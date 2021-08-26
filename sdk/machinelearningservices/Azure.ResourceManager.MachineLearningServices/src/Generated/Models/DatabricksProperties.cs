@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The DatabricksProperties. </summary>
+    /// <summary> Properties of Databricks. </summary>
     public partial class DatabricksProperties
     {
         /// <summary> Initializes a new instance of DatabricksProperties. </summary>
@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of DatabricksProperties. </summary>
         /// <param name="databricksAccessToken"> Databricks access token. </param>
-        internal DatabricksProperties(string databricksAccessToken)
+        /// <param name="workspaceUrl"> Workspace Url. </param>
+        internal DatabricksProperties(string databricksAccessToken, string workspaceUrl)
         {
             DatabricksAccessToken = databricksAccessToken;
+            WorkspaceUrl = workspaceUrl;
         }
 
         /// <summary> Databricks access token. </summary>
         public string DatabricksAccessToken { get; set; }
+        /// <summary> Workspace Url. </summary>
+        public string WorkspaceUrl { get; set; }
     }
 }

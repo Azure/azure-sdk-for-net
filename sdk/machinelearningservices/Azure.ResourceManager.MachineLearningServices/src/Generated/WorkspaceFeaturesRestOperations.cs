@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of WorkspaceFeaturesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> Azure subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public WorkspaceFeaturesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01-preview")
+        public WorkspaceFeaturesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-07-01")
         {
             if (subscriptionId == null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Lists all enabled features for a workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Lists all enabled features for a workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Lists all enabled features for a workspace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Lists all enabled features for a workspace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>

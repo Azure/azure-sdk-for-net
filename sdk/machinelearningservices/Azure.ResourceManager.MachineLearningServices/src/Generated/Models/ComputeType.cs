@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         private const string AKSValue = "AKS";
+        private const string KubernetesValue = "Kubernetes";
         private const string AmlComputeValue = "AmlCompute";
         private const string ComputeInstanceValue = "ComputeInstance";
         private const string DataFactoryValue = "DataFactory";
@@ -30,9 +31,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         private const string HDInsightValue = "HDInsight";
         private const string DatabricksValue = "Databricks";
         private const string DataLakeAnalyticsValue = "DataLakeAnalytics";
+        private const string SynapseSparkValue = "SynapseSpark";
 
         /// <summary> AKS. </summary>
         public static ComputeType AKS { get; } = new ComputeType(AKSValue);
+        /// <summary> Kubernetes. </summary>
+        public static ComputeType Kubernetes { get; } = new ComputeType(KubernetesValue);
         /// <summary> AmlCompute. </summary>
         public static ComputeType AmlCompute { get; } = new ComputeType(AmlComputeValue);
         /// <summary> ComputeInstance. </summary>
@@ -47,6 +51,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static ComputeType Databricks { get; } = new ComputeType(DatabricksValue);
         /// <summary> DataLakeAnalytics. </summary>
         public static ComputeType DataLakeAnalytics { get; } = new ComputeType(DataLakeAnalyticsValue);
+        /// <summary> SynapseSpark. </summary>
+        public static ComputeType SynapseSpark { get; } = new ComputeType(SynapseSparkValue);
         /// <summary> Determines if two <see cref="ComputeType"/> values are the same. </summary>
         public static bool operator ==(ComputeType left, ComputeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeType"/> values are not the same. </summary>

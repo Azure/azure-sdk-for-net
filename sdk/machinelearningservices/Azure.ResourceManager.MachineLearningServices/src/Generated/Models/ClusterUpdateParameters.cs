@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        /// <summary> Desired scale settings for the amlCompute. </summary>
-        public ScaleSettings ScaleSettings { get; set; }
+        /// <summary> Properties of ClusterUpdate. </summary>
+        public ScaleSettingsInformation Properties { get; set; }
     }
 }

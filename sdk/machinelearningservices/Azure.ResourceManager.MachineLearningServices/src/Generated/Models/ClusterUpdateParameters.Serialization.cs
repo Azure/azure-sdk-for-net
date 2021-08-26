@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScaleSettings))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("scaleSettings");
-                writer.WriteObjectValue(ScaleSettings);
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

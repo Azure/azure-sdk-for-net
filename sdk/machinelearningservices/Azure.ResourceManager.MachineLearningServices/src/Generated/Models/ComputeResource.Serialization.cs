@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
@@ -47,41 +42,27 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
+            }
             writer.WriteEndObject();
         }
 
         internal static ComputeResource DeserializeComputeResource(JsonElement element)
         {
+            Optional<Identity> identity = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<Sku> sku = default;
+            Optional<SystemData> systemData = default;
             Optional<Compute> properties = default;
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<Identity> identity = default;
-            Optional<string> location = default;
             Optional<string> type = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<Sku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = Compute.DeserializeCompute(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("identity"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -95,11 +76,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -127,8 +103,43 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = Compute.DeserializeCompute(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ComputeResource(id.Value, name.Value, identity.Value, location.Value, type.Value, Optional.ToDictionary(tags), sku.Value, properties.Value);
+            return new ComputeResource(id.Value, name.Value, type.Value, identity.Value, location.Value, Optional.ToDictionary(tags), sku.Value, systemData.Value, properties.Value);
         }
     }
 }

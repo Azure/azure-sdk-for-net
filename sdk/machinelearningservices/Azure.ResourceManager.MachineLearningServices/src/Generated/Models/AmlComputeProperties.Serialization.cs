@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<RemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
             Optional<AllocationState> allocationState = default;
             Optional<DateTimeOffset> allocationStateTransitionTime = default;
-            Optional<IReadOnlyList<MachineLearningServiceError>> errors = default;
+            Optional<IReadOnlyList<ErrorResponse>> errors = default;
             Optional<int> currentNodeCount = default;
             Optional<int> targetNodeCount = default;
             Optional<NodeStateCounts> nodeStateCounts = default;
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MachineLearningServiceError> array = new List<MachineLearningServiceError>();
+                    List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningServiceError.DeserializeMachineLearningServiceError(item));
+                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
                     }
                     errors = array;
                     continue;

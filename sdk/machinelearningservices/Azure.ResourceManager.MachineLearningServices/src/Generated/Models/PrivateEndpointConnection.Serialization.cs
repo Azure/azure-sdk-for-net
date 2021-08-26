@@ -60,28 +60,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static PrivateEndpointConnection DeserializePrivateEndpointConnection(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
             Optional<Identity> identity = default;
             Optional<string> location = default;
-            Optional<string> type = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<Sku> sku = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             Optional<PrivateEndpoint> privateEndpoint = default;
             Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<PrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("identity"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -95,11 +86,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -125,6 +111,31 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     sku = Sku.DeserializeSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -170,7 +181,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnection(id.Value, name.Value, identity.Value, location.Value, type.Value, Optional.ToDictionary(tags), sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new PrivateEndpointConnection(id.Value, name.Value, type.Value, identity.Value, location.Value, Optional.ToDictionary(tags), sku.Value, systemData.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

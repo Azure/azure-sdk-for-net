@@ -8,33 +8,36 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The resource requirements for the container (cpu and memory). </summary>
-    public partial class ContainerResourceRequirements
+    internal partial class ContainerResourceRequirements
     {
         /// <summary> Initializes a new instance of ContainerResourceRequirements. </summary>
-        public ContainerResourceRequirements()
+        internal ContainerResourceRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerResourceRequirements. </summary>
-        /// <param name="cpu"> The number of CPU cores on the container. </param>
-        /// <param name="memoryInGB"> The amount of memory on the container in GB. </param>
-        /// <param name="gpu"> The number of GPU cores in the container. </param>
-        /// <param name="fpga"> The number of FPGA PCIE devices exposed to the container. Must be multiple of 2. </param>
-        internal ContainerResourceRequirements(double? cpu, double? memoryInGB, int? gpu, int? fpga)
-        {
-            Cpu = cpu;
-            MemoryInGB = memoryInGB;
-            Gpu = gpu;
-            Fpga = fpga;
-        }
-
-        /// <summary> The number of CPU cores on the container. </summary>
-        public double? Cpu { get; set; }
-        /// <summary> The amount of memory on the container in GB. </summary>
-        public double? MemoryInGB { get; set; }
+        /// <summary>
+        /// The minimum amount of CPU cores to be used by the container. More info:
+        /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/.
+        /// </summary>
+        public double? Cpu { get; }
+        /// <summary>
+        /// The maximum amount of CPU cores allowed to be used by the container. More info:
+        /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/.
+        /// </summary>
+        public double? CpuLimit { get; }
+        /// <summary>
+        /// The minimum amount of memory (in GB) to be used by the container. More info:
+        /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/.
+        /// </summary>
+        public double? MemoryInGB { get; }
+        /// <summary>
+        /// The maximum amount of memory (in GB) allowed to be used by the container. More info:
+        /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/.
+        /// </summary>
+        public double? MemoryInGBLimit { get; }
         /// <summary> The number of GPU cores in the container. </summary>
-        public int? Gpu { get; set; }
+        public int? Gpu { get; }
         /// <summary> The number of FPGA PCIE devices exposed to the container. Must be multiple of 2. </summary>
-        public int? Fpga { get; set; }
+        public int? Fpga { get; }
     }
 }

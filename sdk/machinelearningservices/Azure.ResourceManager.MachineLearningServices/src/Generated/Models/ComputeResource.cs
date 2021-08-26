@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -15,22 +16,39 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of ComputeResource. </summary>
         public ComputeResource()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ComputeResource. </summary>
-        /// <param name="id"> Specifies the resource ID. </param>
-        /// <param name="name"> Specifies the name of the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="type"> Specifies the type of the resource. </param>
         /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
+        /// <param name="systemData"> System data. </param>
         /// <param name="properties"> Compute properties. </param>
-        internal ComputeResource(string id, string name, Identity identity, string location, string type, IDictionary<string, string> tags, Sku sku, Compute properties) : base(id, name, identity, location, type, tags, sku)
+        internal ComputeResource(string id, string name, string type, Identity identity, string location, IDictionary<string, string> tags, Sku sku, SystemData systemData, Compute properties) : base(id, name, type)
         {
+            Identity = identity;
+            Location = location;
+            Tags = tags;
+            Sku = sku;
+            SystemData = systemData;
             Properties = properties;
         }
 
+        /// <summary> The identity of the resource. </summary>
+        public Identity Identity { get; set; }
+        /// <summary> Specifies the location of the resource. </summary>
+        public string Location { get; set; }
+        /// <summary> Contains resource tags defined as key/value pairs. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> The sku of the workspace. </summary>
+        public Sku Sku { get; set; }
+        /// <summary> System data. </summary>
+        public SystemData SystemData { get; }
         /// <summary> Compute properties. </summary>
         public Compute Properties { get; set; }
     }

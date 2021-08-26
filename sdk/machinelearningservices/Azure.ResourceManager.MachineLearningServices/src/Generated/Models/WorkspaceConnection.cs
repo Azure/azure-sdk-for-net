@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class WorkspaceConnection
     {
         /// <summary> Initializes a new instance of WorkspaceConnection. </summary>
-        internal WorkspaceConnection()
+        public WorkspaceConnection()
         {
         }
 
@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="authType"> Authorization type of the workspace connection. </param>
         /// <param name="value"> Value details of the workspace connection. </param>
-        internal WorkspaceConnection(string id, string name, string type, string category, string target, string authType, string value)
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        internal WorkspaceConnection(string id, string name, string type, string category, string target, string authType, string value, ValueFormat? valueFormat)
         {
             Id = id;
             Name = name;
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Target = target;
             AuthType = authType;
             Value = value;
+            ValueFormat = valueFormat;
         }
 
         /// <summary> ResourceId of the workspace connection. </summary>
@@ -41,12 +43,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Resource type of workspace connection. </summary>
         public string Type { get; }
         /// <summary> Category of the workspace connection. </summary>
-        public string Category { get; }
+        public string Category { get; set; }
         /// <summary> Target of the workspace connection. </summary>
-        public string Target { get; }
+        public string Target { get; set; }
         /// <summary> Authorization type of the workspace connection. </summary>
-        public string AuthType { get; }
+        public string AuthType { get; set; }
         /// <summary> Value details of the workspace connection. </summary>
-        public string Value { get; }
+        public string Value { get; set; }
+        /// <summary> format for the workspace connection value. </summary>
+        public ValueFormat? ValueFormat { get; set; }
     }
 }

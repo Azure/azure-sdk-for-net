@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of WorkspacesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> Azure subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public WorkspacesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01-preview")
+        public WorkspacesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-07-01")
         {
             if (subscriptionId == null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets the properties of the specified machine learning workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets the properties of the specified machine learning workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates or updates a workspace with the specified parameters. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="parameters"> The parameters for creating or updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,7 +182,6 @@ namespace Azure.ResourceManager.MachineLearningServices
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                 case 202:
                     return message.Response;
                 default:
@@ -191,7 +190,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates or updates a workspace with the specified parameters. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="parameters"> The parameters for creating or updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,7 +215,6 @@ namespace Azure.ResourceManager.MachineLearningServices
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                 case 202:
                     return message.Response;
                 default:
@@ -244,7 +242,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes a machine learning workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -273,7 +271,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes a machine learning workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -325,7 +323,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Updates a machine learning workspace with the specified parameters. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="parameters"> The parameters for updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -362,7 +360,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Updates a machine learning workspace with the specified parameters. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="parameters"> The parameters for updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -398,7 +396,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName, string skiptoken)
+        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName, string skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -411,9 +409,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            if (skiptoken != null)
+            if (skip != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skip", skip, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -421,18 +419,18 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Lists all the available machine learning workspaces under the specified resource group. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<WorkspaceListResult>> ListByResourceGroupAsync(string resourceGroupName, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> ListByResourceGroupAsync(string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName, skiptoken);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -449,18 +447,18 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Lists all the available machine learning workspaces under the specified resource group. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<WorkspaceListResult> ListByResourceGroup(string resourceGroupName, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> ListByResourceGroup(string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName, skiptoken);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -471,6 +469,93 @@ namespace Azure.ResourceManager.MachineLearningServices
                         value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDiagnoseRequest(string resourceGroupName, string workspaceName, DiagnoseWorkspaceParameters parameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/diagnose", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (parameters != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(parameters);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Diagnose workspace setup issue. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="parameters"> The parameter of diagnosing workspace health. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public async Task<ResponseWithHeaders<WorkspacesDiagnoseHeaders>> DiagnoseAsync(string resourceGroupName, string workspaceName, DiagnoseWorkspaceParameters parameters = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreateDiagnoseRequest(resourceGroupName, workspaceName, parameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new WorkspacesDiagnoseHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Diagnose workspace setup issue. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="parameters"> The parameter of diagnosing workspace health. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public ResponseWithHeaders<WorkspacesDiagnoseHeaders> Diagnose(string resourceGroupName, string workspaceName, DiagnoseWorkspaceParameters parameters = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreateDiagnoseRequest(resourceGroupName, workspaceName, parameters);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new WorkspacesDiagnoseHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -497,7 +582,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Lists all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -529,7 +614,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Lists all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -581,7 +666,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Resync all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -601,6 +686,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -608,7 +694,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Resync all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -628,13 +714,14 @@ namespace Azure.ResourceManager.MachineLearningServices
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest(string skiptoken)
+        internal HttpMessage CreateListBySubscriptionRequest(string skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -645,9 +732,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            if (skiptoken != null)
+            if (skip != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skip", skip, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -655,11 +742,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Lists all the available machine learning workspaces under the specified subscription. </summary>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<WorkspaceListResult>> ListBySubscriptionAsync(string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> ListBySubscriptionAsync(string skip = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest(skiptoken);
+            using var message = CreateListBySubscriptionRequest(skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -676,11 +763,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Lists all the available machine learning workspaces under the specified subscription. </summary>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<WorkspaceListResult> ListBySubscription(string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> ListBySubscription(string skip = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest(skiptoken);
+            using var message = CreateListBySubscriptionRequest(skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -696,7 +783,419 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string skiptoken)
+        internal HttpMessage CreateListNotebookAccessTokenRequest(string resourceGroupName, string workspaceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/listNotebookAccessToken", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> return notebook access token and refresh token. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public async Task<Response<NotebookAccessTokenResult>> ListNotebookAccessTokenAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreateListNotebookAccessTokenRequest(resourceGroupName, workspaceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        NotebookAccessTokenResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = NotebookAccessTokenResult.DeserializeNotebookAccessTokenResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> return notebook access token and refresh token. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public Response<NotebookAccessTokenResult> ListNotebookAccessToken(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreateListNotebookAccessTokenRequest(resourceGroupName, workspaceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        NotebookAccessTokenResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = NotebookAccessTokenResult.DeserializeNotebookAccessTokenResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePrepareNotebookRequest(string resourceGroupName, string workspaceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/prepareNotebook", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Prepare a notebook. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public async Task<Response> PrepareNotebookAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreatePrepareNotebookRequest(resourceGroupName, workspaceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Prepare a notebook. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public Response PrepareNotebook(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreatePrepareNotebookRequest(resourceGroupName, workspaceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListStorageAccountKeysRequest(string resourceGroupName, string workspaceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/listStorageAccountKeys", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> List storage account keys of a workspace. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public async Task<Response<ListStorageAccountKeysResult>> ListStorageAccountKeysAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreateListStorageAccountKeysRequest(resourceGroupName, workspaceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListStorageAccountKeysResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ListStorageAccountKeysResult.DeserializeListStorageAccountKeysResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> List storage account keys of a workspace. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public Response<ListStorageAccountKeysResult> ListStorageAccountKeys(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreateListStorageAccountKeysRequest(resourceGroupName, workspaceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListStorageAccountKeysResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ListStorageAccountKeysResult.DeserializeListStorageAccountKeysResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListNotebookKeysRequest(string resourceGroupName, string workspaceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/listNotebookKeys", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> List keys of a notebook. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public async Task<Response<ListNotebookKeysResult>> ListNotebookKeysAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreateListNotebookKeysRequest(resourceGroupName, workspaceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListNotebookKeysResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ListNotebookKeysResult.DeserializeListNotebookKeysResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> List keys of a notebook. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public Response<ListNotebookKeysResult> ListNotebookKeys(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreateListNotebookKeysRequest(resourceGroupName, workspaceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListNotebookKeysResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ListNotebookKeysResult.DeserializeListNotebookKeysResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListOutboundNetworkDependenciesEndpointsRequest(string resourceGroupName, string workspaceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Called by Client (Portal, CLI, etc) to get a list of all external outbound dependencies (FQDNs) programmatically. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public async Task<Response<ExternalFqdnResponse>> ListOutboundNetworkDependenciesEndpointsAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreateListOutboundNetworkDependenciesEndpointsRequest(resourceGroupName, workspaceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ExternalFqdnResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ExternalFqdnResponse.DeserializeExternalFqdnResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Called by Client (Portal, CLI, etc) to get a list of all external outbound dependencies (FQDNs) programmatically. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public Response<ExternalFqdnResponse> ListOutboundNetworkDependenciesEndpoints(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            using var message = CreateListOutboundNetworkDependenciesEndpointsRequest(resourceGroupName, workspaceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ExternalFqdnResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ExternalFqdnResponse.DeserializeExternalFqdnResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -711,11 +1210,11 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Lists all the available machine learning workspaces under the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<WorkspaceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -726,7 +1225,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, skiptoken);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -744,11 +1243,11 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Lists all the available machine learning workspaces under the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<WorkspaceListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -759,7 +1258,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, skiptoken);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -775,7 +1274,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string skiptoken)
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -790,17 +1289,17 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Lists all the available machine learning workspaces under the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<WorkspaceListResult>> ListBySubscriptionNextPageAsync(string nextLink, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> ListBySubscriptionNextPageAsync(string nextLink, string skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, skiptoken);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -818,17 +1317,17 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Lists all the available machine learning workspaces under the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<WorkspaceListResult> ListBySubscriptionNextPage(string nextLink, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> ListBySubscriptionNextPage(string nextLink, string skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, skiptoken);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

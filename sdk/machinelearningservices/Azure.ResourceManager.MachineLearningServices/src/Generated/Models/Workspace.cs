@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,22 +16,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of Workspace. </summary>
         public Workspace()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnection>();
             SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of Workspace. </summary>
-        /// <param name="id"> Specifies the resource ID. </param>
-        /// <param name="name"> Specifies the name of the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="type"> Specifies the type of the resource. </param>
         /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
+        /// <param name="systemData"> System data. </param>
         /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
         /// <param name="description"> The description of this workspace. </param>
         /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
-        /// <param name="creationTime"> The creation time of the machine learning workspace in ISO8601 format. </param>
         /// <param name="keyVault"> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </param>
         /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. This cannot be changed once the workspace has been created. </param>
         /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. This cannot be changed once the workspace has been created. </param>
@@ -45,14 +45,25 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="privateLinkCount"> Count of private connections in the workspace. </param>
         /// <param name="imageBuildCompute"> The compute name for image build. </param>
         /// <param name="allowPublicAccessWhenBehindVnet"> The flag to indicate whether to allow public access when behind VNet. </param>
+        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections in the workspace. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources in this workspace. </param>
-        internal Workspace(string id, string name, Identity identity, string location, string type, IDictionary<string, string> tags, Sku sku, string workspaceId, string description, string friendlyName, DateTimeOffset? creationTime, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, string discoveryUrl, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, IReadOnlyList<PrivateEndpointConnection> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources) : base(id, name, identity, location, type, tags, sku)
+        /// <param name="notebookInfo"> The notebook info of Azure ML workspace. </param>
+        /// <param name="serviceManagedResourcesSettings"> The service managed resource settings. </param>
+        /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
+        /// <param name="tenantId"> The tenant id associated with this workspace. </param>
+        /// <param name="storageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
+        /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
+        internal Workspace(string id, string name, string type, Identity identity, string location, IDictionary<string, string> tags, Sku sku, SystemData systemData, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, string discoveryUrl, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<PrivateEndpointConnection> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, string tenantId, bool? storageHnsEnabled, string mlFlowTrackingUri) : base(id, name, type)
         {
+            Identity = identity;
+            Location = location;
+            Tags = tags;
+            Sku = sku;
+            SystemData = systemData;
             WorkspaceId = workspaceId;
             Description = description;
             FriendlyName = friendlyName;
-            CreationTime = creationTime;
             KeyVault = keyVault;
             ApplicationInsights = applicationInsights;
             ContainerRegistry = containerRegistry;
@@ -65,18 +76,33 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             PrivateLinkCount = privateLinkCount;
             ImageBuildCompute = imageBuildCompute;
             AllowPublicAccessWhenBehindVnet = allowPublicAccessWhenBehindVnet;
+            PublicNetworkAccess = publicNetworkAccess;
             PrivateEndpointConnections = privateEndpointConnections;
             SharedPrivateLinkResources = sharedPrivateLinkResources;
+            NotebookInfo = notebookInfo;
+            ServiceManagedResourcesSettings = serviceManagedResourcesSettings;
+            PrimaryUserAssignedIdentity = primaryUserAssignedIdentity;
+            TenantId = tenantId;
+            StorageHnsEnabled = storageHnsEnabled;
+            MlFlowTrackingUri = mlFlowTrackingUri;
         }
 
+        /// <summary> The identity of the resource. </summary>
+        public Identity Identity { get; set; }
+        /// <summary> Specifies the location of the resource. </summary>
+        public string Location { get; set; }
+        /// <summary> Contains resource tags defined as key/value pairs. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> The sku of the workspace. </summary>
+        public Sku Sku { get; set; }
+        /// <summary> System data. </summary>
+        public SystemData SystemData { get; }
         /// <summary> The immutable id associated with this workspace. </summary>
         public string WorkspaceId { get; }
         /// <summary> The description of this workspace. </summary>
         public string Description { get; set; }
         /// <summary> The friendly name for this workspace. This name in mutable. </summary>
         public string FriendlyName { get; set; }
-        /// <summary> The creation time of the machine learning workspace in ISO8601 format. </summary>
-        public DateTimeOffset? CreationTime { get; }
         /// <summary> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </summary>
         public string KeyVault { get; set; }
         /// <summary> ARM id of the application insights associated with this workspace. This cannot be changed once the workspace has been created. </summary>
@@ -101,9 +127,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string ImageBuildCompute { get; set; }
         /// <summary> The flag to indicate whether to allow public access when behind VNet. </summary>
         public bool? AllowPublicAccessWhenBehindVnet { get; set; }
+        /// <summary> Whether requests from Public Network are allowed. </summary>
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The list of private endpoint connections in the workspace. </summary>
         public IReadOnlyList<PrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources in this workspace. </summary>
         public IList<SharedPrivateLinkResource> SharedPrivateLinkResources { get; }
+        /// <summary> The notebook info of Azure ML workspace. </summary>
+        public NotebookResourceInfo NotebookInfo { get; }
+        /// <summary> The service managed resource settings. </summary>
+        public ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
+        /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
+        public string PrimaryUserAssignedIdentity { get; set; }
+        /// <summary> The tenant id associated with this workspace. </summary>
+        public string TenantId { get; }
+        /// <summary> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </summary>
+        public bool? StorageHnsEnabled { get; }
+        /// <summary> The URI associated with this workspace that machine learning flow must point at to set up tracking. </summary>
+        public string MlFlowTrackingUri { get; }
     }
 }

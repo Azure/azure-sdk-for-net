@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of PrivateLinkResourcesOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> Azure subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal PrivateLinkResourcesOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01-preview")
+        internal PrivateLinkResourcesOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-07-01")
         {
             RestClient = new PrivateLinkResourcesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets the private link resources that need to be created for a workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkResourceListResult>> ListByWorkspaceAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResourceListResult>> ListAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourcesOperations.ListByWorkspace");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourcesOperations.List");
             scope.Start();
             try
             {
-                return await RestClient.ListByWorkspaceAsync(resourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ListAsync(resourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets the private link resources that need to be created for a workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkResourceListResult> ListByWorkspace(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkResourceListResult> List(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourcesOperations.ListByWorkspace");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourcesOperations.List");
             scope.Start();
             try
             {
-                return RestClient.ListByWorkspace(resourceGroupName, workspaceName, cancellationToken);
+                return RestClient.List(resourceGroupName, workspaceName, cancellationToken);
             }
             catch (Exception e)
             {

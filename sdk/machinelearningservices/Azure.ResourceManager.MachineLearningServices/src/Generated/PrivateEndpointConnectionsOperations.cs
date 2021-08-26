@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MachineLearningServices.Models;
 
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> Azure subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal PrivateEndpointConnectionsOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01-preview")
+        internal PrivateEndpointConnectionsOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-07-01")
         {
             RestClient = new PrivateEndpointConnectionsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets the specified private endpoint connection associated with the workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets the specified private endpoint connection associated with the workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,18 +81,18 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Update the state of specified private endpoint connection associated with the workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateEndpointConnection>> PutAsync(string resourceGroupName, string workspaceName, string privateEndpointConnectionName, PrivateEndpointConnection properties, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateEndpointConnection>> CreateOrUpdateAsync(string resourceGroupName, string workspaceName, string privateEndpointConnectionName, PrivateEndpointConnection properties, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionsOperations.Put");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionsOperations.CreateOrUpdate");
             scope.Start();
             try
             {
-                return await RestClient.PutAsync(resourceGroupName, workspaceName, privateEndpointConnectionName, properties, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateOrUpdateAsync(resourceGroupName, workspaceName, privateEndpointConnectionName, properties, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -101,18 +102,18 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Update the state of specified private endpoint connection associated with the workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateEndpointConnection> Put(string resourceGroupName, string workspaceName, string privateEndpointConnectionName, PrivateEndpointConnection properties, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateEndpointConnection> CreateOrUpdate(string resourceGroupName, string workspaceName, string privateEndpointConnectionName, PrivateEndpointConnection properties, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionsOperations.Put");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionsOperations.CreateOrUpdate");
             scope.Start();
             try
             {
-                return RestClient.Put(resourceGroupName, workspaceName, privateEndpointConnectionName, properties, cancellationToken);
+                return RestClient.CreateOrUpdate(resourceGroupName, workspaceName, privateEndpointConnectionName, properties, cancellationToken);
             }
             catch (Exception e)
             {
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes the specified private endpoint connection associated with the workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes the specified private endpoint connection associated with the workspace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,6 +160,74 @@ namespace Azure.ResourceManager.MachineLearningServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> List all the private endpoint connections associated with the workspace. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public virtual AsyncPageable<PrivateEndpointConnection> ListAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            async Task<Page<PrivateEndpointConnection>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionsOperations.List");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListAsync(resourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> List all the private endpoint connections associated with the workspace. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        public virtual Pageable<PrivateEndpointConnection> List(string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+
+            Page<PrivateEndpointConnection> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionsOperations.List");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.List(resourceGroupName, workspaceName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }

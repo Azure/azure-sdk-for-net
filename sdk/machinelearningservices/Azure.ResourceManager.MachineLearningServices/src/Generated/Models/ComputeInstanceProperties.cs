@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public ComputeInstanceProperties()
         {
             Applications = new ChangeTrackingList<ComputeInstanceApplication>();
-            Errors = new ChangeTrackingList<MachineLearningServiceError>();
+            Errors = new ChangeTrackingList<ErrorResponse>();
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceProperties. </summary>
@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="state"> The current state of this ComputeInstance. </param>
         /// <param name="computeInstanceAuthorizationType"> The Compute Instance Authorization type. Available values are personal (default). </param>
         /// <param name="personalComputeInstanceSettings"> Settings for a personal compute instance. </param>
+        /// <param name="setupScripts"> Details of customized scripts to execute for setting up the cluster. </param>
         /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
-        internal ComputeInstanceProperties(string vmSize, ResourceId subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningServiceError> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, ComputeInstanceLastOperation lastOperation)
+        internal ComputeInstanceProperties(string vmSize, ResourceId subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScripts, ComputeInstanceLastOperation lastOperation)
         {
             VmSize = vmSize;
             Subnet = subnet;
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             State = state;
             ComputeInstanceAuthorizationType = computeInstanceAuthorizationType;
             PersonalComputeInstanceSettings = personalComputeInstanceSettings;
+            SetupScripts = setupScripts;
             LastOperation = lastOperation;
         }
 
@@ -64,13 +66,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Describes information on user who created this ComputeInstance. </summary>
         public ComputeInstanceCreatedBy CreatedBy { get; }
         /// <summary> Collection of errors encountered on this ComputeInstance. </summary>
-        public IReadOnlyList<MachineLearningServiceError> Errors { get; }
+        public IReadOnlyList<ErrorResponse> Errors { get; }
         /// <summary> The current state of this ComputeInstance. </summary>
         public ComputeInstanceState? State { get; }
         /// <summary> The Compute Instance Authorization type. Available values are personal (default). </summary>
         public ComputeInstanceAuthorizationType? ComputeInstanceAuthorizationType { get; set; }
         /// <summary> Settings for a personal compute instance. </summary>
         public PersonalComputeInstanceSettings PersonalComputeInstanceSettings { get; set; }
+        /// <summary> Details of customized scripts to execute for setting up the cluster. </summary>
+        public SetupScripts SetupScripts { get; set; }
         /// <summary> The last operation on ComputeInstance. </summary>
         public ComputeInstanceLastOperation LastOperation { get; }
     }

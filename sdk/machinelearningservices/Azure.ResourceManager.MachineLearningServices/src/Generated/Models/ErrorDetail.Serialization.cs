@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,8 +15,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
-            string code = default;
-            string message = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<ErrorDetail>> details = default;
+            Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -28,8 +32,43 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("target"))
+                {
+                    target = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("details"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ErrorDetail> array = new List<ErrorDetail>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DeserializeErrorDetail(item));
+                    }
+                    details = array;
+                    continue;
+                }
+                if (property.NameEquals("additionalInfo"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
+                    }
+                    additionalInfo = array;
+                    continue;
+                }
             }
-            return new ErrorDetail(code, message);
+            return new ErrorDetail(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
         }
     }
 }

@@ -5,52 +5,32 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Azure Resource Manager resource envelope. </summary>
+    /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     public partial class Resource
     {
         /// <summary> Initializes a new instance of Resource. </summary>
         public Resource()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of Resource. </summary>
-        /// <param name="id"> Specifies the resource ID. </param>
-        /// <param name="name"> Specifies the name of the resource. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="type"> Specifies the type of the resource. </param>
-        /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
-        /// <param name="sku"> The sku of the workspace. </param>
-        internal Resource(string id, string name, Identity identity, string location, string type, IDictionary<string, string> tags, Sku sku)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        internal Resource(string id, string name, string type)
         {
             Id = id;
             Name = name;
-            Identity = identity;
-            Location = location;
             Type = type;
-            Tags = tags;
-            Sku = sku;
         }
 
-        /// <summary> Specifies the resource ID. </summary>
+        /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
         public string Id { get; }
-        /// <summary> Specifies the name of the resource. </summary>
+        /// <summary> The name of the resource. </summary>
         public string Name { get; }
-        /// <summary> The identity of the resource. </summary>
-        public Identity Identity { get; set; }
-        /// <summary> Specifies the location of the resource. </summary>
-        public string Location { get; set; }
-        /// <summary> Specifies the type of the resource. </summary>
+        /// <summary> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </summary>
         public string Type { get; }
-        /// <summary> Contains resource tags defined as key/value pairs. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The sku of the workspace. </summary>
-        public Sku Sku { get; set; }
     }
 }

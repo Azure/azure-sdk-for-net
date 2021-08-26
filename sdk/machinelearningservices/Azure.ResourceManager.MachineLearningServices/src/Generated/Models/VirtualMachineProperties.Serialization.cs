@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("administratorAccount");
                 writer.WriteObjectValue(AdministratorAccount);
             }
+            if (Optional.IsDefined(IsNotebookInstanceCompute))
+            {
+                writer.WritePropertyName("isNotebookInstanceCompute");
+                writer.WriteBooleanValue(IsNotebookInstanceCompute.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<int> sshPort = default;
             Optional<string> address = default;
             Optional<VirtualMachineSshCredentials> administratorAccount = default;
+            Optional<bool> isNotebookInstanceCompute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachineSize"))
@@ -76,8 +82,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     administratorAccount = VirtualMachineSshCredentials.DeserializeVirtualMachineSshCredentials(property.Value);
                     continue;
                 }
+                if (property.NameEquals("isNotebookInstanceCompute"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isNotebookInstanceCompute = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new VirtualMachineProperties(virtualMachineSize.Value, Optional.ToNullable(sshPort), address.Value, administratorAccount.Value);
+            return new VirtualMachineProperties(virtualMachineSize.Value, Optional.ToNullable(sshPort), address.Value, administratorAccount.Value, Optional.ToNullable(isNotebookInstanceCompute));
         }
     }
 }
