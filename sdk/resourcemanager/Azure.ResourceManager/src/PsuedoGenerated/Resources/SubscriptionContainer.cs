@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
             : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            RestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            RestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary>
