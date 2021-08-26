@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
@@ -365,7 +366,11 @@ namespace Azure.Core.Pipeline
             if (options.ServerCertificateCustomValidationCallback != null)
             {
                 request.ServerCertificateValidationCallback =
-                    (_, certificate, _, _) => options.ServerCertificateCustomValidationCallback(new X509Certificate2(certificate));
+                    (request, certificate, x509Chain, sslPolicyErrors) => options.ServerCertificateCustomValidationCallback(
+                        request,
+                        new X509Certificate2(certificate),
+                        x509Chain,
+                        sslPolicyErrors);
             }
         }
     }

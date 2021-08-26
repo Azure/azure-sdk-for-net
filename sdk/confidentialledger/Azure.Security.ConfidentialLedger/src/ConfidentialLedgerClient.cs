@@ -43,13 +43,13 @@ namespace Azure.Security.ConfidentialLedger
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(
-                options,
+                actualOptions,
                 new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
                 new HttpPipelinePolicy[] { authPolicy },
                 new ResponseClassifier(),
                 transportOptions);
             this.ledgerUri = ledgerUri;
-            apiVersion = options.Version;
+            apiVersion = actualOptions.Version;
         }
 
         internal HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(Uri ledgerUri, ConfidentialLedgerClientOptions options)
@@ -79,18 +79,18 @@ namespace Azure.Security.ConfidentialLedger
             certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
 
             // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
-            bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
+            bool CertValidationCheck(object request, X509Certificate2 cert)
             {
-                bool isChainValid = x509Chain.Build(cert);
+                bool isChainValid = certificateChain.Build(cert);
                 if (!isChainValid) return false;
 
-                var isCertSignedByTheTlsCert = x509Chain.ChainElements.Cast<X509ChainElement>()
+                var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
                     .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
                 return isCertSignedByTheTlsCert;
             }
             return new HttpPipelineTransportOptions
             {
-                ServerCertificateCustomValidationCallback = certificate2 => CertValidationCheck(null, certificate2, certificateChain, SslPolicyErrors.None)
+                ServerCertificateCustomValidationCallback = (request, certificate2) => CertValidationCheck(request, certificate2)
             };
         }
     }

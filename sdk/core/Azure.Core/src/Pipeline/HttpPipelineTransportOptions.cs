@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.Http;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Azure.Core.Pipeline
@@ -14,6 +16,6 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// A delegate that validates the certificate presented by the server.
         /// </summary>
-        public Func<X509Certificate2?, bool>? ServerCertificateCustomValidationCallback { get; set; }
+        public Func<object, X509Certificate2?, X509Chain?, SslPolicyErrors, bool>? ServerCertificateCustomValidationCallback { get; set; }
     }
 }

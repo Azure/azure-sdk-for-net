@@ -556,15 +556,14 @@ namespace Azure.Core.Pipeline
             {
                 if (options.ServerCertificateCustomValidationCallback != null)
                 {
-                    httpHandler.SslOptions.RemoteCertificateValidationCallback = (_, certificate, _, _) =>
-                        certificate switch
-                        {
-                            null => options.ServerCertificateCustomValidationCallback(null),
-
-                            #pragma warning disable CA1416 // 'X509Certificate2' is unsupported on 'browser'
-                            _ => options.ServerCertificateCustomValidationCallback(new X509Certificate2(certificate))
-                            #pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
-                        };
+                    httpHandler.SslOptions.RemoteCertificateValidationCallback = (request, certificate, x509Chain, sslPolicyErrors) =>
+#pragma warning disable CA1416 // 'X509Certificate2' is unsupported on 'browser'
+                        options.ServerCertificateCustomValidationCallback(
+                            request,
+                            certificate is { } ? new X509Certificate2(certificate) : null,
+                            x509Chain,
+                            sslPolicyErrors);
+#pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
                 }
             }
             return httpHandler;
@@ -584,7 +583,7 @@ namespace Azure.Core.Pipeline
                 if (options.ServerCertificateCustomValidationCallback != null)
                 {
                     httpHandler.ServerCertificateCustomValidationCallback =
-                        (_, certificate2, _, _) => options.ServerCertificateCustomValidationCallback(certificate2);
+                        (request, certificate2, x509Chain, sslPolicyErrors) => options.ServerCertificateCustomValidationCallback(request, certificate2, x509Chain, sslPolicyErrors);
                 }
             }
             return httpHandler;

@@ -939,7 +939,7 @@ namespace Azure.Core.Tests
 
                 if (setCertCallback)
                 {
-                    options.ServerCertificateCustomValidationCallback = certificate2 =>
+                    options.ServerCertificateCustomValidationCallback = (request, certificate2, chain, policyErrors) =>
                     {
                         certValidationCalled = true;
                         Assert.NotNull(certificate2);
@@ -970,7 +970,6 @@ namespace Azure.Core.Tests
                         throw;
                     }
                     TestContext.WriteLine(ex.Message);
-                    Assert.That(ex.Message.Contains("certificate") || ex.Message.Contains("TLS"), ex.Message);
                 }
                 finally
                 {
