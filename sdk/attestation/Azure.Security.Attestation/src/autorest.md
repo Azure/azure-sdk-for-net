@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` in src directory to re-generate.
 ``` yaml
 title: Azure.Security.Attestation
 require:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/45c7ae94a46920c94b5e03e6a7d128d6cb7a364e/specification/attestation/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/cde7f150e8d3bf3af2418cc347cae0fb2baed6a7/specification/attestation/data-plane/readme.md
 namespace: Azure.Security.Attestation
 tag: package-2020-10-01
 azure-arm: false
