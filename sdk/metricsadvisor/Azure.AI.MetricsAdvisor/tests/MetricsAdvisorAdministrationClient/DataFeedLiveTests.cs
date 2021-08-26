@@ -1084,6 +1084,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Granularity.GranularityType, Is.EqualTo(DataFeedGranularityType.Custom));
             Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.EqualTo(3000));
 
+            Assert.That(dataFeed.MetricIds, Is.Not.Null);
+            Assert.That(dataFeed.MetricIds.Count, Is.EqualTo(2));
+            Assert.That(dataFeed.MetricIds.Count, Is.EqualTo(dataFeed.Schema.MetricColumns.Count));
+            Assert.That(dataFeed.MetricIds.Keys, Contains.Item("cost"));
+            Assert.That(dataFeed.MetricIds.Keys, Contains.Item("revenue"));
+
             Assert.That(dataFeed.Schema, Is.Not.Null);
             Assert.That(dataFeed.Schema.MetricColumns, Is.Not.Null);
             Assert.That(dataFeed.Schema.MetricColumns.Count, Is.EqualTo(2));
@@ -1164,6 +1170,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Granularity, Is.Not.Null);
             Assert.That(dataFeed.Granularity.GranularityType, Is.EqualTo(DataFeedGranularityType.Daily));
             Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.Null);
+
+            Assert.That(dataFeed.MetricIds, Is.Not.Null);
+            Assert.That(dataFeed.MetricIds.Count, Is.EqualTo(1));
+            Assert.That(dataFeed.MetricIds.Count, Is.EqualTo(dataFeed.Schema.MetricColumns.Count));
+            Assert.That(dataFeed.MetricIds.Keys, Contains.Item("cost"));
 
             Assert.That(dataFeed.Schema, Is.Not.Null);
             Assert.That(dataFeed.Schema.MetricColumns, Is.Not.Null);
