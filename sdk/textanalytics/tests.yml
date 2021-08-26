@@ -12,4 +12,4 @@ extends:
         Location: 'centraluseuap'
       UsGov:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
-    SupportedClouds: 'Public,Canary,UsGov'
+    SupportedClouds: 'Public,Canary,UsGov,China'
