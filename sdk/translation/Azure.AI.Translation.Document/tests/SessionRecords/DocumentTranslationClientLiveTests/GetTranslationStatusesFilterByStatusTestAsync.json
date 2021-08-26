@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1526045109?restype=container",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source462077597?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-a1dec20b39680b4aa7c6248f7bebc44d-7a1ab80f022b034a-00",
+        "traceparent": "00-aa28d5a9dfe49849a0a93e0533f45dd9-f8f32036d45f5149-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "fac168094a15877c1b5eb97611e091c5",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:27 GMT",
+        "x-ms-client-request-id": "6b7435528510a5535d04f896ad3b37e9",
+        "x-ms-date": "Thu, 26 Aug 2021 14:06:57 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -17,28 +17,28 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 25 Aug 2021 18:45:26 GMT",
-        "ETag": "\u00220x8D967F88142445E\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:26 GMT",
+        "Date": "Thu, 26 Aug 2021 14:06:56 GMT",
+        "ETag": "\u00220x8D9689AC3F96A66\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:06:57 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "fac168094a15877c1b5eb97611e091c5",
-        "x-ms-request-id": "97606329-d01e-0088-80e1-99d996000000",
+        "x-ms-client-request-id": "6b7435528510a5535d04f896ad3b37e9",
+        "x-ms-request-id": "3ddf19e2-201e-0057-3e83-9a92ac000000",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1526045109/File_0.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source462077597/File_0.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-9746cb5c35994049b0da327f5fd3a428-e4ef714d3050a543-00",
+        "traceparent": "00-8c88f311cff91c4b9c2f7c21d89d685c-9c212d8b21c42745-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "c7bd2a0367c8cba29e5c8af77d806104",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:27 GMT",
+        "x-ms-client-request-id": "bde7fcc6cc9fec1e47b936405d1abeb2",
+        "x-ms-date": "Thu, 26 Aug 2021 14:06:57 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -47,28 +47,28 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:27 GMT",
-        "ETag": "\u00220x8D967F88179A712\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:27 GMT",
+        "Date": "Thu, 26 Aug 2021 14:06:57 GMT",
+        "ETag": "\u00220x8D9689AC4316BE1\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:06:57 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "c7bd2a0367c8cba29e5c8af77d806104",
+        "x-ms-client-request-id": "bde7fcc6cc9fec1e47b936405d1abeb2",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "97606351-d01e-0088-21e1-99d996000000",
+        "x-ms-request-id": "3ddf1a55-201e-0057-1c83-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/target838503391?restype=container",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/target1257220293?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-8e1cc866c9bcaa4787975f2d89543be8-f0bcd173c2526448-00",
+        "traceparent": "00-69ca4c2ef3eb6c45b0831dc1866b4ef6-35e16edd5126ea47-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "4cb18c0967fde0798124ac0bba62e724",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:27 GMT",
+        "x-ms-client-request-id": "ef4f5d8f68f6b4c7df71720a983114f9",
+        "x-ms-date": "Thu, 26 Aug 2021 14:06:57 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -76,12 +76,12 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 25 Aug 2021 18:45:27 GMT",
-        "ETag": "\u00220x8D967F8818FD65B\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:27 GMT",
+        "Date": "Thu, 26 Aug 2021 14:06:57 GMT",
+        "ETag": "\u00220x8D9689AC449E2FF\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:06:57 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "4cb18c0967fde0798124ac0bba62e724",
-        "x-ms-request-id": "976063a6-d01e-0088-69e1-99d996000000",
+        "x-ms-client-request-id": "ef4f5d8f68f6b4c7df71720a983114f9",
+        "x-ms-request-id": "3ddf1ace-201e-0057-0d83-9a92ac000000",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
@@ -94,9 +94,9 @@
         "Content-Length": "103",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d78e4435e4dfc14985505edf6c7014c4-4f608a49e38a9643-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "69f93aa6ed09c6a2f65bb8bf850a9afd",
+        "traceparent": "00-11bff006b5c3bc45a963aacad0c581bd-55cf6c949266e549-00",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "9e4ea60bfd4b16868724564e13484245",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -116,57 +116,57 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "8ea9f6ab-5cf3-4bc1-87ac-9e1946c639d1",
+        "apim-request-id": "07575b2b-a7f5-4abf-be52-7f410f906235",
         "Content-Length": "0",
-        "Date": "Wed, 25 Aug 2021 18:45:26 GMT",
-        "Operation-Location": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
-        "Set-Cookie": [
-          "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "8ea9f6ab-5cf3-4bc1-87ac-9e1946c639d1"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "540896b579e0c30643e74743f6c0e4fa",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "b01b688a-ab39-4d4b-b599-5e649b77dd1f",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:27 GMT",
-        "ETag": "\u0022C2B44453444B6DE961649415F30B2F67EC9E146C803AF7CB5FC6645D5B2FF127\u0022",
-        "Retry-After": "1",
+        "Date": "Thu, 26 Aug 2021 14:06:57 GMT",
+        "Operation-Location": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/80731233-0000-4e9e-ae85-2ad4c0624110",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
           "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "X-RequestId": "07575b2b-a7f5-4abf-be52-7f410f906235"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/80731233-0000-4e9e-ae85-2ad4c0624110",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "dd1dd046f9e893d02009c05aace2af88",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a85e104a-29ab-400b-a1e5-4660bf42ed43",
+        "Cache-Control": [
+          "public",
+          "max-age=1"
+        ],
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Aug 2021 14:06:58 GMT",
+        "ETag": "\u0022A39F02F9BE66C2CE34983029F3F334DDD6B1D8F0FBC6EA24FAC50C89014432CD\u0022",
+        "Retry-After": "1",
+        "Set-Cookie": [
+          "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "b01b688a-ab39-4d4b-b599-5e649b77dd1f"
+        "X-RequestId": "a85e104a-29ab-400b-a1e5-4660bf42ed43"
       },
       "ResponseBody": {
-        "id": "88603e31-8334-44a1-910c-a4935366b247",
-        "createdDateTimeUtc": "2021-08-25T18:45:27.5796926Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:27.5796961Z",
+        "id": "80731233-0000-4e9e-ae85-2ad4c0624110",
+        "createdDateTimeUtc": "2021-08-26T14:06:57.9773906Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:06:57.9773909Z",
         "status": "NotStarted",
         "summary": {
           "total": 0,
@@ -180,74 +180,26 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/80731233-0000-4e9e-ae85-2ad4c0624110",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "46d6d2a39a671bd6e9ea56a1aeb95a76",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "73524622136f927ad73868d21178a097",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e33b43d5-9255-4a33-b58a-e7d574756d11",
+        "apim-request-id": "2feace7e-5ba5-4c38-a3cf-1a315529ff07",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:28 GMT",
-        "ETag": "\u0022ED7E55E11E87AB9E75429FEA67FED086C1C39A69D1FEEC4B4C62546C029D2849\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "e33b43d5-9255-4a33-b58a-e7d574756d11"
-      },
-      "ResponseBody": {
-        "id": "88603e31-8334-44a1-910c-a4935366b247",
-        "createdDateTimeUtc": "2021-08-25T18:45:27.5796926Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:28.2046541Z",
-        "status": "NotStarted",
-        "summary": {
-          "total": 1,
-          "failed": 0,
-          "success": 0,
-          "inProgress": 0,
-          "notYetStarted": 1,
-          "cancelled": 0,
-          "totalCharacterCharged": 0
-        }
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "2356ae8992592d4434362621a65fd035",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "4827ac5d-3aaf-4251-b7b3-6c3c046780d6",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:29 GMT",
-        "ETag": "\u0022600E75ADA39599D303CF4A55CB7DD50555517DC4335C5E20EA0F9872FAB0387F\u0022",
+        "Date": "Thu, 26 Aug 2021 14:06:59 GMT",
+        "ETag": "\u0022EA6EA70A4FD406C8667537F16EF659AC3B105BBFA414371B752EEB9CED376024\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -257,12 +209,12 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "4827ac5d-3aaf-4251-b7b3-6c3c046780d6"
+        "X-RequestId": "2feace7e-5ba5-4c38-a3cf-1a315529ff07"
       },
       "ResponseBody": {
-        "id": "88603e31-8334-44a1-910c-a4935366b247",
-        "createdDateTimeUtc": "2021-08-25T18:45:27.5796926Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:29.7313452Z",
+        "id": "80731233-0000-4e9e-ae85-2ad4c0624110",
+        "createdDateTimeUtc": "2021-08-26T14:06:57.9773906Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:06:59.1981254Z",
         "status": "Running",
         "summary": {
           "total": 1,
@@ -276,26 +228,26 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/80731233-0000-4e9e-ae85-2ad4c0624110",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "b31cbd7754341a95c0ec6af523641489",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "c7c42c2f36131211d6ba7d413d2b69a5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "913ecb41-f46a-4312-bc7d-d1172286280c",
+        "apim-request-id": "4032bc2d-0965-41a4-bd30-c00b1fcd71d8",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:31 GMT",
-        "ETag": "\u0022600E75ADA39599D303CF4A55CB7DD50555517DC4335C5E20EA0F9872FAB0387F\u0022",
+        "Date": "Thu, 26 Aug 2021 14:07:00 GMT",
+        "ETag": "\u0022F25A09D9D2AD0379BFCA03EF1B7C6F677862C81181D89FED99D9156C03595D5B\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -305,12 +257,12 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "913ecb41-f46a-4312-bc7d-d1172286280c"
+        "X-RequestId": "4032bc2d-0965-41a4-bd30-c00b1fcd71d8"
       },
       "ResponseBody": {
-        "id": "88603e31-8334-44a1-910c-a4935366b247",
-        "createdDateTimeUtc": "2021-08-25T18:45:27.5796926Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:29.7313452Z",
+        "id": "80731233-0000-4e9e-ae85-2ad4c0624110",
+        "createdDateTimeUtc": "2021-08-26T14:06:57.9773906Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:06:59.7150188Z",
         "status": "Running",
         "summary": {
           "total": 1,
@@ -324,26 +276,26 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/80731233-0000-4e9e-ae85-2ad4c0624110",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "47b9d08cc16910a18ea8113174b47589",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "cc2bcd74cef632d5568a06af91fd82a7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "216d269f-2ec6-42cd-967c-0e8cfd3a2ea5",
+        "apim-request-id": "2c293c0e-3eb2-4d84-9b5d-69852737f7f8",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:32 GMT",
-        "ETag": "\u0022600E75ADA39599D303CF4A55CB7DD50555517DC4335C5E20EA0F9872FAB0387F\u0022",
+        "Date": "Thu, 26 Aug 2021 14:07:01 GMT",
+        "ETag": "\u0022F25A09D9D2AD0379BFCA03EF1B7C6F677862C81181D89FED99D9156C03595D5B\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -353,12 +305,12 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "216d269f-2ec6-42cd-967c-0e8cfd3a2ea5"
+        "X-RequestId": "2c293c0e-3eb2-4d84-9b5d-69852737f7f8"
       },
       "ResponseBody": {
-        "id": "88603e31-8334-44a1-910c-a4935366b247",
-        "createdDateTimeUtc": "2021-08-25T18:45:27.5796926Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:29.7313452Z",
+        "id": "80731233-0000-4e9e-ae85-2ad4c0624110",
+        "createdDateTimeUtc": "2021-08-26T14:06:57.9773906Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:06:59.7150188Z",
         "status": "Running",
         "summary": {
           "total": 1,
@@ -372,26 +324,26 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/80731233-0000-4e9e-ae85-2ad4c0624110",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "f02a201aa79d3542193c636d284e0ad0",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "802b2868e71dec74353f9db5963855ab",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "44cc51a9-fabd-4c80-ae31-d5510fdd02ba",
+        "apim-request-id": "c1d0d1a9-d534-4922-bfad-9a803066231c",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:34 GMT",
-        "ETag": "\u0022600E75ADA39599D303CF4A55CB7DD50555517DC4335C5E20EA0F9872FAB0387F\u0022",
+        "Date": "Thu, 26 Aug 2021 14:07:03 GMT",
+        "ETag": "\u0022F25A09D9D2AD0379BFCA03EF1B7C6F677862C81181D89FED99D9156C03595D5B\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -401,12 +353,12 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "44cc51a9-fabd-4c80-ae31-d5510fdd02ba"
+        "X-RequestId": "c1d0d1a9-d534-4922-bfad-9a803066231c"
       },
       "ResponseBody": {
-        "id": "88603e31-8334-44a1-910c-a4935366b247",
-        "createdDateTimeUtc": "2021-08-25T18:45:27.5796926Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:29.7313452Z",
+        "id": "80731233-0000-4e9e-ae85-2ad4c0624110",
+        "createdDateTimeUtc": "2021-08-26T14:06:57.9773906Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:06:59.7150188Z",
         "status": "Running",
         "summary": {
           "total": 1,
@@ -420,26 +372,26 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/80731233-0000-4e9e-ae85-2ad4c0624110",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "d5959c2188a6b6cc1c0b258b4264a50b",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "445dc2ced44d61a1569171892f6181d9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c6a15a1c-ab48-463a-91fb-beb45f9194af",
+        "apim-request-id": "6d98340b-27c1-4e27-9b41-b157137ac08a",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:35 GMT",
-        "ETag": "\u0022600E75ADA39599D303CF4A55CB7DD50555517DC4335C5E20EA0F9872FAB0387F\u0022",
+        "Date": "Thu, 26 Aug 2021 14:07:04 GMT",
+        "ETag": "\u0022F25A09D9D2AD0379BFCA03EF1B7C6F677862C81181D89FED99D9156C03595D5B\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -449,12 +401,12 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "c6a15a1c-ab48-463a-91fb-beb45f9194af"
+        "X-RequestId": "6d98340b-27c1-4e27-9b41-b157137ac08a"
       },
       "ResponseBody": {
-        "id": "88603e31-8334-44a1-910c-a4935366b247",
-        "createdDateTimeUtc": "2021-08-25T18:45:27.5796926Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:29.7313452Z",
+        "id": "80731233-0000-4e9e-ae85-2ad4c0624110",
+        "createdDateTimeUtc": "2021-08-26T14:06:57.9773906Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:06:59.7150188Z",
         "status": "Running",
         "summary": {
           "total": 1,
@@ -468,26 +420,26 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/80731233-0000-4e9e-ae85-2ad4c0624110",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "03dae0762439e4eb8d842e2d5d34e840",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "15d9d638e9008d87583f96b631209c1d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "142c121a-6e54-4a52-99e0-a6c3175d1edf",
+        "apim-request-id": "d4b5a2df-88e3-4851-aacb-e6fd2bc96ec9",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:36 GMT",
-        "ETag": "\u0022600E75ADA39599D303CF4A55CB7DD50555517DC4335C5E20EA0F9872FAB0387F\u0022",
+        "Date": "Thu, 26 Aug 2021 14:07:05 GMT",
+        "ETag": "\u0022F25A09D9D2AD0379BFCA03EF1B7C6F677862C81181D89FED99D9156C03595D5B\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -497,12 +449,12 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "142c121a-6e54-4a52-99e0-a6c3175d1edf"
+        "X-RequestId": "d4b5a2df-88e3-4851-aacb-e6fd2bc96ec9"
       },
       "ResponseBody": {
-        "id": "88603e31-8334-44a1-910c-a4935366b247",
-        "createdDateTimeUtc": "2021-08-25T18:45:27.5796926Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:29.7313452Z",
+        "id": "80731233-0000-4e9e-ae85-2ad4c0624110",
+        "createdDateTimeUtc": "2021-08-26T14:06:57.9773906Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:06:59.7150188Z",
         "status": "Running",
         "summary": {
           "total": 1,
@@ -516,26 +468,26 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/80731233-0000-4e9e-ae85-2ad4c0624110",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "d810419e9f1e91e35374d49282b6f3b4",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "cee05b353e9f935a86ca298c76ebbcd4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "899cc5a8-ecb0-4a8c-8cc1-a052b6f8e4a1",
+        "apim-request-id": "a37c0364-b282-42f2-b2f6-bcbd5ebc6aee",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:37 GMT",
-        "ETag": "\u0022600E75ADA39599D303CF4A55CB7DD50555517DC4335C5E20EA0F9872FAB0387F\u0022",
+        "Date": "Thu, 26 Aug 2021 14:07:06 GMT",
+        "ETag": "\u00226D946BC3F45EA55DB032C30C7B8EF346EBFDF7D6F3FE4BC7EFF2AC366FA42015\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -545,108 +497,12 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "899cc5a8-ecb0-4a8c-8cc1-a052b6f8e4a1"
+        "X-RequestId": "a37c0364-b282-42f2-b2f6-bcbd5ebc6aee"
       },
       "ResponseBody": {
-        "id": "88603e31-8334-44a1-910c-a4935366b247",
-        "createdDateTimeUtc": "2021-08-25T18:45:27.5796926Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:29.7313452Z",
-        "status": "Running",
-        "summary": {
-          "total": 1,
-          "failed": 0,
-          "success": 0,
-          "inProgress": 1,
-          "notYetStarted": 0,
-          "cancelled": 0,
-          "totalCharacterCharged": 0
-        }
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "47f657960673fc97b0b048225a9f58e8",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "d22a487f-cb09-4cd1-8825-d2fdac3f67bb",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:39 GMT",
-        "ETag": "\u0022600E75ADA39599D303CF4A55CB7DD50555517DC4335C5E20EA0F9872FAB0387F\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "d22a487f-cb09-4cd1-8825-d2fdac3f67bb"
-      },
-      "ResponseBody": {
-        "id": "88603e31-8334-44a1-910c-a4935366b247",
-        "createdDateTimeUtc": "2021-08-25T18:45:27.5796926Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:29.7313452Z",
-        "status": "Running",
-        "summary": {
-          "total": 1,
-          "failed": 0,
-          "success": 0,
-          "inProgress": 1,
-          "notYetStarted": 0,
-          "cancelled": 0,
-          "totalCharacterCharged": 0
-        }
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "00ede422cd54d7edfd49afc4505962d6",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "d4dec219-ce18-4994-8c37-533c09fcd07d",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:40 GMT",
-        "ETag": "\u0022D9198ECFC3CA7CCDDACF895601EC5FC68CFC11738FD05F20D1D139EBB8163BF0\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "d4dec219-ce18-4994-8c37-533c09fcd07d"
-      },
-      "ResponseBody": {
-        "id": "88603e31-8334-44a1-910c-a4935366b247",
-        "createdDateTimeUtc": "2021-08-25T18:45:27.5796926Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:39.7395417Z",
+        "id": "80731233-0000-4e9e-ae85-2ad4c0624110",
+        "createdDateTimeUtc": "2021-08-26T14:06:57.9773906Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:07:06.928173Z",
         "status": "Succeeded",
         "summary": {
           "total": 1,
@@ -660,26 +516,26 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/88603e31-8334-44a1-910c-a4935366b247/documents",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/80731233-0000-4e9e-ae85-2ad4c0624110/documents",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "06967991a03e97ccaa13276d57c136b4",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "c07cc3be405fe5ab3ad0eb0d3deb2f35",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c448dfc4-2c0f-415e-b63e-4bf9fe42395d",
+        "apim-request-id": "c8de4375-9589-4302-9010-76602117aff4",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:40 GMT",
-        "ETag": "\u002269EFED1CA883B54B9F4230AF51CB3F54BD0A3A17A83385B60598F3DEC5C7DE48\u0022",
+        "Date": "Thu, 26 Aug 2021 14:07:07 GMT",
+        "ETag": "\u0022189D15B39459AE76BC09D4C81FC3445D86C0F2CC3F1A9A4C662F7104228C8C6F\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -689,34 +545,34 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "c448dfc4-2c0f-415e-b63e-4bf9fe42395d"
+        "X-RequestId": "c8de4375-9589-4302-9010-76602117aff4"
       },
       "ResponseBody": {
         "value": [
           {
-            "path": "https://documentstorageleithy.blob.core.windows.net/target838503391/File_0.txt",
-            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1526045109/File_0.txt",
-            "createdDateTimeUtc": "2021-08-25T18:45:29.2431846Z",
-            "lastActionDateTimeUtc": "2021-08-25T18:45:39.7395248Z",
+            "path": "https://documentstorageleithy.blob.core.windows.net/target1257220293/File_0.txt",
+            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source462077597/File_0.txt",
+            "createdDateTimeUtc": "2021-08-26T14:06:59.2091595Z",
+            "lastActionDateTimeUtc": "2021-08-26T14:07:06.9281669Z",
             "status": "Succeeded",
             "to": "fr",
             "progress": 1,
-            "id": "000b4644-0000-0000-0000-000000000000",
+            "id": "000b50f8-0000-0000-0000-000000000000",
             "characterCharged": 16
           }
         ]
       }
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092?restype=container",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-c7237afd955ce044a34a7391449a9203-9f1b71af666dde47-00",
+        "traceparent": "00-ad9fa02070e0144480591b0cd01569ff-54e731e19d8ef34c-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "c99d6fec60f26ac81f4a2a57d2ac574e",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:41 GMT",
+        "x-ms-client-request-id": "80d4535339b27bfa458e35c0fb176c82",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:07 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -724,28 +580,28 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 25 Aug 2021 18:45:40 GMT",
-        "ETag": "\u00220x8D967F889B697CF\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:40 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:07 GMT",
+        "ETag": "\u00220x8D9689ACA1C8260\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:07 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "c99d6fec60f26ac81f4a2a57d2ac574e",
-        "x-ms-request-id": "9760742a-d01e-0088-73e1-99d996000000",
+        "x-ms-client-request-id": "80d4535339b27bfa458e35c0fb176c82",
+        "x-ms-request-id": "3ddf28ae-201e-0057-6383-9a92ac000000",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_0.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_0.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-8103860cd82c894391cc6c56d0a248d4-162ac9209a98b245-00",
+        "traceparent": "00-2375ea406fcf8542b522be68a5ec33f2-58dbc65adb5b9947-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "08e19171a9511882565640a67f7f3b12",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:41 GMT",
+        "x-ms-client-request-id": "a46df8c2bedbaff5fb93ce524c559b9a",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:07 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -754,30 +610,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:41 GMT",
-        "ETag": "\u00220x8D967F889E9690A\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:41 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:07 GMT",
+        "ETag": "\u00220x8D9689ACA49B01E\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:07 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "08e19171a9511882565640a67f7f3b12",
+        "x-ms-client-request-id": "a46df8c2bedbaff5fb93ce524c559b9a",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "97607450-d01e-0088-14e1-99d996000000",
+        "x-ms-request-id": "3ddf28f8-201e-0057-2283-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_1.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_1.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-7538e134e6ae2545ad377187582cb5a6-6810d3ac65344b49-00",
+        "traceparent": "00-a464b88dd9be2148ac750750a0da5aad-b7b788161180cd4f-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "e964a7fb0dc4189ece9c1f55a240d766",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:42 GMT",
+        "x-ms-client-request-id": "982296f353e8890b81441ab175243fb9",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:07 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -786,30 +642,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:41 GMT",
-        "ETag": "\u00220x8D967F88A15B147\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:41 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:07 GMT",
+        "ETag": "\u00220x8D9689ACA7C3B14\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:08 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "e964a7fb0dc4189ece9c1f55a240d766",
+        "x-ms-client-request-id": "982296f353e8890b81441ab175243fb9",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "97607495-d01e-0088-50e1-99d996000000",
+        "x-ms-request-id": "3ddf2994-201e-0057-2d83-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_2.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_2.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-6f91cdc4b6de8f498a55c19f3e2e3585-3b9f131706e98347-00",
+        "traceparent": "00-3446f99f3ef29546ac6aa4f5dc705fb1-fdaa823492bb054d-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "30e61fcfab5542cbed85729c1f22ea9f",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:42 GMT",
+        "x-ms-client-request-id": "f37b8b7e91c295195e24851f6ba72fef",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:08 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -818,30 +674,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:41 GMT",
-        "ETag": "\u00220x8D967F88A415D35\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:41 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:08 GMT",
+        "ETag": "\u00220x8D9689ACAA96DFF\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:08 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "30e61fcfab5542cbed85729c1f22ea9f",
+        "x-ms-client-request-id": "f37b8b7e91c295195e24851f6ba72fef",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "976074c6-d01e-0088-7fe1-99d996000000",
+        "x-ms-request-id": "3ddf29fa-201e-0057-0883-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_3.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_3.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-b602f43b842ff34eb007d19db100f6ca-14d20516ae377144-00",
+        "traceparent": "00-2b088bee4cb73340afec1dd700917975-05cbedd91b811946-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "2b5b170f6e486389f2c93ab48a2c7516",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:42 GMT",
+        "x-ms-client-request-id": "64cd9bf2d4f46e99ece32297a44339d7",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:08 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -850,30 +706,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:42 GMT",
-        "ETag": "\u00220x8D967F88A759631\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:42 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:08 GMT",
+        "ETag": "\u00220x8D9689ACAD8EB38\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:08 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "2b5b170f6e486389f2c93ab48a2c7516",
+        "x-ms-client-request-id": "64cd9bf2d4f46e99ece32297a44339d7",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "976074fc-d01e-0088-2be1-99d996000000",
+        "x-ms-request-id": "3ddf2a44-201e-0057-4a83-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_4.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_4.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-67c11e01e46f0e428c88e8341cffa628-3cf9c9be98202c4e-00",
+        "traceparent": "00-e00cb58bdbfc3746927b4e79c098a02c-1b24f8f5e6117140-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "5fd6d97e0b994fbcdc21fc3f9a02f8ab",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:43 GMT",
+        "x-ms-client-request-id": "c0d41554a8da61d77d8c3ac3ceec1eda",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:08 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -882,30 +738,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:42 GMT",
-        "ETag": "\u00220x8D967F88AA0A5BE\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:42 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:08 GMT",
+        "ETag": "\u00220x8D9689ACB05F707\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:09 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "5fd6d97e0b994fbcdc21fc3f9a02f8ab",
+        "x-ms-client-request-id": "c0d41554a8da61d77d8c3ac3ceec1eda",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "9760754d-d01e-0088-71e1-99d996000000",
+        "x-ms-request-id": "3ddf2a8d-201e-0057-0783-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_5.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_5.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-4baaf54eb18ea7458c97fdf26ee21777-d96449fcf5dbf340-00",
+        "traceparent": "00-f238a4678474944ca18e11c1b531e6a3-00375046b9fc8c4a-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "8a467fb1ace4611e95823d8c7116b7c0",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:43 GMT",
+        "x-ms-client-request-id": "dabf2a15da57a9c4f20c06df6f82f11a",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:09 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -914,30 +770,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:42 GMT",
-        "ETag": "\u00220x8D967F88ACBDC71\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:42 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:09 GMT",
+        "ETag": "\u00220x8D9689ACB343B81\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:09 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "8a467fb1ace4611e95823d8c7116b7c0",
+        "x-ms-client-request-id": "dabf2a15da57a9c4f20c06df6f82f11a",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "97607584-d01e-0088-1ee1-99d996000000",
+        "x-ms-request-id": "3ddf2ae7-201e-0057-5483-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_6.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_6.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-67aa8a7aea0cd348bb5631afb35b14e9-582377eec7753944-00",
+        "traceparent": "00-011e969cf67de54ab3781eb4f18447ff-2d1f2a5bf3221949-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "451d5c0f8b4b03065a0c4e26714ac8f0",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:43 GMT",
+        "x-ms-client-request-id": "55caadeb6ed24915c36be7689ad5a0ff",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:09 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -946,30 +802,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:42 GMT",
-        "ETag": "\u00220x8D967F88AF76153\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:43 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:09 GMT",
+        "ETag": "\u00220x8D9689ACB667852\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:09 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "451d5c0f8b4b03065a0c4e26714ac8f0",
+        "x-ms-client-request-id": "55caadeb6ed24915c36be7689ad5a0ff",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "976075c2-d01e-0088-58e1-99d996000000",
+        "x-ms-request-id": "3ddf2b45-201e-0057-2283-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_7.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_7.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-76da20809018444a94ec325c257bc77d-f45165cc29f60d48-00",
+        "traceparent": "00-1ee217e0bfa9924380dd6a38a31b475a-323e8d73454d4d42-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "0a028ed0eae6d232bb74ca16cd30dec5",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:43 GMT",
+        "x-ms-client-request-id": "798147c45f83797f512bcecda1f8f2fa",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:09 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -978,30 +834,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:43 GMT",
-        "ETag": "\u00220x8D967F88B2249D8\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:43 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:09 GMT",
+        "ETag": "\u00220x8D9689ACB953222\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:09 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "0a028ed0eae6d232bb74ca16cd30dec5",
+        "x-ms-client-request-id": "798147c45f83797f512bcecda1f8f2fa",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "9760760d-d01e-0088-1ce1-99d996000000",
+        "x-ms-request-id": "3ddf2bb3-201e-0057-0283-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_8.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_8.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-2c53c807ca83814bb451193fb751dc7e-7c4211e0aa75274d-00",
+        "traceparent": "00-37bf500dc9593d4c8096bf1dabdca2f6-99abd6e28a0a5c4e-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "3e2f3b6ab2e5265f79422fd75df7ef4a",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:44 GMT",
+        "x-ms-client-request-id": "20d81f9bc921a707157516ebf35c0f1c",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:10 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1010,30 +866,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:43 GMT",
-        "ETag": "\u00220x8D967F88B4D8090\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:43 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:10 GMT",
+        "ETag": "\u00220x8D9689ACBC1C884\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:10 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "3e2f3b6ab2e5265f79422fd75df7ef4a",
+        "x-ms-client-request-id": "20d81f9bc921a707157516ebf35c0f1c",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "97607666-d01e-0088-6ce1-99d996000000",
+        "x-ms-request-id": "3ddf2c2a-201e-0057-6983-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_9.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_9.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-67e8abd1df4b534ca453a5725f71dcba-b695f1cd33f3d04c-00",
+        "traceparent": "00-3455c35081addb43a4ac17e864d5f49b-4f806e1781862047-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "e2bc4dbaac1425d92a4a8ad7c0ef362a",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:44 GMT",
+        "x-ms-client-request-id": "271a076c77008b972e5104a79f47a8cb",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:10 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1042,30 +898,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:43 GMT",
-        "ETag": "\u00220x8D967F88B7D4BEE\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:43 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:10 GMT",
+        "ETag": "\u00220x8D9689ACBF516F5\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:10 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "e2bc4dbaac1425d92a4a8ad7c0ef362a",
+        "x-ms-client-request-id": "271a076c77008b972e5104a79f47a8cb",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "976076d6-d01e-0088-4de1-99d996000000",
+        "x-ms-request-id": "3ddf2c90-201e-0057-3e83-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_10.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_10.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-2ba9135f89e3564cb011bbff59960ffd-a30e30304fd6ab48-00",
+        "traceparent": "00-bf86f53a96b2d04fbd66b2fc27fd6c6e-970008d3ca1a2345-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "36bc892e8a1b1d0a2fdb91a4ba5a74c4",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:44 GMT",
+        "x-ms-client-request-id": "7bcced797ffcfbdd40da640e499486f4",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:10 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1074,30 +930,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:44 GMT",
-        "ETag": "\u00220x8D967F88BA96D1B\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:44 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:10 GMT",
+        "ETag": "\u00220x8D9689ACC24E258\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:10 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "36bc892e8a1b1d0a2fdb91a4ba5a74c4",
+        "x-ms-client-request-id": "7bcced797ffcfbdd40da640e499486f4",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "9760772c-d01e-0088-1be1-99d996000000",
+        "x-ms-request-id": "3ddf2cea-201e-0057-0a83-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_11.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_11.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-32fb61e113c52b47bdfa4366d2ace770-a5abc889a24e5344-00",
+        "traceparent": "00-7b2b72a8bcff9f409d76d6883ce48d59-88526e6a03299849-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "7f5c7f85fb74bdb1620a139a2888668a",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:45 GMT",
+        "x-ms-client-request-id": "9a61b21ccbdd23f9884df2d0c56007ce",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:10 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1106,30 +962,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:44 GMT",
-        "ETag": "\u00220x8D967F88BD47CA7\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:44 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:10 GMT",
+        "ETag": "\u00220x8D9689ACC54FBD7\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:11 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "7f5c7f85fb74bdb1620a139a2888668a",
+        "x-ms-client-request-id": "9a61b21ccbdd23f9884df2d0c56007ce",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "97607789-d01e-0088-69e1-99d996000000",
+        "x-ms-request-id": "3ddf2d47-201e-0057-5a83-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_12.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_12.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-311bca756755274397f4ed3b1d862def-71aee6de93fbec40-00",
+        "traceparent": "00-ba0bf175322025478e7ad00fa9b0dd03-5031ff290afdce41-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "d4a9050cb93a2f2f429eb3381b356acf",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:45 GMT",
+        "x-ms-client-request-id": "06724acd938fec1f291fe72613884299",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1138,30 +994,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:44 GMT",
-        "ETag": "\u00220x8D967F88BFFDA59\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:44 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:11 GMT",
+        "ETag": "\u00220x8D9689ACC81924B\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:11 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "d4a9050cb93a2f2f429eb3381b356acf",
+        "x-ms-client-request-id": "06724acd938fec1f291fe72613884299",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "976077bd-d01e-0088-18e1-99d996000000",
+        "x-ms-request-id": "3ddf2da8-201e-0057-2c83-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_13.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_13.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-196a2d66a7bcb94da4785afb1da0c49e-5b012b5a5de9c94b-00",
+        "traceparent": "00-680a69d1e5a51042b49c019bb654c75e-f5763d76a6ed824d-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "4051c5d5b69332b5d7ffd3117670f4a6",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:45 GMT",
+        "x-ms-client-request-id": "ed8b0fca0de5aeeef3a8f3af8d0c35e0",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1170,30 +1026,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:44 GMT",
-        "ETag": "\u00220x8D967F88C2AE9EA\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:45 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:11 GMT",
+        "ETag": "\u00220x8D9689ACCAE4FD9\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:11 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "4051c5d5b69332b5d7ffd3117670f4a6",
+        "x-ms-client-request-id": "ed8b0fca0de5aeeef3a8f3af8d0c35e0",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "976077f3-d01e-0088-3de1-99d996000000",
+        "x-ms-request-id": "3ddf2e00-201e-0057-7883-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_14.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_14.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-190125ef86d8d543936660c895622d25-bd8514f922cbd845-00",
+        "traceparent": "00-b6d9c0c85434d24081d0b10f3ccb7784-4ae66abb5441314f-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "b5980675a0b1cb8a502c3dd64879a12d",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:45 GMT",
+        "x-ms-client-request-id": "fe4095d380218865927571bde3d30fff",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1202,30 +1058,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:45 GMT",
-        "ETag": "\u00220x8D967F88C55D262\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:45 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:11 GMT",
+        "ETag": "\u00220x8D9689ACCDD57BC\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:12 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "b5980675a0b1cb8a502c3dd64879a12d",
+        "x-ms-client-request-id": "fe4095d380218865927571bde3d30fff",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "97607833-d01e-0088-73e1-99d996000000",
+        "x-ms-request-id": "3ddf2e40-201e-0057-3083-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_15.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_15.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-77c1bf098c1edf4cac1a11f505cbaa6c-0a8bd19a64835944-00",
+        "traceparent": "00-87687e865b76cd47bfb8d8a3cc4edc63-246e9a04a0ff4a4e-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "63c5439f253655f65076fd3be51eb8d2",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:46 GMT",
+        "x-ms-client-request-id": "b606580a19d4c0e85cc412e6a0705e1c",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:12 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1234,30 +1090,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:45 GMT",
-        "ETag": "\u00220x8D967F88C813018\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:45 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:12 GMT",
+        "ETag": "\u00220x8D9689ACD0A1559\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:12 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "63c5439f253655f65076fd3be51eb8d2",
+        "x-ms-client-request-id": "b606580a19d4c0e85cc412e6a0705e1c",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "97607858-d01e-0088-11e1-99d996000000",
+        "x-ms-request-id": "3ddf2e84-201e-0057-6e83-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_16.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_16.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-bc111f9773286e49b06a181cd5dd3556-5448d696152b7d4e-00",
+        "traceparent": "00-7c6666d13913844582c6c02dfdc98f9d-b2f43436c980c848-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "14c20caab59d351e3b86f06679dfea5d",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:46 GMT",
+        "x-ms-client-request-id": "7d5207e944474a78a9035b709b30ca1f",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:12 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1266,30 +1122,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:45 GMT",
-        "ETag": "\u00220x8D967F88CAC8DD3\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:45 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:12 GMT",
+        "ETag": "\u00220x8D9689ACD376F4E\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:12 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "14c20caab59d351e3b86f06679dfea5d",
+        "x-ms-client-request-id": "7d5207e944474a78a9035b709b30ca1f",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "97607898-d01e-0088-4ae1-99d996000000",
+        "x-ms-request-id": "3ddf2ee9-201e-0057-4383-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_17.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_17.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-fb850b15710e274a8a956522174fbac6-967a5e771db89c45-00",
+        "traceparent": "00-a042799543769d4991c0683f15f88c22-907900b4c1eb9546-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "3371a65d91ab506f1042643ba34ee531",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:46 GMT",
+        "x-ms-client-request-id": "35a5f4997f06b90bad80a25d6d7ee722",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:12 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1298,30 +1154,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:46 GMT",
-        "ETag": "\u00220x8D967F88CD79D64\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:46 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:12 GMT",
+        "ETag": "\u00220x8D9689ACD64A23A\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:12 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "3371a65d91ab506f1042643ba34ee531",
+        "x-ms-client-request-id": "35a5f4997f06b90bad80a25d6d7ee722",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "976078e3-d01e-0088-0ce1-99d996000000",
+        "x-ms-request-id": "3ddf2f4e-201e-0057-1783-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_18.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_18.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-1fae8ab895c0754fb670cb899d08e61d-b801b6b25f20234b-00",
+        "traceparent": "00-c8870f3239fbbe468230725339890224-eaf5df6d387c3442-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "3b2c6a738cb7ea8f258f28b0348fdc70",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:47 GMT",
+        "x-ms-client-request-id": "dcd455169280c6b7e0bc0cd1be78242c",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:13 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1330,30 +1186,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:46 GMT",
-        "ETag": "\u00220x8D967F88D032230\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:46 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:13 GMT",
+        "ETag": "\u00220x8D9689ACD91D512\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:13 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "3b2c6a738cb7ea8f258f28b0348fdc70",
+        "x-ms-client-request-id": "dcd455169280c6b7e0bc0cd1be78242c",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "97607939-d01e-0088-57e1-99d996000000",
+        "x-ms-request-id": "3ddf2f9e-201e-0057-5e83-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1415864092/File_19.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1147422197/File_19.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-3903fa494e5e0d40bc21555a07efacda-875a552b78a63341-00",
+        "traceparent": "00-c5a40361e5d2a94e9e50654aa4f069af-8d4a6ff5aa620b40-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "3fdd9f8c85ad19279c71045a50e391ec",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:47 GMT",
+        "x-ms-client-request-id": "ac4df3fa29ca6a15fb99d0c6a11adc2b",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:13 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1362,28 +1218,28 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 25 Aug 2021 18:45:46 GMT",
-        "ETag": "\u00220x8D967F88D2ECE1E\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:46 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:13 GMT",
+        "ETag": "\u00220x8D9689ACDC4872A\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:13 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "3fdd9f8c85ad19279c71045a50e391ec",
+        "x-ms-client-request-id": "ac4df3fa29ca6a15fb99d0c6a11adc2b",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "97607970-d01e-0088-0ce1-99d996000000",
+        "x-ms-request-id": "3ddf2ff8-201e-0057-2883-9a92ac000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/target1074018720?restype=container",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/target789919003?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-1c375396c8f00040934812bbe608e7e1-83c3e5208f2cfe41-00",
+        "traceparent": "00-209c93b5ef02174a869af5aa9e19c865-5608c905fe78984a-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "b30ef2bfa6ae16d0870e1b68bf1c8065",
-        "x-ms-date": "Wed, 25 Aug 2021 18:45:47 GMT",
+        "x-ms-client-request-id": "5c4659399eed3c06de544a733afb355c",
+        "x-ms-date": "Thu, 26 Aug 2021 14:07:13 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -1391,12 +1247,12 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 25 Aug 2021 18:45:46 GMT",
-        "ETag": "\u00220x8D967F88D4546D0\u0022",
-        "Last-Modified": "Wed, 25 Aug 2021 18:45:46 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:13 GMT",
+        "ETag": "\u00220x8D9689ACDDDBC12\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:07:13 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "b30ef2bfa6ae16d0870e1b68bf1c8065",
-        "x-ms-request-id": "976079ad-d01e-0088-3fe1-99d996000000",
+        "x-ms-client-request-id": "5c4659399eed3c06de544a733afb355c",
+        "x-ms-request-id": "3ddf3057-201e-0057-7b83-9a92ac000000",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
@@ -1409,9 +1265,9 @@
         "Content-Length": "103",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b091956c205c6c48b244228535e83d26-eb1db2254709c246-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "7104aff384a643ee139f4588359941fd",
+        "traceparent": "00-8667b5f09f9db44e8742d4c46a62a92d-7a1032cb33eb714b-00",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "307a6376573b3fed6ae1e7c1f024c5df",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1431,10 +1287,10 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "aac1430b-d477-4c18-beb5-bb932e5dcae2",
+        "apim-request-id": "fa79f6d7-8461-4ea9-b28f-41891a4f8221",
         "Content-Length": "0",
-        "Date": "Wed, 25 Aug 2021 18:45:46 GMT",
-        "Operation-Location": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/4419c955-e50f-4782-ade4-74e798ca1b7b",
+        "Date": "Thu, 26 Aug 2021 14:07:13 GMT",
+        "Operation-Location": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/3c773c25-3b05-48cb-92b3-fe321b99ca9d",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
           "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
@@ -1442,26 +1298,26 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "aac1430b-d477-4c18-beb5-bb932e5dcae2"
+        "X-RequestId": "fa79f6d7-8461-4ea9-b28f-41891a4f8221"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/4419c955-e50f-4782-ade4-74e798ca1b7b",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/3c773c25-3b05-48cb-92b3-fe321b99ca9d",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "9d75103bbdcef8dd0c2826770bb0dd55",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "1e84b5e0cfdd540c466fecd4cbf6c19d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d23b5130-db00-4e4a-a0ba-173e73809c43",
+        "apim-request-id": "420826c1-b315-4e6e-8133-d7d3f09ce4ed",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:47 GMT",
+        "Date": "Thu, 26 Aug 2021 14:07:13 GMT",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -1471,12 +1327,12 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "d23b5130-db00-4e4a-a0ba-173e73809c43"
+        "X-RequestId": "420826c1-b315-4e6e-8133-d7d3f09ce4ed"
       },
       "ResponseBody": {
-        "id": "4419c955-e50f-4782-ade4-74e798ca1b7b",
-        "createdDateTimeUtc": "2021-08-25T18:45:47.205312Z",
-        "lastActionDateTimeUtc": "2021-08-25T18:45:47.4485515Z",
+        "id": "3c773c25-3b05-48cb-92b3-fe321b99ca9d",
+        "createdDateTimeUtc": "2021-08-26T14:07:14.0385355Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:07:14.2819236Z",
         "status": "Cancelling",
         "summary": {
           "total": 0,
@@ -1490,27 +1346,27 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches?ids=4419c955-e50f-4782-ade4-74e798ca1b7b",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches?ids=3c773c25-3b05-48cb-92b3-fe321b99ca9d",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-4ada14d178292a4987ab0b450761cd85-4431fb0b137ef043-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "345cf4847a8d3afa04caa00f6048e1ed",
+        "traceparent": "00-14e5c32a8f86cf4ea6269e038b099fab-b706126b841f4d4b-00",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b72b6a9afa61e2df6b06f20cb7444bb9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "983e3912-bc10-4fd8-8306-fc6eef2b9e68",
+        "apim-request-id": "f78ec287-2e53-41e4-9088-fbf833b99d8b",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:52 GMT",
-        "ETag": "\u0022B691493928B7E5D183B22D888E02C7224BE4DAADF9F583025BF623B7765436EC\u0022",
+        "Date": "Thu, 26 Aug 2021 14:07:19 GMT",
+        "ETag": "\u00225A37383F19542CEB2609CDD5F283EB4B9B2F8AB8454C416D63C9A5E15872885D\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -1520,14 +1376,14 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "983e3912-bc10-4fd8-8306-fc6eef2b9e68"
+        "X-RequestId": "f78ec287-2e53-41e4-9088-fbf833b99d8b"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "4419c955-e50f-4782-ade4-74e798ca1b7b",
-            "createdDateTimeUtc": "2021-08-25T18:45:47.205312Z",
-            "lastActionDateTimeUtc": "2021-08-25T18:45:50.4057284Z",
+            "id": "3c773c25-3b05-48cb-92b3-fe321b99ca9d",
+            "createdDateTimeUtc": "2021-08-26T14:07:14.0385355Z",
+            "lastActionDateTimeUtc": "2021-08-26T14:07:17.7495091Z",
             "status": "Cancelling",
             "summary": {
               "total": 20,
@@ -1543,27 +1399,27 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches?ids=4419c955-e50f-4782-ade4-74e798ca1b7b",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches?ids=3c773c25-3b05-48cb-92b3-fe321b99ca9d",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6b2ec69fa775b641bbd4b689cfc06a33-cbec53ddb9d9ca40-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "ae2c1dcce3a63697d10b647d5e773762",
+        "traceparent": "00-93a2554c3b7c74419a90604c06d53d46-3620452833339049-00",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "84926a8f1676a67e5625e9cb6a187473",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9a8d9503-ddd6-47d5-8357-aa1374474c3a",
+        "apim-request-id": "79687ae0-3faf-4312-9261-305506c7cf47",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:57 GMT",
-        "ETag": "\u0022A938AA954586BAA1750FDAA95E22C3E3E1ED19F849EF51E6EFF29B1CE3723E6B\u0022",
+        "Date": "Thu, 26 Aug 2021 14:07:24 GMT",
+        "ETag": "\u00227A25ADB7D8608255A29A6182A3309ECC97EF3D4382C4B44E3DA5775D25DF8D88\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -1573,14 +1429,14 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "9a8d9503-ddd6-47d5-8357-aa1374474c3a"
+        "X-RequestId": "79687ae0-3faf-4312-9261-305506c7cf47"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "4419c955-e50f-4782-ade4-74e798ca1b7b",
-            "createdDateTimeUtc": "2021-08-25T18:45:47.205312Z",
-            "lastActionDateTimeUtc": "2021-08-25T18:45:54.1761712Z",
+            "id": "3c773c25-3b05-48cb-92b3-fe321b99ca9d",
+            "createdDateTimeUtc": "2021-08-26T14:07:14.0385355Z",
+            "lastActionDateTimeUtc": "2021-08-26T14:07:21.6924944Z",
             "status": "Cancelled",
             "summary": {
               "total": 20,
@@ -1596,27 +1452,27 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches?statuses=Cancelled%2CCancelling",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches?statuses=Cancelled%2CCancelling\u0026createdDateTimeUtcStart=2021-08-26T08%3A07%3A24.9347283Z",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d2aed38780c9464ab5f23490e19f6a41-5d3c490cb40be445-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "4003f0c10d3dc170153a98031dce97c3",
+        "traceparent": "00-0683f4a49ba5c144be32a1e65bbcaf07-f27b4b469f385243-00",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "86274a200df8e57dd5a2b3d7dd009d02",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2b4b8f00-ed45-4b1a-b279-1515df9a97c9",
+        "apim-request-id": "5df994d6-bca0-486d-ab03-25b10dce74af",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:57 GMT",
-        "ETag": "\u00228BA81BFA5C020A365B5B5E380F6FACD1D2F050EF0AF4D6FD782DBD59AA78F43D\u0022",
+        "Date": "Thu, 26 Aug 2021 14:07:24 GMT",
+        "ETag": "\u00224BEF2B0413F72467A86050E2DA574621C37460DE56596C28FD55DDAB935B7D04\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -1626,14 +1482,14 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "2b4b8f00-ed45-4b1a-b279-1515df9a97c9"
+        "X-RequestId": "5df994d6-bca0-486d-ab03-25b10dce74af"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "4419c955-e50f-4782-ade4-74e798ca1b7b",
-            "createdDateTimeUtc": "2021-08-25T18:45:47.205312Z",
-            "lastActionDateTimeUtc": "2021-08-25T18:45:54.1761712Z",
+            "id": "3c773c25-3b05-48cb-92b3-fe321b99ca9d",
+            "createdDateTimeUtc": "2021-08-26T14:07:14.0385355Z",
+            "lastActionDateTimeUtc": "2021-08-26T14:07:21.6924944Z",
             "status": "Cancelled",
             "summary": {
               "total": 20,
@@ -1646,9 +1502,9 @@
             }
           },
           {
-            "id": "69c933d1-698c-42ed-967d-40253aee437f",
-            "createdDateTimeUtc": "2021-08-25T18:45:12.8086284Z",
-            "lastActionDateTimeUtc": "2021-08-25T18:45:21.5359358Z",
+            "id": "f81d5c81-f7db-41da-baa7-dff063bd88c4",
+            "createdDateTimeUtc": "2021-08-26T14:06:50.6689792Z",
+            "lastActionDateTimeUtc": "2021-08-26T14:06:55.7249243Z",
             "status": "Cancelled",
             "summary": {
               "total": 20,
@@ -1661,9 +1517,9 @@
             }
           },
           {
-            "id": "decfe908-d309-4d44-838b-7b12aa38d315",
-            "createdDateTimeUtc": "2021-08-25T14:21:31.5637982Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:21:38.0583554Z",
+            "id": "cbd0280d-ed6b-4ad0-818d-eee8d0d19808",
+            "createdDateTimeUtc": "2021-08-26T13:23:52.7354145Z",
+            "lastActionDateTimeUtc": "2021-08-26T13:23:57.8859353Z",
             "status": "Cancelled",
             "summary": {
               "total": 20,
@@ -1676,9 +1532,9 @@
             }
           },
           {
-            "id": "c8b61454-5adf-4d70-b81b-5573dcbd5f58",
-            "createdDateTimeUtc": "2021-08-25T14:20:52.7421831Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:20:58.7274706Z",
+            "id": "2bd0dab9-918e-48f8-9919-94dcff13c8d4",
+            "createdDateTimeUtc": "2021-08-26T13:23:21.2191695Z",
+            "lastActionDateTimeUtc": "2021-08-26T13:23:25.3549473Z",
             "status": "Cancelled",
             "summary": {
               "total": 20,
@@ -1691,9 +1547,9 @@
             }
           },
           {
-            "id": "253d9f25-18d2-4cc7-8669-4d8407b22a9c",
-            "createdDateTimeUtc": "2021-08-25T14:19:05.8329604Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:19:10.6795351Z",
+            "id": "7c03da23-0463-456b-bdd7-c37865f5aa61",
+            "createdDateTimeUtc": "2021-08-26T13:06:16.8917739Z",
+            "lastActionDateTimeUtc": "2021-08-26T13:06:20.2226075Z",
             "status": "Cancelled",
             "summary": {
               "total": 20,
@@ -1706,2082 +1562,9 @@
             }
           },
           {
-            "id": "60db663e-f771-4adb-b08f-6854b85696e1",
-            "createdDateTimeUtc": "2021-08-25T14:18:43.8946636Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:18:51.4148389Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "5acc56a1-33c3-4542-9370-5f7b9b19f5ab",
-            "createdDateTimeUtc": "2021-08-25T14:15:39.7803188Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:15:43.1246356Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "2597203e-1311-41c4-886f-f465cd164759",
-            "createdDateTimeUtc": "2021-08-25T14:15:19.2437991Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:15:23.9402734Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "f4b9df36-266a-40d0-ba29-fc0e67dd4887",
-            "createdDateTimeUtc": "2021-08-25T14:14:35.4257961Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:14:41.4038969Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "a5c6c285-da24-494d-a971-919266469088",
-            "createdDateTimeUtc": "2021-08-25T14:14:14.5070628Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:14:19.0578249Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "533c3361-dfbe-4bd2-a517-9491e071775a",
-            "createdDateTimeUtc": "2021-08-25T14:13:34.7214701Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:13:39.5494326Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "a23b53f3-ed01-458b-947e-867a553eb591",
-            "createdDateTimeUtc": "2021-08-25T14:13:13.8939951Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:13:19.2252019Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "0d4b8b20-a460-469a-b3aa-588300fef2e0",
-            "createdDateTimeUtc": "2021-08-25T14:08:25.2665312Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:08:32.3285477Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "2aecc1c5-d3da-45b9-93c5-d2a260d6aedf",
-            "createdDateTimeUtc": "2021-08-25T14:08:02.4909754Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:08:06.9807983Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "b0607637-8b27-4120-8b39-6194b5755e92",
-            "createdDateTimeUtc": "2021-08-25T14:06:09.5993734Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:06:14.8816421Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "b7f3c08a-c2c0-4228-9f8a-c92be3b7737d",
-            "createdDateTimeUtc": "2021-08-25T14:05:44.5683358Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:05:49.4108643Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "0d5c55f5-91e2-4d2f-88f8-9c7ae1de5505",
-            "createdDateTimeUtc": "2021-08-25T14:05:07.8586943Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:05:11.277379Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "b4f56a1c-3b5d-42a2-a94e-1c949dfe776f",
-            "createdDateTimeUtc": "2021-08-25T14:04:41.9246386Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:04:48.5055613Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "ff62a2bd-4c6f-47e8-b557-f429dd7e6f3a",
-            "createdDateTimeUtc": "2021-08-25T14:03:49.5697452Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:03:53.7964747Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "9eb1fcae-bc60-4b93-90eb-64a52c473672",
-            "createdDateTimeUtc": "2021-08-25T14:03:24.5425451Z",
-            "lastActionDateTimeUtc": "2021-08-25T14:03:31.821667Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "eb67646e-c215-4fa3-8eb3-da0770064e5f",
-            "createdDateTimeUtc": "2021-08-25T13:57:19.6278599Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:57:30.2946248Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "727d5bf9-f9fb-4ddf-9a38-828f22910b12",
-            "createdDateTimeUtc": "2021-08-25T13:53:59.4231523Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:54:05.5775816Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "4809cfc7-d5ae-4225-868e-05544f489358",
-            "createdDateTimeUtc": "2021-08-25T13:53:29.8911657Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:53:33.6911548Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "d493956c-db6d-4a17-a5f0-028becb4ccfa",
-            "createdDateTimeUtc": "2021-08-25T13:52:31.0854759Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:52:34.9946496Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "b6a8fa53-920e-4932-8c81-f3c73c0b2988",
-            "createdDateTimeUtc": "2021-08-25T13:51:53.8772741Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:52:00.7948926Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c2301f1f-c87f-4772-9f9c-5a9d7548b349",
-            "createdDateTimeUtc": "2021-08-25T13:45:19.087893Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:45:23.5227282Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "d8ecc615-eeeb-4787-a601-851daef7b268",
-            "createdDateTimeUtc": "2021-08-25T13:44:54.582286Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:44:58.230487Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "14f3ad4c-7135-415e-859d-9b5f431ae6da",
-            "createdDateTimeUtc": "2021-08-25T13:44:08.2452291Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:44:16.8544217Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "9bb35643-eeb4-475b-8344-c3ae46655123",
-            "createdDateTimeUtc": "2021-08-25T13:43:37.812651Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:43:45.7364219Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "ea604b93-8058-4d72-af48-81ad3ed99057",
-            "createdDateTimeUtc": "2021-08-25T13:41:46.5703013Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:41:50.3292734Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "501bfb81-87b7-4a4e-8f2a-67df97de6546",
-            "createdDateTimeUtc": "2021-08-25T13:41:24.0184265Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:41:27.7675607Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "42029254-a247-4c0b-ba14-52b9856051a4",
-            "createdDateTimeUtc": "2021-08-25T13:40:13.0836214Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:40:17.2772553Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "d0ed4aa1-8314-4eff-8794-7d71942ebb55",
-            "createdDateTimeUtc": "2021-08-25T13:39:50.5251217Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:39:54.8052147Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "92252ab6-aeee-429c-8eca-f02e13be2348",
-            "createdDateTimeUtc": "2021-08-25T13:36:06.2711907Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:36:11.6241286Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "0e476571-3f2d-4999-bab6-7d3487603d22",
-            "createdDateTimeUtc": "2021-08-25T13:29:53.0363818Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:29:58.8829377Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "9feff3a9-0b8c-4c47-b780-664c7d90d549",
-            "createdDateTimeUtc": "2021-08-25T13:26:04.1635563Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:26:08.1645944Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c2f031b9-55db-42a9-9ecc-afdd741985bf",
-            "createdDateTimeUtc": "2021-08-25T13:25:45.2888951Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:25:49.1040561Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "500ffbb8-db58-417a-9bbc-98fd0d5e0f6e",
-            "createdDateTimeUtc": "2021-08-25T13:24:28.73101Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:24:32.7396137Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6385a3f7-9a39-4389-a9e3-0b533e19561d",
-            "createdDateTimeUtc": "2021-08-25T13:24:08.1547203Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:24:11.935914Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "040d09c1-a792-48a1-8b09-368ad940703c",
-            "createdDateTimeUtc": "2021-08-25T13:23:09.2673068Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:23:17.3461036Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "a4720b7c-5aff-451d-9168-4aaeb46810ec",
-            "createdDateTimeUtc": "2021-08-25T13:22:47.9668002Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:22:51.8319732Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "53665f6e-2451-47ad-872e-0b60048296bc",
-            "createdDateTimeUtc": "2021-08-25T13:21:59.6468367Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:22:04.1049272Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "4d02dc0e-82d0-4106-9601-2b67d4895887",
-            "createdDateTimeUtc": "2021-08-25T13:21:41.2699303Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:21:45.685377Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "2f83a75e-3690-478a-b2c1-838a3c87780f",
-            "createdDateTimeUtc": "2021-08-25T13:20:00.4021268Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:20:04.4540659Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "79358abe-ca1d-4a34-a9dc-251d35f38d88",
-            "createdDateTimeUtc": "2021-08-25T13:19:40.6697383Z",
-            "lastActionDateTimeUtc": "2021-08-25T13:19:47.1202077Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "aa883068-64e5-435b-8663-bc9573b2e917",
-            "createdDateTimeUtc": "2021-08-25T10:56:20.2363383Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:56:27.0780797Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "90c0a544-4504-4020-8396-0544b00c18c6",
-            "createdDateTimeUtc": "2021-08-25T10:55:55.9293426Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:56:05.0797274Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "614afed7-f7f1-4d74-9ad7-eff593103cd6",
-            "createdDateTimeUtc": "2021-08-25T10:29:21.1938146Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:29:24.7004537Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "f74ec5a8-15e9-4b8c-b8b6-c33ddd521c63",
-            "createdDateTimeUtc": "2021-08-25T10:29:02.5870188Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:29:05.9331656Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "fc864d53-0ddb-4fad-85ac-2d7451de0350",
-            "createdDateTimeUtc": "2021-08-25T10:28:05.7449329Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:28:15.1486564Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          }
-        ],
-        "@nextLink": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches?$skip=50\u0026$top=89\u0026$maxpagesize=50\u0026statuses=Cancelled,Cancelling"
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches?$skip=50\u0026$top=89\u0026$maxpagesize=50\u0026statuses=Cancelled,Cancelling",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-404c0f62bd1e1345ae3f8d8cb703f472-2aac6cb968b98241-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "eeaa38472e83a1ae5d266381167cdc8c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "65ca6265-c0c5-4255-98de-1fe83d36091f",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:58 GMT",
-        "ETag": "\u00220E268367A44951B59C64C1534C495086BE9520454641676C84DBE46489067D5B\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "65ca6265-c0c5-4255-98de-1fe83d36091f"
-      },
-      "ResponseBody": {
-        "value": [
-          {
-            "id": "30bc281b-3a6c-4a97-92c2-43de98e83aa4",
-            "createdDateTimeUtc": "2021-08-25T10:27:43.633836Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:27:50.5077585Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6f160aba-7e60-4748-a972-d0a146b3196e",
-            "createdDateTimeUtc": "2021-08-25T10:26:50.4040903Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:26:54.3204806Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "ca6e611e-7b53-4d7f-b638-afe8d00bb725",
-            "createdDateTimeUtc": "2021-08-25T10:26:26.2866155Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:26:30.7154518Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "5d4b8b67-af0b-4c12-9c75-0869a2ba66df",
-            "createdDateTimeUtc": "2021-08-25T10:24:14.9778475Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:24:23.0381859Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "57bc3d42-2f4c-4dd1-ad51-791847d581d4",
-            "createdDateTimeUtc": "2021-08-25T10:23:51.1332076Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:23:58.0469266Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c55b120e-d8e1-48de-b0af-0e8d45c2b960",
-            "createdDateTimeUtc": "2021-08-25T10:09:55.7948842Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:10:02.821391Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "8e66ffc9-0ac3-48a0-82ae-7609c6a6050a",
-            "createdDateTimeUtc": "2021-08-25T10:09:31.391233Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:09:35.8564693Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "63fb087b-4dd8-46d8-ac10-48bb79ce86d3",
-            "createdDateTimeUtc": "2021-08-25T10:07:25.2633442Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:07:31.8339883Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "cb2faa2d-95b1-46f9-bd39-4c5ffaf3d066",
-            "createdDateTimeUtc": "2021-08-25T10:07:01.8887184Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:07:06.5864174Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "73489fba-e1e8-4fb6-9f08-1eec3698f3e3",
-            "createdDateTimeUtc": "2021-08-25T10:05:29.2026751Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:05:41.024571Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "d5015b23-d0d7-46f0-af5e-50e2228f4841",
-            "createdDateTimeUtc": "2021-08-25T10:05:07.1839969Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:05:15.5031116Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "8f3aefad-b2fc-41cf-968d-18b0497b5fb3",
-            "createdDateTimeUtc": "2021-08-25T10:01:07.121612Z",
-            "lastActionDateTimeUtc": "2021-08-25T10:01:13.8095906Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "609f5c8f-80e1-424b-9801-5d3e804c134e",
-            "createdDateTimeUtc": "2021-08-25T09:47:51.4646326Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:47:59.0397057Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "cc873f8b-e71f-4617-a277-00b299907c0e",
-            "createdDateTimeUtc": "2021-08-25T09:47:17.2200753Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:47:25.0694763Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "92c6004e-733f-41af-8d2f-89b41bb279c6",
-            "createdDateTimeUtc": "2021-08-25T09:44:03.9368379Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:44:09.2827307Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "0699ddc0-9394-43b7-8335-99b582ac7af5",
-            "createdDateTimeUtc": "2021-08-25T09:43:07.3141327Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:43:12.1318918Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "686ae6d7-ffc1-4c0c-a4b1-49a57d03524b",
-            "createdDateTimeUtc": "2021-08-25T09:42:39.886955Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:42:45.1118961Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "77edc600-d50a-4740-ba35-9fc276ae7415",
-            "createdDateTimeUtc": "2021-08-25T09:19:31.6344382Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:19:39.3248571Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "8afe0ff5-a724-4d21-acce-da44c26b3ffe",
-            "createdDateTimeUtc": "2021-08-25T09:19:10.8844738Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:19:17.2753878Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "02acf584-26b6-40d3-a958-e34734f20ef5",
-            "createdDateTimeUtc": "2021-08-25T09:18:05.5949331Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:18:10.700436Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "da3b7f1b-eaf1-4ef3-b1d7-34cb12c58f5f",
-            "createdDateTimeUtc": "2021-08-25T09:17:41.6284086Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:17:46.8467624Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "e2fdfa9b-eef5-4285-84f2-394dc3ee0cde",
-            "createdDateTimeUtc": "2021-08-25T09:16:55.2621789Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:17:00.0474197Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "8107b309-29ed-4fc0-b2e1-cfeb96210550",
-            "createdDateTimeUtc": "2021-08-25T09:16:27.1861354Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:16:31.6226169Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "d33cd5ae-28a9-4560-980d-3cd99decdb56",
-            "createdDateTimeUtc": "2021-08-25T09:15:20.2067568Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:15:30.5710243Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "ea961c29-189c-4dbc-b375-61167cf15a17",
-            "createdDateTimeUtc": "2021-08-25T09:14:55.2312472Z",
-            "lastActionDateTimeUtc": "2021-08-25T09:15:04.6298687Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "eb8efceb-d78d-4dcf-aedb-c3edde6cbc7e",
-            "createdDateTimeUtc": "2021-08-24T19:55:47.1477025Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:55:51.5061055Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "534d90e6-5360-471e-bfd0-54d23d28aa3f",
-            "createdDateTimeUtc": "2021-08-24T19:53:32.6469602Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:53:40.4258421Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "a10ef07d-101a-4e0c-9194-ab61b49cba8a",
-            "createdDateTimeUtc": "2021-08-24T19:53:07.1127838Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:53:15.4049994Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "223a9ccf-7935-4581-995a-60605ee335a5",
-            "createdDateTimeUtc": "2021-08-24T19:50:41.7797004Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:50:48.506789Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "4dbe99ed-ca2d-4dbe-8bcd-2643d5bbe7f4",
-            "createdDateTimeUtc": "2021-08-24T19:50:16.0211307Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:50:26.0420851Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "f80c73e0-e8ec-4d35-a4d4-27179f0ed4bf",
-            "createdDateTimeUtc": "2021-08-24T19:49:10.6527877Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:49:15.2215103Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "18d1d2d0-c3e1-4864-833c-8ab189be6fc1",
-            "createdDateTimeUtc": "2021-08-24T19:48:44.5805808Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:48:49.1109041Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "5a457f72-8bd8-450c-ac60-da04df2cc2ab",
-            "createdDateTimeUtc": "2021-08-24T19:46:10.1997622Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:46:17.9106435Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "60ff13d3-9f94-431f-ac62-58f42f771630",
-            "createdDateTimeUtc": "2021-08-24T19:45:44.4022212Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:45:48.9866813Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "195c51ce-0ef1-491b-9ec2-db1542402a32",
-            "createdDateTimeUtc": "2021-08-24T19:44:53.1308296Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:45:02.5998496Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6a18a4bd-f2cc-42cc-b195-cd1cdb22eaf6",
-            "createdDateTimeUtc": "2021-08-24T19:44:31.5620308Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:44:38.2064648Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c562e87c-1fb3-4e9f-8748-803d34fe7b11",
-            "createdDateTimeUtc": "2021-08-24T19:42:08.6323717Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:42:16.6949486Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "2c8d2c87-1dd9-42af-aa73-9052cb89123c",
-            "createdDateTimeUtc": "2021-08-24T19:41:44.486071Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:41:49.5437122Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "a8018349-6083-4c7b-be65-a0d93cd7f9f1",
-            "createdDateTimeUtc": "2021-08-24T19:26:28.685069Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:26:35.6712921Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "93c8fbe5-2509-4e26-aa38-5b44ae36abb9",
-            "createdDateTimeUtc": "2021-08-24T19:25:53.9806028Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:25:59.7724431Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "b981ecff-a052-4239-975b-2f4ed45aa2e7",
-            "createdDateTimeUtc": "2021-08-24T19:25:32.5560562Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:25:36.3150668Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "5fce870f-5805-48fe-9e55-d978c0a44a96",
-            "createdDateTimeUtc": "2021-08-24T19:24:49.8512423Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:24:54.7359674Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "58dd2537-2390-41ce-8e66-cf5d991a0ef0",
-            "createdDateTimeUtc": "2021-08-24T19:24:28.0491081Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:24:32.8824749Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "309c5ab2-ab6e-42d2-b341-3d273507090b",
-            "createdDateTimeUtc": "2021-08-24T19:19:16.359635Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:19:26.45727Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6621b15c-9956-44d8-8bd2-de6d1dd3d518",
-            "createdDateTimeUtc": "2021-08-24T19:18:15.2019519Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:18:20.6814382Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "b39c5530-1a07-4898-b0cf-d1b81c31958c",
-            "createdDateTimeUtc": "2021-08-24T19:17:00.6801855Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:17:04.7751099Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "ab5f7b09-0873-4d2d-942c-5a76b6296264",
-            "createdDateTimeUtc": "2021-08-24T19:16:35.6588021Z",
-            "lastActionDateTimeUtc": "2021-08-24T19:16:45.7609068Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c0c4e53a-6bc5-4d35-be29-4e9d088d6b70",
-            "createdDateTimeUtc": "2021-08-24T15:36:55.7864604Z",
-            "lastActionDateTimeUtc": "2021-08-24T15:37:01.6474825Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "161de4ac-0924-4527-8170-a4bec6eb38c8",
-            "createdDateTimeUtc": "2021-08-24T15:36:21.2461429Z",
-            "lastActionDateTimeUtc": "2021-08-24T15:36:28.9384829Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "49840bd2-de72-4b7d-9bf4-47f746ecc5bb",
-            "createdDateTimeUtc": "2021-08-23T17:47:33.9921789Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:47:40.5970502Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          }
-        ],
-        "@nextLink": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches?$skip=100\u0026$top=39\u0026$maxpagesize=50\u0026statuses=Cancelled,Cancelling"
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches?$skip=100\u0026$top=39\u0026$maxpagesize=50\u0026statuses=Cancelled,Cancelling",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-deb2120755e73445b90b86d23cf7b0a7-eb845d7e815dc74e-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210825.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "704d3d93a144bfb0ad6b986c4a941802",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "6da52098-28fb-4694-8d19-d972af835855",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Aug 2021 18:45:59 GMT",
-        "ETag": "\u0022D44C804CFCA1E28F2F68B63B3FF2BE3675D447F6A80C1DE9FAE7C86D50649FB3\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "6da52098-28fb-4694-8d19-d972af835855"
-      },
-      "ResponseBody": {
-        "value": [
-          {
-            "id": "6e3b9367-513c-4d20-8c07-ee3568440b7c",
-            "createdDateTimeUtc": "2021-08-23T17:47:11.3828547Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:47:15.2840674Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "b2d0e15f-95ef-40d4-bfb0-9a4f203a54ba",
-            "createdDateTimeUtc": "2021-08-23T17:35:20.3985579Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:35:27.6518861Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "15bb936d-c180-4255-9ba2-a07bec5806dd",
-            "createdDateTimeUtc": "2021-08-23T17:34:58.0354643Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:35:03.3355533Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "29353a68-850e-4c04-bce3-ce98e0ee567f",
-            "createdDateTimeUtc": "2021-08-23T17:33:06.4539736Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:33:14.3872677Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "40f6ee23-324d-49fd-b74b-fcdcbb410299",
-            "createdDateTimeUtc": "2021-08-23T17:32:44.9924751Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:32:51.3694131Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "1617b829-c0a3-4971-92d4-c2964babd030",
-            "createdDateTimeUtc": "2021-08-23T17:32:09.2406517Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:32:18.6614602Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "a577fd72-5713-466c-8bc7-a1c81c9ce690",
-            "createdDateTimeUtc": "2021-08-23T17:31:48.2758423Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:31:53.1076136Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "3ef3e1fd-9489-4036-a76d-adf8121073a9",
-            "createdDateTimeUtc": "2021-08-23T17:28:59.4940221Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:29:05.3839228Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "795298f9-c99d-46ad-9be8-756171a64d47",
-            "createdDateTimeUtc": "2021-08-23T17:28:37.2538866Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:28:47.3380251Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "38136150-8f48-470f-93d0-efd2167ad0df",
-            "createdDateTimeUtc": "2021-08-23T17:28:06.0935977Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:28:15.7031915Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "8f25593f-63ad-413a-9e0b-2f7b935e53f7",
-            "createdDateTimeUtc": "2021-08-23T17:27:42.2908433Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:27:51.9149141Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "032a3bb1-cdbf-4162-b3c7-7b3618379c7f",
-            "createdDateTimeUtc": "2021-08-23T17:27:09.7358524Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:27:19.680071Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "ab879574-fcf3-41e3-b77e-6ea15d44b413",
-            "createdDateTimeUtc": "2021-08-23T17:26:47.3142089Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:26:56.5225722Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "98743da0-d863-41c4-bf57-56fa90b43eb4",
-            "createdDateTimeUtc": "2021-08-23T17:25:45.600667Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:25:49.2127676Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "183d6c88-fdae-4ea5-aa68-340f1ad84f77",
-            "createdDateTimeUtc": "2021-08-23T17:25:24.3498398Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:25:31.0082101Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "09960070-bdf0-46b1-99af-928e4a626f69",
-            "createdDateTimeUtc": "2021-08-23T17:24:31.4385114Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:24:35.5546122Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "d8405784-fa6b-4267-b830-d8513a4f658d",
-            "createdDateTimeUtc": "2021-08-23T17:24:00.3396396Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:24:05.6562369Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "43b2701d-cae4-47b5-8287-f00ef452a7ce",
-            "createdDateTimeUtc": "2021-08-23T17:23:35.5630305Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:23:45.0431691Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "464de745-a68f-43db-b2af-61ccf62acc73",
-            "createdDateTimeUtc": "2021-08-23T17:20:31.3475187Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:20:40.1632632Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "3591ae2c-a6f1-44f4-8f8b-802ccb41fb0d",
-            "createdDateTimeUtc": "2021-08-23T17:19:56.3627557Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:20:04.8977529Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c5addf28-55a0-4cf7-a193-452c47aba219",
-            "createdDateTimeUtc": "2021-08-23T17:19:36.4200341Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:19:43.8168428Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "7570de08-6a5c-4a7d-9862-65db205744e2",
-            "createdDateTimeUtc": "2021-08-23T17:16:04.5109438Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:16:14.2207404Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c2b12a8c-a64e-486a-8cb8-6f533fa14d9a",
-            "createdDateTimeUtc": "2021-08-23T17:12:39.1494425Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:12:48.7856928Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "d0b76907-0261-4277-884c-f0823f9ec122",
-            "createdDateTimeUtc": "2021-08-23T17:12:16.3765099Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:12:22.483808Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "b6bd137e-2a00-4427-bbda-215b9dcdbff1",
-            "createdDateTimeUtc": "2021-08-23T17:11:35.4166713Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:11:41.9836701Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "68dba74a-e802-486b-a389-28977cbd191c",
-            "createdDateTimeUtc": "2021-08-23T17:11:11.1146708Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:11:15.5935992Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "e1bc7687-0156-45f5-9428-e63c022dbafd",
-            "createdDateTimeUtc": "2021-08-23T17:09:30.3557278Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:09:38.0232919Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "4ad591be-f6a3-424a-a368-a5ac3338c68e",
-            "createdDateTimeUtc": "2021-08-23T17:09:05.6068524Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:09:14.2949945Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "fb02d26f-4b4a-44c7-8512-1dc605b4760d",
-            "createdDateTimeUtc": "2021-08-23T17:08:01.2644983Z",
-            "lastActionDateTimeUtc": "2021-08-23T17:08:07.3426569Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "3fe85a3c-4db1-4dc5-baf8-b4956f535c2f",
-            "createdDateTimeUtc": "2021-08-23T16:59:08.3574297Z",
-            "lastActionDateTimeUtc": "2021-08-23T16:59:16.4935524Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "5afefe59-d1b7-4df4-ad58-0c7665aa1167",
-            "createdDateTimeUtc": "2021-08-23T16:58:22.7200327Z",
-            "lastActionDateTimeUtc": "2021-08-23T16:58:30.9323045Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "da52052a-d809-46b3-a65f-4b0b4366462b",
-            "createdDateTimeUtc": "2021-08-23T16:57:50.2799217Z",
-            "lastActionDateTimeUtc": "2021-08-23T16:57:55.6175942Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "bf798bca-7a93-47a3-a1ff-ccdf90015328",
-            "createdDateTimeUtc": "2021-08-23T16:53:14.9104004Z",
-            "lastActionDateTimeUtc": "2021-08-23T16:53:20.0243492Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "de676d42-097d-499d-b424-63c44ff0fd85",
-            "createdDateTimeUtc": "2021-08-23T16:41:50.025133Z",
-            "lastActionDateTimeUtc": "2021-08-23T16:41:55.021436Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "144d63b0-b972-47da-be48-e8369610d9d0",
-            "createdDateTimeUtc": "2021-08-23T16:41:24.3300611Z",
-            "lastActionDateTimeUtc": "2021-08-23T16:41:27.9762437Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "ae29411c-ed5f-45e6-be84-e97c675599ed",
-            "createdDateTimeUtc": "2021-08-23T16:39:53.6000673Z",
-            "lastActionDateTimeUtc": "2021-08-23T16:39:59.431849Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6924c556-8704-4b02-9148-45101d5a8791",
-            "createdDateTimeUtc": "2021-08-23T16:39:31.6451911Z",
-            "lastActionDateTimeUtc": "2021-08-23T16:39:36.1986712Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "f1ce52fa-8234-47ec-9772-934b3a24bb70",
-            "createdDateTimeUtc": "2021-08-16T09:59:08.2257882Z",
-            "lastActionDateTimeUtc": "2021-08-16T09:59:14.4683656Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 20,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 20,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6e7b03fa-1abe-4524-82df-9efccd37df2f",
-            "createdDateTimeUtc": "2021-08-16T09:57:10.9273883Z",
-            "lastActionDateTimeUtc": "2021-08-16T09:57:17.7325207Z",
+            "id": "e31993ab-f254-49ec-afdd-3f0ba829dbbb",
+            "createdDateTimeUtc": "2021-08-26T13:05:57.8600906Z",
+            "lastActionDateTimeUtc": "2021-08-26T13:06:02.713723Z",
             "status": "Cancelled",
             "summary": {
               "total": 20,
@@ -3798,9 +1581,10 @@
     }
   ],
   "Variables": {
+    "DateTimeOffsetNow": "2021-08-26T16:07:24.9347283\u002B02:00",
     "DOCUMENT_TRANSLATION_API_KEY": "Sanitized",
     "DOCUMENT_TRANSLATION_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=documentstorageleithy;AccountKey=Kg==;EndpointSuffix=core.windows.net",
     "DOCUMENT_TRANSLATION_ENDPOINT": "https://document-translation-test.cognitiveservices.azure.com/",
-    "RandomSeed": "611649423"
+    "RandomSeed": "72514056"
   }
 }

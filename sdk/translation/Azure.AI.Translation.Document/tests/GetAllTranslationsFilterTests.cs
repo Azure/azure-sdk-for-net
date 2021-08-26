@@ -81,9 +81,14 @@ namespace Azure.AI.Translation.Document.Tests
                     DocumentTranslationStatus.Canceled,
                     DocumentTranslationStatus.Canceling
             };
+
+            // getting only translations from the last few hours
+            var recentTimestamp = Recording.UtcNow.AddHours(-6);
+
             var options = new GetTranslationStatusesOptions
             {
-                Statuses = { canceledStatusList[0], canceledStatusList[1] }
+                Statuses = { canceledStatusList[0], canceledStatusList[1] },
+                CreatedAfter = recentTimestamp
             };
 
             var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
@@ -149,10 +154,14 @@ namespace Azure.AI.Translation.Document.Tests
             var timestamp = Recording.UtcNow;
             await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
+            // getting only translations from the last hour
+            var recentTimestamp = Recording.UtcNow.AddHours(-1);
+
             // list translations with filter
             var options = new GetTranslationStatusesOptions
             {
-                CreatedBefore = timestamp
+                CreatedBefore = timestamp,
+                CreatedAfter = recentTimestamp
             };
 
             var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
@@ -171,10 +180,14 @@ namespace Azure.AI.Translation.Document.Tests
             // create test jobs
             await CreateTranslationJobsAsync(client, jobsCount: 3, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
+            // getting only translations from the last few hours
+            var recentTimestamp = Recording.UtcNow.AddHours(-6);
+
             // list translations with filter
             var options = new GetTranslationStatusesOptions
             {
-                OrderBy = { new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false) }
+                OrderBy = { new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false) },
+                CreatedAfter = recentTimestamp
             };
 
             var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
