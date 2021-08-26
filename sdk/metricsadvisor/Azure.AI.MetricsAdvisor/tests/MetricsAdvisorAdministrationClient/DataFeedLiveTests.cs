@@ -1126,6 +1126,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(80)));
             Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromMinutes(10)));
             Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(5));
+
+            Assert.That(dataFeed.RollupSettings, Is.Not.Null);
+            Assert.That(dataFeed.RollupSettings.RollupType, Is.EqualTo(DataFeedRollupType.NoRollupNeeded));
+            Assert.That(dataFeed.RollupSettings.RollupIdentificationValue, Is.Null);
+            Assert.That(dataFeed.RollupSettings.AutoRollupMethod, Is.EqualTo(DataFeedAutoRollupMethod.None));
+            Assert.That(dataFeed.RollupSettings.AutoRollupGroupByColumnNames, Is.Not.Null);
+            Assert.That(dataFeed.RollupSettings.AutoRollupGroupByColumnNames.Count, Is.EqualTo(0));
         }
 
         private void ValidateUpdatedDataFeedWithOptionalMembersSet(DataFeed dataFeed, string expectedId, string expectedName)
@@ -1196,6 +1203,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(90)));
             Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromMinutes(20)));
             Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(6));
+
+            Assert.That(dataFeed.RollupSettings, Is.Not.Null);
+            Assert.That(dataFeed.RollupSettings.RollupType, Is.EqualTo(DataFeedRollupType.NoRollupNeeded));
+            Assert.That(dataFeed.RollupSettings.RollupIdentificationValue, Is.Null);
+            Assert.That(dataFeed.RollupSettings.AutoRollupMethod, Is.EqualTo(DataFeedAutoRollupMethod.None));
+            Assert.That(dataFeed.RollupSettings.AutoRollupGroupByColumnNames, Is.Not.Null);
+            Assert.That(dataFeed.RollupSettings.AutoRollupGroupByColumnNames.Count, Is.EqualTo(0));
         }
 
         private void ValidateGenericDataSource(DataFeedSource dataSource, bool isAdmin)
