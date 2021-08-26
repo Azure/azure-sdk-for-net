@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Core
         public override void OnSendingRequest(HttpMessage message)
         {
             var header = message.TryGetProperty("UserAgentOverride", out var userAgent) ? userAgent as string : _defaultHeader;
-            message.Request.Headers.Add(HttpHeader.Names.UserAgent, header);
+            message.Request.Headers.SetValue(HttpHeader.Names.UserAgent, header);
         }
     }
 }
