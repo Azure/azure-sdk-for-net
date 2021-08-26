@@ -225,15 +225,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             string target = tagObjects.GetDependencyTarget(PartBType.Db);
             string dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
-            if (!string.IsNullOrEmpty(target) && !string.IsNullOrEmpty(dbName))
+            bool isTargetEmpty = string.IsNullOrEmpty(target);
+            bool isDbNameEmpty = string.IsNullOrEmpty(dbName);
+            if (!isTargetEmpty && !isDbNameEmpty)
             {
                 target = $"{target}/{dbName}";
             }
-            else if (string.IsNullOrEmpty(target) && !string.IsNullOrEmpty(dbName))
+            else if (isTargetEmpty && !isDbNameEmpty)
             {
                 target = dbName;
             }
-            else if (string.IsNullOrEmpty(target) && string.IsNullOrEmpty(dbName))
+            else if (isTargetEmpty && isDbNameEmpty)
             {
                 target = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
             }
