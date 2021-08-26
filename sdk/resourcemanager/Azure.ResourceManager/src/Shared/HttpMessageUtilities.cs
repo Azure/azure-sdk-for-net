@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -12,7 +14,7 @@ namespace Azure.ResourceManager.Core
     {
         internal static readonly string PlatformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
 
-        private static string GetUserAgentName(string componentName, string componentVersion, string applicationId)
+        private static string GetUserAgentName(string componentName, string componentVersion, string? applicationId)
         {
             string result;
             if (applicationId != null)
@@ -30,9 +32,9 @@ namespace Azure.ResourceManager.Core
         {
             const string PackagePrefix = "Azure.";
 
-            Assembly assembly = source.GetType().Assembly;
+            Assembly assembly = source.GetType().Assembly!;
 
-            AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            AssemblyInformationalVersionAttribute? versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             if (versionAttribute == null)
             {
                 throw new InvalidOperationException($"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{assembly.FullName}' (inferred from the use of options type '{options.GetType().FullName}').");
