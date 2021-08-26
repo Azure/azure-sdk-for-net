@@ -228,9 +228,9 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var statusList = options?.Statuses?.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
-                    var idList = options?.Ids?.Count > 0 ? options?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
-                    var orderByList = options?.OrderBy?.Count > 0 ? options?.OrderBy?.Select(order => order.ToGenerated()) : null;
+                    var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
+                    var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
+                    var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
 
                     var response = _serviceRestClient.GetTranslationsStatus(
                         ids: idList,
@@ -282,9 +282,9 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var statusList = options?.Statuses?.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
-                    var idList = options?.Ids?.Count > 0 ? options?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
-                    var orderByList = options?.OrderBy?.Count > 0 ? options?.OrderBy?.Select(order => order.ToGenerated()) : null;
+                    var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
+                    var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
+                    var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
 
                     var response = await _serviceRestClient.GetTranslationsStatusAsync(
                         ids: idList,

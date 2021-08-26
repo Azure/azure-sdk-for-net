@@ -373,13 +373,17 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
+                    var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
+                    var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
+                    var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
+
                     var response = _serviceClient.GetDocumentsStatus(
                         new Guid(Id),
-                        ids: options?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
-                        statuses: options?.Statuses?.Select(status => status.ToString()),
+                        ids: idList,
+                        statuses: statusList,
                         createdDateTimeUtcStart: options?.CreatedAfter,
                         createdDateTimeUtcEnd: options?.CreatedBefore,
-                        orderBy: options?.OrderBy?.Select(order => order.ToGenerated()),
+                        orderBy: orderByList,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -424,13 +428,17 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
+                    var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
+                    var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
+                    var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
+
                     var response = await _serviceClient.GetDocumentsStatusAsync(
                         new Guid(Id),
-                        ids: options?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
-                        statuses: options?.Statuses?.Select(status => status.ToString()),
+                        ids: idList,
+                        statuses: statusList,
                         createdDateTimeUtcStart: options?.CreatedAfter,
                         createdDateTimeUtcEnd: options?.CreatedBefore,
-                        orderBy: options?.OrderBy?.Select(order => order.ToGenerated()),
+                        orderBy: orderByList,
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
