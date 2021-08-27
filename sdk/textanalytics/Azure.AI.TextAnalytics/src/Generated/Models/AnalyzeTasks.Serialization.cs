@@ -25,6 +25,9 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<EntityLinkingTasksItem>> entityLinkingTasks = default;
             Optional<IReadOnlyList<SentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
             Optional<IReadOnlyList<ExtractiveSummarizationTasksItem>> extractiveSummarizationTasks = default;
+            Optional<IReadOnlyList<TasksStateTasksCustomEntityRecognitionTasksItem>> customEntityRecognitionTasks = default;
+            Optional<IReadOnlyList<TasksStateTasksCustomSingleClassificationTasksItem>> customSingleClassificationTasks = default;
+            Optional<IReadOnlyList<TasksStateTasksCustomMultiClassificationTasksItem>> customMultiClassificationTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completed"))
@@ -137,8 +140,53 @@ namespace Azure.AI.TextAnalytics.Models
                     extractiveSummarizationTasks = array;
                     continue;
                 }
+                if (property.NameEquals("customEntityRecognitionTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<TasksStateTasksCustomEntityRecognitionTasksItem> array = new List<TasksStateTasksCustomEntityRecognitionTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TasksStateTasksCustomEntityRecognitionTasksItem.DeserializeTasksStateTasksCustomEntityRecognitionTasksItem(item));
+                    }
+                    customEntityRecognitionTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("customSingleClassificationTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<TasksStateTasksCustomSingleClassificationTasksItem> array = new List<TasksStateTasksCustomSingleClassificationTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TasksStateTasksCustomSingleClassificationTasksItem.DeserializeTasksStateTasksCustomSingleClassificationTasksItem(item));
+                    }
+                    customSingleClassificationTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("customMultiClassificationTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<TasksStateTasksCustomMultiClassificationTasksItem> array = new List<TasksStateTasksCustomMultiClassificationTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TasksStateTasksCustomMultiClassificationTasksItem.DeserializeTasksStateTasksCustomMultiClassificationTasksItem(item));
+                    }
+                    customMultiClassificationTasks = array;
+                    continue;
+                }
             }
-            return new AnalyzeTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks), Optional.ToList(extractiveSummarizationTasks));
+            return new AnalyzeTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks), Optional.ToList(extractiveSummarizationTasks), Optional.ToList(customEntityRecognitionTasks), Optional.ToList(customSingleClassificationTasks), Optional.ToList(customMultiClassificationTasks));
         }
     }
 }

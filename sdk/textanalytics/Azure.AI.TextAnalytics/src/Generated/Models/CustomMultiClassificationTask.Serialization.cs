@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class ExtractiveSummarizationTask : IUtf8JsonSerializable
+    internal partial class CustomMultiClassificationTask : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
