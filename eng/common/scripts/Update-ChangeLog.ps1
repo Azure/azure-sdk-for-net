@@ -106,7 +106,47 @@ if ($LatestsSorted[0] -ne $Version) {
 
 if ($ReplaceLatestEntryTitle)
 {
-    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -Content $ChangeLogEntries[$LatestVersion].ReleaseContent
+    # Remove empty sections from content
+    $sanitizedContent = @()
+    $sectionContent = @()
+    $sectionContentCount = 0
+    $latesVersionContent = $ChangeLogEntries[$LatestVersion].ReleaseContent
+
+    foreach ($line in $latesVersionContent)
+    {
+        if ($line.StartsWith("### ") -or $sectionContentCount -gt 0)
+        {
+            if ($line.StartsWith("#") -and $sectionContentCount -gt 1)
+            {
+                $sanitizedContent += $sectionContent
+                $sectionContent = @()
+                $sectionContentCount = 0
+            }
+    
+            if ($line.StartsWith("#") -and $sectionContentCount -eq 1)
+            {
+                $sectionContent = @()
+                $sectionContentCount = 0
+            }
+
+            $sectionContent += $line
+            if (-not [System.String]::IsNullOrWhiteSpace($line))
+            {
+                $sectionContentCount++
+            }
+        }
+        elseif ($sectionContent.Count -eq 0)
+        {
+            $sanitizedContent += $line
+        }
+    }
+    
+    if ($sectionContentCount -gt 1)
+    {
+        $sanitizedContent += $sectionContent
+    }
+
+    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -Content $sanitizedContent
     LogDebug "Resetting latest entry title to [$($newChangeLogEntry.ReleaseTitle)]"
     $ChangeLogEntries.Remove($LatestVersion)
     if ($newChangeLogEntry) {

@@ -78,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 case PartBType.Db:
                     var depDataAndType = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
                     dependency.Data = depDataAndType[0]?.ToString();
-                    dependency.Target = monitorTags.PartBTags.GetDependencyTarget(PartBType.Db);
+                    dependency.Target = monitorTags.PartBTags.GetDbDependencyTarget();
                     dependency.Type = SqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString();
                     break;
                 case PartBType.Rpc:
@@ -92,6 +92,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     dependency.Data = depDataAndType[0]?.ToString();
                     dependency.Type = depDataAndType[1]?.ToString();
                     break;
+            }
+
+            if (activity.Kind == ActivityKind.Internal && activity.Parent != null)
+            {
+                dependency.Type = "InProc";
             }
 
             AddPropertiesToTelemetry(dependency.Properties, ref monitorTags.PartCTags);

@@ -219,7 +219,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         }
 
         ///<summary>
-        /// Gets http dependency target from activity tag objects.
+        /// Gets Database dependency target from activity tag objects.
+        ///</summary>
+        internal static string GetDbDependencyTarget(this AzMonList tagObjects)
+        {
+            string target = tagObjects.GetDependencyTarget(PartBType.Db);
+            string dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
+            bool isTargetEmpty = string.IsNullOrEmpty(target);
+            bool isDbNameEmpty = string.IsNullOrEmpty(dbName);
+            if (!isTargetEmpty && !isDbNameEmpty)
+            {
+                target = $"{target}/{dbName}";
+            }
+            else if (isTargetEmpty && !isDbNameEmpty)
+            {
+                target = dbName;
+            }
+            else if (isTargetEmpty && isDbNameEmpty)
+            {
+                target = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
+            }
+
+            return target;
+        }
+
+        ///<summary>
+        /// Gets Http dependency target from activity tag objects.
         ///</summary>
         internal static string GetDependencyTarget(this AzMonList tagObjects, PartBType type)
         {
