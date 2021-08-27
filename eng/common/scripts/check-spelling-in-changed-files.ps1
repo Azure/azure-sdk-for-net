@@ -79,9 +79,14 @@ Set-Content `
     -Path $cspellConfigTemporaryPath `
     -Value (ConvertTo-Json $cspellConfig -Depth 100)
 
+# IGNORE_FILE_ -- In some cases a PR contains changes to only files which are
+# excluded. In these cases `cspell` will produce an error when the files listed
+# in the "files" config are excluded. Specifying a file name on the command line
+# (even one which does not exist) will prevent this error.
+
 # Use the mutated configuration file when calling cspell
-Write-Host "npx cspell lint --config $cspellConfigTemporaryPath"
-$spellingErrors = npx cspell lint --config $cspellConfigTemporaryPath
+Write-Host "npx cspell lint --config $cspellConfigTemporaryPath --no-must-find-files IGNORE_FILE_"
+$spellingErrors = npx cspell lint --config $cspellConfigTemporaryPath --no-must-find-files IGNORE_FILE_
 
 if ($spellingErrors) {
     $errorLoggingFunction = Get-Item 'Function:LogWarning'
