@@ -167,9 +167,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     RoleInstance = Dns.GetHostName();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.Write($"ErrorInitializingRoleInstanceToHostName{EventLevelSuffix.Error}", $"{e.ToInvariantString()}");
+                    AzureMonitorExporterEventSource.Log.Write($"ErrorInitializingRoleInstanceToHostName{EventLevelSuffix.Error}", $"{ex.ToInvariantString()}");
                 }
             }
         }
