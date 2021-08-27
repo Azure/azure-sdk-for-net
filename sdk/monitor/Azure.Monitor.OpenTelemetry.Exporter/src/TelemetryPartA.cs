@@ -157,9 +157,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 RoleName = serviceName;
             }
 
-            // This will happen in two cases
+            // This will happen when
             // 1) AddService() is not called on resource.
             // 2) AddService is called with autoGenerateServiceInstanceId set to false and serviceInstanceId is not passed.
+            // 3) service.instance.id attribute is not set.
             if (RoleInstance == null)
             {
                 try
