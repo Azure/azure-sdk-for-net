@@ -12,25 +12,17 @@ namespace Microsoft.Azure.Management.NetApp.Models
 {
 
     /// <summary>
-    /// Defines values for ServiceLevel.
+    /// Defines values for AvsDataStore.
     /// </summary>
-    public static class ServiceLevel
+    public static class AvsDataStore
     {
         /// <summary>
-        /// Standard service level
+        /// avsDataStore is enabled
         /// </summary>
-        public const string Standard = "Standard";
+        public const string Enabled = "Enabled";
         /// <summary>
-        /// Premium service level
+        /// avsDataStore is disabled
         /// </summary>
-        public const string Premium = "Premium";
-        /// <summary>
-        /// Ultra service level
-        /// </summary>
-        public const string Ultra = "Ultra";
-        /// <summary>
-        /// Zone redundant storage service level
-        /// </summary>
-        public const string StandardZRS = "StandardZRS";
+        public const string Disabled = "Disabled";
     }
 }
