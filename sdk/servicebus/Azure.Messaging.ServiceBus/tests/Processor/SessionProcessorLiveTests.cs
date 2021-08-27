@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
+using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Processor
@@ -1884,6 +1885,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 using var logger = new AzureEventSourceListener(
                     (eventData, text) => Console.WriteLine("[{1}] {3:o}: {0}: {2}", eventData.EventSource.Name, eventData.Level, text, DateTimeOffset.Now),
                     EventLevel.Verbose);
+                AmqpTrace.FrameLogger = Console.WriteLine;
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 100;
