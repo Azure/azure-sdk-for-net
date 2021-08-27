@@ -51,6 +51,13 @@ foreach ($file in $changedFiles) {
     $changedFilePaths += $file.Path
 }
 
+# The "files" list must always contain a file which exists, is not empty, and is
+# not excluded in ignorePaths. In this case it will be a file with the contents
+# "1" (no spelling errors will be detected)
+$notExcludedFile = (New-TemporaryFile).ToString()
+"1" >> $notExcludedFile
+$changedFilePaths += $notExcludedFile
+
 # Using GetTempPath because it works on linux and windows. Setting .json
 # extension because cspell requires the file have a .json or .jsonc extension
 $cspellConfigTemporaryPath = Join-Path `
@@ -79,14 +86,20 @@ Set-Content `
     -Path $cspellConfigTemporaryPath `
     -Value (ConvertTo-Json $cspellConfig -Depth 100)
 
-# IGNORE_FILE_ -- In some cases a PR contains changes to only files which are
-# excluded. In these cases `cspell` will produce an error when the files listed
-# in the "files" config are excluded. Specifying a file name on the command line
-# (even one which does not exist) will prevent this error.
+# cspell will merge configurations from files in well-known locations. In this
+# case the `.vscode/cspell.json` file is a well-known location. To force cspell
+# to use ONLY the temporary config file we rename the config file in the
+# well-known location to a temporary name. (`.vscode/cspell.json.ignore`)
+Write-Host "Renaming $CspellConfigPath"
+$originalConfigPath = Resolve-Path $CspellConfigPath
+Move-Item $originalConfigPath "$originalConfigPath.ignore" | Out-Null
 
 # Use the mutated configuration file when calling cspell
-Write-Host "npx cspell lint --config $cspellConfigTemporaryPath --no-must-find-files IGNORE_FILE_"
-$spellingErrors = npx cspell lint --config $cspellConfigTemporaryPath --no-must-find-files IGNORE_FILE_
+Write-Host "npx cspell lint --config $cspellConfigTemporaryPath --no-must-find-files "
+$spellingErrors = npx cspell lint --config $cspellConfigTemporaryPath --no-must-find-files
+
+Write-Host "cspell run complete, restoring original configuration."
+Move-Item "$originalConfigPath.ignore" $originalConfigPath -Force | Out-Null
 
 if ($spellingErrors) {
     $errorLoggingFunction = Get-Item 'Function:LogWarning'
@@ -94,7 +107,7 @@ if ($spellingErrors) {
         $errorLoggingFunction = Get-Item 'Function:LogError'
     }
 
-    foreach ($spellingError in $spellingErrors) { 
+    foreach ($spellingError in $spellingErrors) {
         &$errorLoggingFunction $spellingError
     }
     &$errorLoggingFunction "Spelling errors detected. To correct false positives or learn about spell checking see: https://aka.ms/azsdk/engsys/spellcheck"
@@ -104,7 +117,8 @@ if ($spellingErrors) {
     }
 } else {
     Write-Host "No spelling errors detected. Removing temporary config file."
-    Remove-Item -Path $cspellConfigTemporaryPath -Force
+    Remove-Item -Path $cspellConfigTemporaryPath -Force | Out-Null
+    Remove-Item -Path $notExcludedFile -Force | Out-Null
 }
 
 exit 0
