@@ -4,17 +4,6 @@
 
 - New Design
 
-## 1.0.0-preview.2
-
-- Accept header added to all requests.
-- Collections are now always initialized and collection properties are readonly by default.
-
-## 1.0.0-preview.1
-
-This package follows the new Azure SDK guidelines which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
-
-This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
-
 ### General New Features
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
@@ -56,18 +45,13 @@ using Azure.Identity;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 
-var keyVaultManagementClient = new KeyVaultManagementClient(
-            subscriptionId,
-            new DefaultAzureCredential(),
-            new KeyVaultManagementClientOptions());
-var vaultsOperations = keyVaultManagementClient.Vaults;
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceGroup resourceGroup = await armClient.DefaultSubscription.GetResourceGroups().GetAsync("myRgName");
 
-var vault = await vaultsOperations.StartCreateOrUpdateAsync(
-            resourceGroupName,
-            vaultName,
-            parameters
-            );
-var vaultValue = (await vault.WaitForCompletionAsync()).Value;
+VaultContainer vaultContainer = resourceGroup.GetVaults();
+
+VaultCreateOrUpdateOperation lro = await vaultsOperations.CreateOrUpdateAsync(vaultName, parameters);
+Vault vault = lro.Value;
 
 ```
 
