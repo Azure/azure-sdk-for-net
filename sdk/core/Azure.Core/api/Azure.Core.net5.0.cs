@@ -742,7 +742,17 @@ namespace Azure.Core.Pipeline
     public partial class HttpPipelineTransportOptions
     {
         public HttpPipelineTransportOptions() { }
-        public System.Func<System.Security.Cryptography.X509Certificates.X509Certificate2?, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
+        public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct ServerCertificateCustomValidationArgs
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public ServerCertificateCustomValidationArgs(System.Security.Cryptography.X509Certificates.X509Certificate2? certificate, System.Security.Cryptography.X509Certificates.X509Chain? x509Chain, System.Net.Security.SslPolicyErrors sslPolicyErrors) { throw null; }
+        public System.Security.Cryptography.X509Certificates.X509Certificate2? Certificate { get { throw null; } }
+        public System.Net.Security.SslPolicyErrors SslPolicyErrors { get { throw null; } }
+        public System.Security.Cryptography.X509Certificates.X509Chain? X509Chain { get { throw null; } }
     }
 }
 namespace Azure.Core.Serialization

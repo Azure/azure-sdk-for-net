@@ -90,7 +90,7 @@ namespace Azure.Security.ConfidentialLedger
             }
             return new HttpPipelineTransportOptions
             {
-                ServerCertificateCustomValidationCallback = (_, certificate2, _, _) => CertValidationCheck(certificate2)
+                ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate)
             };
         }
     }
