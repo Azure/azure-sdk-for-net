@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {

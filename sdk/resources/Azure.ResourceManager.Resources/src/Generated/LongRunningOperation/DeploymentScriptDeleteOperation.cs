@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deletes a deployment script. When operation completes, status code 200 returned without content. </summary>
-    public partial class DeploymentScriptDeleteOperation : Azure.Operation
+    public partial class DeploymentScriptDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

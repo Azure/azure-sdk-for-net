@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deletes the managed application definition. </summary>
-    public partial class ApplicationDefinitionDeleteOperation : Azure.Operation
+    public partial class ApplicationDefinitionDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 

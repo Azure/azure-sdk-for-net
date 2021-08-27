@@ -8,15 +8,8 @@
       This is the first beta preview version, so expect incompatible changes in subsequent releases as we improve the product.
     </Description>
     <PackageTags>azure;management;resources</PackageTags>
-    <NoWarn>$(NoWarn);AZC0008;</NoWarn>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
+    <NoWarn>$(NoWarn);</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager" VersionOverride="1.0.0-alpha.20210824.1" />
-    <PackageReference Include="Azure.Core" VersionOverride="1.18.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Properties\" />

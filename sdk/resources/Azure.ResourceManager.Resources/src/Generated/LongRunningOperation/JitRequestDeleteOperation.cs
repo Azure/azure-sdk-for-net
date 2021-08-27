@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deletes the JIT request. </summary>
-    public partial class JitRequestDeleteOperation : Azure.Operation
+    public partial class JitRequestDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

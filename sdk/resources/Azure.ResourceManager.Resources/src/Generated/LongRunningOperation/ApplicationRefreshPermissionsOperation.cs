@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Refresh Permissions for application. </summary>
-    public partial class ApplicationRefreshPermissionsOperation : Azure.Operation
+    public partial class ApplicationRefreshPermissionsOperation : Operation
     {
         private readonly OperationInternals _operation;
 

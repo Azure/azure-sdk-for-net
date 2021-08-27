@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
         #region Application
         private static ApplicationsRestOperations GetApplicationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ApplicationsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ApplicationsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the Applications for this <see cref="Subscription" />. </summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Resources
         #region JitRequestDefinition
         private static JitRequestsRestOperations GetJitRequestsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new JitRequestsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new JitRequestsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Retrieves all JIT requests within the subscription. </summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Resources
         #region DeploymentScript
         private static DeploymentScriptsRestOperations GetDeploymentScriptsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new DeploymentScriptsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new DeploymentScriptsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the DeploymentScripts for this <see cref="Subscription" />. </summary>

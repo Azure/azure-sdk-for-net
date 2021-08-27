@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
         internal JitRequestDefinitionContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new JitRequestsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new JitRequestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>

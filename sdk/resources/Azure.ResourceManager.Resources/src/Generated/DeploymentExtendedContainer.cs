@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
         internal DeploymentExtendedContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _restClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Verify that the input resource Id is a valid container for this type. </summary>

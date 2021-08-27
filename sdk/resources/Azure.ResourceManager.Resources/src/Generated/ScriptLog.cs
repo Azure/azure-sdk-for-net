@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DeploymentScriptLogsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new DeploymentScriptLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ScriptLog"/> class. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DeploymentScriptLogsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new DeploymentScriptLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information from validate template deployment response. </summary>
