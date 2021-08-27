@@ -6,7 +6,7 @@ param (
     [hashtable] $Artifact,
 
     [Parameter()]
-    [string] $PipelineWorkspace,
+    [string] $PipelineWorkspace
 )
 
 Write-Host "dotnet new console"
