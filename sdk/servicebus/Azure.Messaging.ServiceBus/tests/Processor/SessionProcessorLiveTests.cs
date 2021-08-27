@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
+    [NonParallelizable]
     public class SessionProcessorLiveTests : ServiceBusLiveTestBase
     {
         [Test]
