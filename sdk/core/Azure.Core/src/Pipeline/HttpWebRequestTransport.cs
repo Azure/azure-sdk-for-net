@@ -368,7 +368,6 @@ namespace Azure.Core.Pipeline
                 request.ServerCertificateValidationCallback =
                     (request, certificate, x509Chain, sslPolicyErrors) => options.ServerCertificateCustomValidationCallback(
                         new ServerCertificateCustomValidationArgs(
-                            null,
                             new X509Certificate2(certificate),
                             x509Chain,
                             sslPolicyErrors));

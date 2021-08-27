@@ -935,7 +935,6 @@ namespace Azure.Core.Tests
                 true))
             {
                 bool certValidationCalled = false;
-                object message = null;
                 X509Certificate2 cert = null;
                 X509Chain chain = null;
                 var options = new HttpPipelineTransportOptions();
@@ -945,7 +944,6 @@ namespace Azure.Core.Tests
                     options.ServerCertificateCustomValidationCallback = args =>
                     {
                         certValidationCalled = true;
-                        message = args.Message;
                         cert = args.Certificate;
                         chain = args.X509Chain;
                         return isValidCert;
@@ -953,18 +951,17 @@ namespace Azure.Core.Tests
                 }
                 var transport = GetTransport(true, options);
                 Request request = transport.CreateRequest();
-                // request.Uri.Reset(testServer.Address);
-                request.Uri.Reset(new Uri("https://www.google.com"));
+                request.Uri.Reset(testServer.Address);
 
                 try
                 {
                     await ExecuteRequest(request, transport);
-                    // Assert.Multiple(
-                    //     () =>
-                    //     {
-                    //         Assert.IsTrue(isValidCert);
-                    //         Assert.IsTrue(setCertCallback);
-                    //     });
+                    Assert.Multiple(
+                        () =>
+                        {
+                            Assert.IsTrue(isValidCert);
+                            Assert.IsTrue(setCertCallback);
+                        });
                 }
                 catch (Exception ex) when (ex is not AssertionException)
                 {
@@ -989,7 +986,6 @@ namespace Azure.Core.Tests
                         Assert.Multiple(
                             () =>
                             {
-                                Assert.NotNull(message, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.Message)} should not be null");
                                 Assert.NotNull(cert, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.Certificate)} should not be null");
                                 Assert.NotNull(chain, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.X509Chain)} should not be null");
                             });
