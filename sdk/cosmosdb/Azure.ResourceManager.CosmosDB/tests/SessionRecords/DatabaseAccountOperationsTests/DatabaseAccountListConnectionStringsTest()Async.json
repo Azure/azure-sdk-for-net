@@ -18,7 +18,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "1015",
+        "Content-Length": "379",
         "Content-Type": "application/json",
         "Date": "Fri, 25 Sep 2020 01:34:00 GMT",
         "Pragma": "no-cache",
@@ -34,19 +34,19 @@
       "ResponseBody": {
         "connectionStrings": [
           {
-            "connectionString": "mongodb://db4937:XXyVHcpaR31kGFKVRL0T0XV9mugOGgLB6puQe3FxrUCKGtAxaOlpUcYh1YYq1YFM1Z0F8w1njhCCkQVrGhdjTA==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
+            "connectionString": "Sanitized",
             "description": "Primary MongoDB Connection String"
           },
           {
-            "connectionString": "mongodb://db4937:01IQdRqk73h5xNX4f1UXkGI53cPqs15dmBVuNtuvJ8sLngZqragmZ41AT1OeuhhSfxHZv0TjsD1K0WfaVBRZTA==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
+            "connectionString": "Sanitized",
             "description": "Secondary MongoDB Connection String"
           },
           {
-            "connectionString": "mongodb://db4937:V19N5Vck7GaJudGnVz7kk78vQC561VtVEgRwpVPxvdd7GTmAcmNg6pqd1H8VZFbgwhtcwrMZ7CUPMCcLcP5pDw==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
+            "connectionString": "Sanitized",
             "description": "Primary Read-Only MongoDB Connection String"
           },
           {
-            "connectionString": "mongodb://db4937:Q6QGkEkeIA1OW2coJ0m4Nl1E5YXDIjKsboTDPiajjubvpWr52VZEgk0dfWtvtZKKLC2dLbGDmUHSXKOmNiXUSw==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
+            "connectionString": "Sanitized",
             "description": "Secondary Read-Only MongoDB Connection String"
           }
         ]
