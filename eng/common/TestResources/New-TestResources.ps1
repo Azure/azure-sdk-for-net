@@ -478,7 +478,8 @@ try {
         }
 
         $msg = if ($templateFile.jsonFilePath -ne $templateFile.originalFilePath) {
-            "Deployment template $($templateFile.jsonFilePath) $($templateFile.originalFilePath) to resource group $($resourceGroup.ResourceGroupName)"} else {
+            "Deployment template $($templateFile.jsonFilePath) from $($templateFile.originalFilePath) to resource group $($resourceGroup.ResourceGroupName)"
+        } else {
             "Deployment template $($templateFile.jsonFilePath) to resource group $($resourceGroup.ResourceGroupName)"
         }
         Log $msg
