@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("ADO 6161")]
         public async Task BGPCommunityApiTest()
         {
             //_ = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/routefilters");

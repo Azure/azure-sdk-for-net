@@ -849,14 +849,16 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(nicPrivateIpAdd2, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[1].Address);
 
             //Start AppGw
-            await getGateway.Value.StartAsync();
+            // TODO: ADO 6162, but consider to move this into another test
+            //await getGateway.Value.StartAsync();
 
             // Get AppGw and make sure nics are added to backend
             getGateway = await applicationGatewayContainer.GetAsync(appGwName);
             Assert.AreEqual(2, getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count);
 
             //Stop AppGw
-            await getGateway.Value.StopAsync();
+            // TODO: ADO 6162, but consider to move this into another test
+            //await getGateway.Value.StopAsync();
 
             // Delete AppGw
             await getGateway.Value.DeleteAsync();
