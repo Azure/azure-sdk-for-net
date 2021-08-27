@@ -15,7 +15,6 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
-    [NonParallelizable]
     public class SessionProcessorLiveTests : ServiceBusLiveTestBase
     {
         [Test]
@@ -1877,6 +1876,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        [NonParallelizable]
         public async Task CanUpdateMaxCallsPerSessionConcurrency()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
