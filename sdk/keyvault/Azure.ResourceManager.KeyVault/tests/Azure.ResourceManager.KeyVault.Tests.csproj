@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TestHelperProjects>Rbac1.6;</TestHelperProjects>
-    <UseNewMgmtFramework>true</UseNewMgmtFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="D:\Azure\azure-sdk-for-net\eng\..\sdk\testcommon\Azure.Graph.Rbac\src\Generated\Models\ServicePrincipal.Serialization.cs" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.KeyVault.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.KeyVault.csproj" />
+    <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 </Project>
