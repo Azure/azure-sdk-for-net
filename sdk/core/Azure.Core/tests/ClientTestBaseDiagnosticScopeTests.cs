@@ -27,6 +27,21 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ThrowsWhenDuplicateDiagnosticScope()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.DuplicateScopeAsync());
+            StringAssert.Contains($"A scope has already started for event '{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.DuplicateScope)}'", ex.Message);
+        }
+
+        [Test]
+        public async Task DoesNotThrowWhenDuplicateDiagnosticScopeProperlyDisposed()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            await client.DuplicateScopeProperlyDisposedAsync();
+        }
+
+        [Test]
         public void ThrowsWhenNoDiagnosticScopeInsidePageable()
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
@@ -74,11 +89,17 @@ namespace Azure.Core.Tests
 
         public class InvalidDiagnosticScopeTestClient
         {
-            private void FireScope(string method)
+            private DiagnosticScope CreateScope(string method)
             {
                 DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Core.Tests", "random", true);
                 string activityName = $"{typeof(InvalidDiagnosticScopeTestClient).Name}.{method}";
                 DiagnosticScope scope = clientDiagnostics.CreateScope(activityName);
+                return scope;
+            }
+
+            private void CreateAndFireScope(string method)
+            {
+                DiagnosticScope scope = CreateScope(method);
                 scope.Start();
                 scope.Dispose();
             }
@@ -95,47 +116,76 @@ namespace Azure.Core.Tests
                 return true;
             }
 
+            public virtual Task<bool> DuplicateScopeAsync()
+            {
+                return Task.FromResult(DuplicateScope());
+            }
+
+            public virtual bool DuplicateScope()
+            {
+                using DiagnosticScope scope1 = CreateScope(nameof(DuplicateScope));
+                scope1.Start();
+                using DiagnosticScope scope2 = CreateScope(nameof(DuplicateScope));
+                scope2.Start();
+                return true;
+            }
+
+            public virtual Task<bool> DuplicateScopeProperlyDisposedAsync()
+            {
+                return Task.FromResult(DuplicateScopeProperlyDisposed());
+            }
+
+            public virtual bool DuplicateScopeProperlyDisposed()
+            {
+                DiagnosticScope scope1 = CreateScope(nameof(DuplicateScopeProperlyDisposed));
+                scope1.Start();
+                scope1.Dispose();
+                using DiagnosticScope scope2 = CreateScope(nameof(DuplicateScopeProperlyDisposed));
+                scope2.Start();
+                return true;
+            }
+
             public virtual Task<bool> WrongScopeAsync()
             {
-                FireScope("DoesNotExist");
+                CreateAndFireScope("DoesNotExist");
                 return Task.FromResult(true);
             }
 
             public virtual bool WrongScope()
             {
-                FireScope("DoesNotExist");
+                CreateAndFireScope("DoesNotExist");
                 return true;
             }
 
             public virtual Task<bool> CorrectScopeAsync()
             {
-                FireScope(nameof(CorrectScope));
+                CreateAndFireScope(nameof(CorrectScope));
                 return Task.FromResult(true);
             }
 
             public virtual bool CorrectScope()
             {
-                FireScope(nameof(CorrectScope));
+                CreateAndFireScope(nameof(CorrectScope));
                 return true;
             }
 
             [ForwardsClientCalls]
             public virtual Task<bool> ForwardsAsync()
             {
-                FireScope(nameof(CorrectScope));
+                CreateAndFireScope(nameof(CorrectScope));
                 return Task.FromResult(true);
             }
 
             [ForwardsClientCalls]
             public virtual bool Forwards()
             {
-                FireScope(nameof(CorrectScope));
+                CreateAndFireScope(nameof(CorrectScope));
                 return true;
             }
 
             public virtual AsyncPageable<int> GetPageableNoPageableScopesAsync()
             {
-                FireScope(nameof(GetPageableNoPageableScopesAsync));
+                CreateAndFireScope(nameof(GetPageableNoPageableScopesAsync));
 
                 return PageResponseEnumerator.CreateAsyncEnumerable(s =>
                 {
@@ -150,7 +200,7 @@ namespace Azure.Core.Tests
 
             public virtual Pageable<int> GetPageableNoPageableScopes()
             {
-                FireScope(nameof(GetPageableNoPageableScopes));
+                CreateAndFireScope(nameof(GetPageableNoPageableScopes));
 
                 return PageResponseEnumerator.CreateEnumerable(s =>
                 {
@@ -167,7 +217,7 @@ namespace Azure.Core.Tests
             {
                 return PageResponseEnumerator.CreateAsyncEnumerable(s =>
                 {
-                    FireScope(nameof(GetPageableValidScopes));
+                    CreateAndFireScope(nameof(GetPageableValidScopes));
 
                     if (s == null)
                     {
@@ -182,7 +232,7 @@ namespace Azure.Core.Tests
             {
                 return PageResponseEnumerator.CreateEnumerable(s =>
                 {
-                    FireScope(nameof(GetPageableValidScopes));
+                    CreateAndFireScope(nameof(GetPageableValidScopes));
 
                     if (s == null)
                     {

@@ -70,7 +70,10 @@ namespace Azure.Core.Tests
                         Links = links.Select(a => a.ParentId).ToList(),
                         LinkedActivities = links.ToList()
                     };
-
+                    if (Scopes.Any(s => s.Name == scope.Name && !s.IsCompleted))
+                    {
+                        scope.IsDuplicate = true;
+                    }
                     Scopes.Add(scope);
                     _scopeStartCallback?.Invoke(scope);
                 }
@@ -141,6 +144,12 @@ namespace Azure.Core.Tests
 
             foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {
+                if (producedDiagnosticScope.IsDuplicate)
+                {
+                    // throw this exception lazily on Dispose so that we don't trigger a bunch of other
+                    // erroneous exceptions relating to scopes not being completed/started that hide the actual issue
+                    throw new InvalidOperationException($"A scope has already started for event '{producedDiagnosticScope.Name}'");
+                }
                 if (!producedDiagnosticScope.IsCompleted)
                 {
                     throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");
@@ -216,6 +225,7 @@ namespace Azure.Core.Tests
             public string Name { get; set; }
             public Activity Activity { get; set; }
             public bool IsCompleted { get; set; }
+            public bool IsDuplicate { get; set; }
             public bool IsFailed => Exception != null;
             public Exception Exception { get; set; }
             public List<string> Links { get; set; } = new List<string>();
