@@ -47,8 +47,8 @@ stages:
             - job: InstallationCheck
               displayName: "Installation Check"
               steps:
-                # - download: current
-                #   artifact: ${{parameters.ArtifactName}}
+                - download: current
+                  artifact: ${{parameters.ArtifactName}}-signed
                 - pwsh:
                     mkdir InstallationCheck
                   displayName: Create Testing Directory
