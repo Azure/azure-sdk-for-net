@@ -87,7 +87,7 @@ namespace Azure.Identity
         /// <summary>
         /// A delegate that will be called before the cache is accessed. The data returned will be used to set the current state of the cache.
         /// </summary>
-        internal Func<TokenCacheNotificationDetails, Task<UserAssertionCacheDetails>> RefreshCacheFromOptionsAsync;
+        internal Func<TokenCacheNotificationDetails, Task<TokenCacheDetails>> RefreshCacheFromOptionsAsync;
 
         internal virtual async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
         {

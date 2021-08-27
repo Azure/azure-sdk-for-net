@@ -31,7 +31,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="details"></param>
         /// <returns></returns>
-        protected internal virtual async Task<UserAssertionCacheDetails> RefreshCacheAsync(TokenCacheNotificationDetails details) =>
+        protected internal virtual async Task<TokenCacheDetails> RefreshCacheAsync(TokenCacheNotificationDetails details) =>
              new() {CacheBytes =  await RefreshCacheAsync().ConfigureAwait(false)};
     }
 }

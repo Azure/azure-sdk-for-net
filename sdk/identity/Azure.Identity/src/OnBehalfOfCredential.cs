@@ -21,6 +21,7 @@ namespace Azure.Identity
         private readonly bool _allowMultiTenantAuthentication;
         private readonly string _clientId;
         private readonly string _clientSecret;
+        private readonly UserAssertion _userAssertion;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -30,25 +31,26 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Azure Active Directory.
-        /// Calls to <see cref="GetToken"/> and <see cref="GetTokenAsync"/> should be wrapped with a using block that constructs an instance of
-        /// <see cref="UserAssertionScope"/> with the user's <see cref="AccessToken"/> to be used in the On-Behalf-Of flow.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
+        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public OnBehalfOfCredential(
             string tenantId,
             string clientId,
             string clientSecret,
+            string userAssertion,
             OnBehalfOfCredentialOptions options = null)
-            : this(tenantId, clientId, clientSecret, options, null, null)
+            : this(tenantId, clientId, clientSecret, userAssertion, options, null, null)
         { }
 
         internal OnBehalfOfCredential(
             string tenantId,
             string clientId,
             string clientSecret,
+            string userAssertion,
             OnBehalfOfCredentialOptions options,
             CredentialPipeline pipeline,
             MsalConfidentialClient client)
@@ -62,7 +64,8 @@ namespace Azure.Identity
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             _clientId = clientId;
             _clientSecret = clientSecret;
-            _client = client;
+            _userAssertion = new UserAssertion(userAssertion);
+            _client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, options, default);
         }
 
         /// <inheritdoc />
@@ -80,13 +83,12 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
-                UserAssertionScope.Current.Client = _client ?? new MsalConfidentialClient(_pipeline, tenantId, _clientId, _clientSecret, UserAssertionScope.Current.CacheOptions, default);
 
-                AuthenticationResult result = await UserAssertionScope.Current.Client
-                    .AcquireTokenOnBehalfOf(requestContext.Scopes, tenantId, UserAssertionScope.Current.UserAssertion, async, cancellationToken)
+                AuthenticationResult result = await _client
+                    .AcquireTokenOnBehalfOf(requestContext.Scopes, tenantId, _userAssertion, async, cancellationToken)
                     .ConfigureAwait(false);
 
-                return new AccessToken(result.AccessToken, result.ExpiresOn, DateTimeOffset.UtcNow);
+                return new AccessToken(result.AccessToken, result.ExpiresOn);
             }
             catch (Exception e)
             {

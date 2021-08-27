@@ -19,27 +19,6 @@ namespace Azure.Core
         {
             Token = accessToken;
             ExpiresOn = expiresOn;
-            if (expiresOn >= DateTimeOffset.MinValue.AddMinutes(5))
-            {
-                RefreshOn = expiresOn.AddMinutes(-5);
-            }
-            else
-            {
-                RefreshOn = expiresOn;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="AccessToken"/> using the provided <paramref name="accessToken"/> and <paramref name="expiresOn"/>.
-        /// </summary>
-        /// <param name="accessToken">The bearer access token value.</param>
-        /// <param name="expiresOn">The bearer access token expiry date.</param>
-        /// <param name="refreshOn">A hint indicating when the <see cref="AccessToken"/> should be refreshed.</param>
-        public AccessToken(string accessToken, DateTimeOffset expiresOn, DateTimeOffset refreshOn)
-        {
-            Token = accessToken;
-            ExpiresOn = expiresOn;
-            RefreshOn = refreshOn;
         }
 
         /// <summary>
@@ -51,16 +30,6 @@ namespace Azure.Core
         /// Gets the time when the provided token expires.
         /// </summary>
         public DateTimeOffset ExpiresOn { get; }
-
-        /// <summary>
-        /// Indicates when the <see cref="AccessToken"/> should be refreshed, when set.
-        /// This value should also be used as an indication of when the <see cref="AccessToken"/> can be cached.
-        /// For example, if the value is <see cref="DateTimeOffset.MinValue"/>,
-        /// <see cref="TokenCredential.GetToken(TokenRequestContext, System.Threading.CancellationToken)"/> or
-        /// <see cref="TokenCredential.GetTokenAsync(TokenRequestContext, System.Threading.CancellationToken)"/>
-        /// should always be called rather than caching the token in your own code.
-        /// </summary>
-        public DateTimeOffset? RefreshOn { get; set; }
 
         /// <inheritdoc />
         public override bool Equals(object? obj)

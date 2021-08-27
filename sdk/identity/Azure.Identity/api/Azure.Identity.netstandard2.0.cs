@@ -240,7 +240,7 @@ namespace Azure.Identity
     public partial class OnBehalfOfCredential : Azure.Core.TokenCredential
     {
         protected OnBehalfOfCredential() { }
-        public OnBehalfOfCredential(string tenantId, string clientId, string clientSecret, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
+        public OnBehalfOfCredential(string tenantId, string clientId, string clientSecret, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -338,6 +338,13 @@ namespace Azure.Identity
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } }
         public string Username { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct TokenCacheDetails
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public System.ReadOnlyMemory<byte> CacheBytes { get { throw null; } set { } }
+    }
     public partial class TokenCacheNotificationDetails
     {
         internal TokenCacheNotificationDetails() { }
@@ -365,26 +372,8 @@ namespace Azure.Identity
     {
         protected UnsafeTokenCacheOptions() { }
         protected internal abstract System.Threading.Tasks.Task<System.ReadOnlyMemory<byte>> RefreshCacheAsync();
-        protected internal virtual System.Threading.Tasks.Task<Azure.Identity.UserAssertionCacheDetails> RefreshCacheAsync(Azure.Identity.TokenCacheNotificationDetails details) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task<Azure.Identity.TokenCacheDetails> RefreshCacheAsync(Azure.Identity.TokenCacheNotificationDetails details) { throw null; }
         protected internal abstract System.Threading.Tasks.Task TokenCacheUpdatedAsync(Azure.Identity.TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct UserAssertionCacheDetails
-    {
-        private object _dummy;
-        private int _dummyPrimitive;
-        public System.ReadOnlyMemory<byte> CacheBytes { get { throw null; } set { } }
-    }
-    public partial class UserAssertionScope : System.IDisposable
-    {
-        public UserAssertionScope(string accessToken, Azure.Identity.UserAssertionScopeOptions options = null) { }
-        public void Dispose() { }
-    }
-    public partial class UserAssertionScopeOptions
-    {
-        public UserAssertionScopeOptions() { }
-        public System.Func<Azure.Identity.TokenCacheNotificationDetails, System.Threading.Tasks.Task<Azure.Identity.UserAssertionCacheDetails>> HydrateCache { get { throw null; } set { } }
-        public System.Func<Azure.Identity.UserAssertionCacheDetails, System.Threading.Tasks.Task> PersistCache { get { throw null; } set { } }
     }
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential
     {

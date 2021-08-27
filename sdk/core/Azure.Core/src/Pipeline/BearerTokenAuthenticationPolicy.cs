@@ -33,19 +33,20 @@ namespace Azure.Core.Pipeline
         /// <param name="scopes">Scopes to be included in acquired tokens.</param>
         /// <exception cref="ArgumentNullException">When <paramref name="credential"/> or <paramref name="scopes"/> is null.</exception>
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
-            : this(credential, scopes, TimeSpan.FromSeconds(30))
+            : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
         { }
 
         internal BearerTokenAuthenticationPolicy(
             TokenCredential credential,
             IEnumerable<string> scopes,
+            TimeSpan tokenRefreshOffset,
             TimeSpan tokenRefreshRetryDelay)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
 
             _scopes = scopes.ToArray();
-            _accessTokenCache = new AccessTokenCache(credential, tokenRefreshRetryDelay, scopes.ToArray());
+            _accessTokenCache = new AccessTokenCache(credential, tokenRefreshOffset, tokenRefreshRetryDelay, scopes.ToArray());
         }
 
         /// <inheritdoc />
@@ -176,15 +177,17 @@ namespace Azure.Core.Pipeline
         {
             private readonly object _syncObj = new object();
             private readonly TokenCredential _credential;
+            private readonly TimeSpan _tokenRefreshOffset;
             private readonly TimeSpan _tokenRefreshRetryDelay;
 
             private TokenRequestContext? _currentContext;
             private TaskCompletionSource<HeaderValueInfo>? _infoTcs;
             private TaskCompletionSource<HeaderValueInfo>? _backgroundUpdateTcs;
 
-            public AccessTokenCache(TokenCredential credential, TimeSpan tokenRefreshRetryDelay, string[] initialScopes)
+            public AccessTokenCache(TokenCredential credential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay, string[] initialScopes)
             {
                 _credential = credential;
+                _tokenRefreshOffset = tokenRefreshOffset;
                 _tokenRefreshRetryDelay = tokenRefreshRetryDelay;
                 _currentContext = new TokenRequestContext(initialScopes);
             }
@@ -195,12 +198,11 @@ namespace Azure.Core.Pipeline
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
                 TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs;
                 int maxCancellationRetries = 3;
-                HeaderValueInfo info;
-                DateTimeOffset now = DateTimeOffset.UtcNow;
 
                 while (true)
                 {
-                    (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context, now);
+                    (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context);
+                    HeaderValueInfo info;
                     if (getTokenFromCredential)
                     {
                         if (backgroundUpdateTcs != null)
@@ -285,12 +287,12 @@ namespace Azure.Core.Pipeline
             }
 
             private (TaskCompletionSource<HeaderValueInfo> InfoTcs, TaskCompletionSource<HeaderValueInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential)
-                GetTaskCompletionSources(TokenRequestContext context, DateTimeOffset now)
+                GetTaskCompletionSources(TokenRequestContext context)
             {
                 lock (_syncObj)
                 {
                     // Initial state. GetTaskCompletionSources has been called for the first time
-                    if (_infoTcs == null || RequestRequiresNewToken(context) || _infoTcs.Task.Status == TaskStatus.RanToCompletion && _infoTcs.Task.Result.Token.RefreshOn == DateTimeOffset.MinValue)
+                    if (_infoTcs == null || RequestRequiresNewToken(context))
                     {
                         _currentContext = context;
                         _infoTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -305,24 +307,25 @@ namespace Azure.Core.Pipeline
                         return (_infoTcs, _backgroundUpdateTcs, false);
                     }
 
+                    DateTimeOffset now = DateTimeOffset.UtcNow;
                     // Access token has been successfully acquired in background and it is not expired yet, use it instead of current one
                     if (_backgroundUpdateTcs != null &&
                         _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion &&
-                        _backgroundUpdateTcs.Task.Result.Token.ExpiresOn >= now)
+                        _backgroundUpdateTcs.Task.Result.ExpiresOn > now)
                     {
                         _infoTcs = _backgroundUpdateTcs;
                         _backgroundUpdateTcs = default;
                     }
 
                     // Attempt to get access token has failed or it has already expired. Need to get a new one
-                    if (_infoTcs.Task.Status != TaskStatus.RanToCompletion || now >= _infoTcs.Task.Result.Token.ExpiresOn)
+                    if (_infoTcs.Task.Status != TaskStatus.RanToCompletion || now >= _infoTcs.Task.Result.ExpiresOn)
                     {
                         _infoTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
                         return (_infoTcs, default, true);
                     }
 
                     // Access token is still valid but is about to expire, try to get it in background
-                    if (now >= _infoTcs.Task.Result.Token.RefreshOn && _backgroundUpdateTcs == null)
+                    if (now >= _infoTcs.Task.Result.RefreshOn && _backgroundUpdateTcs == null)
                     {
                         _backgroundUpdateTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
                         return (_infoTcs, _backgroundUpdateTcs, true);
@@ -353,16 +356,12 @@ namespace Azure.Core.Pipeline
                 }
                 catch (OperationCanceledException oce) when (cts.IsCancellationRequested)
                 {
-                    AccessToken token = info.Token;
-                    token.RefreshOn = DateTimeOffset.UtcNow;
-                    backgroundUpdateTcs.SetResult(new HeaderValueInfo(token));
+                    backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow));
                     AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
                 }
                 catch (Exception e)
                 {
-                    AccessToken token = info.Token;
-                    token.RefreshOn = DateTimeOffset.UtcNow + _tokenRefreshRetryDelay;
-                    backgroundUpdateTcs.SetResult(new HeaderValueInfo(token));
+                    backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay));
                     AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
                 }
                 finally
@@ -377,18 +376,20 @@ namespace Azure.Core.Pipeline
                     ? await _credential.GetTokenAsync(context, cancellationToken).ConfigureAwait(false)
                     : _credential.GetToken(context, cancellationToken);
 
-                return new HeaderValueInfo(token);
+                return new HeaderValueInfo("Bearer " + token.Token, token.ExpiresOn, token.ExpiresOn - _tokenRefreshOffset);
             }
 
             private readonly struct HeaderValueInfo
             {
                 public string HeaderValue { get; }
-                public AccessToken Token { get; }
+                public DateTimeOffset ExpiresOn { get; }
+                public DateTimeOffset RefreshOn { get; }
 
-                public HeaderValueInfo(AccessToken token)
+                public HeaderValueInfo(string headerValue, DateTimeOffset expiresOn, DateTimeOffset refreshOn)
                 {
-                    Token = token;
-                    HeaderValue = "Bearer " + token.Token;
+                    HeaderValue = headerValue;
+                    ExpiresOn = expiresOn;
+                    RefreshOn = refreshOn;
                 }
             }
         }
