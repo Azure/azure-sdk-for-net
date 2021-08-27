@@ -182,5 +182,18 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "zones")]
         public IList<string> Zones { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ExtendedLocation != null)
+            {
+                ExtendedLocation.Validate();
+            }
+        }
     }
 }
