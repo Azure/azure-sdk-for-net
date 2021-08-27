@@ -1253,16 +1253,16 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlockInfo> StageBlockFromUri(
             Uri sourceUri,
             string base64BlockId,
-            StageBlockFromUriOptions options,
+            StageBlockFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
-                options.SourceRange,
-                options.SourceContentHash,
-                options.SourceConditions,
-                options.DestinationConditions,
-                options.SourceAuthentication,
+                options?.SourceRange ?? default,
+                options?.SourceContentHash,
+                options?.SourceConditions,
+                options?.DestinationConditions,
+                options?.SourceAuthentication,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1309,16 +1309,16 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
             Uri sourceUri,
             string base64BlockId,
-            StageBlockFromUriOptions options,
+            StageBlockFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             await StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
-                options.SourceRange,
-                options.SourceContentHash,
-                options.SourceConditions,
-                options.DestinationConditions,
-                options.SourceAuthentication,
+                options?.SourceRange ?? default,
+                options?.SourceContentHash,
+                options?.SourceConditions,
+                options?.DestinationConditions,
+                options?.SourceAuthentication,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1384,14 +1384,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<BlockInfo> StageBlockFromUri(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             string base64BlockId,
-            HttpRange sourceRange = default,
-            byte[] sourceContentHash = default,
-            RequestConditions sourceConditions = default,
-            BlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            HttpRange sourceRange,
+            byte[] sourceContentHash,
+            RequestConditions sourceConditions,
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
@@ -1465,14 +1467,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             string base64BlockId,
-            HttpRange sourceRange = default,
-            byte[] sourceContentHash = default,
-            RequestConditions sourceConditions = default,
-            BlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            HttpRange sourceRange,
+            byte[] sourceContentHash,
+            RequestConditions sourceConditions,
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             await StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
