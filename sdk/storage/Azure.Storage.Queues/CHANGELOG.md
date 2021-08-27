@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.8.0-beta.3 (Unreleased)
-- Fixed issue where QueueClient.ReceiveMassage() and .ReceiveMessageAsync() were creating two Diagnostic Scopes.
+- Fixed issue where QueueClient.ReceiveMessage() and .ReceiveMessageAsync() were creating two Diagnostic Scopes.
 
 ## 12.8.0-beta.2 (2021-07-23)
 - This release contains bug fixes to improve quality.
