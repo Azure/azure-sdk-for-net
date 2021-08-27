@@ -46,7 +46,6 @@
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/resources/*/api/*.cs",
     "sdk/sqlmanagement/*/api/*.cs",
     "sdk/synapse/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs"
@@ -110,6 +109,10 @@
         "oaep",
         "setsas"
       ]
+    },
+    {
+      "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
+      "words": ["Puid"]
     },
     {
       "filename": "**/sdk/search/**/*.cs",
