@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -43,10 +42,14 @@ namespace Azure.Storage.Blobs.Tests
         {
         }
 
-        internal Action<Request> GetHashAssertion(TransactionalHashAlgorithm algorithm, byte[] expectedHash = default)
+        internal Action<Request> GetRequestHashAssertion(TransactionalHashAlgorithm algorithm, Func<Request, bool> isHashExpected = default, byte[] expectedHash = default)
         {
             return request =>
             {
+                if (isHashExpected != default && !isHashExpected(request)) {
+                    return;
+                }
+
                 switch (algorithm)
                 {
                     case TransactionalHashAlgorithm.MD5:
@@ -64,6 +67,49 @@ namespace Azure.Storage.Blobs.Tests
                         break;
                     case TransactionalHashAlgorithm.StorageCrc64:
                         if (request.Headers.TryGetValue("x-ms-content-crc64", out string crc))
+                        {
+                            if (expectedHash != default)
+                            {
+                                Assert.AreEqual(Convert.ToBase64String(expectedHash), crc);
+                            }
+                        }
+                        else
+                        {
+                            Assert.Fail("x-ms-content-crc64 expected on request but was not found.");
+                        }
+                        break;
+                    default:
+                        throw new Exception("Bad TransactionalHashAlgorithm provided to Request hash assertion.");
+                }
+            };
+        }
+
+        internal Action<Response> GetResponseHashAssertion(TransactionalHashAlgorithm algorithm, Func<Response, bool> isHashExpected = default, byte[] expectedHash = default)
+        {
+            return response =>
+            {
+                if (isHashExpected != default && !isHashExpected(response))
+                {
+                    return;
+                }
+
+                switch (algorithm)
+                {
+                    case TransactionalHashAlgorithm.MD5:
+                        if (response.Headers.TryGetValue("Content-MD5", out string md5))
+                        {
+                            if (expectedHash != default)
+                            {
+                                Assert.AreEqual(Convert.ToBase64String(expectedHash), md5);
+                            }
+                        }
+                        else
+                        {
+                            Assert.Fail("Content-MD5 expected on request but was not found.");
+                        }
+                        break;
+                    case TransactionalHashAlgorithm.StorageCrc64:
+                        if (response.Headers.TryGetValue("x-ms-content-crc64", out string crc))
                         {
                             if (expectedHash != default)
                             {
@@ -136,12 +182,54 @@ namespace Azure.Storage.Blobs.Tests
             }
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
-            // Act / Assert
-            Assert.DoesNotThrowAsync(async () => await (await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
+            // Act
+            var response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
             {
                 TransactionalHashingOptions = hashingOptions,
                 Range = range
-            })).Value.Content.CopyToAsync(Stream.Null));
+            });
+
+            // Assert
+            Assert.DoesNotThrowAsync(async () => await response.Value.Content.CopyToAsync(Stream.Null));
+        }
+
+        [Test, Combinatorial]
+        public async Task DownloadStreamingHashMismatchThrows(
+            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [Values(true, false)] bool defers)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(DefaultDataSize);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm, DeferValidation = defers };
+
+            // alter response contents in pipeline, forcing a hash mismatch on verification step
+            var clientOptions = GetOptions();
+            clientOptions.AddPolicy(new TamperStreamContentsPolicy(), HttpPipelinePosition.PerCall);
+            blob = new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions);
+
+            // Act
+            AsyncTestDelegate operation = async () => await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
+            {
+                TransactionalHashingOptions = hashingOptions,
+                Range = new HttpRange(length: data.Length)
+            });
+
+            // Assert
+            if (defers)
+            {
+                Assert.DoesNotThrowAsync(operation);
+            }
+            else
+            {
+                Assert.ThrowsAsync<InvalidDataException>(operation);
+            }
         }
 
         // hashing, so we buffered the stream to hash then rewind before returning to user
@@ -198,6 +286,11 @@ namespace Azure.Storage.Blobs.Tests
             {
                 await blob.UploadAsync(stream);
             }
+
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseHashAssertion(algorithm));
+            var clientOptions = GetOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+            blob = InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions));
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act
@@ -208,6 +301,7 @@ namespace Azure.Storage.Blobs.Tests
             });
 
             // Assert
+            hashPipelineAssertion.CheckResponse = true;
             Assert.DoesNotThrowAsync(async () => await readStream.CopyToAsync(Stream.Null));
         }
 
@@ -225,46 +319,52 @@ namespace Azure.Storage.Blobs.Tests
             {
                 await blob.UploadAsync(stream);
             }
+
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseHashAssertion(algorithm));
+            var clientOptions = GetOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+            blob = InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions));
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
-            // Act
+            // Act / Assert
+            hashPipelineAssertion.CheckResponse = true;
             await blob.DownloadToAsync(new BlobBaseDownloadToOptions(Stream.Null)
             {
-                TransactionalHashingOptions = hashingOptions
+                TransactionalHashingOptions = hashingOptions,
+                TransferOptions = new StorageTransferOptions { InitialTransferSize = chunkSize, MaximumTransferSize = chunkSize }
             });
-
-            // Assert
-            // we didn't throw, so that's good
-            // TODO intercept responses in pipeline to check for hash responses
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        //[TestCase(TransactionalHashAlgorithm.StorageCrc64)] TODO #23578
         public async Task BlobClientUploadSuccessfulHashVerification(TransactionalHashAlgorithm algorithm)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
             var data = GetRandomBuffer(DefaultDataSize);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm));
+            var clientOptions = GetOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
             var hashingOptions = new UploadTransactionalHashingOptions { Algorithm = algorithm };
 
-            // Act
+            // Act / Assert
             using (var stream = new MemoryStream(data))
             {
+                hashPipelineAssertion.CheckRequest = true;
                 await blob.UploadAsync(stream, new BlobUploadOptions
                 {
                     TransactionalHashingOptions = hashingOptions
                 });
             }
-
-            // Assert
-            // we didn't throw, so that's good
-            // TODO intercept requests in pipeline to check for hash values
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        //[TestCase(TransactionalHashAlgorithm.StorageCrc64)] TODO #23578
         public async Task BlobClientUploadUsePrecalculatedOnOneshot(TransactionalHashAlgorithm algorithm)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -272,18 +372,20 @@ namespace Azure.Storage.Blobs.Tests
             // Arrange
             var data = GetRandomBuffer(Constants.KB); // well below partition size
 
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm));
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm));
             var clientOptions = GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
             // create an incorrect hash to check on request pipeline, guaranteeing we didn't autocalculate
             var precalculatedHash = GetRandomBuffer(16);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm,
                 PrecalculatedHash = precalculatedHash
             };
+
+            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
 
             // Act / Assert
             using (var stream = new MemoryStream(data))
@@ -305,8 +407,6 @@ namespace Azure.Storage.Blobs.Tests
                         throw new ArgumentException("Test arguments contain bad algorithm specifier.");
                 }
             }
-
-            // TODO intercept requests in pipeline to check for hash values
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
@@ -319,7 +419,10 @@ namespace Azure.Storage.Blobs.Tests
             const int blockSize = Constants.KB;
             var data = GetRandomBuffer(2 * blockSize);
 
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm));
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(
+                algorithm,
+                // only check put block, not put block list
+                isHashExpected: request => request.Uri.Query.Contains("blockid=")));
             var clientOptions = GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
@@ -350,7 +453,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        //[TestCase(TransactionalHashAlgorithm.StorageCrc64)] TODO #23578
         public async Task BlockBlobClientUploadUsePrecalculatedOnOneshot(TransactionalHashAlgorithm algorithm)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -358,7 +461,7 @@ namespace Azure.Storage.Blobs.Tests
             // Arrange
             var data = GetRandomBuffer(Constants.KB); // well below partition size
 
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm));
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm));
             var clientOptions = GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
@@ -407,7 +510,10 @@ namespace Azure.Storage.Blobs.Tests
             const int blockSize = Constants.KB;
             var data = GetRandomBuffer(2 * blockSize);
 
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm));
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(
+                algorithm,
+                // only check put block, not put block list
+                isHashExpected: request => request.Uri.Query.Contains("blockid=")));
             var clientOptions = GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
@@ -452,7 +558,7 @@ namespace Azure.Storage.Blobs.Tests
                 Algorithm = algorithm
             };
 
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm));
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm));
             var clientOptions = GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
@@ -487,7 +593,7 @@ namespace Azure.Storage.Blobs.Tests
                 PrecalculatedHash = precalculatedHash
             };
 
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm, expectedHash: precalculatedHash));
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm, expectedHash: precalculatedHash));
             var clientOptions = GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 

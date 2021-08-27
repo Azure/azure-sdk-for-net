@@ -30,7 +30,7 @@ namespace Azure.Storage
                         computedHash.MD5,
                         response.Headers.TryGetValue("Content-MD5", out byte[] md5) ? md5 : default))
                     {
-                        throw new Exception(); // TODO better exception
+                        throw Errors.HashMismatch("Content-MD5");
                     }
                     break;
                 case TransactionalHashAlgorithm.StorageCrc64:
@@ -38,7 +38,7 @@ namespace Azure.Storage
                         computedHash.StorageCrc64,
                         response.Headers.TryGetValue("x-ms-content-crc64", out byte[] crc) ? crc : default))
                     {
-                        throw new Exception(); // TODO better exception
+                        throw Errors.HashMismatch("x-ms-content-crc64");
                     }
                     break;
                 default:

@@ -1282,7 +1282,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // hashing is opt-in, so this buffer is part of that opt-in
                     if (options.TransactionalHashingOptions != default && !options.TransactionalHashingOptions.DeferValidation)
                     {
-                        // safe-truncate; transactional hash download limit well below maxInt
+                        // safe-buffer; transactional hash download limit well below maxInt
                         var readDestStream = new MemoryStream((int)response.Value.Details.ContentLength);
                         if (async)
                         {
@@ -2039,6 +2039,7 @@ namespace Azure.Storage.Blobs.Specialized
                     options.Conditions,
                     //options.ProgressHandler, // TODO: #8506
                     options.TransferOptions,
+                    options.TransactionalHashingOptions,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -2050,6 +2051,7 @@ namespace Azure.Storage.Blobs.Specialized
                     options.Conditions,
                     //options.ProgressHandler, // TODO: #8506
                     options.TransferOptions,
+                    options.TransactionalHashingOptions,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -2092,6 +2094,7 @@ namespace Azure.Storage.Blobs.Specialized
                     options.Conditions,
                     //options.ProgressHandler, // TODO: #8506
                     options.TransferOptions,
+                    options.TransactionalHashingOptions,
                     async: true,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2103,6 +2106,7 @@ namespace Azure.Storage.Blobs.Specialized
                     options.Conditions,
                     //options.ProgressHandler, // TODO: #8506
                     options.TransferOptions,
+                    options.TransactionalHashingOptions,
                     async: true,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

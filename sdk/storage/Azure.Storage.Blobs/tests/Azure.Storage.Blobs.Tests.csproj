@@ -29,4 +29,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
     </Content> 
   </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="C:\Repos\azure-sdk-for-net\sdk\storage\Azure.Storage.Common\tests\Shared\TamperTransactionalHashPolicy.cs" />
+    </ItemGroup>
 </Project>
