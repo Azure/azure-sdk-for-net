@@ -7,5 +7,13 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// </summary>
     public class UploadManifestResult
     {
+        internal UploadManifestResult(string digest)
+        {
+            Digest = digest;
+        }
+
+        /// <summary>
+        /// </summary>
+        public string Digest { get; }
     }
 }

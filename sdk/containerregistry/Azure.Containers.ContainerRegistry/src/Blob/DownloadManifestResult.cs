@@ -10,11 +10,21 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// </summary>
     public class DownloadManifestResult
     {
-        internal DownloadManifestResult(Stream content, IReadOnlyList<ArtifactBlobProperties> artifactFiles)
+        internal DownloadManifestResult(string digest, ManifestMediaType mediaType, Stream content, IReadOnlyList<ArtifactBlobProperties> artifactFiles)
         {
             Content = content;
+            MediaType = mediaType;
+            Digest = digest;
             ArtifactFiles = artifactFiles;
         }
+
+        /// <summary>
+        /// </summary>
+        public string Digest { get; }
+
+        /// <summary>
+        /// </summary>
+        public ManifestMediaType MediaType { get; }
 
         /// <summary>
         /// </summary>

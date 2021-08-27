@@ -25,33 +25,40 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         // TODO: Test UploadManifest
 
-        [RecordedTest]
-        public async Task CanUploadManifest()
+        [RecordedTest, NonParallelizable]
+        public async Task CanUploadOciManifest()
         {
             // Arrange
-            var uploadClient = CreateBlobClient("hello-artifact");
-            var manifestPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\hello-artifact", "manifest.json");
+            var client = CreateBlobClient("oci-artifact");
+
+            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
+            string digest = default;
 
             // Act
-            using (var fs = File.OpenRead(manifestPath))
+            using (var fs = File.OpenRead(manifest))
             {
-                await uploadClient.UploadManifestAsync(fs, new UploadManifestOptions());
+                var uploadResult = await client.UploadManifestAsync(fs, new UploadManifestOptions()
+                {
+                    MediaType = ManifestMediaType.OciManifest
+                });
+                digest = uploadResult.Value.Digest;
             }
 
-            // right now, getting this error:
-            //        "code": "MANIFEST_INVALID",
-            //        "message": "manifest invalid",
-
             // Assert
+            var downloadResult = await client.DownloadManifestAsync(digest);
+            Assert.AreEqual(digest, downloadResult.Value.Digest);
+
+            // TODO: Make this pass
+            //Assert.AreEqual(ManifestMediaType.OciManifest, downloadResult.Value.MediaType);
         }
 
-        [RecordedTest]
+        [RecordedTest, NonParallelizable]
         public async Task CanUploadBlob()
         {
             // Arrange
-            var client = CreateBlobClient("hello-artifact");
+            var client = CreateBlobClient("oci-artifact");
             var blob = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\hello-artifact", blob);
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", blob);
 
             string digest = default;
             // Act
@@ -62,12 +69,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Assert
-            var result = await client.DownloadBlobAsync(digest);
-            Assert.AreEqual(digest, result.Value.Digest);
-            Assert.AreEqual(28, result.Value.Content.Length);
+            var downloadResult = await client.DownloadBlobAsync(digest);
+            Assert.AreEqual(digest, downloadResult.Value.Digest);
+            Assert.AreEqual(28, downloadResult.Value.Content.Length);
 
             // Clean up
-            // TODO: delete the blob here
+            await client.DeleteBlobAsync(digest);
         }
 
         // TODO: Test full push scenario - for OCI
