@@ -54,21 +54,21 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// </summary>
         /// Note to implementers: if this method returns <code>true</code>, the methods
         /// <see cref="IsPublicKeyComplete"/>, <see cref="IsPublicKeyValid"/>, <see cref="IsPrivateKeyComplete"/> and 
-        /// <see cref="IsPrivateKeyValid"/> must be overriden.
+        /// <see cref="IsPrivateKeyValid"/> must be overridden.
         public abstract bool IsPublicKeyCrypto { get; }
 
         /// <summary>
         /// Tells if the type of key verified by this object supports symmetric key algorithms.
         /// </summary>
         /// Note to implementers: if this method returns <code>true</code>, the methods
-        /// <see cref="IsSymmetricKeyComplete"/> and <see cref="IsSymmetricKeyValid"/> must be overriden.
+        /// <see cref="IsSymmetricKeyComplete"/> and <see cref="IsSymmetricKeyValid"/> must be overridden.
         public abstract bool IsSymmetricKeyCrypto { get; }
 
         /// <summary>
         /// Tells if the type of key verified by this object contains a secret component, such as a hardware key token.
         /// </summary>
         /// Note to implementers: if this method returns <code>true</code>, the methods
-        /// <see cref="IsSecretKeyComplete"/> and <see cref="IsSecretKeyValid"/> must be overriden.
+        /// <see cref="IsSecretKeyComplete"/> and <see cref="IsSecretKeyValid"/> must be overridden.
         public abstract bool HasSecretKey { get; }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
         private Exception ThrowDefaultForPublicKeyCrypto( string methodName )
         {
             if ( IsPublicKeyCrypto )
-                throw new NotImplementedException( $"Type {GetType().Name} is a bad implementation. If {nameof( IsPublicKeyCrypto )} returns true, then {methodName} must be overriden and the base must not be called." );
+                throw new NotImplementedException( $"Type {GetType().Name} is a bad implementation. If {nameof( IsPublicKeyCrypto )} returns true, then {methodName} must be overridden and the base must not be called." );
 
             throw new InvalidOperationException( $"Type {GetType().Name} is not intended for public key cryptography." );
         }
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
         private Exception ThrowDefaultForSymmetricKeyCrypto( string methodName )
         {
             if ( IsSymmetricKeyCrypto )
-                throw new NotImplementedException( $"Type {GetType().Name} is a bad implementation. If {nameof( IsSymmetricKeyCrypto )} returns true, then {methodName} must be overriden and the base must not be called." );
+                throw new NotImplementedException( $"Type {GetType().Name} is a bad implementation. If {nameof( IsSymmetricKeyCrypto )} returns true, then {methodName} must be overridden and the base must not be called." );
 
             throw new InvalidOperationException( $"Type {GetType().Name} is not intended for symmetric key cryptography." );
         }
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
         private Exception ThrowDefaultForSecretKeyCrypto( string methodName )
         {
             if ( HasSecretKey )
-                throw new NotImplementedException( $"Type {GetType().Name} is a bad implementation. If {nameof( HasSecretKey )} returns true, then {methodName} must be overriden and the base must not be called." );
+                throw new NotImplementedException( $"Type {GetType().Name} is a bad implementation. If {nameof( HasSecretKey )} returns true, then {methodName} must be overridden and the base must not be called." );
 
             throw new InvalidOperationException( $"Type {GetType().Name} is not intended to keys that have a secret component (for instance, HSM keys)." );
         }

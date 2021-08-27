@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -34,9 +33,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="migrationSolutionId">The migration solution
         /// Id.</param>
-        public VaultSettingCreationInputProperties(string migrationSolutionId)
+        /// <param name="vmwareToAzureProviderType">VMware to Azure provider
+        /// type.</param>
+        public VaultSettingCreationInputProperties(string migrationSolutionId = default(string), string vmwareToAzureProviderType = default(string))
         {
             MigrationSolutionId = migrationSolutionId;
+            VmwareToAzureProviderType = vmwareToAzureProviderType;
             CustomInit();
         }
 
@@ -52,17 +54,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string MigrationSolutionId { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets vMware to Azure provider type.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (MigrationSolutionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MigrationSolutionId");
-            }
-        }
+        [JsonProperty(PropertyName = "vmwareToAzureProviderType")]
+        public string VmwareToAzureProviderType { get; set; }
+
     }
 }

@@ -124,7 +124,7 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;
             };
-            mockPublicMsalClient.ExtendedSilentAuthFactory = (_, _, tenant, _, _) =>
+            mockPublicMsalClient.ExtendedSilentAuthFactory = (_, _, _, tenant, _, _) =>
             {
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;

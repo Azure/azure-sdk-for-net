@@ -22,19 +22,21 @@ namespace Azure.Identity
         {
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool logPii)
             : base(pipeline, tenantId, clientId, cacheOptions)
         {
             _clientSecret = clientSecret;
             RegionalAuthority = regionalAuthority;
+            LogPII = logPii;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, ClientCertificateCredential.IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, ClientCertificateCredential.IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool logPii)
             : base(pipeline, tenantId, clientId, cacheOptions)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
             RegionalAuthority = regionalAuthority;
+            LogPII = logPii;
         }
 
         internal RegionalAuthority? RegionalAuthority { get; }
@@ -43,7 +45,8 @@ namespace Azure.Identity
         {
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
                 .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId)
-                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline));
+                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
+                .WithLogging(AzureIdentityEventSource.Singleton.LogMsal, enablePiiLogging: LogPII);
 
             if (_clientSecret != null)
             {

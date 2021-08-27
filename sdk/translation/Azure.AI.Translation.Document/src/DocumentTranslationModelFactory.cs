@@ -101,7 +101,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="success">Sets the <see cref="StatusSummary.Success"/> and the <see cref="TranslationStatus.DocumentsSucceeded"/> properties.</param>
         /// <param name="inProgress">Sets the <see cref="StatusSummary.InProgress"/> and the <see cref="TranslationStatus.DocumentsInProgress"/> properties.</param>
         /// <param name="notYetStarted">Sets the <see cref="StatusSummary.NotYetStarted"/> and the <see cref="TranslationStatus.DocumentsNotStarted"/> properties.</param>
-        /// <param name="cancelled">Sets the <see cref="StatusSummary.Cancelled"/> and the <see cref="TranslationStatus.DocumentsCancelled"/> properties.</param>
+        /// <param name="canceled">Sets the <see cref="StatusSummary.Cancelled"/> and the <see cref="TranslationStatus.DocumentsCanceled"/> properties.</param>
         /// <param name="totalCharacterCharged">Sets the <see cref="StatusSummary.TotalCharacterCharged"/> and the <see cref="TranslationStatus.TotalCharactersCharged"/> properties.</param>
         /// <returns>A new instance of <see cref="Document.TranslationStatus"/> for mocking purposes.</returns>
         public static TranslationStatus TranslationStatus(
@@ -115,11 +115,11 @@ namespace Azure.AI.Translation.Document
             int success,
             int inProgress,
             int notYetStarted,
-            int cancelled,
+            int canceled,
             long totalCharacterCharged
             )
         {
-            StatusSummary newSummary = new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged);
+            StatusSummary newSummary = new StatusSummary(total, failed, success, inProgress, notYetStarted, canceled, totalCharacterCharged);
             return new TranslationStatus(id, createdOn, lastModified, status, error, newSummary);
         }
         #endregion Statuses

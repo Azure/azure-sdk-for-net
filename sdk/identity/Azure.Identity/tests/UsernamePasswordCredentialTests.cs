@@ -49,7 +49,14 @@ namespace Azure.Identity.Tests
             var clientId = Guid.NewGuid().ToString();
             var tenantId = Guid.NewGuid().ToString();
 
-            var credential = new UsernamePasswordCredential(username, password, clientId, tenantId, new TokenCredentialOptions{ IsLoggingPIIEnabled = isLoggingPIIEnabled}, default, null);
+            var credential = new UsernamePasswordCredential(
+                username,
+                password,
+                clientId,
+                tenantId,
+                new TokenCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled },
+                default,
+                null);
 
             Assert.NotNull(credential.Client);
             Assert.AreEqual(isLoggingPIIEnabled, credential.Client.LogPII);

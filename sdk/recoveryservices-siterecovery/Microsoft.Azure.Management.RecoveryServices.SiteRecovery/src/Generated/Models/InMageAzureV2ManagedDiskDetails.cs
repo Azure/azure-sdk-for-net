@@ -36,12 +36,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="replicaDiskType">The replica disk type.</param>
         /// <param name="diskEncryptionSetId">The DiskEncryptionSet ARM
         /// ID.</param>
-        public InMageAzureV2ManagedDiskDetails(string diskId = default(string), string seedManagedDiskId = default(string), string replicaDiskType = default(string), string diskEncryptionSetId = default(string))
+        /// <param name="targetDiskName">The target disk name.</param>
+        public InMageAzureV2ManagedDiskDetails(string diskId = default(string), string seedManagedDiskId = default(string), string replicaDiskType = default(string), string diskEncryptionSetId = default(string), string targetDiskName = default(string))
         {
             DiskId = diskId;
             SeedManagedDiskId = seedManagedDiskId;
             ReplicaDiskType = replicaDiskType;
             DiskEncryptionSetId = diskEncryptionSetId;
+            TargetDiskName = targetDiskName;
             CustomInit();
         }
 
@@ -73,6 +75,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskEncryptionSetId")]
         public string DiskEncryptionSetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target disk name.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetDiskName")]
+        public string TargetDiskName { get; set; }
 
     }
 }

@@ -2996,7 +2996,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "544",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 10:16:48 GMT",
         "Expires": "-1",
@@ -3015,10 +3015,10 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200928T101648Z:1b5bf311-0794-4dac-bed4-9fcc1320b234"
       },
       "ResponseBody": {
-        "primaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-1272.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-3599;SharedAccessKey=Ni7rqpl7KFfW5humG3FbiG40Y4mjMO2IHepuNKp6jPg=",
-        "secondaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-1272.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-3599;SharedAccessKey=jkh\u002BwoFNqbueasV8Ti3FQk\u002Bc02TjSVuhfWCJWHeXaGk=",
-        "primaryKey": "Ni7rqpl7KFfW5humG3FbiG40Y4mjMO2IHepuNKp6jPg=",
-        "secondaryKey": "jkh\u002BwoFNqbueasV8Ti3FQk\u002Bc02TjSVuhfWCJWHeXaGk=",
+        "primaryConnectionString": "Sanitized",
+        "secondaryConnectionString": "Sanitized",
+        "primaryKey": "Sanitized",
+        "secondaryKey": "Sanitized",
         "keyName": "sdk-Authrules-3599"
       }
     },
@@ -3044,7 +3044,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "544",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 10:16:54 GMT",
         "Expires": "-1",
@@ -3063,10 +3063,10 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200928T101655Z:8b622f92-37e8-4156-b448-8e09d6f7a1a6"
       },
       "ResponseBody": {
-        "primaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-1272.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-3599;SharedAccessKey=T27cPDXe/08D9hwIiCgkDheElLGEG4uHzA088Jf6V3A=",
-        "secondaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-1272.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-3599;SharedAccessKey=jkh\u002BwoFNqbueasV8Ti3FQk\u002Bc02TjSVuhfWCJWHeXaGk=",
-        "primaryKey": "T27cPDXe/08D9hwIiCgkDheElLGEG4uHzA088Jf6V3A=",
-        "secondaryKey": "jkh\u002BwoFNqbueasV8Ti3FQk\u002Bc02TjSVuhfWCJWHeXaGk=",
+        "primaryConnectionString": "Sanitized",
+        "secondaryConnectionString": "Sanitized",
+        "primaryKey": "Sanitized",
+        "secondaryKey": "Sanitized",
         "keyName": "sdk-Authrules-3599"
       }
     },
@@ -3092,7 +3092,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "544",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 10:17:01 GMT",
         "Expires": "-1",
@@ -3111,10 +3111,10 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200928T101701Z:12da7063-0f49-4eae-99fe-1ba04c6527bf"
       },
       "ResponseBody": {
-        "primaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-1272.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-3599;SharedAccessKey=T27cPDXe/08D9hwIiCgkDheElLGEG4uHzA088Jf6V3A=",
-        "secondaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-1272.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-3599;SharedAccessKey=3GMrGXeNtmiLHMf2AE7JwRIiLZ9iRnXXfqZ4ZRfOUPI=",
-        "primaryKey": "T27cPDXe/08D9hwIiCgkDheElLGEG4uHzA088Jf6V3A=",
-        "secondaryKey": "3GMrGXeNtmiLHMf2AE7JwRIiLZ9iRnXXfqZ4ZRfOUPI=",
+        "primaryConnectionString": "Sanitized",
+        "secondaryConnectionString": "Sanitized",
+        "primaryKey": "Sanitized",
+        "secondaryKey": "Sanitized",
         "keyName": "sdk-Authrules-3599"
       }
     },

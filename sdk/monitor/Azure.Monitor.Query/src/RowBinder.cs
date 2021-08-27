@@ -7,10 +7,10 @@ using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query
 {
-    internal class RowBinder: TypeBinder<LogsQueryResultRow>
+    internal class RowBinder: TypeBinder<LogsTableRow>
     {
         internal static RowBinder Shared = new();
-        internal IReadOnlyList<T> BindResults<T>(IReadOnlyList<LogsQueryResultTable> tables)
+        internal IReadOnlyList<T> BindResults<T>(IReadOnlyList<LogsTable> tables)
         {
             List<T> results = new List<T>();
             if (typeof(IDictionary<string, object>).IsAssignableFrom(typeof(T)))
@@ -45,12 +45,12 @@ namespace Azure.Monitor.Query
             return results;
         }
 
-        protected override void Set<T>(LogsQueryResultRow destination, T value, BoundMemberInfo memberInfo)
+        protected override void Set<T>(LogsTableRow destination, T value, BoundMemberInfo memberInfo)
         {
             throw new NotSupportedException();
         }
 
-        protected override bool TryGet<T>(BoundMemberInfo memberInfo, LogsQueryResultRow source, out T value)
+        protected override bool TryGet<T>(BoundMemberInfo memberInfo, LogsTableRow source, out T value)
         {
             int column;
 
@@ -98,7 +98,7 @@ namespace Azure.Monitor.Query
             else
             {
                 throw new NotSupportedException($"The {typeof(T)} type is not supported as a deserialization target. " +
-                                                "Supported types are string, bool, long, decimal, double, object, Guid, DateTimeOffset, TimeSpan, BinaryData.");
+                                                "Supported types are string, bool, long, decimal, double, object, Guid, DateTimeOffset, TimeRange, BinaryData.");
             }
 
             return true;

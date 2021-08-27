@@ -94,7 +94,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 
         internal static byte[] NewNCryptPublicBlob( RSAParameters rsaParams )
         {
-            // Builds a BCRYPT_RSAKEY_BLOB strucutre ( http://msdn.microsoft.com/en-us/library/windows/desktop/aa375531(v=vs.85).aspx ).
+            // Builds a BCRYPT_RSAKEY_BLOB structure ( http://msdn.microsoft.com/en-us/library/windows/desktop/aa375531(v=vs.85).aspx ).
             var size = 6 * 4 + rsaParams.Exponent.Length + rsaParams.Modulus.Length;
             var data = new byte[size];
             var stream = new MemoryStream( data );
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 
         internal static byte[] NewNCryptPrivateBlob( RSAParameters rsaParams )
         {
-            // Builds a BCRYPT_RSAKEY_BLOB strucutre ( http://msdn.microsoft.com/en-us/library/windows/desktop/aa375531(v=vs.85).aspx ).
+            // Builds a BCRYPT_RSAKEY_BLOB structure ( http://msdn.microsoft.com/en-us/library/windows/desktop/aa375531(v=vs.85).aspx ).
             var size = 6 * 4 + rsaParams.Exponent.Length + rsaParams.Modulus.Length + rsaParams.P.Length + rsaParams.Q.Length;
             var data = new byte[size];
             var stream = new MemoryStream( data );
