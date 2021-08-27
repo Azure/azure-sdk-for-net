@@ -467,10 +467,10 @@ namespace Sql.Tests
                 // Get TDE config
                 // Recently changed to be enabled by default
                 var config = sqlClient.TransparentDataEncryptions.Get(resourceGroup.Name, server.Name, dbName);
-                Assert.Equal(TransparentDataEncryptionStatus.Enabled, config.Status);
+                Assert.Equal(TransparentDataEncryptionState.Enabled, config.State);
 
                 // Update TDE config
-                config.Status = TransparentDataEncryptionStatus.Disabled;
+                config.State = TransparentDataEncryptionState.Disabled;
 
                 // Sometimes the config is still being updated from the previous PUT, so execute with retry
                 SqlManagementTestUtilities.ExecuteWithRetry(() =>
@@ -483,7 +483,7 @@ namespace Sql.Tests
                     return e.Response.StatusCode == HttpStatusCode.Conflict;
                 });
 
-                Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
+                Assert.Equal(TransparentDataEncryptionState.Disabled, config.State);
             }
         }
     }
