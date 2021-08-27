@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "CloudServicesUpdateDomain", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "DedicatedHostGroups", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "DedicatedHosts", "2021-07-01"),
-                new Tuple<string, string, string>("Compute", "DiskAccesses", "2020-12-01"),
-                new Tuple<string, string, string>("Compute", "DiskEncryptionSets", "2020-12-01"),
-                new Tuple<string, string, string>("Compute", "DiskRestorePoint", "2020-12-01"),
-                new Tuple<string, string, string>("Compute", "Disks", "2020-12-01"),
+                new Tuple<string, string, string>("Compute", "DiskAccesses", "2021-04-01"),
+                new Tuple<string, string, string>("Compute", "DiskEncryptionSets", "2021-04-01"),
+                new Tuple<string, string, string>("Compute", "DiskRestorePoint", "2021-04-01"),
+                new Tuple<string, string, string>("Compute", "Disks", "2021-04-01"),
                 new Tuple<string, string, string>("Compute", "Galleries", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "GalleryApplicationVersions", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "GalleryApplications", "2021-07-01"),
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "SharedGalleries", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "SharedGalleryImageVersions", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "SharedGalleryImages", "2021-07-01"),
-                new Tuple<string, string, string>("Compute", "Snapshots", "2020-12-01"),
+                new Tuple<string, string, string>("Compute", "Snapshots", "2021-04-01"),
                 new Tuple<string, string, string>("Compute", "SshPublicKeys", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "Usage", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineExtensionImages", "2021-07-01"),
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Compute
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/rytruong/azure-rest-api-specs/blob/dev/rytruong/swagger_diskrp/specification/compute/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\work\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "rytruong";
       public static readonly String GithubBranchName = "dev/rytruong/swagger_diskrp";
-      public static readonly String GithubCommidId = "22af910314b230d4e25ce00611e2514270a5c046";
+      public static readonly String GithubCommidId = "c0d3bfc936901b2698df35cf4d59ff3877973609";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
