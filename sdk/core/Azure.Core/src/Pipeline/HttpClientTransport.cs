@@ -9,6 +9,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Security;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -85,6 +86,11 @@ namespace Azure.Core.Pipeline
 #pragma warning restore CA1801
         {
             using HttpRequestMessage httpRequest = BuildRequestMessage(message);
+#if NET5_0
+            httpRequest.Options.Set(new HttpRequestOptionsKey<HttpMessage>(MessageForServerCertificateCallback), message);
+#else
+            httpRequest.Properties[MessageForServerCertificateCallback] = message;
+#endif
             HttpResponseMessage responseMessage;
             Stream? contentStream = null;
             try
@@ -556,13 +562,25 @@ namespace Azure.Core.Pipeline
             {
                 if (options.ServerCertificateCustomValidationCallback != null)
                 {
-                    httpHandler.SslOptions.RemoteCertificateValidationCallback = (request, certificate, x509Chain, sslPolicyErrors) =>
+                    httpHandler.SslOptions.RemoteCertificateValidationCallback = (sender, certificate, x509Chain, sslPolicyErrors) =>
 #pragma warning disable CA1416 // 'X509Certificate2' is unsupported on 'browser'
-                        options.ServerCertificateCustomValidationCallback(
-                            request,
-                            certificate is { } ? new X509Certificate2(certificate) : null,
-                            x509Chain,
-                            sslPolicyErrors);
+                    {
+                        HttpMessage? message = null;
+                        if (sender is HttpRequestMessage requestMessage)
+                        {
+#if NET5_0
+                            requestMessage.Options.TryGetValue(new HttpRequestOptionsKey<HttpMessage>(MessageForServerCertificateCallback), out message);
+#else
+                            message = requestMessage.Properties[MessageForServerCertificateCallback] as HttpMessage;
+#endif
+                        }
+                        return options.ServerCertificateCustomValidationCallback(
+                            new ServerCertificateCustomValidationArgs(
+                                message,
+                                certificate is { } ? new X509Certificate2(certificate) : null,
+                                x509Chain,
+                                sslPolicyErrors));
+                    };
 #pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
                 }
             }
@@ -583,7 +601,17 @@ namespace Azure.Core.Pipeline
                 if (options.ServerCertificateCustomValidationCallback != null)
                 {
                     httpHandler.ServerCertificateCustomValidationCallback =
-                        (request, certificate2, x509Chain, sslPolicyErrors) => options.ServerCertificateCustomValidationCallback(request, certificate2, x509Chain, sslPolicyErrors);
+                        (request, certificate2, x509Chain, sslPolicyErrors) =>
+                        {
+                            HttpMessage? message;
+#if NET5_0
+                            request.Options.TryGetValue(new HttpRequestOptionsKey<HttpMessage>(MessageForServerCertificateCallback), out message);
+#else
+                            message = request?.Properties[MessageForServerCertificateCallback] as HttpMessage;
+#endif
+                            return options.ServerCertificateCustomValidationCallback(
+                                new ServerCertificateCustomValidationArgs(message, certificate2, x509Chain, sslPolicyErrors));
+                        };
                 }
             }
             return httpHandler;

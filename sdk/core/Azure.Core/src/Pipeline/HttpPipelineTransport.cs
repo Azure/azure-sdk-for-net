@@ -54,5 +54,7 @@ namespace Azure.Core.Pipeline
                 _ => new HttpClientTransport(options)
             };
         }
+
+        internal const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
     }
 }

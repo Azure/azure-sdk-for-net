@@ -31,7 +31,7 @@ namespace Azure.Core.Tests
 #if !NET461
                 return options switch
                 {
-                    null => new HttpClientTransport(new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = (_, _, _, _) => true }),
+                    null => new HttpClientTransport(new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = _ => true }),
                     _ => new HttpClientTransport(options)
 
                 };
