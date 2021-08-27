@@ -78,7 +78,7 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies whether the <see cref="InteractiveBrowserCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Setting to true disables launching the default system browser to authenticate in development environments.
-        /// The default is <see langword="true" />.
+        /// The default is <c>true</c>.
         /// </summary>
         public bool ExcludeInteractiveBrowserCredential { get; set; } = true;
 
