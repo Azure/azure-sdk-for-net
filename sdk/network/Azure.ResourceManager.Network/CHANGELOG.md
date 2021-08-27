@@ -1,13 +1,6 @@
 # Release History
 
-## 1.0.0-preview.3 (Unreleased)
-
-## 1.0.0-preview.2 (2020-09-23)
-
-- Accept header added to all requests.
-- Collections are now always initialized and collection properties are readonly by default.
-
-## 1.0.0-preview.1
+## 1.0.0-beta.1 (Unreleased)
 
 This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
@@ -15,11 +8,11 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 
 ### General New Features
 
-    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
-    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
-    - HTTP pipeline with custom policies
-    - Better error-handling
-    - Support uniform telemetry across all languages
+- Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
+- Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
+- HTTP pipeline with custom policies
+- Better error-handling
+- Support uniform telemetry across all languages
 
 > NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
 
@@ -96,16 +89,16 @@ Before upgrade:
 
 ```csharp
 var policy = new IpsecPolicy()
-            {
-                SaLifeTimeSeconds = 300,
-                SaDataSizeKilobytes = 1024,
-                IpsecEncryption = IpsecEncryption.AES128,
-                IpsecIntegrity = IpsecIntegrity.SHA256,
-                IkeEncryption = IkeEncryption.AES192,
-                IkeIntegrity = IkeIntegrity.SHA1,
-                DhGroup = DhGroup.DHGroup2,
-                PfsGroup = PfsGroup.PFS1,
-            }
+    {
+        SaLifeTimeSeconds = 300,
+        SaDataSizeKilobytes = 1024,
+        IpsecEncryption = IpsecEncryption.AES128,
+        IpsecIntegrity = IpsecIntegrity.SHA256,
+        IkeEncryption = IkeEncryption.AES192,
+        IkeIntegrity = IkeIntegrity.SHA1,
+        DhGroup = DhGroup.DHGroup2,
+        PfsGroup = PfsGroup.PFS1,
+    };
 ```
 
 After upgrade:
