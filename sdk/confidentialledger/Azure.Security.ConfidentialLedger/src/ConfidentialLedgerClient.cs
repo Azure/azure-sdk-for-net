@@ -79,7 +79,7 @@ namespace Azure.Security.ConfidentialLedger
             certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
 
             // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
-            bool CertValidationCheck(object request, X509Certificate2 cert)
+            bool CertValidationCheck(X509Certificate2 cert)
             {
                 bool isChainValid = certificateChain.Build(cert);
                 if (!isChainValid) return false;
@@ -90,7 +90,7 @@ namespace Azure.Security.ConfidentialLedger
             }
             return new HttpPipelineTransportOptions
             {
-                ServerCertificateCustomValidationCallback = (request, certificate2) => CertValidationCheck(request, certificate2)
+                ServerCertificateCustomValidationCallback = (_, certificate2, _, _) => CertValidationCheck(certificate2)
             };
         }
     }
