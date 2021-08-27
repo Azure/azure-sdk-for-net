@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
@@ -1878,6 +1880,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
+                using var logger = new AzureEventSourceListener(
+                    (eventData, text) => Console.WriteLine("[{1}] {3:o}: {0}: {2}", eventData.EventSource.Name, eventData.Level, text, DateTimeOffset.Now),
+                    EventLevel.Verbose);
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 100;
