@@ -141,5 +141,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             Assert.Equal(expectedType, remoteDependencyDataType);
         }
+
+        [Fact]
+        public void DependencyTypeisSetToInProcForInternalSpanWithParent()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var parentActivity = activitySource.StartActivity("ParentActivity", ActivityKind.Internal);
+            using var childActivity = activitySource.StartActivity("ChildActivity", ActivityKind.Internal);
+
+            var monitorTagsParent = AzureMonitorConverter.EnumerateActivityTags(parentActivity);
+
+            var remoteDependencyDataTypeForParent = TelemetryPartB.GetRemoteDependencyData(parentActivity, ref monitorTagsParent).Type;
+
+            Assert.Null(remoteDependencyDataTypeForParent);
+
+            var monitorTagsChild = AzureMonitorConverter.EnumerateActivityTags(childActivity);
+
+            var remoteDependencyDataTypeForChild = TelemetryPartB.GetRemoteDependencyData(childActivity, ref monitorTagsChild).Type;
+
+            Assert.Equal("InProc", remoteDependencyDataTypeForChild);
+        }
     }
 }

@@ -4846,7 +4846,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "544",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 09:59:38 GMT",
         "Expires": "-1",
@@ -4865,10 +4865,10 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200928T095938Z:53913b31-e59c-41de-be26-4d69aaf24f01"
       },
       "ResponseBody": {
-        "primaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-8464.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-5762;SharedAccessKey=6QUxk\u002BT15lP9vrnrOFYMbOZr9ZwZzk17fWSc3\u002BzZjTw=",
-        "secondaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-8464.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-5762;SharedAccessKey=Zs20LBTM\u002BLhDsdGtZgZrTHOcoM4AYshtcM7g282RvlY=",
-        "primaryKey": "6QUxk\u002BT15lP9vrnrOFYMbOZr9ZwZzk17fWSc3\u002BzZjTw=",
-        "secondaryKey": "Zs20LBTM\u002BLhDsdGtZgZrTHOcoM4AYshtcM7g282RvlY=",
+        "primaryConnectionString": "Sanitized",
+        "secondaryConnectionString": "Sanitized",
+        "primaryKey": "Sanitized",
+        "secondaryKey": "Sanitized",
         "keyName": "sdk-Authrules-5762"
       }
     },
@@ -5179,7 +5179,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "550",
+        "Content-Length": "480",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 09:59:49 GMT",
         "Expires": "-1",
@@ -5200,8 +5200,8 @@
       "ResponseBody": {
         "aliasPrimaryConnectionString": "Endpoint=sb://sdk-disasterrecovery-3315.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-5762;SharedAccessKey=6QUxk\u002BT15lP9vrnrOFYMbOZr9ZwZzk17fWSc3\u002BzZjTw=",
         "aliasSecondaryConnectionString": "Endpoint=sb://sdk-disasterrecovery-3315.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-5762;SharedAccessKey=Zs20LBTM\u002BLhDsdGtZgZrTHOcoM4AYshtcM7g282RvlY=",
-        "primaryKey": "6QUxk\u002BT15lP9vrnrOFYMbOZr9ZwZzk17fWSc3\u002BzZjTw=",
-        "secondaryKey": "Zs20LBTM\u002BLhDsdGtZgZrTHOcoM4AYshtcM7g282RvlY=",
+        "primaryKey": "Sanitized",
+        "secondaryKey": "Sanitized",
         "keyName": "sdk-Authrules-5762"
       }
     },
