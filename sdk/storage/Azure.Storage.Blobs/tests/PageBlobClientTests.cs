@@ -2520,13 +2520,18 @@ namespace Azure.Storage.Blobs.Test
 
             HttpRange httpRange = new HttpRange(0, 1);
 
+            PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+            {
+                SourceConditions = sourceConditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 pageBlobClient.UploadPagesFromUriAsync(
                     uri,
                     httpRange,
                     httpRange,
-                    sourceConditions: sourceConditions),
+                    options),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"UploadPagesFromUri does not support the {invalidSourceCondition} condition(s)."));
