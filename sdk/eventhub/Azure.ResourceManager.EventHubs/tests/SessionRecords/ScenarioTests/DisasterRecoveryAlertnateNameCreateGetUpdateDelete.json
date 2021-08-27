@@ -4417,7 +4417,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "542",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 08:52:19 GMT",
         "Expires": "-1",
@@ -4436,10 +4436,10 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200928T085220Z:6cc20583-a329-4dc4-9650-045c4509a9e3"
       },
       "ResponseBody": {
-        "primaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-668.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-8251;SharedAccessKey=49pOfHEvzAFG6obSHoobBUSyIEWLhKY8j\u002BrVcWEJdWI=",
-        "secondaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-668.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-8251;SharedAccessKey=xmBDB6tiG9FfvOCh8vb9a\u002Bx2kbvoQgjZhJe8FVRJ8Mk=",
-        "primaryKey": "49pOfHEvzAFG6obSHoobBUSyIEWLhKY8j\u002BrVcWEJdWI=",
-        "secondaryKey": "xmBDB6tiG9FfvOCh8vb9a\u002Bx2kbvoQgjZhJe8FVRJ8Mk=",
+        "primaryConnectionString": "Sanitized",
+        "secondaryConnectionString": "Sanitized",
+        "primaryKey": "Sanitized",
+        "secondaryKey": "Sanitized",
         "keyName": "sdk-Authrules-8251"
       }
     },
@@ -4709,7 +4709,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "552",
+        "Content-Length": "482",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 08:52:30 GMT",
         "Expires": "-1",
@@ -4730,8 +4730,8 @@
       "ResponseBody": {
         "aliasPrimaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-668.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-8251;SharedAccessKey=49pOfHEvzAFG6obSHoobBUSyIEWLhKY8j\u002BrVcWEJdWI=",
         "aliasSecondaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-668.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-8251;SharedAccessKey=xmBDB6tiG9FfvOCh8vb9a\u002Bx2kbvoQgjZhJe8FVRJ8Mk=",
-        "primaryKey": "49pOfHEvzAFG6obSHoobBUSyIEWLhKY8j\u002BrVcWEJdWI=",
-        "secondaryKey": "xmBDB6tiG9FfvOCh8vb9a\u002Bx2kbvoQgjZhJe8FVRJ8Mk=",
+        "primaryKey": "Sanitized",
+        "secondaryKey": "Sanitized",
         "keyName": "sdk-Authrules-8251"
       }
     },

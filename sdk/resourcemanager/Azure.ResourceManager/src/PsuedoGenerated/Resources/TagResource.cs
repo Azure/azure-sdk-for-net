@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref = "TagResource"/> class. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
             _data = resource;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>

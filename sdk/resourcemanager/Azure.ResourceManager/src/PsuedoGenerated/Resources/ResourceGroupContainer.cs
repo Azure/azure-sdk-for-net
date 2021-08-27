@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         protected new Subscription Parent { get {return base.Parent as Subscription;} }
 
-        private ResourceGroupsRestOperations RestClient => _restClient ??= new ResourceGroupsRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+        private ResourceGroupsRestOperations RestClient => _restClient ??= new ResourceGroupsRestOperations(Diagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
 
         private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 

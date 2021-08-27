@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Management
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Management
             _data = resource;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary>
