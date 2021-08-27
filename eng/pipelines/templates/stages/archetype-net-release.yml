@@ -53,7 +53,7 @@ stages:
                     mkdir InstallationCheck
                   displayName: Create Testing Directory
                 - pwsh: |
-                    eng/scripts/InstallationCheck.ps1 -ArtifactName ${{parameters.ArtifactName}} -Artifact ${{artifact}} -PipelineWorkspace $(Pipeline.Workspace)
+                    eng/scripts/InstallationCheck.ps1 -ArtifactName ${{parameters.ArtifactName}} -Artifact $artifact -PipelineWorkspace $(Pipeline.Workspace)
                   displayName: Verify Package Installation
                   workingDirectory: $(System.DefaultWorkingDirectory)/InstallationCheck
           - deployment: TagRepository
