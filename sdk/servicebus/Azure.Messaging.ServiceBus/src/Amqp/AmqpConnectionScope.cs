@@ -626,6 +626,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             var session = default(AmqpSession);
             var stopWatch = ValueStopwatch.StartNew();
+            ReceivingAmqpLink link = null;
 
             try
             {
@@ -668,7 +669,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     OperationTimeout = _operationTimeout
                 };
 
-                var link = new ReceivingAmqpLink(linkSettings);
+                link = new ReceivingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}:{linkSettings.Source.ToString()}";
 
                 link.AttachTo(session);
@@ -701,7 +702,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Aborting the session will perform any necessary cleanup of
                 // the associated link as well.
-
+                if (link != null)
+                {
+                    ActiveLinks.TryRemove(link, out var timer);
+                    timer?.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+                    timer?.Dispose();
+                }
                 session?.Abort();
                 ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
