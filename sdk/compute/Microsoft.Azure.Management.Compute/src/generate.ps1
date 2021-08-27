@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "compute/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "compute/resource-manager" -AutoRestVersion "v2" -SpecsRepoFork "rytruong" -SpecsRepoBranch "dev/rytruong/swagger_diskrp"
