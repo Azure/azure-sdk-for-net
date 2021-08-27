@@ -284,25 +284,15 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         {
             Assert.AreEqual(vme1.Id, vme2.Id);
             Assert.AreEqual(vme1.Name, vme2.Name);
-            // adding these checks one by one is so tedious, is there anything we can do about this?
-            /*ForceUpdateTag = forceUpdateTag;
-              Publisher = publisher; Java withPublisher("Microsoft.OSTCExtensions")
-              TypePropertiesType = typePropertiesType;
-              TypeHandlerVersion = typeHandlerVersion;Java withVersion("2.3")
-              AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
-              EnableAutomaticUpgrade = enableAutomaticUpgrade;
-              Settings = settings;
-              ProtectedSettings = protectedSettings; Java 83-85
-              ProvisioningState = provisioningState;
-              InstanceView = instanceView;*/
         }
 
         public static VirtualMachineExtensionData GetBasicLinuxVirtualMachineExtensionData(Location location)
         {
             return new VirtualMachineExtensionData(location)
             {
-                Publisher = "Microsoft.OSTCExtensions",//or "Microsoft.Azure.Extensions"
-                TypeHandlerVersion = "2.3",
+                Publisher = "Microsoft.Azure.Extensions",
+                TypeHandlerVersion = "2.0",
+                TypePropertiesType = "CustomScript",
             };
         }
         #endregion

@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var Iro_virtualMachine = await container.CreateOrUpdateAsync(vmName, input);
-            VirtualMachine virtualMachine = Iro_virtualMachine.Value;
+            var lro_virtualMachine = await container.CreateOrUpdateAsync(vmName, input);
+            VirtualMachine virtualMachine = lro_virtualMachine.Value;
             return virtualMachine.GetVirtualMachineExtensionVirtualMachines();
         }
 
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetVirtualMachineExtensionVirtualMachineContainerAsync();
             var vmeName = Recording.GenerateAssetName("testVME-");
-            var Iro_virtualMachine = await container.CreateOrUpdateAsync(vmeName, BasicVirtualMachineExtensionData);
-            VirtualMachineExtensionVirtualMachine virtualMachine = Iro_virtualMachine.Value;
+            var lro_virtualMachine = await container.CreateOrUpdateAsync(vmeName, BasicVirtualMachineExtensionData);
+            VirtualMachineExtensionVirtualMachine virtualMachine = lro_virtualMachine.Value;
             Assert.AreEqual(vmeName, virtualMachine.Data.Name);
         }
 
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetVirtualMachineExtensionVirtualMachineContainerAsync();
             var vmeName = Recording.GenerateAssetName("testVME-");
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineExtensionData(DefaultLocation);
-            var Iro_vme1 = await container.CreateOrUpdateAsync(vmeName, input);
-            VirtualMachineExtensionVirtualMachine vme1 = Iro_vme1.Value;
+            var lro_vme1 = await container.CreateOrUpdateAsync(vmeName, input);
+            VirtualMachineExtensionVirtualMachine vme1 = lro_vme1.Value;
             VirtualMachineExtensionVirtualMachine vme2 = await container.GetAsync(vmeName);
 
             ResourceDataHelper.AssertVirtualMachineEXtention(vme1.Data, vme2.Data);
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetVirtualMachineExtensionVirtualMachineContainerAsync();
             var vmeName = Recording.GenerateAssetName("testVME-");
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineExtensionData(DefaultLocation);
-            var  Iro_vme = await container.CreateOrUpdateAsync(vmeName, input);
-            VirtualMachineExtensionVirtualMachine vme = Iro_vme.Value;
+            var  lro_vme = await container.CreateOrUpdateAsync(vmeName, input);
+            VirtualMachineExtensionVirtualMachine vme = lro_vme.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(vmeName));
             Assert.IsFalse(await container.CheckIfExistsAsync(vmeName + "1"));
 
@@ -81,18 +81,16 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task GetAll()
         {
             var container = await GetVirtualMachineExtensionVirtualMachineContainerAsync();
-            var vmeName1 = Recording.GenerateAssetName("testVME-");
-            var vmeName2 = Recording.GenerateAssetName("testVME-");
-            var input1 = BasicVirtualMachineExtensionData;
-            var input2 = BasicVirtualMachineExtensionData;
-            _ = await container.CreateOrUpdateAsync(vmeName1, input1);
-            _ = await container.CreateOrUpdateAsync(vmeName2, input2);
+            var vmeName = Recording.GenerateAssetName("testVME-");
+            var input = BasicVirtualMachineExtensionData;
+            _ = await container.CreateOrUpdateAsync(vmeName, input);
+            _ = await container.CreateOrUpdateAsync(vmeName, input);
             int count = 0;
             foreach (var vme in (await container.GetAllAsync()).Value)
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.GreaterOrEqual(count, 1);
         }
     }
 }

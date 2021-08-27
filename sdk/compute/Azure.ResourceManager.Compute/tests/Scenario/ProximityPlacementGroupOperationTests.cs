@@ -4,7 +4,6 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -19,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = (await CreateResourceGroupAsync()).GetProximityPlacementGroups();
             var input = ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            var Iro_group =  await container.CreateOrUpdateAsync(groupName, input);
-            ProximityPlacementGroup group = Iro_group.Value;
+            var lro_group =  await container.CreateOrUpdateAsync(groupName, input);
+            ProximityPlacementGroup group = lro_group.Value;
             return group;
         }
 
