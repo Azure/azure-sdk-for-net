@@ -5,9 +5,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
     /// </summary>
-    public class UploadBlobResult
+    public class DeleteBlobResult
     {
-        internal UploadBlobResult(string digest)
+        /// <summary>
+        /// </summary>
+        /// <param name="digest"></param>
+        internal DeleteBlobResult(string digest)
         {
             Digest = digest;
         }

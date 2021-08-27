@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.ResumableStorage;
@@ -19,14 +18,13 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     {
         private readonly Uri _endpoint;
         private readonly string _registryName;
+        private readonly string _repositoryName;
         private readonly HttpPipeline _pipeline;
         private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
         private readonly AuthenticationRestClient _acrAuthClient;
         private readonly ContainerRegistryBlobRestClient _blobRestClient;
-
-        private readonly string _repositoryName;
 
         // TODO: Design choice about taking repository name in the constructor, vs. methods?
 
@@ -128,18 +126,28 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             options ??= new UploadBlobOptions();
 
-            string digest = ContentDescriptor.ComputeDigest(stream);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
+            scope.Start();
+            try
+            {
+                string digest = ContentDescriptor.ComputeDigest(stream);
 
-            ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
-                await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
+                    await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
-            ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
-                await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, stream, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
+                    await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, stream, cancellationToken).ConfigureAwait(false);
 
-            ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
-                await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
+                    await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
 
-            return Response.FromValue(new UploadBlobResult(), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -218,8 +226,54 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public virtual async Task<Response<DownloadBlobResult>> DownloadBlobAsync(string digest, DownloadBlobOptions options = default, CancellationToken cancellationToken = default)
         {
             options ??= new DownloadBlobOptions();
-            ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
+            scope.Start();
+            try
+            {
+                ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="digest"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<DeleteBlobResult> DeleteBlob(string digest, DeleteBlobOptions options = default, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="digest"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<DeleteBlobResult>> DeleteBlobAsync(string digest, DeleteBlobOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options ??= new DeleteBlobOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteBlob)}");
+            scope.Start();
+            try
+            {
+                ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> blobResult = await _blobRestClient.DeleteBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DeleteBlobResult(blobResult.Headers.DockerContentDigest), blobResult.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion

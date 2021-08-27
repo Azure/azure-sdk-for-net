@@ -97,9 +97,9 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 {
                     if (file == manifestFilePath)
                     {
-                        await uploadClient.UploadManifestAsync(fs,
-                            new UploadManifestOptions(ManifestMediaType.OciManifestV1)
-                        );
+                        //await uploadClient.UploadManifestAsync(fs,
+                        //    new UploadManifestOptions(ManifestMediaType.OciManifestV1)
+                        //);
                     }
                     else
                     {
