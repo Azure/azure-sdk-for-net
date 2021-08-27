@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
                 }
                 inputEvents.Add(cloudEvent);
             }
-            await client.SendCloudEventsAsync(inputEvents);
+            await client.SendCloudNativeCloudEventsAsync(inputEvents);
 
             activity.Stop();
             List<CloudEvent> endEvents = DeserializeRequest(mockTransport.SingleRequest);
