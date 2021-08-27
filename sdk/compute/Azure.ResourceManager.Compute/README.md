@@ -35,6 +35,7 @@ To authenticate to Azure and create an `ArmClient`, do the following:
 
 ```C# Snippet:Readme_AuthClient
 using Azure.Identity;
+using Azure.ResourceManager;
 
 // Code omitted for brevity
 
