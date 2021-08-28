@@ -1,9 +1,9 @@
 param (
     [Parameter()]
-    [string] $ArtifactName,
+    [string] $ArtifactsDirectory,
 
     [Parameter()]
-    [hashtable] $Artifact,
+    [string] $Artifact,
 
     [Parameter()]
     [string] $PipelineWorkspace
@@ -11,13 +11,13 @@ param (
 
 Write-Host "dotnet new console"
 dotnet new console
-$localFeed = "$PipelineWorkspace/$ArtifactName-signed/$($Artifact.name)"
+$localFeed = "$PipelineWorkspace/$ArtifactsDirectory-signed/$Artifact"
 Write-Host "dotnet nuget add source $($localFeed)"
 dotnet nuget add source $localFeed
 
-$version = (Get-ChildItem "$($localFeed)/*.nupkg" -Exclude "*.symbols.nupkg" -Name).replace(".nupkg","").replace("$($Artifact.name).","")
-Write-Host "dotnet add package $($Artifact.name) --version $version --no-restore"
-dotnet add package $($Artifact.name) --version $version --no-restore
+$version = (Get-ChildItem "$($localFeed)/*.nupkg" -Exclude "*.symbols.nupkg" -Name).replace(".nupkg","").replace("$($Artifact).","")
+Write-Host "dotnet add package $Artifact --version $version --no-restore"
+dotnet add package $Artifact --version $version --no-restore
 if ($LASTEXITCODE) {
     exit $LASTEXITCODE
 }
