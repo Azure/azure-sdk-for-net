@@ -11,7 +11,7 @@ param (
 
 Write-Host "dotnet new console"
 dotnet new console
-$localFeed = "$PipelineWorkspace/$ArtifactsDirectory-signed/$Artifact"
+$localFeed = "$(Pipeline.Workspace)/$ArtifactsDirectory-signed/$Artifact"
 Write-Host "dotnet nuget add source $($localFeed)"
 dotnet nuget add source $localFeed
 
