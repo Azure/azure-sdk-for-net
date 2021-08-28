@@ -952,7 +952,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="connection">The connection to close.</param>
-        protected virtual void CloseConnection(AmqpConnection connection) => connection.SafeClose();
+        protected virtual void CloseConnection(AmqpConnection connection)
+        {
+            Console.WriteLine($"{DateTimeOffset.UtcNow.ToString("o")}: Closing connection {connection.Identifier}");
+            connection.SafeClose();
+        }
 
         /// <summary>
         ///   Calculates the interval after which authorization for an AMQP link should be
