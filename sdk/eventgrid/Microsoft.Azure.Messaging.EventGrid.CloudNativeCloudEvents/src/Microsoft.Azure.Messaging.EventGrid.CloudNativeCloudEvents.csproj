@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>CloudNative CloudEvents support for Azure.Messaging.EventGrid library</AssemblyTitle>
     <Description>This library allows the CloudEvent model from CloudNative.CloudEvents to be published using the Azure Event Grid client library.</Description>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0</Version>
     <PackageTags>Microsoft Azure SDK CloudNative CloudEvents</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
