@@ -23,5 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ApiEntityReference HealthProbe { get; set; }
         /// <summary> The list of network configurations. </summary>
         public IList<VirtualMachineScaleSetUpdateNetworkConfiguration> NetworkInterfaceConfigurations { get; }
+        /// <summary> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode &apos;Flexible&apos;. </summary>
+        public NetworkApiVersion? NetworkApiVersion { get; set; }
     }
 }

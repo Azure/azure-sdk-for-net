@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = "West US";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string gwSubnetName = Recording.GenerateAssetName("azsmnet");
             string subnet2Name = Recording.GenerateAssetName("azsmnet");

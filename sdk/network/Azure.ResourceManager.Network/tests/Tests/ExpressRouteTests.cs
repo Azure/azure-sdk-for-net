@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/routefilters");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
 
             // Create route filter
             string filterName = "filter";
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = "westus";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
 
             string circuitName = "circuit";
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = "westus";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
 
             string circuitName = "circuit";
 
