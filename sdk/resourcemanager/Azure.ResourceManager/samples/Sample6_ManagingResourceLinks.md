@@ -4,11 +4,12 @@
 
 For this example, you need the following namespaces:
 
-```C# Snippet:Managing_Policies_Namespaces
+```C# Snippet:Managing_ResourceLinks_Namespaces
 using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using Azure;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 ## Create a Resource Link
 
-```C# Snippet:Readme_CreateResourceLink
+```C# Snippet:Managing_ResourceLinks_CreateResourceLink
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ResourceLinkContainer resourceLinkContainer = armClient.GetResourceLinks();
 
@@ -31,7 +32,7 @@ ResourceLink resourceLink = (await armClient.GetResourceLinks().CreateOrUpdateAs
 
 ## List Resource Links
 
-```C# Snippet:Readme_ListResourceLinks
+```C# Snippet:Managing_ResourceLinks_ListResourceLinks
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ResourceLinkContainer resourceLinkContainer = armClient.GetResourceLinks();
 ResourceIdentifier vnId1 = vn1.Id;
@@ -44,7 +45,7 @@ await foreach (var link in resourceLinks)
 
 ## Get and Delete a ResourceLink
 
-```C# Snippet:Readme_DeleteResourceLink
+```C# Snippet:Managing_ResourceLinks_DeleteResourceLink
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ResourceLinkContainer resourceLinkContainer = armClient.GetResourceLinks();
 string resourceLinkName = "myLink";

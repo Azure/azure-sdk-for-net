@@ -6,34 +6,37 @@ For this example, you need the following namespaces:
 
 ```C# Snippet:Managing_Policies_Namespaces
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Azure;
 using Azure.Identity;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 ```
 
 When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:
 
-```C# Snippet:Readme_DefaultSubscription
+```C# Snippet:Managing_Policies_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects.
 
-```C# Snippet:Readme_GetResourceGroupContainer
+```C# Snippet:Managing_Policies_GetResourceGroupContainer
+ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+// With the container, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ```
 
 ## Create a Policy Definition
 
 We'll create our policy definition in the subscription scope. To do this, we will create a `PolicyDefinitionData` object for the parameters that we want our policy definition to have, then we will get the policy definition container from subscription and we call `CreateOrUpdateAsync()`.
 
-```C# Snippet:Readme_CreatePolicyDefinition
+```C# Snippet:Managing_Policies_CreatePolicyDefinition
 string policyDefinitionName = "myPolicyDef";
 PolicyDefinitionData policyDefinitionData = new PolicyDefinitionData
 {
@@ -63,7 +66,7 @@ PolicyDefinition policyDefinition = (await pdContainer.CreateOrUpdateAsync(polic
 
 Now that we have a resource group and a policy definition, we can create a policy assignment that applies the policy to the resource group.
 
-```C# Snippet:Readme_CreatePolicyAssignment
+```C# Snippet:Managing_Policies_CreatePolicyAssignment
 PolicyAssignmentContainer paContainer = resourceGroup.GetPolicyAssignments();
 string policyAssignmentName = "myPolicyAssign";
 PolicyAssignmentData policyAssignmentData = new PolicyAssignmentData
@@ -76,20 +79,20 @@ PolicyAssignment policyAssignment = (await paContainer.CreateOrUpdateAsync(polic
 
 You can also create a policy assignment for a subscription, management group or any resource. The only change you need to make is to get the PolicyAssignmentContainer from the corresponding parent.
 
-```C# Snippet:Readme_CreatePolicyAssignmentForAnyResource
+```C# Snippet:Managing_Policies_CreatePolicyAssignmentForAnyResource
 PolicyAssignmentContainer subscriptionPaContainer = subscription.GetPolicyAssignments();
 
 var managementGroup = (await armClient.GetManagementGroups().GetAsync("myMgmtGroup")).Value;
 PolicyAssignmentContainer managementGroupPaContainer = managementGroup.GetPolicyAssignments();
-
 // Suppose you have an existing VirtualNetwork myVNet resource
 PolicyAssignmentContainer vNetPaContainer = myVNet.GetPolicyAssignments();
 ```
 
 ## List All Policy Assignments for the Resource Group
 
-```C# Snippet:Readme_GetAllPolicyAssignments
+```C# Snippet:Managing_Policies_GetAllPolicyAssignments
 string filter = "AtExactScope()";
+PolicyAssignmentContainer paContainer = resourceGroup.GetPolicyAssignments();
 AsyncPageable<PolicyAssignment> policyAssignments = paContainer.GetAllAsync(filter: filter);
 await foreach (var pa in policyAssignments)
 {
@@ -101,7 +104,7 @@ See more about filter options: https://docs.microsoft.com/rest/api/policy/policy
 
 ## Get and Delete a Policy Assignment
 
-```C# Snippet:Readme_DeletePolicyAssignment
+```C# Snippet:Managing_Policies_DeletePolicyAssignment
 PolicyAssignmentContainer paContainer = resourceGroup.GetPolicyAssignments();
 string policyAssignmentName = "myPolicyAssign";
 PolicyAssignment policyAssignment = (await paContainer.GetAsync(policyAssignmentName)).Value;
@@ -110,7 +113,7 @@ await policyAssignment.DeleteAsync();
 
 ## Get and Delete a Policy Definition
 
-```C# Snippet:Readme_DeletePolicyDefinition
+```C# Snippet:Managing_Policies_DeletePolicyDefinition
 PolicyDefinitionContainer pdContainer = subscription.GetPolicyDefinitions();
 string policyDefinitionName = "myPolicyDef";
 PolicyDefinition policyDefinition = (await pdContainer.GetAsync(policyDefinitionName)).Value;
