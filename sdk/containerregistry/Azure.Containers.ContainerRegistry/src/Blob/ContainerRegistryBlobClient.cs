@@ -105,7 +105,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 string tagOrDigest = options.Tag ?? ContentDescriptor.ComputeDigest(stream);
                 ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, options.MediaType.ToString(), cancellationToken).ConfigureAwait(false);
-
                 return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
             }
             catch (Exception e)
@@ -185,15 +184,16 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                // TODO: Options could expose platform: arch/os to select for manifest list
+                Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, digest, options.MediaType.ToString(), cancellationToken).ConfigureAwait(false);
+                Response rawResponse = response.GetRawResponse();
+                ManifestMediaType mediaType = rawResponse.Headers.ContentType;
 
-                Response<ArtifactManifestProperties> properties = await _restClient.GetManifestPropertiesAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
-                Response<ManifestWrapper> manifestWrapper = await _restClient.GetManifestAsync(_repositoryName, digest, properties.Value.MediaType, cancellationToken).ConfigureAwait(false);
+                if (!rawResponse.Headers.TryGetValue("Docker-Content-Digest", out string downloadedDigest))
+                {
+                    _clientDiagnostics.CreateRequestFailedException(rawResponse, "Response did not contain \"Docker-Content-Digest\" header.");
+                }
 
-                Stream stream = manifestWrapper.GetRawResponse().ContentStream;
-                stream.Position = 0;
-                // TODO: get digest from response
-                return Response.FromValue(new DownloadManifestResult(digest, manifestWrapper.Value.MediaType, stream, GetArtifactFiles(properties.Value.MediaType, manifestWrapper.Value)), manifestWrapper.GetRawResponse());
+                return Response.FromValue(new DownloadManifestResult(downloadedDigest, mediaType, rawResponse.ContentStream, GetArtifactFiles(options.MediaType, response.Value)), rawResponse);
             }
             catch (Exception e)
             {
@@ -202,14 +202,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
-        private IReadOnlyList<ArtifactBlobProperties> GetArtifactFiles(string mediaType, ManifestWrapper manifest)
+        private IReadOnlyList<ArtifactBlobProperties> GetArtifactFiles(ManifestMediaType mediaType, ManifestWrapper manifest)
         {
             List<ArtifactBlobProperties> artifactFiles = new List<ArtifactBlobProperties>();
 
             // TODO: Implement for each of the manifest schemas
-            // TODO: internal extensible enum for possible media types?
-            // DO we always have media type, or will we need to get this from Content-Type header?
-            if (mediaType == "application/vnd.docker.distribution.manifest.v2+json")
+            if (mediaType == ManifestMediaType.OciManifest)
             {
                 // If has config, add config
                 if (manifest.Config != null)
