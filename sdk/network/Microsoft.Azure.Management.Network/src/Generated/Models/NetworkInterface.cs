@@ -70,8 +70,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// network interface resource. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
-        /// <param name="workloadType">WorkloadType of the NetworkInterface for
-        /// BareMetal resources</param>
         /// <param name="nicType">Type of Network Interface resource. Possible
         /// values include: 'Standard', 'Elastic'</param>
         /// <param name="privateLinkService">Privatelinkservice of the network
@@ -81,7 +79,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Abort', 'Committed'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<NetworkInterfaceTapConfiguration> tapConfigurations = default(IList<NetworkInterfaceTapConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableIPForwarding = default(bool?), IList<string> hostedWorkloads = default(IList<string>), SubResource dscpConfiguration = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string), string workloadType = default(string), string nicType = default(string), PrivateLinkService privateLinkService = default(PrivateLinkService), string migrationPhase = default(string), string etag = default(string))
+        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<NetworkInterfaceTapConfiguration> tapConfigurations = default(IList<NetworkInterfaceTapConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableIPForwarding = default(bool?), IList<string> hostedWorkloads = default(IList<string>), SubResource dscpConfiguration = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string), string nicType = default(string), PrivateLinkService privateLinkService = default(PrivateLinkService), string migrationPhase = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
@@ -99,7 +97,6 @@ namespace Microsoft.Azure.Management.Network.Models
             DscpConfiguration = dscpConfiguration;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
-            WorkloadType = workloadType;
             NicType = nicType;
             PrivateLinkService = privateLinkService;
             MigrationPhase = migrationPhase;
@@ -210,13 +207,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets workloadType of the NetworkInterface for BareMetal
-        /// resources
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.workloadType")]
-        public string WorkloadType { get; set; }
-
-        /// <summary>
         /// Gets or sets type of Network Interface resource. Possible values
         /// include: 'Standard', 'Elastic'
         /// </summary>
@@ -244,5 +234,46 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ExtendedLocation != null)
+            {
+                ExtendedLocation.Validate();
+            }
+            if (PrivateEndpoint != null)
+            {
+                PrivateEndpoint.Validate();
+            }
+            if (IpConfigurations != null)
+            {
+                foreach (var element in IpConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (TapConfigurations != null)
+            {
+                foreach (var element1 in TapConfigurations)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+            if (PrivateLinkService != null)
+            {
+                PrivateLinkService.Validate();
+            }
+        }
     }
 }
