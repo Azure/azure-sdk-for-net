@@ -119,8 +119,8 @@ namespace Azure.AI.Translation.Document
             long totalCharacterCharged
             )
         {
-            StatusSummary newSummary = new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged);
-            return new TranslationStatus(id, createdOn, lastModified, status, error, newSummary);
+            StatusSummary newSummary = new StatusSummary(total, failed, success, inProgress, notYetStarted, canceled, totalCharacterCharged);
+            return new TranslationStatusResult(id, createdOn, lastModified, status, error, newSummary);
         }
         #endregion Statuses
     }

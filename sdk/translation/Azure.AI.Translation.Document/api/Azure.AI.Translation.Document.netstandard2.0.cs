@@ -168,15 +168,6 @@ namespace Azure.AI.Translation.Document
         public static bool operator !=(Azure.AI.Translation.Document.DocumentTranslationStatus left, Azure.AI.Translation.Document.DocumentTranslationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FileFormat
-    {
-        internal FileFormat() { }
-        public System.Collections.Generic.IReadOnlyList<string> ContentTypes { get { throw null; } }
-        public string DefaultFormatVersion { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> FileExtensions { get { throw null; } }
-        public string Format { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> FormatVersions { get { throw null; } }
-    }
     public partial class GetDocumentStatusesOptions
     {
         public GetDocumentStatusesOptions() { }
