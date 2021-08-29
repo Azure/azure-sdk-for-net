@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Azure.Test
 {
@@ -23,8 +22,8 @@ namespace Azure.Azure.Test
             string location = null;
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            ProviderInfo provider = await client.GetTenantProviderAsync(providerName);
-            foreach (var resource in provider.ResourceTypes)
+            Provider provider = await client.DefaultSubscription.GetProviders().GetAsync(providerName);
+            foreach (var resource in provider.Data.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
                 {

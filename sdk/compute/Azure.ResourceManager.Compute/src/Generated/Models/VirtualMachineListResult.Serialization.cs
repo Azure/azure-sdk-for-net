@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineListResult DeserializeVirtualMachineListResult(JsonElement element)
         {
-            IReadOnlyList<VirtualMachine> value = default;
+            IReadOnlyList<VirtualMachineData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<VirtualMachine> array = new List<VirtualMachine>();
+                    List<VirtualMachineData> array = new List<VirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachine.DeserializeVirtualMachine(item));
+                        array.Add(VirtualMachineData.DeserializeVirtualMachineData(item));
                     }
                     value = array;
                     continue;

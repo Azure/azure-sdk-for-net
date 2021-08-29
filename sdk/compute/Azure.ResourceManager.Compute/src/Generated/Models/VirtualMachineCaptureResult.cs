@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Output of virtual machine capture operation. </summary>
-    public partial class VirtualMachineCaptureResult : SubResource
+    public partial class VirtualMachineCaptureResult : WritableSubResource
     {
         /// <summary> Initializes a new instance of VirtualMachineCaptureResult. </summary>
         public VirtualMachineCaptureResult()
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineCaptureResult. </summary>
-        /// <param name="id"> Resource Id. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="schema"> the schema of the captured virtual machine. </param>
         /// <param name="contentVersion"> the version of the content. </param>
         /// <param name="parameters"> parameters of the captured virtual machine. </param>

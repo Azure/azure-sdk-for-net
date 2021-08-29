@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            ProviderInfo provider = await client.GetTenantProviderAsync(providerName);
-            foreach (var resource in provider.ResourceTypes)
+            Provider provider = await client.DefaultSubscription.GetProviders().GetAsync(providerName);
+            foreach (var resource in provider.Data.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
                 {
