@@ -10,7 +10,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Identity;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -30,8 +32,14 @@ namespace Azure.Core.TestFramework
 
         private TokenCredential _credential;
         private TestRecording _recording;
+        private readonly string _serviceName;
 
-        private readonly Dictionary<string, string> _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private Dictionary<string, string> _environmentFile;
+        private readonly string _serviceSdkDirectory;
+
+        private bool _bootstrappingAttempted;
+        private readonly SemaphoreSlim _bootstrappingSemaphore = new(1, 1);
+        private Exception _bootstrappingException;
 
         protected TestEnvironment()
         {
@@ -42,28 +50,34 @@ namespace Azure.Core.TestFramework
 
             var testProject = GetSourcePath(GetType().Assembly);
             var sdkDirectory = Path.GetFullPath(Path.Combine(RepositoryRoot, "sdk"));
-            var serviceName = Path.GetFullPath(testProject)
+            _serviceName = Path.GetFullPath(testProject)
                 .Substring(sdkDirectory.Length)
                 .Trim(Path.DirectorySeparatorChar)
                 .Split(Path.DirectorySeparatorChar).FirstOrDefault();
 
-            if (string.IsNullOrWhiteSpace(serviceName))
+            if (string.IsNullOrWhiteSpace(_serviceName))
             {
                 throw new InvalidOperationException($"Unable to determine the service name from test project path {testProject}");
             }
 
-            var serviceSdkDirectory = Path.Combine(sdkDirectory, serviceName);
+            _serviceSdkDirectory = Path.Combine(sdkDirectory, _serviceName);
             if (!Directory.Exists(sdkDirectory))
             {
-                throw new InvalidOperationException($"SDK directory {serviceSdkDirectory} not found");
+                throw new InvalidOperationException($"SDK directory {_serviceSdkDirectory} not found");
             }
 
-            _prefix = serviceName.ToUpperInvariant() + "_";
+            _prefix = _serviceName.ToUpperInvariant() + "_";
 
+            ParseEnvironmentFile();
+        }
+
+        private void ParseEnvironmentFile()
+        {
+            _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             var testEnvironmentFiles = new[]
             {
-                Path.Combine(serviceSdkDirectory, "test-resources.bicep.env"),
-                Path.Combine(serviceSdkDirectory, "test-resources.json.env")
+                Path.Combine(_serviceSdkDirectory, "test-resources.bicep.env"),
+                Path.Combine(_serviceSdkDirectory, "test-resources.json.env")
             };
 
             foreach (var testEnvironmentFile in testEnvironmentFiles)
@@ -304,6 +318,11 @@ namespace Azure.Core.TestFramework
         protected string GetRecordedVariable(string name, Action<RecordedVariableOptions> options)
         {
             var value = GetRecordedOptionalVariable(name, options);
+            if (value == null)
+            {
+                BootStrapTestResources();
+                value = GetRecordedOptionalVariable(name, options);
+            }
             EnsureValue(name, value);
             return value;
         }
@@ -348,6 +367,11 @@ namespace Azure.Core.TestFramework
         protected string GetVariable(string name)
         {
             var value = GetOptionalVariable(name);
+            if (value == null)
+            {
+                BootStrapTestResources();
+                value = GetOptionalVariable(name);
+            }
             EnsureValue(name, value);
             return value;
         }
@@ -356,10 +380,18 @@ namespace Azure.Core.TestFramework
         {
             if (value == null)
             {
-                var prefixedName = _prefix + name;
-                throw new InvalidOperationException(
-                    $"Unable to find environment variable {prefixedName} or {name} required by test." + Environment.NewLine +
-                    "Make sure the test environment was initialized using eng/common/TestResources/New-TestResources.ps1 script.");
+                string prefixedName = _prefix + name;
+                string message = $"Unable to find environment variable {prefixedName} or {name} required by test." + Environment.NewLine +
+                                 "Make sure the test environment was initialized using eng/common/TestResources/New-TestResources.ps1 script.";
+                if (_bootstrappingException != null)
+                {
+                    message += Environment.NewLine + "Resource creation failed during the test run. Make sure Powershell version 6 or higher is installed.";
+                    throw new InvalidOperationException(
+                        message,
+                        _bootstrappingException);
+                }
+
+                throw new InvalidOperationException(message);
             }
         }
 
@@ -457,6 +489,50 @@ namespace Azure.Core.TestFramework
                 bool.TryParse(switchString, out bool disableAutoRecording);
 
                 return disableAutoRecording || GlobalIsRunningInCI;
+            }
+        }
+
+        private void BootStrapTestResources()
+        {
+            try
+            {
+                _bootstrappingSemaphore.Wait();
+
+                if (_bootstrappingAttempted)
+                {
+                    return;
+                }
+
+                string path = Path.Combine(TestEnvironment.RepositoryRoot, "eng", "common", "TestResources",
+                    $"New-TestResources-Wrapper.ps1 {_serviceName} " +
+                    $"-basename {Environment.UserName}-{_serviceName}-{Guid.NewGuid().ToString().Substring(0, 4)} ");
+
+                var processInfo = new ProcessStartInfo(
+                    @"pwsh.exe",
+                    path)
+                {
+                    UseShellExecute = true
+                };
+                Process process = null;
+                try
+                {
+                    process = Process.Start(processInfo);
+                }
+                catch (Exception ex)
+                {
+                    _bootstrappingException = ex;
+                }
+
+                if (process != null)
+                {
+                    process.WaitForExit();
+                    ParseEnvironmentFile();
+                }
+            }
+            finally
+            {
+                _bootstrappingAttempted = true;
+                _bootstrappingSemaphore.Release();
             }
         }
     }
