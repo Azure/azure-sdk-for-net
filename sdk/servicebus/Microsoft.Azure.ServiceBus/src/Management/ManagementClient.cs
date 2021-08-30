@@ -22,6 +22,13 @@ namespace Microsoft.Azure.ServiceBus.Management
         private readonly string clientId;
 
         /// <summary>
+        /// Can be used for mocking.
+        /// </summary>
+        public ManagementClient()
+        {
+        }
+        
+        /// <summary>
         /// Initializes a new <see cref="ManagementClient"/> which can be used to perform management opertions on ServiceBus entities.
         /// </summary>
         /// <param name="connectionString">Namespace connection string.</param>
