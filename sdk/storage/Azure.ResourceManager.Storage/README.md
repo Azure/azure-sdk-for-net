@@ -79,7 +79,7 @@ StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
 AsyncPageable<StorageAccount> response = accountContainer.GetAllAsync();
 await foreach (StorageAccount storageAccount in response)
 {
-    Console.WriteLine(storageAccount.Data.Name);
+    Console.WriteLine(storageAccount.Id.Name);
 }
 ```
 
@@ -88,7 +88,7 @@ await foreach (StorageAccount storageAccount in response)
 ```C# Snippet:Managing_StorageAccounts_GetStorageAccount
 StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
 StorageAccount storageAccount = await accountContainer.GetAsync("myAccount");
-Console.WriteLine(storageAccount.Data.Name);
+Console.WriteLine(storageAccount.Id.Name);
 ```
 
 ### Try to get a storage account if it exists
@@ -99,7 +99,7 @@ StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
 StorageAccount storageAccount = await accountContainer.GetIfExistsAsync("foo");
 if (storageAccount != null)
 {
-    Console.WriteLine(storageAccount.Data.Name);
+    Console.WriteLine(storageAccount.Id.Name);
 }
 if (await accountContainer.CheckIfExistsAsync("bar"))
 {
