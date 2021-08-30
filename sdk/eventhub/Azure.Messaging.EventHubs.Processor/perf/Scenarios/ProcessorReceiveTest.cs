@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor.Perf.Infrastructure;
 
@@ -15,19 +18,45 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
             EventProcessorClient.ProcessErrorAsync += ProcessErrorAsync;
         }
 
-        private Task ProcessEventAsync(ProcessEventArgs arg)
+        private async Task ProcessEventAsync(ProcessEventArgs arg)
         {
-            // EventPerfTest.EventRaised() should never throw either, but add a guard in case this changes
-            try
+            if (arg.HasEvent)
             {
-                EventRaised();
-            }
-            catch (Exception e)
-            {
-                ErrorRaised(e);
-            }
+                if (Options.ProcessingDelayMs.HasValue)
+                {
+                    if (Options.ProcessingDelayStrategy == ProcessingDelayStrategy.Sleep)
+                    {
+                        Thread.Sleep(Options.ProcessingDelayMs.Value);
+                    }
+                    else if (Options.ProcessingDelayStrategy == ProcessingDelayStrategy.Spin)
+                    {
+                        var sw = Stopwatch.StartNew();
+                        while (sw.ElapsedMilliseconds < Options.ProcessingDelayMs.Value)
+                        {
+                        }
+                    }
+                }
 
-            return Task.CompletedTask;
+                // Consume properties
+                foreach (var property in arg.Data.Properties)
+                {
+                    var key = property.Key;
+                    var value = property.Value;
+                }
+
+                // Consume body
+                await arg.Data.EventBody.ToStream().CopyToAsync(Stream.Null);
+
+                // EventPerfTest.EventRaised() should never throw either, but add a guard in case this changes
+                try
+                {
+                    EventRaised();
+                }
+                catch (Exception e)
+                {
+                    ErrorRaised(e);
+                }
+            }
         }
 
         private Task ProcessErrorAsync(ProcessErrorEventArgs arg)

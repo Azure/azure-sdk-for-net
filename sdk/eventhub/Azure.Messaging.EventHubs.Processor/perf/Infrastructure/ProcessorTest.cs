@@ -21,15 +21,31 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
             _checkpointStore = new BlobContainerClient(GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
                 $"CheckpointStore-{Guid.NewGuid()}".ToLowerInvariant());
 
+            var clientOptions = new EventProcessorClientOptions() {
+                LoadBalancingStrategy = options.LoadBalancingStrategy
+            };
+
+            if (options.CacheEventCount.HasValue)
+            {
+                clientOptions.CacheEventCount = options.CacheEventCount.Value;
+            }
+
+            if (options.MaximumWaitTimeMs.HasValue)
+            {
+                clientOptions.MaximumWaitTime = TimeSpan.FromMilliseconds(options.MaximumWaitTimeMs.Value);
+            }
+
+            if (options.PrefetchCount.HasValue)
+            {
+                clientOptions.PrefetchCount = options.PrefetchCount.Value;
+            }
+
             EventProcessorClient = new EventProcessorClient(
                 _checkpointStore,
                 EventHubConsumerClient.DefaultConsumerGroupName,
                 EventHubsTestEnvironment.Instance.EventHubsConnectionString,
                 EventHubsTestEnvironment.Instance.EventHubNameOverride,
-                new EventProcessorClientOptions()
-                {
-                    LoadBalancingStrategy = options.LoadBalancingStrategy,
-                });
+                clientOptions);
         }
 
         public override async Task SetupAsync()
