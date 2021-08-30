@@ -221,7 +221,8 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                if (this.messageReceiver.ReceiveMode == ReceiveMode.PeekLock)
+                if (this.messageReceiver.ReceiveMode == ReceiveMode.PeekLock &&
+                    this.registerHandlerOptions.AutoComplete)
                 {
                     await this.messageReceiver.AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
                 }

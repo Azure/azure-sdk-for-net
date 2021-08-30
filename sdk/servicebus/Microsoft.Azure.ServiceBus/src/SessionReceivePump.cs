@@ -104,7 +104,8 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                if (session.ReceiveMode == ReceiveMode.PeekLock)
+                if (session.ReceiveMode == ReceiveMode.PeekLock &&
+                    this.sessionHandlerOptions.AutoComplete)
                 {
                     await session.AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
                 }
