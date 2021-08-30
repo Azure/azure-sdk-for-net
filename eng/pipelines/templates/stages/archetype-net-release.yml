@@ -43,6 +43,18 @@ stages:
         dependsOn: Signing
         condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
         jobs:
+          - job: InstallationCheck
+            condition: ne('${{ artifact.skipPublishPackage }}', 'true')
+            displayName: "Installation Check"
+            steps:
+              - download: current
+                artifact: ${{parameters.ArtifactName}}-signed
+              - pwsh: mkdir InstallationCheck
+                displayName: Create Testing Directory
+              - pwsh: |
+                  $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1 -ArtifactsDirectory ${{parameters.ArtifactName}} -Artifact ${{artifact.name}} -PipelineWorkspace $(Pipeline.Workspace)
+                displayName: Verify Package Installation
+                workingDirectory: $(System.DefaultWorkingDirectory)/InstallationCheck
           - deployment: TagRepository
             displayName: "Create release tag"
             condition: ne(variables['Skip.TagRepository'], 'true')
