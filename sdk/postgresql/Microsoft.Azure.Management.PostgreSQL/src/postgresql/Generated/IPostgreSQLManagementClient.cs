@@ -44,6 +44,11 @@ namespace Microsoft.Azure.Management.PostgreSQL
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
@@ -73,24 +78,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
         IServersOperations Servers { get; }
 
         /// <summary>
-        /// Gets the IReplicasOperations.
-        /// </summary>
-        IReplicasOperations Replicas { get; }
-
-        /// <summary>
         /// Gets the IFirewallRulesOperations.
         /// </summary>
         IFirewallRulesOperations FirewallRules { get; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkRulesOperations.
-        /// </summary>
-        IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
-
-        /// <summary>
-        /// Gets the IDatabasesOperations.
-        /// </summary>
-        IDatabasesOperations Databases { get; }
 
         /// <summary>
         /// Gets the IConfigurationsOperations.
@@ -98,24 +88,19 @@ namespace Microsoft.Azure.Management.PostgreSQL
         IConfigurationsOperations Configurations { get; }
 
         /// <summary>
-        /// Gets the ILogFilesOperations.
-        /// </summary>
-        ILogFilesOperations LogFiles { get; }
-
-        /// <summary>
-        /// Gets the IServerAdministratorsOperations.
-        /// </summary>
-        IServerAdministratorsOperations ServerAdministrators { get; }
-
-        /// <summary>
-        /// Gets the ILocationBasedPerformanceTierOperations.
-        /// </summary>
-        ILocationBasedPerformanceTierOperations LocationBasedPerformanceTier { get; }
-
-        /// <summary>
         /// Gets the ICheckNameAvailabilityOperations.
         /// </summary>
         ICheckNameAvailabilityOperations CheckNameAvailability { get; }
+
+        /// <summary>
+        /// Gets the ILocationBasedCapabilitiesOperations.
+        /// </summary>
+        ILocationBasedCapabilitiesOperations LocationBasedCapabilities { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkSubnetUsageOperations.
+        /// </summary>
+        IVirtualNetworkSubnetUsageOperations VirtualNetworkSubnetUsage { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -123,24 +108,14 @@ namespace Microsoft.Azure.Management.PostgreSQL
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IServerSecurityAlertPoliciesOperations.
+        /// Gets the IDatabasesOperations.
         /// </summary>
-        IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; }
+        IDatabasesOperations Databases { get; }
 
         /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// Gets the IGetPrivateDnsZoneSuffixOperations.
         /// </summary>
-        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkResourcesOperations.
-        /// </summary>
-        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
-
-        /// <summary>
-        /// Gets the IServerKeysOperations.
-        /// </summary>
-        IServerKeysOperations ServerKeys { get; }
+        IGetPrivateDnsZoneSuffixOperations GetPrivateDnsZoneSuffix { get; }
 
     }
 }

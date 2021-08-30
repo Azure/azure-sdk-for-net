@@ -50,6 +50,11 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
@@ -78,24 +83,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public virtual IServersOperations Servers { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicasOperations.
-        /// </summary>
-        public virtual IReplicasOperations Replicas { get; private set; }
-
-        /// <summary>
         /// Gets the IFirewallRulesOperations.
         /// </summary>
         public virtual IFirewallRulesOperations FirewallRules { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkRulesOperations.
-        /// </summary>
-        public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
-
-        /// <summary>
-        /// Gets the IDatabasesOperations.
-        /// </summary>
-        public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
         /// Gets the IConfigurationsOperations.
@@ -103,24 +93,19 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public virtual IConfigurationsOperations Configurations { get; private set; }
 
         /// <summary>
-        /// Gets the ILogFilesOperations.
-        /// </summary>
-        public virtual ILogFilesOperations LogFiles { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerAdministratorsOperations.
-        /// </summary>
-        public virtual IServerAdministratorsOperations ServerAdministrators { get; private set; }
-
-        /// <summary>
-        /// Gets the ILocationBasedPerformanceTierOperations.
-        /// </summary>
-        public virtual ILocationBasedPerformanceTierOperations LocationBasedPerformanceTier { get; private set; }
-
-        /// <summary>
         /// Gets the ICheckNameAvailabilityOperations.
         /// </summary>
         public virtual ICheckNameAvailabilityOperations CheckNameAvailability { get; private set; }
+
+        /// <summary>
+        /// Gets the ILocationBasedCapabilitiesOperations.
+        /// </summary>
+        public virtual ILocationBasedCapabilitiesOperations LocationBasedCapabilities { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkSubnetUsageOperations.
+        /// </summary>
+        public virtual IVirtualNetworkSubnetUsageOperations VirtualNetworkSubnetUsage { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -128,24 +113,14 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IServerSecurityAlertPoliciesOperations.
+        /// Gets the IDatabasesOperations.
         /// </summary>
-        public virtual IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; private set; }
+        public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// Gets the IGetPrivateDnsZoneSuffixOperations.
         /// </summary>
-        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkResourcesOperations.
-        /// </summary>
-        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerKeysOperations.
-        /// </summary>
-        public virtual IServerKeysOperations ServerKeys { get; private set; }
+        public virtual IGetPrivateDnsZoneSuffixOperations GetPrivateDnsZoneSuffix { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the PostgreSQLManagementClient class.
@@ -389,21 +364,16 @@ namespace Microsoft.Azure.Management.PostgreSQL
         private void Initialize()
         {
             Servers = new ServersOperations(this);
-            Replicas = new ReplicasOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
-            VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
-            Databases = new DatabasesOperations(this);
             Configurations = new ConfigurationsOperations(this);
-            LogFiles = new LogFilesOperations(this);
-            ServerAdministrators = new ServerAdministratorsOperations(this);
-            LocationBasedPerformanceTier = new LocationBasedPerformanceTierOperations(this);
             CheckNameAvailability = new CheckNameAvailabilityOperations(this);
+            LocationBasedCapabilities = new LocationBasedCapabilitiesOperations(this);
+            VirtualNetworkSubnetUsage = new VirtualNetworkSubnetUsageOperations(this);
             Operations = new Operations(this);
-            ServerSecurityAlertPolicies = new ServerSecurityAlertPoliciesOperations(this);
-            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
-            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
-            ServerKeys = new ServerKeysOperations(this);
+            Databases = new DatabasesOperations(this);
+            GetPrivateDnsZoneSuffix = new GetPrivateDnsZoneSuffixOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -433,8 +403,6 @@ namespace Microsoft.Azure.Management.PostgreSQL
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ServerPropertiesForCreate>("createMode"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ServerPropertiesForCreate>("createMode"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

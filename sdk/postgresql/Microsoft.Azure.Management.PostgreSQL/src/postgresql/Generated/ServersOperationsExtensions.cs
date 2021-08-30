@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.PostgreSQL
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -24,7 +22,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
     public static partial class ServersOperationsExtensions
     {
             /// <summary>
-            /// Creates a new server, or will overwrite an existing server.
+            /// Creates a new server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,13 +36,13 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='parameters'>
             /// The required parameters for creating or updating a server.
             /// </param>
-            public static Server Create(this IServersOperations operations, string resourceGroupName, string serverName, ServerForCreate parameters)
+            public static Server Create(this IServersOperations operations, string resourceGroupName, string serverName, Server parameters)
             {
                 return operations.CreateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates a new server, or will overwrite an existing server.
+            /// Creates a new server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,7 +59,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Server> CreateAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerForCreate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Server> CreateAsync(this IServersOperations operations, string resourceGroupName, string serverName, Server parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -85,7 +83,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='parameters'>
             /// The required parameters for updating a server.
             /// </param>
-            public static Server Update(this IServersOperations operations, string resourceGroupName, string serverName, ServerUpdateParameters parameters)
+            public static Server Update(this IServersOperations operations, string resourceGroupName, string serverName, ServerForUpdate parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
@@ -109,7 +107,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Server> UpdateAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Server> UpdateAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerForUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -203,7 +201,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            public static IEnumerable<Server> ListByResourceGroup(this IServersOperations operations, string resourceGroupName)
+            public static IPage<Server> ListByResourceGroup(this IServersOperations operations, string resourceGroupName)
             {
                 return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
@@ -220,7 +218,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Server>> ListByResourceGroupAsync(this IServersOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Server>> ListByResourceGroupAsync(this IServersOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -234,7 +232,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<Server> List(this IServersOperations operations)
+            public static IPage<Server> List(this IServersOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -248,7 +246,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Server>> ListAsync(this IServersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Server>> ListAsync(this IServersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -268,9 +266,12 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static void Restart(this IServersOperations operations, string resourceGroupName, string serverName)
+            /// <param name='parameters'>
+            /// The parameters for restarting a server.
+            /// </param>
+            public static void Restart(this IServersOperations operations, string resourceGroupName, string serverName, RestartParameter parameters = default(RestartParameter))
             {
-                operations.RestartAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                operations.RestartAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -285,16 +286,93 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
+            /// <param name='parameters'>
+            /// The parameters for restarting a server.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, RestartParameter parameters = default(RestartParameter), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RestartWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.RestartWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Creates a new server, or will overwrite an existing server.
+            /// Starts a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static void Start(this IServersOperations operations, string resourceGroupName, string serverName)
+            {
+                operations.StartAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StartAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StartWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Stops a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static void Stop(this IServersOperations operations, string resourceGroupName, string serverName)
+            {
+                operations.StopAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stops a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StopAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StopWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Creates a new server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -308,13 +386,13 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='parameters'>
             /// The required parameters for creating or updating a server.
             /// </param>
-            public static Server BeginCreate(this IServersOperations operations, string resourceGroupName, string serverName, ServerForCreate parameters)
+            public static Server BeginCreate(this IServersOperations operations, string resourceGroupName, string serverName, Server parameters)
             {
                 return operations.BeginCreateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates a new server, or will overwrite an existing server.
+            /// Creates a new server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -331,7 +409,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Server> BeginCreateAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerForCreate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Server> BeginCreateAsync(this IServersOperations operations, string resourceGroupName, string serverName, Server parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -355,7 +433,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='parameters'>
             /// The required parameters for updating a server.
             /// </param>
-            public static Server BeginUpdate(this IServersOperations operations, string resourceGroupName, string serverName, ServerUpdateParameters parameters)
+            public static Server BeginUpdate(this IServersOperations operations, string resourceGroupName, string serverName, ServerForUpdate parameters)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
@@ -379,7 +457,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Server> BeginUpdateAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Server> BeginUpdateAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerForUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -436,9 +514,12 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static void BeginRestart(this IServersOperations operations, string resourceGroupName, string serverName)
+            /// <param name='parameters'>
+            /// The parameters for restarting a server.
+            /// </param>
+            public static void BeginRestart(this IServersOperations operations, string resourceGroupName, string serverName, RestartParameter parameters = default(RestartParameter))
             {
-                operations.BeginRestartAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                operations.BeginRestartAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -453,12 +534,157 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
+            /// <param name='parameters'>
+            /// The parameters for restarting a server.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginRestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, RestartParameter parameters = default(RestartParameter), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Starts a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static void BeginStart(this IServersOperations operations, string resourceGroupName, string serverName)
+            {
+                operations.BeginStartAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginStartAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Stops a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static void BeginStop(this IServersOperations operations, string resourceGroupName, string serverName)
+            {
+                operations.BeginStopAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stops a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginStopAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginStopWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// List all the servers in a given resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Server> ListByResourceGroupNext(this IServersOperations operations, string nextPageLink)
+            {
+                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all the servers in a given resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Server>> ListByResourceGroupNextAsync(this IServersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all the servers in a given subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Server> ListNext(this IServersOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all the servers in a given subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Server>> ListNextAsync(this IServersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

@@ -5,7 +5,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.PostgreSQL
+namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
 {
   using System;
   using System.Collections.Generic;
@@ -19,31 +19,25 @@ namespace Microsoft.Azure.Management.PostgreSQL
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DBforPostgreSQL", "CheckNameAvailability", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Configurations", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Databases", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "FirewallRules", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "LocationBasedPerformanceTier", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "LogFiles", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Operations", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Replicas", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "ServerAdministrators", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Servers", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "VirtualNetworkRules", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "PrivateEndpointConnections", "2018-06-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "PrivateLinkResources", "2018-06-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "ServerKeys", "2020-01-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "ServerSecurityAlertPolicies", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "CheckNameAvailability", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Configurations", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Databases", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "FirewallRules", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "GetPrivateDnsZoneSuffix", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "LocationBasedCapabilities", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Operations", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Servers", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "VirtualNetworkSubnetUsage", "2021-06-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/postgresql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.output-folder=C:\\z\\azure-sdk-for-net\\sdk\\postgresql\\Microsoft.Azure.Management.PostgreSQL\\src\\postgresql\\Generated";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/postgresql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.output-folder=C:\\Users\\daeunyim\\work\\SDK\\azure-sdk-for-net\\sdk\\postgresql\\Microsoft.Azure.Management.PostgreSQL\\src\\postgresql\\Generated";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "faf8e1c19e3b36e6d16622bf168369a838b04a7f";
+      public static readonly String GithubCommidId = "b020247789ba2ab0065ebbcfa69050ce729493b8";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
