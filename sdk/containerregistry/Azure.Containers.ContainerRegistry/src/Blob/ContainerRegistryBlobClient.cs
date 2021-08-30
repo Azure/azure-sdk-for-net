@@ -295,6 +295,40 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="digest"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response DeleteManifest(string digest, DeleteManifestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="digest"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> DeleteManifestAsync(string digest, DeleteManifestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options ??= new DeleteManifestOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.DeleteManifestAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         #endregion
     }
 }

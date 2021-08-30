@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Linq;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
@@ -20,7 +22,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
-
             var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
             string digest = default;
 
@@ -39,7 +40,46 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             Assert.AreEqual(ManifestMediaType.OciManifest, downloadResult.Value.MediaType);
 
-            // TODO: implement delete manifest
+            // Clean up
+            await client.DeleteManifestAsync(digest);
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanUploadOciManifestWithTag()
+        {
+            // Arrange
+            string repository = "oci-artifact";
+            var client = CreateBlobClient(repository);
+            var metadataClient = CreateClient();
+            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
+            string digest = default;
+            string tag = $"v{DateTime.Now.Ticks}";
+
+            // Act
+            using (var fs = File.OpenRead(manifest))
+            {
+                var uploadResult = await client.UploadManifestAsync(fs, new UploadManifestOptions()
+                {
+                    Tag = tag,
+                    MediaType = ManifestMediaType.OciManifest
+                });
+                digest = uploadResult.Value.Digest;
+            }
+
+            // Assert
+            var downloadResult = await client.DownloadManifestAsync(digest);
+            Assert.AreEqual(digest, downloadResult.Value.Digest);
+            Assert.AreEqual(ManifestMediaType.OciManifest, downloadResult.Value.MediaType);
+
+            var artifact = metadataClient.GetArtifact(repository, digest);
+            var tags = artifact.GetTagPropertiesCollectionAsync();
+            var count = await tags.CountAsync();
+            Assert.AreEqual(1, count);
+            var firstTag = await tags.FirstAsync();
+            Assert.AreEqual(tag, firstTag.Name);
+
+            // Clean up
+            await client.DeleteManifestAsync(digest);
         }
 
         [RecordedTest, NonParallelizable]
@@ -105,7 +145,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual("sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed", downloadResult.Value.ArtifactFiles[0].Digest);
             Assert.AreEqual(repository, downloadResult.Value.ArtifactFiles[0].RepositoryName);
 
-            // TODO: implement delete manifest
+            // Clean up
+            await client.DeleteManifestAsync(digest);
         }
 
         [RecordedTest, NonParallelizable]
