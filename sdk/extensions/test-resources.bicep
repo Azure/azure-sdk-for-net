@@ -93,5 +93,14 @@ resource blobAcount 'Microsoft.Storage/storageAccounts@2019-04-01' = {
   }
 }
 
+var contributorRole = 'b24988ac-6180-42a0-ab88-20f7382dd24c'
+resource blobContributorAssignment 'Microsoft.Authorization/roleAssignments@2015-07-01' = {
+  name:  guid(resourceGroup().id, testApplicationOid, contributorRole)
+  properties: {
+    principalId: testApplicationOid
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', contributorRole)
+  }
+}
+
 output AZURE_KEYVAULT_URL string = keyVault.properties.vaultUri
 output BLOB_STORAGE_ENDPOINT string = blobAcount.properties.primaryEndpoints.blob
