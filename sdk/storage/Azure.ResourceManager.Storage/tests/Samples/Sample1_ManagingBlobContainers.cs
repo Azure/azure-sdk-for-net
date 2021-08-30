@@ -12,7 +12,7 @@ using Sku = Azure.ResourceManager.Storage.Models.Sku;
 
 namespace Azure.ResourceManager.Storage.Tests.Samples
 {
-    public class Sample2_ManagingBlobContainers
+    public class Sample1_ManagingBlobContainers
     {
         private ResourceGroup resourceGroup;
         private StorageAccount storageAccount;
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             #region Snippet:Managing_BlobContainers_GetBlobContainerIfExists
             BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
             BlobContainer blobContainer = await blobContainerContainer.GetIfExistsAsync("foo");
-            if (storageAccount != null)
+            if (blobContainer != null)
             {
-                Console.WriteLine(storageAccount.Data.Name);
+                Console.WriteLine(blobContainer.Id.Name);
             }
             if (await blobContainerContainer.CheckIfExistsAsync("bar"))
             {

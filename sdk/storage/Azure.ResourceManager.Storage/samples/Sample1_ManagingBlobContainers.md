@@ -17,14 +17,14 @@ using Sku = Azure.ResourceManager.Storage.Models.Sku;
 
 When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:
 
-```C# Snippet:Readme_DefaultSubscription
+```C# Snippet:Managing_StorageAccounts_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
 
-```C# Snippet:Readme_GetResourceGroupContainer
+```C# Snippet:Managing_StorageAccounts_GetResourceGroupContainer
 string rgName = "myRgName";
 Location location = Location.WestUS2;
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
@@ -90,9 +90,9 @@ Console.WriteLine(blobContainer.Id.Name);
 ```C# Snippet:Managing_BlobContainers_GetBlobContainerIfExists
 BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
 BlobContainer blobContainer = await blobContainerContainer.GetIfExistsAsync("foo");
-if (storageAccount != null)
+if (blobContainer != null)
 {
-    Console.WriteLine(storageAccount.Data.Name);
+    Console.WriteLine(blobContainer.Id.Name);
 }
 if (await blobContainerContainer.CheckIfExistsAsync("bar"))
 {
@@ -110,4 +110,4 @@ await blobContainer.DeleteAsync();
 
 ## Next steps
 
-Take a look at the [Managing Storage Accounts](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingStorageAccounts.md) samples.
+Take a look at the [Managing Storage Accounts](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample2_ManagingFileShares.md) samples.

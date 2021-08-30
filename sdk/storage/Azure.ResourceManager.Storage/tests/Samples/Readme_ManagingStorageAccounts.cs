@@ -14,18 +14,17 @@ using Sku = Azure.ResourceManager.Storage.Models.Sku;
 
 namespace Azure.ResourceManager.Storage.Tests.Samples
 {
-    public class Sample1_ManagingStorageAccounts
+    public class ReadMe_ManagingStorageAccounts
     {
         private ResourceGroup resourceGroup;
         [SetUp]
         public async Task createResourceGroup()
         {
-            #region Snippet:Readme_DefaultSubscription
+            #region Snippet:Managing_StorageAccounts_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.DefaultSubscription;
             #endregion
-
-            #region Snippet:Readme_GetResourceGroupContainer
+            #region Snippet:Managing_StorageAccounts_GetResourceGroupContainer
             string rgName = "myRgName";
             Location location = Location.WestUS2;
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
@@ -98,6 +97,17 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
             StorageAccount storageAccount = await accountContainer.GetAsync("myAccount");
             await storageAccount.DeleteAsync();
+            #endregion
+        }
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task AddTag()
+        {
+            #region Snippet:Managing_StorageAccounts_AddTagStorageAccount
+            StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
+            StorageAccount storageAccount = await accountContainer.GetAsync("myAccount");
+            // add a tag on this storage account
+            await storageAccount.AddTagAsync("key", "value");
             #endregion
         }
     }

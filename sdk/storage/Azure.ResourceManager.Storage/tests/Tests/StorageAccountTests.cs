@@ -548,5 +548,22 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.NotNull(serviceSasParameters.SharedAccessStartTime);
             Assert.NotNull(serviceSasParameters.SharedAccessExpiryTime);
         }
+        [Test]
+        [RecordedTest]
+        public async Task AddTag()
+        {
+            //create storage account
+            string accountName = Recording.GenerateAssetName("storage");
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            //add tag to this storage account
+            account=await account.AddTagAsync("key", "value");
+
+            //verify the tag is added successfully
+            Assert.AreEqual(account.Data.Tags.Count, 1);
+        }
     }
 }
