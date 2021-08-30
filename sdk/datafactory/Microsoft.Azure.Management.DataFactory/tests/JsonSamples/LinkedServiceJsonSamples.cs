@@ -615,6 +615,56 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AmazonRdsForOracleLinkedService = @"
+{
+    name: ""LinkedService-AmazonRdsForOracleDB"",
+    properties:
+    {
+        type: ""AmazonRdsForOracle"",
+        connectVia: {
+            referenceName : ""CherryAgent-01"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            encryptedCredential: ""MyEncryptedCredentials""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AmazonRdsForOracleLinkedServiceWithPasswordInAKV = @"
+{
+    name: ""LinkedService-AmazonRdsForOracleDB-with-Password-in-AKV"",
+    properties:
+    {
+        type: ""AmazonRdsForOracle"",
+        connectVia: {
+            referenceName : ""CherryAgent-01"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            password: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            },
+            encryptedCredential: ""MyEncryptedCredentials""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string FileSystemLinkedService = @"
 {
     name: ""LinkedService-FileSystem"",

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("nw");
 
             string location = "eastus";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
             string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             NetworkWatcher properties = new NetworkWatcher { Location = location };
 
