@@ -34,7 +34,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Playback)
+            : base(async, RecordedTestMode.Record)
         {
             Sanitizer = new StorageRecordedTestSanitizer();
         }

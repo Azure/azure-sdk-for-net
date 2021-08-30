@@ -40,9 +40,13 @@ namespace Azure.Storage.Test.Shared
             _streamTransform = streamTransform ?? _defaultStreamTransform;
         }
 
+        public bool TransformRequestBody { get; set; }
+
+        public bool TransformResponseBody { get; set; }
+
         public override void OnSendingRequest(HttpMessage message)
         {
-            if (message.Request.Content != default)
+            if (TransformRequestBody && message.Request.Content != default)
             {
                 var sendContents = new MemoryStream();
                 message.Request.Content.WriteTo(sendContents, CancellationToken.None);
@@ -52,7 +56,7 @@ namespace Azure.Storage.Test.Shared
 
         public override void OnReceivedResponse(HttpMessage message)
         {
-            if (message.Response.ContentStream != default)
+            if (TransformResponseBody && message.Response.ContentStream != default)
             {
                 message.Response.ContentStream = _streamTransform(message.Response.ContentStream);
             }
