@@ -1,4 +1,4 @@
-# Example: Managing the Blob Container
+# Example: Managing the Blob Containers
 
 >Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
 
@@ -110,4 +110,4 @@ await blobContainer.DeleteAsync();
 
 ## Next steps
 
-Take a look at the [Managing Storage Accounts](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample2_ManagingFileShares.md) samples.
+Take a look at the [Managing File Shares](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample2_ManagingFileShares.md) samples.

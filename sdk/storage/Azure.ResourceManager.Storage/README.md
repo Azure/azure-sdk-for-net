@@ -91,15 +91,7 @@ StorageAccount storageAccount = await accountContainer.GetAsync("myAccount");
 Console.WriteLine(storageAccount.Data.Name);
 ```
 
-### Delete a storage account
-
-```C# Snippet:Managing_StorageAccounts_DeleteStorageAccount
-StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
-StorageAccount storageAccount = await accountContainer.GetAsync("myAccount");
-await storageAccount.DeleteAsync();
-```
-
-### Check if storage account set exists
+### Try to get a storage account if it exists
 
 
 ```C# Snippet:Managing_StorageAccounts_GetStorageAccountIfExists
@@ -115,7 +107,15 @@ if (await accountContainer.CheckIfExistsAsync("bar"))
 }
 ```
 
-### Add a tag to a storage account
+### Delete a storage account
+
+```C# Snippet:Managing_StorageAccounts_DeleteStorageAccount
+StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
+StorageAccount storageAccount = await accountContainer.GetAsync("myAccount");
+await storageAccount.DeleteAsync();
+```
+
+### Add a tag to the storage account
 
 ```C# Snippet:Managing_StorageAccounts_AddTagStorageAccount
 StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
