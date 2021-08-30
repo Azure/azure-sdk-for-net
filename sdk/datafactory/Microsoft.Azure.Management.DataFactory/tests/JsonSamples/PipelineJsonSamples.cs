@@ -6054,6 +6054,43 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample(version: "Copy")]
+        public const string AmazonRdsForOracleSourcePipeline = @"
+{
+    name: ""DataPipeline_PostgreSqlSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""AmazonRdsForOracleToPostgreSqlCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""AmazonRdsForOracleSource"",
+                        query: ""select * from faketable""
+                    },
+                    sink:
+                    {
+                        type: ""AzurePostgreSqlSink"",
+                        preCopyScript: ""fake script""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
         public const string OraclePartitionSourcePipeline = @"
 {
     name: ""DataPipeline_OraclePartitionSample"",
