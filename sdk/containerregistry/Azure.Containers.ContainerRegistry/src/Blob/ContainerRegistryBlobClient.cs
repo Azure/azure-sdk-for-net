@@ -188,18 +188,33 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 Response rawResponse = response.GetRawResponse();
                 ManifestMediaType mediaType = rawResponse.Headers.ContentType;
 
-                if (!rawResponse.Headers.TryGetValue("Docker-Content-Digest", out string downloadedDigest))
+                if (!rawResponse.Headers.TryGetValue("Docker-Content-Digest", out string registryDigest))
                 {
                     _clientDiagnostics.CreateRequestFailedException(rawResponse, "Response did not contain \"Docker-Content-Digest\" header.");
                 }
 
-                return Response.FromValue(new DownloadManifestResult(downloadedDigest, mediaType, rawResponse.ContentStream, GetArtifactFiles(options.MediaType, response.Value)), rawResponse);
+                if (!ValidateDigest(rawResponse.ContentStream, registryDigest))
+                {
+                    _clientDiagnostics.CreateRequestFailedException(rawResponse, "The manifest's digest according to the registry does not match the locally computed digest value.");
+                }
+
+                return Response.FromValue(new DownloadManifestResult(registryDigest, mediaType, rawResponse.ContentStream, GetArtifactFiles(options.MediaType, response.Value)), rawResponse);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static bool ValidateDigest(Stream content, string digest)
+        {
+            // Validate that the file content did not change in transmission from the registry.
+
+            // TODO: The registry may use a different digest algorithm - we may need to handle that
+            string contentDigest = ContentDescriptor.ComputeDigest(content);
+            content.Position = 0;
+            return digest.Equals(contentDigest, StringComparison.OrdinalIgnoreCase);
         }
 
         private IReadOnlyList<ArtifactBlobProperties> GetArtifactFiles(ManifestMediaType mediaType, ManifestWrapper manifest)
@@ -251,6 +266,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+
+                if (!ValidateDigest(blobResult.Value, blobResult.Headers.DockerContentDigest))
+                {
+                    _clientDiagnostics.CreateRequestFailedException(blobResult.GetRawResponse(), "The manifest's digest according to the registry does not match the locally computed digest value.");
+                }
+
                 return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
             }
             catch (Exception e)

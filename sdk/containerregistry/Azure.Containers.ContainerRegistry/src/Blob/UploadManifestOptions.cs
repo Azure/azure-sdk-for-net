@@ -14,6 +14,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         /// <summary>
         /// </summary>
-        public ManifestMediaType MediaType { get; set; }
+        public ManifestMediaType MediaType { get; set; } = ManifestMediaType.OciManifest;
     }
 }
