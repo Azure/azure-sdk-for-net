@@ -3,6 +3,7 @@
 >Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
 
 Namespaces for this example:
+
 ```C# Snippet:Manage_Disks_Namespaces
 using System;
 using System.Threading.Tasks;
@@ -93,4 +94,5 @@ await disk.DeleteAsync();
 
 
 ## Next steps
-Take a look at the [Managing Virtual Machines](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-compute-2/sdk/compute/Azure.ResourceManager.Compute/samples/Sample2_ManagingVirtualMachines.md) samples.
+
+Take a look at the [Managing Virtual Machines](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/samples/Sample2_ManagingVirtualMachines.md) samples.
