@@ -289,7 +289,7 @@ try {
                 $AzureTestPrincipal
             } else {
                 Log "TestApplicationId was not specified; creating a new service principal in subscription '$SubscriptionId'"
-		$suffix = (New-Guid).ToString('n').Substring(0, 4)
+                $suffix = (New-Guid).ToString('n').Substring(0, 4)
                 $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner -Scope "/subscriptions/$SubscriptionId" -DisplayName "test-resources-$($baseName)$suffix.microsoft.com"
                 $global:AzureTestSubscription = $SubscriptionId
 
