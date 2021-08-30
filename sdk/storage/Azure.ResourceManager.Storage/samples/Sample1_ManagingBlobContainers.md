@@ -62,7 +62,7 @@ Now that we have the blob service, we can manage the blob containers inside this
 BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
 string blobContainerName = "myBlobContainer";
 BlobContainerData blobContainerData= new BlobContainerData();
-BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerContainer.CreateOrUpdateAsync(blobContainerName, new BlobContainerData());
+BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerContainer.CreateOrUpdateAsync(blobContainerName, blobContainerData);
 BlobContainer blobContainer = await blobContainerCreateOperation.WaitForCompletionAsync();
 ```
 

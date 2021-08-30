@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
             string blobContainerName = "myBlobContainer";
             BlobContainerData blobContainerData= new BlobContainerData();
-            BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerContainer.CreateOrUpdateAsync(blobContainerName, new BlobContainerData());
+            BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerContainer.CreateOrUpdateAsync(blobContainerName, blobContainerData);
             BlobContainer blobContainer = await blobContainerCreateOperation.WaitForCompletionAsync();
             #endregion
         }

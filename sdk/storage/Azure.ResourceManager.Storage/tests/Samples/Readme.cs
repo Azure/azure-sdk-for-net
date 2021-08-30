@@ -19,7 +19,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         public void ClientAuth()
         {
 #endif
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             #endregion
         }
     }
