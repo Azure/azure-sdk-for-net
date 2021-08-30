@@ -64,7 +64,7 @@ finally
 }
 ```
 
-## Capture filtered Log Events
+## Apply filtering logic to logs
 
 This examples demonstrates using a callback with the listener to allow custom logic, such as filtering, of the log messages.  This can help to reduce log spam when troubleshooting by capturing just the log entries that are helpful.   
 
