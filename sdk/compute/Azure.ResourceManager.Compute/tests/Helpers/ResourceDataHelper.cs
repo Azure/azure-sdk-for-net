@@ -190,15 +190,12 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         #region GalleryImageVersion
         public static void AssertGalleryImageVersion(GalleryImageVersionData imageVersion1, GalleryImageVersionData imageVersion2)
         {
-            Assert.AreEqual(imageVersion1.Name, imageVersion2.Name);
-            Assert.AreEqual(imageVersion1.Id, imageVersion2.Id);
-            Assert.AreEqual(imageVersion1.Location, imageVersion2.Location);
-            Assert.AreEqual(imageVersion1.Tags, imageVersion2.Tags);
+            AssertTrackedResource(imageVersion1, imageVersion2);
         }
 
         public static GalleryImageVersionData GetBasicGalleryImageVersionData(Location location,string VMID)
         {
-            var data = new GalleryImageVersionData(location)
+            return new GalleryImageVersionData(location)
             {
                 StorageProfile = new GalleryImageVersionStorageProfile()
                 {
@@ -208,7 +205,6 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                     }
                 }
             };
-            return data;
         }
         #endregion
 
@@ -283,8 +279,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         #region VirtualMachineExtention
         public static void AssertVirtualMachineExtention(VirtualMachineExtensionData vme1, VirtualMachineExtensionData vme2)
         {
-            Assert.AreEqual(vme1.Id, vme2.Id);
-            Assert.AreEqual(vme1.Name, vme2.Name);
+            AssertTrackedResource(vme1, vme2);
         }
 
         public static VirtualMachineExtensionData GetBasicLinuxVirtualMachineExtensionData(Location location)
@@ -388,17 +383,12 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         #region ProximityPlacementGroup
         public static void AssertProximityPlacementGroup(ProximityPlacementGroupData group1, ProximityPlacementGroupData group2)
         {
-            Assert.AreEqual(group1.Name, group2.Name);
-            Assert.AreEqual(group1.Id, group2.Id);
-            Assert.AreEqual(group1.Location, group2.Location);
-            Assert.AreEqual(group1.Tags, group2.Tags);
+            AssertTrackedResource(group1, group2);
         }
 
         public static ProximityPlacementGroupData  GetBasicProximityPlacementGroupData(Location location)
         {
-            return new ProximityPlacementGroupData(location)
-            {
-            };
+            return new ProximityPlacementGroupData(location);
         }
         #endregion
 
