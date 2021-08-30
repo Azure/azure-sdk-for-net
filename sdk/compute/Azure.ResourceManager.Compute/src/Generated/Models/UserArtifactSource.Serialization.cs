@@ -15,31 +15,34 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("fileName");
-            writer.WriteStringValue(FileName);
             writer.WritePropertyName("mediaLink");
             writer.WriteStringValue(MediaLink);
+            if (Optional.IsDefined(DefaultConfigurationLink))
+            {
+                writer.WritePropertyName("defaultConfigurationLink");
+                writer.WriteStringValue(DefaultConfigurationLink);
+            }
             writer.WriteEndObject();
         }
 
         internal static UserArtifactSource DeserializeUserArtifactSource(JsonElement element)
         {
-            string fileName = default;
             string mediaLink = default;
+            Optional<string> defaultConfigurationLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileName"))
-                {
-                    fileName = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("mediaLink"))
                 {
                     mediaLink = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("defaultConfigurationLink"))
+                {
+                    defaultConfigurationLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new UserArtifactSource(fileName, mediaLink);
+            return new UserArtifactSource(mediaLink, defaultConfigurationLink.Value);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.Azure.Test
             string location = null;
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            Response<Provider> provider = await client.Providers.GetAsync(providerName);
+            Response<ResourceManager.Resources.Models.Provider> provider = await client.Providers.GetAsync(providerName);
             foreach (var resource in provider.Value.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))

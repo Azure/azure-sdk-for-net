@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            Response<Provider> provider = await client.Providers.GetAsync(providerName);
+            Response<Resources.Models.Provider> provider = await client.Providers.GetAsync(providerName);
             foreach (var resource in provider.Value.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            Response<Provider> provider = await providersOperations.GetAsync(providerName);
+            Response<Resources.Models.Provider> provider = await providersOperations.GetAsync(providerName);
             foreach (var resource in provider.Value.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
