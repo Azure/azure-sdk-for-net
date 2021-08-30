@@ -240,7 +240,7 @@ namespace Azure.Monitor.Query.Tests
                 "dynamic({\"a\":123, \"b\":\"hello\", \"c\":[1,2,3], \"d\":{}})" +
                 "]", _logsTestData.DataTimeRange);
 
-            LogsQueryResultRow row = results.Value.Table.Rows[0];
+            LogsTableRow row = results.Value.Table.Rows[0];
 
             var expectedDate = DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00");
             Assert.AreEqual(expectedDate, row.GetDateTimeOffset("DateTime"));

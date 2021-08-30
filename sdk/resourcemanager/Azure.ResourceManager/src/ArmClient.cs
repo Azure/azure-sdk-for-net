@@ -103,8 +103,12 @@ namespace Azure.ResourceManager
 
             Credential = credential;
             BaseUri = baseUri ?? new Uri(DefaultUri);
-            ClientOptions = options?.Clone() ?? new ArmClientOptions();
-            Pipeline = ManagementPipelineBuilder.Build(Credential, ClientOptions.Scope, options ?? ClientOptions);
+            options ??= new ArmClientOptions();
+            if (options.Diagnostics.IsTelemetryEnabled)
+                options.AddPolicy(new MgmtTelemetryPolicy(this, options), HttpPipelinePosition.PerRetry);
+            Pipeline = ManagementPipelineBuilder.Build(Credential, options.Scope, options);
+
+            ClientOptions = options.Clone();
 
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)

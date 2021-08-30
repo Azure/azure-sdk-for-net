@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="metrics"> the value of the collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="metrics"/> is null. </exception>
-        internal MetricsQueryResult(string timespan, IEnumerable<Metric> metrics)
+        internal MetricsQueryResult(string timespan, IEnumerable<MetricResult> metrics)
         {
             if (timespan == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
         /// <param name="metrics"> the value of the collection. </param>
-        internal MetricsQueryResult(int? cost, string timespan, TimeSpan? interval, string @namespace, string resourceRegion, IReadOnlyList<Metric> metrics)
+        internal MetricsQueryResult(int? cost, string timespan, TimeSpan? interval, string @namespace, string resourceRegion, IReadOnlyList<MetricResult> metrics)
         {
             Cost = cost;
             _timespan = timespan;

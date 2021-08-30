@@ -4412,7 +4412,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "544",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 09:00:18 GMT",
         "Expires": "-1",
@@ -4431,10 +4431,10 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200928T090018Z:dbfd98b5-708d-48ee-bf25-0eb9a38a3820"
       },
       "ResponseBody": {
-        "primaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-8523.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-9644;SharedAccessKey=ZEENb\u002B22l9oNfZRTfbjWhxXN7Q4mCrHmfht2B0C16z8=",
-        "secondaryConnectionString": "Endpoint=sb://sdk-eventhub-namespace-8523.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-9644;SharedAccessKey=wJAxYabLR69ZTGJel8wHwzhOq3j7w/hR/S14AWmvYrE=",
-        "primaryKey": "ZEENb\u002B22l9oNfZRTfbjWhxXN7Q4mCrHmfht2B0C16z8=",
-        "secondaryKey": "wJAxYabLR69ZTGJel8wHwzhOq3j7w/hR/S14AWmvYrE=",
+        "primaryConnectionString": "Sanitized",
+        "secondaryConnectionString": "Sanitized",
+        "primaryKey": "Sanitized",
+        "secondaryKey": "Sanitized",
         "keyName": "sdk-Authrules-9644"
       }
     },
@@ -4745,7 +4745,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "550",
+        "Content-Length": "480",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 09:00:30 GMT",
         "Expires": "-1",
@@ -4766,8 +4766,8 @@
       "ResponseBody": {
         "aliasPrimaryConnectionString": "Endpoint=sb://sdk-disasterrecovery-5960.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-9644;SharedAccessKey=ZEENb\u002B22l9oNfZRTfbjWhxXN7Q4mCrHmfht2B0C16z8=",
         "aliasSecondaryConnectionString": "Endpoint=sb://sdk-disasterrecovery-5960.servicebus.windows.net/;SharedAccessKeyName=sdk-Authrules-9644;SharedAccessKey=wJAxYabLR69ZTGJel8wHwzhOq3j7w/hR/S14AWmvYrE=",
-        "primaryKey": "ZEENb\u002B22l9oNfZRTfbjWhxXN7Q4mCrHmfht2B0C16z8=",
-        "secondaryKey": "wJAxYabLR69ZTGJel8wHwzhOq3j7w/hR/S14AWmvYrE=",
+        "primaryKey": "Sanitized",
+        "secondaryKey": "Sanitized",
         "keyName": "sdk-Authrules-9644"
       }
     },

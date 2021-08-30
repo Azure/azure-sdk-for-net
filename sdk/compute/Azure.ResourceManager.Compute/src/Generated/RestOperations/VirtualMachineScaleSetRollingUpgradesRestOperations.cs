@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -21,19 +22,22 @@ namespace Azure.ResourceManager.Compute
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
+        private readonly string _userAgent;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetRollingUpgradesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public VirtualMachineScaleSetRollingUpgradesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        public VirtualMachineScaleSetRollingUpgradesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
         internal HttpMessage CreateCancelRequest(string resourceGroupName, string vmScaleSetName)
@@ -52,6 +56,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/rollingUpgrades/cancel", false);
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -127,6 +132,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/osRollingUpgrade", false);
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -202,6 +208,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/extensionRollingUpgrade", false);
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -278,6 +285,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 

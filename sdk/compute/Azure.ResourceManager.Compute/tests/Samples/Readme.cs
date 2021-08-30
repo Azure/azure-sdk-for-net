@@ -3,6 +3,7 @@
 
 #region Snippet:Readme_AuthClient
 using Azure.Identity;
+using Azure.ResourceManager;
 #if !SNIPPET
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;

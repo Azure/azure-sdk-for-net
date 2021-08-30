@@ -39,7 +39,7 @@ directive:
   - from: types.json
     where: $.definitions.*
     transform: >
-      $["x-namespace"] = "Azure.ResourceManager.Resources.Models"
+      $["x-namespace"] = "Azure.ResourceManager.Models"
   - from: types.json
     where: $.definitions.*
     transform: >
@@ -55,9 +55,13 @@ directive:
   - from: types.json
     where: $.definitions.*.properties[?(@.enum)]
     transform: >
-      $["x-namespace"] = "Azure.ResourceManager.Resources.Models"
+      $["x-namespace"] = "Azure.ResourceManager.Models"
   - from: types.json
     where: $.definitions.*.properties[?(@.enum)]
     transform: >
       $["x-accessibility"] = "public"
+  - from: types.json
+    where: $.definitions.systemData.properties.*
+    transform: >
+      $["readOnly"] = true
 ```
