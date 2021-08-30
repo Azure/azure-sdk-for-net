@@ -5,7 +5,7 @@ cryptographic keys for your cloud applications using FIPS 140-2 Level 3 validate
 
 The Azure Key Vault administration library clients support administrative tasks such as full backup / restore and key-level role-based access control (RBAC).
 
-[Source code][admin_client_src] | [Package (NuGet)][admin_client_nuget_package] | [Product documentation][keyvault_docs] | [Samples][admin_client_samples]
+[Source code][admin_client_src] | [Package (NuGet)][admin_client_nuget_package] | [Product documentation][managedhsm_docs] | [Samples][admin_client_samples]
 
 ## Getting started
 
@@ -69,15 +69,15 @@ environment variables. The following example shows a way to do this in Powershel
     ```
 
 * Create the Managed HSM and grant the above mentioned service principal authorization to perform administrative operations on the Managed HSM
-(replace `<your-resource-group-name>` and `<your-key-hsm-name>` with your own, unique names and `<your-service-principal-object-id>` with the value from above):
+(replace `<your-resource-group-name>` and `<your-managed-hsm-name>` with your own, unique names and `<your-service-principal-object-id>` with the value from above):
     ```PowerShell
-    az keyvault create --hsm-name <your-key-hsm-name> --resource-group <your-resource-group-name> --administrators <your-service-principal-object-id> --location <your-azure-location>
+    az keyvault create --hsm-name <your-managed-hsm-name> --resource-group <your-resource-group-name> --administrators <your-service-principal-object-id> --location <your-azure-location>
     ```
   This service principal is automatically added to the "Managed HSM Administrators" [built-in role][built_in_roles].
 
 * Use the above mentioned Azure Key Vault name to retrieve details of your Vault which also contains your Azure Key Vault URL:
     ```PowerShell
-    az keyvault show --hsm-name <your-key-hsm-name> --query properties.hsmUri --output tsv
+    az keyvault show --hsm-name <your-managed-hsm-name> --query properties.hsmUri --output tsv
     ```
 
 #### Activate your managed HSM
@@ -104,7 +104,7 @@ Use the `az keyvault security-domain download` command to download the security 
 The example below, uses 3 RSA key pairs (only public keys are needed for this command) and sets the quorum to 2.
 
 ```PowerShell
-az keyvault security-domain download --hsm-name <your-key-hsm-name> --sd-wrapping-keys ./certs/cert_0.cer ./certs/cert_1.cer ./certs/cert_2.cer --sd-quorum 2 --security-domain-file ContosoMHSM-SD.json
+az keyvault security-domain download --hsm-name <your-managed-hsm-name> --sd-wrapping-keys ./certs/cert_0.cer ./certs/cert_1.cer ./certs/cert_2.cer --sd-quorum 2 --security-domain-file ContosoMHSM-SD.json
 ```
 
 #### Controlling access to your managed HSM
@@ -114,7 +114,7 @@ who are able to download a security domain and [manage roles for data plane acce
 To perform other actions on keys, you need to assign principals to other roles such as "Managed HSM Crypto User", which can perform non-destructive key operations:
 
 ```PowerShell
-az keyvault role assignment create --hsm-name <your-key-hsm-name> --role "Managed HSM Crypto User" --scope / --assignee-object-id <principal-or-user-object-ID> --assignee-principal-type <principal-type>
+az keyvault role assignment create --hsm-name <your-managed-hsm-name> --role "Managed HSM Crypto User" --scope / --assignee-object-id <principal-or-user-object-ID> --assignee-principal-type <principal-type>
 ```
 
 Please read [best practices][best_practices] for properly securing your managed HSM.
@@ -269,7 +269,7 @@ additional questions or comments.
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [rbac_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultAccessControlClient.cs
 [backup_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultBackupClient.cs
-[keyvault_docs]: https://docs.microsoft.com/azure/key-vault/
+[managedhsm_docs]: https://docs.microsoft.com/azure/key-vault/managed-hsm/
 [keyvault_rest]: https://docs.microsoft.com/rest/api/keyvault/
 [admin_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Security.KeyVault.Administration
 [admin_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples
