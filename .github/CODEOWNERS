@@ -663,3 +663,5 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml            @AlexGhiondea @maririos
+/sdk/eventhub/tests.data.yml  @serkantkaraca @sjkwak
+/sdk/servicebus/tests.data.yml @shankarsama @DorothySun216 
