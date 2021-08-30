@@ -23,7 +23,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 
                 var blob = container.GetBlobClient("test-blob");
                 await blob.UploadAsync(new MemoryStream());
-
+                await blob.DeleteAsync();
                 await container.DeleteAsync();
 
                 return await base.IsEnvironmentReadyAsync();
