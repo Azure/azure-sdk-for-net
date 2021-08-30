@@ -1,14 +1,12 @@
 # Release History
 
-## 11.4.0-beta.2 (Unreleased)
+## 11.4.0-beta.2 (2021-08-10)
 
 ### Features Added
-
-### Breaking Changes
+- Support for [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/authentication/) based authentication. Users can specify a [`TokenCredential`](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential) when creating a `SearchClient`, `SearchIndexClient` or a `SearchIndexerClient`. For example, you can get started with `new SearchClient(endpoint, new DefaultAzureCredential())` to authenticate via AAD using [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md). For more details see [how to use role-based authentication in Azure Cognitive Search](https://docs.microsoft.com/azure/search/search-security-rbac?tabs=config-svc-portal%2Crbac-portal).
 
 ### Bugs Fixed
-
-### Other Changes
+- Enhanced the documentation of some `SearchOptions` properties by adding links to REST docs - https://github.com/Azure/azure-sdk-for-net/issues/22808
 
 ## 11.4.0-beta.1 (2021-07-06)
 

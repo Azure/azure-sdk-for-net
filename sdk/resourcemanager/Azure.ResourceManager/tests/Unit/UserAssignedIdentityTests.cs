@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Tests
         public void TestSerializerValidIdentity()
         {
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
-            string expected = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";
+            string expected = "{}";
 
             JsonAsserts.AssertSerialization(expected, userAssignedIdentity);
         }
@@ -249,10 +249,7 @@ namespace Azure.ResourceManager.Tests
                     serializable.Write(writer);
                 }
             }
-            string expected = "{\"clientId\":\"3beb288c-c3f9-4300-896f-02fbf175b6be\"," +
-                "\"principalId\":\"d0416856-d6cf-466d-8d64-ddc8d7782096\"}" +
-                "{\"clientId\":\"fbb39377-ff46-4a82-8c47-42d573180482\"," +
-                "\"principalId\":\"6d63ce43-c3ac-4b03-933d-4bc31eae50b2\"}";
+            string expected = "{}{}";
 
             var actual = Encoding.UTF8.GetString(memoryStream.ToArray());
             Assert.AreEqual(expected, actual);

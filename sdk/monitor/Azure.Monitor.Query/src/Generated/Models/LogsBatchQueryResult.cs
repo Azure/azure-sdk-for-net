@@ -15,22 +15,22 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsBatchQueryResult : LogsQueryResult
     {
         /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
-        /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tables"/> is null. </exception>
-        internal LogsBatchQueryResult(IEnumerable<LogsQueryResultTable> tables) : base(tables)
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
+        internal LogsBatchQueryResult(IEnumerable<LogsTable> allTables) : base(allTables)
         {
-            if (tables == null)
+            if (allTables == null)
             {
-                throw new ArgumentNullException(nameof(tables));
+                throw new ArgumentNullException(nameof(allTables));
             }
         }
 
         /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
-        /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <param name="Statistics"> Any object. </param>
-        /// <param name="Visualization"> Any object. </param>
-        /// <param name="Error"> Any object. </param>
-        internal LogsBatchQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement Statistics, JsonElement Visualization, JsonElement Error) : base(tables, Statistics, Visualization, Error)
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <param name="statistics"> Any object. </param>
+        /// <param name="visualization"> Any object. </param>
+        /// <param name="error"> Any object. </param>
+        internal LogsBatchQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error) : base(allTables, statistics, visualization, error)
         {
         }
     }

@@ -39,12 +39,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   over the partition; in the case where more than one publisher in the producer group attempts to assert ownership for the same
         ///   partition, the one having a larger <see cref="OwnerLevel"/> value will "win".
         ///
-        ///   <para>When an owner level is specified, other exclusive publishers which have a lower owner level within the context of the same producer
+        ///   When an owner level is specified, other exclusive publishers which have a lower owner level within the context of the same producer
         ///   group will either not be allowed to be created or, if they already exist, will encounter an exception during the next attempted operation.  Should
-        ///   there be multiple producers in the producer group with the same owner level, each of them will be able to publish to the partition.</para>
+        ///   there be multiple producers in the producer group with the same owner level, each of them will be able to publish to the partition.
         ///
-        ///   <para>Producers with no owner level or which belong to a different producer group are permitted to publish to the associated partition without
-        /// restriction or awareness of other exclusive producers.</para>
+        ///   Producers with no owner level or which belong to a different producer group are permitted to publish to the associated partition without
+        ///   restriction or awareness of other exclusive producers.
         /// </summary>
         ///
         /// <value>The relative priority to associate with an exclusive publisher; if <c>null</c>, the Event Hubs service will control the value.</value>
@@ -52,11 +52,12 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <remarks>
         ///   The owner level is only recognized and relevant when certain features of the producer are enabled.  For example, it is used by
         ///   idempotent publishing.
-        ///
-        ///   <para>An <see cref="EventHubsException"/> will occur if an <see cref="EventHubProducerClient"/> is unable to read events from the
-        ///   requested Event Hub partition for the given consumer group.  In this case, the <see cref="EventHubsException.FailureReason"/>
-        ///   will be set to <see cref="EventHubsException.FailureReason.ProducerDisconnected"/>.</para>
         /// </remarks>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when the owner level is set and the <see cref="EventHubProducerClient"/> is unable to publish to the requested Event Hub partition due to being denied
+        ///   ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ProducerDisconnected"/>.
+        /// </exception>
         ///
         /// <seealso cref="EventHubsException" />
         /// <seealso cref="EventHubsException.FailureReason.ProducerDisconnected" />

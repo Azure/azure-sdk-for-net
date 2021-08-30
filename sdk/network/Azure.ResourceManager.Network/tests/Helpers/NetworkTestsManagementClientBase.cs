@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
         public ResourcesManagementClient ResourceManagementClient { get; set; }
         public StorageManagementClient StorageManagementClient { get; set; }
-        public ComputeManagementClient ComputeManagementClient { get; set; }
+        //public ComputeManagementClient ComputeManagementClient { get; set; }
         public NetworkManagementClient NetworkManagementClient { get; set; }
 
         public NetworkInterfacesOperations NetworkInterfacesOperations { get; set; }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             ResourceManagementClient = GetResourceManagementClient();
             StorageManagementClient = GetStorageManagementClient();
-            ComputeManagementClient = GetComputeManagementClient();
+            //ComputeManagementClient = GetComputeManagementClient();
             NetworkManagementClient = GetNetworkManagementClient();
 
             NetworkInterfacesOperations = NetworkManagementClient.NetworkInterfaces;
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                  InstrumentClientOptions(new StorageManagementClientOptions())));
         }
 
-        private ComputeManagementClient GetComputeManagementClient()
-        {
-            return InstrumentClient(new ComputeManagementClient(TestEnvironment.SubscriptionId,
-                 TestEnvironment.Credential,
-                 InstrumentClientOptions(new ComputeManagementClientOptions())));
-        }
+        //private ComputeManagementClient GetComputeManagementClient()
+        //{
+        //    return InstrumentClient(new ComputeManagementClient(TestEnvironment.SubscriptionId,
+        //         TestEnvironment.Credential,
+        //         InstrumentClientOptions(new ComputeManagementClientOptions())));
+        //}
 
         private NetworkManagementClient GetNetworkManagementClient()
         {

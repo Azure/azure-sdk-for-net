@@ -33,18 +33,9 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public SearchServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2021-04-30-Preview")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             this.xMsClientRequestId = xMsClientRequestId;
-            this.apiVersion = apiVersion;
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

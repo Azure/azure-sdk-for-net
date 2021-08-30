@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
 
             // CreateVirtualNetworkGateway API
             // Prerequisite:- Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API

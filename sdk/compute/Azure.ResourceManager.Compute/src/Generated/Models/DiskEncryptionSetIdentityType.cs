@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The type of Managed Identity used by the DiskEncryptionSet. Only SystemAssigned is supported. </summary>
+    /// <summary> The type of Managed Identity used by the DiskEncryptionSet. Only SystemAssigned is supported for new creations. Disk Encryption Sets can be updated with Identity type None during migration of subscription to a new Azure Active Directory tenant; it will cause the encrypted resources to lose access to the keys. </summary>
     public readonly partial struct DiskEncryptionSetIdentityType : IEquatable<DiskEncryptionSetIdentityType>
     {
         private readonly string _value;
@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         private const string SystemAssignedValue = "SystemAssigned";
+        private const string NoneValue = "None";
 
         /// <summary> SystemAssigned. </summary>
         public static DiskEncryptionSetIdentityType SystemAssigned { get; } = new DiskEncryptionSetIdentityType(SystemAssignedValue);
+        /// <summary> None. </summary>
+        public static DiskEncryptionSetIdentityType None { get; } = new DiskEncryptionSetIdentityType(NoneValue);
         /// <summary> Determines if two <see cref="DiskEncryptionSetIdentityType"/> values are the same. </summary>
         public static bool operator ==(DiskEncryptionSetIdentityType left, DiskEncryptionSetIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskEncryptionSetIdentityType"/> values are not the same. </summary>
