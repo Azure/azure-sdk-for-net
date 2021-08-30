@@ -40,10 +40,6 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
                 clientOptions.PrefetchCount = options.PrefetchCount.Value;
             }
 
-            Console.WriteLine($"PrefetchCount: {clientOptions.PrefetchCount}");
-            Console.WriteLine($"CacheEventCount: {clientOptions.CacheEventCount}");
-            Console.WriteLine($"MaximumWaitTime: {clientOptions.MaximumWaitTime}");
-
             EventProcessorClient = new EventProcessorClient(
                 _checkpointStore,
                 EventHubConsumerClient.DefaultConsumerGroupName,
