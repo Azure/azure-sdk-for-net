@@ -41,7 +41,6 @@ namespace SnippetGenerator
                 unUsedSnippets = (await new DirectoryProcessor(BasePath).ProcessAsync()).ToList();
             }
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Red;
             string message = $"Not all snippets were used.\n{string.Join(Environment.NewLine, unUsedSnippets)}";
             unUsedSnippets.Sort();
             if (StrictMode)
@@ -53,7 +52,7 @@ namespace SnippetGenerator
             }
             else
             {
-                Console.WriteLine(message);
+                WriteError(message);
             }
             sw.Stop();
             Console.WriteLine($"SnippetGenerator completed in {sw.Elapsed}");
@@ -61,18 +60,24 @@ namespace SnippetGenerator
 
         public static int Main(string[] args)
         {
-            ConsoleColor foreground = Console.ForegroundColor;
-
             try
             {
                 return CommandLineApplication.Execute<Program>(args);
             }
             catch (Exception e)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-
-                Console.Error.WriteLine(e.ToString());
+                WriteError(e.ToString());
                 return 1;
+            }
+        }
+
+        private static void WriteError(string message, params object[] args)
+        {
+            ConsoleColor foreground = Console.ForegroundColor;
+            try
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(message, args);
             }
             finally
             {
