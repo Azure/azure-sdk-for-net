@@ -190,7 +190,7 @@ try {
         $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
         Log "Generated base name '$BaseName' for CI build"
     } elseif (!$BaseName) {
-        $BaseName = "$UserName$ServiceDirectory"
+        $BaseName = "$UserName$ServiceDirectory" + (New-Guid).ToString('n').Substring(0, 4)
         Log "BaseName was not set. Using default base name '$BaseName'"
     }
 
