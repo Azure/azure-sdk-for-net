@@ -34,7 +34,8 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Error target", error.Target);
 
             Assert.AreEqual("MoreDetailedBadError", error.InnerError.Code);
-            Assert.AreEqual("Inner message", error.InnerError.Message);
+            Assert.True(error.InnerError.TryGetCustomProperty<string>("message", out var message) && message == "Inner Message");
+
             Assert.Null(error.InnerError.InnerError);
             Assert.AreEqual("BadError: Something wasn't awesome" + Environment.NewLine +
                             "Target: Error target" + Environment.NewLine +
@@ -72,10 +73,10 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Error target", error.Target);
 
             Assert.AreEqual("MoreDetailedBadError", error.InnerError.Code);
-            Assert.AreEqual("Inner message", error.InnerError.Message);
+            Assert.True(error.InnerError.TryGetCustomProperty<string>("message", out var message) && message == "Inner Message");
 
             Assert.AreEqual("InnerMoreDetailedBadError", error.InnerError.InnerError.Code);
-            Assert.AreEqual("Inner Inner message", error.InnerError.InnerError.Message);
+            Assert.True(error.InnerError.InnerError.TryGetCustomProperty<string>("message", out var innerMessage) && innerMessage == "Inner Inner message");
 
             Assert.AreEqual("Code 1", error.Details[0].Code);
             Assert.AreEqual("Message 1", error.Details[0].Message);

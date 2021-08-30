@@ -15,10 +15,12 @@ namespace Azure.Core
     [JsonConverter(typeof(Converter))]
     public sealed class ResponseInnerError
     {
-        internal ResponseInnerError(string? code, string? message, ResponseInnerError? innerError)
+        private readonly JsonElement _innerErrorElement;
+
+        internal ResponseInnerError(string? code, ResponseInnerError? innerError, JsonElement innerErrorElement)
         {
+            _innerErrorElement = innerErrorElement;
             Code = code;
-            Message = message;
             InnerError = innerError;
         }
 
@@ -28,14 +30,29 @@ namespace Azure.Core
         public string? Code { get; }
 
         /// <summary>
-        /// Gets the error message.
-        /// </summary>
-        public string? Message { get; }
-
-        /// <summary>
         /// Gets the inner error.
         /// </summary>
         public ResponseInnerError? InnerError { get; }
+
+        /// <summary>
+        /// Attempts to retrieve a service specific property from the error.
+        /// </summary>
+        /// <param name="name">The name of the error.</param>
+        /// <param name="value">The variable to assign the value to.</param>
+        /// <typeparam name="T">The type of the requested property.</typeparam>
+        /// <returns><c>true</c> if the property exists, <c>false</c> otherwise.</returns>
+        public bool TryGetCustomProperty<T>(string name, out T? value)
+        {
+            if (_innerErrorElement.TryGetProperty(name, out JsonElement property))
+            {
+                var json = property.GetRawText();
+                value = JsonSerializer.Deserialize<T>(json);
+                return true;
+            }
+
+            value = default;
+            return false;
+        }
 
         internal class Converter : JsonConverter<ResponseInnerError?>
         {
@@ -59,19 +76,13 @@ namespace Azure.Core
                     code = property.GetString();
                 }
 
-                string? message = null;
-                if (element.TryGetProperty("message", out property))
-                {
-                    message = property.GetString();
-                }
-
                 ResponseInnerError? innererror = null;
                 if (element.TryGetProperty("innererror", out property))
                 {
                     innererror = Read(property);
                 }
 
-                return new ResponseInnerError(code, message, innererror);
+                return new ResponseInnerError(code, innererror, element.Clone());
             }
 
             public override void Write(Utf8JsonWriter writer, ResponseInnerError? value, JsonSerializerOptions options)
@@ -85,7 +96,7 @@ namespace Azure.Core
         {
             var builder = new StringBuilder();
 
-            builder.AppendFormat(CultureInfo.InvariantCulture, "{0}: {1}{2}", Code, Message, Environment.NewLine);
+            builder.AppendFormat(CultureInfo.InvariantCulture, "{0}: {1}", Code, Environment.NewLine);
             if (InnerError != null)
             {
                 builder.AppendLine("Inner Error:");

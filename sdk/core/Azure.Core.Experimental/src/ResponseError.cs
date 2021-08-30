@@ -24,7 +24,7 @@ namespace Azure.Core
         /// <param name="innerError">The inner error.</param>
         /// <param name="target">The error target.</param>
         /// <param name="details">The error details.</param>
-        public ResponseError(string? code, string? message, ResponseInnerError? innerError, string? target, IReadOnlyList<ResponseError>? details)
+        public ResponseError(string? code, string? message, string? target, ResponseInnerError? innerError = null, IReadOnlyList<ResponseError>? details = null)
         {
             Code = code;
             Message = message;
@@ -113,7 +113,7 @@ namespace Azure.Core
                     }
                 }
 
-                return new ResponseError(code, message, innererror, target, details);
+                return new ResponseError(code, message, target, innererror, details);
             }
 
             public override void Write(Utf8JsonWriter writer, ResponseError? value, JsonSerializerOptions options)
