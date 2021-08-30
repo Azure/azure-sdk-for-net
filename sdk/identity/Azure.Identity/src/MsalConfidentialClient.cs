@@ -10,9 +10,9 @@ namespace Azure.Identity
 {
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
-        private readonly string _clientSecret;
-        private readonly bool _includeX5CClaimHeader;
-        private readonly ClientCertificateCredential.IX509Certificate2Provider _certificateProvider;
+        internal readonly string _clientSecret;
+        internal readonly bool _includeX5CClaimHeader;
+        internal readonly ClientCertificateCredential.IX509Certificate2Provider _certificateProvider;
 
         /// <summary>
         /// For mocking purposes only.

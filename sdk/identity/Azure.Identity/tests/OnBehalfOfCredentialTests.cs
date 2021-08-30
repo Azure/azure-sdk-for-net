@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity.Tests.Mock;
@@ -11,6 +13,47 @@ namespace Azure.Identity.Tests
     public class OnBehalfOfCredentialTests : CredentialTestBase
     {
         public OnBehalfOfCredentialTests(bool isAsync) : base(isAsync) { }
+
+        [Test]
+        public void CtorValidation()
+        {
+            OnBehalfOfCredential cred;
+            string userAssertion = Guid.NewGuid().ToString();
+            string clientSecret = Guid.NewGuid().ToString();
+
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, userAssertion, new OnBehalfOfCredentialOptions()));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, userAssertion, new OnBehalfOfCredentialOptions()));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, null, new OnBehalfOfCredentialOptions()));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, userAssertion, null));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, userAssertion, new OnBehalfOfCredentialOptions()));
+            cred = new OnBehalfOfCredential(TenantId, ClientId, userAssertion, new OnBehalfOfCredentialOptions { CertificatePath = "\\" });
+            // Assert
+            Assert.NotNull(cred._client._certificateProvider);
+
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, clientSecret, userAssertion));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, clientSecret, userAssertion));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, null, userAssertion));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, clientSecret, null));
+            cred = new OnBehalfOfCredential(TenantId, ClientId, clientSecret, userAssertion);
+            // Assert
+            Assert.AreEqual(clientSecret, cred._client._clientSecret);
+
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, new X509Certificate2(), userAssertion));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, new X509Certificate2(), userAssertion));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, null, userAssertion));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, new X509Certificate2(), null));
+            cred = new OnBehalfOfCredential(TenantId, ClientId, new X509Certificate2(), userAssertion);
+            // Assert
+            Assert.NotNull(cred._client._certificateProvider);
+
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, new X509Certificate2(), userAssertion, new OnBehalfOfCredentialOptions()));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, new X509Certificate2(), userAssertion, new OnBehalfOfCredentialOptions()));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, default(X509Certificate2), userAssertion, new OnBehalfOfCredentialOptions()));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, new X509Certificate2(), null, new OnBehalfOfCredentialOptions()));
+            cred = new OnBehalfOfCredential(TenantId, ClientId, new X509Certificate2(), userAssertion, new OnBehalfOfCredentialOptions());
+            // Assert
+            Assert.NotNull(cred._client._certificateProvider);
+        }
 
         [Test]
         public async Task UsesTenantIdHint(

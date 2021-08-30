@@ -205,7 +205,7 @@ namespace Azure.Identity
         /// <summary>
         /// X509Certificate2FromObjectProvider provides an X509Certificate2 from an existing instance.
         /// </summary>
-        private class X509Certificate2FromObjectProvider : IX509Certificate2Provider
+        internal class X509Certificate2FromObjectProvider : IX509Certificate2Provider
         {
             private X509Certificate2 Certificate { get; }
 
@@ -232,6 +232,7 @@ namespace Azure.Identity
 
             public X509Certificate2FromFileProvider(string clientCertificatePath)
             {
+                Argument.AssertNotNull(clientCertificatePath, nameof(clientCertificatePath));
                 CertificatePath = clientCertificatePath ?? throw new ArgumentNullException(nameof(clientCertificatePath));
             }
 

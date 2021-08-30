@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,7 +16,7 @@ namespace Azure.Identity
     /// </summary>
     public class OnBehalfOfCredential : TokenCredential
     {
-        private readonly MsalConfidentialClient _client;
+        internal readonly MsalConfidentialClient _client;
         private readonly string _tenantId;
         private readonly CredentialPipeline _pipeline;
         private readonly bool _allowMultiTenantAuthentication;
@@ -28,6 +29,87 @@ namespace Azure.Identity
         /// </summary>
         protected OnBehalfOfCredential()
         { }
+
+        /// <summary>
+        /// Creates an instance of the OnBehalfOfCredential with the details needed to authenticate against Azure Active Directory with the specified certificate path
+        /// (via the <see cref="OnBehalfOfCredentialOptions"/>).
+        /// </summary>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public OnBehalfOfCredential(string tenantId, string clientId, string userAssertion, OnBehalfOfCredentialOptions options)
+            : this(tenantId, clientId, new ClientCertificateCredential.X509Certificate2FromFileProvider(options?.CertificatePath), userAssertion, null, null, null)
+        { }
+
+        /// <summary>
+        /// Creates an instance of the OnBehalfOfCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// </summary>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
+        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
+        public OnBehalfOfCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, string userAssertion)
+            : this(tenantId, clientId, clientCertificate, userAssertion, null, null, null)
+        { }
+
+        /// <summary>
+        /// Creates an instance of the OnBehalfOfCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// </summary>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
+        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public OnBehalfOfCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, string userAssertion, OnBehalfOfCredentialOptions options)
+            : this(tenantId, clientId, clientCertificate, userAssertion, options, null, null)
+        { }
+
+        internal OnBehalfOfCredential(
+            string tenantId,
+            string clientId,
+            X509Certificate2 certificate,
+            string userAssertion,
+            OnBehalfOfCredentialOptions options,
+            CredentialPipeline pipeline,
+            MsalConfidentialClient client)
+            : this(
+                tenantId,
+                clientId,
+                new ClientCertificateCredential.X509Certificate2FromObjectProvider(certificate ?? throw new ArgumentNullException(nameof(certificate))),
+                userAssertion,
+                options,
+                pipeline,
+                client)
+        { }
+
+        internal OnBehalfOfCredential(
+            string tenantId,
+            string clientId,
+            ClientCertificateCredential.IX509Certificate2Provider certificateProvider,
+            string userAssertion,
+            OnBehalfOfCredentialOptions options,
+            CredentialPipeline pipeline,
+            MsalConfidentialClient client)
+        {
+            _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
+            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+            options ??= new OnBehalfOfCredentialOptions();
+            _userAssertion = new UserAssertion(userAssertion);
+
+            _client = client ??
+                      new MsalConfidentialClient(
+                          _pipeline,
+                          tenantId,
+                          clientId,
+                          certificateProvider,
+                          options.SendCertificateChain,
+                          options,
+                          options.RegionalAuthority,
+                          options.IsLoggingPIIEnabled);
+        }
 
         /// <summary>
         /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Azure Active Directory.
