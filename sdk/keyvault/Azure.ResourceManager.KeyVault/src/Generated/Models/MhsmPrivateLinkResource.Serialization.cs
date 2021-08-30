@@ -9,33 +9,15 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
-<<<<<<< HEAD:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/RestorePointCollectionData.Serialization.cs
-using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources.Models;
-
-namespace Azure.ResourceManager.Compute
-{
-    public partial class RestorePointCollectionData : IUtf8JsonSerializable
-=======
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class MhsmPrivateLinkResource : IUtf8JsonSerializable
->>>>>>> origin/main:sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/Models/MhsmPrivateLinkResource.Serialization.cs
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-<<<<<<< HEAD:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/RestorePointCollectionData.Serialization.cs
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-=======
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
@@ -48,18 +30,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName(item.Key);
                 writer.WriteStringValue(item.Value);
             }
->>>>>>> origin/main:sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/Models/MhsmPrivateLinkResource.Serialization.cs
             writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-<<<<<<< HEAD:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/RestorePointCollectionData.Serialization.cs
-            if (Optional.IsDefined(Source))
-            {
-                writer.WritePropertyName("source");
-                writer.WriteObjectValue(Source);
-=======
             if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames");
@@ -69,58 +44,33 @@ namespace Azure.ResourceManager.KeyVault.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
->>>>>>> origin/main:sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/Models/MhsmPrivateLinkResource.Serialization.cs
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-<<<<<<< HEAD:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/RestorePointCollectionData.Serialization.cs
-        internal static RestorePointCollectionData DeserializeRestorePointCollectionData(JsonElement element)
-        {
-=======
         internal static MhsmPrivateLinkResource DeserializeMhsmPrivateLinkResource(JsonElement element)
         {
             Optional<ManagedHsmSku> sku = default;
             Optional<SystemData> systemData = default;
->>>>>>> origin/main:sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/Models/MhsmPrivateLinkResource.Serialization.cs
             IDictionary<string, string> tags = default;
             Location location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-<<<<<<< HEAD:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/RestorePointCollectionData.Serialization.cs
-            Optional<RestorePointCollectionSourceProperties> source = default;
-            Optional<string> provisioningState = default;
-            Optional<string> restorePointCollectionId = default;
-            Optional<IReadOnlyList<RestorePointData>> restorePoints = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("tags"))
-=======
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
->>>>>>> origin/main:sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/Models/MhsmPrivateLinkResource.Serialization.cs
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
-<<<<<<< HEAD:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/RestorePointCollectionData.Serialization.cs
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-=======
                     sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value);
->>>>>>> origin/main:sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/Models/MhsmPrivateLinkResource.Serialization.cs
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -148,8 +98,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                     location = property.Value.GetString();
                     continue;
                 }
-<<<<<<< HEAD:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/RestorePointCollectionData.Serialization.cs
-=======
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -165,7 +113,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                     type = property.Value.GetString();
                     continue;
                 }
->>>>>>> origin/main:sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/Models/MhsmPrivateLinkResource.Serialization.cs
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -175,38 +122,18 @@ namespace Azure.ResourceManager.KeyVault.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-<<<<<<< HEAD:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/RestorePointCollectionData.Serialization.cs
-                        if (property0.NameEquals("source"))
-=======
                         if (property0.NameEquals("groupId"))
                         {
                             groupId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("requiredMembers"))
->>>>>>> origin/main:sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/Models/MhsmPrivateLinkResource.Serialization.cs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-<<<<<<< HEAD:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/RestorePointCollectionData.Serialization.cs
-                            source = RestorePointCollectionSourceProperties.DeserializeRestorePointCollectionSourceProperties(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("restorePointCollectionId"))
-                        {
-                            restorePointCollectionId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("restorePoints"))
-=======
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -216,39 +143,25 @@ namespace Azure.ResourceManager.KeyVault.Models
                             continue;
                         }
                         if (property0.NameEquals("requiredZoneNames"))
->>>>>>> origin/main:sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/Models/MhsmPrivateLinkResource.Serialization.cs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-<<<<<<< HEAD:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/RestorePointCollectionData.Serialization.cs
-                            List<RestorePointData> array = new List<RestorePointData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(RestorePointData.DeserializeRestorePointData(item));
-                            }
-                            restorePoints = array;
-=======
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
                                 array.Add(item.GetString());
                             }
                             requiredZoneNames = array;
->>>>>>> origin/main:sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/Models/MhsmPrivateLinkResource.Serialization.cs
                             continue;
                         }
                     }
                     continue;
                 }
             }
-<<<<<<< HEAD:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/RestorePointCollectionData.Serialization.cs
-            return new RestorePointCollectionData(id, name, type, tags, location, source.Value, provisioningState.Value, restorePointCollectionId.Value, Optional.ToList(restorePoints));
-=======
             return new MhsmPrivateLinkResource(id, name, type, tags, location, sku.Value, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
->>>>>>> origin/main:sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/Models/MhsmPrivateLinkResource.Serialization.cs
         }
     }
 }
