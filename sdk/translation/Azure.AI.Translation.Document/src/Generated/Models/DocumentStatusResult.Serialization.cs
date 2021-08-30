@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class DocumentStatus
+    public partial class DocumentStatusResult
     {
-        internal static DocumentStatus DeserializeDocumentStatus(JsonElement element)
+        internal static DocumentStatusResult DeserializeDocumentStatusResult(JsonElement element)
         {
             Optional<Uri> path = default;
             Uri sourcePath = default;
@@ -93,7 +93,7 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new DocumentStatus(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error, progress, id, characterCharged);
+            return new DocumentStatusResult(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error, progress, id, characterCharged);
         }
     }
 }

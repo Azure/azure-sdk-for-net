@@ -37,11 +37,11 @@ namespace Azure.AI.Translation.Document.Samples
 
             TimeSpan pollingInterval = new(1000);
 
-            foreach (DocumentStatus document in operation.GetDocumentStatuses())
+            foreach (DocumentStatusResult document in operation.GetDocumentStatuses())
             {
                 Console.WriteLine($"Polling Status for document{document.SourceDocumentUri}");
 
-                Response<DocumentStatus> responseDocumentStatus = operation.GetDocumentStatus(document.Id);
+                Response<DocumentStatusResult> responseDocumentStatus = operation.GetDocumentStatus(document.Id);
 
                 while (responseDocumentStatus.Value.Status != DocumentTranslationStatus.Failed &&
                           responseDocumentStatus.Value.Status != DocumentTranslationStatus.Succeeded)

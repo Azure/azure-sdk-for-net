@@ -40,7 +40,7 @@ Console.WriteLine($"    Failed: {operation.DocumentsFailed}");
 Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
 Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
 
-await foreach (DocumentStatus document in operation.Value)
+await foreach (DocumentStatusResult document in operation.Value)
 {
     Console.WriteLine($"Document with Id: {document.Id}");
     Console.WriteLine($"  Status:{document.Status}");

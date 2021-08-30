@@ -88,7 +88,7 @@ namespace Azure.AI.Translation.Document.Samples
                 }
             }
 
-            foreach (DocumentStatus document in operation.GetValues())
+            foreach (DocumentStatusResult document in operation.GetValues())
             {
                 Console.WriteLine($"Document with Id: {document.Id}");
                 Console.WriteLine($"  Status:{document.Status}");
