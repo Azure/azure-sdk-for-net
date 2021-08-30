@@ -16,6 +16,8 @@ namespace Azure.Data.Tables.Tests
         private const string Secret = "Kg==";
         private readonly TableSharedKeyCredential _expectedCred = new TableSharedKeyCredential(AccountName, Secret);
         private readonly TableSharedKeyCredential _expectedDevStoraageCred = new TableSharedKeyCredential(TableConstants.ConnectionStrings.DevStoreAccountName, TableConstants.ConnectionStrings.DevStoreAccountKey);
+        private const string cosmosPubDomain = "table.cosmos.azure.com";
+        private const string cosmosUsSecDomain = "table.cosmos.azure.microsoft.scloud";
 
         /// <summary>
         /// Validates the functionality of the TableConnectionString.
@@ -97,8 +99,12 @@ namespace Azure.Data.Tables.Tests
 
         public static IEnumerable<object[]> ValidCosmosConnStrings()
         {
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosPubDomain}:443/;", cosmosPubDomain };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosPubDomain}:443/;", cosmosPubDomain };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosPubDomain}:443/;", cosmosPubDomain };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosUsSecDomain}:443/;", cosmosUsSecDomain };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosUsSecDomain}:443/;", cosmosUsSecDomain };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosUsSecDomain}:443/;", cosmosUsSecDomain };
         }
 
         /// <summary>
@@ -106,13 +112,13 @@ namespace Azure.Data.Tables.Tests
         /// </summary>
         [Test]
         [TestCaseSource(nameof(ValidCosmosConnStrings))]
-        public void ParsesCosmos(string connString)
+        public void ParsesCosmos(string connString, string domain)
         {
             Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
             Assert.That(tcs.Credentials, Is.Not.Null);
             Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
-            Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.cosmos.azure.com:443/")), "The PrimaryUri should have matched.");
-            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.cosmos.azure.com:443/")), "The SecondaryUri should have matched.");
+            Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.{domain}:443/")), "The PrimaryUri should have matched.");
+            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.{domain}:443/")), "The SecondaryUri should have matched.");
         }
 
         public static IEnumerable<object[]> ValidSasStorageConnStrings()
