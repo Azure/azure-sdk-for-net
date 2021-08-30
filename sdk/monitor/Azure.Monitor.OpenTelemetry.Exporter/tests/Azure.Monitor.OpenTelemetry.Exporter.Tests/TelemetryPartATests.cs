@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Net;
 using Xunit;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
-using System.Net;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 {
