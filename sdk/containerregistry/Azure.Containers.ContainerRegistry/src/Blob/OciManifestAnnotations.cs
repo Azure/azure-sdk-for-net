@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
     [CodeGenModel("Annotations")]
     internal partial class OciManifestAnnotations

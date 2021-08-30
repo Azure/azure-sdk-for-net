@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class DockerManifestV1JwkHeader
+    internal partial class JWKHeader
     {
-        internal static DockerManifestV1JwkHeader DeserializeDockerManifestV1JwkHeader(JsonElement element)
+        internal static JWKHeader DeserializeJWKHeader(JsonElement element)
         {
             Optional<string> crv = default;
             Optional<string> kid = default;
@@ -47,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new DockerManifestV1JwkHeader(crv.Value, kid.Value, kty.Value, x.Value, y.Value);
+            return new JWKHeader(crv.Value, kid.Value, kty.Value, x.Value, y.Value);
         }
     }
 }

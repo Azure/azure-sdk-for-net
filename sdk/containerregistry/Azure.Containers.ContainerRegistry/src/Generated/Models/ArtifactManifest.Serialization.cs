@@ -9,21 +9,21 @@ using System.Text.Json;
 using Azure.Containers.ContainerRegistry;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    internal partial class ImageManifest
+    internal partial class ArtifactManifest
     {
-        internal static ImageManifest DeserializeImageManifest(JsonElement element)
+        internal static ArtifactManifest DeserializeArtifactManifest(JsonElement element)
         {
             if (element.TryGetProperty("mediaType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
                     case "ManifestWrapper": return ManifestWrapper.DeserializeManifestWrapper(element);
-                    case "application/vnd.docker.distribution.manifest.list.v2+json": return DockerManifestList.DeserializeDockerManifestList(element);
-                    case "application/vnd.docker.distribution.manifest.v1+json": return DockerManifestV1.DeserializeDockerManifestV1(element);
-                    case "application/vnd.docker.distribution.manifest.v2+json": return DockerManifestV2.DeserializeDockerManifestV2(element);
-                    case "application/vnd.oci.image.index.v1+json": return OciIndex.DeserializeOciIndex(element);
+                    case "application/vnd.docker.distribution.manifest.list.v2+json": return ManifestList.DeserializeManifestList(element);
+                    case "application/vnd.docker.distribution.manifest.v1+json": return V1Manifest.DeserializeV1Manifest(element);
+                    case "application/vnd.docker.distribution.manifest.v2+json": return V2Manifest.DeserializeV2Manifest(element);
+                    case "application/vnd.oci.image.index.v1+json": return OCIIndex.DeserializeOCIIndex(element);
                     case "application/vnd.oci.image.manifest.v1+json": return OciManifest.DeserializeOciManifest(element);
                 }
             }
@@ -42,7 +42,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new ImageManifest(schemaVersion, mediaType);
+            return new ArtifactManifest(schemaVersion, mediaType);
         }
     }
 }

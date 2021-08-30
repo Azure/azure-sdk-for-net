@@ -7,13 +7,14 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class DockerManifestV2
+    internal partial class V2Manifest
     {
-        internal static DockerManifestV2 DeserializeDockerManifestV2(JsonElement element)
+        internal static V2Manifest DeserializeV2Manifest(JsonElement element)
         {
             Optional<ContentDescriptor> config = default;
             Optional<IReadOnlyList<ContentDescriptor>> layers = default;
@@ -57,7 +58,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new DockerManifestV2(schemaVersion, mediaType, config.Value, Optional.ToList(layers));
+            return new V2Manifest(schemaVersion, mediaType, config.Value, Optional.ToList(layers));
         }
     }
 }

@@ -9,18 +9,18 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class RuntimePlatform
+    internal partial class Platform
     {
-        internal static RuntimePlatform DeserializeRuntimePlatform(JsonElement element)
+        internal static Platform DeserializePlatform(JsonElement element)
         {
             Optional<string> architecture = default;
             Optional<string> os = default;
             Optional<string> osVersion = default;
             Optional<IReadOnlyList<string>> osFeatures = default;
             Optional<string> variant = default;
-            Optional<IList<string>> features = default;
+            Optional<IReadOnlyList<string>> features = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("architecture"))
@@ -74,7 +74,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new RuntimePlatform(architecture.Value, os.Value, osVersion.Value, Optional.ToList(osFeatures), variant.Value, Optional.ToList(features));
+            return new Platform(architecture.Value, os.Value, osVersion.Value, Optional.ToList(osFeatures), variant.Value, Optional.ToList(features));
         }
     }
 }

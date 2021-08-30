@@ -7,13 +7,14 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class OciIndex
+    internal partial class OCIIndex
     {
-        internal static OciIndex DeserializeOciIndex(JsonElement element)
+        internal static OCIIndex DeserializeOCIIndex(JsonElement element)
         {
             Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             Optional<OciManifestAnnotations> annotations = default;
@@ -57,7 +58,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new OciIndex(schemaVersion, mediaType, Optional.ToList(manifests), annotations.Value);
+            return new OCIIndex(schemaVersion, mediaType, Optional.ToList(manifests), annotations.Value);
         }
     }
 }

@@ -6,27 +6,28 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested OCI index file. </summary>
-    internal partial class OciIndex : ImageManifest
+    internal partial class OCIIndex : ArtifactManifest
     {
-        /// <summary> Initializes a new instance of OciIndex. </summary>
+        /// <summary> Initializes a new instance of OCIIndex. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal OciIndex(int schemaVersion) : base(schemaVersion)
+        internal OCIIndex(int schemaVersion) : base(schemaVersion)
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
             MediaType = "application/vnd.oci.image.index.v1+json";
         }
 
-        /// <summary> Initializes a new instance of OciIndex. </summary>
+        /// <summary> Initializes a new instance of OCIIndex. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="manifests"> List of OCI image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciIndex(int schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, OciManifestAnnotations annotations) : base(schemaVersion, mediaType)
+        internal OCIIndex(int schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, OciManifestAnnotations annotations) : base(schemaVersion, mediaType)
         {
             Manifests = manifests;
             Annotations = annotations;

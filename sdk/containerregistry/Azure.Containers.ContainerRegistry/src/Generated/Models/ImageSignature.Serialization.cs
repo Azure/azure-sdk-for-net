@@ -8,13 +8,13 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class DockerManifestV1ImageSignature
+    internal partial class ImageSignature
     {
-        internal static DockerManifestV1ImageSignature DeserializeDockerManifestV1ImageSignature(JsonElement element)
+        internal static ImageSignature DeserializeImageSignature(JsonElement element)
         {
-            Optional<DockerManifestV1Jwk> header = default;
+            Optional<JWK> header = default;
             Optional<string> signature = default;
             Optional<string> @protected = default;
             foreach (var property in element.EnumerateObject())
@@ -26,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    header = DockerManifestV1Jwk.DeserializeDockerManifestV1Jwk(property.Value);
+                    header = JWK.DeserializeJWK(property.Value);
                     continue;
                 }
                 if (property.NameEquals("signature"))
@@ -40,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new DockerManifestV1ImageSignature(header.Value, signature.Value, @protected.Value);
+            return new ImageSignature(header.Value, signature.Value, @protected.Value);
         }
     }
 }

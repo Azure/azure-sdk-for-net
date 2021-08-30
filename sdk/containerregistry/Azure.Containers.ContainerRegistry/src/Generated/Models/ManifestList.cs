@@ -6,26 +6,27 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested Docker multi-arch-manifest file. </summary>
-    internal partial class DockerManifestList : ImageManifest
+    internal partial class ManifestList : ArtifactManifest
     {
-        /// <summary> Initializes a new instance of DockerManifestList. </summary>
+        /// <summary> Initializes a new instance of ManifestList. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal DockerManifestList(int schemaVersion) : base(schemaVersion)
+        internal ManifestList(int schemaVersion) : base(schemaVersion)
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
             MediaType = "application/vnd.docker.distribution.manifest.list.v2+json";
         }
 
-        /// <summary> Initializes a new instance of DockerManifestList. </summary>
+        /// <summary> Initializes a new instance of ManifestList. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="manifests"> List of V2 image layer information. </param>
-        internal DockerManifestList(int schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests) : base(schemaVersion, mediaType)
+        internal ManifestList(int schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests) : base(schemaVersion, mediaType)
         {
             Manifests = manifests;
             MediaType = mediaType ?? "application/vnd.docker.distribution.manifest.list.v2+json";

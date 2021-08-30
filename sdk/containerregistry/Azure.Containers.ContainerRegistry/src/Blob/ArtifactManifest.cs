@@ -3,10 +3,10 @@
 
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
     [CodeGenModel("Manifest")]
-    internal partial class ImageManifest
+    internal partial class ArtifactManifest
     {
         /// <summary> Media type for this Manifest. </summary>
         public string MediaType { get; set; }

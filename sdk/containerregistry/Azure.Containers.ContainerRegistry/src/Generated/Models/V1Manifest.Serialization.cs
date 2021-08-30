@@ -9,18 +9,18 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class DockerManifestV1
+    internal partial class V1Manifest
     {
-        internal static DockerManifestV1 DeserializeDockerManifestV1(JsonElement element)
+        internal static V1Manifest DeserializeV1Manifest(JsonElement element)
         {
             Optional<string> architecture = default;
             Optional<string> name = default;
             Optional<string> tag = default;
-            Optional<IReadOnlyList<DockerManifestV1FsLayer>> fsLayers = default;
-            Optional<IReadOnlyList<DockerManifestV1History>> history = default;
-            Optional<IReadOnlyList<DockerManifestV1ImageSignature>> signatures = default;
+            Optional<IReadOnlyList<FsLayer>> fsLayers = default;
+            Optional<IReadOnlyList<History>> history = default;
+            Optional<IReadOnlyList<ImageSignature>> signatures = default;
             int schemaVersion = default;
             string mediaType = default;
             foreach (var property in element.EnumerateObject())
@@ -47,10 +47,10 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DockerManifestV1FsLayer> array = new List<DockerManifestV1FsLayer>();
+                    List<FsLayer> array = new List<FsLayer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DockerManifestV1FsLayer.DeserializeDockerManifestV1FsLayer(item));
+                        array.Add(FsLayer.DeserializeFsLayer(item));
                     }
                     fsLayers = array;
                     continue;
@@ -62,10 +62,10 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DockerManifestV1History> array = new List<DockerManifestV1History>();
+                    List<History> array = new List<History>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DockerManifestV1History.DeserializeDockerManifestV1History(item));
+                        array.Add(ContainerRegistry.History.DeserializeHistory(item));
                     }
                     history = array;
                     continue;
@@ -77,10 +77,10 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DockerManifestV1ImageSignature> array = new List<DockerManifestV1ImageSignature>();
+                    List<ImageSignature> array = new List<ImageSignature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DockerManifestV1ImageSignature.DeserializeDockerManifestV1ImageSignature(item));
+                        array.Add(ImageSignature.DeserializeImageSignature(item));
                     }
                     signatures = array;
                     continue;
@@ -96,7 +96,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new DockerManifestV1(schemaVersion, mediaType, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new V1Manifest(schemaVersion, mediaType, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
         }
     }
 }

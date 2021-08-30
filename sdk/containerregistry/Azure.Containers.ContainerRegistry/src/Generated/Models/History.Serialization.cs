@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class DockerManifestV1History
+    internal partial class History
     {
-        internal static DockerManifestV1History DeserializeDockerManifestV1History(JsonElement element)
+        internal static History DeserializeHistory(JsonElement element)
         {
             Optional<string> v1Compatibility = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new DockerManifestV1History(v1Compatibility.Value);
+            return new History(v1Compatibility.Value);
         }
     }
 }

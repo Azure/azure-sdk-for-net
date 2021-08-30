@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
     internal partial class ManifestListAttributes
     {
@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
-            Optional<RuntimePlatform> platform = default;
+            Optional<Platform> platform = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"))
@@ -47,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    platform = RuntimePlatform.DeserializeRuntimePlatform(property.Value);
+                    platform = Platform.DeserializePlatform(property.Value);
                     continue;
                 }
             }

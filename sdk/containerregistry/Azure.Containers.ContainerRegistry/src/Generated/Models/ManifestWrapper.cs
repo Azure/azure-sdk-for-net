@@ -6,13 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Containers.ContainerRegistry.ResumableStorage;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested manifest file. </summary>
-    internal partial class ManifestWrapper : ImageManifest
+    internal partial class ManifestWrapper : ArtifactManifest
     {
         /// <summary> Initializes a new instance of ManifestWrapper. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
@@ -20,9 +20,9 @@ namespace Azure.Containers.ContainerRegistry
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
             Layers = new ChangeTrackingList<ContentDescriptor>();
-            FsLayers = new ChangeTrackingList<DockerManifestV1FsLayer>();
-            History = new ChangeTrackingList<DockerManifestV1History>();
-            Signatures = new ChangeTrackingList<DockerManifestV1ImageSignature>();
+            FsLayers = new ChangeTrackingList<FsLayer>();
+            History = new ChangeTrackingList<History>();
+            Signatures = new ChangeTrackingList<ImageSignature>();
             MediaType = "ManifestWrapper";
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="fsLayers"> (V1) List of layer information. </param>
         /// <param name="history"> (V1) Image history. </param>
         /// <param name="signatures"> (V1) Image signature. </param>
-        internal ManifestWrapper(int schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, ContentDescriptor config, IReadOnlyList<ContentDescriptor> layers, OciManifestAnnotations annotations, string architecture, string name, string tag, IReadOnlyList<DockerManifestV1FsLayer> fsLayers, IReadOnlyList<DockerManifestV1History> history, IReadOnlyList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion, mediaType)
+        internal ManifestWrapper(int schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, ContentDescriptor config, IReadOnlyList<ContentDescriptor> layers, OciManifestAnnotations annotations, string architecture, string name, string tag, IReadOnlyList<FsLayer> fsLayers, IReadOnlyList<History> history, IReadOnlyList<ImageSignature> signatures) : base(schemaVersion, mediaType)
         {
             Manifests = manifests;
             Config = config;
@@ -69,10 +69,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> (V1) Image tag. </summary>
         public string Tag { get; }
         /// <summary> (V1) List of layer information. </summary>
-        public IReadOnlyList<DockerManifestV1FsLayer> FsLayers { get; }
+        public IReadOnlyList<FsLayer> FsLayers { get; }
         /// <summary> (V1) Image history. </summary>
-        public IReadOnlyList<DockerManifestV1History> History { get; }
+        public IReadOnlyList<History> History { get; }
         /// <summary> (V1) Image signature. </summary>
-        public IReadOnlyList<DockerManifestV1ImageSignature> Signatures { get; }
+        public IReadOnlyList<ImageSignature> Signatures { get; }
     }
 }

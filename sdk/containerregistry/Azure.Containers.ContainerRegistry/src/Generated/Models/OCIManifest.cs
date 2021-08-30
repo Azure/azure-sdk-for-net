@@ -8,10 +8,10 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> Returns the requested OCI Manifest file. </summary>
-    internal partial class OciManifest : ImageManifest
+    internal partial class OciManifest : ArtifactManifest
     {
         /// <summary> Initializes a new instance of OciManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>

@@ -5,22 +5,22 @@
 
 #nullable disable
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> Returns the requested manifest file. </summary>
-    internal partial class ImageManifest
+    internal partial class ArtifactManifest
     {
-        /// <summary> Initializes a new instance of ImageManifest. </summary>
+        /// <summary> Initializes a new instance of ArtifactManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal ImageManifest(int schemaVersion)
+        internal ArtifactManifest(int schemaVersion)
         {
             SchemaVersion = schemaVersion;
         }
 
-        /// <summary> Initializes a new instance of ImageManifest. </summary>
+        /// <summary> Initializes a new instance of ArtifactManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
-        internal ImageManifest(int schemaVersion, string mediaType)
+        internal ArtifactManifest(int schemaVersion, string mediaType)
         {
             SchemaVersion = schemaVersion;
             MediaType = mediaType;

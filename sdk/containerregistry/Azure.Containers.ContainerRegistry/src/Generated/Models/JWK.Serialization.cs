@@ -8,13 +8,13 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class DockerManifestV1Jwk
+    internal partial class JWK
     {
-        internal static DockerManifestV1Jwk DeserializeDockerManifestV1Jwk(JsonElement element)
+        internal static JWK DeserializeJWK(JsonElement element)
         {
-            Optional<DockerManifestV1JwkHeader> jwk = default;
+            Optional<JWKHeader> jwk = default;
             Optional<string> alg = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jwk = DockerManifestV1JwkHeader.DeserializeDockerManifestV1JwkHeader(property.Value);
+                    jwk = JWKHeader.DeserializeJWKHeader(property.Value);
                     continue;
                 }
                 if (property.NameEquals("alg"))
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new DockerManifestV1Jwk(jwk.Value, alg.Value);
+            return new JWK(jwk.Value, alg.Value);
         }
     }
 }

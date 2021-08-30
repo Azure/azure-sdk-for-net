@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Containers.ContainerRegistry.ResumableStorage;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -23,9 +23,9 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> architecture = default;
             Optional<string> name = default;
             Optional<string> tag = default;
-            Optional<IReadOnlyList<DockerManifestV1FsLayer>> fsLayers = default;
-            Optional<IReadOnlyList<DockerManifestV1History>> history = default;
-            Optional<IReadOnlyList<DockerManifestV1ImageSignature>> signatures = default;
+            Optional<IReadOnlyList<FsLayer>> fsLayers = default;
+            Optional<IReadOnlyList<History>> history = default;
+            Optional<IReadOnlyList<ImageSignature>> signatures = default;
             int schemaVersion = default;
             string mediaType = default;
             foreach (var property in element.EnumerateObject())
@@ -102,10 +102,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DockerManifestV1FsLayer> array = new List<DockerManifestV1FsLayer>();
+                    List<FsLayer> array = new List<FsLayer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DockerManifestV1FsLayer.DeserializeDockerManifestV1FsLayer(item));
+                        array.Add(FsLayer.DeserializeFsLayer(item));
                     }
                     fsLayers = array;
                     continue;
@@ -117,10 +117,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DockerManifestV1History> array = new List<DockerManifestV1History>();
+                    List<History> array = new List<History>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DockerManifestV1History.DeserializeDockerManifestV1History(item));
+                        array.Add(ContainerRegistry.History.DeserializeHistory(item));
                     }
                     history = array;
                     continue;
@@ -132,10 +132,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DockerManifestV1ImageSignature> array = new List<DockerManifestV1ImageSignature>();
+                    List<ImageSignature> array = new List<ImageSignature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DockerManifestV1ImageSignature.DeserializeDockerManifestV1ImageSignature(item));
+                        array.Add(ImageSignature.DeserializeImageSignature(item));
                     }
                     signatures = array;
                     continue;

@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class DockerManifestV1FsLayer
+    internal partial class FsLayer
     {
-        internal static DockerManifestV1FsLayer DeserializeDockerManifestV1FsLayer(JsonElement element)
+        internal static FsLayer DeserializeFsLayer(JsonElement element)
         {
             Optional<string> blobSum = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new DockerManifestV1FsLayer(blobSum.Value);
+            return new FsLayer(blobSum.Value);
         }
     }
 }

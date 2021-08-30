@@ -8,7 +8,7 @@ using System.Text;
 using Azure.Core;
 using System.Security.Cryptography;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
     [CodeGenModel("Descriptor")]
     internal partial class ContentDescriptor

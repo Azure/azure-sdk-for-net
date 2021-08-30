@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class DockerManifestList
+    internal partial class ManifestList
     {
-        internal static DockerManifestList DeserializeDockerManifestList(JsonElement element)
+        internal static ManifestList DeserializeManifestList(JsonElement element)
         {
             Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             int schemaVersion = default;
@@ -46,7 +46,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new DockerManifestList(schemaVersion, mediaType, Optional.ToList(manifests));
+            return new ManifestList(schemaVersion, mediaType, Optional.ToList(manifests));
         }
     }
 }
