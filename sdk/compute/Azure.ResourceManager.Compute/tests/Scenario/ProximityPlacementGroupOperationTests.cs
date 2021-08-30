@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = (await CreateResourceGroupAsync()).GetProximityPlacementGroups();
             var input = ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            var lro_group =  await container.CreateOrUpdateAsync(groupName, input);
-            ProximityPlacementGroup group = lro_group.Value;
+            var lroGroup =  await container.CreateOrUpdateAsync(groupName, input);
+            ProximityPlacementGroup group = lroGroup.Value;
             return group;
         }
 

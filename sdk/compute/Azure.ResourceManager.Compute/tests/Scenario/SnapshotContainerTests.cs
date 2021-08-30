@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class SnapshotContainerTests : ComputeTestBase
     {
         public SnapshotContainerTests(bool isAsync)
-    : base(isAsync, RecordedTestMode.Record)
+    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
-            var lro_disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
-            Disk _disk = lro_disk.Value;
+            var lroDisk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            Disk _disk = lroDisk.Value;
             var diskID = _disk.Id;
             var createoption = new DiskCreateOption("copy");
             var input =  ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
-            var lro_disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
-            Disk _disk = lro_disk.Value;
+            var lrodisk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            Disk _disk = lrodisk.Value;
             var diskID = _disk.Id;
             var createoption = new DiskCreateOption("copy");
             var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
-            var lro_disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
-            Disk _disk = lro_disk.Value;
+            var lroDisk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            Disk _disk = lroDisk.Value;
             var diskID = _disk.Id;
             var createoption = new DiskCreateOption("copy");
             var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
-            var lro_disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
-            Disk _disk = lro_disk.Value;
+            var lroDisk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            Disk _disk = lroDisk.Value;
             var diskID = _disk.Id;
             var createoption = new DiskCreateOption("copy");
             var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);

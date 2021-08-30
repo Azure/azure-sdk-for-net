@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class VirtualMachineExtensionVirtualMachineOperationsTests : VirtualMachineTestBase
     {
         public VirtualMachineExtensionVirtualMachineOperationsTests(bool isAsync)
-           : base(isAsync, RecordedTestMode.Record)
+           : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro_virtualMachine = await container.CreateOrUpdateAsync(vmName, input);
-            VirtualMachine virtualMachine = lro_virtualMachine.Value;
+            var lroVirtualMachine = await container.CreateOrUpdateAsync(vmName, input);
+            VirtualMachine virtualMachine = lroVirtualMachine.Value;
             var vmeContainer = virtualMachine.GetVirtualMachineExtensionVirtualMachines();
             var vmeInput = ResourceDataHelper.GetBasicLinuxVirtualMachineExtensionData(DefaultLocation);
-            var lro_vme1 = await vmeContainer.CreateOrUpdateAsync(vmeName, vmeInput);
-            VirtualMachineExtensionVirtualMachine vme = lro_vme1.Value;
+            var lroVme1 = await vmeContainer.CreateOrUpdateAsync(vmeName, vmeInput);
+            VirtualMachineExtensionVirtualMachine vme = lroVme1.Value;
             return vme;
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vme = await CreateVirtualMachineExtensionAsync(vmeName);
             VirtualMachineExtensionVirtualMachine vme2 = await vme.GetAsync();
 
-            ResourceDataHelper.AssertVirtualMachineEXtention(vme.Data, vme2.Data);
+            ResourceDataHelper.AssertVirtualMachineExtention(vme.Data, vme2.Data);
         }
 
         [TestCase]

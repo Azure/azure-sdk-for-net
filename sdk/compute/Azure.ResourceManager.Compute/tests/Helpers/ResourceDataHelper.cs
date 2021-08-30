@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         #endregion
 
         #region GalleryImageVersion
-        public static void AssertGalleryImageVersion(GalleryImageVersionData imageversion1, GalleryImageVersionData imageversion2)
+        public static void AssertGalleryImageVersion(GalleryImageVersionData imageVersion1, GalleryImageVersionData imageVersion2)
         {
-            Assert.AreEqual(imageversion1.Name, imageversion2.Name);
-            Assert.AreEqual(imageversion1.Id, imageversion2.Id);
-            Assert.AreEqual(imageversion1.Location, imageversion2.Location);
-            Assert.AreEqual(imageversion1.Tags, imageversion2.Tags);
+            Assert.AreEqual(imageVersion1.Name, imageVersion2.Name);
+            Assert.AreEqual(imageVersion1.Id, imageVersion2.Id);
+            Assert.AreEqual(imageVersion1.Location, imageVersion2.Location);
+            Assert.AreEqual(imageVersion1.Tags, imageVersion2.Tags);
         }
 
         public static GalleryImageVersionData GetBasicGalleryImageVersionData(Location location,string VMID)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         #endregion
 
         #region VirtualMachineExtention
-        public static void AssertVirtualMachineEXtention(VirtualMachineExtensionData vme1, VirtualMachineExtensionData vme2)
+        public static void AssertVirtualMachineExtention(VirtualMachineExtensionData vme1, VirtualMachineExtensionData vme2)
         {
             Assert.AreEqual(vme1.Id, vme2.Id);
             Assert.AreEqual(vme1.Name, vme2.Name);
@@ -396,10 +396,9 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
 
         public static ProximityPlacementGroupData  GetBasicProximityPlacementGroupData(Location location)
         {
-            var data = new ProximityPlacementGroupData(location)
+            return new ProximityPlacementGroupData(location)
             {
             };
-            return data;
         }
         #endregion
 

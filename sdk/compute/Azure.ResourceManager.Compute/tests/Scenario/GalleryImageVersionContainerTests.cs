@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Tests
         protected GenericResourceContainer _genericResourceContainer;
         private VirtualMachine _vm;
         public GalleryImageVersionContainerTests(bool isAsync)
-           : base(isAsync , RecordedTestMode.Record)
+           : base(isAsync)// , RecordedTestMode.Record)
         {
         }
         private async Task<GalleryImageVersionContainer> GetGalleryImageVersionContainerAsync()
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Compute.Tests
                     Recording.GenerateAssetName("offer"),
                     Recording.GenerateAssetName("sku"));
             var input_2 = ResourceDataHelper.GetBasicGalleryImageData(DefaultLocation, OperatingSystemTypes.Linux, identifier);
-            var lro_Gallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, input);
-            _gallery = lro_Gallery.Value;
-            var lro_GalleryImage = await _gallery.GetGalleryImages().CreateOrUpdateAsync(galleryImageName, input_2);
-            _galleryImage = lro_GalleryImage.Value;
+            var lroGallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, input);
+            _gallery = lroGallery.Value;
+            var lroGalleryImage = await _gallery.GetGalleryImages().CreateOrUpdateAsync(galleryImageName, input_2);
+            _galleryImage = lroGalleryImage.Value;
             return _galleryImage.GetGalleryImageVersions();
         }
 
@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.Compute.Tests
             var vnet = await CreateVirtualNetwork();
             var nic = await CreateNetworkInterface(GetSubnetId(vnet));
             var vmInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro_VM = await vmContainer.CreateOrUpdateAsync(vmName, vmInput);
-            _vm = lro_VM.Value;
+            var lroVm = await vmContainer.CreateOrUpdateAsync(vmName, vmInput);
+            _vm = lroVm.Value;
             await _vm.DeallocateAsync();
             await _vm.GeneralizeAsync();
             var vmID = _vm.Id;
             var BasicGalleryImageVersionData = ResourceDataHelper.GetBasicGalleryImageVersionData(DefaultLocation, vmID);
             var GalleryImageVersionName = "1.0.0";
-            var lro_imageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
-            GalleryImageVersion imageVersion = lro_imageVersion.Value;
+            var lroImageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
+            GalleryImageVersion imageVersion = lroImageVersion.Value;
             Assert.AreEqual(GalleryImageVersionName, imageVersion.Data.Name);
         }
 
@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.Compute.Tests
             var vnet = await CreateVirtualNetwork();
             var nic = await CreateNetworkInterface(GetSubnetId(vnet));
             var VMInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, VMName, nic.Id);
-            var lro_VM = await vmContainer.CreateOrUpdateAsync(VMName, VMInput);
-            _vm = lro_VM.Value;
+            var lroVm = await vmContainer.CreateOrUpdateAsync(VMName, VMInput);
+            _vm = lroVm.Value;
             await _vm.DeallocateAsync();
             await _vm.GeneralizeAsync();
             var vmID = _vm.Id;
             var BasicGalleryImageVersionData = ResourceDataHelper.GetBasicGalleryImageVersionData(DefaultLocation, vmID);
             var GalleryImageVersionName = "1.0.0";
-            var lro_imageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
-            GalleryImageVersion imageVersion = lro_imageVersion.Value;
+            var lroImageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
+            GalleryImageVersion imageVersion = lroImageVersion.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(GalleryImageVersionName));
             Assert.IsFalse(await container.CheckIfExistsAsync(GalleryImageVersionName + "1"));
 
@@ -168,15 +168,15 @@ namespace Azure.ResourceManager.Compute.Tests
             var vnet = await CreateVirtualNetwork();
             var nic = await CreateNetworkInterface(GetSubnetId(vnet));
             var vmInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro_vm = await vmContainer.CreateOrUpdateAsync(vmName, vmInput);
-            _vm = lro_vm.Value;
+            var lroVm = await vmContainer.CreateOrUpdateAsync(vmName, vmInput);
+            _vm = lroVm.Value;
             await _vm.DeallocateAsync();
             await _vm.GeneralizeAsync();
             var vmID = _vm.Id;
             var BasicGalleryImageVersionData = ResourceDataHelper.GetBasicGalleryImageVersionData(DefaultLocation, vmID);
             var GalleryImageVersionName = "1.0.0";
-            var lro_imageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
-            GalleryImageVersion imageversion = lro_imageVersion.Value;
+            var lroImageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
+            GalleryImageVersion imageversion = lroImageVersion.Value;
             GalleryImageVersion imageversion2 = await container.GetAsync(GalleryImageVersionName);
 
             ResourceDataHelper.AssertGalleryImageVersion(imageversion.Data, imageversion2.Data);
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vnet = await CreateVirtualNetwork();
             var nic = await CreateNetworkInterface(GetSubnetId(vnet));
             var vmInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro_vm = await vmContainer.CreateOrUpdateAsync(vmName, vmInput);
-            _vm = lro_vm.Value;
+            var lroVm = await vmContainer.CreateOrUpdateAsync(vmName, vmInput);
+            _vm = lroVm.Value;
             await _vm.DeallocateAsync();
             await _vm.GeneralizeAsync();
             var vmID = _vm.Id;

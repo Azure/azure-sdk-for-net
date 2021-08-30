@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetProximityPlacementGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("management.azure.com");
             var input = ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            var lro_group = await container.CreateOrUpdateAsync(groupName, input);
-            ProximityPlacementGroup group = lro_group.Value;
+            var lroGroup = await container.CreateOrUpdateAsync(groupName, input);
+            ProximityPlacementGroup group = lroGroup.Value;
             Assert.AreEqual(groupName, group.Data.Name);
         }
 
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetProximityPlacementGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testPro-");
             var input = ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            var lro_group1 = await container.CreateOrUpdateAsync(groupName, input);
-            ProximityPlacementGroup group1 = lro_group1.Value;
+            var lroGroup1 = await container.CreateOrUpdateAsync(groupName, input);
+            ProximityPlacementGroup group1 = lroGroup1.Value;
             ProximityPlacementGroup group2 = await container.GetAsync(groupName);
             ResourceDataHelper.AssertProximityPlacementGroup(group1.Data, group2.Data);
         }
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetProximityPlacementGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testPro-");
             var input = ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            var lro_group = await container.CreateOrUpdateAsync(groupName, input);
-            ProximityPlacementGroup group = lro_group.Value;
+            var lroGroup = await container.CreateOrUpdateAsync(groupName, input);
+            ProximityPlacementGroup group = lroGroup.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(groupName));
             Assert.IsFalse(await container.CheckIfExistsAsync(groupName + "1"));
 

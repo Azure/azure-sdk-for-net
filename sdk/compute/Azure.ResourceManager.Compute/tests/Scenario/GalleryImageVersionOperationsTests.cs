@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Tests
         protected GenericResourceContainer _genericResourceContainer;
         private GalleryImageVersion _galleryImageVersion;
         public GalleryImageVersionOperationsTests(bool isAsync)
-        : base(isAsync , RecordedTestMode.Record)
+        : base(isAsync)// , RecordedTestMode.Record)
         {
         }
 
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var galleryName = Recording.GenerateAssetName("testGallery");
             var galleryImageName = "1.0.0";
             var galleryInput = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            var lro_gallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, galleryInput);
-            _gallery = lro_gallery.Value;
+            var lroGallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, galleryInput);
+            _gallery = lroGallery.Value;
             var identifier = ResourceDataHelper.GetGalleryImageIdentifier(
                     Recording.GenerateAssetName("publisher"),
                     Recording.GenerateAssetName("offer"),
@@ -107,16 +107,16 @@ namespace Azure.ResourceManager.Compute.Tests
             var vnet = await CreateVirtualNetwork();
             var nic = await CreateNetworkInterface(GetSubnetId(vnet));
             var vmInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro_vm = await vmContainer.CreateOrUpdateAsync(vmName, vmInput);
-            var _vm = lro_vm.Value;
+            var lroVm = await vmContainer.CreateOrUpdateAsync(vmName, vmInput);
+            var _vm = lroVm.Value;
             await _vm.DeallocateAsync();
             await _vm.GeneralizeAsync();
             var vmID = _vm.Id;
             var imageVersionInput = ResourceDataHelper.GetBasicGalleryImageVersionData(DefaultLocation, vmID);
-            var Iro_galleryImage = await _gallery.GetGalleryImages().CreateOrUpdateAsync(galleryImageName, imageInput);
-            _galleryImage = Iro_galleryImage.Value;
-            var Iro_galleryImageVersion =  await _galleryImage.GetGalleryImageVersions().CreateOrUpdateAsync(galleryImageVersionName, imageVersionInput);
-            _galleryImageVersion = Iro_galleryImageVersion.Value;
+            var lroGalleryImage = await _gallery.GetGalleryImages().CreateOrUpdateAsync(galleryImageName, imageInput);
+            _galleryImage = lroGalleryImage.Value;
+            var lroGalleryImageVersion =  await _galleryImage.GetGalleryImageVersions().CreateOrUpdateAsync(galleryImageVersionName, imageVersionInput);
+            _galleryImageVersion = lroGalleryImageVersion.Value;
             return _galleryImageVersion;
         }
 
@@ -139,25 +139,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
             ResourceDataHelper.AssertGalleryImageVersion(imageVersion.Data, imageVersion2.Data);
         }
-
-        //[TestCase]
-        //[RecordedTest]
-        /*public async Task Update()
-        {
-            var name = "1.0.0";
-            var imageVersion = await CreateGalleryImageVersionAsync(name);
-            //var publishingProfile = new GalleryImageVersionPublishingProfile();
-            var storage = new GalleryImageVersionStorageProfile();
-            var update = new GalleryImageVersionUpdate()
-            {
-                //PublishingProfile = publishingProfile
-                StorageProfile = storage
-            };
-            var Iro_updatedGalleryImageVersion = await imageVersion.UpdateAsync(update);
-            GalleryImageVersion updatedGalleryImageVersion = Iro_updatedGalleryImageVersion.Value;
-            //Assert.AreEqual(publishingProfile, updatedGalleryImageVersion.Data.PublishingProfile);
-            Assert.AreEqual(storage, updatedGalleryImageVersion.Data.StorageProfile);
-        }*/
 
         [TestCase]
         [RecordedTest]
