@@ -13,7 +13,7 @@ You can find the details of those new libraries
 In this basic quickstart guide, we will walk you through how to
 authenticate to Azure using the preview libraries and start interacting
 with Azure resources. There are several possible approaches to
-authentication. This document illustrates the most common scenario
+authentication. This document illustrates the most common scenario.
 
 ## Getting started
 
@@ -56,7 +56,7 @@ Additional documentation for the `Azure.Identity.DefaultAzureCredential` class c
 
 ### Understanding Azure Resource Hierarchy
 
-In new management libraries, we no longer provide various clients like `ResourceManagementClient` or `ComputeMangementClient`. Instead, we adopt a hierarchical resource model. **Before you continue, make sure you go through the concepts of the Azure .NET SDK [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/README.md#key-concepts)**
+In new management libraries, we no longer provide various clients like `ResourceManagementClient` or `ComputeMangementClient`. Instead, we adopt a hierarchical resource model. **Before you continue, make sure you go through the concepts of the Azure .NET SDK [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/README.md#key-concepts).**
 
 ----
 
@@ -147,7 +147,7 @@ ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rg
 VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
 // Use the same location as the resource group
 string vmName = "myVM";
-var input = new VirtualMachineData(resourceGroup.Data.Location)
+VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
 {
     HardwareProfile = new HardwareProfile()
     {
