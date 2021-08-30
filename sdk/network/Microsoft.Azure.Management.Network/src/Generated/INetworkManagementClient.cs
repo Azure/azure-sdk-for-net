@@ -301,101 +301,6 @@ namespace Microsoft.Azure.Management.Network
         INetworkInterfaceTapConfigurationsOperations NetworkInterfaceTapConfigurations { get; }
 
         /// <summary>
-        /// Gets the INetworkManagersOperations.
-        /// </summary>
-        INetworkManagersOperations NetworkManagers { get; }
-
-        /// <summary>
-        /// Gets the INetworkManagerCommitsOperations.
-        /// </summary>
-        INetworkManagerCommitsOperations NetworkManagerCommits { get; }
-
-        /// <summary>
-        /// Gets the INetworkManagerDeploymentStatusOperations.
-        /// </summary>
-        INetworkManagerDeploymentStatusOperations NetworkManagerDeploymentStatus { get; }
-
-        /// <summary>
-        /// Gets the IEffectiveVirtualNetworksOperations.
-        /// </summary>
-        IEffectiveVirtualNetworksOperations EffectiveVirtualNetworks { get; }
-
-        /// <summary>
-        /// Gets the IActiveConnectivityConfigurationsOperations.
-        /// </summary>
-        IActiveConnectivityConfigurationsOperations ActiveConnectivityConfigurations { get; }
-
-        /// <summary>
-        /// Gets the IActiveSecurityAdminRulesOperations.
-        /// </summary>
-        IActiveSecurityAdminRulesOperations ActiveSecurityAdminRules { get; }
-
-        /// <summary>
-        /// Gets the IActiveSecurityUserRulesOperations.
-        /// </summary>
-        IActiveSecurityUserRulesOperations ActiveSecurityUserRules { get; }
-
-        /// <summary>
-        /// Gets the IConnectivityConfigurationsOperations.
-        /// </summary>
-        IConnectivityConfigurationsOperations ConnectivityConfigurations { get; }
-
-        /// <summary>
-        /// Gets the IEffectiveConnectivityConfigurationsOperations.
-        /// </summary>
-        IEffectiveConnectivityConfigurationsOperations EffectiveConnectivityConfigurations { get; }
-
-        /// <summary>
-        /// Gets the INetworkManagerEffectiveSecurityAdminRulesOperations.
-        /// </summary>
-        INetworkManagerEffectiveSecurityAdminRulesOperations NetworkManagerEffectiveSecurityAdminRules { get; }
-
-        /// <summary>
-        /// Gets the INetworkGroupsOperations.
-        /// </summary>
-        INetworkGroupsOperations NetworkGroups { get; }
-
-        /// <summary>
-        /// Gets the ISecurityUserConfigurationsOperations.
-        /// </summary>
-        ISecurityUserConfigurationsOperations SecurityUserConfigurations { get; }
-
-        /// <summary>
-        /// Gets the IUserRuleCollectionsOperations.
-        /// </summary>
-        IUserRuleCollectionsOperations UserRuleCollections { get; }
-
-        /// <summary>
-        /// Gets the IUserRulesOperations.
-        /// </summary>
-        IUserRulesOperations UserRules { get; }
-
-        /// <summary>
-        /// Gets the ISecurityAdminConfigurationsOperations.
-        /// </summary>
-        ISecurityAdminConfigurationsOperations SecurityAdminConfigurations { get; }
-
-        /// <summary>
-        /// Gets the IAdminRuleCollectionsOperations.
-        /// </summary>
-        IAdminRuleCollectionsOperations AdminRuleCollections { get; }
-
-        /// <summary>
-        /// Gets the IAdminRulesOperations.
-        /// </summary>
-        IAdminRulesOperations AdminRules { get; }
-
-        /// <summary>
-        /// Gets the INetworkSecurityPerimetersOperations.
-        /// </summary>
-        INetworkSecurityPerimetersOperations NetworkSecurityPerimeters { get; }
-
-        /// <summary>
-        /// Gets the IPerimeterAssociableResourceTypesOperations.
-        /// </summary>
-        IPerimeterAssociableResourceTypesOperations PerimeterAssociableResourceTypes { get; }
-
-        /// <summary>
         /// Gets the INetworkProfilesOperations.
         /// </summary>
         INetworkProfilesOperations NetworkProfiles { get; }
@@ -531,6 +436,11 @@ namespace Microsoft.Azure.Management.Network
         IServiceTagsOperations ServiceTags { get; }
 
         /// <summary>
+        /// Gets the IServiceTagInformationOperations.
+        /// </summary>
+        IServiceTagInformationOperations ServiceTagInformation { get; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         IUsagesOperations Usages { get; }
@@ -574,6 +484,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILocalNetworkGatewaysOperations.
         /// </summary>
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewayNatRulesOperations.
+        /// </summary>
+        IVirtualNetworkGatewayNatRulesOperations VirtualNetworkGatewayNatRules { get; }
 
         /// <summary>
         /// Gets the IVirtualNetworkTapsOperations.
