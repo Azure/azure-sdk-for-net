@@ -35,7 +35,7 @@ finally
 }
 ```
 
-## Capture ALL Events and display them in the Trace
+## Capture ALL events and write them to `Trace`
 
 Similar to the previous example, this snippet captures all logs, but writes them to [`Trace`](https://docs.microsoft.com/dotnet/api/system.diagnostics.trace) output.   This approach may be desirable for applications that do not have the `Console` available.
 
