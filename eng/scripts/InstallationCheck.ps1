@@ -12,10 +12,10 @@ param (
 Write-Host "dotnet new console"
 dotnet new console
 $localFeed = "$PipelineWorkspace/$ArtifactsDirectory-signed/$Artifact"
-Write-Host "dotnet nuget add source $($localFeed)"
+Write-Host "dotnet nuget add source $localFeed"
 dotnet nuget add source $localFeed
 
-$version = (Get-ChildItem "$($localFeed)/*.nupkg" -Exclude "*.symbols.nupkg" -Name).replace(".nupkg","").replace("$($Artifact).","")
+$version = (Get-ChildItem "$localFeed/*.nupkg" -Exclude "*.symbols.nupkg" -Name).replace(".nupkg","").replace("$Artifact.","")
 Write-Host "dotnet add package $Artifact --version $version --no-restore"
 dotnet add package $Artifact --version $version --no-restore
 if ($LASTEXITCODE) {
