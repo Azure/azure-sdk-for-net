@@ -121,7 +121,7 @@ finally
 }
 ```
 
-## Capture filtered Log Events to a file
+## Capture filtered logs to a file
 
 For scenarios where capturing logs to `Trace` or `Console` outputs isn't ideal, log information can be streamed into a variety of targets, such as Azure Storage, databases, and files for durable persistence.    This example demonstrates capturing error logs to a text file so that they can be analyzed later, while capturing non-error information to `Console` output.  
 
