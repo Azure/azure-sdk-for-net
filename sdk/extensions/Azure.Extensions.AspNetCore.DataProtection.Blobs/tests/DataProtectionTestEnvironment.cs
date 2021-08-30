@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
@@ -21,7 +22,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
                 await container.CreateIfNotExistsAsync();
 
                 var blob = container.GetBlobClient("test-blob");
-                await blob.UploadAsync(new BinaryData(""));
+                await blob.UploadAsync(new MemoryStream());
 
                 await container.DeleteAsync();
 
