@@ -30,10 +30,14 @@ dotnet tool install --global `
  --version "1.0.0-dev.20210730.3" `
  "Azure.Sdk.Tools.SnippetGenerator"
 
-if($StrictMode) {
-    Resolve-Path "$root" | %{ snippet-generator -b "$_" -sm}
-} else {
-    Resolve-Path "$root" | %{ snippet-generator -b "$_" }
+
+$scriptBlock = { 
+    param($strictMode, $root)
+    if($StrictMode) {
+        Resolve-Path "$root" | %{ snippet-generator -b "$_" -sm}
+    } else {
+        Resolve-Path "$root" | %{ snippet-generator -b "$_" }
+    }
 }
 
-Pop-Location
+Start-Process pwsh -NoNewWindow -ArgumentList "-command (Invoke-Command -ScriptBlock {$scriptBlock} -ArgumentList $StrictMode, $root)"
