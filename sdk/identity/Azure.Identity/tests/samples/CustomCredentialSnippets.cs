@@ -15,9 +15,9 @@ namespace Azure.Identity.Tests.samples
     public class CustomCredentialSnippets
     {
         [Test]
-        public void StaticTokenCredentialUsage()
+        public void TokenCredentialCreateUsage()
         {
-            #region Snippet:StaticTokenCredentialUsage
+            #region Snippet:TokenCredentialCreateUsage
             AccessToken token = GetTokenForScope("https://storage.azure.com/.default");
 #if SNIPPET
             var credential = TokenCredential.Create((_, _) => token);

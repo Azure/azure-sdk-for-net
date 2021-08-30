@@ -5,9 +5,9 @@ The Azure.Identity library covers a broad range of Azure Active Directory authen
 
 For scenarios where you need to authenticate with a prefetched access token, the `StaticTokenCredential` is available.
 
-The following example shows an how an application already using some other mechanism for acquiring tokens (in this case the hypothetical method `AquireTokenForScope`) could use the `StaticTokenCredential` to authenticate a `BlobClient`.
+The following example shows an how an application already using some other mechanism for acquiring tokens (in this case the hypothetical method `AquireTokenForScope`) could use the `TokenCredential.Create` to authenticate a `BlobClient`.
 
-```C# Snippet:StaticTokenCredentialUsage
+```C# Snippet:TokenCredentialCreateUsage
 AccessToken token = GetTokenForScope("https://storage.azure.com/.default");
 var credential = TokenCredential.Create((_, _) => token);
 
