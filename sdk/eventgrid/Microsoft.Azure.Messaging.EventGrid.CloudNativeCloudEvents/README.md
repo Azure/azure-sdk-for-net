@@ -60,7 +60,7 @@ var cloudEvent =
         Source = new Uri("http://www.contoso.com"),
         Data = "data"
     };
-await client.SendCloudEventAsync(cloudEvent);
+await client.SendCloudNativeCloudEventAsync(cloudEvent);
 ```
 
 ## Troubleshooting
