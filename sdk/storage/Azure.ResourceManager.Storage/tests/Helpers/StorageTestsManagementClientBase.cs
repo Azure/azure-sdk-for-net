@@ -32,11 +32,8 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             {"key2","value2"}
         };
 
-        private ResourcesManagementClient ResourceManagementClient { get; set; }
+        private ArmClient ArmClient { get; set; }
         private StorageManagementClient StorageManagementClient { get; set; }
-
-        public ResourcesOperations ResourcesClient { get; set; }
-        public ResourceGroupsOperations ResourceGroupsClient { get; set; }
 
         public UsagesOperations UsagesClient { get; set; }
         public StorageAccountsOperations AccountsClient { get; set; }
@@ -57,9 +54,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
 
         protected void Initialize()
         {
-            ResourceManagementClient = GetResourceManagementClient();
-            ResourcesClient = ResourceManagementClient.Resources;
-            ResourceGroupsClient = ResourceManagementClient.ResourceGroups;
+            ArmClient = GetResourceManagementClient();
 
             StorageManagementClient = GetStorageManagementClient();
             UsagesClient = StorageManagementClient.Usages;
@@ -95,12 +90,12 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             return account;
         }
 
-        public static async Task<string> CreateResourceGroup(ResourceGroupsOperations resourceGroupsOperations, TestRecording recording)
+        public static async Task<string> CreateResourceGroup(ArmClient client, TestRecording recording)
         {
             string name = recording.GenerateAssetName("res");
             if (!IsTestTenant)
             {
-                await resourceGroupsOperations.CreateOrUpdateAsync(name, new ResourceGroup(DefaultRGLocation));
+                await client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(DefaultRGLocation));
             }
             return name;
         }

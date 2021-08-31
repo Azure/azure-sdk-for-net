@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         private async Task<string> CreateResourceGroupAsync()
         {
-            return await CreateResourceGroup(ResourceGroupsClient, Recording);
+            return await CreateResourceGroup(GetResourceManagementClient(), Recording);
         }
 
         private async Task<StorageAccount> CreateStorageAccountAsync(string resourceGroupName, string accountName, StorageAccountCreateParameters parameters = null)
