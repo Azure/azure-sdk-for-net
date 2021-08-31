@@ -88,6 +88,7 @@ namespace Azure.Storage.Sas
         Filter = 512,
         DeleteVersion = 1024,
         SetImmutabilityPolicy = 2048,
+        PermanentDelete = 4096,
     }
     [System.FlagsAttribute]
     public enum AccountSasResourceTypes
