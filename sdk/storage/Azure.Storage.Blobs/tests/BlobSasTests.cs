@@ -46,6 +46,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task BlobVersionSas_AllPermissions()
         {
             // Arrange
@@ -72,8 +73,39 @@ namespace Azure.Storage.Blobs.Tests
             };
 
             // Act
-            AppendBlobClient sasAppendBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
-            await sasAppendBlobClient.DeleteAsync();
+            AppendBlobClient sasBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+            await sasBlobClient.DeleteAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task BlobSnapshotSas_AllPermissions()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder()
+            {
+                ExpiresOn = Recording.UtcNow.AddDays(1),
+                BlobContainerName = test.Container.Name,
+                BlobName = blobName,
+                Snapshot = snapshotResponse.Value.Snapshot
+            };
+            blobSasBuilder.SetPermissions(SnapshotSasPermissions.All);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Snapshot = snapshotResponse.Value.Snapshot,
+                Sas = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials())
+            };
+
+            // Act
+            AppendBlobClient sasBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+            await sasBlobClient.GetPropertiesAsync();
         }
     }
 }
