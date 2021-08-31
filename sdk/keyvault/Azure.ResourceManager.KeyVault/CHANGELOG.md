@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.1 (2021-08-31)
 
+### Breaking Changes
+
+Guidance to migrate from previous version of Azure Management SDK
 
 ### General New Features
 
