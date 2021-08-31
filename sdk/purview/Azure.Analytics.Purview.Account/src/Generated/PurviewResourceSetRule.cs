@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetResourceSetRuleRequest(options);
+            using HttpMessage message = CreateGetResourceSetRuleRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetResourceSetRuleRequest(options);
+            using HttpMessage message = CreateGetResourceSetRuleRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -637,7 +637,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1183,7 +1183,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1241,7 +1241,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteResourceSetRuleRequest(options);
+            using HttpMessage message = CreateDeleteResourceSetRuleRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1281,7 +1281,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteResourceSetRuleRequest(options);
+            using HttpMessage message = CreateDeleteResourceSetRuleRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);

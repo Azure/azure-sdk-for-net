@@ -72,7 +72,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
+            using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -123,7 +123,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
+            using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -212,7 +212,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -252,7 +252,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -434,7 +434,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -598,7 +598,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -659,7 +659,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -699,7 +699,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -881,7 +881,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1045,7 +1045,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
