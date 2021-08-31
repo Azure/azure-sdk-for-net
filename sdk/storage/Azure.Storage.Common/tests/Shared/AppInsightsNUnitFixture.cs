@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
@@ -60,12 +61,14 @@ public class AppInsightsNUnitFixture
     {
         private string _testRunId = Environment.GetEnvironmentVariable("AZURE_STORAGE_TEST_RUN_ID") ?? Guid.NewGuid().ToString(); // there should be more info from pipeline.
         private string _testRunStartTime = Environment.GetEnvironmentVariable("AZURE_STORAGE_TEST_RUN_START_TIME");
+        private string _assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
 
         public void Initialize(ITelemetry telemetry)
         {
             var telemetryWithProperties = telemetry as ISupportProperties;
             if (telemetryWithProperties != null)
             {
+                telemetryWithProperties.Properties.Add("TestAssembly", _assemblyName);
                 telemetryWithProperties.Properties.Add("TestRunId", _testRunId);
                 telemetryWithProperties.Properties.Add("TestRunStartTime", _testRunStartTime);
                 var testContext = TestContext.CurrentContext;

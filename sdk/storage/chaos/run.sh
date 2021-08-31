@@ -8,6 +8,12 @@ export AZURE_LIVE_TEST_SERVICE_VERSIONS=V2019_07_07
 
 export $(grep 'APPINSIGHTS_INSTRUMENTATIONKEY' $ENV_FILE | xargs)
 
+UUID=$(cat /proc/sys/kernel/random/uuid)
+export AZURE_STORAGE_TEST_RUN_ID=$UUID
+
+NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+export AZURE_STORAGE_TEST_RUN_START_TIME=$NOW
+
 dotnet test /azure-sdk-for-net/eng/service.proj \
     --filter "(TestCategory!=Manually) & (TestCategory!=NonChaos)" \
     --framework net5.0 \

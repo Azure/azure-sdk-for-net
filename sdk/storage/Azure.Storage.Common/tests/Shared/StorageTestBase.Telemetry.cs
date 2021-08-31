@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -21,8 +22,19 @@ namespace Azure.Storage.Test.Shared
                 {
                     { "TestName", context.Test.FullName },
                     { "TestOutcome", context.Result.Outcome.Status.ToString() },
-                    { "NumberOfAssertions", context.Result.Assertions.ToString() }
+                    { "NumberOfAssertions", context.Result.Assertions.Count().ToString() }
                 });
+
+                foreach (var assertion in context.Result.Assertions)
+                {
+                    AppInsightsNUnitFixture.TelemetryClient.TrackTrace("Assertion Result", new Dictionary<string, string>()
+                    {
+                        { "TestName", context.Test.FullName },
+                        { "AssertionStatus", assertion.Status.ToString() },
+                        { "AssertionMessage", assertion.Message },
+                        { "AssertionStackTrace", assertion.StackTrace }
+                    });
+                }
             }
         }
     }
