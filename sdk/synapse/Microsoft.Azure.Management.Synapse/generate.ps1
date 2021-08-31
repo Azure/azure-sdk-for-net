@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "synapse/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "synapse/resource-manager" -AutoRestVersion "v2" -SpecsRepoFork zesluo -SpecsRepoBranch zeshi/gensdk0830 -SdkRepoRootPath C:\ZeshiLuo\azure-sdk-for-net-1\sdk

@@ -374,5 +374,10 @@ namespace Microsoft.Azure.Management.Synapse
         /// </summary>
         IRestorableDroppedSqlPoolsOperations RestorableDroppedSqlPools { get; }
 
+        /// <summary>
+        /// Gets the IAzureADOnlyAuthenticationsOperations.
+        /// </summary>
+        IAzureADOnlyAuthenticationsOperations AzureADOnlyAuthentications { get; }
+
     }
 }

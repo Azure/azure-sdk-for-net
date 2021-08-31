@@ -380,6 +380,11 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual IRestorableDroppedSqlPoolsOperations RestorableDroppedSqlPools { get; private set; }
 
         /// <summary>
+        /// Gets the IAzureADOnlyAuthenticationsOperations.
+        /// </summary>
+        public virtual IAzureADOnlyAuthenticationsOperations AzureADOnlyAuthentications { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SynapseManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -681,8 +686,9 @@ namespace Microsoft.Azure.Management.Synapse
             WorkspaceSqlAadAdmins = new WorkspaceSqlAadAdminsOperations(this);
             WorkspaceManagedIdentitySqlControlSettings = new WorkspaceManagedIdentitySqlControlSettingsOperations(this);
             RestorableDroppedSqlPools = new RestorableDroppedSqlPoolsOperations(this);
+            AzureADOnlyAuthentications = new AzureADOnlyAuthenticationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-04-01-preview";
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
