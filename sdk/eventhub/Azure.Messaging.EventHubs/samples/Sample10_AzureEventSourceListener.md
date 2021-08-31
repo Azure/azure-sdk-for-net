@@ -13,15 +13,13 @@ This example captures all Azure SDK logs from any client library in use, writing
 ```C# Snippet:EventHubs_Sample10_ConsoleListener
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var producer = new EventHubProducerClient(connectionString, eventHubName);
 
 using AzureEventSourceListener consoleListener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.LogAlways);
-
-EventHubProducerClient producer = new EventHubProducerClient(connectionString, eventHubName);
 
 try
 {
     using var eventBatch = await producer.CreateBatchAsync();
-
     var eventData = new EventData("This is an event body");
 
     if (!eventBatch.TryAdd(eventData))
@@ -42,15 +40,13 @@ Similar to the previous example, this snippet captures all logs, but writes them
 ```C# Snippet:EventHubs_Sample10_TraceListener
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var producer = new EventHubProducerClient(connectionString, eventHubName);
 
 using AzureEventSourceListener traceListener = AzureEventSourceListener.CreateTraceLogger(EventLevel.LogAlways);
-
-EventHubProducerClient producer = new EventHubProducerClient(connectionString, eventHubName);
 
 try
 {
     using var eventBatch = await producer.CreateBatchAsync();
-
     var eventData = new EventData("This is an event body");
 
     if (!eventBatch.TryAdd(eventData))
@@ -75,6 +71,7 @@ More information about the `args` parameter for the callback can be found in the
 ```C# Snippet:EventHubs_Sample10_CustomListenerWithFilter
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var producer = new EventHubProducerClient(connectionString, eventHubName);
 
 using AzureEventSourceListener customListener = new AzureEventSourceListener((args, message) =>
 {
@@ -95,19 +92,9 @@ using AzureEventSourceListener customListener = new AzureEventSourceListener((ar
     }
 }, EventLevel.LogAlways);
 
-EventHubsConnectionStringProperties connectionStringProperties = EventHubsConnectionStringProperties.Parse(connectionString);
-
-TokenCredential credential = new DefaultAzureCredential();
-
-var producer = new EventHubProducerClient(
-    connectionStringProperties.FullyQualifiedNamespace,
-    connectionStringProperties.EventHubName ?? eventHubName,
-    credential);
-
 try
 {
     using var eventBatch = await producer.CreateBatchAsync();
-
     var eventData = new EventData("This is an event body");
 
     if (!eventBatch.TryAdd(eventData))
@@ -128,8 +115,9 @@ For scenarios where capturing logs to `Trace` or `Console` outputs isn't ideal, 
 ```C# Snippet:EventHubs_Sample10_CustomListenerWithFile
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var producer = new EventHubProducerClient(connectionString, eventHubName);
 
-using Stream stream = new FileStream("<< PATH TO THE FILE >>", FileMode.OpenOrCreate, FileAccess.Write); 
+using Stream stream = new FileStream("<< PATH TO THE FILE >>", FileMode.OpenOrCreate, FileAccess.Write);
 
 using StreamWriter streamWriter = new StreamWriter(stream)
 {
@@ -152,12 +140,9 @@ using AzureEventSourceListener customListener = new AzureEventSourceListener((ar
     }
 }, EventLevel.LogAlways);
 
-EventHubProducerClient producer = new EventHubProducerClient(connectionString, eventHubName);
-
 try
 {
     using var eventBatch = await producer.CreateBatchAsync();
-
     var eventData = new EventData("This is an event body");
 
     if (!eventBatch.TryAdd(eventData))

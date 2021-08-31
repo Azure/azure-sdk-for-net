@@ -6,9 +6,7 @@ using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Diagnostics;
-using Azure.Identity;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
 
@@ -41,15 +39,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
+            var producer = new EventHubProducerClient(connectionString, eventHubName);
 
             using AzureEventSourceListener consoleListener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.LogAlways);
-
-            EventHubProducerClient producer = new EventHubProducerClient(connectionString, eventHubName);
 
             try
             {
                 using var eventBatch = await producer.CreateBatchAsync();
-
                 var eventData = new EventData("This is an event body");
 
                 if (!eventBatch.TryAdd(eventData))
@@ -81,15 +77,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
+            var producer = new EventHubProducerClient(connectionString, eventHubName);
 
             using AzureEventSourceListener traceListener = AzureEventSourceListener.CreateTraceLogger(EventLevel.LogAlways);
-
-            EventHubProducerClient producer = new EventHubProducerClient(connectionString, eventHubName);
 
             try
             {
                 using var eventBatch = await producer.CreateBatchAsync();
-
                 var eventData = new EventData("This is an event body");
 
                 if (!eventBatch.TryAdd(eventData))
@@ -121,6 +115,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
+            var producer = new EventHubProducerClient(connectionString, eventHubName);
 
             using AzureEventSourceListener customListener = new AzureEventSourceListener((args, message) =>
             {
@@ -141,19 +136,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 }
             }, EventLevel.LogAlways);
 
-            EventHubsConnectionStringProperties connectionStringProperties = EventHubsConnectionStringProperties.Parse(connectionString);
-
-            TokenCredential credential = new DefaultAzureCredential();
-
-            var producer = new EventHubProducerClient(
-                connectionStringProperties.FullyQualifiedNamespace,
-                connectionStringProperties.EventHubName ?? eventHubName,
-                credential);
-
             try
             {
                 using var eventBatch = await producer.CreateBatchAsync();
-
                 var eventData = new EventData("This is an event body");
 
                 if (!eventBatch.TryAdd(eventData))
@@ -181,11 +166,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 #if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var producer = new EventHubProducerClient(connectionString, eventHubName);
 
-            using Stream stream = new FileStream("<< PATH TO THE FILE >>", FileMode.OpenOrCreate, FileAccess.Write); 
+            using Stream stream = new FileStream("<< PATH TO THE FILE >>", FileMode.OpenOrCreate, FileAccess.Write);
 #else
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
+            var producer = new EventHubProducerClient(connectionString, eventHubName);
 
             using Stream stream = new MemoryStream();
 #endif
@@ -211,12 +198,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 }
             }, EventLevel.LogAlways);
 
-            EventHubProducerClient producer = new EventHubProducerClient(connectionString, eventHubName);
-
             try
             {
                 using var eventBatch = await producer.CreateBatchAsync();
-
                 var eventData = new EventData("This is an event body");
 
                 if (!eventBatch.TryAdd(eventData))
