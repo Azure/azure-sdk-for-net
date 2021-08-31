@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RewriteRules))
@@ -46,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<IList<ApplicationGatewayRewriteRule>> rewriteRules = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -104,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayRewriteRuleSet(id.Value, name.Value, etag.Value, Optional.ToList(rewriteRules), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayRewriteRuleSet(id, name.Value, etag.Value, Optional.ToList(rewriteRules), Optional.ToNullable(provisioningState));
         }
     }
 }

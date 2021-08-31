@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationSecurityGroupListResult. </summary>
         internal ApplicationSecurityGroupListResult()
         {
-            Value = new ChangeTrackingList<ApplicationSecurityGroup>();
+            Value = new ChangeTrackingList<ApplicationSecurityGroupData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationSecurityGroupListResult. </summary>
         /// <param name="value"> A list of application security groups. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ApplicationSecurityGroupListResult(IReadOnlyList<ApplicationSecurityGroup> value, string nextLink)
+        internal ApplicationSecurityGroupListResult(IReadOnlyList<ApplicationSecurityGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of application security groups. </summary>
-        public IReadOnlyList<ApplicationSecurityGroup> Value { get; }
+        public IReadOnlyList<ApplicationSecurityGroupData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

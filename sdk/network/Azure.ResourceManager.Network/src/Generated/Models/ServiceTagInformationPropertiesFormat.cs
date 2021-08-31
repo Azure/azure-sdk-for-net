@@ -24,12 +24,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="region"> The region of service tag. </param>
         /// <param name="systemService"> The name of system service. </param>
         /// <param name="addressPrefixes"> The list of IP address prefixes. </param>
-        internal ServiceTagInformationPropertiesFormat(string changeNumber, string region, string systemService, IReadOnlyList<string> addressPrefixes)
+        /// <param name="state"> The state of the service tag. </param>
+        internal ServiceTagInformationPropertiesFormat(string changeNumber, string region, string systemService, IReadOnlyList<string> addressPrefixes, string state)
         {
             ChangeNumber = changeNumber;
             Region = region;
             SystemService = systemService;
             AddressPrefixes = addressPrefixes;
+            State = state;
         }
 
         /// <summary> The iteration number of service tag. </summary>
@@ -40,5 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         public string SystemService { get; }
         /// <summary> The list of IP address prefixes. </summary>
         public IReadOnlyList<string> AddressPrefixes { get; }
+        /// <summary> The state of the service tag. </summary>
+        public string State { get; }
     }
 }
