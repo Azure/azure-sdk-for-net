@@ -19,7 +19,7 @@ namespace Azure.Management.EventHub.Tests
         {
             var location = await GetLocation();
             var resourceGroupName = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
-            ResourceGroup resourceGroup = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            ResourceGroup resourceGroup = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdate(resourceGroupName, new ResourceGroupData(location)).WaitForCompletionAsync();
 
             // Prepare VNet
             var vnetName = Recording.GenerateAssetName("sdktestvnet");
