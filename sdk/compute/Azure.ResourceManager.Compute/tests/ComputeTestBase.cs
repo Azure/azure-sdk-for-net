@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Tests
         protected async Task<ResourceGroup> CreateResourceGroupAsync()
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
-            return await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {
@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.Compute.Tests
                         { "test", "env" }
                     }
                 });
+            return rgOp.Value;
         }
     }
 }
