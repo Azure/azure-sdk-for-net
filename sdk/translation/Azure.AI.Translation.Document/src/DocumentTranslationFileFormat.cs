@@ -10,7 +10,7 @@ namespace Azure.AI.Translation.Document
     /// Possible file formats supported by the Document Translation service.
     /// </summary>
     [CodeGenModel("FileFormat")]
-    public partial class FileFormat
+    public partial class DocumentTranslationFileFormat
     {
         /// <summary> Supported format versions. </summary>
         [CodeGenMember("Versions")]

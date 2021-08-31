@@ -10,7 +10,7 @@ namespace Azure.AI.Translation.Document
     /// Status information about a particular document within a translation operation.
     /// </summary>
     [CodeGenModel("DocumentStatus")]
-    public partial class DocumentStatus
+    public partial class DocumentStatusResult
     {
         /// <summary>
         /// Document Id.
@@ -35,7 +35,7 @@ namespace Azure.AI.Translation.Document
         /// This property will have a value only when the document was successfully processed.
         /// </summary>
         [CodeGenMember("To")]
-        public string TranslatedTo { get; }
+        public string TranslatedToLanguageCode { get; }
 
         /// <summary>
         /// The date time when the document was created.

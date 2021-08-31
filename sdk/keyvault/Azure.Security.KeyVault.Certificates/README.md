@@ -70,16 +70,16 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Use the above mentioned Azure Key Vault name to retrieve details of your Vault which also contains your Azure Key Vault URL:
     ```PowerShell
-    az keyvault show --name <your-key-vault-name>
+    az keyvault show --name <your-key-vault-name> --query properties.vaultUri --output tsv
     ```
 
 #### Create CertificateClient
-Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** with the above returned URI, you can create the [CertificateClient][certificate_client_class]:
+Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET**, and **AZURE_TENANT_ID** environment variables, replace **vaultUrl** with the output of `az keyvault show` in the example below to create the [CertificateClient][certificate_client_class]:
 
 ```C# Snippet:CreateCertificateClient
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+var client = new CertificateClient(vaultUri: new Uri(vaultUrl), credential: new DefaultAzureCredential());
 ```
 
 ## Key concepts
