@@ -11,7 +11,7 @@ namespace Azure.AI.Language.QuestionAnswering
     /// </summary>
     public partial class QuestionAnsweringClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_05_01_preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_07_15_Preview;
 
         /// <summary>
         /// The version of the service to use.
@@ -23,6 +23,11 @@ namespace Azure.AI.Language.QuestionAnswering
             /// Service version "2021-05-01-preview".
             /// </summary>
             V2021_05_01_preview = 1,
+
+            /// <summary>
+            /// Service version "2021-07-15-preview".
+            /// </summary>
+            V2021_07_15_Preview = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -36,6 +41,7 @@ namespace Azure.AI.Language.QuestionAnswering
             Version = version switch
             {
                 ServiceVersion.V2021_05_01_preview => "2021-05-01-preview",
+                ServiceVersion.V2021_07_15_Preview => "2021-07-15-preview",
                 _ => throw new NotSupportedException()
             };
 
