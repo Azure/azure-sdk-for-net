@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -53,8 +54,8 @@ namespace Azure.Containers.ContainerRegistry
 
         internal static OCIManifest DeserializeOCIManifest(JsonElement element)
         {
-            Optional<Descriptor> config = default;
-            Optional<IList<Descriptor>> layers = default;
+            Optional<ContentDescriptor> config = default;
+            Optional<IList<ContentDescriptor>> layers = default;
             Optional<Annotations> annotations = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -66,7 +67,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = Descriptor.DeserializeDescriptor(property.Value);
+                    config = ContentDescriptor.DeserializeContentDescriptor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"))
@@ -76,10 +77,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Descriptor> array = new List<Descriptor>();
+                    List<ContentDescriptor> array = new List<ContentDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Descriptor.DeserializeDescriptor(item));
+                        array.Add(ContentDescriptor.DeserializeContentDescriptor(item));
                     }
                     layers = array;
                     continue;

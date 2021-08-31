@@ -162,7 +162,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateCreateManifestRequest(string name, string reference, Manifest payload)
+        internal HttpMessage CreateCreateManifestRequest(string name, string reference, Manifest payload, string contentType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -175,7 +175,10 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath(reference, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/vnd.docker.distribution.manifest.v2+json");
+            if (contentType != null)
+            {
+                request.Headers.Add("Content-Type", contentType);
+            }
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(payload);
             request.Content = content;
@@ -186,9 +189,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
+        /// <param name="contentType"> The manifest&apos;s Content-Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
-        public async Task<ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, Manifest payload, string contentType = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -203,7 +207,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(payload));
             }
 
-            using var message = CreateCreateManifestRequest(name, reference, payload);
+            using var message = CreateCreateManifestRequest(name, reference, payload, contentType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerRegistryCreateManifestHeaders(message.Response);
             switch (message.Response.Status)
@@ -224,9 +228,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
+        /// <param name="contentType"> The manifest&apos;s Content-Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
-        public ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, Manifest payload, string contentType = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -241,7 +246,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(payload));
             }
 
-            using var message = CreateCreateManifestRequest(name, reference, payload);
+            using var message = CreateCreateManifestRequest(name, reference, payload, contentType);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerRegistryCreateManifestHeaders(message.Response);
             switch (message.Response.Status)

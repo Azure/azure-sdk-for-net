@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.ContainerRegistry;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    internal partial class Descriptor : IUtf8JsonSerializable
+    internal partial class ContentDescriptor : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in Urls)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
@@ -56,12 +58,12 @@ namespace Azure.Containers.ContainerRegistry
             writer.WriteEndObject();
         }
 
-        internal static Descriptor DeserializeDescriptor(JsonElement element)
+        internal static ContentDescriptor DeserializeContentDescriptor(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
-            Optional<IList<string>> urls = default;
+            Optional<IList<Uri>> urls = default;
             Optional<Annotations> annotations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,10 +94,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new Uri(item.GetString()));
                     }
                     urls = array;
                     continue;
@@ -111,7 +113,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new Descriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
+            return new ContentDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
         }
     }
 }
