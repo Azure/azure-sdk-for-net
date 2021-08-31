@@ -112,7 +112,6 @@ namespace Azure.ResourceManager.Compute.Tests
         protected async Task<GenericResource> CreateBasicDependenciesOfVirtualMachineAsync()
         {
             var vnet = await CreateVirtualNetwork();
-            //var subnet = await CreateSubnet(vnet.Id as ResourceGroupResourceIdentifier);
             var nic = await CreateNetworkInterface(GetSubnetId(vnet));
             return nic;
         }

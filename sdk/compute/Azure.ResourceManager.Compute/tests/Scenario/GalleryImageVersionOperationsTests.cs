@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     Recording.GenerateAssetName("offer"),
                     Recording.GenerateAssetName("sku"));
             var imageInput = ResourceDataHelper.GetBasicGalleryImageData(DefaultLocation, OperatingSystemTypes.Linux, identifier);
-            var vmContainer = _versionResourceGroup.GetVirtualMachines();
+            var vmContainer = await GetVirtualMachineContainerAsync();
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var vmInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);

@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
@@ -45,9 +43,8 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            _versionResourceGroup = await CreateResourceGroupAsync();
             var container = await GetGalleryImageVersionContainerAsync();
-            var vmContainer = _versionResourceGroup.GetVirtualMachines();
+            var vmContainer = await GetVirtualMachineContainerAsync();
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var vmInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
@@ -67,13 +64,12 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task CheckIfExists()
         {
-            _versionResourceGroup = await CreateResourceGroupAsync();
             var container = await GetGalleryImageVersionContainerAsync();
-            var vmContainer = _versionResourceGroup.GetVirtualMachines();
-            var VMName = Recording.GenerateAssetName("testVM-");
+            var vmContainer = await GetVirtualMachineContainerAsync();
+            var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
-            var VMInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, VMName, nic.Id);
-            var lroVm = await vmContainer.CreateOrUpdateAsync(VMName, VMInput);
+            var vmInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
+            var lroVm = await vmContainer.CreateOrUpdateAsync(vmName, vmInput);
             _vm = lroVm.Value;
             await _vm.DeallocateAsync();
             await _vm.GeneralizeAsync();
@@ -92,9 +88,8 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task Get()
         {
-            _versionResourceGroup = await CreateResourceGroupAsync();
             var container = await GetGalleryImageVersionContainerAsync();
-            var vmContainer = _versionResourceGroup.GetVirtualMachines();
+            var vmContainer = await GetVirtualMachineContainerAsync();
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var vmInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
@@ -116,9 +111,8 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            _versionResourceGroup = await CreateResourceGroupAsync();
             var container = await GetGalleryImageVersionContainerAsync();
-            var vmContainer = _versionResourceGroup.GetVirtualMachines();
+            var vmContainer = await GetVirtualMachineContainerAsync();
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var vmInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
