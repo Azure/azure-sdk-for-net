@@ -1,8 +1,7 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2021-08-31)
 
-- New Design
 
 ### General New Features
 
@@ -13,8 +12,6 @@
     - Support uniform telemetry across all languages
 
 > NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
-
-### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
 The package name has been changed from `Microsoft.Azure.Management.KeyVault` to `Azure.ResourceManager.KeyVault`
