@@ -201,5 +201,44 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.True(service.Data.DeleteRetentionPolicy.Enabled);
             Assert.AreEqual(service.Data.DeleteRetentionPolicy.Days, 100);
         }
+        [Test]
+        [RecordedTest]
+        public async Task ImmutabilityPolicy_AllowProtectedAppendWrites()
+        {
+            // create a blob container
+            string containerName = Recording.GenerateAssetName("testblob");
+            BlobContainerData data = new BlobContainerData();
+            BlobContainer container = (await _blobContainerContainer.CreateOrUpdateAsync(containerName, new BlobContainerData())).Value;
+            ImmutabilityPolicy immutabilityPolicy = new ImmutabilityPolicy()
+            {
+                ImmutabilityPeriodSinceCreationInDays=4,
+                AllowProtectedAppendWrites = true
+            };
+            immutabilityPolicy =await container.CreateOrUpdateImmutabilityPolicyAsync(ifMatch: "",immutabilityPolicy);
+            Assert.NotNull(immutabilityPolicy.Id);
+            Assert.NotNull(immutabilityPolicy.Type);
+            Assert.NotNull(immutabilityPolicy.Name);
+            Assert.AreEqual(4, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+            Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+            Assert.True(immutabilityPolicy.AllowProtectedAppendWrites.Value);
+
+            immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays = 5;
+            immutabilityPolicy.AllowProtectedAppendWrites = false;
+            immutabilityPolicy = await container.CreateOrUpdateImmutabilityPolicyAsync(ifMatch: immutabilityPolicy.Etag, immutabilityPolicy);
+            Assert.NotNull(immutabilityPolicy.Id);
+            Assert.NotNull(immutabilityPolicy.Type);
+            Assert.NotNull(immutabilityPolicy.Name);
+            Assert.AreEqual(5, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+            Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+            Assert.False(immutabilityPolicy.AllowProtectedAppendWrites.Value);
+
+            immutabilityPolicy = await container.GetImmutabilityPolicyAsync(immutabilityPolicy.Etag);
+            Assert.NotNull(immutabilityPolicy.Id);
+            Assert.NotNull(immutabilityPolicy.Type);
+            Assert.NotNull(immutabilityPolicy.Name);
+            Assert.AreEqual(5, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+            Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+            Assert.False(immutabilityPolicy.AllowProtectedAppendWrites.Value);
+        }
     }
 }
