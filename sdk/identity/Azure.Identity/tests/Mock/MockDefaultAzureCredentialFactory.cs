@@ -17,9 +17,9 @@ namespace Azure.Identity.Tests.Mock
         private Mock<AzureCliCredential> mockAzureCliCredential = new();
         public Action<string, Mock<ManagedIdentityCredential>> OnCreateManagedIdentityCredential { get; set; }
         private Mock<ManagedIdentityCredential> mockManagedIdentityCredential = new();
-        public Action<string, string, Mock<SharedTokenCacheCredential>> OnCreateSharedTokenCacheCredential { get; set; }
+        public Action<string, string, string, Mock<SharedTokenCacheCredential>> OnCreateSharedTokenCacheCredential { get; set; }
         private Mock<SharedTokenCacheCredential> mockSharedTokenCacheCredential = new();
-        public Action<string, Mock<InteractiveBrowserCredential>> OnCreateInteractiveBrowserCredential { get; set; }
+        public Action<string, string, Mock<InteractiveBrowserCredential>> OnCreateInteractiveBrowserCredential { get; set; }
         private Mock<InteractiveBrowserCredential> mockInteractiveBrowserCredential = new();
         public Action<string, Mock<VisualStudioCredential>> OnCreateVisualStudioCredential { get; set; }
         private Mock<VisualStudioCredential> mockVisualStudioCredential = new();
@@ -40,9 +40,9 @@ namespace Azure.Identity.Tests.Mock
             return mockManagedIdentityCredential.Object;
         }
 
-        public override TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
+        public override TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username, string clientId)
         {
-            OnCreateSharedTokenCacheCredential?.Invoke(tenantId, username, mockSharedTokenCacheCredential);
+            OnCreateSharedTokenCacheCredential?.Invoke(tenantId, username, clientId, mockSharedTokenCacheCredential);
             return mockSharedTokenCacheCredential.Object;
         }
 
@@ -58,9 +58,9 @@ namespace Azure.Identity.Tests.Mock
             return mockAzurePowershellCredential.Object;
         }
 
-        public override TokenCredential CreateInteractiveBrowserCredential(string tenantId)
+        public override TokenCredential CreateInteractiveBrowserCredential(string tenantId, string clientId)
         {
-            OnCreateInteractiveBrowserCredential?.Invoke(tenantId, mockInteractiveBrowserCredential);
+            OnCreateInteractiveBrowserCredential?.Invoke(tenantId, clientId, mockInteractiveBrowserCredential);
             return mockInteractiveBrowserCredential.Object;
         }
 

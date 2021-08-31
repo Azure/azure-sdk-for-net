@@ -28,16 +28,16 @@ namespace Azure.Identity
             return new ManagedIdentityCredential(clientId, Pipeline);
         }
 
-        public virtual TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
+        public virtual TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username, string cliendId)
         {
-            return new SharedTokenCacheCredential(tenantId, username, null, Pipeline);
+            return new SharedTokenCacheCredential(tenantId, username, new SharedTokenCacheCredentialOptions{ ClientId = cliendId }, Pipeline);
         }
 
-        public virtual TokenCredential CreateInteractiveBrowserCredential(string tenantId)
+        public virtual TokenCredential CreateInteractiveBrowserCredential(string tenantId, string clientId)
         {
             return new InteractiveBrowserCredential(
                 tenantId,
-                Constants.DeveloperSignOnClientId,
+                clientId ?? Constants.DeveloperSignOnClientId,
                 new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = new TokenCachePersistenceOptions() },
                 Pipeline);
         }

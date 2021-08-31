@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- `DefaultAzureCredentialOptions` now has a `ClientId` property which allows passing a ClientId value to the `SharedTokenCredential` and `InteractiveBrowserCredential` when constructing a `DefaultAzureCredential`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
