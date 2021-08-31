@@ -12,6 +12,7 @@ using Azure.Identity;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using NUnit.Framework;
 
@@ -26,7 +27,7 @@ namespace Azure.Core.TestFramework
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
 
-        private static readonly Dictionary<Type, Task> s_environmentStateCache = new Dictionary<Type, Task>();
+        private static readonly Dictionary<Type, Task> s_environmentStateCache = new();
 
         private readonly string _prefix;
 
@@ -37,9 +38,11 @@ namespace Azure.Core.TestFramework
         private Dictionary<string, string> _environmentFile;
         private readonly string _serviceSdkDirectory;
 
-        private bool _bootstrappingAttempted;
-        private readonly SemaphoreSlim _bootstrappingSemaphore = new(1, 1);
+        private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = new();
+        private static readonly object s_syncLock = new();
+        private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         private Exception _bootstrappingException;
+        private readonly Type _type;
 
         protected TestEnvironment()
         {
@@ -67,6 +70,7 @@ namespace Azure.Core.TestFramework
             }
 
             _prefix = _serviceName.ToUpperInvariant() + "_";
+            _type = GetType();
 
             ParseEnvironmentFile();
         }
@@ -230,10 +234,10 @@ namespace Azure.Core.TestFramework
                 Task task;
                 lock (s_environmentStateCache)
                 {
-                    if (!s_environmentStateCache.TryGetValue(GetType(), out task))
+                    if (!s_environmentStateCache.TryGetValue(_type, out task))
                     {
                         task = WaitForEnvironmentInternalAsync();
-                        s_environmentStateCache[GetType()] = task;
+                        s_environmentStateCache[_type] = task;
                     }
                 }
                 await task;
@@ -382,7 +386,7 @@ namespace Azure.Core.TestFramework
             {
                 string prefixedName = _prefix + name;
                 string message = $"Unable to find environment variable {prefixedName} or {name} required by test." + Environment.NewLine +
-                                 "Make sure the test environment was initialized using eng/common/TestResources/New-TestResources.ps1 script.";
+                                 "Make sure the test environment was initialized using the eng/common/TestResources/New-TestResources.ps1 script.";
                 if (_bootstrappingException != null)
                 {
                     message += Environment.NewLine + "Resource creation failed during the test run. Make sure Powershell version 6 or higher is installed.";
@@ -494,45 +498,47 @@ namespace Azure.Core.TestFramework
 
         private void BootStrapTestResources()
         {
-            try
+            lock (s_syncLock)
             {
-                _bootstrappingSemaphore.Wait();
-
-                if (_bootstrappingAttempted)
-                {
-                    return;
-                }
-
-                string path = Path.Combine(TestEnvironment.RepositoryRoot, "eng", "common", "TestResources",
-                    $"New-TestResources-Wrapper.ps1 {_serviceName} " +
-                    $"-basename {Environment.UserName}-{_serviceName}-{Guid.NewGuid().ToString().Substring(0, 4)} ");
-
-                var processInfo = new ProcessStartInfo(
-                    @"pwsh.exe",
-                    path)
-                {
-                    UseShellExecute = true
-                };
-                Process process = null;
                 try
                 {
-                    process = Process.Start(processInfo);
-                }
-                catch (Exception ex)
-                {
-                    _bootstrappingException = ex;
-                }
+                    if (!s_isWindows || s_bootstrappingAttemptedTypes.Contains(_type))
+                    {
+                        return;
+                    }
 
-                if (process != null)
-                {
-                    process.WaitForExit();
-                    ParseEnvironmentFile();
+                    string path = Path.Combine(
+                        RepositoryRoot,
+                        "eng",
+                        "scripts",
+                        $"New-TestResources-Bootstrapper.ps1 {_serviceName}");
+
+                        var processInfo = new ProcessStartInfo(
+                        @"pwsh.exe",
+                        path)
+                    {
+                        UseShellExecute = true
+                    };
+                    Process process = null;
+                    try
+                    {
+                        process = Process.Start(processInfo);
+                    }
+                    catch (Exception ex)
+                    {
+                        _bootstrappingException = ex;
+                    }
+
+                    if (process != null)
+                    {
+                        process.WaitForExit();
+                        ParseEnvironmentFile();
+                    }
                 }
-            }
-            finally
-            {
-                _bootstrappingAttempted = true;
-                _bootstrappingSemaphore.Release();
+                finally
+                {
+                    s_bootstrappingAttemptedTypes.Add(_type);
+                }
             }
         }
     }
