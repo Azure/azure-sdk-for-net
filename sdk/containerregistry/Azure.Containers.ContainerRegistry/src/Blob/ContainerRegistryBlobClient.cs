@@ -102,7 +102,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                string tagOrDigest = options.Tag ?? ContentDescriptor.ComputeDigest(stream);
+                string tagOrDigest = options.Tag ?? ArtifactBlobDescriptor.ComputeDigest(stream);
                 ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, options.MediaType.ToString(), cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
             }
@@ -138,7 +138,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                string digest = ContentDescriptor.ComputeDigest(stream);
+                string digest = ArtifactBlobDescriptor.ComputeDigest(stream);
 
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
@@ -211,7 +211,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             // Validate that the file content did not change in transmission from the registry.
 
             // TODO: The registry may use a different digest algorithm - we may need to handle that
-            string contentDigest = ContentDescriptor.ComputeDigest(content);
+            string contentDigest = ArtifactBlobDescriptor.ComputeDigest(content);
             content.Position = 0;
             return digest.Equals(contentDigest, StringComparison.OrdinalIgnoreCase);
         }

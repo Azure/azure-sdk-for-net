@@ -4,22 +4,25 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using Azure.Core;
-using System.Security.Cryptography;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     [CodeGenModel("Descriptor")]
-    internal partial class ContentDescriptor
+    public partial class ArtifactBlobDescriptor
     {
-        public ContentDescriptor(string mediaType)
+        /// <summary>
+        /// </summary>
+        /// <param name="mediaType"></param>
+        /// <param name="digest"></param>
+        /// <param name="size"></param>
+        public ArtifactBlobDescriptor(string mediaType, string digest, long? size = null)
         {
             MediaType = mediaType;
-
-            // TODO: Set Size and Digest from MediaType
-            // TODO: what if Size passed is null?
-            // TODO: See https://github.com/sajayantony/acr-cli/blob/main/Services/ContentStore.cs#L134 for details
+            Digest = digest;
+            Size = size;
         }
 
         /// <summary> Layer media type. </summary>
@@ -30,14 +33,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string Digest { get; set; }
 
         /// <summary> Specifies a list of URIs from which this object may be downloaded. </summary>
-        public IList<Uri> Urls { get; }
+        internal IList<Uri> Urls { get; }
 
-        public Stream ToStream()
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary> Additional information provided through arbitrary metadata. </summary>
+        internal Annotations Annotations { get; }
 
-        public static string ComputeDigest(Stream stream)
+        internal static string ComputeDigest(Stream stream)
         {
             // TODO: cache and dispose SHA256?
             using (SHA256 sha256 = SHA256.Create())

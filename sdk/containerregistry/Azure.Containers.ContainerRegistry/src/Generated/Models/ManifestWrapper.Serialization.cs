@@ -18,8 +18,8 @@ namespace Azure.Containers.ContainerRegistry
         {
             Optional<string> mediaType = default;
             Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
-            Optional<ContentDescriptor> config = default;
-            Optional<IReadOnlyList<ContentDescriptor>> layers = default;
+            Optional<ArtifactBlobDescriptor> config = default;
+            Optional<IReadOnlyList<ArtifactBlobDescriptor>> layers = default;
             Optional<Annotations> annotations = default;
             Optional<string> architecture = default;
             Optional<string> name = default;
@@ -57,7 +57,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = ContentDescriptor.DeserializeContentDescriptor(property.Value);
+                    config = ArtifactBlobDescriptor.DeserializeArtifactBlobDescriptor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"))
@@ -67,10 +67,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ContentDescriptor> array = new List<ContentDescriptor>();
+                    List<ArtifactBlobDescriptor> array = new List<ArtifactBlobDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentDescriptor.DeserializeContentDescriptor(item));
+                        array.Add(ArtifactBlobDescriptor.DeserializeArtifactBlobDescriptor(item));
                     }
                     layers = array;
                     continue;

@@ -17,8 +17,8 @@ namespace Azure.Containers.ContainerRegistry
         internal static V2Manifest DeserializeV2Manifest(JsonElement element)
         {
             Optional<string> mediaType = default;
-            Optional<ContentDescriptor> config = default;
-            Optional<IReadOnlyList<ContentDescriptor>> layers = default;
+            Optional<ArtifactBlobDescriptor> config = default;
+            Optional<IReadOnlyList<ArtifactBlobDescriptor>> layers = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = ContentDescriptor.DeserializeContentDescriptor(property.Value);
+                    config = ArtifactBlobDescriptor.DeserializeArtifactBlobDescriptor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"))
@@ -44,10 +44,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ContentDescriptor> array = new List<ContentDescriptor>();
+                    List<ArtifactBlobDescriptor> array = new List<ArtifactBlobDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentDescriptor.DeserializeContentDescriptor(item));
+                        array.Add(ArtifactBlobDescriptor.DeserializeArtifactBlobDescriptor(item));
                     }
                     layers = array;
                     continue;

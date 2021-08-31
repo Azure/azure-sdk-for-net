@@ -44,3 +44,22 @@ directive:
   transform: >
     $["x-ms-client-name"] = "nextLink"
 ```
+
+# Make OciManifest a public type
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.OCIManifest
+  transform: >
+    delete $["x-accessibility"];
+    delete $["allOf"];
+```
+
+# Make ArtifactBlobDescriptor a public type
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.Descriptor
+  transform: >
+    delete $["x-accessibility"]
+```

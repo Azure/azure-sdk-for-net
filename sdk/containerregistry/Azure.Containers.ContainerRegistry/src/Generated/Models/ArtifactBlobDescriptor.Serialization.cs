@@ -13,9 +13,9 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    internal partial class ContentDescriptor
+    public partial class ArtifactBlobDescriptor
     {
-        internal static ContentDescriptor DeserializeContentDescriptor(JsonElement element)
+        internal static ArtifactBlobDescriptor DeserializeArtifactBlobDescriptor(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<long> size = default;
@@ -66,11 +66,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                         annotations = null;
                         continue;
                     }
-                    annotations = Annotations.DeserializeAnnotations(property.Value);
+                    annotations = ContainerRegistry.Annotations.DeserializeAnnotations(property.Value);
                     continue;
                 }
             }
-            return new ContentDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
+            return new ArtifactBlobDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
         }
     }
 }
