@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Tests
         public async Task Delete()
         {
             string rgName = Recording.GenerateAssetName("testRg-1-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             string policyAssignmentName = Recording.GenerateAssetName("testPolAssign-");
             PolicyAssignmentData policyAssignmentData = new PolicyAssignmentData
             {

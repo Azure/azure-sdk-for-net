@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Tests
         {
             //If you want to change this test, ensure you have the right access to management group, otherwise the test will fail and unable to re-record.
             string mgmtGroupName = Recording.GenerateAssetName("testMgmtGroup-");
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().CreateOrUpdateAsync(mgmtGroupName, new CreateManagementGroupOptions());
+            ManagementGroup mgmtGroup = (await Client.GetManagementGroups().CreateOrUpdateAsync(mgmtGroupName, new CreateManagementGroupOptions())).Value;
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-C-");
             PolicyAssignmentData policyAssignmentData = new PolicyAssignmentData
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdateAtResourceGroup()
         {
             string rgName = Recording.GenerateAssetName("testRg-1-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             string policyAsignmentName = Recording.GenerateAssetName("polAssign-C-");
             PolicyAssignmentData policyAssignmentData = new PolicyAssignmentData
             {
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdateAtResource()
         {
             string rgName = Recording.GenerateAssetName("testRg-2-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             string vnName = Recording.GenerateAssetName("testVn-");
             GenericResourceData vnData = ConstructGenericVirtualNetwork();
             ResourceIdentifier vnId = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnName);
-            GenericResource vn = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId, vnData);
+            GenericResource vn = (await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId, vnData)).Value;
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-C-");
             PolicyAssignmentData policyAssignmentData = new PolicyAssignmentData
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Tests
         public async Task List()
         {
             string rgName = Recording.GenerateAssetName("testRg-3-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             string policyAssignmentName1 = Recording.GenerateAssetName("polAssign-L-");
             string policyAssignmentName2 = Recording.GenerateAssetName("polAssign-L-");
             string policyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/0015ea4d-51ff-4ce3-8d8c-f3f8f0179a56";
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Tests
         public async Task Get()
         {
             string rgName = Recording.GenerateAssetName("testRg-4-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-G-");
             PolicyAssignmentData policyAssignmentData = new PolicyAssignmentData
             {

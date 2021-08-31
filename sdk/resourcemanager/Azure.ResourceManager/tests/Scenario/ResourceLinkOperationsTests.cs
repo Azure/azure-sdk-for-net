@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Tests
         public async Task Delete()
         {
             string rgName = Recording.GenerateAssetName("testRg-1-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             GenericResourceData vNData = ConstructGenericVirtualNetwork();
             ResourceIdentifier vnId1 = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", Recording.GenerateAssetName("testVn-"));
             ResourceIdentifier vnId2 = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", Recording.GenerateAssetName("testVn-"));
-            GenericResource vn1 = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId1, vNData);
-            GenericResource vn2 = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId2, vNData);
+            GenericResource vn1 = (await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId1, vNData)).Value;
+            GenericResource vn2 = (await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId2, vNData)).Value;
             string resourceLinkName = Recording.GenerateAssetName("link-D-");
             ResourceIdentifier resourceLinkId = vnId1 + "/providers/Microsoft.Resources/links/" + resourceLinkName;
             ResourceLinkProperties properties = new ResourceLinkProperties(vnId2);

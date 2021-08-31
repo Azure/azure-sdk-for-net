@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Tests.Samples
                 }
             };
             ResourceIdentifier vnId = resourceGroup.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnName);
-            GenericResource myVNet = await armClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId, vnData);
+            GenericResource myVNet = (await armClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId, vnData)).Value;
             #region Snippet:Managing_Policies_CreatePolicyAssignmentForAnyResource
             PolicyAssignmentContainer subscriptionPaContainer = subscription.GetPolicyAssignments();
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Tests.Samples
             // With the container, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroup resourceGroup = (await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location))).Value;
             #endregion
 
             this.resourceGroup = resourceGroup;

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Tests
         {
             //If you want to change this test, ensure you have the right access to management group, otherwise the test will fail and unable to re-record.
             string mgmtGroupName = Recording.GenerateAssetName("testMgmtGroup-");
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().CreateOrUpdateAsync(mgmtGroupName, new CreateManagementGroupOptions());
+            ManagementGroup mgmtGroup = (await Client.GetManagementGroups().CreateOrUpdateAsync(mgmtGroupName, new CreateManagementGroupOptions())).Value;
             string policyDefinitionName = Recording.GenerateAssetName("polDef-C-");
             PolicyDefinitionData policyDefinitionData = CreatePolicyDefinitionData(policyDefinitionName);
             PolicyDefinition policyDefinition = (await mgmtGroup.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, policyDefinitionData)).Value;

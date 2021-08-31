@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Tests.Samples
             // With the container, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroup resourceGroup = (await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location))).Value;
             GenericResourceData vNData = new GenericResourceData(Location.WestUS2)
             {
                 Properties = new JsonObject()
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Tests.Samples
             };
             ResourceIdentifier vnId1 = resourceGroup.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", "vn1");
             ResourceIdentifier vnId2 = resourceGroup.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", "vn2");
-            GenericResource vn1 = await subscription.GetGenericResources().CreateOrUpdateAsync(vnId1, vNData);
-            GenericResource vn2 = await subscription.GetGenericResources().CreateOrUpdateAsync(vnId2, vNData);
+            GenericResource vn1 = (await subscription.GetGenericResources().CreateOrUpdateAsync(vnId1, vNData)).Value;
+            GenericResource vn2 = (await subscription.GetGenericResources().CreateOrUpdateAsync(vnId2, vNData)).Value;
             this.vn1 = vn1;
             this.vn2 = vn2;
         }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdate()
         {
             string rgName = Recording.GenerateAssetName("testRg-1-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             string policyAssignmentName = Recording.GenerateAssetName("testPolAssign-");
             PolicyAssignmentData policyAssignmentData = new PolicyAssignmentData
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Tests
         public async Task List()
         {
             string rgName = Recording.GenerateAssetName("testRg-2-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             string policyAssignmentName = Recording.GenerateAssetName("testPolAssign-");
             string policyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/0015ea4d-51ff-4ce3-8d8c-f3f8f0179a56";
             PolicyAssignmentData policyAssignmentData = new PolicyAssignmentData
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Tests
         public async Task Get()
         {
             string rgName = Recording.GenerateAssetName("testRg-3-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             string policyAssignmentName = Recording.GenerateAssetName("testPolAssign-");
             PolicyAssignmentData policyAssignmentData = new PolicyAssignmentData
             {

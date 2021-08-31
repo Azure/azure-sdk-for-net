@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdate()
         {
             string rgName = Recording.GenerateAssetName("testRg-1-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             GenericResourceData vNData = ConstructGenericVirtualNetwork();
             ResourceIdentifier vnId1 = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", Recording.GenerateAssetName("testVn-"));
             ResourceIdentifier vnId2 = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", Recording.GenerateAssetName("testVn-"));
-            GenericResource vn1 = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId1, vNData);
-            GenericResource vn2 = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId2, vNData);
+            GenericResource vn1 = (await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId1, vNData)).Value;
+            GenericResource vn2 = (await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId2, vNData)).Value;
             string resourceLinkName = Recording.GenerateAssetName("link-C-");
             ResourceIdentifier resourceLinkId = vnId1 + "/providers/Microsoft.Resources/links/" + resourceLinkName;
             ResourceLinkProperties properties = new ResourceLinkProperties(vnId2);
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Tests
         public async Task List()
         {
             string rgName = Recording.GenerateAssetName("testRg-2-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             GenericResourceData vNData = ConstructGenericVirtualNetwork();
             ResourceIdentifier vnId1 = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", Recording.GenerateAssetName("testVn-"));
             ResourceIdentifier vnId2 = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", Recording.GenerateAssetName("testVn-"));
             ResourceIdentifier vnId3 = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", Recording.GenerateAssetName("testVn-"));
-            GenericResource vn1 = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId1, vNData);
-            GenericResource vn2 = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId2, vNData);
-            GenericResource vn3 = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId3, vNData);
+            GenericResource vn1 = (await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId1, vNData)).Value;
+            GenericResource vn2 = (await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId2, vNData)).Value;
+            GenericResource vn3 = (await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId3, vNData)).Value;
             string resourceLinkName1 = Recording.GenerateAssetName("link-L-");
             string resourceLinkName2 = Recording.GenerateAssetName("link-L-");
             ResourceIdentifier resourceLinkId1 = vnId1 + "/providers/Microsoft.Resources/links/" + resourceLinkName1;
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Tests
         public async Task Get()
         {
             string rgName = Recording.GenerateAssetName("testRg-3-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             GenericResourceData vNData = ConstructGenericVirtualNetwork();
             ResourceIdentifier vnId1 = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", Recording.GenerateAssetName("testVn-"));
             ResourceIdentifier vnId2 = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", Recording.GenerateAssetName("testVn-"));
-            GenericResource vn1 = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId1, vNData);
-            GenericResource vn2 = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId2, vNData);
+            GenericResource vn1 = (await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId1, vNData)).Value;
+            GenericResource vn2 = (await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId2, vNData)).Value;
             string resourceLinkName = Recording.GenerateAssetName("link-G-");
             ResourceIdentifier resourceLinkId = vnId1 + "/providers/Microsoft.Resources/links/" + resourceLinkName;
             ResourceLinkProperties properties = new ResourceLinkProperties(vnId2);

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdateAtResourceGroup()
         {
             string rgName = Recording.GenerateAssetName("testRg-1-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-C-");
             ManagementLockObjectData mgmtLockObjectData = new ManagementLockObjectData(new LockLevel("CanNotDelete"));
             ManagementLockObject mgmtLockObject = (await rg.GetManagementLocks().CreateOrUpdateAsync(mgmtLockObjectName, mgmtLockObjectData)).Value;
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdateAtResource()
         {
             string rgName = Recording.GenerateAssetName("testRg-2-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             string vnName = Recording.GenerateAssetName("testVn-");
             GenericResourceData vnData = ConstructGenericVirtualNetwork();
             ResourceIdentifier vnId = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnName);
-            GenericResource vn = await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId, vnData);
+            GenericResource vn = (await Client.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnId, vnData)).Value;
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-C-");
             ManagementLockObjectData mgmtLockObjectData = new ManagementLockObjectData(new LockLevel("CanNotDelete"));
             ManagementLockObject mgmtLockObject = (await vn.GetManagementLocks().CreateOrUpdateAsync(mgmtLockObjectName, mgmtLockObjectData)).Value;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Tests
         public async Task List()
         {
             string rgName = Recording.GenerateAssetName("testRg-3-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = (await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName)).Value;
             string mgmtLockObjectName1 = Recording.GenerateAssetName("mgmtLock-L-");
             string mgmtLockObjectName2 = Recording.GenerateAssetName("mgmtLock-L-");
             ManagementLockObjectData mgmtLockObjectData = new ManagementLockObjectData(new LockLevel("CanNotDelete"));
