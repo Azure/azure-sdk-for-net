@@ -27,7 +27,8 @@ This is a scoped operations object, and any operations you perform will be done 
 ```C# Snippet:Managing_StorageAccounts_GetResourceGroupContainer
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroup resourceGroup = operation.Value;
 ```
 
 After we have the resource group created, we can create a storage account
@@ -42,7 +43,7 @@ StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(s
 StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
 StorageAccountCreateOperation accountCreateOperation = await accountContainer.CreateOrUpdateAsync(accountName, parameters);
-StorageAccount storageAccount = await accountCreateOperation.WaitForCompletionAsync();
+StorageAccount storageAccount = accountCreateOperation.Value;
 ```
 
 
@@ -63,7 +64,7 @@ BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
 string blobContainerName = "myBlobContainer";
 BlobContainerData blobContainerData= new BlobContainerData();
 BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerContainer.CreateOrUpdateAsync(blobContainerName, blobContainerData);
-BlobContainer blobContainer = await blobContainerCreateOperation.WaitForCompletionAsync();
+BlobContainer blobContainer = blobContainerCreateOperation.Value;
 ```
 
 ***List all blob containers***
