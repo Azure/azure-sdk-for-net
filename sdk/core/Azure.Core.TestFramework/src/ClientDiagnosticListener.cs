@@ -67,13 +67,11 @@ namespace Azure.Core.Tests
                     {
                         Name = name,
                         Activity = Activity.Current,
+                        ParentActivity = Activity.Current.Parent,
                         Links = links.Select(a => a.ParentId).ToList(),
                         LinkedActivities = links.ToList()
                     };
-                    if (Scopes.Any(s => s.Name == scope.Name && !s.IsCompleted))
-                    {
-                        scope.IsDuplicate = true;
-                    }
+
                     Scopes.Add(scope);
                     _scopeStartCallback?.Invoke(scope);
                 }
@@ -144,9 +142,11 @@ namespace Azure.Core.Tests
 
             foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {
-                if (producedDiagnosticScope.IsDuplicate)
+                // Check the immediate parent to determine if it is a duplicate. Note this won't catch duplicates that
+                // are separated by other operations, e.g. A -> B -> A would not be caught.
+                if (producedDiagnosticScope.Activity.OperationName == producedDiagnosticScope.ParentActivity?.OperationName)
                 {
-                    // throw this exception lazily on Dispose so that we don't trigger a bunch of other
+                    // Throw this exception lazily on Dispose, rather than when the scope is started, so that we don't trigger a bunch of other
                     // erroneous exceptions relating to scopes not being completed/started that hide the actual issue
                     throw new InvalidOperationException($"A scope has already started for event '{producedDiagnosticScope.Name}'");
                 }
@@ -230,6 +230,7 @@ namespace Azure.Core.Tests
             public Exception Exception { get; set; }
             public List<string> Links { get; set; } = new List<string>();
             public List<Activity> LinkedActivities { get; set; } = new List<Activity>();
+            public Activity ParentActivity { get; set; }
 
             public override string ToString()
             {
