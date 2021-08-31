@@ -474,6 +474,7 @@ namespace Azure.Storage
                 public const char SetImmutabilityPolicy = 'i';
                 public const char ManageOwnership = 'o';
                 public const char ManageAccessControl = 'p';
+                public const char PermanentDelete = 'y';
             }
 
             internal static class Parameters
