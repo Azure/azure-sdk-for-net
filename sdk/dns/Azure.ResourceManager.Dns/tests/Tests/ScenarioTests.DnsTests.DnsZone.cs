@@ -124,7 +124,7 @@ namespace Azure.Management.Dns.Tests
                 }
             }
             Assert.IsTrue(zoneOneFound && zoneTwoFound);
-            await ResourceGroupsOperations.StartDeleteAsync(this.resourceGroup + "-Two");
+            await (await ResourceGroupsOperations.GetAsync(this.resourceGroup + "-Two")).Value.StartDeleteAsync();
             await this.WaitForCompletionAsync(await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameOne));
         }
 

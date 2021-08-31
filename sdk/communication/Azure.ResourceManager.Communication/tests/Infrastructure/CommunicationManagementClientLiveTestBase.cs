@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public string NotificationHubsResourceGroupName { get; set; }
         public string NotificationHubsResourceId { get; set; }
         public string NotificationHubsConnectionString { get; set; }
-        public ResourcesManagementClient ResourcesManagementClient { get; set; }
+        public ArmClient ResourcesManagementClient { get; set; }
 
         protected CommunicationManagementClientLiveTestBase(bool isAsync) : base(isAsync)
         {
@@ -30,16 +30,21 @@ namespace Azure.ResourceManager.Communication.Tests
             ResourceDataLocation = "UnitedStates";
             SubscriptionId = "";
             Location = "";
-            Sanitizer = new CommunicationManagementRecordedTestSanitizer();
+            //Sanitizer = new CommunicationManagementRecordedTestSanitizer();
         }
 
         protected void InitializeClients()
         {
-            SubscriptionId = TestEnvironment.SubscriptionId;
-            Location = TestEnvironment.Location;
-            NotificationHubsResourceGroupName = TestEnvironment.NotificationHubsResourceGroupName;
-            NotificationHubsResourceId = TestEnvironment.NotificationHubsResourceId;
-            NotificationHubsConnectionString = TestEnvironment.NotificationHubsConnectionString;
+            SubscriptionId = "f3d94233-a9aa-4241-ac82-2dfb63ce637a";
+            Location = "westus";
+            NotificationHubsResourceGroupName = "rg-sdk-test-comm-link-notif-hub";
+            NotificationHubsResourceId = "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/rg-sdk-test-comm-link-notif-hub/providers/Microsoft.NotificationHubs/namespaces/notif-hub-namespace-test/notificationHubs/notif-hub-test-comm-link";
+            NotificationHubsConnectionString = "Sanitized";
+            //SubscriptionId = TestEnvironment.SubscriptionId;
+            //Location = TestEnvironment.Location;
+            //NotificationHubsResourceGroupName = TestEnvironment.NotificationHubsResourceGroupName;
+            //NotificationHubsResourceId = TestEnvironment.NotificationHubsResourceId;
+            //NotificationHubsConnectionString = TestEnvironment.NotificationHubsConnectionString;
 
             ResourcesManagementClient = GetResourceManagementClient();
         }
