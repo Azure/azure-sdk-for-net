@@ -17,13 +17,6 @@ namespace Azure.ResourceManager.Compute.Tests
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
-        private ProximityPlacementGroupData BasicProximityPlacementGroupData
-        {
-            get
-            {
-                return ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            }
-        }
 
         private async Task<ProximityPlacementGroupContainer> GetProximityPlacementGroupContainerAsync()
         {
@@ -50,8 +43,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetProximityPlacementGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testPro-");
             var input = ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            var lroGroup1 = await container.CreateOrUpdateAsync(groupName, input);
-            ProximityPlacementGroup group1 = lroGroup1.Value;
+            var lroGroup = await container.CreateOrUpdateAsync(groupName, input);
+            ProximityPlacementGroup group1 = lroGroup.Value;
             ProximityPlacementGroup group2 = await container.GetAsync(groupName);
             ResourceDataHelper.AssertProximityPlacementGroup(group1.Data, group2.Data);
         }

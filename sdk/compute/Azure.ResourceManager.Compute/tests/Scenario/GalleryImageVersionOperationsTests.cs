@@ -12,100 +12,33 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    public class GalleryImageVersionOperationsTests : ComputeTestBase
+    public class GalleryImageVersionOperationsTests : VirtualMachineTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroup _versionResourceGroup;
         private Gallery _gallery;
         private GalleryImage _galleryImage;
-        protected GenericResourceContainer _genericResourceContainer;
         private GalleryImageVersion _galleryImageVersion;
         public GalleryImageVersionOperationsTests(bool isAsync)
         : base(isAsync)// , RecordedTestMode.Record)
         {
         }
 
-        protected async Task<GenericResource> CreateVirtualNetwork()
-        {
-            _genericResourceContainer = DefaultSubscription.GetGenericResources();
-            var vnetName = Recording.GenerateAssetName("testVNet-");
-            var subnetName = Recording.GenerateAssetName("testSubnet-");
-            ResourceIdentifier vnetId = $"{_resourceGroup.Id}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
-            var addressSpaces = new Dictionary<string, object>()
-            {
-                { "addressPrefixes", new List<string>() { "10.0.0.0/16" } }
-            };
-            var subnet = new Dictionary<string, object>()
-            {
-                { "name", subnetName },
-                { "properties", new Dictionary<string, object>()
-                {
-                    { "addressPrefix", "10.0.2.0/24" }
-                } }
-            };
-            var subnets = new List<object>() { subnet };
-            var input = new GenericResourceData(DefaultLocation)
-            {
-                Properties = new Dictionary<string, object>()
-                {
-                    { "addressSpace", addressSpaces },
-                    { "subnets", subnets }
-                }
-            };
-            return await _genericResourceContainer.CreateOrUpdateAsync(vnetId, input);
-        }
-
-        private async Task<GenericResource> CreateNetworkInterface(ResourceIdentifier subnetId)
-        {
-            _genericResourceContainer = DefaultSubscription.GetGenericResources();
-            var nicName = Recording.GenerateAssetName("testNic-");
-            ResourceIdentifier nicId = $"{_resourceGroup.Id}/providers/Microsoft.Network/networkInterfaces/{nicName}";
-            var input = new GenericResourceData(DefaultLocation)
-            {
-                Properties = new Dictionary<string, object>()
-                {
-                    { "ipConfigurations", new List<object>()
-                        {
-                            new Dictionary<string, object>()
-                            {
-                                { "name", "internal" },
-                                { "properties", new Dictionary<string, object>()
-                                    {
-                                        { "subnet", new Dictionary<string, object>() { { "id", subnetId.ToString() } } }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            };
-            return await _genericResourceContainer.CreateOrUpdateAsync(nicId, input);
-        }
-
-        protected ResourceIdentifier GetSubnetId(GenericResource vnet)
-        {
-            var properties = vnet.Data.Properties as IDictionary<string, object>;
-            var subnets = properties["subnets"] as IEnumerable<object>;
-            var subnet = subnets.First() as IDictionary<string, object>;
-            return subnet["id"] as string;
-        }
-
         private async Task<GalleryImageVersion> CreateGalleryImageVersionAsync(string galleryImageVersionName)
         {
-            _resourceGroup = await CreateResourceGroupAsync();
+            _versionResourceGroup = await CreateResourceGroupAsync();
             var galleryName = Recording.GenerateAssetName("testGallery");
             var galleryImageName = "1.0.0";
             var galleryInput = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            var lroGallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, galleryInput);
+            var lroGallery = await _versionResourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, galleryInput);
             _gallery = lroGallery.Value;
             var identifier = ResourceDataHelper.GetGalleryImageIdentifier(
                     Recording.GenerateAssetName("publisher"),
                     Recording.GenerateAssetName("offer"),
                     Recording.GenerateAssetName("sku"));
             var imageInput = ResourceDataHelper.GetBasicGalleryImageData(DefaultLocation, OperatingSystemTypes.Linux, identifier);
-            var vmContainer = _resourceGroup.GetVirtualMachines();
+            var vmContainer = _versionResourceGroup.GetVirtualMachines();
             var vmName = Recording.GenerateAssetName("testVM-");
-            var vnet = await CreateVirtualNetwork();
-            var nic = await CreateNetworkInterface(GetSubnetId(vnet));
+            var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var vmInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             var lroVm = await vmContainer.CreateOrUpdateAsync(vmName, vmInput);
             var _vm = lroVm.Value;

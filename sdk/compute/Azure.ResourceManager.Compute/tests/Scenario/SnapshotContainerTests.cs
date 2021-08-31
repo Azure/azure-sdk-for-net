@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var lroDisk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
             Disk _disk = lroDisk.Value;
             var diskID = _disk.Id;
-            var createoption = new DiskCreateOption("copy");
-            var input =  ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
+            var createOption = new DiskCreateOption("copy");
+            var input =  ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createOption, diskID);
             var lro = await container.CreateOrUpdateAsync(ssName, input);
             Snapshot ss = lro.Value;
             Assert.AreEqual(ssName, ss.Data.Name);
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var lrodisk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
             Disk _disk = lrodisk.Value;
             var diskID = _disk.Id;
-            var createoption = new DiskCreateOption("copy");
-            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
+            var createOption = new DiskCreateOption("copy");
+            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createOption, diskID);
             var lro = await container.CreateOrUpdateAsync(ssName, input);
             Snapshot ss1 = lro.Value;
             Snapshot ss2 = await container.GetAsync(ssName);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Disk _disk = lroDisk.Value;
             var diskID = _disk.Id;
             var createOption = new DiskCreateOption("copy");
-            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
+            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createOption, diskID);
             var lro = await container.CreateOrUpdateAsync(ssName, input);
             Snapshot ss = lro.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(ssName));

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -395,8 +394,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         #region Snapshot
         public static void AssertSnapshot(SnapshotData ss1, SnapshotData ss2)
         {
-            Assert.AreEqual(ss1.Id, ss2.Id);
-            Assert.AreEqual(ss1.Name, ss2.Name);
+            AssertTrackedResource(ss1, ss2);
         }
 
         public static SnapshotData GetBasicSnapshotData(Location location, DiskCreateOption createOption, string diskID)

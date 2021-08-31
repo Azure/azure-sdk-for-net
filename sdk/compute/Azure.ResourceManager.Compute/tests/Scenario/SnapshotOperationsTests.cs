@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Disk _disk = lroDisk.Value;
             var diskID = _disk.Id;
             var createOption = new DiskCreateOption("copy");
-            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
+            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createOption, diskID);
             var lro = await container.CreateOrUpdateAsync(ssName, input);
             Snapshot ss = lro.Value;
             await ss.DeleteAsync();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Disk _disk = lroDisk.Value;
             var diskID = _disk.Id;
             var createOption = new DiskCreateOption("copy");
-            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
+            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createOption, diskID);
             var lro = await container.CreateOrUpdateAsync(ssName, input);
             Snapshot ss1 = lro.Value;
             Snapshot ss2 = await ss1.GetAsync();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Disk _disk = lroDisk.Value;
             var diskID = _disk.Id;
             var createOption = new DiskCreateOption("copy");
-            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
+            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createOption, diskID);
             var lro = await container.CreateOrUpdateAsync(ssName, input);
             Snapshot ss = lro.Value;
 
