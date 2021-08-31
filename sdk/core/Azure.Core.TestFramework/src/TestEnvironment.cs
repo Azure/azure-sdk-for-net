@@ -502,7 +502,7 @@ namespace Azure.Core.TestFramework
             {
                 try
                 {
-                    if (!s_isWindows || s_bootstrappingAttemptedTypes.Contains(_type))
+                    if (!s_isWindows || s_bootstrappingAttemptedTypes.Contains(_type) || Mode == RecordedTestMode.Playback)
                     {
                         return;
                     }
