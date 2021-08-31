@@ -79,24 +79,24 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="tokenCredential"> A token credential used to authenticate to an Azure Service. </param>
-        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential tokenCredential)
-            : this(endpoint, hub, tokenCredential, new WebPubSubServiceClientOptions())
+        /// <param name="credential"> A token credential used to authenticate to an Azure Service. </param>
+        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential credential)
+            : this(endpoint, hub, credential, new WebPubSubServiceClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="tokenCredential"> A token credential used to authenticate to an Azure Service. </param>
+        /// <param name="credential"> A token credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential tokenCredential, WebPubSubServiceClientOptions options)
+        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential credential, WebPubSubServiceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(hub, nameof(hub));
-            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+            Argument.AssertNotNull(credential, nameof(credential));
 
-            this._tokenCredential = tokenCredential;
+            this._tokenCredential = credential;
             this.hub = hub;
             this.endpoint = endpoint;
 
@@ -117,7 +117,7 @@ namespace Azure.Messaging.WebPubSub
             Pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
-                perRetryPolicies: new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(tokenCredential, "TODO:credentialScopeName") },
+                perRetryPolicies: new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, "TODO:credentialScopeName") },
                 new ResponseClassifier()
             );
         }
