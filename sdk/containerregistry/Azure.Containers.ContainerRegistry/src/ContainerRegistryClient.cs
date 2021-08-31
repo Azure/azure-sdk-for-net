@@ -19,6 +19,7 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
         private readonly AuthenticationRestClient _acrAuthClient;
+        private readonly ContainerRegistryBlobRestClient _blobRestClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts,
@@ -87,6 +88,7 @@ namespace Azure.Containers.ContainerRegistry
             string defaultScope = options.Audience + "/.default";
             _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            _blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
@@ -256,7 +258,8 @@ namespace Azure.Containers.ContainerRegistry
                 _endpoint,
                 repositoryName,
                 _clientDiagnostics,
-                _restClient);
+                _restClient,
+                _blobRestClient);
         }
 
         /// <summary>
@@ -279,7 +282,8 @@ namespace Azure.Containers.ContainerRegistry
                 repositoryName,
                 tagOrDigest,
                 _clientDiagnostics,
-                _restClient);
+                _restClient,
+                _blobRestClient);
         }
     }
 }
