@@ -157,7 +157,7 @@ namespace Azure.Messaging.EventGrid.Tests
             using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
 
             // simulating some other activity already being started before doing operations with the client
-            var activity = new Activity($"ParentEvent");
+            var activity = new Activity("ParentEvent");
             activity.SetW3CFormat();
             activity.Start();
             activity.TraceStateString = "tracestatevalue";
