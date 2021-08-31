@@ -36,9 +36,10 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task LinkNotificationHub()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            ResourceGroup rg = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 NotificationHubsResourceGroupName,
                 new ResourceGroupData(Location));
+            ResourceGroup rg = lro.Value;
 
             CommunicationManagementClient acsClient = GetCommunicationManagementClient();
             var resourceName = Recording.GenerateAssetName("sdk-test-link-notif-hub-");
