@@ -4,6 +4,9 @@
 using System;
 using Azure.Core;
 
+// Prevent an options class from being generated.
+[assembly: CodeGenSuppressType(nameof(Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions))]
+
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary>

@@ -11,10 +11,9 @@ batch:
 - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ee3061aa89dcb77829a327cf159fbb9c12ea013f/specification/cognitiveservices/data-plane/Language/preview/2021-07-15-preview/questionanswering.json
   clear-output-folder: true
 
-# TODO: Uncomment when we ship authoring support and remove ./QuestionAnsweringClientOptions.cs.
-# - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ee3061aa89dcb77829a327cf159fbb9c12ea013f/specification/cognitiveservices/data-plane/Language/preview/2021-07-15-preview/questionanswering-authoring.json
-#   add-credentials: true
-#   low-level-client: true
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ee3061aa89dcb77829a327cf159fbb9c12ea013f/specification/cognitiveservices/data-plane/Language/preview/2021-07-15-preview/questionanswering-authoring.json
+  add-credentials: true
+  low-level-client: true
 
 modelerfour:
   lenient-model-deduplication: true

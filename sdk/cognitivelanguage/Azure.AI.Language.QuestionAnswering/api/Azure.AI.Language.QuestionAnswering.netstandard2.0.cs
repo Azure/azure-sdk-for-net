@@ -17,11 +17,54 @@ namespace Azure.AI.Language.QuestionAnswering
     }
     public partial class QuestionAnsweringClientOptions : Azure.Core.ClientOptions
     {
-        public QuestionAnsweringClientOptions(Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion version = Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion.V2021_05_01_preview) { }
+        public QuestionAnsweringClientOptions(Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion version = Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion.V2021_07_15_Preview) { }
         public enum ServiceVersion
         {
             V2021_05_01_preview = 1,
+            V2021_07_15_Preview = 2,
         }
+    }
+    public partial class QuestionAnsweringProjectsClient
+    {
+        protected QuestionAnsweringProjectsClient() { }
+        public QuestionAnsweringProjectsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions options = null) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response CreateProject(string projectName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateProjectAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response DeleteProject(string projectName, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteProjectAsync(string projectName, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> DeployProject(string projectName, string deploymentName, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeployProjectAsync(string projectName, string deploymentName, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> Export(string projectName, string format = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ExportAsync(string projectName, string format = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetDeployStatus(string projectName, string deploymentName, string jobId, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetExportStatus(string projectName, string jobId, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetExportStatusAsync(string projectName, string jobId, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetImportStatus(string projectName, string jobId, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetImportStatusAsync(string projectName, string jobId, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetProjectDetails(string projectName, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetProjectDetailsAsync(string projectName, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetQnas(string projectName, string source = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetQnasAsync(string projectName, string source = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetSources(string projectName, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSourcesAsync(string projectName, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetSynonyms(string projectName, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSynonymsAsync(string projectName, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetUpdateQnasStatus(string projectName, string jobId, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetUpdateQnasStatusAsync(string projectName, string jobId, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetUpdateSourcesStatus(string projectName, string jobId, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> Import(string projectName, Azure.Core.RequestContent content, string format = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ImportAsync(string projectName, Azure.Core.RequestContent content, string format = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response ListProjects(Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ListProjectsAsync(Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> UpdateQnas(string projectName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> UpdateQnasAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> UpdateSources(string projectName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> UpdateSourcesAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response UpdateSynonyms(string projectName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSynonymsAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
     }
 }
 namespace Azure.AI.Language.QuestionAnswering.Models
