@@ -50,13 +50,14 @@ namespace Policy.Tests
                 var thisTestName = TestUtilities.GetCurrentMethodName();
                 var policyDefinition = this.CreatePolicyDefinition($"{thisTestName} Policy Definition ${LivePolicyTests.NameTag}");
 
-                var result = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
-                Assert.NotNull(result);
+                var putResult = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
+                Assert.NotNull(putResult);
+                this.AssertValid(policyName, policyDefinition, putResult, isBuiltin: false);
+                this.AssertMinimal(putResult);
 
                 // Validate result
                 var getResult = client.PolicyDefinitions.Get(policyName);
-                this.AssertValid(policyName, policyDefinition, getResult, false);
-                this.AssertMinimal(getResult);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 var listResult = client.PolicyDefinitions.List();
                 this.AssertInList(client, policyName, policyDefinition, listResult);
@@ -68,15 +69,15 @@ namespace Policy.Tests
                 // Update with all properties
                 this.UpdatePolicyDefinition(policyDefinition);
 
-                result = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
-                Assert.NotNull(result);
+                putResult = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
+                Assert.NotNull(putResult);
+                this.AssertValid(policyName, policyDefinition, putResult, false);
+                Assert.Equal("All", putResult.Mode);
+                Assert.Null(putResult.Parameters);
 
                 // Validate result
                 getResult = client.PolicyDefinitions.Get(policyName);
-                this.AssertValid(policyName, policyDefinition, getResult, false);
-
-                Assert.Equal("All", getResult.Mode);
-                Assert.Null(getResult.Parameters);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 // Delete definition and validate
                 this.DeleteDefinitionAndValidate(client, policyName);
@@ -84,12 +85,13 @@ namespace Policy.Tests
                 // Create definition with parameters
                 policyDefinition = this.CreatePolicyDefinitionWithParameters(policyName);
 
-                result = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
-                Assert.NotNull(result);
+                putResult = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
+                Assert.NotNull(putResult);
+                this.AssertValid(policyName, policyDefinition, putResult, false);
 
                 // Validate result
                 getResult = client.PolicyDefinitions.Get(policyName);
-                this.AssertValid(policyName, policyDefinition, getResult, false);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 // Delete definition and validate
                 this.DeleteDefinitionAndValidate(client, policyName);
@@ -163,17 +165,18 @@ namespace Policy.Tests
                     PolicyDefinitions = new[] { new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id) }
                 };
 
-                var result = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
-                Assert.NotNull(result);
+                var putResult = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
+                Assert.NotNull(putResult);
+                this.AssertValid(setName, policySet, putResult, false);
+                Assert.Single(putResult.PolicyDefinitions);
+                Assert.Null(putResult.Description);
+                this.AssertMetadataValid(putResult.Metadata);
+                Assert.Null(putResult.Parameters);
+                Assert.Equal("Custom", putResult.PolicyType);
 
                 // Validate result
                 var getResult = client.PolicySetDefinitions.Get(setName);
-                this.AssertValid(setName, policySet, getResult, false);
-                Assert.Single(getResult.PolicyDefinitions);
-                Assert.Null(getResult.Description);
-                AssertMetadataValid(getResult.Metadata);
-                Assert.Null(getResult.Parameters);
-                Assert.Equal("Custom", getResult.PolicyType);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 var listResult = client.PolicySetDefinitions.List();
                 this.AssertInList(client, setName, policySet, listResult);
@@ -189,41 +192,42 @@ namespace Policy.Tests
                 policySet.DisplayName = $"Updated {policySet.DisplayName}";
 
                 // Add another definition that can be referenced (must be distinct from the first one to pass validation)
-                const string refId = "refId2";
+                const string RefId = "refId2";
                 var definitionName2 = TestUtilities.GenerateName();
                 var definitionResult2 = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: definitionName2, parameters: policyDefinition);
                 policySet.PolicyDefinitions = new[]
                 {
                     new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id),
-                    new PolicyDefinitionReference(policyDefinitionId: definitionResult2.Id, policyDefinitionReferenceId: refId)
+                    new PolicyDefinitionReference(policyDefinitionId: definitionResult2.Id, policyDefinitionReferenceId: RefId)
                 };
 
-                result = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
-                Assert.NotNull(result);
+                putResult = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
+                Assert.NotNull(putResult);
+                this.AssertValid(setName, policySet, putResult, false);
+                Assert.Equal(2, putResult.PolicyDefinitions.Count);
+                Assert.Null(putResult.Parameters);
+                Assert.Equal("Custom", putResult.PolicyType);
+                Assert.Equal(1, putResult.PolicyDefinitions.Count(definition => RefId.Equals(definition.PolicyDefinitionReferenceId, StringComparison.Ordinal)));
 
                 // validate result
                 getResult = client.PolicySetDefinitions.Get(setName);
-                this.AssertValid(setName, policySet, getResult, false);
-                Assert.Equal(2, getResult.PolicyDefinitions.Count);
-                Assert.Null(getResult.Parameters);
-                Assert.Equal("Custom", getResult.PolicyType);
-                Assert.Equal(1, getResult.PolicyDefinitions.Count(definition => refId.Equals(definition.PolicyDefinitionReferenceId, StringComparison.Ordinal)));
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 // Delete and validate
                 this.DeleteSetDefinitionAndValidate(client, setName);
 
                 // Create a policy set with groups
-                const string groupNameOne = "group1";
-                const string groupNameTwo = "group2";
-                policySet.PolicyDefinitionGroups = new List<PolicyDefinitionGroup> { new PolicyDefinitionGroup(groupNameOne), new PolicyDefinitionGroup(groupNameTwo) };
-                policySet.PolicyDefinitions[0].GroupNames = new[] { groupNameOne, groupNameTwo };
-                policySet.PolicyDefinitions[1].GroupNames = new[] { groupNameTwo };
-                result = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
-                Assert.NotNull(result);
-                this.AssertValid(setName, policySet, result, false);
+                const string GroupNameOne = "group1";
+                const string GroupNameTwo = "group2";
+                policySet.PolicyDefinitionGroups = new List<PolicyDefinitionGroup> { new PolicyDefinitionGroup(GroupNameOne), new PolicyDefinitionGroup(GroupNameTwo) };
+                policySet.PolicyDefinitions[0].GroupNames = new[] { GroupNameOne, GroupNameTwo };
+                policySet.PolicyDefinitions[1].GroupNames = new[] { GroupNameTwo };
+                putResult = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
+                Assert.NotNull(putResult);
+                this.AssertValid(setName, policySet, putResult, false);
 
                 getResult = client.PolicySetDefinitions.Get(setName);
-                this.AssertValid(setName, policySet, getResult, false);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 // Delete and validate everything
                 this.DeleteSetDefinitionAndValidate(client, setName);
@@ -248,13 +252,14 @@ namespace Policy.Tests
                     Parameters = policySetParameters
                 };
 
-                result = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
-                Assert.NotNull(result);
+                putResult = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
+                Assert.NotNull(putResult);
+                this.AssertValid(setName, policySet, putResult, false);
+                Assert.Single(putResult.PolicyDefinitions);
 
                 // validate result
                 getResult = client.PolicySetDefinitions.Get(setName);
-                this.AssertValid(setName, policySet, getResult, false);
-                Assert.Single(getResult.PolicyDefinitions);
+                this.AssertEqual(putResult, getResult, isBuiltin: false);
 
                 // Delete everything and validate
                 this.DeleteSetDefinitionAndValidate(client, setName);
