@@ -1,9 +1,10 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2021-08-31)
 
+### Breaking Changes
 
-### Migration from Previous Version of Azure Management SDK
+Guidance to migrate from Previous Version of Azure Management SDK
 
 #### Package Name
 The package name has been changed from `Microsoft.Azure.Management.Compute` to `Azure.ResourceManager.Compute`
