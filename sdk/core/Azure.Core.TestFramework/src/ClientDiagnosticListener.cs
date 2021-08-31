@@ -225,7 +225,6 @@ namespace Azure.Core.Tests
             public string Name { get; set; }
             public Activity Activity { get; set; }
             public bool IsCompleted { get; set; }
-            public bool IsDuplicate { get; set; }
             public bool IsFailed => Exception != null;
             public Exception Exception { get; set; }
             public List<string> Links { get; set; } = new List<string>();
