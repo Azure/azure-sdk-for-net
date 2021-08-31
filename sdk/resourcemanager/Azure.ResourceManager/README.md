@@ -274,7 +274,8 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 string rgName = "myRgName";
 Location location = Location.WestUS2;
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroupCreateOrUpdateOperation operation = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroup resourceGroup = operation.Value;
 ```
 
 ### List all resource groups

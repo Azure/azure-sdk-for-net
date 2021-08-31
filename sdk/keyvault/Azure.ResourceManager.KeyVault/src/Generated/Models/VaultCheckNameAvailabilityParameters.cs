@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The parameters used to check the availability of the vault name. </summary>
-    public partial class VaultCheckNameAvailabilityParameters
+    internal partial class VaultCheckNameAvailabilityParameters
     {
         /// <summary> Initializes a new instance of VaultCheckNameAvailabilityParameters. </summary>
         /// <param name="name"> The vault name. </param>

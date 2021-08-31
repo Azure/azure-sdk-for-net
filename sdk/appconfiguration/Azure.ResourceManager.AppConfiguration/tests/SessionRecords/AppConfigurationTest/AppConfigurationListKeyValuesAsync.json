@@ -209,7 +209,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1361",
+        "Content-Length": "865",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 25 Sep 2020 23:42:42 GMT",
         "Expires": "-1",
@@ -230,7 +230,7 @@
             "id": "jnrq-l1-s0:gAZHNo17T5LBiv45mXyA",
             "name": "Primary",
             "value": "LBdxbvTf2B8C1kjciCsvqaYo2s\u002BuVQ7br8yMlX\u002BXCsA=",
-            "connectionString": "Endpoint=https://configuration1102.azconfig.io;Id=jnrq-l1-s0:gAZHNo17T5LBiv45mXyA;Secret=LBdxbvTf2B8C1kjciCsvqaYo2s\u002BuVQ7br8yMlX\u002BXCsA=",
+            "connectionString": "Sanitized",
             "lastModified": "2020-09-25T23:42:41\u002B00:00",
             "readOnly": false
           },
@@ -238,7 +238,7 @@
             "id": "5xCT-l1-s0:lDlp2mCVZDdLp\u002BRGoSht",
             "name": "Secondary",
             "value": "nRjAjkFQHs6e1WoApS0ebYAxlTh7mNzt4mp6dto1HrQ=",
-            "connectionString": "Endpoint=https://configuration1102.azconfig.io;Id=5xCT-l1-s0:lDlp2mCVZDdLp\u002BRGoSht;Secret=nRjAjkFQHs6e1WoApS0ebYAxlTh7mNzt4mp6dto1HrQ=",
+            "connectionString": "Sanitized",
             "lastModified": "2020-09-25T23:42:41\u002B00:00",
             "readOnly": false
           },
@@ -246,7 +246,7 @@
             "id": "zvXf-l1-s0:\u002BRU4uwyMdwqKCntdi7Us",
             "name": "Primary Read Only",
             "value": "kXIqCoqWh4rDuoTLMnJP1PRBGYnGSL2BfyVEHeRyP2E=",
-            "connectionString": "Endpoint=https://configuration1102.azconfig.io;Id=zvXf-l1-s0:\u002BRU4uwyMdwqKCntdi7Us;Secret=kXIqCoqWh4rDuoTLMnJP1PRBGYnGSL2BfyVEHeRyP2E=",
+            "connectionString": "Sanitized",
             "lastModified": "2020-09-25T23:42:41\u002B00:00",
             "readOnly": true
           },
@@ -254,7 +254,7 @@
             "id": "Muuo-l1-s0:4w/fZgg22ZVtlzip7v4/",
             "name": "Secondary Read Only",
             "value": "1NsWU2P3jt8idj3bxr\u002BMMUFBfTugWUrdl6xyomx3da4=",
-            "connectionString": "Endpoint=https://configuration1102.azconfig.io;Id=Muuo-l1-s0:4w/fZgg22ZVtlzip7v4/;Secret=1NsWU2P3jt8idj3bxr\u002BMMUFBfTugWUrdl6xyomx3da4=",
+            "connectionString": "Sanitized",
             "lastModified": "2020-09-25T23:42:41\u002B00:00",
             "readOnly": true
           }
@@ -284,7 +284,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "327",
+        "Content-Length": "203",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 25 Sep 2020 23:42:42 GMT",
         "Expires": "-1",
@@ -303,7 +303,7 @@
         "id": "USrj-l1-s0:rqPA1MqMNhHy6LF0sRO1",
         "name": "Primary",
         "value": "PtX7HdocgamtScJ2VmJS\u002BOGwnZRlkqcJCApLInAXa3E=",
-        "connectionString": "Endpoint=https://configuration1102.azconfig.io;Id=USrj-l1-s0:rqPA1MqMNhHy6LF0sRO1;Secret=PtX7HdocgamtScJ2VmJS\u002BOGwnZRlkqcJCApLInAXa3E=",
+        "connectionString": "Sanitized",
         "lastModified": "2020-09-25T23:42:42\u002B00:00",
         "readOnly": false
       }

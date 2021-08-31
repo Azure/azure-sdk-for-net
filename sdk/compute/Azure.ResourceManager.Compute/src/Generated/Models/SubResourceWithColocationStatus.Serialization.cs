@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,18 +21,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("colocationStatus");
                 writer.WriteObjectValue(ColocationStatus);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static SubResourceWithColocationStatus DeserializeSubResourceWithColocationStatus(JsonElement element)
         {
             Optional<InstanceViewStatus> colocationStatus = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("colocationStatus"))
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SubResourceWithColocationStatus(id.Value, colocationStatus.Value);
+            return new SubResourceWithColocationStatus(id, colocationStatus.Value);
         }
     }
 }

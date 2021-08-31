@@ -1,15 +1,10 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
+## 1.0.0 (2021-09-07)
 
 ### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
-
+- Renamed `SendCloudEvent` to `SendCloudNativeCloudEvent`
+- Renamed `SendCloudEvents` to `SendCloudNativeCloudEvents`
 
 ## 1.0.0-beta.2 (2021-06-15)
 
