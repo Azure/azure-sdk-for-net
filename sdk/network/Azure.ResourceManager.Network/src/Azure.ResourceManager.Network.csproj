@@ -1,15 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Nullable>annotations</Nullable>
     <Version>1.0.0-beta.1</Version>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <LangVersion>9.0</LangVersion>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
-    <RestoreAdditionalProjectSources>https://azuresdkartifacts.blob.core.windows.net/azure-sdk-tools/index.json</RestoreAdditionalProjectSources>
     <PackageId>Azure.ResourceManager.Network</PackageId>
     <Description>
       Azure management client SDK for Azure resource provider Microsoft.Network.
@@ -17,5 +8,4 @@
     </Description>
     <PackageTags>azure;management;network</PackageTags>
   </PropertyGroup>
-
 </Project>

@@ -41,7 +41,7 @@ VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetwor
 string vnetName = "myVnet";
 
 // Use the same location as the resource group
-var input = new VirtualNetworkData()
+VirtualNetworkData input = new VirtualNetworkData()
 {
     Location = resourceGroup.Data.Location,
     AddressSpace = new AddressSpace()

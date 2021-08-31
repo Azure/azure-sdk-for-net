@@ -38,7 +38,7 @@ Now that we have the resource group created, we can manage the network interface
 ```C# Snippet:Managing_Networks_CreateANetworkInterface
 PublicIPAddressContainer publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
 string publicIPAddressName = "myIPAddress";
-var publicIPInput = new PublicIPAddressData()
+PublicIPAddressData publicIPInput = new PublicIPAddressData()
 {
     Location = resourceGroup.Data.Location,
     PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -51,7 +51,7 @@ PublicIPAddress publicIPAddress = await publicIPAddressContainer.CreateOrUpdate(
 
 NetworkInterfaceContainer networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
 string networkInterfaceName = "myNetworkInterface";
-var networkInterfaceInput = new NetworkInterfaceData()
+NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
 {
     Location = resourceGroup.Data.Location,
     IpConfigurations = {

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             string vnetName = "myVnet";
             // Use the same location as the resource group
-            var vnetInput = new VirtualNetworkData()
+            VirtualNetworkData vnetInput = new VirtualNetworkData()
             {
                 Location = resourceGroup.Data.Location,
                 AddressSpace = new AddressSpace()
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             #region Snippet:Managing_Networks_CreateANetworkInterface
             PublicIPAddressContainer publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
             string publicIPAddressName = "myIPAddress";
-            var publicIPInput = new PublicIPAddressData()
+            PublicIPAddressData publicIPInput = new PublicIPAddressData()
             {
                 Location = resourceGroup.Data.Location,
                 PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
 
             NetworkInterfaceContainer networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             string networkInterfaceName = "myNetworkInterface";
-            var networkInterfaceInput = new NetworkInterfaceData()
+            NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
             {
                 Location = resourceGroup.Data.Location,
                 IpConfigurations = {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             // With the container, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            this.resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
         }
     }
 }
