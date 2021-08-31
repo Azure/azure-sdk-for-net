@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public void TestStartCreateOrUpdate(string value)
         {
-            Assert.ThrowsAsync<ArgumentException>(async delegate { await _client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).StartCreateOrUpdateAsync(value); });
+            Assert.ThrowsAsync<ArgumentException>(async delegate { await _client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(value, false); });
         }
     }
 }
