@@ -12,11 +12,11 @@ namespace LUIS.Authoring.Tests.Luis
     {
         private const HttpRecorderMode mode = HttpRecorderMode.Playback;
 
-        protected readonly Guid GlobalAppId = new Guid("57145764-300b-4640-a4ed-0289ad085e05");
+        protected readonly Guid GlobalAppId = new Guid("87c4b1be-ad31-42cd-9906-2faf9cb6e5cd");
         protected const string GlobalVersionId = "0.1";
         protected readonly Guid GlobalAppIdError = new Guid("86226c53-b7a6-416f-876b-226b2b5ab07d");
-        protected readonly Guid GlobalNoneId = new Guid("26c734cc-849b-4a02-9a6d-b3a4649060cf");
-        protected const string AuthoringKey = "00000000000000000000000000000000";
+        protected readonly Guid GlobalNoneId = new Guid("19cda7e1-5c22-4b9b-bbb2-2a1a47c94a41");
+        protected const string AuthoringKey = "321c7c949ed745bf987b80702945c694";
         protected readonly string OwnerEmail = "a-xxxx@microsoft.com";
 
 

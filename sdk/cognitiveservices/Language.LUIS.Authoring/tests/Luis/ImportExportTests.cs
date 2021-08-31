@@ -179,7 +179,7 @@
         [Fact]
         public void ImportAppLuFormat()
         {
-            var appText = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportLuApp.json")).ToString();
+            var appText = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportLuApp.lu"));
 
             UseClientFor(async client =>
             {

@@ -99,7 +99,7 @@
             {
                 var appId = await client.Apps.AddAsync(new ApplicationCreateObject
                 {
-                    Name = "Examples Test App",
+                    Name = "Examples Test App 4",
                     Description = "New LUIS App",
                     Culture = "en-us",
                     Domain = "Comics",

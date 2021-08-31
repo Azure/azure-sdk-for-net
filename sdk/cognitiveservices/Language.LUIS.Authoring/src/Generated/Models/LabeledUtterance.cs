@@ -40,7 +40,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// example.</param>
         /// <param name="intentPredictions">List of suggested intents.</param>
         /// <param name="entityPredictions">List of suggested entities.</param>
-        public LabeledUtterance(int? id = default(int?), string text = default(string), IList<string> tokenizedText = default(IList<string>), string intentLabel = default(string), IList<EntityLabel> entityLabels = default(IList<EntityLabel>), IList<IntentPrediction> intentPredictions = default(IList<IntentPrediction>), IList<EntityPrediction> entityPredictions = default(IList<EntityPrediction>))
+        public LabeledUtterance(long? id = default(long?), string text = default(string), IList<string> tokenizedText = default(IList<string>), string intentLabel = default(string), IList<EntityLabel> entityLabels = default(IList<EntityLabel>), IList<IntentPrediction> intentPredictions = default(IList<IntentPrediction>), IList<EntityPrediction> entityPredictions = default(IList<EntityPrediction>))
         {
             Id = id;
             Text = text;
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// Gets or sets ID of Labeled Utterance.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public int? Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// Gets or sets the utterance. For example, "What's the weather like
