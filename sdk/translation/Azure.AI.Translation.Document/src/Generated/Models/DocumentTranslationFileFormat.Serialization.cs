@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class FileFormat
+    public partial class DocumentTranslationFileFormat
     {
-        internal static FileFormat DeserializeFileFormat(JsonElement element)
+        internal static DocumentTranslationFileFormat DeserializeDocumentTranslationFileFormat(JsonElement element)
         {
             string format = default;
             IReadOnlyList<string> fileExtensions = default;
@@ -68,7 +68,7 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new FileFormat(format, fileExtensions, contentTypes, defaultVersion.Value, Optional.ToList(versions));
+            return new DocumentTranslationFileFormat(format, fileExtensions, contentTypes, defaultVersion.Value, Optional.ToList(versions));
         }
     }
 }

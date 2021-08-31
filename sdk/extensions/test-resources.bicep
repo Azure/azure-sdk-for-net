@@ -16,7 +16,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' = {
   properties: {
     sku: {
       family: 'A'
-      name: 'premium'
+      name: 'standard'
     }
     tenantId: tenantId
     accessPolicies: [
@@ -90,6 +90,16 @@ resource blobAcount 'Microsoft.Storage/storageAccounts@2019-04-01' = {
   properties: {
     supportsHttpsTrafficOnly: true
     accessTier: 'Hot'
+  }
+}
+
+var blobDataContributorRole = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
+resource blobContributorAssignment 'Microsoft.Authorization/roleAssignments@2018-09-01-preview' = {
+  name:  guid(resourceGroup().id, testApplicationOid, blobDataContributorRole)
+  scope: resourceGroup()
+  properties: {
+    principalId: testApplicationOid
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', blobDataContributorRole)
   }
 }
 

@@ -13,14 +13,14 @@ using Azure.Core;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> The FileFormat. </summary>
-    public partial class FileFormat
+    public partial class DocumentTranslationFileFormat
     {
-        /// <summary> Initializes a new instance of FileFormat. </summary>
+        /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/>, <paramref name="fileExtensions"/>, or <paramref name="contentTypes"/> is null. </exception>
-        internal FileFormat(string format, IEnumerable<string> fileExtensions, IEnumerable<string> contentTypes)
+        internal DocumentTranslationFileFormat(string format, IEnumerable<string> fileExtensions, IEnumerable<string> contentTypes)
         {
             if (format == null)
             {
@@ -41,13 +41,13 @@ namespace Azure.AI.Translation.Document
             FormatVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FileFormat. </summary>
+        /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
         /// <param name="defaultFormatVersion"> Default version if none is specified. </param>
         /// <param name="formatVersions"> Supported Version. </param>
-        internal FileFormat(string format, IReadOnlyList<string> fileExtensions, IReadOnlyList<string> contentTypes, string defaultFormatVersion, IReadOnlyList<string> formatVersions)
+        internal DocumentTranslationFileFormat(string format, IReadOnlyList<string> fileExtensions, IReadOnlyList<string> contentTypes, string defaultFormatVersion, IReadOnlyList<string> formatVersions)
         {
             Format = format;
             FileExtensions = fileExtensions;

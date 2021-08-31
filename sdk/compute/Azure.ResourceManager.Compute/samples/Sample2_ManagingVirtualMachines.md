@@ -1,6 +1,8 @@
-Example: Managing Virtual Machines
+# Example: Managing Virtual Machines
+
 --------------------------------------
 For this example, you need the following namespaces:
+
 ```C# Snippet:Managing_VirtualMachines_Namespaces
 using System;
 using System.Threading.Tasks;
