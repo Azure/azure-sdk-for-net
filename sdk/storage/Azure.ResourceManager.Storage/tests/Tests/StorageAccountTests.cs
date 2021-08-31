@@ -565,5 +565,23 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //verify the tag is added successfully
             Assert.AreEqual(account.Data.Tags.Count, 1);
         }
+        [Test]
+        [RecordedTest]
+        public async Task CreateStorageAccountWithEnableNfsV3()
+        {
+            //create storage account
+            string accountName = Recording.GenerateAssetName("storage");
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind:Kind.StorageV2);
+            parameters.EnableNfsV3 = false;
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            //validate
+            VerifyAccountProperties(account, false);
+            Assert.NotNull(account.Data.PrimaryEndpoints.Web);
+            Assert.AreEqual(Kind.StorageV2, account.Data.Kind);
+            Assert.False(account.Data.EnableNfsV3);
+        }
     }
 }
