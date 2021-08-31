@@ -20,7 +20,7 @@ namespace Azure.AI.Translation.Document
         public System.Uri SourceDocumentUri { get { throw null; } }
         public Azure.AI.Translation.Document.DocumentTranslationStatus Status { get { throw null; } }
         public System.Uri TranslatedDocumentUri { get { throw null; } }
-        public string TranslatedTo { get { throw null; } }
+        public string TranslatedToLanguageCode { get { throw null; } }
         public float TranslationProgressPercentage { get { throw null; } }
     }
     public partial class DocumentTranslationClient
