@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     internal partial class ContentDescriptor
     {
         /// <summary> Initializes a new instance of ContentDescriptor. </summary>
-        public ContentDescriptor()
+        internal ContentDescriptor()
         {
             Urls = new ChangeTrackingList<Uri>();
         }
@@ -36,6 +36,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Annotations = annotations;
         }
         /// <summary> Additional information provided through arbitrary metadata. </summary>
-        public Annotations Annotations { get; set; }
+        public Annotations Annotations { get; }
     }
 }

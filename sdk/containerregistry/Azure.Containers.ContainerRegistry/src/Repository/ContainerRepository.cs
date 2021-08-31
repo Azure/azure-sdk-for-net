@@ -21,6 +21,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
+        private readonly ContainerRegistryBlobRestClient _blobRestClient;
 
         private readonly Uri _registryEndpoint;
         private readonly string _name;
@@ -37,13 +38,14 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        internal ContainerRepository(Uri registryEndpoint, string name, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
+        internal ContainerRepository(Uri registryEndpoint, string name, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient, ContainerRegistryBlobRestClient blobRestClient)
         {
             _name = name;
             _registryEndpoint = registryEndpoint;
 
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
+            _blobRestClient = blobRestClient;
         }
 
         /// <summary> Initializes a new instance of ContainerRepository for mocking. </summary>
@@ -67,7 +69,8 @@ namespace Azure.Containers.ContainerRegistry
                 _name,
                 tagOrDigest,
                 _clientDiagnostics,
-                _restClient);
+                _restClient,
+                _blobRestClient);
         }
 
         #region Repository methods

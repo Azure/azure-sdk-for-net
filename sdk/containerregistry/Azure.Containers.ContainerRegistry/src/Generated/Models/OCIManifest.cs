@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class OCIManifest : Manifest
     {
         /// <summary> Initializes a new instance of OCIManifest. </summary>
-        public OCIManifest()
+        internal OCIManifest()
         {
             Layers = new ChangeTrackingList<ContentDescriptor>();
         }
@@ -25,7 +25,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OCIManifest(int? schemaVersion, ContentDescriptor config, IList<ContentDescriptor> layers, Annotations annotations) : base(schemaVersion)
+        internal OCIManifest(int? schemaVersion, ContentDescriptor config, IReadOnlyList<ContentDescriptor> layers, Annotations annotations) : base(schemaVersion)
         {
             Config = config;
             Layers = layers;
@@ -33,10 +33,10 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> V2 image config descriptor. </summary>
-        public ContentDescriptor Config { get; set; }
+        public ContentDescriptor Config { get; }
         /// <summary> List of V2 image layer information. </summary>
-        public IList<ContentDescriptor> Layers { get; }
+        public IReadOnlyList<ContentDescriptor> Layers { get; }
         /// <summary> Additional information provided through arbitrary metadata. </summary>
-        public Annotations Annotations { get; set; }
+        public Annotations Annotations { get; }
     }
 }

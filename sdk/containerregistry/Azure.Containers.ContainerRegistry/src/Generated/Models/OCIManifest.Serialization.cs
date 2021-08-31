@@ -12,50 +12,12 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class OCIManifest : IUtf8JsonSerializable
+    internal partial class OCIManifest
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Config))
-            {
-                writer.WritePropertyName("config");
-                writer.WriteObjectValue(Config);
-            }
-            if (Optional.IsCollectionDefined(Layers))
-            {
-                writer.WritePropertyName("layers");
-                writer.WriteStartArray();
-                foreach (var item in Layers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Annotations))
-            {
-                if (Annotations != null)
-                {
-                    writer.WritePropertyName("annotations");
-                    writer.WriteObjectValue(Annotations);
-                }
-                else
-                {
-                    writer.WriteNull("annotations");
-                }
-            }
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static OCIManifest DeserializeOCIManifest(JsonElement element)
         {
             Optional<ContentDescriptor> config = default;
-            Optional<IList<ContentDescriptor>> layers = default;
+            Optional<IReadOnlyList<ContentDescriptor>> layers = default;
             Optional<Annotations> annotations = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())

@@ -103,7 +103,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 string tagOrDigest = options.Tag ?? ContentDescriptor.ComputeDigest(stream);
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, options.MediaType.ToString(), cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, options.MediaType.ToString(), cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
             }
             catch (Exception e)

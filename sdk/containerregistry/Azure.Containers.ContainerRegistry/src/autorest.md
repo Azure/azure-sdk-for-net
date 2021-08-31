@@ -23,3 +23,24 @@ directive:
             "description": "The manifest's Content-Type."
         });
 ```
+
+# Treat manifest as stream
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.ManifestBody
+  transform: >
+    $.schema = {
+        "type": "string",
+        "format": "binary"
+      }
+```
+
+# Change NextLink client name to nextLink
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.NextLink
+  transform: >
+    $["x-ms-client-name"] = "nextLink"
+```

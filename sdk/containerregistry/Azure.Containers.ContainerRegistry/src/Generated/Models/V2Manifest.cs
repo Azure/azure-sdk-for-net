@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class V2Manifest : Manifest
     {
         /// <summary> Initializes a new instance of V2Manifest. </summary>
-        public V2Manifest()
+        internal V2Manifest()
         {
             Layers = new ChangeTrackingList<ContentDescriptor>();
         }
@@ -25,7 +25,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
-        internal V2Manifest(int? schemaVersion, string mediaType, ContentDescriptor config, IList<ContentDescriptor> layers) : base(schemaVersion)
+        internal V2Manifest(int? schemaVersion, string mediaType, ContentDescriptor config, IReadOnlyList<ContentDescriptor> layers) : base(schemaVersion)
         {
             MediaType = mediaType;
             Config = config;
@@ -33,10 +33,10 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Media type for this Manifest. </summary>
-        public string MediaType { get; set; }
+        public string MediaType { get; }
         /// <summary> V2 image config descriptor. </summary>
-        public ContentDescriptor Config { get; set; }
+        public ContentDescriptor Config { get; }
         /// <summary> List of V2 image layer information. </summary>
-        public IList<ContentDescriptor> Layers { get; }
+        public IReadOnlyList<ContentDescriptor> Layers { get; }
     }
 }

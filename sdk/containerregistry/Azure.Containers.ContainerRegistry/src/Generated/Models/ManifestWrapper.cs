@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class ManifestWrapper : Manifest
     {
         /// <summary> Initializes a new instance of ManifestWrapper. </summary>
-        public ManifestWrapper()
+        internal ManifestWrapper()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
             Layers = new ChangeTrackingList<ContentDescriptor>();
@@ -37,7 +37,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="fsLayers"> (V1) List of layer information. </param>
         /// <param name="history"> (V1) Image history. </param>
         /// <param name="signatures"> (V1) Image signature. </param>
-        internal ManifestWrapper(int? schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, ContentDescriptor config, IList<ContentDescriptor> layers, Annotations annotations, string architecture, string name, string tag, IList<FsLayer> fsLayers, IList<History> history, IList<ImageSignature> signatures) : base(schemaVersion)
+        internal ManifestWrapper(int? schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, ContentDescriptor config, IReadOnlyList<ContentDescriptor> layers, Annotations annotations, string architecture, string name, string tag, IReadOnlyList<FsLayer> fsLayers, IReadOnlyList<History> history, IReadOnlyList<ImageSignature> signatures) : base(schemaVersion)
         {
             MediaType = mediaType;
             Manifests = manifests;
@@ -53,26 +53,26 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Media type for this Manifest. </summary>
-        public string MediaType { get; set; }
+        public string MediaType { get; }
         /// <summary> (ManifestList, OCIIndex) List of V2 image layer information. </summary>
-        public IList<ManifestListAttributes> Manifests { get; }
+        public IReadOnlyList<ManifestListAttributes> Manifests { get; }
         /// <summary> (V2, OCI) Image config descriptor. </summary>
-        public ContentDescriptor Config { get; set; }
+        public ContentDescriptor Config { get; }
         /// <summary> (V2, OCI) List of V2 image layer information. </summary>
-        public IList<ContentDescriptor> Layers { get; }
+        public IReadOnlyList<ContentDescriptor> Layers { get; }
         /// <summary> (OCI, OCIIndex) Additional metadata. </summary>
-        public Annotations Annotations { get; set; }
+        public Annotations Annotations { get; }
         /// <summary> (V1) CPU architecture. </summary>
-        public string Architecture { get; set; }
+        public string Architecture { get; }
         /// <summary> (V1) Image name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> (V1) Image tag. </summary>
-        public string Tag { get; set; }
+        public string Tag { get; }
         /// <summary> (V1) List of layer information. </summary>
-        public IList<FsLayer> FsLayers { get; }
+        public IReadOnlyList<FsLayer> FsLayers { get; }
         /// <summary> (V1) Image history. </summary>
-        public IList<History> History { get; }
+        public IReadOnlyList<History> History { get; }
         /// <summary> (V1) Image signature. </summary>
-        public IList<ImageSignature> Signatures { get; }
+        public IReadOnlyList<ImageSignature> Signatures { get; }
     }
 }
