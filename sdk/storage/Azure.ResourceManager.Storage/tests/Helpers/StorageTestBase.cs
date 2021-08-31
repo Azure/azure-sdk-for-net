@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         public async Task<ResourceGroup> CreateResourceGroupAsync()
         {
             string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
-            return await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            ResourceGroupCreateOrUpdateOperation operation= await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {
@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                         { "test", "env" }
                     }
                 });
+            return operation.Value;
         }
 
         public static void VerifyAccountProperties(StorageAccount account,bool useDefaults)

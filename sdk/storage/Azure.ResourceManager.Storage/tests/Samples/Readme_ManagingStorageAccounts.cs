@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             #region Snippet:Managing_StorageAccounts_GetResourceGroupContainer
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroup resourceGroup = operation.Value;
             #endregion
 
             this.resourceGroup = resourceGroup;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
             StorageAccountCreateOperation accountCreateOperation = await accountContainer.CreateOrUpdateAsync(accountName, parameters);
-            StorageAccount storageAccount = await accountCreateOperation.WaitForCompletionAsync();
+            StorageAccount storageAccount = accountCreateOperation.Value;
             #endregion
         }
         [Test]

@@ -24,7 +24,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             Subscription subscription = armClient.DefaultSubscription;
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroup resourceGroup = operation.Value;
             this.resourceGroup = resourceGroup;
             Sku sku = new Sku(SkuName.StandardGRS);
             Kind kind = Kind.Storage;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             string blobContainerName = "myBlobContainer";
             BlobContainerData blobContainerData= new BlobContainerData();
             BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerContainer.CreateOrUpdateAsync(blobContainerName, blobContainerData);
-            BlobContainer blobContainer = await blobContainerCreateOperation.WaitForCompletionAsync();
+            BlobContainer blobContainer = blobContainerCreateOperation.Value;
             #endregion
         }
         [Test]
