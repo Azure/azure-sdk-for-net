@@ -17,7 +17,6 @@ namespace Azure.Core.Tests
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
         private readonly Action<ProducedDiagnosticScope> _scopeStartCallback;
-        private readonly Dictionary<Activity, Activity> _activityGraph = new();
 
         public List<ProducedDiagnosticScope> Scopes { get; } = new List<ProducedDiagnosticScope>();
 
@@ -73,10 +72,6 @@ namespace Azure.Core.Tests
                     };
 
                     Scopes.Add(scope);
-                    if (!_activityGraph.ContainsKey(scope.Activity))
-                    {
-                        _activityGraph.Add(scope.Activity, scope.Activity.Parent);
-                    }
                     _scopeStartCallback?.Invoke(scope);
                 }
                 else if (value.Key.EndsWith(stopSuffix))
@@ -158,7 +153,7 @@ namespace Azure.Core.Tests
                         throw new InvalidOperationException($"A scope has already started for event '{producedDiagnosticScope.Name}'");
                     }
 
-                    _activityGraph.TryGetValue(activity, out activity);
+                    activity = activity.Parent;
                 }
 
                 if (!producedDiagnosticScope.IsCompleted)
