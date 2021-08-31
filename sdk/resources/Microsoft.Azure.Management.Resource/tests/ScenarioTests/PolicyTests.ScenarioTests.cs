@@ -8,6 +8,7 @@ namespace Policy.Tests
     using System.Linq;
     using System.Net;
 
+    using Microsoft.Azure.Management.ManagedServiceIdentity;
     using Microsoft.Azure.Management.ManagementGroups;
     using Microsoft.Azure.Management.ManagementGroups.Models;
     using Microsoft.Azure.Management.ResourceManager;
@@ -329,8 +330,9 @@ namespace Policy.Tests
                 listResult = client.PolicyAssignments.List();
                 Assert.Empty(listResult.Where(p => p.Name.Equals(assignmentName)));
 
-                // Create brand new assignment with identity
+                // Create brand new assignment with user assigned identity
                 assignmentName = TestUtilities.GenerateName();
+                policyAssignment.Identity = new Identity(type: ResourceIdentityType.UserAssigned, userAssignedIdentities: new Dictionary<string, IdentityUserAssignedIdentitiesValue> { { "foo", null } });
                 result = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
                 Assert.NotNull(result);
 
@@ -350,16 +352,89 @@ namespace Policy.Tests
         }
 
         [Fact]
+        public void CanPatchPolicyAssignment()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                const string Region = "westus2";
+
+                var client = context.GetServiceClient<PolicyClient>();
+                var resourceGroupClient = context.GetServiceClient<ResourceManagementClient>();
+                var msiMgmtClient = context.GetServiceClient<ManagedServiceIdentityClient>();
+
+                // make a test resource group
+                var resourceGroupName = TestUtilities.GenerateName();
+                var resourceGroup = resourceGroupClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup(location: Region));
+
+                // make a test user-assigned identity
+                var testUserAssignedIdentityName = TestUtilities.GenerateName();
+                var identityParameters = new Microsoft.Azure.Management.ManagedServiceIdentity.Models.Identity(location: Region);
+                var userAssignedIdentity = msiMgmtClient.UserAssignedIdentities.CreateOrUpdate(resourceGroupName: resourceGroupName, resourceName: testUserAssignedIdentityName, parameters: identityParameters);
+
+                // make a test policy definition
+                var policyDefinitionName = TestUtilities.GenerateName();
+                var thisTestName = TestUtilities.GetCurrentMethodName();
+                var policyDefinitionModel = this.CreatePolicyDefinition($"{thisTestName} Policy Definition");
+                var policyDefinition = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName, policyDefinitionModel);
+
+                // assign the test policy definition to the test resource group
+                var policyAssignmentName = TestUtilities.GenerateName();
+                var assignmentScope = this.ResourceGroupScope(resourceGroup);
+                var policyAssignment = new PolicyAssignment
+                {
+                    DisplayName = $"{thisTestName} Policy Assignment",
+                    PolicyDefinitionId = policyDefinition.Id,
+                    Location = Region // TODO: remove once bug fix is rolled out (calec)
+                };
+
+                var assignment = client.PolicyAssignments.Create(assignmentScope, policyAssignmentName, policyAssignment);
+
+                // get the same item at scope and ensure it matches
+                var getAssignment = client.PolicyAssignments.Get(assignmentScope, assignment.Name);
+                this.AssertEqual(assignment, getAssignment);
+
+                // patch the assignment by changing the identity to the test user-assigned identity
+                var policyUserAssignedIdentity = new Identity(type: ResourceIdentityType.UserAssigned, userAssignedIdentities: new Dictionary<string, IdentityUserAssignedIdentitiesValue> { { userAssignedIdentity.Id, new IdentityUserAssignedIdentitiesValue() } });
+                var policyAssignmentPatchRequest = new PolicyAssignmentUpdate { Location = Region, Identity = policyUserAssignedIdentity };
+                var patchAssignment = client.PolicyAssignments.Update(assignmentScope, policyAssignmentName, policyAssignmentPatchRequest);
+                Assert.Equal(Region, patchAssignment.Location);
+                Assert.NotNull(patchAssignment.Identity);
+                Assert.Equal(policyUserAssignedIdentity.Type, patchAssignment.Identity.Type);
+                Assert.NotNull(patchAssignment.Identity.UserAssignedIdentities);
+                Assert.Equal(1, patchAssignment.Identity.UserAssignedIdentities.Count);
+                Assert.True(patchAssignment.Identity.UserAssignedIdentities.TryGetValue(userAssignedIdentity.Id, out var policyUserAssignedIdentitiesValue));
+                Assert.Equal(userAssignedIdentity.ClientId.ToString(), policyUserAssignedIdentitiesValue.ClientId);
+                Assert.Equal(userAssignedIdentity.PrincipalId.ToString(), policyUserAssignedIdentitiesValue.PrincipalId);
+
+                getAssignment = client.PolicyAssignments.Get(assignmentScope, assignment.Name);
+                this.AssertEqual(patchAssignment, getAssignment);
+
+                // clean up everything
+                client.PolicyAssignments.Delete(assignmentScope, assignment.Name);
+                client.PolicyDefinitions.Delete(policyDefinition.Name);
+                msiMgmtClient.UserAssignedIdentities.Delete(resourceGroupName: resourceGroupName, resourceName: testUserAssignedIdentityName);
+                resourceGroupClient.ResourceGroups.Delete(resourceGroupName);
+            }
+        }
+
+        [Fact]
         public void CanCrudPolicyAssignmentAtResourceGroup()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
+                const string Location = "westus2";
+
                 var client = context.GetServiceClient<PolicyClient>();
                 var resourceGroupClient = context.GetServiceClient<ResourceManagementClient>();
+                var msiMgmtClient = context.GetServiceClient<ManagedServiceIdentityClient>();
 
                 // make a test resource group
                 var resourceGroupName = TestUtilities.GenerateName();
-                var resourceGroup = resourceGroupClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup("westus2"));
+                var resourceGroup = resourceGroupClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup(location: Location));
+
+                // make a test user-assigned identity
+                var identityParameters = new Microsoft.Azure.Management.ManagedServiceIdentity.Models.Identity(location: Location);
+                var userAssignedIdentity = msiMgmtClient.UserAssignedIdentities.CreateOrUpdate(resourceGroupName: resourceGroupName, resourceName: "test-msi", parameters: identityParameters);
 
                 // make a test policy definition
                 var policyDefinitionName = TestUtilities.GenerateName();
@@ -389,6 +464,7 @@ namespace Policy.Tests
                 // clean up everything
                 client.PolicyAssignments.Delete(assignmentScope, assignment.Name);
                 client.PolicyDefinitions.Delete(policyDefinition.Name);
+                msiMgmtClient.UserAssignedIdentities.Delete(resourceGroupName: resourceGroupName, resourceName: "");
                 resourceGroupClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
@@ -1527,7 +1603,7 @@ namespace Policy.Tests
             Assert.Equal(expected.Description, result.Description);
             Assert.Equal(expected.DisplayName, result.DisplayName);
             Assert.Equal(expected.Id, result.Id);
-            AssertMetadataEqual(expected.Metadata, result.Metadata, false);
+            this.AssertMetadataEqual(expected.Metadata, result.Metadata, false);
             Assert.Equal(expected.Name, result.Name);
             if (expected.NotScopes == null)
             {
@@ -1547,9 +1623,40 @@ namespace Policy.Tests
             Assert.Equal(expected.Scope, result.Scope);
             Assert.Equal(expected.Type, result.Type);
             Assert.Equal(expected.Location, result.Location);
-            Assert.Equal(expected.Identity?.Type, result.Identity?.Type);
-            Assert.Equal(expected.Identity?.PrincipalId, result.Identity?.PrincipalId);
-            Assert.Equal(expected.Identity?.TenantId, result.Identity?.TenantId);
+            this.AssertEqual(expected.Identity, result.Identity);
+        }
+
+        // validate that the given result identity is equal to the expected one
+        private void AssertEqual(Identity expected, Identity result)
+        {
+            if (expected != null)
+            {
+                Assert.NotNull(result);
+                Assert.Equal(expected.Type, result.Type);
+                Assert.Equal(expected.PrincipalId, result.PrincipalId);
+                Assert.Equal(expected.TenantId, result.TenantId);
+
+                if (expected.UserAssignedIdentities != null)
+                {
+                    Assert.NotNull(result.UserAssignedIdentities);
+                    Assert.Equal(expected.UserAssignedIdentities.Count, result.UserAssignedIdentities.Count);
+
+                    foreach (var expectedUserAssignedIdentity in expected.UserAssignedIdentities)
+                    {
+                        Assert.True(result.UserAssignedIdentities.TryGetValue(expectedUserAssignedIdentity.Key, out var resultUserAssignedIdentity));
+                        Assert.Equal(expectedUserAssignedIdentity.Value.ClientId, resultUserAssignedIdentity.ClientId);
+                        Assert.Equal(expectedUserAssignedIdentity.Value.PrincipalId, resultUserAssignedIdentity.PrincipalId);
+                    }
+                }
+                else
+                {
+                    Assert.Null(result.UserAssignedIdentities);
+                }
+            }
+            else
+            {
+                Assert.Null(result);
+            }
         }
 
         // validate that the given list result contains exactly one policy assignment matching the given name and model
