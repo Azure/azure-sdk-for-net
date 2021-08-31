@@ -5,7 +5,10 @@ param (
     [string] $ServiceDirectory,
 
     [Parameter()]
-    [switch] $StrictMode
+    [switch] $StrictMode,
+
+    [Parameter()]
+    [string] $SnippetToolPath=''
 )
 
 $root = "$PSScriptRoot/../../sdk"
@@ -18,26 +21,27 @@ if ($ServiceDirectory -and ($ServiceDirectory -ne "*")) {
 
 if (-not (Test-Path Env:TF_BUILD)) 
 {
-    $StrictMode = $true 
+    $StrictMode = $true
+
+    dotnet tool install --global `
+    --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" `
+    --version "1.0.0-dev.20210730.3" `
+    "Azure.Sdk.Tools.SnippetGenerator"
 }
-else 
+else
 {
-    Push-Location $Env:PIPELINE_WORKSPACE
-}
-
-dotnet tool install --global `
- --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" `
- --version "1.0.0-dev.20210730.3" `
- "Azure.Sdk.Tools.SnippetGenerator"
-
-
-$scriptBlock = { 
-    param($strictMode, $root)
-    if($StrictMode) {
-        Resolve-Path "$root" | %{ snippet-generator -b "$_" -sm}
-    } else {
-        Resolve-Path "$root" | %{ snippet-generator -b "$_" }
+    if ($Env:AGENT_OS -match "Windows.*")
+    {
+        $SnippetToolPath = "%USERPROFILE%\.dotnet\tools\"
+    }
+    else
+    {
+        $SnippetToolPath = "$HOME/.dotnet/tools/"
     }
 }
 
-Start-Process pwsh -NoNewWindow -ArgumentList "-command (Invoke-Command -ScriptBlock {$scriptBlock} -ArgumentList $StrictMode, $root)"
+if($StrictMode) {
+    Resolve-Path "$root" | %{ & "${SnippetToolPath}snippet-generator" -b "$_" -sm}
+} else {
+    Resolve-Path "$root" | %{ & "${SnippetToolPath}snippet-generator" -b "$_" }
+}
