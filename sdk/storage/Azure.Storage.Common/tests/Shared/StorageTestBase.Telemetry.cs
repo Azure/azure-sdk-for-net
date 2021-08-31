@@ -20,7 +20,8 @@ namespace Azure.Storage.Test.Shared
                 AppInsightsNUnitFixture.TelemetryClient.TrackTrace("Test finished", new Dictionary<string, string>()
                 {
                     { "TestName", context.Test.FullName },
-                    { "TestOutcome", context.Result.Outcome.Status.ToString() }
+                    { "TestOutcome", context.Result.Outcome.Status.ToString() },
+                    { "NumberOfAssertions", context.Result.Assertions.ToString() }
                 });
             }
         }

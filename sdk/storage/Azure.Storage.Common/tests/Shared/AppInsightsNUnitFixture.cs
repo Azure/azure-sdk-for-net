@@ -58,7 +58,8 @@ public class AppInsightsNUnitFixture
 
     private class CustomTelemetryInitializer : ITelemetryInitializer
     {
-        private string _testRunId = Guid.NewGuid().ToString(); // TODO This should come from env, pipeline id or something.
+        private string _testRunId = Environment.GetEnvironmentVariable("AZURE_STORAGE_TEST_RUN_ID") ?? Guid.NewGuid().ToString(); // there should be more info from pipeline.
+        private string _testRunStartTime = Environment.GetEnvironmentVariable("AZURE_STORAGE_TEST_RUN_START_TIME");
 
         public void Initialize(ITelemetry telemetry)
         {
@@ -66,6 +67,7 @@ public class AppInsightsNUnitFixture
             if (telemetryWithProperties != null)
             {
                 telemetryWithProperties.Properties.Add("TestRunId", _testRunId);
+                telemetryWithProperties.Properties.Add("TestRunStartTime", _testRunStartTime);
                 var testContext = TestContext.CurrentContext;
                 if (testContext != null)
                 {
