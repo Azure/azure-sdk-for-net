@@ -389,7 +389,7 @@ namespace Azure.Core.TestFramework
                                  "Make sure the test environment was initialized using the eng/common/TestResources/New-TestResources.ps1 script.";
                 if (_bootstrappingException != null)
                 {
-                    message += Environment.NewLine + "Resource creation failed during the test run. Make sure Powershell version 6 or higher is installed.";
+                    message += Environment.NewLine + "Resource creation failed during the test run. Make sure PowerShell version 6 or higher is installed.";
                     throw new InvalidOperationException(
                         message,
                         _bootstrappingException);
