@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -104,6 +105,34 @@ namespace Azure.Storage.Blobs.Tests
             };
 
             // Act
+            AppendBlobClient sasBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+            await sasBlobClient.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task AccountSas_AllPermissions()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+
+            AccountSasBuilder accountSasBuilder = new AccountSasBuilder(
+                permissions: AccountSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: AccountSasServices.Blobs,
+                resourceTypes: AccountSasResourceTypes.Object);
+
+            Uri accountSasUri = test.Container.GetParentBlobServiceClient().GenerateAccountSasUri(accountSasBuilder);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(accountSasUri)
+            {
+                BlobContainerName = test.Container.Name,
+                BlobName = blobName
+            };
+
+            // Assert
             AppendBlobClient sasBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
             await sasBlobClient.GetPropertiesAsync();
         }
