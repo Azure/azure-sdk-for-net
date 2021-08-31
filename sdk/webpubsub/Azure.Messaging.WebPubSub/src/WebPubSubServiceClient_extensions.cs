@@ -18,6 +18,7 @@ namespace Azure.Messaging.WebPubSub
     public partial class WebPubSubServiceClient
     {
         private AzureKeyCredential _credential;
+        private TokenCredential _tokenCredential;
 
         /// <summary>
         /// The hub.
@@ -71,6 +72,52 @@ namespace Azure.Messaging.WebPubSub
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
+                new ResponseClassifier()
+            );
+        }
+
+        /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="tokenCredential"> A token credential used to authenticate to an Azure Service. </param>
+        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential tokenCredential)
+            : this(endpoint, hub, tokenCredential, new WebPubSubServiceClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="tokenCredential"> A token credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential tokenCredential, WebPubSubServiceClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(hub, nameof(hub));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+
+            this._tokenCredential = tokenCredential;
+            this.hub = hub;
+            this.endpoint = endpoint;
+
+            options ??= new WebPubSubServiceClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            apiVersion = options.Version;
+
+            HttpPipelinePolicy[] perCallPolicies;
+            if (options.ReverseProxyEndpoint != null)
+            {
+                perCallPolicies = new HttpPipelinePolicy[] { new ApimPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
+            }
+            else
+            {
+                perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
+            }
+
+            Pipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: perCallPolicies,
+                perRetryPolicies: new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(tokenCredential, "TODO:credentialScopeName") },
                 new ResponseClassifier()
             );
         }

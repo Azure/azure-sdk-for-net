@@ -33,6 +33,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual Uri GenerateClientAccessUri(DateTimeOffset expiresAt, string userId = default, params string[] roles)
         {
             var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
+            // TODO: use _tokenCredential to construct keyBytes
+
             var jwt = new JwtBuilder(keyBytes);
             var now = DateTimeOffset.UtcNow;
 

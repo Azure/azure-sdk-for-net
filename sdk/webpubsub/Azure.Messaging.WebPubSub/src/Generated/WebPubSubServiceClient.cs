@@ -29,6 +29,126 @@ namespace Azure.Messaging.WebPubSub
         {
         }
 
+        /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
+        /// <param name="userId"> User Id. </param>
+        /// <param name="role"> Roles that the connection with the generated token will have. </param>
+        /// <param name="minutesToExpire"> The expire time of the generated token. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GenerateClientTokenAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGenerateClientTokenRequest(userId, role, minutesToExpire, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientToken");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
+        /// <param name="userId"> User Id. </param>
+        /// <param name="role"> Roles that the connection with the generated token will have. </param>
+        /// <param name="minutesToExpire"> The expire time of the generated token. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GenerateClientToken(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGenerateClientTokenRequest(userId, role, minutesToExpire, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientToken");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GenerateClientToken"/> and <see cref="GenerateClientTokenAsync"/> operations. </summary>
+        /// <param name="userId"> User Id. </param>
+        /// <param name="role"> Roles that the connection with the generated token will have. </param>
+        /// <param name="minutesToExpire"> The expire time of the generated token. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGenerateClientTokenRequest(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(hub, true);
+            uri.AppendPath("/:generateToken", false);
+            if (userId != null)
+            {
+                uri.AppendQuery("userId", userId, true);
+            }
+            if (role != null)
+            {
+                uri.AppendQueryDelimited("role", role, ",", true);
+            }
+            if (minutesToExpire != null)
+            {
+                uri.AppendQuery("minutesToExpire", minutesToExpire.Value, true);
+            }
+            if (apiVersion != null)
+            {
+                uri.AppendQuery("api-version", apiVersion, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. </param>

@@ -21,13 +21,15 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary> The 2021_05_01_preview version of the Azure WebPubSub service. </summary>
             V2021_05_01_preview = 1,
+            /// <summary> The 2021_08_01_preview version of the Azure WebPubSub service. </summary>
+            V2021_08_01_preview = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// The Latest <see cref="ServiceVersion"/> supported by this client library.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_05_01_preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_08_01_preview;
 
         /// <summary>
         /// Gets the version of the service API used when making requests.
@@ -69,6 +71,7 @@ namespace Azure.Messaging.WebPubSub
             version switch
             {
                 WebPubSubServiceClientOptions.ServiceVersion.V2021_05_01_preview => "2021-05-01-preview",
+                WebPubSubServiceClientOptions.ServiceVersion.V2021_08_01_preview => "2021-08-01-preview",
                 _ => throw CreateInvalidVersionException(version)
             };
 
