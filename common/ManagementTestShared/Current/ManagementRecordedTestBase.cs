@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.TestFramework
             return operation.WaitForCompletionAsync();
         }
 
+        protected ValueTask<Response> WaitForCompletionAsync(Operation operation)
+        {
+            return operation.WaitForCompletionResponseAsync();
+        }
+
         protected ArmClient GetResourceManagementClient()
         {
             var options = InstrumentClientOptions(new ArmClientOptions());

@@ -60,16 +60,26 @@ namespace Azure.Core.TestFramework
 
             _prefix = serviceName.ToUpperInvariant() + "_";
 
-            var testEnvironmentFile = Path.Combine(serviceSdkDirectory, "test-resources.json.env");
-            if (File.Exists(testEnvironmentFile))
+            var testEnvironmentFiles = new[]
             {
-                var json = JsonDocument.Parse(
-                    ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
-                );
+                Path.Combine(serviceSdkDirectory, "test-resources.bicep.env"),
+                Path.Combine(serviceSdkDirectory, "test-resources.json.env")
+            };
 
-                foreach (var property in json.RootElement.EnumerateObject())
+            foreach (var testEnvironmentFile in testEnvironmentFiles)
+            {
+                if (File.Exists(testEnvironmentFile))
                 {
-                    _environmentFile[property.Name] = property.Value.GetString();
+                    var json = JsonDocument.Parse(
+                        ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
+                    );
+
+                    foreach (var property in json.RootElement.EnumerateObject())
+                    {
+                        _environmentFile[property.Name] = property.Value.GetString();
+                    }
+
+                    break;
                 }
             }
         }

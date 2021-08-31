@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultBackendAddressPool))
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<SubResource> defaultBackendAddressPool = default;
             Optional<SubResource> defaultBackendHttpSettings = default;
             Optional<SubResource> defaultRewriteRuleSet = default;
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultBackendAddressPool = DeserializeSubResource(property0.Value);
+                            defaultBackendAddressPool = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultBackendHttpSettings"))
@@ -122,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultBackendHttpSettings = DeserializeSubResource(property0.Value);
+                            defaultBackendHttpSettings = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultRewriteRuleSet"))
@@ -132,7 +130,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultRewriteRuleSet = DeserializeSubResource(property0.Value);
+                            defaultRewriteRuleSet = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultRedirectConfiguration"))
@@ -142,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultRedirectConfiguration = DeserializeSubResource(property0.Value);
+                            defaultRedirectConfiguration = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("pathRules"))
@@ -174,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayUrlPathMap(id.Value, name.Value, etag.Value, type.Value, defaultBackendAddressPool.Value, defaultBackendHttpSettings.Value, defaultRewriteRuleSet.Value, defaultRedirectConfiguration.Value, Optional.ToList(pathRules), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayUrlPathMap(id, name.Value, etag.Value, type.Value, defaultBackendAddressPool.Value, defaultBackendHttpSettings.Value, defaultRewriteRuleSet.Value, defaultRedirectConfiguration.Value, Optional.ToList(pathRules), Optional.ToNullable(provisioningState));
         }
     }
 }

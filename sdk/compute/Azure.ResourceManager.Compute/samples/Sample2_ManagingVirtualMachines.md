@@ -1,6 +1,8 @@
-Example: Managing Virtual Machines
+# Example: Managing Virtual Machines
+
 --------------------------------------
 For this example, you need the following namespaces:
+
 ```C# Snippet:Managing_VirtualMachines_Namespaces
 using System;
 using System.Threading.Tasks;
@@ -26,7 +28,8 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 // With the container, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroupCreateOrUpdateOperation lro = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroup resourceGroup = lro.Value;
 ```
 
 Now that we have the resource group created, we can manage the virtual machines inside this resource group.

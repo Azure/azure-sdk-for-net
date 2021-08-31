@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The service tag information. </summary>
-    public partial class ServiceTagInformation
+    public partial class ServiceTagInformation : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of ServiceTagInformation. </summary>
         internal ServiceTagInformation()
@@ -16,21 +18,18 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ServiceTagInformation. </summary>
+        /// <param name="id"> The id. </param>
         /// <param name="properties"> Properties of the service tag information. </param>
         /// <param name="name"> The name of service tag. </param>
-        /// <param name="id"> The ID of service tag. </param>
-        internal ServiceTagInformation(ServiceTagInformationPropertiesFormat properties, string name, string id)
+        internal ServiceTagInformation(string id, ServiceTagInformationPropertiesFormat properties, string name) : base(id)
         {
             Properties = properties;
             Name = name;
-            Id = id;
         }
 
         /// <summary> Properties of the service tag information. </summary>
         public ServiceTagInformationPropertiesFormat Properties { get; }
         /// <summary> The name of service tag. </summary>
         public string Name { get; }
-        /// <summary> The ID of service tag. </summary>
-        public string Id { get; }
     }
 }
