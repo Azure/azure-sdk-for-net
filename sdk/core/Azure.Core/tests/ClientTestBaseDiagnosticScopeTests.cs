@@ -27,11 +27,19 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ThrowsWhenDuplicateDiagnosticScope()
+        public void ThrowsWhenDuplicateDiagnosticScope_DirectAncestor()
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.DuplicateScopeAsync());
-            StringAssert.Contains($"A scope has already started for event '{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.DuplicateScope)}'", ex.Message);
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.DuplicateScopeDirectAncestorAsync());
+            StringAssert.Contains($"A scope has already started for event '{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.DuplicateScopeDirectAncestor)}'", ex.Message);
+        }
+
+        [Test]
+        public void ThrowsWhenDuplicateDiagnosticScope_Ancestor()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.DuplicateScopeAncestorAsync());
+            StringAssert.Contains($"A scope has already started for event '{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.DuplicateScopeAncestor)}'", ex.Message);
         }
 
         [Test]
@@ -116,17 +124,33 @@ namespace Azure.Core.Tests
                 return true;
             }
 
-            public virtual Task<bool> DuplicateScopeAsync()
+            public virtual Task<bool> DuplicateScopeDirectAncestorAsync()
             {
-                return Task.FromResult(DuplicateScope());
+                return Task.FromResult(DuplicateScopeDirectAncestor());
             }
 
-            public virtual bool DuplicateScope()
+            public virtual bool DuplicateScopeDirectAncestor()
             {
-                using DiagnosticScope scope1 = CreateScope(nameof(DuplicateScope));
+                using DiagnosticScope scope1 = CreateScope(nameof(DuplicateScopeDirectAncestor));
                 scope1.Start();
-                using DiagnosticScope scope2 = CreateScope(nameof(DuplicateScope));
+                using DiagnosticScope scope2 = CreateScope(nameof(DuplicateScopeDirectAncestor));
                 scope2.Start();
+                return true;
+            }
+
+            public virtual Task<bool> DuplicateScopeAncestorAsync()
+            {
+                return Task.FromResult(DuplicateScopeAncestor());
+            }
+
+            public virtual bool DuplicateScopeAncestor()
+            {
+                using DiagnosticScope scope1 = CreateScope(nameof(DuplicateScopeAncestor));
+                scope1.Start();
+                using DiagnosticScope scope2 = CreateScope(nameof(CorrectScope));
+                scope2.Start();
+                using DiagnosticScope scope3 = CreateScope(nameof(DuplicateScopeAncestor));
+                scope3.Start();
                 return true;
             }
 

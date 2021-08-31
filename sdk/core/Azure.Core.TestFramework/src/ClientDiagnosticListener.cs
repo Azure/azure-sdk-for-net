@@ -17,6 +17,7 @@ namespace Azure.Core.Tests
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
         private readonly Action<ProducedDiagnosticScope> _scopeStartCallback;
+        private readonly Dictionary<Activity, Activity> _activityGraph = new();
 
         public List<ProducedDiagnosticScope> Scopes { get; } = new List<ProducedDiagnosticScope>();
 
@@ -67,12 +68,15 @@ namespace Azure.Core.Tests
                     {
                         Name = name,
                         Activity = Activity.Current,
-                        ParentActivity = Activity.Current.Parent,
                         Links = links.Select(a => a.ParentId).ToList(),
                         LinkedActivities = links.ToList()
                     };
 
                     Scopes.Add(scope);
+                    if (!_activityGraph.ContainsKey(scope.Activity))
+                    {
+                        _activityGraph.Add(scope.Activity, scope.Activity.Parent);
+                    }
                     _scopeStartCallback?.Invoke(scope);
                 }
                 else if (value.Key.EndsWith(stopSuffix))
@@ -142,14 +146,20 @@ namespace Azure.Core.Tests
 
             foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {
-                // Check the immediate parent to determine if it is a duplicate. Note this won't catch duplicates that
-                // are separated by other operations, e.g. A -> B -> A would not be caught.
-                if (producedDiagnosticScope.Activity.OperationName == producedDiagnosticScope.ParentActivity?.OperationName)
+                var activity = producedDiagnosticScope.Activity;
+                var operationName = activity.OperationName;
+                // traverse the activities and check for duplicates among ancestors
+                while (activity != null)
                 {
-                    // Throw this exception lazily on Dispose, rather than when the scope is started, so that we don't trigger a bunch of other
-                    // erroneous exceptions relating to scopes not being completed/started that hide the actual issue
-                    throw new InvalidOperationException($"A scope has already started for event '{producedDiagnosticScope.Name}'");
+                    if (operationName == activity.Parent?.OperationName)
+                    {
+                        // Throw this exception lazily on Dispose, rather than when the scope is started, so that we don't trigger a bunch of other
+                        // erroneous exceptions relating to scopes not being completed/started that hide the actual issue
+                        throw new InvalidOperationException($"A scope has already started for event '{producedDiagnosticScope.Name}'");
+                    }
+                    activity = _activityGraph[activity];
                 }
+
                 if (!producedDiagnosticScope.IsCompleted)
                 {
                     throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");
@@ -229,7 +239,6 @@ namespace Azure.Core.Tests
             public Exception Exception { get; set; }
             public List<string> Links { get; set; } = new List<string>();
             public List<Activity> LinkedActivities { get; set; } = new List<Activity>();
-            public Activity ParentActivity { get; set; }
 
             public override string ToString()
             {
