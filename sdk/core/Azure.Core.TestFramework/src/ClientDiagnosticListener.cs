@@ -157,7 +157,8 @@ namespace Azure.Core.Tests
                         // erroneous exceptions relating to scopes not being completed/started that hide the actual issue
                         throw new InvalidOperationException($"A scope has already started for event '{producedDiagnosticScope.Name}'");
                     }
-                    activity = _activityGraph[activity];
+
+                    _activityGraph.TryGetValue(activity, out activity);
                 }
 
                 if (!producedDiagnosticScope.IsCompleted)
