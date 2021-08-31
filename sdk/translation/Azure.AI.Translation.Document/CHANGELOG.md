@@ -12,7 +12,7 @@
 - Renamed type `TranslationStatus` to `TranslationStatusResult`.
 - Renamed type `FileFormat` to `DocumentTranslationFileFormat`.
 - Renamed property `TranslatedTo` to `TranslatedToLanguageCode` in `DocumentStatusResult`.
-- Renamed parameter `asc` to `ascending` in `DocumentStatusResult`.
+- Renamed parameter `asc` to `ascending` in `DocumentStatusResult` constructor.
 - Changed spelling of `cancelled`/`cancelling` to `canceled`/`cancelling`. The following changes have been made:
   - property `DocumentsCancelled` to `DocumentsCanceled` in `DocumentTranslationOperation`
   - property `DocumentsCancelled` to `DocumentsCanceled` in `TranslationStatusResult`
