@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An Ssl predefined policy. </summary>
-    public partial class ApplicationGatewaySslPredefinedPolicy : SubResource
+    public partial class ApplicationGatewaySslPredefinedPolicy : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>
         public ApplicationGatewaySslPredefinedPolicy()
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of the Ssl predefined policy. </param>
         /// <param name="cipherSuites"> Ssl cipher suites to be enabled in the specified order for application gateway. </param>
         /// <param name="minProtocolVersion"> Minimum version of Ssl protocol to be supported on application gateway. </param>

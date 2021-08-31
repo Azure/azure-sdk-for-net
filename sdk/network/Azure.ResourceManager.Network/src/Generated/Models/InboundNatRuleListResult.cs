@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of InboundNatRuleListResult. </summary>
         internal InboundNatRuleListResult()
         {
-            Value = new ChangeTrackingList<InboundNatRule>();
+            Value = new ChangeTrackingList<InboundNatRuleData>();
         }
 
         /// <summary> Initializes a new instance of InboundNatRuleListResult. </summary>
         /// <param name="value"> A list of inbound nat rules in a load balancer. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal InboundNatRuleListResult(IReadOnlyList<InboundNatRule> value, string nextLink)
+        internal InboundNatRuleListResult(IReadOnlyList<InboundNatRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of inbound nat rules in a load balancer. </summary>
-        public IReadOnlyList<InboundNatRule> Value { get; }
+        public IReadOnlyList<InboundNatRuleData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

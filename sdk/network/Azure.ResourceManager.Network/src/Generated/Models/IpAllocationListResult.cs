@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of IpAllocationListResult. </summary>
         internal IpAllocationListResult()
         {
-            Value = new ChangeTrackingList<IpAllocation>();
+            Value = new ChangeTrackingList<IpAllocationData>();
         }
 
         /// <summary> Initializes a new instance of IpAllocationListResult. </summary>
         /// <param name="value"> A list of IpAllocation resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal IpAllocationListResult(IReadOnlyList<IpAllocation> value, string nextLink)
+        internal IpAllocationListResult(IReadOnlyList<IpAllocationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of IpAllocation resources. </summary>
-        public IReadOnlyList<IpAllocation> Value { get; }
+        public IReadOnlyList<IpAllocationData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
