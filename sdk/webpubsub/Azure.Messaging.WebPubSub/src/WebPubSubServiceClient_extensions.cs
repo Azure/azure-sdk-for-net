@@ -117,7 +117,7 @@ namespace Azure.Messaging.WebPubSub
             Pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
-                perRetryPolicies: new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, "TODO:credentialScopeName") },
+                perRetryPolicies: new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, WebPubSubServiceClientOptions.CredentialScopeName) },
                 new ResponseClassifier()
             );
         }

@@ -14,6 +14,11 @@ namespace Azure.Messaging.WebPubSub
     public partial class WebPubSubServiceClientOptions : ClientOptions
     {
         /// <summary>
+        /// The name of the scope to authenticate for when creating a <see cref="Azure.Core.Pipeline.BearerTokenAuthenticationPolicy"/>
+        /// </summary>
+        internal const string CredentialScopeName = "https://webpubsub.azure.com/.default";
+
+        /// <summary>
         /// The versions of Azure WebPubSub supported by this client library.
         /// </summary>
         public enum ServiceVersion
