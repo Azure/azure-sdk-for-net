@@ -85,6 +85,91 @@ namespace Microsoft.Azure.Management.Synapse
         IIpFirewallRulesOperations IpFirewallRules { get; }
 
         /// <summary>
+        /// Gets the IIntegrationRuntimesOperations.
+        /// </summary>
+        IIntegrationRuntimesOperations IntegrationRuntimes { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeNodeIpAddressOperations.
+        /// </summary>
+        IIntegrationRuntimeNodeIpAddressOperations IntegrationRuntimeNodeIpAddress { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
+        /// </summary>
+        IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeNodesOperations.
+        /// </summary>
+        IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeCredentialsOperations.
+        /// </summary>
+        IIntegrationRuntimeCredentialsOperations IntegrationRuntimeCredentials { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeConnectionInfosOperations.
+        /// </summary>
+        IIntegrationRuntimeConnectionInfosOperations IntegrationRuntimeConnectionInfos { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeAuthKeysOperations.
+        /// </summary>
+        IIntegrationRuntimeAuthKeysOperations IntegrationRuntimeAuthKeys { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeMonitoringDataOperations.
+        /// </summary>
+        IIntegrationRuntimeMonitoringDataOperations IntegrationRuntimeMonitoringData { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeStatusOperations.
+        /// </summary>
+        IIntegrationRuntimeStatusOperations IntegrationRuntimeStatus { get; }
+
+        /// <summary>
+        /// Gets the IKeysOperations.
+        /// </summary>
+        IKeysOperations Keys { get; }
+
+        /// <summary>
+        /// Gets the ILibraryOperations.
+        /// </summary>
+        ILibraryOperations Library { get; }
+
+        /// <summary>
+        /// Gets the ILibrariesOperations.
+        /// </summary>
+        ILibrariesOperations Libraries { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkHubPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkHubPrivateLinkResourcesOperations PrivateLinkHubPrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkHubsOperations.
+        /// </summary>
+        IPrivateLinkHubsOperations PrivateLinkHubs { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsPrivateLinkHubOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsPrivateLinkHubOperations PrivateEndpointConnectionsPrivateLinkHub { get; }
+
+        /// <summary>
         /// Gets the ISqlPoolsOperations.
         /// </summary>
         ISqlPoolsOperations SqlPools { get; }
@@ -230,101 +315,6 @@ namespace Microsoft.Azure.Management.Synapse
         ISqlPoolWorkloadClassifierOperations SqlPoolWorkloadClassifier { get; }
 
         /// <summary>
-        /// Gets the IWorkspacesOperations.
-        /// </summary>
-        IWorkspacesOperations Workspaces { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceAadAdminsOperations.
-        /// </summary>
-        IWorkspaceAadAdminsOperations WorkspaceAadAdmins { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceSqlAadAdminsOperations.
-        /// </summary>
-        IWorkspaceSqlAadAdminsOperations WorkspaceSqlAadAdmins { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedIdentitySqlControlSettingsOperations.
-        /// </summary>
-        IWorkspaceManagedIdentitySqlControlSettingsOperations WorkspaceManagedIdentitySqlControlSettings { get; }
-
-        /// <summary>
-        /// Gets the IRestorableDroppedSqlPoolsOperations.
-        /// </summary>
-        IRestorableDroppedSqlPoolsOperations RestorableDroppedSqlPools { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimesOperations.
-        /// </summary>
-        IIntegrationRuntimesOperations IntegrationRuntimes { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeNodeIpAddressOperations.
-        /// </summary>
-        IIntegrationRuntimeNodeIpAddressOperations IntegrationRuntimeNodeIpAddress { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
-        /// </summary>
-        IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeNodesOperations.
-        /// </summary>
-        IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeCredentialsOperations.
-        /// </summary>
-        IIntegrationRuntimeCredentialsOperations IntegrationRuntimeCredentials { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeConnectionInfosOperations.
-        /// </summary>
-        IIntegrationRuntimeConnectionInfosOperations IntegrationRuntimeConnectionInfos { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeAuthKeysOperations.
-        /// </summary>
-        IIntegrationRuntimeAuthKeysOperations IntegrationRuntimeAuthKeys { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeMonitoringDataOperations.
-        /// </summary>
-        IIntegrationRuntimeMonitoringDataOperations IntegrationRuntimeMonitoringData { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeStatusOperations.
-        /// </summary>
-        IIntegrationRuntimeStatusOperations IntegrationRuntimeStatus { get; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkResourcesOperations.
-        /// </summary>
-        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkHubPrivateLinkResourcesOperations.
-        /// </summary>
-        IPrivateLinkHubPrivateLinkResourcesOperations PrivateLinkHubPrivateLinkResources { get; }
-
-        /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
-        /// </summary>
-        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkHubsOperations.
-        /// </summary>
-        IPrivateLinkHubsOperations PrivateLinkHubs { get; }
-
-        /// <summary>
-        /// Gets the IPrivateEndpointConnectionsPrivateLinkHubOperations.
-        /// </summary>
-        IPrivateEndpointConnectionsPrivateLinkHubOperations PrivateEndpointConnectionsPrivateLinkHub { get; }
-
-        /// <summary>
         /// Gets the IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations.
         /// </summary>
         IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations WorkspaceManagedSqlServerBlobAuditingPolicies { get; }
@@ -360,9 +350,29 @@ namespace Microsoft.Azure.Management.Synapse
         IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations WorkspaceManagedSqlServerRecoverableSqlPools { get; }
 
         /// <summary>
-        /// Gets the IKeysOperations.
+        /// Gets the IWorkspacesOperations.
         /// </summary>
-        IKeysOperations Keys { get; }
+        IWorkspacesOperations Workspaces { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceAadAdminsOperations.
+        /// </summary>
+        IWorkspaceAadAdminsOperations WorkspaceAadAdmins { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceSqlAadAdminsOperations.
+        /// </summary>
+        IWorkspaceSqlAadAdminsOperations WorkspaceSqlAadAdmins { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedIdentitySqlControlSettingsOperations.
+        /// </summary>
+        IWorkspaceManagedIdentitySqlControlSettingsOperations WorkspaceManagedIdentitySqlControlSettings { get; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedSqlPoolsOperations.
+        /// </summary>
+        IRestorableDroppedSqlPoolsOperations RestorableDroppedSqlPools { get; }
 
     }
 }

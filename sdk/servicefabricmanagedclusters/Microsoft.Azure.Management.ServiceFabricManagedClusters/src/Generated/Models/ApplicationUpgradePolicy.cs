@@ -34,11 +34,7 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// requests to drain gracefully. This would be effective when the
         /// instance is closing during the application/cluster upgrade, only
         /// for those instances which have a non-zero delay duration configured
-        /// in the service description. See InstanceCloseDelayDurationSeconds
-        /// property in StatelessServiceDescription for details. Note, the
-        /// default value of InstanceCloseDelayDurationInSeconds is 4294967295,
-        /// which indicates that the behavior will entirely depend on the delay
-        /// configured in the stateless service description.</param>
+        /// in the service description.</param>
         /// <param name="upgradeMode">Possible values include: 'Monitored',
         /// 'UnmonitoredAuto'</param>
         /// <param name="upgradeReplicaSetCheckTimeout">The maximum amount of
@@ -89,11 +85,7 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// gracefully. This would be effective when the instance is closing
         /// during the application/cluster upgrade, only for those instances
         /// which have a non-zero delay duration configured in the service
-        /// description. See InstanceCloseDelayDurationSeconds property in
-        /// StatelessServiceDescription for details. Note, the default value of
-        /// InstanceCloseDelayDurationInSeconds is 4294967295, which indicates
-        /// that the behavior will entirely depend on the delay configured in
-        /// the stateless service description.
+        /// description.
         /// </summary>
         [JsonProperty(PropertyName = "instanceCloseDelayDuration")]
         public long? InstanceCloseDelayDuration { get; set; }

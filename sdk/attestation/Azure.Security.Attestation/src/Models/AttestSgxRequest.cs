@@ -4,9 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
+    [CodeGenModel("AttestSgxEnclaveRequest")]
+
     internal partial class AttestSgxEnclaveRequest
     {
     }

@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the KeyForDiskEncryptionSet class.
         /// </summary>
         /// <param name="keyUrl">Fully versioned Key Url pointing to a key in
-        /// KeyVault</param>
+        /// KeyVault. Version segment of the Url is required regardless of
+        /// rotationToLatestKeyVersionEnabled value.</param>
         /// <param name="sourceVault">Resource id of the KeyVault containing
         /// the key or secret. This property is optional and cannot be used if
         /// the KeyVault subscription is not the same as the Disk Encryption
@@ -59,7 +60,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public SourceVault SourceVault { get; set; }
 
         /// <summary>
-        /// Gets or sets fully versioned Key Url pointing to a key in KeyVault
+        /// Gets or sets fully versioned Key Url pointing to a key in KeyVault.
+        /// Version segment of the Url is required regardless of
+        /// rotationToLatestKeyVersionEnabled value.
         /// </summary>
         [JsonProperty(PropertyName = "keyUrl")]
         public string KeyUrl { get; set; }

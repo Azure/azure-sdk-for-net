@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -31,6 +32,7 @@ namespace Microsoft.Azure.WebJobs
         private readonly string _queueName;
         private readonly string _topicName;
         private readonly string _subscriptionName;
+        private bool? _autoCompleteMessages;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusTriggerAttribute"/> class.
@@ -88,6 +90,27 @@ namespace Microsoft.Azure.WebJobs
         /// Gets or sets a value indicating whether sessions are enabled.
         /// </summary>
         public bool IsSessionsEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether trigger should automatically complete the message after successful processing. If not explicitly set, the behavior will be based on the <see cref="ServiceBusOptions.AutoCompleteMessages"/> value.
+        /// </summary>
+        public bool AutoCompleteMessages
+        {
+            get
+            {
+                return _autoCompleteMessages.HasValue ? _autoCompleteMessages.Value : true;
+            }
+            set
+            {
+                _autoCompleteMessages = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a boolean to check if auto complete messages option was set on the trigger.
+        /// Since a nullable property can't be used in the attribute. This is a work around for it.
+        /// </summary>
+        internal bool IsAutoCompleteMessagesOptionSet { get { return _autoCompleteMessages.HasValue; } }
 
         private string DebuggerDisplay
         {

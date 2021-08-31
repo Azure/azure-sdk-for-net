@@ -34,12 +34,13 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// <param name="name">Name of the rule set.</param>
         /// <param name="id">The id of the rule set.</param>
         /// <param name="type">The type of the rule set.</param>
-        public MonitoringTagRules(string name = default(string), string id = default(string), string type = default(string), MonitoringTagRulesProperties properties = default(MonitoringTagRulesProperties))
+        public MonitoringTagRules(string name = default(string), string id = default(string), string type = default(string), MonitoringTagRulesProperties properties = default(MonitoringTagRulesProperties), SystemData systemData = default(SystemData))
         {
             Name = name;
             Id = id;
             Type = type;
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -70,6 +71,11 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public MonitoringTagRulesProperties Properties { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

@@ -3,20 +3,19 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
   paths:
     include:
     - sdk/servicebus/ci.yml
+    - sdk/servicebus/service.projects
     - sdk/servicebus/Azure.Messaging.ServiceBus
     - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus
 
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
@@ -24,6 +23,7 @@ pr:
   paths:
     include:
     - sdk/servicebus/ci.yml
+    - sdk/servicebus/service.projects
     - sdk/servicebus/Azure.Messaging.ServiceBus
     - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus
 

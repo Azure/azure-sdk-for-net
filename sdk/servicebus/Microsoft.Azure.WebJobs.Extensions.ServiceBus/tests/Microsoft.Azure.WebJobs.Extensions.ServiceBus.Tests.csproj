@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" VersionOverride="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="2.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.Azure.Management.ServiceBus" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
   </ItemGroup>
 
   <ItemGroup>

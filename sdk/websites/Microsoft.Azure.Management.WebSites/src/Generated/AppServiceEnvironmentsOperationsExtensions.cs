@@ -449,6 +449,104 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get networking configuration of an App Service Environment
+            /// </summary>
+            /// <remarks>
+            /// Description for Get networking configuration of an App Service Environment
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            public static AseV3NetworkingConfiguration GetAseV3NetworkingConfiguration(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetAseV3NetworkingConfigurationAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get networking configuration of an App Service Environment
+            /// </summary>
+            /// <remarks>
+            /// Description for Get networking configuration of an App Service Environment
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AseV3NetworkingConfiguration> GetAseV3NetworkingConfigurationAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAseV3NetworkingConfigurationWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update networking configuration of an App Service Environment
+            /// </summary>
+            /// <remarks>
+            /// Description for Update networking configuration of an App Service
+            /// Environment
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='aseNetworkingConfiguration'>
+            /// </param>
+            public static AseV3NetworkingConfiguration UpdateAseNetworkingConfiguration(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, AseV3NetworkingConfiguration aseNetworkingConfiguration)
+            {
+                return operations.UpdateAseNetworkingConfigurationAsync(resourceGroupName, name, aseNetworkingConfiguration).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update networking configuration of an App Service Environment
+            /// </summary>
+            /// <remarks>
+            /// Description for Update networking configuration of an App Service
+            /// Environment
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='aseNetworkingConfiguration'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AseV3NetworkingConfiguration> UpdateAseNetworkingConfigurationAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, AseV3NetworkingConfiguration aseNetworkingConfiguration, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateAseNetworkingConfigurationWithHttpMessagesAsync(resourceGroupName, name, aseNetworkingConfiguration, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get diagnostic information for an App Service Environment.
             /// </summary>
             /// <remarks>
@@ -1083,6 +1181,256 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<OutboundEnvironmentEndpoint>> GetOutboundNetworkDependenciesEndpointsAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetOutboundNetworkDependenciesEndpointsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoints associated with a hosting environment
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoints associated with a
+            /// hosting environment
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionList(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetPrivateEndpointConnectionListAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoints associated with a hosting environment
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoints associated with a
+            /// hosting environment
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource GetPrivateEndpointConnection(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.GetPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource ApproveOrRejectPrivateEndpointConnection(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper)
+            {
+                return operations.ApproveOrRejectPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> ApproveOrRejectPrivateEndpointConnectionAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            public static object DeletePrivateEndpointConnection(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.DeletePrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeletePrivateEndpointConnectionAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the private link resources
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the private link resources
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            public static PrivateLinkResourcesWrapper GetPrivateLinkResources(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetPrivateLinkResourcesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the private link resources
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the private link resources
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateLinkResourcesWrapper> GetPrivateLinkResourcesAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateLinkResourcesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2025,6 +2373,110 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource BeginApproveOrRejectPrivateEndpointConnection(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper)
+            {
+                return operations.BeginApproveOrRejectPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> BeginApproveOrRejectPrivateEndpointConnectionAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            public static object BeginDeletePrivateEndpointConnection(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.BeginDeletePrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> BeginDeletePrivateEndpointConnectionAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Resume an App Service Environment.
             /// </summary>
             /// <remarks>
@@ -2629,6 +3081,48 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<OutboundEnvironmentEndpoint>> GetOutboundNetworkDependenciesEndpointsNextAsync(this IAppServiceEnvironmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetOutboundNetworkDependenciesEndpointsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoints associated with a hosting environment
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoints associated with a
+            /// hosting environment
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionListNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
+            {
+                return operations.GetPrivateEndpointConnectionListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoints associated with a hosting environment
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoints associated with a
+            /// hosting environment
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListNextAsync(this IAppServiceEnvironmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

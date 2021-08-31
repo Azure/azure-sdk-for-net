@@ -34,9 +34,9 @@ namespace Azure.Analytics.Synapse.Tests
             return all;
         }
 
-        public static async Task WaitAndAssertSuccessfulCompletion (this Operation<Response> operation)
+        public static async Task WaitAndAssertSuccessfulCompletion (this Operation operation)
         {
-            Response response = await operation.WaitForCompletionAsync();
+            Response response = await operation.WaitForCompletionResponseAsync();
             response.AssertSuccess();
         }
 

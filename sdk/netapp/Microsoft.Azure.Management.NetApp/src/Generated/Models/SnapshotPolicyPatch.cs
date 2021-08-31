@@ -39,7 +39,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="name1">Snapshot policy name</param>
         /// <param name="hourlySchedule">hourlySchedule</param>
         /// <param name="dailySchedule">dailySchedule</param>
         /// <param name="weeklySchedule">weeklySchedule</param>
@@ -47,14 +46,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="enabled">The property to decide policy is enabled or
         /// not</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public SnapshotPolicyPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string name1 = default(string), HourlySchedule hourlySchedule = default(HourlySchedule), DailySchedule dailySchedule = default(DailySchedule), WeeklySchedule weeklySchedule = default(WeeklySchedule), MonthlySchedule monthlySchedule = default(MonthlySchedule), bool? enabled = default(bool?), string provisioningState = default(string))
+        public SnapshotPolicyPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), HourlySchedule hourlySchedule = default(HourlySchedule), DailySchedule dailySchedule = default(DailySchedule), WeeklySchedule weeklySchedule = default(WeeklySchedule), MonthlySchedule monthlySchedule = default(MonthlySchedule), bool? enabled = default(bool?), string provisioningState = default(string))
         {
             Location = location;
             Id = id;
             Name = name;
             Type = type;
             Tags = tags;
-            Name1 = name1;
             HourlySchedule = hourlySchedule;
             DailySchedule = dailySchedule;
             WeeklySchedule = weeklySchedule;
@@ -98,12 +96,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets snapshot policy name
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string Name1 { get; private set; }
 
         /// <summary>
         /// Gets or sets hourlySchedule

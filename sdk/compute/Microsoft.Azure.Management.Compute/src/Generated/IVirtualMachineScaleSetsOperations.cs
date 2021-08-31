@@ -138,6 +138,12 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the VM scale set.
         /// </param>
+        /// <param name='expand'>
+        /// The expand expression to apply on the operation. 'UserData'
+        /// retrieves the UserData property of the VM scale set that was
+        /// provided by the user during the VM scale set Create/Update
+        /// operation. Possible values include: 'userData'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -153,7 +159,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VirtualMachineScaleSet>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineScaleSet>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deallocates specific virtual machines in a VM scale set. Shuts down
         /// the virtual machines and releases the compute resources. You are
@@ -455,7 +461,7 @@ namespace Microsoft.Azure.Management.Compute
         /// set. Operation on instances which are not eligible for perform
         /// maintenance will be failed. Please refer to best practices for more
         /// details:
-        /// https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
+        /// https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -912,7 +918,7 @@ namespace Microsoft.Azure.Management.Compute
         /// set. Operation on instances which are not eligible for perform
         /// maintenance will be failed. Please refer to best practices for more
         /// details:
-        /// https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
+        /// https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

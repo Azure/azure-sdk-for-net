@@ -19,13 +19,14 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ServiceFabric", "ApplicationTypeVersions", "2021-01-01-preview"),
-                new Tuple<string, string, string>("ServiceFabric", "ApplicationTypes", "2021-01-01-preview"),
-                new Tuple<string, string, string>("ServiceFabric", "Applications", "2021-01-01-preview"),
-                new Tuple<string, string, string>("ServiceFabric", "ManagedClusters", "2021-01-01-preview"),
-                new Tuple<string, string, string>("ServiceFabric", "NodeTypes", "2021-01-01-preview"),
-                new Tuple<string, string, string>("ServiceFabric", "Operations", "2021-01-01-preview"),
-                new Tuple<string, string, string>("ServiceFabric", "Services", "2021-01-01-preview"),
+                new Tuple<string, string, string>("ServiceFabric", "ApplicationTypeVersions", "2021-05-01"),
+                new Tuple<string, string, string>("ServiceFabric", "ApplicationTypes", "2021-05-01"),
+                new Tuple<string, string, string>("ServiceFabric", "Applications", "2021-05-01"),
+                new Tuple<string, string, string>("ServiceFabric", "ManagedClusterVersion", "2021-05-01"),
+                new Tuple<string, string, string>("ServiceFabric", "ManagedClusters", "2021-05-01"),
+                new Tuple<string, string, string>("ServiceFabric", "NodeTypes", "2021-05-01"),
+                new Tuple<string, string, string>("ServiceFabric", "Operations", "2021-05-01"),
+                new Tuple<string, string, string>("ServiceFabric", "Services", "2021-05-01"),
               }.AsEnumerable();
           }
       }
@@ -35,7 +36,7 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/servicefabricmanagedclusters/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\code\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "8240593bde5350e6762015523ccd57cb61e32da5";
+      public static readonly String GithubCommidId = "5047dfdf585969892ac035ffdfbc57623f0bf1c5";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

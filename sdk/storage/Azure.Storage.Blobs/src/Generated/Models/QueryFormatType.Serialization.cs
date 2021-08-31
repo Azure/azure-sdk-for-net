@@ -16,6 +16,7 @@ namespace Azure.Storage.Blobs.Models
             QueryFormatType.Delimited => "delimited",
             QueryFormatType.Json => "json",
             QueryFormatType.Arrow => "arrow",
+            QueryFormatType.Parquet => "parquet",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryFormatType value.")
         };
 
@@ -24,6 +25,7 @@ namespace Azure.Storage.Blobs.Models
             if (string.Equals(value, "delimited", StringComparison.InvariantCultureIgnoreCase)) return QueryFormatType.Delimited;
             if (string.Equals(value, "json", StringComparison.InvariantCultureIgnoreCase)) return QueryFormatType.Json;
             if (string.Equals(value, "arrow", StringComparison.InvariantCultureIgnoreCase)) return QueryFormatType.Arrow;
+            if (string.Equals(value, "parquet", StringComparison.InvariantCultureIgnoreCase)) return QueryFormatType.Parquet;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryFormatType value.");
         }
     }

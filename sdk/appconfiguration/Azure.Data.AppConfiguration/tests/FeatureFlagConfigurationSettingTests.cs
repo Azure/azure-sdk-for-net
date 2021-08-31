@@ -55,7 +55,6 @@ namespace Azure.Data.AppConfiguration
 
         [TestCase("INVALID")]
         [TestCase(MinimalFeatureValue)]
-        [TestCase(MinimalFeatureValueWithFormatting)]
         [TestCase("")]
         public void CanRountripValue(string value)
         {
@@ -139,20 +138,6 @@ namespace Azure.Data.AppConfiguration
         }
 
         [Test]
-        public void ReadingPropertiedDoesNotChangeValue()
-        {
-            var feature = new FeatureFlagConfigurationSetting();
-            feature.Value = MinimalFeatureValueWithFormatting;
-            _ = feature.Description;
-            _ = feature.ClientFilters;
-            _ = feature.DisplayName;
-            _ = feature.FeatureId;
-            _ = feature.IsEnabled;
-
-            Assert.AreEqual(MinimalFeatureValueWithFormatting, feature.Value);
-        }
-
-        [Test]
         public void SettingDescriptionChangesValue()
         {
             var feature = new FeatureFlagConfigurationSetting();
@@ -203,6 +188,23 @@ namespace Azure.Data.AppConfiguration
             }));
 
             Assert.AreEqual("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":1}}]}}", feature.Value);
+        }
+
+        [Test]
+        public void ChangingParametersUpdatesValue()
+        {
+            var feature = new FeatureFlagConfigurationSetting();
+            feature.Value = MinimalFeatureValueWithFormatting;
+            feature.ClientFilters.Add(new FeatureFlagFilter("file", new Dictionary<string, object>()
+            {
+                {"p1", 1}
+            }));
+
+            Assert.AreEqual("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":1}}]}}", feature.Value);
+
+            feature.ClientFilters[0].Parameters["p1"] = 2;
+
+            Assert.AreEqual("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":2}}]}}", feature.Value);
         }
     }
 }

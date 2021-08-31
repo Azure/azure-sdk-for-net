@@ -14,5 +14,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of rerun triggers. </summary>
     public partial class RerunTriggerListResponse
     {
+        /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
+        /// <param name="value"> List of rerun triggers. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RerunTriggerListResponse(IEnumerable<RerunTriggerResource> value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            Value = value.ToList();
+        }
+
+        /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
+        /// <param name="value"> List of rerun triggers. </param>
+        /// <param name="nextLink"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
+        internal RerunTriggerListResponse(IList<RerunTriggerResource> value, string nextLink)
+        {
+            Value = value;
+            NextLink = nextLink;
+        }
+
+        /// <summary> List of rerun triggers. </summary>
+        public IList<RerunTriggerResource> Value { get; }
+        /// <summary> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </summary>
+        public string NextLink { get; }
     }
 }

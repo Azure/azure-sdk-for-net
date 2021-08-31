@@ -31,5 +31,14 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey = customerProvidedKey;
             EncryptionScope = encryptionScope;
         }
+
+        internal static BlobClientConfiguration DeepCopy(BlobClientConfiguration originalClientConfiguration)
+            => new BlobClientConfiguration(
+                pipeline: originalClientConfiguration.Pipeline,
+                sharedKeyCredential: originalClientConfiguration.SharedKeyCredential,
+                clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
+                version: originalClientConfiguration.Version,
+                customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
+                encryptionScope: originalClientConfiguration.EncryptionScope);
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
 using System;
+using System.Collections.Specialized;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -17,7 +18,7 @@ namespace CosmosDB.Tests.ScenarioTests
         const string location = "EAST US 2";
         // using an existing DB account, since Account provisioning takes 10-15 minutes
         const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "db001";
+        const string databaseAccountName = "db003";
 
         const string databaseName = "databaseName3668";
         const string databaseName2 = "databaseName23668";
@@ -55,12 +56,9 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.MongoDB,
-                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties
+                        Locations = new List<Location>
                         {
-                            Locations = new List<Location>
-                            {
-                                {new Location(locationName: location) }
-                            }
+                            {new Location(locationName: location) }
                         }
                     };
 
@@ -70,7 +68,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
                 {
-                    Resource = new MongoDBDatabaseResource { Id = databaseName },
+                    Resource = new MongoDBDatabaseResource {Id = databaseName},
                     Options = new CreateUpdateOptions()
                 };
 
@@ -126,7 +124,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = cosmosDBManagementClient.MongoDBResources.ListMongoDBCollectionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(mongoDBCollections);
 
-                foreach (MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
+                foreach(MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
                 {
                     cosmosDBManagementClient.MongoDBResources.DeleteMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, mongoDBCollection.Name);
                 }

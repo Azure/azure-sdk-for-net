@@ -35,12 +35,14 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// <param name="id">Fully qualified identifier of the resource</param>
         /// <param name="name">Name of the resource</param>
         /// <param name="type">Type of the resource</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="location">Location of the resource</param>
         /// <param name="maintenanceConfigurationId">The maintenance
         /// configuration Id</param>
         /// <param name="resourceId">The unique resourceId</param>
-        public ConfigurationAssignment(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string maintenanceConfigurationId = default(string), string resourceId = default(string))
-            : base(id, name, type)
+        public ConfigurationAssignment(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), string maintenanceConfigurationId = default(string), string resourceId = default(string))
+            : base(id, name, type, systemData)
         {
             Location = location;
             MaintenanceConfigurationId = maintenanceConfigurationId;

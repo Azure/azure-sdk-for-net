@@ -7,25 +7,25 @@
 
 using System;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The incurred cost for a single phone number. </summary>
     public partial class PhoneNumberCost
     {
         /// <summary> Initializes a new instance of PhoneNumberCost. </summary>
         /// <param name="amount"> The cost amount. </param>
-        /// <param name="iSOCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
+        /// <param name="isoCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="iSOCurrencySymbol"/> is null. </exception>
-        internal PhoneNumberCost(double amount, string iSOCurrencySymbol, BillingFrequency billingFrequency)
+        /// <exception cref="ArgumentNullException"> <paramref name="isoCurrencySymbol"/> is null. </exception>
+        internal PhoneNumberCost(double amount, string isoCurrencySymbol, BillingFrequency billingFrequency)
         {
-            if (iSOCurrencySymbol == null)
+            if (isoCurrencySymbol == null)
             {
-                throw new ArgumentNullException(nameof(iSOCurrencySymbol));
+                throw new ArgumentNullException(nameof(isoCurrencySymbol));
             }
 
             Amount = amount;
-            ISOCurrencySymbol = iSOCurrencySymbol;
+            IsoCurrencySymbol = isoCurrencySymbol;
             BillingFrequency = billingFrequency;
         }
 

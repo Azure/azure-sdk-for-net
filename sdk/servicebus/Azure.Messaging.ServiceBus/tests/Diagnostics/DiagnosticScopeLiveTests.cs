@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.Tests;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using NUnit.Framework;
@@ -16,12 +17,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
     [NonParallelizable]
     public class DiagnosticScopeLiveTests : ServiceBusLiveTestBase
     {
-        private TestDiagnosticListener _listener;
+        private ClientDiagnosticListener _listener;
 
         [SetUp]
         public void Setup()
         {
-            _listener = new TestDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            _listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
         }
 
         [TearDown]
@@ -66,20 +67,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     // loop in case we don't receive all messages in one attempt
                     var received = await receiver.ReceiveMessagesAsync(remaining);
                     receivedMsgs.AddRange(received);
-                    (string Key, object Value, DiagnosticListener) receiveStart = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.ReceiveActivityName + ".Start", receiveStart.Key);
+                    var receiveScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
+                    AssertCommonTags(receiveScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
-                    Activity receiveActivity = (Activity)receiveStart.Value;
-                    AssertCommonTags(receiveActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-
-                    var receiveLinkedActivities = ((IEnumerable<Activity>)receiveActivity.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(receiveActivity)).ToArray();
-                    for (int i = 0; i < receiveLinkedActivities.Length; i++)
+                    var receiveLinkedActivities = receiveScope.LinkedActivities;
+                    for (int i = 0; i < receiveLinkedActivities.Count; i++)
                     {
                         Assert.AreEqual(sendActivities[i].ParentId, receiveLinkedActivities[i].ParentId);
                     }
-                    (string Key, object Value, DiagnosticListener) receiveStop = _listener.Events.Dequeue();
-
-                    Assert.AreEqual(DiagnosticProperty.ReceiveActivityName + ".Stop", receiveStop.Key);
                     remaining -= received.Count;
                 }
 
@@ -87,94 +82,53 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 var completed = receivedMsgs[msgIndex];
                 await receiver.CompleteMessageAsync(completed);
-                (string Key, object Value, DiagnosticListener) completeStart = _listener.Events.Dequeue();
-                Assert.AreEqual(DiagnosticProperty.CompleteActivityName + ".Start", completeStart.Key);
-                Activity completeActivity = (Activity)completeStart.Value;
-                AssertCommonTags(completeActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-                (string Key, object Value, DiagnosticListener) completeStop = _listener.Events.Dequeue();
-                Assert.AreEqual(DiagnosticProperty.CompleteActivityName + ".Stop", completeStop.Key);
+                var completeScope = _listener.AssertAndRemoveScope(DiagnosticProperty.CompleteActivityName);
+                AssertCommonTags(completeScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
                 var deferred = receivedMsgs[++msgIndex];
                 await receiver.DeferMessageAsync(deferred);
-                (string Key, object Value, DiagnosticListener) deferStart = _listener.Events.Dequeue();
-                Assert.AreEqual(DiagnosticProperty.DeferActivityName + ".Start", deferStart.Key);
-                Activity deferActivity = (Activity)deferStart.Value;
-                AssertCommonTags(deferActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-                (string Key, object Value, DiagnosticListener) deferStop = _listener.Events.Dequeue();
-                Assert.AreEqual(DiagnosticProperty.DeferActivityName + ".Stop", deferStop.Key);
+                var deferredScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeferActivityName);
+                AssertCommonTags(deferredScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
                 var deadLettered = receivedMsgs[++msgIndex];
                 await receiver.DeadLetterMessageAsync(deadLettered);
-                (string Key, object Value, DiagnosticListener) deadLetterStart = _listener.Events.Dequeue();
-                Assert.AreEqual(DiagnosticProperty.DeadLetterActivityName + ".Start", deadLetterStart.Key);
-                Activity deadLetterActivity = (Activity)deadLetterStart.Value;
-                AssertCommonTags(deadLetterActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-                (string Key, object Value, DiagnosticListener) deadletterStop = _listener.Events.Dequeue();
-                Assert.AreEqual(DiagnosticProperty.DeadLetterActivityName + ".Stop", deadletterStop.Key);
+                var deadLetterScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeadLetterActivityName);
+                AssertCommonTags(deadLetterScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
                 var abandoned = receivedMsgs[++msgIndex];
                 await receiver.AbandonMessageAsync(abandoned);
-                (string Key, object Value, DiagnosticListener) abandonStart = _listener.Events.Dequeue();
-                Assert.AreEqual(DiagnosticProperty.AbandonActivityName + ".Start", abandonStart.Key);
-                Activity abandonActivity = (Activity)abandonStart.Value;
-                AssertCommonTags(abandonActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-                (string Key, object Value, DiagnosticListener) abandonStop = _listener.Events.Dequeue();
-                Assert.AreEqual(DiagnosticProperty.AbandonActivityName + ".Stop", abandonStop.Key);
+                var abandonScope = _listener.AssertAndRemoveScope(DiagnosticProperty.AbandonActivityName);
+                AssertCommonTags(abandonScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
                 var receiveDeferMsg = await receiver.ReceiveDeferredMessageAsync(deferred.SequenceNumber);
-                (string Key, object Value, DiagnosticListener) receiveDeferStart = _listener.Events.Dequeue();
-                Assert.AreEqual(DiagnosticProperty.ReceiveDeferredActivityName + ".Start", receiveDeferStart.Key);
-                Activity receiveDeferActivity = (Activity)receiveDeferStart.Value;
-                AssertCommonTags(receiveDeferActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-
-                (string Key, object Value, DiagnosticListener) receiveDeferStop = _listener.Events.Dequeue();
-                Assert.AreEqual(DiagnosticProperty.ReceiveDeferredActivityName + ".Stop", receiveDeferStop.Key);
+                var receiveDeferScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveDeferredActivityName);
+                AssertCommonTags(receiveDeferScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
                 // renew lock
                 if (useSessions)
                 {
                     var sessionReceiver = (ServiceBusSessionReceiver)receiver;
                     await sessionReceiver.RenewSessionLockAsync();
-                    (string Key, object Value, DiagnosticListener) renewStart = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.RenewSessionLockActivityName + ".Start", renewStart.Key);
-                    Activity renewActivity = (Activity)renewStart.Value;
-                    AssertCommonTags(renewActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-
-                    (string Key, object Value, DiagnosticListener) renewStop = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.RenewSessionLockActivityName + ".Stop", renewStop.Key);
+                    var renewSessionScope = _listener.AssertAndRemoveScope(DiagnosticProperty.RenewSessionLockActivityName);
+                    AssertCommonTags(renewSessionScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
                     // set state
                     var state = new BinaryData("state");
                     await sessionReceiver.SetSessionStateAsync(state);
-                    (string Key, object Value, DiagnosticListener) setStateStart = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.SetSessionStateActivityName + ".Start", setStateStart.Key);
-                    Activity setStateActivity = (Activity)setStateStart.Value;
-                    AssertCommonTags(setStateActivity, sessionReceiver.EntityPath, sessionReceiver.FullyQualifiedNamespace);
-
-                    (string Key, object Value, DiagnosticListener) setStateStop = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.SetSessionStateActivityName + ".Stop", setStateStop.Key);
+                    var setStateScope = _listener.AssertAndRemoveScope(DiagnosticProperty.SetSessionStateActivityName);
+                    AssertCommonTags(setStateScope.Activity, sessionReceiver.EntityPath, sessionReceiver.FullyQualifiedNamespace);
 
                     // get state
                     var getState = await sessionReceiver.GetSessionStateAsync();
                     Assert.AreEqual(state.ToArray(), getState.ToArray());
-                    (string Key, object Value, DiagnosticListener) getStateStart = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.GetSessionStateActivityName + ".Start", getStateStart.Key);
-                    Activity getStateActivity = (Activity)getStateStart.Value;
-                    AssertCommonTags(getStateActivity, sessionReceiver.EntityPath, sessionReceiver.FullyQualifiedNamespace);
-
-                    (string Key, object Value, DiagnosticListener) getStateStop = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.GetSessionStateActivityName + ".Stop", getStateStop.Key);
+                    var getStateScope = _listener.AssertAndRemoveScope(DiagnosticProperty.GetSessionStateActivityName);
+                    AssertCommonTags(getStateScope.Activity, sessionReceiver.EntityPath, sessionReceiver.FullyQualifiedNamespace);
                 }
                 else
                 {
                     await receiver.RenewMessageLockAsync(receivedMsgs[4]);
-                    (string Key, object Value, DiagnosticListener) renewStart = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.RenewMessageLockActivityName + ".Start", renewStart.Key);
-                    Activity renewActivity = (Activity)renewStart.Value;
-                    AssertCommonTags(renewActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-
-                    (string Key, object Value, DiagnosticListener) renewStop = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.RenewMessageLockActivityName + ".Stop", renewStop.Key);
+                    var renewMessageScope = _listener.AssertAndRemoveScope(DiagnosticProperty.RenewMessageLockActivityName);
+                    AssertCommonTags(renewMessageScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
                 }
 
                 // schedule
@@ -185,32 +139,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     var seq = await sender.ScheduleMessageAsync(msg, DateTimeOffset.UtcNow.AddMinutes(1));
                     Assert.IsNotNull(msg.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute]);
 
-                    (string Key, object Value, DiagnosticListener) startMessage = _listener.Events.Dequeue();
-                    Activity messageActivity = (Activity)startMessage.Value;
-                    AssertCommonTags(messageActivity, sender.EntityPath, sender.FullyQualifiedNamespace);
-                    Assert.AreEqual(DiagnosticProperty.MessageActivityName + ".Start", startMessage.Key);
+                    var messageScope = _listener.AssertAndRemoveScope(DiagnosticProperty.MessageActivityName);
+                    AssertCommonTags(messageScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
 
-                    (string Key, object Value, DiagnosticListener) stopMessage = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.MessageActivityName + ".Stop", stopMessage.Key);
+                    var scheduleScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ScheduleActivityName);
+                    AssertCommonTags(scheduleScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
 
-                    (string Key, object Value, DiagnosticListener) startSchedule = _listener.Events.Dequeue();
-                    AssertCommonTags((Activity)startSchedule.Value, sender.EntityPath, sender.FullyQualifiedNamespace);
-
-                    Assert.AreEqual(DiagnosticProperty.ScheduleActivityName + ".Start", startSchedule.Key);
-                    (string Key, object Value, DiagnosticListener) stopSchedule = _listener.Events.Dequeue();
-
-                    Assert.AreEqual(DiagnosticProperty.ScheduleActivityName + ".Stop", stopSchedule.Key);
-                    var linkedActivities = ((IEnumerable<Activity>)startSchedule.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startSchedule.Value)).ToArray();
-                    Assert.AreEqual(1, linkedActivities.Length);
-                    Assert.AreEqual(messageActivity.Id, linkedActivities[0].ParentId);
+                    var linkedActivities = scheduleScope.LinkedActivities;
+                    Assert.AreEqual(1, linkedActivities.Count);
+                    Assert.AreEqual(messageScope.Activity.Id, linkedActivities[0].ParentId);
 
                     await sender.CancelScheduledMessageAsync(seq);
-                    (string Key, object Value, DiagnosticListener) startCancel = _listener.Events.Dequeue();
-                    AssertCommonTags((Activity)startCancel.Value, sender.EntityPath, sender.FullyQualifiedNamespace);
-                    Assert.AreEqual(DiagnosticProperty.CancelActivityName + ".Start", startCancel.Key);
-
-                    (string Key, object Value, DiagnosticListener) stopCancel = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.CancelActivityName + ".Stop", stopCancel.Key);
+                    var cancelScope = _listener.AssertAndRemoveScope(DiagnosticProperty.CancelActivityName);
+                    AssertCommonTags(cancelScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
                 }
 
                 // send a batch
@@ -227,6 +168,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         [Test]
         public async Task ProcessorActivities()
         {
+            string[] messageActivities = null;
+            int messageProcessedCt = 0;
+            bool callbackExecuted = false;
+            _listener = new ClientDiagnosticListener(
+                EntityScopeFactory.DiagnosticNamespace,
+                scopeStartCallback: scope =>
+                {
+                    if (scope.Name == DiagnosticProperty.ProcessMessageActivityName)
+                    {
+                        Assert.IsNotNull(messageActivities);
+                        Assert.AreEqual(
+                            messageActivities[messageProcessedCt],
+                            scope.Links.Single());
+                        callbackExecuted = true;
+                    }
+                });
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
@@ -235,6 +192,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var msgs = GetMessages(messageCt);
                 await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(false, sender, msgs);
+                messageActivities = sendActivities.Select(a => a.ParentId).ToArray();
 
                 ServiceBusProcessor processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
@@ -243,11 +201,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     MaxConcurrentCalls = 1
                 });
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-                int messageProcessedCt = 0;
                 processor.ProcessMessageAsync += args =>
                 {
-                    messageProcessedCt++;
-                    if (messageProcessedCt == messageCt)
+                    if (++messageProcessedCt == messageCt)
                     {
                         tcs.SetResult(true);
                     }
@@ -259,22 +215,33 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StopProcessingAsync();
                 for (int i = 0; i < messageCt; i++)
                 {
-                    (string Key, object Value, DiagnosticListener) receiveStart = _listener.Events.Dequeue();
-                    (string Key, object Value, DiagnosticListener) receiveStop = _listener.Events.Dequeue();
-                    (string Key, object Value, DiagnosticListener) processStart = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.ProcessMessageActivityName + ".Start", processStart.Key);
-                    Activity processActivity = (Activity)processStart.Value;
-                    AssertCommonTags(processActivity, processor.EntityPath, processor.FullyQualifiedNamespace);
-
-                    (string Key, object Value, DiagnosticListener) processStop = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.ProcessMessageActivityName + ".Stop", processStop.Key);
+                    _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
+                    var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessMessageActivityName);
+                    AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
+                Assert.IsTrue(callbackExecuted);
             };
         }
 
         [Test]
         public async Task SessionProcessorActivities()
         {
+            string[] messageActivities = null;
+            int messageProcessedCt = 0;
+            bool callbackExecuted = false;
+            _listener = new ClientDiagnosticListener(
+                EntityScopeFactory.DiagnosticNamespace,
+                scopeStartCallback: scope =>
+                {
+                    if (scope.Name == DiagnosticProperty.ProcessSessionMessageActivityName)
+                    {
+                        Assert.IsNotNull(messageActivities);
+                        Assert.AreEqual(
+                            messageActivities[messageProcessedCt],
+                            scope.Links.Single());
+                        callbackExecuted = true;
+                    }
+                });
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
@@ -283,6 +250,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var msgs = GetMessages(messageCt, "sessionId");
                 await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(false, sender, msgs);
+                messageActivities = sendActivities.Select(a => a.ParentId).ToArray();
 
                 ServiceBusSessionProcessor processor = client.CreateSessionProcessor(scope.QueueName,
                     new ServiceBusSessionProcessorOptions
@@ -292,11 +260,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                         MaxConcurrentSessions = 1
                     });
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-                int processedMsgCt = 0;
                 processor.ProcessMessageAsync += args =>
                 {
-                    processedMsgCt++;
-                    if (processedMsgCt == messageCt)
+                    if (++messageProcessedCt == messageCt)
                     {
                         tcs.SetResult(true);
                     }
@@ -308,17 +274,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StopProcessingAsync();
                 for (int i = 0; i < messageCt; i++)
                 {
-                    (string Key, object Value, DiagnosticListener) receiveStart = _listener.Events.Dequeue();
-                    (string Key, object Value, DiagnosticListener) receiveStop = _listener.Events.Dequeue();
-                    (string Key, object Value, DiagnosticListener) processStart = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.ProcessSessionMessageActivityName + ".Start", processStart.Key);
-                    Activity processActivity = (Activity)processStart.Value;
-                    AssertCommonTags(processActivity, processor.EntityPath, processor.FullyQualifiedNamespace);
-
-                    (string Key, object Value, DiagnosticListener) processStop = _listener.Events.Dequeue();
-                    Assert.AreEqual(DiagnosticProperty.ProcessSessionMessageActivityName + ".Stop", processStop.Key);
+                    _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
+                    var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessSessionMessageActivityName);
+                    AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
-            };
+                Assert.IsTrue(callbackExecuted);
+            }
         }
 
         private Activity[] AssertSendActivities(bool useSessions, ServiceBusSender sender, IEnumerable<ServiceBusMessage> msgs)
@@ -327,29 +288,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             foreach (var msg in msgs)
             {
                 Assert.IsNotNull(msg.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute]);
-                (string Key, object Value, DiagnosticListener) startMessage = _listener.Events.Dequeue();
-                messageActivities.Add((Activity)startMessage.Value);
-                AssertCommonTags((Activity)startMessage.Value, sender.EntityPath, sender.FullyQualifiedNamespace);
-                Assert.AreEqual(DiagnosticProperty.MessageActivityName + ".Start", startMessage.Key);
-
-                (string Key, object Value, DiagnosticListener) stopMessage = _listener.Events.Dequeue();
-                Assert.AreEqual(DiagnosticProperty.MessageActivityName + ".Stop", stopMessage.Key);
+                var messageScope = _listener.AssertAndRemoveScope(DiagnosticProperty.MessageActivityName);
+                messageActivities.Add(messageScope.Activity);
+                AssertCommonTags(messageScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
             }
 
-            (string Key, object Value, DiagnosticListener) startSend = _listener.Events.Dequeue();
-            Assert.AreEqual(DiagnosticProperty.SendActivityName + ".Start", startSend.Key);
-            Activity sendActivity = (Activity)startSend.Value;
-            AssertCommonTags(sendActivity, sender.EntityPath, sender.FullyQualifiedNamespace);
+            var sendScope = _listener.AssertAndRemoveScope(DiagnosticProperty.SendActivityName);
+            AssertCommonTags(sendScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
 
-            (string Key, object Value, DiagnosticListener) stopSend = _listener.Events.Dequeue();
-            Assert.AreEqual(DiagnosticProperty.SendActivityName + ".Stop", stopSend.Key);
-
-            var sendLinkedActivities = ((IEnumerable<Activity>)startSend.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startSend.Value)).ToArray();
-            for (int i = 0; i < sendLinkedActivities.Length; i++)
+            var sendLinkedActivities = sendScope.LinkedActivities;
+            for (int i = 0; i < sendLinkedActivities.Count; i++)
             {
                 Assert.AreEqual(messageActivities[i].Id, sendLinkedActivities[i].ParentId);
             }
-            return sendLinkedActivities;
+            return sendLinkedActivities.ToArray();
         }
         private void AssertCommonTags(Activity activity, string entityName, string fullyQualifiedNamespace)
         {

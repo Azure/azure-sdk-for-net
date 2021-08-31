@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     internal partial class AttestSgxEnclaveRequest : IUtf8JsonSerializable
     {

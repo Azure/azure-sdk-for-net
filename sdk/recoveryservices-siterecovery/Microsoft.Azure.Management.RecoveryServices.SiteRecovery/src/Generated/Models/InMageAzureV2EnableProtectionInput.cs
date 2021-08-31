@@ -36,19 +36,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="masterTargetId">The Master target Id.</param>
         /// <param name="processServerId">The Process Server Id.</param>
-        /// <param name="storageAccountId">The storage account name.</param>
+        /// <param name="storageAccountId">The storage account Id.</param>
         /// <param name="runAsAccountId">The CS account Id.</param>
-        /// <param name="multiVmGroupId">The multi vm group Id.</param>
-        /// <param name="multiVmGroupName">The multi vm group name.</param>
+        /// <param name="multiVmGroupId">The multi VM group Id.</param>
+        /// <param name="multiVmGroupName">The multi VM group name.</param>
         /// <param name="disksToInclude">The disks to include list.</param>
         /// <param name="targetAzureNetworkId">The selected target Azure
         /// network Id.</param>
         /// <param name="targetAzureSubnetId">The selected target Azure subnet
         /// Id.</param>
         /// <param name="enableRdpOnTargetOption">The selected option to enable
-        /// RDP\SSH on target vm after failover. String value of
-        /// {SrsDataContract.EnableRDPOnTargetOption} enum.</param>
-        /// <param name="targetAzureVmName">The target azure Vm Name.</param>
+        /// RDP\SSH on target VM after failover. String value of
+        /// SrsDataContract.EnableRDPOnTargetOption enum.</param>
+        /// <param name="targetAzureVmName">The target azure VM Name.</param>
         /// <param name="logStorageAccountId">The storage account to be used
         /// for logging during replication.</param>
         /// <param name="targetAzureV1ResourceGroupId">The Id of the target
@@ -59,15 +59,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// failover VM is to be created.</param>
         /// <param name="diskType">The DiskType. Possible values include:
         /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'</param>
-        /// <param name="diskEncryptionSetId">The DiskEncryptionSet ARM
-        /// ID.</param>
+        /// <param name="targetAvailabilitySetId">The target availability set
+        /// ARM Id for resource manager deployment.</param>
         /// <param name="targetAvailabilityZone">The target availability
         /// zone.</param>
         /// <param name="targetProximityPlacementGroupId">The proximity
         /// placement group ARM Id.</param>
-        /// <param name="targetAvailabilitySetId">The availability set ARM
+        /// <param name="licenseType">License type. Possible values include:
+        /// 'NotSpecified', 'NoLicenseType', 'WindowsServer'</param>
+        /// <param name="sqlServerLicenseType">The SQL Server license type.
+        /// Possible values include: 'NotSpecified', 'NoLicenseType', 'PAYG',
+        /// 'AHUB'</param>
+        /// <param name="targetVmSize">The target VM size.</param>
+        /// <param name="diskEncryptionSetId">The DiskEncryptionSet ARM
         /// Id.</param>
-        public InMageAzureV2EnableProtectionInput(string masterTargetId = default(string), string processServerId = default(string), string storageAccountId = default(string), string runAsAccountId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), IList<InMageAzureV2DiskInputDetails> disksToInclude = default(IList<InMageAzureV2DiskInputDetails>), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRdpOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), string diskType = default(string), string diskEncryptionSetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetAvailabilitySetId = default(string))
+        /// <param name="targetVmTags">The target VM tags.</param>
+        /// <param name="seedManagedDiskTags">The tags for the seed managed
+        /// disks.</param>
+        /// <param name="targetManagedDiskTags">The tags for the target managed
+        /// disks.</param>
+        /// <param name="targetNicTags">The tags for the target NICs.</param>
+        public InMageAzureV2EnableProtectionInput(string masterTargetId = default(string), string processServerId = default(string), string storageAccountId = default(string), string runAsAccountId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), IList<InMageAzureV2DiskInputDetails> disksToInclude = default(IList<InMageAzureV2DiskInputDetails>), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRdpOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), string diskType = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string licenseType = default(string), string sqlServerLicenseType = default(string), string targetVmSize = default(string), string diskEncryptionSetId = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IDictionary<string, string> seedManagedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetManagedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>))
         {
             MasterTargetId = masterTargetId;
             ProcessServerId = processServerId;
@@ -84,10 +96,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetAzureV1ResourceGroupId = targetAzureV1ResourceGroupId;
             TargetAzureV2ResourceGroupId = targetAzureV2ResourceGroupId;
             DiskType = diskType;
-            DiskEncryptionSetId = diskEncryptionSetId;
+            TargetAvailabilitySetId = targetAvailabilitySetId;
             TargetAvailabilityZone = targetAvailabilityZone;
             TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
-            TargetAvailabilitySetId = targetAvailabilitySetId;
+            LicenseType = licenseType;
+            SqlServerLicenseType = sqlServerLicenseType;
+            TargetVmSize = targetVmSize;
+            DiskEncryptionSetId = diskEncryptionSetId;
+            TargetVmTags = targetVmTags;
+            SeedManagedDiskTags = seedManagedDiskTags;
+            TargetManagedDiskTags = targetManagedDiskTags;
+            TargetNicTags = targetNicTags;
             CustomInit();
         }
 
@@ -109,7 +128,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string ProcessServerId { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage account name.
+        /// Gets or sets the storage account Id.
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountId")]
         public string StorageAccountId { get; set; }
@@ -121,13 +140,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string RunAsAccountId { get; set; }
 
         /// <summary>
-        /// Gets or sets the multi vm group Id.
+        /// Gets or sets the multi VM group Id.
         /// </summary>
         [JsonProperty(PropertyName = "multiVmGroupId")]
         public string MultiVmGroupId { get; set; }
 
         /// <summary>
-        /// Gets or sets the multi vm group name.
+        /// Gets or sets the multi VM group name.
         /// </summary>
         [JsonProperty(PropertyName = "multiVmGroupName")]
         public string MultiVmGroupName { get; set; }
@@ -151,15 +170,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string TargetAzureSubnetId { get; set; }
 
         /// <summary>
-        /// Gets or sets the selected option to enable RDP\SSH on target vm
+        /// Gets or sets the selected option to enable RDP\SSH on target VM
         /// after failover. String value of
-        /// {SrsDataContract.EnableRDPOnTargetOption} enum.
+        /// SrsDataContract.EnableRDPOnTargetOption enum.
         /// </summary>
         [JsonProperty(PropertyName = "enableRdpOnTargetOption")]
         public string EnableRdpOnTargetOption { get; set; }
 
         /// <summary>
-        /// Gets or sets the target azure Vm Name.
+        /// Gets or sets the target azure VM Name.
         /// </summary>
         [JsonProperty(PropertyName = "targetAzureVmName")]
         public string TargetAzureVmName { get; set; }
@@ -193,10 +212,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string DiskType { get; set; }
 
         /// <summary>
-        /// Gets or sets the DiskEncryptionSet ARM ID.
+        /// Gets or sets the target availability set ARM Id for resource
+        /// manager deployment.
         /// </summary>
-        [JsonProperty(PropertyName = "diskEncryptionSetId")]
-        public string DiskEncryptionSetId { get; set; }
+        [JsonProperty(PropertyName = "targetAvailabilitySetId")]
+        public string TargetAvailabilitySetId { get; set; }
 
         /// <summary>
         /// Gets or sets the target availability zone.
@@ -211,10 +231,54 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string TargetProximityPlacementGroupId { get; set; }
 
         /// <summary>
-        /// Gets or sets the availability set ARM Id.
+        /// Gets or sets license type. Possible values include: 'NotSpecified',
+        /// 'NoLicenseType', 'WindowsServer'
         /// </summary>
-        [JsonProperty(PropertyName = "targetAvailabilitySetId")]
-        public string TargetAvailabilitySetId { get; set; }
+        [JsonProperty(PropertyName = "licenseType")]
+        public string LicenseType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SQL Server license type. Possible values include:
+        /// 'NotSpecified', 'NoLicenseType', 'PAYG', 'AHUB'
+        /// </summary>
+        [JsonProperty(PropertyName = "sqlServerLicenseType")]
+        public string SqlServerLicenseType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target VM size.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetVmSize")]
+        public string TargetVmSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DiskEncryptionSet ARM Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskEncryptionSetId")]
+        public string DiskEncryptionSetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target VM tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetVmTags")]
+        public IDictionary<string, string> TargetVmTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the seed managed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "seedManagedDiskTags")]
+        public IDictionary<string, string> SeedManagedDiskTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the target managed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetManagedDiskTags")]
+        public IDictionary<string, string> TargetManagedDiskTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the target NICs.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetNicTags")]
+        public IDictionary<string, string> TargetNicTags { get; set; }
 
     }
 }

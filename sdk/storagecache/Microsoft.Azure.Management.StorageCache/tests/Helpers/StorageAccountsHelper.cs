@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="skuName">Storage SKU.</param>
         /// <param name="storageKind">Storage kind.</param>
         /// <returns>Stoprage account.</returns>
-        public StorageAccount CreateStorageAccount(string storageAccountName, string skuName = null, string storageKind = null)
+        public StorageAccount CreateStorageAccount(string storageAccountName, string skuName = null, string storageKind = null, bool blobNfs = false, string subnetUri = null)
         {
             var sku = string.IsNullOrEmpty(skuName) ? DefaultSkuName : skuName;
             var kind = string.IsNullOrEmpty(storageKind) ? DefaultKind : storageKind;
@@ -57,6 +57,32 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                 Sku = new Sku() { Name = sku },
                 Kind = kind,
             };
+
+            if (blobNfs == true)
+            {
+                storageAccountCreateParameters.IsHnsEnabled = true;
+                storageAccountCreateParameters.Kind = "BlockBlobStorage";
+                storageAccountCreateParameters.Sku.Name = "Premium_LRS";
+                storageAccountCreateParameters.EnableHttpsTrafficOnly = false;
+                storageAccountCreateParameters.EnableNfsV3 = true;
+                storageAccountCreateParameters.AllowSharedKeyAccess = true;
+                storageAccountCreateParameters.AllowBlobPublicAccess = true;
+                //RoutingPreference rp = new RoutingPreference();
+                //rp.PublishMicrosoftEndpoints = true;
+                //rp.PublishInternetEndpoints = false;
+                //storageAccountCreateParameters.RoutingPreference = rp;
+                VirtualNetworkRule virtualNetworkRule = new VirtualNetworkRule();
+                virtualNetworkRule.VirtualNetworkResourceId = subnetUri;
+                List<VirtualNetworkRule> virtualNetworkRules = new List<VirtualNetworkRule>();
+                virtualNetworkRules.Add(virtualNetworkRule);
+                NetworkRuleSet nrs = new NetworkRuleSet();
+                nrs.VirtualNetworkRules = virtualNetworkRules;
+                nrs.Bypass = "AzureServices";
+                nrs.DefaultAction = DefaultAction.Deny;
+                nrs.IpRules = new List<IPRule>();
+                storageAccountCreateParameters.NetworkRuleSet = nrs;
+            }
+
             StorageAccount storageAccount = this.StorageManagementClient.StorageAccounts.Create(this.resourceGroup.Name, storageAccountName, storageAccountCreateParameters);
             return storageAccount;
         }
@@ -69,7 +95,9 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <returns>Blob container.</returns>
         public BlobContainer CreateBlobContainer(string storageAccountName, string containerName)
         {
-            BlobContainer blobContainer = this.StorageManagementClient.BlobContainers.Create(this.resourceGroup.Name, storageAccountName, containerName, publicAccess: PublicAccess.Blob);
+            BlobContainer blobProperties = new BlobContainer();
+            blobProperties.PublicAccess = PublicAccess.Blob;
+            BlobContainer blobContainer = this.StorageManagementClient.BlobContainers.Create(this.resourceGroup.Name, storageAccountName, containerName, blobProperties);
             return blobContainer;
         }
     }

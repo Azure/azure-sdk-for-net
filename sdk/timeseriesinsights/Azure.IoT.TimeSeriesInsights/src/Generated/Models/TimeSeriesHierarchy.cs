@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.IoT.TimeSeriesInsights.Models;
 
 namespace Azure.IoT.TimeSeriesInsights
 {

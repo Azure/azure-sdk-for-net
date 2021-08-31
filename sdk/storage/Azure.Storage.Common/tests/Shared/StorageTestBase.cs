@@ -14,13 +14,14 @@ using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Sas;
 using Azure.Storage.Tests.Shared;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Storage.Test.Shared
 {
-    public abstract class StorageTestBase : RecordedTestBase
+    public abstract partial class StorageTestBase<TEnvironment> : RecordedTestBase<TEnvironment> where TEnvironment : StorageTestEnvironment, new()
     {
         static StorageTestBase()
         {
@@ -33,7 +34,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(async, mode)
         {
             Sanitizer = new StorageRecordedTestSanitizer();
         }
@@ -169,7 +170,6 @@ namespace Azure.Storage.Test.Shared
                     }
                     Recording.GetVariable(name, text);
                     break;
-                case RecordedTestMode.Live:
                 default:
                     config = getTenant();
                     break;
@@ -534,6 +534,27 @@ namespace Azure.Storage.Test.Shared
                 sb.Append(Constants.Sas.Permissions.FilterByTags);
             }
             return sb.ToString();
+        }
+
+        public async Task<string> GetAuthToken(string[] scopes = default, TenantConfiguration tenantConfiguration = default)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return "auth token";
+            }
+
+            tenantConfiguration ??= TestConfigOAuth;
+
+            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(tenantConfiguration.ActiveDirectoryApplicationId)
+                .WithAuthority(AzureCloudInstance.AzurePublic, tenantConfiguration.ActiveDirectoryTenantId)
+                .WithClientSecret(tenantConfiguration.ActiveDirectoryApplicationSecret)
+                .Build();
+
+            scopes ??= new string[] { "https://storage.azure.com/.default" };
+
+            AcquireTokenForClientParameterBuilder result = application.AcquireTokenForClient(scopes);
+            AuthenticationResult authenticationResult = await result.ExecuteAsync();
+            return authenticationResult.AccessToken;
         }
     }
 }

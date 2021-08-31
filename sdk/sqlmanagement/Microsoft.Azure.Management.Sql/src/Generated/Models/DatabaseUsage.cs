@@ -10,13 +10,16 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The database usages.
+    /// Usage metric of a database.
     /// </summary>
-    public partial class DatabaseUsage
+    [Rest.Serialization.JsonTransformation]
+    public partial class DatabaseUsage : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the DatabaseUsage class.
@@ -29,24 +32,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the DatabaseUsage class.
         /// </summary>
-        /// <param name="name">The name of the usage metric.</param>
-        /// <param name="resourceName">The name of the resource.</param>
-        /// <param name="displayName">The usage metric display name.</param>
-        /// <param name="currentValue">The current value of the usage
-        /// metric.</param>
-        /// <param name="limit">The current limit of the usage metric.</param>
-        /// <param name="unit">The units of the usage metric.</param>
-        /// <param name="nextResetTime">The next reset time for the usage
-        /// metric (ISO8601 format).</param>
-        public DatabaseUsage(string name = default(string), string resourceName = default(string), string displayName = default(string), double? currentValue = default(double?), double? limit = default(double?), string unit = default(string), System.DateTime? nextResetTime = default(System.DateTime?))
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="displayName">User-readable name of the metric.</param>
+        /// <param name="currentValue">Current value of the metric.</param>
+        /// <param name="limit">Boundary value of the metric.</param>
+        /// <param name="unit">Unit of the metric.</param>
+        public DatabaseUsage(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), double? currentValue = default(double?), double? limit = default(double?), string unit = default(string))
+            : base(id, name, type)
         {
-            Name = name;
-            ResourceName = resourceName;
             DisplayName = displayName;
             CurrentValue = currentValue;
             Limit = limit;
             Unit = unit;
-            NextResetTime = nextResetTime;
             CustomInit();
         }
 
@@ -56,46 +55,28 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the name of the usage metric.
+        /// Gets user-readable name of the metric.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "resourceName")]
-        public string ResourceName { get; private set; }
-
-        /// <summary>
-        /// Gets the usage metric display name.
-        /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets the current value of the usage metric.
+        /// Gets current value of the metric.
         /// </summary>
-        [JsonProperty(PropertyName = "currentValue")]
+        [JsonProperty(PropertyName = "properties.currentValue")]
         public double? CurrentValue { get; private set; }
 
         /// <summary>
-        /// Gets the current limit of the usage metric.
+        /// Gets boundary value of the metric.
         /// </summary>
-        [JsonProperty(PropertyName = "limit")]
+        [JsonProperty(PropertyName = "properties.limit")]
         public double? Limit { get; private set; }
 
         /// <summary>
-        /// Gets the units of the usage metric.
+        /// Gets unit of the metric.
         /// </summary>
-        [JsonProperty(PropertyName = "unit")]
+        [JsonProperty(PropertyName = "properties.unit")]
         public string Unit { get; private set; }
-
-        /// <summary>
-        /// Gets the next reset time for the usage metric (ISO8601 format).
-        /// </summary>
-        [JsonProperty(PropertyName = "nextResetTime")]
-        public System.DateTime? NextResetTime { get; private set; }
 
     }
 }

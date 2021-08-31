@@ -15,6 +15,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the storage of the tokens if a file
+    /// system is used.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class FileSystemTokenStore : ProxyOnlyResource
     {
@@ -33,6 +37,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="directory">The directory in which the tokens will be
+        /// stored.</param>
         public FileSystemTokenStore(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string directory = default(string))
             : base(id, name, kind, type)
         {
@@ -46,6 +52,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the directory in which the tokens will be stored.
         /// </summary>
         [JsonProperty(PropertyName = "properties.directory")]
         public string Directory { get; set; }

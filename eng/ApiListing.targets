@@ -1,25 +1,13 @@
 <Project>
 
   <PropertyGroup>
-    <_SupportsApiListing Condition="'$(IsShippingClientLibrary)' == 'true' AND '$(GenerateApiListingOnBuild)' == 'true'">true</_SupportsApiListing>
+    <_RefSourceOutputPath>$([System.IO.Directory]::GetParent('$(MSBuildProjectDirectory)'))/api/</_RefSourceOutputPath>
+    <GenAPIAdditionalParameters>--exclude-attributes-list "$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt" $(GenAPIAdditionalParameters)</GenAPIAdditionalParameters>
+    <GenAPITargetPath>$(_RefSourceOutputPath)$(AssemblyName).$(TargetFramework).cs</GenAPITargetPath>
   </PropertyGroup>
 
-  <Target
-    Name="_GenerateApiListing"
-    Condition="'$(_SupportsApiListing)' == 'true' AND '$(GenerateAPIListing)' == 'true'"
-    AfterTargets="_GenerateApiListingAfterBuild"
-    DependsOnTargets="GenerateReferenceAssemblySource" />
+  <Target Name="RemoveExistingListings">
 
-  <Target 
-    Name="_GenerateApiListingAfterBuild"
-    AfterTargets="CoreBuild" 
-    Condition="'$(_SupportsApiListing)' == 'true'">
-    
-    <PropertyGroup>
-      <_RefSourceOutputPath>$([System.IO.Directory]::GetParent('$(MSBuildProjectDirectory)'))/api/</_RefSourceOutputPath>
-      <GenAPIAdditionalParameters>--exclude-attributes-list "$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt" $(GenAPIAdditionalParameters)</GenAPIAdditionalParameters>
-      <GenAPITargetPath>$(_RefSourceOutputPath)$(AssemblyName).$(TargetFramework).cs</GenAPITargetPath>
-    </PropertyGroup>
     <ItemGroup>
       <!-- Remove all files that don't start with $(AssemblyName) and the current target -->
       <_ListingsToRemove Include="$(_RefSourceOutputPath)*" Exclude="$(_RefSourceOutputPath)$(AssemblyName).*.cs" />
@@ -29,6 +17,24 @@
     <Delete Files="@(_ListingsToRemove)" />
     <MakeDir Directories="$(_RefSourceOutputPath)"/>
   </Target>
+
+  <Target Name="_SetExportApiInnerTarget">
+    <PropertyGroup>
+      <InnerTargets>ExportApi</InnerTargets>
+    </PropertyGroup>
+  </Target>
+
+  <Target 
+    Name="ExportApiCrossTarget"
+    DependsOnTargets="_SetExportApiInnerTarget;DispatchToInnerBuilds"
+    Condition="'$(IsCrossTargetingBuild)' == 'true'" />
+
+  <Target 
+    Name="ExportApiInner"
+    DependsOnTargets="Build;RemoveExistingListings;GenerateReferenceAssemblySource"
+    Condition="'$(IsInnerBuild)' == 'true'" />
+
+  <Target Name="ExportApi" DependsOnTargets="ExportApiCrossTarget;ExportApiInner" Condition="'$(GenerateAPIListing)' == 'true'" />
 
   <Target Name="_CheckGenerateAPIListingValue" AfterTargets="Build">
     <Error

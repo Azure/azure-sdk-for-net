@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.RecordingFileStatusUpdated event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RecordingFileStatusUpdated event. </summary>
     public partial class AcsRecordingFileStatusUpdatedEventData
     {
         /// <summary> Initializes a new instance of AcsRecordingFileStatusUpdatedEventData. </summary>

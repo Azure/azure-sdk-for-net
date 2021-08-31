@@ -393,6 +393,61 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                 this.DeleteResourceGroup(context, resourceGroupName);
             }
         }
+
+        [Fact]
+        public void CrudProfileWithMinChildEndpointsIp()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
+
+                string resourceGroupName = TrafficManagerHelper.GenerateName();
+                string profileName = TrafficManagerHelper.GenerateName();
+                ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
+
+                // Create the profile. This is multi-value and will have non-default min child endpoints.
+                var expectedProfile = TrafficManagerHelper.CreateOrUpdateProfileWithMultiValue(
+                    trafficManagerClient,
+                    resourceGroupName,
+                    profileName,
+                    3,
+                    77,
+                    66,
+                    55);
+
+                // Get the profile
+                var actualProfile = trafficManagerClient.Profiles.Get(
+                    resourceGroup.Name,
+                    profileName);
+
+                Assert.Equal(5, expectedProfile.Endpoints.Count);
+
+                Assert.Equal(77, expectedProfile.Endpoints[0].MinChildEndpoints);
+                Assert.Equal(66, expectedProfile.Endpoints[0].MinChildEndpointsIPv4);
+                Assert.Equal(55, expectedProfile.Endpoints[0].MinChildEndpointsIPv6);
+
+                Assert.Equal(78, expectedProfile.Endpoints[1].MinChildEndpoints);
+                Assert.Equal(67, expectedProfile.Endpoints[1].MinChildEndpointsIPv4);
+                Assert.Equal(56, expectedProfile.Endpoints[1].MinChildEndpointsIPv6);
+
+                Assert.Equal(79, expectedProfile.Endpoints[2].MinChildEndpoints);
+                Assert.Equal(68, expectedProfile.Endpoints[2].MinChildEndpointsIPv4);
+                Assert.Equal(57, expectedProfile.Endpoints[2].MinChildEndpointsIPv6);
+
+                Assert.Equal(80, expectedProfile.Endpoints[3].MinChildEndpoints);
+                Assert.Equal(69, expectedProfile.Endpoints[3].MinChildEndpointsIPv4);
+                Assert.Equal(58, expectedProfile.Endpoints[3].MinChildEndpointsIPv6);
+
+                Assert.Equal(81, expectedProfile.Endpoints[4].MinChildEndpoints);
+                Assert.Equal(70, expectedProfile.Endpoints[4].MinChildEndpointsIPv4);
+                Assert.Equal(59, expectedProfile.Endpoints[4].MinChildEndpointsIPv6);
+
+                // Delete the profile
+                trafficManagerClient.Profiles.Delete(resourceGroup.Name, profileName);
+
+                this.DeleteResourceGroup(context, resourceGroupName);
+            }
+        }
     }
 }
 

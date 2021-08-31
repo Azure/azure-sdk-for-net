@@ -10,8 +10,8 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> All available compression levels. </summary>
-    public readonly partial struct DatasetCompressionLevel : IEquatable<DatasetCompressionLevel>
+    /// <summary> The DatasetCompressionLevel. </summary>
+    internal readonly partial struct DatasetCompressionLevel : IEquatable<DatasetCompressionLevel>
     {
         private readonly string _value;
 

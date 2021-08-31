@@ -66,6 +66,12 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='restorableSqlDatabaseRid'>
         /// The resource ID of the SQL database.
         /// </param>
+        /// <param name='startTime'>
+        /// The snapshot create timestamp after which snapshots need to be listed.
+        /// </param>
+        /// <param name='endTime'>
+        /// The snapshot create timestamp before which snapshots need to be listed.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -87,7 +93,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<RestorableSqlContainerGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, string restorableSqlDatabaseRid = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<RestorableSqlContainerGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, string restorableSqlDatabaseRid = default(string), string startTime = default(string), string endTime = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -129,6 +135,8 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("instanceId", instanceId);
                 tracingParameters.Add("restorableSqlDatabaseRid", restorableSqlDatabaseRid);
+                tracingParameters.Add("startTime", startTime);
+                tracingParameters.Add("endTime", endTime);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -146,6 +154,14 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (restorableSqlDatabaseRid != null)
             {
                 _queryParameters.Add(string.Format("restorableSqlDatabaseRid={0}", System.Uri.EscapeDataString(restorableSqlDatabaseRid)));
+            }
+            if (startTime != null)
+            {
+                _queryParameters.Add(string.Format("startTime={0}", System.Uri.EscapeDataString(startTime)));
+            }
+            if (endTime != null)
+            {
+                _queryParameters.Add(string.Format("endTime={0}", System.Uri.EscapeDataString(endTime)));
             }
             if (_queryParameters.Count > 0)
             {

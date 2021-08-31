@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
 
@@ -33,14 +34,16 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample06_DefaultAzureCredential
 
-            TokenCredential credential = new DefaultAzureCredential();
+#if SNIPPET
+            var credential = new DefaultAzureCredential();
 
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = scope.EventHubName;
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
+#else
+            var credential = EventHubsTestEnvironment.Instance.Credential;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = scope.EventHubName;
+#endif
 
             var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
@@ -80,14 +83,19 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample06_SharedAccessSignature
 
-            TokenCredential credential = new DefaultAzureCredential();
+#if SNIPPET
+            var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
 
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = scope.EventHubName;
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
+#else
+            var resource = EventHubConnection.BuildConnectionSignatureAuthorizationResource(new EventHubProducerClientOptions().ConnectionOptions.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
+            var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+            var credential = new AzureSasCredential(signature.Value);
+
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = scope.EventHubName;
+#endif
 
             var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
@@ -127,14 +135,16 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample06_SharedAccessKey
 
-            TokenCredential credential = new DefaultAzureCredential();
+#if SNIPPET
+            var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED KEY >>");
 
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = scope.EventHubName;
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
+#else
+            var credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = scope.EventHubName;
+#endif
 
             var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
@@ -174,11 +184,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample06_ConnectionStringParse
 
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+#endif
 
             EventHubsConnectionStringProperties properties =
                 EventHubsConnectionStringProperties.Parse(connectionString);

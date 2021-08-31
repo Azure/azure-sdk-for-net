@@ -48,8 +48,7 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
 
         /// <summary>
         /// The version of the Service Fabric resource provider API. This is a required
-        /// parameter and it's value must be "2021-01-01-preview" for this
-        /// specification.
+        /// parameter and it's value must be "2021-05-01" for this specification.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -100,6 +99,11 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
         /// Gets the IManagedClustersOperations.
         /// </summary>
         public virtual IManagedClustersOperations ManagedClusters { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedClusterVersionOperations.
+        /// </summary>
+        public virtual IManagedClusterVersionOperations ManagedClusterVersion { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -357,10 +361,11 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
             Applications = new ApplicationsOperations(this);
             Services = new ServicesOperations(this);
             ManagedClusters = new ManagedClustersOperations(this);
+            ManagedClusterVersion = new ManagedClusterVersionOperations(this);
             Operations = new Operations(this);
             NodeTypes = new NodeTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-01-01-preview";
+            ApiVersion = "2021-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

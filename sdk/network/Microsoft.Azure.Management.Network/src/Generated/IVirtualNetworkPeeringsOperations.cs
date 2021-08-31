@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters supplied to the create or update virtual network peering
         /// operation.
         /// </param>
+        /// <param name='syncRemoteAddressSpace'>
+        /// Parameter indicates the intention to sync the peering with the
+        /// current address space on the remote vNet after it's updated.
+        /// Possible values include: 'true'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -107,7 +112,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VirtualNetworkPeering>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualNetworkPeering>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, string syncRemoteAddressSpace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all virtual network peerings in a virtual network.
         /// </summary>
@@ -174,6 +179,11 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters supplied to the create or update virtual network peering
         /// operation.
         /// </param>
+        /// <param name='syncRemoteAddressSpace'>
+        /// Parameter indicates the intention to sync the peering with the
+        /// current address space on the remote vNet after it's updated.
+        /// Possible values include: 'true'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -189,7 +199,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VirtualNetworkPeering>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualNetworkPeering>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, string syncRemoteAddressSpace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all virtual network peerings in a virtual network.
         /// </summary>

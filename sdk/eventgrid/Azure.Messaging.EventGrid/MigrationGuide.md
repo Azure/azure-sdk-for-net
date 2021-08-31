@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to `Azure.Messaging.EventGrid` from `Microsoft.Azure.EventGrid`. It will focus on side-by-side comparisons for similar operations between the two packages.
 
-We assume that you are familiar with `Microsoft.Azure.EventGrid`. If not, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/README.md) for `Azure.Messaging.EventGrid` rather than this guide.
+We assume that you are familiar with `Microsoft.Azure.EventGrid`. If not, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid/README.md) for `Azure.Messaging.EventGrid` rather than this guide.
 
 ## Table of contents
 - [Migration benefits](#migration-benefits)
@@ -95,19 +95,29 @@ await client.PublishEventsAsync(topicHostname, eventsList);
 
 In `Azure.Messaging.EventGrid`, when publishing events it is no longer necessary to include the topic host name. Instead, this is passed as part of the `Uri` that is provided to the `EventGridPublisherClient` constructor. The `EventGridEvent` type now has a constructor that includes parameters for all required fields of the event grid schema:
 ```C# Snippet:SendEGEventsToTopic
+// Example of a custom ObjectSerializer used to serialize the event payload to JSON
+var myCustomDataSerializer = new JsonObjectSerializer(
+    new JsonSerializerOptions()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    });
+
 // Add EventGridEvents to a list to publish to the topic
 List<EventGridEvent> eventsList = new List<EventGridEvent>
 {
+    // EventGridEvent with custom model serialized to JSON
     new EventGridEvent(
         "ExampleEventSubject",
         "Example.EventType",
         "1.0",
-        "This is the data for the first event"),
-   new EventGridEvent(
+        new CustomModel() { A = 5, B = true }),
+
+    // EventGridEvent with custom model serialized to JSON using a custom serializer
+    new EventGridEvent(
         "ExampleEventSubject",
         "Example.EventType",
         "1.0",
-        "This is the data for the second event")
+        myCustomDataSerializer.Serialize(new CustomModel() { A = 5, B = true })),
 };
 
 // Send the events
@@ -197,4 +207,4 @@ foreach (EventGridEvent egEvent in egEvents)
 ## Additional samples
 
 More examples can be found at:
-- [Event Grid samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples)
+- [Event Grid samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid/samples)

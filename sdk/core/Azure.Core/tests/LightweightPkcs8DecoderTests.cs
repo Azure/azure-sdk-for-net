@@ -175,6 +175,7 @@ namespace Azure.Core.Tests
         [Test]
         public void GetECDsaPrivateKeyImportedOid()
         {
+            // cspell:ignore Secp
             byte[] data = Convert.FromBase64String(EcSecp256k1PrivateKey);
             Assert.AreEqual("1.2.840.10045.2.1", LightweightPkcs8Decoder.DecodePrivateKeyOid(data));
         }

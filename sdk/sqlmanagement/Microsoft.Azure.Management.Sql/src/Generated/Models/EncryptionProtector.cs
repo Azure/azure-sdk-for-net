@@ -46,7 +46,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="serverKeyName">The name of the server key.</param>
         /// <param name="uri">The URI of the server key.</param>
         /// <param name="thumbprint">Thumbprint of the server key.</param>
-        public EncryptionProtector(string serverKeyType, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string location = default(string), string subregion = default(string), string serverKeyName = default(string), string uri = default(string), string thumbprint = default(string))
+        /// <param name="autoRotationEnabled">Key auto rotation opt-in flag.
+        /// Either true or false.</param>
+        public EncryptionProtector(string serverKeyType, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string location = default(string), string subregion = default(string), string serverKeyName = default(string), string uri = default(string), string thumbprint = default(string), bool? autoRotationEnabled = default(bool?))
             : base(id, name, type)
         {
             Kind = kind;
@@ -56,6 +58,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             ServerKeyType = serverKeyType;
             Uri = uri;
             Thumbprint = thumbprint;
+            AutoRotationEnabled = autoRotationEnabled;
             CustomInit();
         }
 
@@ -108,6 +111,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.thumbprint")]
         public string Thumbprint { get; private set; }
+
+        /// <summary>
+        /// Gets or sets key auto rotation opt-in flag. Either true or false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoRotationEnabled")]
+        public bool? AutoRotationEnabled { get; set; }
 
         /// <summary>
         /// Validate the object.

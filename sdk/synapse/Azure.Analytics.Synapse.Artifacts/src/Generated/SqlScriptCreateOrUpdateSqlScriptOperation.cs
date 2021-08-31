@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a Sql Script. </summary>
     public partial class SqlScriptCreateOrUpdateSqlScriptOperation : Operation<SqlScriptResource>, IOperationSource<SqlScriptResource>
     {
-        private readonly ArmOperationHelpers<SqlScriptResource> _operation;
+        private readonly OperationInternals<SqlScriptResource> _operation;
 
         /// <summary> Initializes a new instance of SqlScriptCreateOrUpdateSqlScriptOperation for mocking. </summary>
         protected SqlScriptCreateOrUpdateSqlScriptOperation()
@@ -28,8 +28,9 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal SqlScriptCreateOrUpdateSqlScriptOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<SqlScriptResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SqlScriptCreateOrUpdateSqlScriptOperation");
+            _operation = new OperationInternals<SqlScriptResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SqlScriptCreateOrUpdateSqlScriptOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

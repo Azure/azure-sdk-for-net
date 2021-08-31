@@ -33,12 +33,15 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// <param name="display">Display name of the operation</param>
         /// <param name="origin">Origin of the operation</param>
         /// <param name="properties">Properties of the operation</param>
-        public Operation(string name = default(string), OperationInfo display = default(OperationInfo), string origin = default(string), object properties = default(object))
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
+        public Operation(string name = default(string), OperationInfo display = default(OperationInfo), string origin = default(string), object properties = default(object), bool? isDataAction = default(bool?))
         {
             Name = name;
             Display = display;
             Origin = origin;
             Properties = properties;
+            IsDataAction = isDataAction;
             CustomInit();
         }
 
@@ -70,6 +73,12 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public object Properties { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the operation is a data action
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
     }
 }

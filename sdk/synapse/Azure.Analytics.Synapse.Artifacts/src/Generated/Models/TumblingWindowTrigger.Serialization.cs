@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(TumblingWindowTriggerConverter))]
     public partial class TumblingWindowTrigger : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -220,6 +222,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, pipeline, frequency, interval, startTime, Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, Optional.ToList(dependsOn));
+        }
+
+        internal partial class TumblingWindowTriggerConverter : JsonConverter<TumblingWindowTrigger>
+        {
+            public override void Write(Utf8JsonWriter writer, TumblingWindowTrigger model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override TumblingWindowTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeTumblingWindowTrigger(document.RootElement);
+            }
         }
     }
 }

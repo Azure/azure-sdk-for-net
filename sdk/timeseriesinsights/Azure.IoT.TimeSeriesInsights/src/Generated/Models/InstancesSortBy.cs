@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.IoT.TimeSeriesInsights.Models
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Value to use for sorting of the time series instances before being returned by search instances call. When it is set to &apos;Rank&apos;, the returned instances are sorted based on the relevance. When it is set to &apos;DisplayName&apos;, the returned results are sorted based on the display name. Display name is the name of the instance if it exists, otherwise, display name is the time series ID. Default is &apos;Rank&apos;. </summary>
-    public readonly partial struct InstancesSortBy : IEquatable<InstancesSortBy>
+    internal readonly partial struct InstancesSortBy : IEquatable<InstancesSortBy>
     {
         private readonly string _value;
 

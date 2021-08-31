@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
         {
             this.fixture = fixture;
             this.testOutputHelper = testOutputHelper;
+            testOutputHelper.WriteLine(fixture.notes.ToString());
         }
 
         /// <summary>
@@ -62,7 +63,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 Assert.Equal(this.fixture.Cache.Identity.Type, response.Identity.Type);
                 Assert.Equal(this.fixture.Cache.Identity.PrincipalId, response.Identity.PrincipalId);
                 Assert.Equal(this.fixture.Cache.Identity.TenantId, response.Identity.TenantId);
-                Assert.Equal(this.fixture.Cache.SecuritySettings.RootSquash, response.SecuritySettings.RootSquash);
+                Assert.Equal(1500, this.fixture.Cache.NetworkSettings.Mtu);
+                Assert.Equal("time.windows.com", this.fixture.Cache.NetworkSettings.NtpServer);
             }
         }
 
@@ -111,6 +113,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.testOutputHelper.WriteLine("Looking for cache in resource group {0}.", this.fixture.ResourceGroup.Name);
                 IList<Cache> cacheListResponse = client.Caches.ListByResourceGroup(this.fixture.ResourceGroup.Name).Value;
+                testOutputHelper.WriteLine($"Caches found {cacheListResponse.Count}");
                 Assert.True(cacheListResponse.Count >= 1);
                 bool found = false;
                 foreach (Cache response in cacheListResponse)

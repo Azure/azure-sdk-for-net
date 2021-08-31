@@ -5,13 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
     public class RecognizePiiEntitiesTests : TextAnalyticsClientLiveTestBase
     {
-        public RecognizePiiEntitiesTests(bool isAsync) : base(isAsync) { }
+        public RecognizePiiEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private const string EnglishDocument1 = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft";
         private const string EnglishDocument2 = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check";
@@ -38,7 +43,8 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             "859-98-0987",
             "800-102-1100",
-            "Microsoft"
+            "Microsoft",
+            "developer"
         };
 
         private static readonly List<string> s_document2ExpectedOutput = new List<string>
@@ -46,7 +52,7 @@ namespace Azure.AI.TextAnalytics.Tests
             "111000025"
         };
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -55,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -64,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -73,18 +79,18 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithDomainTest()
         {
             TextAnalyticsClient client = GetClient();
             string document = "I work at Microsoft and my email is atest@microsoft.com";
 
-            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en", new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation } );
+            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en", new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomain.ProtectedHealthInformation } );
 
             ValidateInDocumenResult(entities, new List<string>() { "atest@microsoft.com", "Microsoft" });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithCategoriesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -96,14 +102,11 @@ namespace Azure.AI.TextAnalytics.Tests
             entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber, PiiEntityCategory.Organization } });
             ValidateInDocumenResult(entities, new List<string>() { "800-102-1100", "Microsoft" });
 
-            entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber, PiiEntityCategory.Organization, PiiEntityCategory.USSocialSecurityNumber } });
-            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
-
             entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.ABARoutingNumber } });
             Assert.AreEqual(0, entities.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithResultCategoriesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -120,7 +123,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(newEntities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -142,7 +145,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -157,7 +160,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -172,7 +175,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -187,7 +190,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -202,23 +205,23 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWithDomainTest()
         {
             TextAnalyticsClient client = GetClient();
 
-            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchDocuments, new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation });
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchDocuments, new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomain.ProtectedHealthInformation });
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
-                { "1", s_document1ExpectedOutput },
+                { "1", new List<string>() { "800-102-1100", "800-102-1100", "Microsoft" } },
                 { "2", s_document2ExpectedOutput },
             };
 
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWitCategoryTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -242,7 +245,6 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (PiiEntity entity in entities)
             {
                 Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
-                Assert.IsTrue(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase));
                 Assert.IsNotNull(entity.Category);
                 Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
                 Assert.GreaterOrEqual(entity.Offset, 0);
@@ -252,6 +254,10 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.IsNotEmpty(entity.SubCategory);
                 }
+            }
+            foreach (var text in minimumExpectedOutput)
+            {
+                Assert.IsTrue(entities.Any(e => e.Text == text));
             }
         }
 

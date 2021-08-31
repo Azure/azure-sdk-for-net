@@ -88,7 +88,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CanSetContentLenghtOverMaxInt()
+        public async Task CanSetContentLengthOverMaxInt()
         {
             long contentLength = 0;
             using TestServer testServer = new TestServer(
@@ -575,7 +575,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task RequestIdCanBeOverriden()
+        public async Task RequestIdCanBeOverridden()
         {
             using TestServer testServer = new TestServer(context => { });
             var transport = GetTransport();

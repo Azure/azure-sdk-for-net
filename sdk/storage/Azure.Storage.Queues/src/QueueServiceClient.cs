@@ -128,7 +128,7 @@ namespace Azure.Storage.Queues
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
@@ -220,7 +220,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueServiceClient(Uri serviceUri, TokenCredential credential, QueueClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options, null)
+            : this(serviceUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -257,7 +257,7 @@ namespace Azure.Storage.Queues
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
@@ -292,7 +292,7 @@ namespace Azure.Storage.Queues
             => new ServiceRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                _uri.ToString(),
+                _uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 

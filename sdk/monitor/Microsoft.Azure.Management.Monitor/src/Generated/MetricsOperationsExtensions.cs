@@ -42,7 +42,9 @@ namespace Microsoft.Azure.Management.Monitor
             /// The interval (i.e. timegrain) of the query.
             /// </param>
             /// <param name='metricnames'>
-            /// The names of the metrics (comma separated) to retrieve.
+            /// The names of the metrics (comma separated) to retrieve. Special case: If a
+            /// metricname itself has a comma in it then use %2 to indicate it. Eg:
+            /// 'Metric,Name1' should be **'Metric%2Name1'**
             /// </param>
             /// <param name='aggregation'>
             /// The list of aggregation types (comma separated) to retrieve.
@@ -90,7 +92,9 @@ namespace Microsoft.Azure.Management.Monitor
             /// The interval (i.e. timegrain) of the query.
             /// </param>
             /// <param name='metricnames'>
-            /// The names of the metrics (comma separated) to retrieve.
+            /// The names of the metrics (comma separated) to retrieve. Special case: If a
+            /// metricname itself has a comma in it then use %2 to indicate it. Eg:
+            /// 'Metric,Name1' should be **'Metric%2Name1'**
             /// </param>
             /// <param name='aggregation'>
             /// The list of aggregation types (comma separated) to retrieve.

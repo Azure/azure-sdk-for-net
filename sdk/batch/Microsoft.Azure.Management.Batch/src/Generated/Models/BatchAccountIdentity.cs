@@ -16,9 +16,10 @@ namespace Microsoft.Azure.Management.Batch.Models
     using System.Linq;
 
     /// <summary>
-    /// The identity of the Batch account, if configured. This is only used
-    /// when the user specifies 'Microsoft.KeyVault' as their Batch account
-    /// encryption configuration.
+    /// The identity of the Batch account, if configured. This is used when the
+    /// user specifies 'Microsoft.KeyVault' as their Batch account encryption
+    /// configuration or when `ManagedIdentity` is selected as the auto-storage
+    /// authentication mode.
     /// </summary>
     public partial class BatchAccountIdentity
     {
@@ -43,10 +44,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account. This property will only be provided for a system assigned
         /// identity.</param>
         /// <param name="userAssignedIdentities">The list of user identities
-        /// associated with the Batch account. The user identity dictionary key
-        /// references will be ARM resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
-        public BatchAccountIdentity(ResourceIdentityType type, string principalId = default(string), string tenantId = default(string), IDictionary<string, BatchAccountIdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, BatchAccountIdentityUserAssignedIdentitiesValue>))
+        /// associated with the Batch account.</param>
+        public BatchAccountIdentity(ResourceIdentityType type, string principalId = default(string), string tenantId = default(string), IDictionary<string, UserAssignedIdentities> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentities>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -83,12 +82,10 @@ namespace Microsoft.Azure.Management.Batch.Models
 
         /// <summary>
         /// Gets or sets the list of user identities associated with the Batch
-        /// account. The user identity dictionary key references will be ARM
-        /// resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "userAssignedIdentities")]
-        public IDictionary<string, BatchAccountIdentityUserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
+        public IDictionary<string, UserAssignedIdentities> UserAssignedIdentities { get; set; }
 
         /// <summary>
         /// Validate the object.

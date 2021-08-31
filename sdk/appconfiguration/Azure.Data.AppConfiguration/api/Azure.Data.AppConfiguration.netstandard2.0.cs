@@ -60,6 +60,7 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationSetting
     {
         public ConfigurationSetting(string key, string value, string label = null) { }
+        public ConfigurationSetting(string key, string value, string label, Azure.ETag etag) { }
         public string ContentType { get { throw null; } set { } }
         public Azure.ETag ETag { get { throw null; } }
         public bool? IsReadOnly { get { throw null; } }
@@ -88,9 +89,9 @@ namespace Azure.Data.AppConfiguration
     public partial class FeatureFlagFilter
     {
         public FeatureFlagFilter(string name) { }
-        public FeatureFlagFilter(string name, System.Collections.Generic.IReadOnlyDictionary<string, object> parameters) { }
+        public FeatureFlagFilter(string name, System.Collections.Generic.IDictionary<string, object> parameters) { }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, object> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> Parameters { get { throw null; } }
     }
     public partial class SecretReferenceConfigurationSetting : Azure.Data.AppConfiguration.ConfigurationSetting
     {

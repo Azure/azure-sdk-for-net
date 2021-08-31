@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -17,17 +16,20 @@ namespace Azure.Identity
     /// </summary>
     public class AuthenticationRecord
     {
+        internal const string CurrentVersion = "1.0";
         private const string UsernamePropertyName = "username";
         private const string AuthorityPropertyName = "authority";
         private const string HomeAccountIdPropertyName = "homeAccountId";
         private const string TenantIdPropertyName = "tenantId";
         private const string ClientIdPropertyName = "clientId";
+        private const string VersionPropertyName = "version";
 
         private static readonly JsonEncodedText s_usernamePropertyNameBytes = JsonEncodedText.Encode(UsernamePropertyName);
         private static readonly JsonEncodedText s_authorityPropertyNameBytes = JsonEncodedText.Encode(AuthorityPropertyName);
         private static readonly JsonEncodedText s_homeAccountIdPropertyNameBytes = JsonEncodedText.Encode(HomeAccountIdPropertyName);
         private static readonly JsonEncodedText s_tenantIdPropertyNameBytes = JsonEncodedText.Encode(TenantIdPropertyName);
         private static readonly JsonEncodedText s_clientIdPropertyNameBytes = JsonEncodedText.Encode(ClientIdPropertyName);
+        private static readonly JsonEncodedText s_versionPropertyNameBytes = JsonEncodedText.Encode(VersionPropertyName);
 
         internal AuthenticationRecord()
         {
@@ -77,6 +79,7 @@ namespace Azure.Identity
         public string ClientId { get; private set; }
 
         internal AccountId AccountId { get; private set; }
+        internal string Version { get; private set; } = CurrentVersion;
 
         /// <summary>
         /// Serializes the <see cref="AuthenticationRecord"/> to the specified <see cref="Stream"/>.
@@ -85,7 +88,8 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public void Serialize(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
 
             SerializeAsync(stream, false, cancellationToken).EnsureCompleted();
         }
@@ -97,7 +101,8 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public async Task SerializeAsync(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
 
             await SerializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }
@@ -109,7 +114,8 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public static AuthenticationRecord Deserialize(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
 
             return DeserializeAsync(stream, false, cancellationToken).EnsureCompleted();
         }
@@ -121,7 +127,8 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public static async Task<AuthenticationRecord> DeserializeAsync(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
 
             return await DeserializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }
@@ -141,6 +148,8 @@ namespace Azure.Identity
                 json.WriteString(s_tenantIdPropertyNameBytes, TenantId);
 
                 json.WriteString(s_clientIdPropertyNameBytes, ClientId);
+
+                json.WriteString(s_versionPropertyNameBytes, Version);
 
                 json.WriteEndObject();
 
@@ -179,6 +188,13 @@ namespace Azure.Identity
                         break;
                     case ClientIdPropertyName:
                         authProfile.ClientId = prop.Value.GetString();
+                        break;
+                    case VersionPropertyName:
+                        authProfile.Version = prop.Value.GetString();
+                        if (authProfile.Version != CurrentVersion)
+                        {
+                            throw new InvalidOperationException($"Attempted to deserialize an {nameof(AuthenticationRecord)} with a version that is not the current version. Expected: '{CurrentVersion}', Actual: '{authProfile.Version}'");
+                        }
                         break;
                 }
             }

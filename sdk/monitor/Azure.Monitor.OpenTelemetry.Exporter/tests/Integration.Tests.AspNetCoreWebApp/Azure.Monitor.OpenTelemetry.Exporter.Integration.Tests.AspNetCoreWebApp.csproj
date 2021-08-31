@@ -6,13 +6,15 @@
     
     <!-- Azure SDK pipeline tries to pack test projects. This warning will be treated as an error and fail the whole build. -->
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+  <ItemGroup>
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.5.1" />
   </ItemGroup>
-    
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <!--We would prefer to use the meta package "Microsoft.AspNetCore.App" here.
     But this package targets NetCoreApp2.1, while all the dependent packages target NetStandard2.0.
     To support net461 so we must reference the dependent packages.-->

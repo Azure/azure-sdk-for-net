@@ -1,11 +1,59 @@
 # Release History
 
-## 3.1.0-beta.4 (Unreleased)
+## 3.2.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 3.1.1 (2021-06-08)
+
+### Key Bug Fixes
+- Handles invoices and other recognition operations that return a `FormField` with `Text` and no `BoundingBox` or `Page` information.
+
+## 3.1.0 (2021-05-26)
+
+### New Features
+- This General Availability (GA) release marks the stability of the changes introduced in package versions `3.1.0-beta.1` through `3.1.0-beta.4`.
+- Updated the `FormRecognizerModelFactory` class to support missing model types for mocking.
+- Added support for service version `2.0`. This can be specified in the `FormRecognizerClientOptions` object under the `ServiceVersion` enum.
+By default the SDK targets latest supported service version.
+
+### Breaking changes
+- The client defaults to the latest supported service version, which currently is `2.1`.
+- Renamed `Id` for `Identity` in all the `StartRecognizeIdDocuments` functionalities. For example, the name of the method is now `StartRecognizeIdentityDocuments`.
+- Renamed the model `ReadingOrder` to `FormReadingOrder`.
+- The model `TextAppearance` now includes the properties `StyleName` and `StyleConfidence` that were part of the `TextStyle` object.
+- Removed the model `TextStyle`.
+- Renamed the method `AsCountryCode` to `AsCountryRegion`.
+- Removed type `FieldValueGender`.
+- Removed value `Gender` from the model `FieldValuetype`.
+
+## 3.0.1 (2021-04-09)
+
+### Key Bug Fixes
+- Updated dependency versions.
+
+## 3.1.0-beta.4 (2021-04-06)
+
+### New Features
+- Added support for pre-built passports and US driver licenses recognition with the `StartRecognizeIdDocuments` API.
+- Expanded the set of document languages that can be provided to the `StartRecognizeContent` API.
+- Added property `Pages` to `RecognizeBusinessCardsOptions`, `RecognizeCustomFormsOptions`, `RecognizeInvoicesOptions`, and `RecognizeReceiptsOptions` to specify the page numbers to recognize.
+- Added property `ReadingOrder` to `RecognizeContentOptions` to specify the order in which recognized text lines are returned.
+
+### Breaking changes
+- The client defaults to the latest supported service version, which currently is `2.1-preview.3`.
+- `StartRecognizeCustomForms` now throws a `RequestFailedException` when an invalid file is passed.
 
 ## 3.1.0-beta.3 (2021-03-09)
 
-## New Features
+### New Features
 - Added protected constructors for mocking to `Operation` types, such as `TrainingOperation` and `RecognizeContentOperation`.
 
 ## 3.1.0-beta.2 (2021-02-09)
@@ -186,5 +234,5 @@ This package's [documentation][readme] and [samples][samples] demonstrate the ne
 
 [guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html
 [cognitiveServices_fr_nuget]: https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.FormRecognizer/0.8.0-preview
-[readme]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md
+[readme]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md

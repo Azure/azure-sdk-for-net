@@ -13,6 +13,7 @@ using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -203,7 +204,7 @@ namespace Azure.Storage.Queues
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
@@ -303,7 +304,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(), options, null)
+            : this(queueUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(queueUri);
         }
@@ -341,7 +342,7 @@ namespace Azure.Storage.Queues
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
@@ -385,31 +386,22 @@ namespace Azure.Storage.Queues
 
         private (QueueRestClient QueueClient, MessagesRestClient MessagesClient, MessageIdRestClient MessageIdClient) BuildRestClients()
         {
-            QueueUriBuilder uriBuilder = new QueueUriBuilder(_uri);
-            string queueName = uriBuilder.QueueName;
-            uriBuilder.QueueName = null;
-
-            string uriString = uriBuilder.ToUri().ToString();
-
             QueueRestClient queueRestClient = new QueueRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                uriString,
-                queueName,
+                _uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
 
             MessagesRestClient messagesRestClient = new MessagesRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                uriString,
-                queueName,
+                _uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
 
             MessageIdRestClient messageIdRestClient = new MessageIdRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                uriString,
-                queueName,
+                _uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
 
             return (queueRestClient, messagesRestClient, messageIdRestClient);
@@ -2348,30 +2340,15 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(ReceiveMessage)}");
+            Response<QueueMessage[]> response = await ReceiveMessagesInternal(
+                maxMessages: 1,
+                visibilityTimeout: visibilityTimeout,
+                operationName: $"{nameof(QueueClient)}.{nameof(ReceiveMessage)}",
+                async: async,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
 
-            try
-            {
-                scope.Start();
-                Response<QueueMessage[]> response = await ReceiveMessagesInternal(
-                    maxMessages: 1,
-                    visibilityTimeout: visibilityTimeout,
-                    operationName: $"{nameof(QueueClient)}.{nameof(ReceiveMessage)}",
-                    async: async,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-
-                return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
         }
         #endregion ReceiveMessage
 
@@ -3130,6 +3107,13 @@ namespace Azure.Storage.Queues
             QueueSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+
+            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
+            builder = QueueSasBuilder.DeepCopy(builder);
+
+            // Assigned builder's QueueName if it is null
+            builder.QueueName ??= Name;
+
             if (!builder.QueueName.Equals(Name, StringComparison.InvariantCulture))
             {
                 // TODO: throw proper exception for non-matching builder name
@@ -3141,8 +3125,10 @@ namespace Azure.Storage.Queues
                     nameof(QueueSasBuilder),
                     nameof(Name));
             }
-            QueueUriBuilder sasUri = new QueueUriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString();
+            QueueUriBuilder sasUri = new QueueUriBuilder(Uri)
+            {
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
+            };
             return sasUri.ToUri();
         }
         #endregion

@@ -21,6 +21,8 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 To recognize business cards from a URI, use the `StartRecognizeBusinessCardsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
 
+For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/businesscardfields).
+
 ```C# Snippet:FormRecognizerSampleRecognizeBusinessCardsFromUri
 Uri businessCardUri = <businessCardUri>;
 
@@ -219,6 +221,8 @@ foreach (RecognizedForm businessCard in businessCards)
 
 To recognize business cards from a given file, use the `StartRecognizeBusinessCards` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
 
+For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/businesscardfields).
+
 ```C# Snippet:FormRecognizerSampleRecognizeBusinessCardFileStream
 string businessCardsPath = "<businessCardsPath>";
 
@@ -290,8 +294,8 @@ foreach (RecognizedForm businessCard in businessCards)
 
 To see the full example source files, see:
 
-* [Recognize business cards from URI](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample12_RecognizeBusinessCardsFromUri.cs)
-* [Recognize business cards from file](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample12_RecognizeBusinessCardsFromFile.cs)
+* [Recognize business cards from URI](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample12_RecognizeBusinessCardsFromUri.cs)
+* [Recognize business cards from file](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample12_RecognizeBusinessCardsFromFile.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
-[strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
+[strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md

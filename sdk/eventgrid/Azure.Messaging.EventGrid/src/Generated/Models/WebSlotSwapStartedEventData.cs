@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Web.SlotSwapStarted event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.SlotSwapStarted event. </summary>
     public partial class WebSlotSwapStartedEventData
     {
         /// <summary> Initializes a new instance of WebSlotSwapStartedEventData. </summary>

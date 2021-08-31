@@ -31,17 +31,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public TriggerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -224,7 +215,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
-                    return Response.FromValue<TriggerResource>(null, message.Response);
+                    return Response.FromValue((TriggerResource)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -254,7 +245,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
-                    return Response.FromValue<TriggerResource>(null, message.Response);
+                    return Response.FromValue((TriggerResource)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

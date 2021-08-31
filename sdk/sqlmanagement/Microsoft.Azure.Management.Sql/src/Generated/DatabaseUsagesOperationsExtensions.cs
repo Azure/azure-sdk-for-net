@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Sql
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -24,7 +22,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class DatabaseUsagesOperationsExtensions
     {
             /// <summary>
-            /// Returns database usages.
+            /// Gets database usages.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,13 +37,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseName'>
             /// The name of the database.
             /// </param>
-            public static IEnumerable<DatabaseUsage> ListByDatabase(this IDatabaseUsagesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            public static IPage<DatabaseUsage> ListByDatabase(this IDatabaseUsagesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
                 return operations.ListByDatabaseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns database usages.
+            /// Gets database usages.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -63,9 +61,43 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<DatabaseUsage>> ListByDatabaseAsync(this IDatabaseUsagesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DatabaseUsage>> ListByDatabaseAsync(this IDatabaseUsagesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets database usages.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<DatabaseUsage> ListByDatabaseNext(this IDatabaseUsagesOperations operations, string nextPageLink)
+            {
+                return operations.ListByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets database usages.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DatabaseUsage>> ListByDatabaseNextAsync(this IDatabaseUsagesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// appears in the response.</param>
         /// <param name="tasks">Software update configuration tasks triggered
         /// in this run</param>
-        public SoftwareUpdateConfigurationRun(string name = default(string), string id = default(string), UpdateConfigurationNavigation softwareUpdateConfiguration = default(UpdateConfigurationNavigation), string status = default(string), string configuredDuration = default(string), string osType = default(string), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), int? computerCount = default(int?), int? failedCount = default(int?), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string), SoftareUpdateConfigurationRunTasks tasks = default(SoftareUpdateConfigurationRunTasks))
+        public SoftwareUpdateConfigurationRun(string name = default(string), string id = default(string), UpdateConfigurationNavigation softwareUpdateConfiguration = default(UpdateConfigurationNavigation), string status = default(string), string configuredDuration = default(string), string osType = default(string), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), int? computerCount = default(int?), int? failedCount = default(int?), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string), SoftwareUpdateConfigurationRunTasks tasks = default(SoftwareUpdateConfigurationRunTasks))
         {
             Name = name;
             Id = id;
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// run
         /// </summary>
         [JsonProperty(PropertyName = "properties.tasks")]
-        public SoftareUpdateConfigurationRunTasks Tasks { get; set; }
+        public SoftwareUpdateConfigurationRunTasks Tasks { get; set; }
 
     }
 }

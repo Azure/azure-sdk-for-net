@@ -182,6 +182,8 @@ namespace Azure.Search.Documents
             {
                 try
                 {
+                    AzureSearchDocumentsEventSource.Instance.SearchIndexingBufferedSenderDisposedWithPendingActions($"{GetType().Name}<{typeof(T).Name}>", Endpoint.AbsoluteUri, _publisher.IndexingActionsCount);
+
                     #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new ObjectNotDisposedException(
                         $"{nameof(SearchIndexingBufferedSender<T>)} has {_publisher.IndexingActionsCount} unsent indexing actions.");
@@ -353,10 +355,9 @@ namespace Azure.Search.Documents
                     SearchClient.ClientDiagnostics)
                     .ConfigureAwait(false);
             }
-            catch
+            catch (Exception e)
             {
-                // TODO: #16706 - Log any exceptions raised from async events
-                // we can't let bubble out because they'd tear down the process
+                AzureSearchDocumentsEventSource.Instance.ActionNotificationEventHandlerExceptionThrown($"{GetType().Name}<{typeof(T).Name}>", Endpoint.AbsoluteUri, nameof(ActionAdded), e);
             }
         }
 
@@ -385,10 +386,9 @@ namespace Azure.Search.Documents
                     SearchClient.ClientDiagnostics)
                     .ConfigureAwait(false);
             }
-            catch
+            catch (Exception e)
             {
-                // TODO: #16706 - Log any exceptions raised from async events
-                // we can't let bubble out because they'd tear down the process
+                AzureSearchDocumentsEventSource.Instance.ActionNotificationEventHandlerExceptionThrown($"{GetType().Name}<{typeof(T).Name}>", Endpoint.AbsoluteUri, nameof(ActionSent), e);
             }
         }
 
@@ -420,10 +420,9 @@ namespace Azure.Search.Documents
                     SearchClient.ClientDiagnostics)
                     .ConfigureAwait(false);
             }
-            catch
+            catch (Exception e)
             {
-                // TODO: #16706 - Log any exceptions raised from async events
-                // we can't let bubble out because they'd tear down the process
+                AzureSearchDocumentsEventSource.Instance.ActionNotificationEventHandlerExceptionThrown($"{GetType().Name}<{typeof(T).Name}>", Endpoint.AbsoluteUri, nameof(ActionCompleted), e);
             }
         }
 
@@ -458,10 +457,9 @@ namespace Azure.Search.Documents
                     SearchClient.ClientDiagnostics)
                     .ConfigureAwait(false);
             }
-            catch
+            catch (Exception e)
             {
-                // TODO: #16706 - Log any exceptions raised from async events
-                // we can't let bubble out because they'd tear down the process
+                AzureSearchDocumentsEventSource.Instance.ActionNotificationEventHandlerExceptionThrown($"{GetType().Name}<{typeof(T).Name}>", Endpoint.AbsoluteUri, nameof(ActionFailed), e);
             }
         }
         #endregion

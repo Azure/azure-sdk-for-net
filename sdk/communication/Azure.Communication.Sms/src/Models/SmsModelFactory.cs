@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Communication.Sms.Models
 {
     /// <summary>
@@ -13,10 +10,11 @@ namespace Azure.Communication.Sms.Models
     {
         /// <summary> Initializes a new instance of SmsSendResult. </summary>
         /// <param name="to"> The recipient&apos;s phone number in E.164 format. </param>
+        /// <param name="messageId"> The identifier of the outgoing Sms message. Only present if message processed. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>
         /// <param name="successful"> Indicates if the message is processed successfully or not. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
-        public static SmsSendResult SmsSendResult(string to, int httpStatusCode, bool successful)
-            => new SmsSendResult(to, httpStatusCode, successful);
+        /// <param name="errorMessage"> Optional error message in case of 4xx/5xx/repeatable errors. </param>
+        public static SmsSendResult SmsSendResult(string to, string messageId, int httpStatusCode, bool successful, string errorMessage)
+            => new SmsSendResult(to, messageId, httpStatusCode, SmsSendResponseItemRepeatabilityResult.Accepted, successful, errorMessage);
     }
 }

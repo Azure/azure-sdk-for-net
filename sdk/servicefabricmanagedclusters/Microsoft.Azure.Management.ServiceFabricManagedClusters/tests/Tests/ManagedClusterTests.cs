@@ -31,10 +31,10 @@ namespace ServiceFabricManagedClusters.Tests
                     () => serviceFabricMcClient.ManagedClusters.GetAsync(resourceGroupName, clusterName)).Result;
                 Assert.True(ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
 
-                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricMcClient, resourceGroupName, Location, clusterName, sku: "Basic");
+                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricMcClient, resourceGroupName, Location, clusterName, sku: SkuName.Basic);
                 Assert.NotNull(cluster);
-                Assert.Equal("Succeeded", cluster.ProvisioningState);
-                Assert.Equal("WaitingForNodes", cluster.ClusterState);
+                Assert.Equal(ManagedResourceProvisioningState.Succeeded, cluster.ProvisioningState);
+                Assert.Equal(ClusterState.WaitingForNodes, cluster.ClusterState);
 
                 var clusters = serviceFabricMcClient.ManagedClusters.ListByResourceGroup(resourceGroupName);
                 Assert.Single(clusters);
@@ -61,7 +61,7 @@ namespace ServiceFabricManagedClusters.Tests
 
                 serviceFabricMcClient.ManagedClusters.CreateOrUpdate(resourceGroupName, clusterName, cluster);
                 cluster = serviceFabricMcClient.ManagedClusters.Get(resourceGroupName, clusterName);
-                Assert.Equal("Succeeded", cluster.ProvisioningState);
+                Assert.Equal(ManagedResourceProvisioningState.Succeeded, cluster.ProvisioningState);
                 Assert.Equal(50000, cluster.ClientConnectionPort);
                 Assert.NotNull(cluster.FabricSettings);
                 Assert.Single(cluster.FabricSettings);
@@ -90,15 +90,15 @@ namespace ServiceFabricManagedClusters.Tests
                     () => serviceFabricMcClient.ManagedClusters.GetAsync(resourceGroupName, clusterName)).Result;
                 Assert.True(ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
 
-                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricMcClient, resourceGroupName, Location, clusterName, sku: "Standard");
+                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricMcClient, resourceGroupName, Location, clusterName, sku: SkuName.Standard);
                 Assert.NotNull(cluster);
-                Assert.Equal("Succeeded", cluster.ProvisioningState);
-                Assert.Equal("WaitingForNodes", cluster.ClusterState);
+                Assert.Equal(ManagedResourceProvisioningState.Succeeded, cluster.ProvisioningState);
+                Assert.Equal(ClusterState.WaitingForNodes, cluster.ClusterState);
 
                 // add primary node type
                 var primaryNodeType = this.CreateNodeType(serviceFabricMcClient, resourceGroupName, clusterName, nodeTypeName1, isPrimary: true, vmInstanceCount: 5);
                 Assert.NotNull(primaryNodeType);
-                Assert.Equal("Succeeded", primaryNodeType.ProvisioningState);
+                Assert.Equal(ManagedResourceProvisioningState.Succeeded, primaryNodeType.ProvisioningState);
 
                 var nodeTypes = serviceFabricMcClient.NodeTypes.ListByManagedClusters(resourceGroupName, clusterName);
                 Assert.Single(nodeTypes);
@@ -111,7 +111,7 @@ namespace ServiceFabricManagedClusters.Tests
                 Assert.Equal(6, primaryNodeType.VmInstanceCount);
 
                 // add secondary node type
-                var secondaryNodeType = this.CreateNodeType(serviceFabricMcClient, resourceGroupName, clusterName, nodeTypeName2, isPrimary: false, vmInstanceCount: 5);
+                var secondaryNodeType = this.CreateNodeType(serviceFabricMcClient, resourceGroupName, clusterName, nodeTypeName2, isPrimary: false, vmInstanceCount: 5, vmSize: "Standard_DS2", dataDiskType: DiskType.PremiumLRS);
                 Assert.False(secondaryNodeType.IsPrimary);
 
                 nodeTypes = serviceFabricMcClient.NodeTypes.ListByManagedClusters(resourceGroupName, clusterName);
@@ -140,11 +140,11 @@ namespace ServiceFabricManagedClusters.Tests
                     () => serviceFabricMcClient.ManagedClusters.DeleteAsync(resourceGroupName, clusterName)).Result;
                 Assert.True(ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
 
-                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricMcClient, resourceGroupName, Location, clusterName, sku: "Basic");
+                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricMcClient, resourceGroupName, Location, clusterName, sku: SkuName.Basic);
                 cluster = serviceFabricMcClient.ManagedClusters.Get(resourceGroupName, clusterName);
                 Assert.NotNull(cluster);
-                Assert.Equal("Succeeded", cluster.ProvisioningState);
-                Assert.Equal("WaitingForNodes", cluster.ClusterState);
+                Assert.Equal(ManagedResourceProvisioningState.Succeeded, cluster.ProvisioningState);
+                Assert.Equal(ClusterState.WaitingForNodes, cluster.ClusterState);
 
                 // add primary node type
                 var primaryNodeType = this.CreateNodeType(serviceFabricMcClient, resourceGroupName, clusterName, nodeTypeName, isPrimary: true, vmInstanceCount: 6);

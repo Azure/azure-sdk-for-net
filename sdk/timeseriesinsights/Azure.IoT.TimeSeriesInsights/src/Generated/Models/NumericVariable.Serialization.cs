@@ -37,7 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights
         internal static NumericVariable DeserializeNumericVariable(JsonElement element)
         {
             TimeSeriesExpression value = default;
-            Optional<InterpolationOperation> interpolation = default;
+            Optional<TimeSeriesInterpolation> interpolation = default;
             TimeSeriesExpression aggregation = default;
             string kind = default;
             Optional<TimeSeriesExpression> filter = default;
@@ -55,7 +55,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    interpolation = InterpolationOperation.DeserializeInterpolationOperation(property.Value);
+                    interpolation = TimeSeriesInterpolation.DeserializeTimeSeriesInterpolation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("aggregation"))

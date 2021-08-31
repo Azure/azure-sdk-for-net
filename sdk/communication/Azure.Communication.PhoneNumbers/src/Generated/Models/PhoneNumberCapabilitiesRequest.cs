@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Capabilities of a phone number. </summary>
     internal partial class PhoneNumberCapabilitiesRequest

@@ -126,7 +126,7 @@ namespace Storage.Tests
                     Location = "eastus2euap",
                     Kind = Kind.StorageV2,
                     Sku = new Sku { Name = SkuName.StandardLRS },
-                    //LargeFileSharesState = LargeFileSharesState.Enabled
+                    LargeFileSharesState = LargeFileSharesState.Enabled
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, createParameters);
                 var updateParameters = new StorageAccountUpdateParameters
@@ -212,31 +212,29 @@ namespace Storage.Tests
 
                     // create 2 share snapshots
                     FileShare shareSnapshot1 = storageMgmtClient.FileShares.Create(rgName, accountName, shareName,
-                                                        new FileShare(),
-                                                        PutSharesExpand.Snapshots);
+                                                        new FileShare(), "snapshots");
                     Assert.NotNull(shareSnapshot1.SnapshotTime);
                     FileShare shareSnapshot2 = storageMgmtClient.FileShares.Create(rgName, accountName, shareName,
-                                                        new FileShare(),
-                                                        PutSharesExpand.Snapshots);
+                                                        new FileShare(), "snapshots");
                     Assert.NotNull(shareSnapshot2.SnapshotTime);
 
                     // Get single share snapsshot
-                    FileShare shareSnapshot = storageMgmtClient.FileShares.Get(rgName, accountName, shareName, GetShareExpand.Stats, shareSnapshot1.SnapshotTime.Value.ToUniversalTime().ToString("o"));
+                    FileShare shareSnapshot = storageMgmtClient.FileShares.Get(rgName, accountName, shareName, "stats", shareSnapshot1.SnapshotTime.Value.ToUniversalTime().ToString("o"));
                     Assert.Equal(shareSnapshot.SnapshotTime, shareSnapshot1.SnapshotTime);
 
                     // List share with snapshot
-                    IPage<FileShareItem> fileShares = storageMgmtClient.FileShares.List(rgName, accountName, expand: ListSharesExpand.Snapshots);
+                    IPage<FileShareItem> fileShares = storageMgmtClient.FileShares.List(rgName, accountName, expand: "snapshots");
                     Assert.Equal(3, fileShares.Count());
 
                     // Delete share snapshot
                     storageMgmtClient.FileShares.Delete(rgName, accountName, shareName2, shareSnapshot2.SnapshotTime.Value.ToUniversalTime().ToString("o"));
 
                     // List share with snapshot
-                    fileShares = storageMgmtClient.FileShares.List(rgName, accountName, expand: ListSharesExpand.Snapshots);
+                    fileShares = storageMgmtClient.FileShares.List(rgName, accountName, expand: "snapshots");
                     //Assert.Equal(2, fileShares.Count());
 
                     // List share with deleted
-                    fileShares = storageMgmtClient.FileShares.List(rgName, accountName, expand: ListSharesExpand.Deleted);
+                    fileShares = storageMgmtClient.FileShares.List(rgName, accountName, expand: "deleted");
                     Assert.Equal(2, fileShares.Count());
                 }
                 finally
@@ -474,7 +472,7 @@ namespace Storage.Tests
 
                     //List with includeDeleted
                     string deletedShareVersion = null;
-                    shares = storageMgmtClient.FileShares.List(rgName, accountName, expand: ListSharesExpand.Deleted);
+                    shares = storageMgmtClient.FileShares.List(rgName, accountName, expand: "deleted");
                     Assert.Equal(2, shares.Count());
                     foreach(FileShareItem share in shares)
                     {
@@ -487,7 +485,7 @@ namespace Storage.Tests
                     }
 
                     //Get not deleted share
-                    share2 = storageMgmtClient.FileShares.Get(rgName, accountName, shareName2, expand: GetShareExpand.Stats);
+                    share2 = storageMgmtClient.FileShares.Get(rgName, accountName, shareName2, expand: "stats");
                     Assert.NotNull(share2.ShareQuota);
                     Assert.NotNull(share2.ShareUsageBytes);
 
@@ -514,7 +512,7 @@ namespace Storage.Tests
                     Assert.Equal(2, shares.Count());
 
                     //List with includeDeleted
-                    shares = storageMgmtClient.FileShares.List(rgName, accountName, expand: ListSharesExpand.Deleted);
+                    shares = storageMgmtClient.FileShares.List(rgName, accountName, expand: "deleted");
                     Assert.Equal(2, shares.Count());
                     }
                     finally
@@ -523,6 +521,222 @@ namespace Storage.Tests
                         storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
                         resourcesClient.ResourceGroups.Delete(rgName);
                     }
+            }
+        }
+
+
+        // File share lease - snapshot
+        [Fact]
+        public void FileShareLease()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "eastus2euap",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS }
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+
+                // implement case
+                try
+                {
+                    // create base share
+                    string shareName = TestUtilities.GenerateName("share");
+                    FileShare share = storageMgmtClient.FileShares.Create(rgName, accountName, shareName, new FileShare()); ;
+
+                    // create share snapshots
+                    FileShare shareSnapshot = storageMgmtClient.FileShares.Create(rgName, accountName, shareName,
+                                                        new FileShare(), "snapshots");
+                    Assert.NotNull(shareSnapshot.SnapshotTime);
+
+                    // Acquire lease share
+                    string proposedLeaseID1 = "ca761232-ed42-11ce-bacd-00aa0057b223";
+                    string proposedLeaseID2 = "dd761232-ed42-11ce-bacd-00aa0057b444";
+                    LeaseShareResponse leaseReponds;
+                    //try
+                    //{
+                        leaseReponds = storageMgmtClient.FileShares.Lease(rgName, accountName, shareName, new LeaseShareRequest(LeaseShareAction.Acquire, leaseDuration: 60, proposedLeaseId: proposedLeaseID1));
+                        Assert.Equal(proposedLeaseID1, leaseReponds.LeaseId);
+                    //}
+                    //catch (Microsoft.Rest.ValidationException)
+                    //{
+                    //}
+
+                    share = storageMgmtClient.FileShares.Get(rgName, accountName, shareName);
+                    Assert.Equal("fixed", share.LeaseDuration);
+                    Assert.Equal("leased", share.LeaseState);
+                    Assert.Equal("locked", share.LeaseStatus);
+
+                    // Renew lease share
+                    leaseReponds = storageMgmtClient.FileShares.Lease(rgName, accountName, shareName, new LeaseShareRequest(LeaseShareAction.Renew, leaseId: proposedLeaseID1));
+                    Assert.Equal(proposedLeaseID1, leaseReponds.LeaseId);
+
+                    // change lease share
+                    leaseReponds = storageMgmtClient.FileShares.Lease(rgName, accountName, shareName, new LeaseShareRequest(LeaseShareAction.Change, leaseId: proposedLeaseID1, proposedLeaseId: proposedLeaseID2));
+                    Assert.Equal(proposedLeaseID2, leaseReponds.LeaseId);
+
+                    // break lease share
+                    leaseReponds = storageMgmtClient.FileShares.Lease(rgName, accountName, shareName, new LeaseShareRequest(LeaseShareAction.Break, breakPeriod: 20));
+                    //Assert.Equal(proposedLeaseID2, leaseReponds.LeaseId);
+                    Assert.Equal("20", leaseReponds.LeaseTimeSeconds);
+
+                    // release lease share
+                    leaseReponds = storageMgmtClient.FileShares.Lease(rgName, accountName, shareName, new LeaseShareRequest(LeaseShareAction.Release, leaseId: proposedLeaseID2));
+                    Assert.Null(leaseReponds.LeaseId);
+
+                    // lease Share Snapshot
+                    //try
+                    //{
+
+                        leaseReponds = storageMgmtClient.FileShares.Lease(rgName, accountName, shareName, new LeaseShareRequest(LeaseShareAction.Acquire, leaseDuration: 60, proposedLeaseId: proposedLeaseID1), shareSnapshot.SnapshotTime.Value.ToUniversalTime().ToString("o"));
+                        Assert.Equal(proposedLeaseID1, leaseReponds.LeaseId);
+                    //}
+                    //catch (Microsoft.Rest.ValidationException e)
+                    //{
+                    //}
+                    shareSnapshot = storageMgmtClient.FileShares.Get(rgName, accountName, shareName, xMsSnapshot: shareSnapshot.SnapshotTime.Value.ToUniversalTime().ToString("o"));
+                    Assert.Equal("fixed", shareSnapshot.LeaseDuration);
+                    Assert.Equal("leased", shareSnapshot.LeaseState);
+                    Assert.Equal("locked", shareSnapshot.LeaseStatus);
+
+                    bool DeleteFail = false;
+                    // try delete with include = none
+                    try
+                    {
+                        storageMgmtClient.FileShares.Delete(rgName, accountName, shareName, include: "none");
+                    }
+                    catch (Microsoft.Rest.Azure.CloudException e) when (e.Response.StatusCode == HttpStatusCode.Conflict)
+                    {
+                        DeleteFail = true;
+                    }
+                    Assert.True(DeleteFail, "Delete should fail with include = none");
+                    DeleteFail = false;
+
+                    // try delete with include = snapshots
+                    try
+                    {
+                        storageMgmtClient.FileShares.Delete(rgName, accountName, shareName, include: "snapshots");
+                    }
+                    catch (Microsoft.Rest.Azure.CloudException e) when (e.Response.StatusCode == HttpStatusCode.Conflict)
+                    {
+                        DeleteFail = true;
+                    }
+                    Assert.True(DeleteFail, "Delete should fail with include = snapshots");
+                    DeleteFail = false;
+
+                    // try delete with default include (snapshots)
+                    try
+                    {
+                        storageMgmtClient.FileShares.Delete(rgName, accountName, shareName, include: "snapshots");
+                    }
+                    catch (Microsoft.Rest.Azure.CloudException e) when (e.Response.StatusCode == HttpStatusCode.Conflict)
+                    {
+                        DeleteFail = true;
+                    }
+
+                    Assert.True(DeleteFail, "Delete should fail with default include (snapshots)");
+                    DeleteFail = false;
+
+                    // delete with include = leased-snapshots
+                    storageMgmtClient.FileShares.Delete(rgName, accountName, shareName, include: "leased-snapshots");
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+
+        // File share AccessPolicy
+        [Fact]
+        public void FileShareAccessPolicy()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "eastus2euap",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS }
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+
+                // implement case
+                try
+                {
+                    // create share
+                    string shareName = TestUtilities.GenerateName("share");
+                    FileShare share = storageMgmtClient.FileShares.Create(rgName, accountName, shareName, new FileShare()); ;
+
+                    // Prepare signedIdentifiers to set 
+                    List<SignedIdentifier> sigs = new List<SignedIdentifier>();
+                    DateTime datenow = DateTime.Now;
+                    datenow = new DateTime(datenow.Year, datenow.Month, datenow.Day, datenow.Hour, datenow.Minute, datenow.Second);
+                    DateTime start1 = datenow;
+                    DateTime end1 = datenow.AddHours(2);
+                    DateTime start2 = datenow.AddMinutes(1);
+                    DateTime end2 = datenow.AddMinutes(40);
+                    SignedIdentifier sig1 = new SignedIdentifier("testSig1",
+                        new AccessPolicy(start: start1,
+                            expiry: end1,
+                            permission: "rw"));
+                    SignedIdentifier sig2 = new SignedIdentifier("testSig2",
+                        new AccessPolicy(start: start2,
+                            expiry: end2,
+                            permission: "rwdl"));
+                    sigs.Add(sig1);
+                    sigs.Add(sig2);
+
+                    // Update share
+                    share = storageMgmtClient.FileShares.Update(rgName, accountName, shareName, new FileShare(signedIdentifiers: sigs));
+                    Assert.Equal(2, share.SignedIdentifiers.Count);
+                    Assert.Equal("testSig1", share.SignedIdentifiers[0].Id);
+                    //Assert.Equal(start1, share.SignedIdentifiers[0].AccessPolicy.Start);
+                    //Assert.Equal(end1, share.SignedIdentifiers[0].AccessPolicy.Expiry);
+                    Assert.Equal("rw", share.SignedIdentifiers[0].AccessPolicy.Permission);
+
+                    // Get share
+                    share = storageMgmtClient.FileShares.Get(rgName, accountName, shareName);
+                    Assert.Equal(2, share.SignedIdentifiers.Count);
+                    Assert.Equal("testSig1", share.SignedIdentifiers[0].Id);
+                    //Assert.Equal(start1, share.SignedIdentifiers[0].AccessPolicy.Start);
+                    //Assert.Equal(end1, share.SignedIdentifiers[0].AccessPolicy.Expiry);
+                    Assert.Equal("rw", share.SignedIdentifiers[0].AccessPolicy.Permission);
+
+                    // delete share
+                    storageMgmtClient.FileShares.Delete(rgName, accountName, shareName);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
             }
         }
     }

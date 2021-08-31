@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(CreateRunResponseConverter))]
     public partial class CreateRunResponse
     {
         internal static CreateRunResponse DeserializeCreateRunResponse(JsonElement element)
@@ -24,6 +27,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new CreateRunResponse(runId);
+        }
+
+        internal partial class CreateRunResponseConverter : JsonConverter<CreateRunResponse>
+        {
+            public override void Write(Utf8JsonWriter writer, CreateRunResponse model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override CreateRunResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCreateRunResponse(document.RootElement);
+            }
         }
     }
 }

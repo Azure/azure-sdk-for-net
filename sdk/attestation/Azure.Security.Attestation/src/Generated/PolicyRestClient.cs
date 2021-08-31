@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Security.Attestation.Models;
 
 namespace Azure.Security.Attestation
 {
@@ -31,17 +30,8 @@ namespace Azure.Security.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="instanceUrl"/> or <paramref name="apiVersion"/> is null. </exception>
         public PolicyRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string instanceUrl, string apiVersion = "2020-10-01")
         {
-            if (instanceUrl == null)
-            {
-                throw new ArgumentNullException(nameof(instanceUrl));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.instanceUrl = instanceUrl;
-            this.apiVersion = apiVersion;
+            this.instanceUrl = instanceUrl ?? throw new ArgumentNullException(nameof(instanceUrl));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

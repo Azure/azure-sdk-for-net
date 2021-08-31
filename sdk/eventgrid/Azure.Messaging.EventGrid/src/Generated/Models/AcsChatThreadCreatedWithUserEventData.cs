@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.ChatThreadCreatedWithUser event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadCreatedWithUser event. </summary>
     public partial class AcsChatThreadCreatedWithUserEventData : AcsChatThreadEventBaseProperties
     {
         /// <summary> Initializes a new instance of AcsChatThreadCreatedWithUserEventData. </summary>

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SalesforceServiceCloudLinkedServiceConverter))]
     public partial class SalesforceServiceCloudLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -71,6 +74,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("securityToken");
                 writer.WriteObjectValue(SecurityToken);
             }
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("apiVersion");
+                writer.WriteObjectValue(ApiVersion);
+            }
             if (Optional.IsDefined(ExtendedProperties))
             {
                 writer.WritePropertyName("extendedProperties");
@@ -101,6 +109,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> username = default;
             Optional<SecretBase> password = default;
             Optional<SecretBase> securityToken = default;
+            Optional<object> apiVersion = default;
             Optional<object> extendedProperties = default;
             Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
@@ -206,6 +215,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             securityToken = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("apiVersion"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            apiVersion = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("extendedProperties"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -232,7 +251,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceServiceCloudLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, environmentUrl.Value, username.Value, password.Value, securityToken.Value, extendedProperties.Value, encryptedCredential.Value);
+            return new SalesforceServiceCloudLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, environmentUrl.Value, username.Value, password.Value, securityToken.Value, apiVersion.Value, extendedProperties.Value, encryptedCredential.Value);
+        }
+
+        internal partial class SalesforceServiceCloudLinkedServiceConverter : JsonConverter<SalesforceServiceCloudLinkedService>
+        {
+            public override void Write(Utf8JsonWriter writer, SalesforceServiceCloudLinkedService model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SalesforceServiceCloudLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSalesforceServiceCloudLinkedService(document.RootElement);
+            }
         }
     }
 }

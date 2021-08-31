@@ -97,7 +97,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             }
         }
 
-        protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsClient tsiClient, int numOfIdKeys)
+        protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsInstances instancesClient, int numOfIdKeys)
         {
             numOfIdKeys.Should().BeInRange(1, 3);
 
@@ -117,8 +117,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     _ => throw new Exception($"Invalid number of Time Series Insights Id properties."),
                 };
 
-                Response<InstancesOperationResult[]> getInstancesResult = await tsiClient
-                    .GetInstancesAsync(new List<TimeSeriesId> { tsId })
+                Response<InstancesOperationResult[]> getInstancesResult = await instancesClient
+                    .GetByIdAsync(new List<TimeSeriesId> { tsId })
                     .ConfigureAwait(false);
 
                 if (getInstancesResult.Value?.First()?.Error != null)
@@ -128,6 +128,12 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             }
 
             throw new Exception($"Unique Id could not be found");
+        }
+
+        protected async Task<string> getDefaultTypeIdAsync(TimeSeriesInsightsModelSettings modelSettingsClient)
+        {
+            Response<TimeSeriesModelSettings> currentSettings = await modelSettingsClient.GetAsync().ConfigureAwait(false);
+            return currentSettings.Value.DefaultTypeId;
         }
 
         private async Task<string> GetUniqueDeviceIdAsync(Func<string, Task<Device>> getDevice)

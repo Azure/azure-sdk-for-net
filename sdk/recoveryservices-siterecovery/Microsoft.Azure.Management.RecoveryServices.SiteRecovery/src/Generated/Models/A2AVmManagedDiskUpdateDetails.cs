@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure VM managed disk update input details.
+    /// A2A Vm managed disk update details.
     /// </summary>
     public partial class A2AVmManagedDiskUpdateDetails
     {
@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// before failover.</param>
         /// <param name="recoveryReplicaDiskAccountType">The replica disk type
         /// before failover.</param>
-        /// <param name="diskEncryptionInfo">The recovery disk encryption
-        /// information (for one / single pass flows).</param>
+        /// <param name="diskEncryptionInfo">The recovery os disk encryption
+        /// information.</param>
         /// <param name="failoverDiskName">The target disk name for unplanned
         /// failover operation.</param>
         /// <param name="tfoDiskName">The target disk name for test failover
@@ -77,8 +77,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string RecoveryReplicaDiskAccountType { get; set; }
 
         /// <summary>
-        /// Gets or sets the recovery disk encryption information (for one /
-        /// single pass flows).
+        /// Gets or sets the recovery os disk encryption information.
         /// </summary>
         [JsonProperty(PropertyName = "diskEncryptionInfo")]
         public DiskEncryptionInfo DiskEncryptionInfo { get; set; }

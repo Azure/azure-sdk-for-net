@@ -38,29 +38,41 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="vmwareMachineId">The ARM Id of the VM discovered in
         /// VMware.</param>
         /// <param name="disksToInclude">The disks to include list.</param>
-        /// <param name="dataMoverRunAsAccountId">The data mover RunAs account
+        /// <param name="dataMoverRunAsAccountId">The data mover run as account
         /// Id.</param>
-        /// <param name="snapshotRunAsAccountId">The snapshot RunAs account
+        /// <param name="snapshotRunAsAccountId">The snapshot run as account
         /// Id.</param>
         /// <param name="targetResourceGroupId">The target resource group ARM
         /// Id.</param>
         /// <param name="targetNetworkId">The target network ARM Id.</param>
         /// <param name="licenseType">License type. Possible values include:
         /// 'NotSpecified', 'NoLicenseType', 'WindowsServer'</param>
+        /// <param name="sqlServerLicenseType">The SQL Server license type.
+        /// Possible values include: 'NotSpecified', 'NoLicenseType', 'PAYG',
+        /// 'AHUB'</param>
         /// <param name="targetVmName">The target VM name.</param>
         /// <param name="targetVmSize">The target VM size.</param>
         /// <param name="targetSubnetName">The target subnet name.</param>
         /// <param name="targetAvailabilitySetId">The target availability set
         /// ARM Id.</param>
+        /// <param name="targetAvailabilityZone">The target availability
+        /// zone.</param>
+        /// <param name="targetProximityPlacementGroupId">The target proximity
+        /// placement group ARM Id.</param>
         /// <param name="targetBootDiagnosticsStorageAccountId">The target boot
         /// diagnostics storage account ARM Id.</param>
         /// <param name="performAutoResync">A value indicating whether auto
         /// resync is to be done.</param>
-        public VMwareCbtEnableMigrationInput(string vmwareMachineId, IList<VMwareCbtDiskInput> disksToInclude, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string targetResourceGroupId, string targetNetworkId, string licenseType = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetSubnetName = default(string), string targetAvailabilitySetId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string performAutoResync = default(string))
+        /// <param name="targetVmTags">The target VM tags.</param>
+        /// <param name="seedDiskTags">The tags for the seed disks.</param>
+        /// <param name="targetDiskTags">The tags for the target disks.</param>
+        /// <param name="targetNicTags">The tags for the target NICs.</param>
+        public VMwareCbtEnableMigrationInput(string vmwareMachineId, IList<VMwareCbtDiskInput> disksToInclude, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string targetResourceGroupId, string targetNetworkId, string licenseType = default(string), string sqlServerLicenseType = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetSubnetName = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string performAutoResync = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IDictionary<string, string> seedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>))
         {
             VmwareMachineId = vmwareMachineId;
             DisksToInclude = disksToInclude;
             LicenseType = licenseType;
+            SqlServerLicenseType = sqlServerLicenseType;
             DataMoverRunAsAccountId = dataMoverRunAsAccountId;
             SnapshotRunAsAccountId = snapshotRunAsAccountId;
             TargetVmName = targetVmName;
@@ -69,8 +81,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetNetworkId = targetNetworkId;
             TargetSubnetName = targetSubnetName;
             TargetAvailabilitySetId = targetAvailabilitySetId;
+            TargetAvailabilityZone = targetAvailabilityZone;
+            TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
             TargetBootDiagnosticsStorageAccountId = targetBootDiagnosticsStorageAccountId;
             PerformAutoResync = performAutoResync;
+            TargetVmTags = targetVmTags;
+            SeedDiskTags = seedDiskTags;
+            TargetDiskTags = targetDiskTags;
+            TargetNicTags = targetNicTags;
             CustomInit();
         }
 
@@ -99,13 +117,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string LicenseType { get; set; }
 
         /// <summary>
-        /// Gets or sets the data mover RunAs account Id.
+        /// Gets or sets the SQL Server license type. Possible values include:
+        /// 'NotSpecified', 'NoLicenseType', 'PAYG', 'AHUB'
+        /// </summary>
+        [JsonProperty(PropertyName = "sqlServerLicenseType")]
+        public string SqlServerLicenseType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the data mover run as account Id.
         /// </summary>
         [JsonProperty(PropertyName = "dataMoverRunAsAccountId")]
         public string DataMoverRunAsAccountId { get; set; }
 
         /// <summary>
-        /// Gets or sets the snapshot RunAs account Id.
+        /// Gets or sets the snapshot run as account Id.
         /// </summary>
         [JsonProperty(PropertyName = "snapshotRunAsAccountId")]
         public string SnapshotRunAsAccountId { get; set; }
@@ -147,6 +172,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string TargetAvailabilitySetId { get; set; }
 
         /// <summary>
+        /// Gets or sets the target availability zone.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetAvailabilityZone")]
+        public string TargetAvailabilityZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target proximity placement group ARM Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetProximityPlacementGroupId")]
+        public string TargetProximityPlacementGroupId { get; set; }
+
+        /// <summary>
         /// Gets or sets the target boot diagnostics storage account ARM Id.
         /// </summary>
         [JsonProperty(PropertyName = "targetBootDiagnosticsStorageAccountId")]
@@ -157,6 +194,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "performAutoResync")]
         public string PerformAutoResync { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target VM tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetVmTags")]
+        public IDictionary<string, string> TargetVmTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the seed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "seedDiskTags")]
+        public IDictionary<string, string> SeedDiskTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the target disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetDiskTags")]
+        public IDictionary<string, string> TargetDiskTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the target NICs.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetNicTags")]
+        public IDictionary<string, string> TargetNicTags { get; set; }
 
         /// <summary>
         /// Validate the object.

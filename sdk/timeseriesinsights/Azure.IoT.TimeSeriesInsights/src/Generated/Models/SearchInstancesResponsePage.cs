@@ -8,7 +8,7 @@
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Single page of the search results. </summary>
-    public partial class SearchInstancesResponsePage
+    internal partial class SearchInstancesResponsePage
     {
         /// <summary> Initializes a new instance of SearchInstancesResponsePage. </summary>
         internal SearchInstancesResponsePage()

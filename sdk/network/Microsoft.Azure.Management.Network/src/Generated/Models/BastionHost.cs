@@ -48,13 +48,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public BastionHost(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<BastionHostIPConfiguration> ipConfigurations = default(IList<BastionHostIPConfiguration>), string dnsName = default(string), string provisioningState = default(string), string etag = default(string))
+        /// <param name="sku">The sku of this Bastion Host.</param>
+        public BastionHost(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<BastionHostIPConfiguration> ipConfigurations = default(IList<BastionHostIPConfiguration>), string dnsName = default(string), string provisioningState = default(string), string etag = default(string), Sku sku = default(Sku))
             : base(id, name, type, location, tags)
         {
             IpConfigurations = ipConfigurations;
             DnsName = dnsName;
             ProvisioningState = provisioningState;
             Etag = etag;
+            Sku = sku;
             CustomInit();
         }
 
@@ -89,6 +91,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the sku of this Bastion Host.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
 
     }
 }

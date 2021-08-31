@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DocumentDbCollectionSource. </summary>
         public DocumentDbCollectionSource()
         {
+            AdditionalColumns = new ChangeTrackingList<AdditionalColumns>();
             Type = "DocumentDbCollectionSource";
         }
 
@@ -23,15 +25,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="query"> Documents query. Type: string (or Expression with resultType string). </param>
         /// <param name="nestingSeparator"> Nested properties separator. Type: string (or Expression with resultType string). </param>
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        internal DocumentDbCollectionSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query, object nestingSeparator, object queryTimeout) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </param>
+        internal DocumentDbCollectionSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query, object nestingSeparator, object queryTimeout, IList<AdditionalColumns> additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             Query = query;
             NestingSeparator = nestingSeparator;
             QueryTimeout = queryTimeout;
+            AdditionalColumns = additionalColumns;
             Type = type ?? "DocumentDbCollectionSource";
         }
 
@@ -41,5 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object NestingSeparator { get; set; }
         /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public object QueryTimeout { get; set; }
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </summary>
+        public IList<AdditionalColumns> AdditionalColumns { get; }
     }
 }

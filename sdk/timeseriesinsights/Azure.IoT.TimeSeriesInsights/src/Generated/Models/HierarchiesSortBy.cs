@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.IoT.TimeSeriesInsights.Models
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Value to use for hierarchy node sorting. When it is set to &apos;CumulativeInstanceCount&apos;, the returned hierarchies are sorted based on the total instances belonging to the hierarchy node and its child hierarchy nodes. When it is set to &apos;Name&apos;, the returned hierarchies are sorted based on the hierarchy name. Optional, default is &apos;CumulativeInstanceCount&apos;. </summary>
-    public readonly partial struct HierarchiesSortBy : IEquatable<HierarchiesSortBy>
+    internal readonly partial struct HierarchiesSortBy : IEquatable<HierarchiesSortBy>
     {
         private readonly string _value;
 

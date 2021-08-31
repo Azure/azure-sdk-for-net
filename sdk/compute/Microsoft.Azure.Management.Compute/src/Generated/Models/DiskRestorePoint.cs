@@ -52,7 +52,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="encryption">Encryption property can be used to encrypt
         /// data at rest with customer managed keys or platform managed
         /// keys.</param>
-        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption))
+        /// <param name="supportsHibernation">Indicates the OS on a disk
+        /// supports hibernation.</param>
+        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?))
             : base(id, name, type)
         {
             TimeCreated = timeCreated;
@@ -63,6 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             FamilyId = familyId;
             SourceUniqueId = sourceUniqueId;
             Encryption = encryption;
+            SupportsHibernation = supportsHibernation;
             CustomInit();
         }
 
@@ -122,6 +125,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; private set; }
+
+        /// <summary>
+        /// Gets or sets indicates the OS on a disk supports hibernation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportsHibernation")]
+        public bool? SupportsHibernation { get; set; }
 
         /// <summary>
         /// Validate the object.

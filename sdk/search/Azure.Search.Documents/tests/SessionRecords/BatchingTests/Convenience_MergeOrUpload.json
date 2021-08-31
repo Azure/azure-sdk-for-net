@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-teglaza2.search.windows.net/indexes(\u0027jaspdepd\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dnolttek\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -9,8 +9,8 @@
         "Content-Length": "35123",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.2.0-alpha.20201009.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "05554e6fb2b679f68949d22d796afe5e",
         "x-ms-return-client-request-id": "true"
@@ -2585,8 +2585,8 @@
         "client-request-id": "05554e6f-b2b6-79f6-8949-d22d796afe5e",
         "Content-Length": "33183",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 09 Oct 2020 18:00:31 GMT",
-        "elapsed-time": "152",
+        "Date": "Sat, 27 Mar 2021 17:44:26 GMT",
+        "elapsed-time": "254",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -5673,7 +5673,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza2.search.windows.net/indexes(\u0027jaspdepd\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dnolttek\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -5681,8 +5681,8 @@
         "Content-Length": "17675",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.2.0-alpha.20201009.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "11ac5bce567c0a4f076199dba4047c2e",
         "x-ms-return-client-request-id": "true"
@@ -6977,8 +6977,8 @@
         "client-request-id": "11ac5bce-567c-0a4f-0761-99dba4047c2e",
         "Content-Length": "16651",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 09 Oct 2020 18:00:31 GMT",
-        "elapsed-time": "53",
+        "Date": "Sat, 27 Mar 2021 17:44:26 GMT",
+        "elapsed-time": "140",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -8529,15 +8529,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza2.search.windows.net/indexes(\u0027jaspdepd\u0027)/docs/$count?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dnolttek\u0027)/docs/$count?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-d03eb8925ebdf24aa4dc48de7f826d15-3a0963c5f1c19043-00",
+        "traceparent": "00-536962e5fcccd54095367de65bd23f9a-44912224b2947741-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.2.0-alpha.20201009.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "c34aa63bf9a85e5d390e5611e3770cd4",
         "x-ms-return-client-request-id": "true"
@@ -8549,8 +8549,8 @@
         "client-request-id": "c34aa63b-f9a8-5e5d-390e-5611e3770cd4",
         "Content-Length": "4",
         "Content-Type": "text/plain",
-        "Date": "Fri, 09 Oct 2020 18:00:31 GMT",
-        "elapsed-time": "5",
+        "Date": "Sat, 27 Mar 2021 17:44:26 GMT",
+        "elapsed-time": "4",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -8562,15 +8562,15 @@
       "ResponseBody": "\uFEFF0"
     },
     {
-      "RequestUri": "https://azs-net-teglaza2.search.windows.net/indexes(\u0027jaspdepd\u0027)/docs/$count?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dnolttek\u0027)/docs/$count?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-e5ef531ae619804f881739c9bc00498c-f1db920656885c41-00",
+        "traceparent": "00-856c4df233f3e44f9d23b75600bbbc8f-733cba3b27cd0e4f-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.2.0-alpha.20201009.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "835c24d4e65319dafe4afd54181ad584",
         "x-ms-return-client-request-id": "true"
@@ -8582,8 +8582,8 @@
         "client-request-id": "835c24d4-e653-19da-fe4a-fd54181ad584",
         "Content-Length": "6",
         "Content-Type": "text/plain",
-        "Date": "Fri, 09 Oct 2020 18:00:32 GMT",
-        "elapsed-time": "5",
+        "Date": "Sat, 27 Mar 2021 17:44:27 GMT",
+        "elapsed-time": "4",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -8595,15 +8595,15 @@
       "ResponseBody": "\uFEFF768"
     },
     {
-      "RequestUri": "https://azs-net-teglaza2.search.windows.net/indexes(\u0027jaspdepd\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dnolttek\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-3c56d13b40b23a428a5677cc387c843d-4561fb7aa77c804e-00",
+        "traceparent": "00-df358d6af3285f4494b5fc71eff59d2c-78617b87e548f740-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.2.0-alpha.20201009.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "d3f2a3cd3a1fd4b6fd4ed86d003e2790",
         "x-ms-return-client-request-id": "true"
@@ -8613,8 +8613,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "d3f2a3cd-3a1f-d4b6-fd4e-d86d003e2790",
-        "Date": "Fri, 09 Oct 2020 18:00:32 GMT",
-        "elapsed-time": "214",
+        "Date": "Sat, 27 Mar 2021 17:44:28 GMT",
+        "elapsed-time": "166",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "d3f2a3cd-3a1f-d4b6-fd4e-d86d003e2790",
@@ -8626,8 +8626,9 @@
   ],
   "Variables": {
     "RandomSeed": "1530528884",
-    "SearchIndexName": "jaspdepd",
+    "SearchIndexName": "dnolttek",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-teglaza2"
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

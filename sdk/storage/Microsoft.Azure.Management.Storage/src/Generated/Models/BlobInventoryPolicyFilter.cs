@@ -10,14 +10,16 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An object that defines the blob inventory rule filter conditions.
+    /// An object that defines the blob inventory rule filter conditions. For
+    /// 'Blob' definition.objectType all filter properties are applicable,
+    /// 'blobTypes' is required and others are optional. For 'Container'
+    /// definition.objectType only prefixMatch is applicable and is optional.
     /// </summary>
     public partial class BlobInventoryPolicyFilter
     {
@@ -32,16 +34,21 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the BlobInventoryPolicyFilter class.
         /// </summary>
-        /// <param name="blobTypes">An array of predefined enum values. Valid
-        /// values include blockBlob, appendBlob, pageBlob. Hns accounts does
-        /// not support pageBlobs.</param>
         /// <param name="prefixMatch">An array of strings for blob prefixes to
         /// be matched.</param>
+        /// <param name="blobTypes">An array of predefined enum values. Valid
+        /// values include blockBlob, appendBlob, pageBlob. Hns accounts does
+        /// not support pageBlobs. This field is required when
+        /// definition.objectType property is set to 'Blob'.</param>
         /// <param name="includeBlobVersions">Includes blob versions in blob
-        /// inventory when value set to true.</param>
+        /// inventory when value is set to true. The definition.schemaFields
+        /// values 'VersionId and IsCurrentVersion' are required if this
+        /// property is set to true, else they must be excluded.</param>
         /// <param name="includeSnapshots">Includes blob snapshots in blob
-        /// inventory when value set to true.</param>
-        public BlobInventoryPolicyFilter(IList<string> blobTypes, IList<string> prefixMatch = default(IList<string>), bool? includeBlobVersions = default(bool?), bool? includeSnapshots = default(bool?))
+        /// inventory when value is set to true. The definition.schemaFields
+        /// value 'Snapshot' is required if this property is set to true, else
+        /// it must be excluded.</param>
+        public BlobInventoryPolicyFilter(IList<string> prefixMatch = default(IList<string>), IList<string> blobTypes = default(IList<string>), bool? includeBlobVersions = default(bool?), bool? includeSnapshots = default(bool?))
         {
             PrefixMatch = prefixMatch;
             BlobTypes = blobTypes;
@@ -64,37 +71,28 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets or sets an array of predefined enum values. Valid values
         /// include blockBlob, appendBlob, pageBlob. Hns accounts does not
-        /// support pageBlobs.
+        /// support pageBlobs. This field is required when
+        /// definition.objectType property is set to 'Blob'.
         /// </summary>
         [JsonProperty(PropertyName = "blobTypes")]
         public IList<string> BlobTypes { get; set; }
 
         /// <summary>
-        /// Gets or sets includes blob versions in blob inventory when value
-        /// set to true.
+        /// Gets or sets includes blob versions in blob inventory when value is
+        /// set to true. The definition.schemaFields values 'VersionId and
+        /// IsCurrentVersion' are required if this property is set to true,
+        /// else they must be excluded.
         /// </summary>
         [JsonProperty(PropertyName = "includeBlobVersions")]
         public bool? IncludeBlobVersions { get; set; }
 
         /// <summary>
         /// Gets or sets includes blob snapshots in blob inventory when value
-        /// set to true.
+        /// is set to true. The definition.schemaFields value 'Snapshot' is
+        /// required if this property is set to true, else it must be excluded.
         /// </summary>
         [JsonProperty(PropertyName = "includeSnapshots")]
         public bool? IncludeSnapshots { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (BlobTypes == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "BlobTypes");
-            }
-        }
     }
 }

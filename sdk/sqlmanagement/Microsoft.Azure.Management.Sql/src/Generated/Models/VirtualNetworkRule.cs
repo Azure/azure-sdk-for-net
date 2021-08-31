@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// before the virtual network has vnet service endpoint
         /// enabled.</param>
         /// <param name="state">Virtual Network Rule State. Possible values
-        /// include: 'Initializing', 'InProgress', 'Ready', 'Deleting',
-        /// 'Unknown'</param>
+        /// include: 'Initializing', 'InProgress', 'Ready', 'Failed',
+        /// 'Deleting', 'Unknown'</param>
         public VirtualNetworkRule(string virtualNetworkSubnetId, string id = default(string), string name = default(string), string type = default(string), bool? ignoreMissingVnetServiceEndpoint = default(bool?), string state = default(string))
             : base(id, name, type)
         {
@@ -72,7 +72,8 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets virtual Network Rule State. Possible values include:
-        /// 'Initializing', 'InProgress', 'Ready', 'Deleting', 'Unknown'
+        /// 'Initializing', 'InProgress', 'Ready', 'Failed', 'Deleting',
+        /// 'Unknown'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public string State { get; private set; }

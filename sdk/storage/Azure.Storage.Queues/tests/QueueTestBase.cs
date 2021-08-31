@@ -15,7 +15,7 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Queues.Tests
 {
-    public class QueueTestBase : StorageTestBase
+    public class QueueTestBase : StorageTestBase<StorageTestEnvironment>
     {
         public string GetNewQueueName() => $"test-queue-{Recording.Random.NewGuid()}";
         public string GetNewMessageId() => $"test-message-{Recording.Random.NewGuid()}";
@@ -218,16 +218,15 @@ namespace Azure.Storage.Queues.Tests
             credentials ??= GetAccountSasCredentials();
             if (!includeEndpoint)
             {
-                return TestExtensions.CreateStorageConnectionString(
+                return new StorageConnectionString(
                     credentials,
-                    TestConfigDefault.AccountName);
+                    (new Uri(TestConfigDefault.BlobServiceEndpoint), new Uri(TestConfigDefault.BlobServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.QueueServiceEndpoint), new Uri(TestConfigDefault.QueueServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.TableServiceEndpoint), new Uri(TestConfigDefault.TableServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.FileServiceEndpoint), new Uri(TestConfigDefault.FileServiceSecondaryEndpoint)));
             }
 
-            (Uri, Uri) queueUri = StorageConnectionString.ConstructQueueEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
+            (Uri, Uri) queueUri = (new Uri(TestConfigDefault.QueueServiceEndpoint), new Uri(TestConfigDefault.QueueServiceSecondaryEndpoint));
 
             return new StorageConnectionString(
                     credentials,

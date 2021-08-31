@@ -32,7 +32,7 @@ namespace Azure.Storage.Sas
         private string _version;
 
         // ss
-        private AccountSasServices? _services;
+        private (AccountSasServices? Parsed, string Raw) _services;
 
         // srt
         private AccountSasResourceTypes? _resourceTypes;
@@ -99,13 +99,13 @@ namespace Azure.Storage.Sas
         /// made with this shared access signature, and the service version to
         /// use when handling requests made with this shared access signature.
         /// </summary>
-        public string Version => _version ?? DefaultSasVersion;
+        public string Version => _version ?? SasQueryParametersInternals.DefaultSasVersionInternal;
 
         /// <summary>
         /// Gets the signed services accessible with an account level shared
         /// access signature.
         /// </summary>
-        public AccountSasServices? Services => _services;
+        public AccountSasServices? Services => _services.Parsed;
 
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
@@ -271,7 +271,7 @@ namespace Azure.Storage.Sas
                         _version = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ServicesUpper:
-                        _services = SasExtensions.ParseAccountServices(kv.Value);
+                        _services = (SasExtensions.ParseAccountServices(kv.Value), kv.Value);
                         break;
                     case Constants.Sas.Parameters.ResourceTypesUpper:
                         _resourceTypes = SasExtensions.ParseResourceTypes(kv.Value);
@@ -366,7 +366,7 @@ namespace Azure.Storage.Sas
             string contentType = default)
         {
             _version = version;
-            _services = services;
+            _services = (services, services?.ToPermissionsString());
             _resourceTypes = resourceTypes;
             _protocol = protocol;
             _startTime = startsOn;
@@ -415,7 +415,7 @@ namespace Azure.Storage.Sas
             int? directoryDepth = default)
         {
             _version = version;
-            _services = services;
+            _services = (services, services?.ToPermissionsString());
             _resourceTypes = resourceTypes;
             _protocol = protocol;
             _startTime = startsOn;
@@ -561,7 +561,7 @@ namespace Azure.Storage.Sas
 
             if (Services != null)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Services, _services.Raw);
             }
 
             if (ResourceTypes != null)

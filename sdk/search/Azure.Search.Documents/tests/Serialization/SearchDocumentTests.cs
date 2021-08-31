@@ -7,9 +7,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Text.Json;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -544,7 +542,6 @@ namespace Azure.Search.Documents.Tests
                         new DateTimeOffset(2017, 1, 13, 14, 3, 0, 0, TimeSpan.FromHours(-8)).ToUniversalTime()
                     }));
 
-#if EXPERIMENTAL_SPATIAL
         [TestCaseSource(nameof(GeoPointValues))]
         public void GetGeoPoints(TestValue<GeoPoint> test) => test.Check((d, n) => d.GetPoint(n));
         private static TestValue<GeoPoint>[] GeoPointValues =>
@@ -584,7 +581,6 @@ namespace Azure.Search.Documents.Tests
                         new GeoPoint(new GeoPosition(0, 1)),
                         new GeoPoint(new GeoPosition(2, 3))
                     }));
-#endif
 
         public class Complex
         {

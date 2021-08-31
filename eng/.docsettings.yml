@@ -58,6 +58,7 @@ known_presence_issues:
   - ['sdk/cognitiveservices/Vision.Face','#5499']
   - ['sdk/cognitiveservices/Vision.FormRecognizer','#5499']
   - ['sdk/containerregistry/Microsoft.Azure.ContainerRegistry','#5499']
+  - ['sdk/eventgrid/Azure.Messaging.EventGrid/EventGridSourceGenerator','#5499']
   - ['sdk/eventgrid/Microsoft.Azure.EventGrid','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs.Processor','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor','#5499']
@@ -149,6 +150,7 @@ known_content_issues:
   - ['sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
   - ['sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Microsoft.Extensions.Azure/README.md','#5499']
+  - ['sdk/eventgrid/README.md','azure-sdk-tools/issues/42']
   - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', '#15423']
   - ['sdk/eventhub/README.md','azure-sdk-tools/issues/42']
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
@@ -172,6 +174,7 @@ known_content_issues:
   - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', '#15423']
   - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', '#15423']
   - ['sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/README.md', '#15423']
+  - ['sdk/personalizer/README.md','azure-sdk-tools/issues/42']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// InMageAzureV2 provider specific settings
+    /// InMageAzureV2 provider specific settings.
     /// </summary>
     [Newtonsoft.Json.JsonObject("InMageAzureV2")]
     public partial class InMageAzureV2ReplicationDetails : ReplicationProviderSpecificSettings
@@ -99,9 +99,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// of the machine. Value can be vCenter or physical.</param>
         /// <param name="enableRdpOnTargetOption">The selected option to enable
         /// RDP\SSH on target vm after failover. String value of
-        /// {SrsDataContract.EnableRDPOnTargetOption} enum.</param>
-        /// <param name="datastores">The data stores of the on-premise machine.
-        /// Value can be list of strings that contain data store names.</param>
+        /// SrsDataContract.EnableRDPOnTargetOption enum.</param>
+        /// <param name="datastores">The datastores of the on-premise machine.
+        /// Value can be list of strings that contain datastore names.</param>
         /// <param name="targetVmId">The ARM Id of the target Azure VM. This
         /// value will be null until the VM is failed over. Only after failure
         /// it will be populated with the ARM Id of the Azure VM.</param>
@@ -117,6 +117,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// disks should be used during failover.</param>
         /// <param name="licenseType">License Type of the VM to be
         /// used.</param>
+        /// <param name="sqlServerLicenseType">The SQL Server license
+        /// type.</param>
         /// <param name="validationErrors">The validation errors of the
         /// on-premise machine Value can be list of validation errors.</param>
         /// <param name="lastRpoCalculatedTime">The last RPO calculated
@@ -129,7 +131,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// item.</param>
         /// <param name="protectedManagedDisks">The list of protected managed
         /// disks.</param>
-        public InMageAzureV2ReplicationDetails(string infrastructureVmId = default(string), string vCenterInfrastructureId = default(string), string protectionStage = default(string), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), int? resyncProgressPercentage = default(int?), long? rpoInSeconds = default(long?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), string ipAddress = default(string), string agentVersion = default(string), System.DateTime? agentExpiryDate = default(System.DateTime?), string isAgentUpdateRequired = default(string), string isRebootAfterUpdateRequired = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string processServerId = default(string), string processServerName = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmSyncStatus = default(string), IList<InMageAzureV2ProtectedDiskDetails> protectedDisks = default(IList<InMageAzureV2ProtectedDiskDetails>), string diskResized = default(string), string masterTargetId = default(string), int? sourceVmCpuCount = default(int?), int? sourceVmRamSizeInMB = default(int?), string osType = default(string), string vhdName = default(string), string osDiskId = default(string), IList<AzureVmDiskDetails> azureVMDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string selectedTfoAzureNetworkId = default(string), string selectedSourceNicId = default(string), string discoveryType = default(string), string enableRdpOnTargetOption = default(string), IList<string> datastores = default(IList<string>), string targetVmId = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string useManagedDisks = default(string), string licenseType = default(string), IList<HealthError> validationErrors = default(IList<HealthError>), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), System.DateTime? lastUpdateReceivedTime = default(System.DateTime?), string replicaId = default(string), string osVersion = default(string), IList<InMageAzureV2ManagedDiskDetails> protectedManagedDisks = default(IList<InMageAzureV2ManagedDiskDetails>))
+        /// <param name="lastRecoveryPointReceived">The last recovery point
+        /// received time.</param>
+        /// <param name="firmwareType">The firmware type of this protected
+        /// item.</param>
+        /// <param name="azureVmGeneration">The target generation for this
+        /// protected item.</param>
+        /// <param name="isAdditionalStatsAvailable">A value indicating whether
+        /// additional IR stats are available or not.</param>
+        /// <param name="totalDataTransferred">The total transferred data in
+        /// bytes.</param>
+        /// <param name="totalProgressHealth">The progress health.</param>
+        /// <param name="targetVmTags">The target VM tags.</param>
+        /// <param name="seedManagedDiskTags">The tags for the seed managed
+        /// disks.</param>
+        /// <param name="targetManagedDiskTags">The tags for the target managed
+        /// disks.</param>
+        /// <param name="targetNicTags">The tags for the target NICs.</param>
+        public InMageAzureV2ReplicationDetails(string infrastructureVmId = default(string), string vCenterInfrastructureId = default(string), string protectionStage = default(string), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), int? resyncProgressPercentage = default(int?), long? rpoInSeconds = default(long?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), string ipAddress = default(string), string agentVersion = default(string), System.DateTime? agentExpiryDate = default(System.DateTime?), string isAgentUpdateRequired = default(string), string isRebootAfterUpdateRequired = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string processServerId = default(string), string processServerName = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmSyncStatus = default(string), IList<InMageAzureV2ProtectedDiskDetails> protectedDisks = default(IList<InMageAzureV2ProtectedDiskDetails>), string diskResized = default(string), string masterTargetId = default(string), int? sourceVmCpuCount = default(int?), int? sourceVmRamSizeInMB = default(int?), string osType = default(string), string vhdName = default(string), string osDiskId = default(string), IList<AzureVmDiskDetails> azureVMDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string selectedTfoAzureNetworkId = default(string), string selectedSourceNicId = default(string), string discoveryType = default(string), string enableRdpOnTargetOption = default(string), IList<string> datastores = default(IList<string>), string targetVmId = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string useManagedDisks = default(string), string licenseType = default(string), string sqlServerLicenseType = default(string), IList<HealthError> validationErrors = default(IList<HealthError>), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), System.DateTime? lastUpdateReceivedTime = default(System.DateTime?), string replicaId = default(string), string osVersion = default(string), IList<InMageAzureV2ManagedDiskDetails> protectedManagedDisks = default(IList<InMageAzureV2ManagedDiskDetails>), System.DateTime? lastRecoveryPointReceived = default(System.DateTime?), string firmwareType = default(string), string azureVmGeneration = default(string), bool? isAdditionalStatsAvailable = default(bool?), long? totalDataTransferred = default(long?), string totalProgressHealth = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IDictionary<string, string> seedManagedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetManagedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>))
         {
             InfrastructureVmId = infrastructureVmId;
             VCenterInfrastructureId = vCenterInfrastructureId;
@@ -179,12 +198,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
             UseManagedDisks = useManagedDisks;
             LicenseType = licenseType;
+            SqlServerLicenseType = sqlServerLicenseType;
             ValidationErrors = validationErrors;
             LastRpoCalculatedTime = lastRpoCalculatedTime;
             LastUpdateReceivedTime = lastUpdateReceivedTime;
             ReplicaId = replicaId;
             OsVersion = osVersion;
             ProtectedManagedDisks = protectedManagedDisks;
+            LastRecoveryPointReceived = lastRecoveryPointReceived;
+            FirmwareType = firmwareType;
+            AzureVmGeneration = azureVmGeneration;
+            IsAdditionalStatsAvailable = isAdditionalStatsAvailable;
+            TotalDataTransferred = totalDataTransferred;
+            TotalProgressHealth = totalProgressHealth;
+            TargetVmTags = targetVmTags;
+            SeedManagedDiskTags = seedManagedDiskTags;
+            TargetManagedDiskTags = targetManagedDiskTags;
+            TargetNicTags = targetNicTags;
             CustomInit();
         }
 
@@ -298,10 +328,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string ProcessServerId { get; set; }
 
         /// <summary>
-        /// Gets the process server name.
+        /// Gets or sets the process server name.
         /// </summary>
         [JsonProperty(PropertyName = "processServerName")]
-        public string ProcessServerName { get; private set; }
+        public string ProcessServerName { get; set; }
 
         /// <summary>
         /// Gets or sets the multi vm group Id.
@@ -438,14 +468,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Gets or sets the selected option to enable RDP\SSH on target vm
         /// after failover. String value of
-        /// {SrsDataContract.EnableRDPOnTargetOption} enum.
+        /// SrsDataContract.EnableRDPOnTargetOption enum.
         /// </summary>
         [JsonProperty(PropertyName = "enableRdpOnTargetOption")]
         public string EnableRdpOnTargetOption { get; set; }
 
         /// <summary>
-        /// Gets or sets the data stores of the on-premise machine. Value can
-        /// be list of strings that contain data store names.
+        /// Gets or sets the datastores of the on-premise machine. Value can be
+        /// list of strings that contain datastore names.
         /// </summary>
         [JsonProperty(PropertyName = "datastores")]
         public IList<string> Datastores { get; set; }
@@ -496,6 +526,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string LicenseType { get; set; }
 
         /// <summary>
+        /// Gets or sets the SQL Server license type.
+        /// </summary>
+        [JsonProperty(PropertyName = "sqlServerLicenseType")]
+        public string SqlServerLicenseType { get; set; }
+
+        /// <summary>
         /// Gets or sets the validation errors of the on-premise machine Value
         /// can be list of validation errors.
         /// </summary>
@@ -531,6 +567,67 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "protectedManagedDisks")]
         public IList<InMageAzureV2ManagedDiskDetails> ProtectedManagedDisks { get; set; }
+
+        /// <summary>
+        /// Gets the last recovery point received time.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastRecoveryPointReceived")]
+        public System.DateTime? LastRecoveryPointReceived { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the firmware type of this protected item.
+        /// </summary>
+        [JsonProperty(PropertyName = "firmwareType")]
+        public string FirmwareType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target generation for this protected item.
+        /// </summary>
+        [JsonProperty(PropertyName = "azureVmGeneration")]
+        public string AzureVmGeneration { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether additional IR stats are
+        /// available or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "isAdditionalStatsAvailable")]
+        public bool? IsAdditionalStatsAvailable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the total transferred data in bytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "totalDataTransferred")]
+        public long? TotalDataTransferred { get; set; }
+
+        /// <summary>
+        /// Gets or sets the progress health.
+        /// </summary>
+        [JsonProperty(PropertyName = "totalProgressHealth")]
+        public string TotalProgressHealth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target VM tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetVmTags")]
+        public IDictionary<string, string> TargetVmTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the seed managed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "seedManagedDiskTags")]
+        public IDictionary<string, string> SeedManagedDiskTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the target managed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetManagedDiskTags")]
+        public IDictionary<string, string> TargetManagedDiskTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the target NICs.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetNicTags")]
+        public IDictionary<string, string> TargetNicTags { get; set; }
 
     }
 }

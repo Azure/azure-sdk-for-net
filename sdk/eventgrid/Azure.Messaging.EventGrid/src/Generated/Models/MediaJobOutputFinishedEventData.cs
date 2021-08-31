@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Job output finished event data. </summary>
+    /// <summary> Job output finished event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobOutputFinished event. </summary>
     public partial class MediaJobOutputFinishedEventData : MediaJobOutputStateChangeEventData
     {
         /// <summary> Initializes a new instance of MediaJobOutputFinishedEventData. </summary>

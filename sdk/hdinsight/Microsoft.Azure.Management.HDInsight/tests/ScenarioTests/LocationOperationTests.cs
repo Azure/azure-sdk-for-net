@@ -2,6 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.HDInsight;
+using Microsoft.Azure.Management.HDInsight.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using Xunit;
 
 namespace Management.HDInsight.Tests
@@ -41,8 +44,8 @@ namespace Management.HDInsight.Tests
             Assert.NotNull(capabilitiesResult.Quota);
             Assert.NotNull(capabilitiesResult.Regions);
             Assert.NotNull(capabilitiesResult.Versions);
-            Assert.NotNull(capabilitiesResult.VmSizeFilters);
-            Assert.NotNull(capabilitiesResult.VmSizes);
+            Assert.NotNull(capabilitiesResult.VmsizeFilters);
+            Assert.NotNull(capabilitiesResult.Vmsizes);
 
             foreach (var feature in capabilitiesResult.Features)
             {
@@ -64,14 +67,60 @@ namespace Management.HDInsight.Tests
                 Assert.NotNull(capabilitiesResult.Versions[platform]);
             }
 
-            foreach (var filter in capabilitiesResult.VmSizeFilters)
+            foreach (var filter in capabilitiesResult.VmsizeFilters)
             {
                 Assert.NotNull(filter);
             }
 
-            foreach (var platform in capabilitiesResult.VmSizes.Keys)
+            foreach (var platform in capabilitiesResult.Vmsizes.Keys)
             {
-                Assert.NotNull(capabilitiesResult.VmSizes[platform]);
+                Assert.NotNull(capabilitiesResult.Vmsizes[platform]);
+            }
+        }
+
+        [Fact]
+        public void TestCheckNameAvailability()
+        {
+            TestInitialize();
+            var checkNameAvailabilityParameter = new NameAvailabilityCheckRequestParameters()
+            {
+                Name = "testclustername",
+                Type = "clusters"
+            };
+            var result = HDInsightClient.Locations.CheckNameAvailability(CommonData.Location, checkNameAvailabilityParameter);
+
+            Assert.True(result.NameAvailable);
+        }
+
+        [Fact]
+        public void TestValidateClusterCreateRequest()
+        {
+            TestInitialize();
+
+            string clusterName = TestUtilities.GenerateName("hdisdk-humboldt");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            ClusterCreateRequestValidationParameters createRequestValidationParameter = new ClusterCreateRequestValidationParameters
+            {
+                Name = clusterName,
+                Type = "clusters",
+                Location = createParams.Location,
+                Identity = createParams.Identity,
+                Properties = createParams.Properties,
+                Tags = createParams.Tags
+            };
+
+            /*
+              The LocationOperationTests overrides the method CreatedResource so there is not real storage account will be created.
+              There should be validation errors.
+              However now there is a bug in backend, backend returns 400 bad request when finding there are validation errors.
+            */
+            try
+            {
+                var result = HDInsightClient.Locations.ValidateClusterCreateRequest(CommonData.Location, createRequestValidationParameter);
+            }
+            catch(ErrorResponseException ex)
+            {
+                Assert.Equal(System.Net.HttpStatusCode.BadRequest, ex.Response.StatusCode);
             }
         }
     }

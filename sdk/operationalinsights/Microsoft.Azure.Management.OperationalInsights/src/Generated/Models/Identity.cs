@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,16 +31,21 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <summary>
         /// Initializes a new instance of the Identity class.
         /// </summary>
-        /// <param name="type">The identity type. Possible values include:
-        /// 'SystemAssigned', 'None'</param>
+        /// <param name="type">Type of managed service identity. Possible
+        /// values include: 'SystemAssigned', 'UserAssigned', 'None'</param>
         /// <param name="principalId">The principal ID of resource
         /// identity.</param>
         /// <param name="tenantId">The tenant ID of resource.</param>
-        public Identity(IdentityType type, string principalId = default(string), string tenantId = default(string))
+        /// <param name="userAssignedIdentities">The list of user identities
+        /// associated with the resource. The user identity dictionary key
+        /// references will be ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
+        public Identity(IdentityType type, string principalId = default(string), string tenantId = default(string), IDictionary<string, UserIdentityProperties> userAssignedIdentities = default(IDictionary<string, UserIdentityProperties>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -60,11 +67,20 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public string TenantId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the identity type. Possible values include:
-        /// 'SystemAssigned', 'None'
+        /// Gets or sets type of managed service identity. Possible values
+        /// include: 'SystemAssigned', 'UserAssigned', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public IdentityType Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of user identities associated with the
+        /// resource. The user identity dictionary key references will be ARM
+        /// resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserIdentityProperties> UserAssignedIdentities { get; set; }
 
         /// <summary>
         /// Validate the object.

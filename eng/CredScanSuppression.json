@@ -4,6 +4,7 @@
         {
             "placeholder": [
                 "Sanitized",
+                "%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D",
                 "fake",
                 "Test12345",
                 "default",
@@ -51,6 +52,7 @@
             "file":[
                 "sdk/identity/Azure.Identity/tests/Data/cert.pfx",
                 "sdk/identity/Azure.Identity/tests/Data/cert-invalid-data.pem",
+                "sdk/identity/Azure.Identity/tests/Data/cert-password-protected.pfx",
                 "sdk/identity/Azure.Identity/tests/Data/cert.pem",
                 "sdk/identity/Azure.Identity/tests/Data/mock-arc-mi-key.key",
                 "sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/tests/cert.pem"

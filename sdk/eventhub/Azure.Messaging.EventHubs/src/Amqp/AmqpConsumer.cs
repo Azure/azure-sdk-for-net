@@ -32,6 +32,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>An empty set of events which can be dispatched when no events are available.</summary>
         private static readonly IReadOnlyList<EventData> EmptyEventSet = Array.Empty<EventData>();
 
+        /// <summary>A captured exception that indicates the partition was stolen by another consumer; this should be surfaced when an attempt is made to open a consumer link.</summary>
+        private volatile Exception _activePartitionStolenException;
+
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private volatile bool _closed;
 
@@ -66,6 +69,12 @@ namespace Azure.Messaging.EventHubs.Amqp
         private string PartitionId { get; }
 
         /// <summary>
+        ///   A unique name used to identify this consumer.
+        /// </summary>
+        ///
+        public string Identifier { get; }
+
+        /// <summary>
         ///   The current position for the consumer, updated as events are received from the
         ///   partition.
         /// </summary>
@@ -86,6 +95,16 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <value><c>true</c> if information about a partition's last event should be requested and tracked; otherwise, <c>false</c>.</value>
         ///
         private bool TrackLastEnqueuedEventProperties { get; }
+
+        /// <summary>
+        ///   Indicates whether or not the consumer should consider itself invalid when a partition is stolen.  If set,
+        ///   an observed exception indicating that the partition was stolen will be captured and surfaced when any
+        ///   operation is requested.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if the consumer is considered invalid after a partition is stolen; otherwise, <c>false</c>.</value>
+        ///
+        private bool InvalidateConsumerWhenPartitionStolen { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -119,11 +138,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="eventHubName">The name of the Event Hub from which events will be consumed.</param>
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="consumerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="eventPosition">The position of the event in the partition where the consumer should begin reading.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="invalidateConsumerWhenPartitionStolen">Indicates whether or not the consumer should consider itself invalid when a partition is stolen.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="messageConverter">The converter to use for translating between AMQP messages and client types.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
@@ -140,8 +161,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         public AmqpConsumer(string eventHubName,
                             string consumerGroup,
                             string partitionId,
+                            string consumerIdentifier,
                             EventPosition eventPosition,
                             bool trackLastEnqueuedEventProperties,
+                            bool invalidateConsumerWhenPartitionStolen,
                             long? ownerLevel,
                             uint? prefetchCount,
                             long? prefetchSizeInBytes,
@@ -156,11 +179,18 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
+            if (string.IsNullOrEmpty(consumerIdentifier))
+            {
+                consumerIdentifier = Guid.NewGuid().ToString();
+            }
+
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
+            Identifier = consumerIdentifier;
             CurrentEventPosition = eventPosition;
             TrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties;
+            InvalidateConsumerWhenPartitionStolen = invalidateConsumerWhenPartitionStolen;
             ConnectionScope = connectionScope;
             RetryPolicy = retryPolicy;
             MessageConverter = messageConverter;
@@ -170,6 +200,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                    CreateConsumerLinkAsync(
                         consumerGroup,
                         partitionId,
+                        consumerIdentifier,
                         CurrentEventPosition,
                         prefetchCount ?? DefaultPrefetchCount,
                         prefetchSizeInBytes,
@@ -177,11 +208,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         trackLastEnqueuedEventProperties,
                         timeout,
                         CancellationToken.None),
-                link =>
-                {
-                    link.Session?.SafeClose();
-                    link.SafeClose();
-                });
+                CloseConsumerLink);
         }
 
         /// <summary>
@@ -205,6 +232,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                           CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
+            Argument.AssertNotClosed(ConnectionScope.IsDisposed, nameof(EventHubConnection));
             Argument.AssertAtLeast(maximumEventCount, 1, nameof(maximumEventCount));
 
             var receivedEventCount = 0;
@@ -214,7 +242,6 @@ namespace Azure.Messaging.EventHubs.Amqp
             var operationId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
             var link = default(ReceivingAmqpLink);
             var retryDelay = default(TimeSpan?);
-            var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedEvents = default(List<EventData>);
             var lastReceivedEvent = default(EventData);
 
@@ -236,52 +263,63 @@ namespace Azure.Messaging.EventHubs.Amqp
                         link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                        var messagesReceived = await Task.Factory.FromAsync
+                        var messagesReceived = await Task.Factory.FromAsync<(ReceivingAmqpLink, int, TimeSpan), IEnumerable<AmqpMessage>>
                         (
-                            (callback, state) => link.BeginReceiveMessages(maximumEventCount, waitTime, callback, state),
-                            (asyncResult) => link.EndReceiveMessages(asyncResult, out amqpMessages),
-                            TaskCreationOptions.RunContinuationsAsynchronously
+                            static (arguments, callback, state) =>
+                            {
+                                var (link, maximumEventCount, waitTime) = arguments;
+                                return link.BeginReceiveMessages(maximumEventCount, waitTime, callback, link);
+                            },
+                            static asyncResult =>
+                            {
+                                var link = (ReceivingAmqpLink)asyncResult.AsyncState;
+                                var received = link.EndReceiveMessages(asyncResult, out var amqpMessages);
+
+                                return received ? amqpMessages : null;
+                            },
+                            (link, maximumEventCount, waitTime),
+                            default
                         ).ConfigureAwait(false);
 
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
+                        // If no messages were received, then just return the empty set.
+
+                        if (messagesReceived == null)
+                        {
+                            return EmptyEventSet;
+                        }
+
                         // If event messages were received, then package them for consumption and
                         // return them.
 
-                        if ((messagesReceived) && (amqpMessages != null))
+                        foreach (AmqpMessage message in messagesReceived)
                         {
                             receivedEvents ??= new List<EventData>();
 
-                            foreach (AmqpMessage message in amqpMessages)
-                            {
-                                link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
-                                receivedEvents.Add(MessageConverter.CreateEventFromMessage(message));
-                                message.Dispose();
-                            }
+                            link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
+                            receivedEvents.Add(MessageConverter.CreateEventFromMessage(message));
+                            message.Dispose();
 
                             receivedEventCount = receivedEvents.Count;
-
-                            if (receivedEventCount > 0)
-                            {
-                                lastReceivedEvent = receivedEvents[receivedEventCount - 1];
-
-                                if (lastReceivedEvent.Offset > long.MinValue)
-                                {
-                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset, false);
-                                }
-
-                                if (TrackLastEnqueuedEventProperties)
-                                {
-                                    LastReceivedEvent = lastReceivedEvent;
-                                }
-                            }
-
-                            return receivedEvents;
                         }
 
-                        // No events were available.
+                        if (receivedEventCount > 0)
+                        {
+                            lastReceivedEvent = receivedEvents[receivedEventCount - 1];
 
-                        return EmptyEventSet;
+                            if (lastReceivedEvent.Offset > long.MinValue)
+                            {
+                                CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset, false);
+                            }
+
+                            if (TrackLastEnqueuedEventProperties)
+                            {
+                                LastReceivedEvent = lastReceivedEvent;
+                            }
+                        }
+
+                        return receivedEvents ?? EmptyEventSet;
                     }
                     catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ServiceTimeout)
                     {
@@ -294,6 +332,33 @@ namespace Azure.Messaging.EventHubs.Amqp
                     catch (Exception ex)
                     {
                         Exception activeEx = ex.TranslateServiceException(EventHubName);
+
+                        // If the partition was stolen determine the correct action to take for
+                        // capturing it with respect to whether the consumer should be invalidated.
+                        //
+                        // In either case, it is a terminal exception and will not trigger a retry;
+                        // allow the normal error handling flow to surface the exception.
+
+                        if (ex.IsConsumerPartitionStolenException())
+                        {
+                             // If the consumer should be invalidated, capture the exception
+                             // and force-close the link.  This will ensure that the next operation
+                             // will surface it.
+
+                            if (InvalidateConsumerWhenPartitionStolen)
+                            {
+                                _activePartitionStolenException = ex;
+                                CloseConsumerLink(link);
+                            }
+                            else
+                            {
+                                // If the consumer should not be invalidated, clear any previously captured exception to avoid
+                                // surfacing the failure multiple times.  If the link is stolen after this operation, it will
+                                // be intercepted and handled as needed.
+
+                                _activePartitionStolenException = null;
+                            }
+                        }
 
                         // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
                         // Otherwise, bubble the exception.
@@ -389,6 +454,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="consumerGroup">The consumer group of the Event Hub to which the link is bound.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition to which the link is bound.</param>
+        /// <param name="consumerIdentifier">The identifier associated with the consumer.</param>
         /// <param name="eventStartingPosition">The place within the partition's event stream to begin consuming events.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
@@ -399,16 +465,43 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The AMQP link to use for consumer-related operations.</returns>
         ///
-        private async Task<ReceivingAmqpLink> CreateConsumerLinkAsync(string consumerGroup,
-                                                                      string partitionId,
-                                                                      EventPosition eventStartingPosition,
-                                                                      uint prefetchCount,
-                                                                      long? prefetchSizeInBytes,
-                                                                      long? ownerLevel,
-                                                                      bool trackLastEnqueuedEventProperties,
-                                                                      TimeSpan timeout,
-                                                                      CancellationToken cancellationToken)
+        protected async Task<ReceivingAmqpLink> CreateConsumerLinkAsync(string consumerGroup,
+                                                                        string partitionId,
+                                                                        string consumerIdentifier,
+                                                                        EventPosition eventStartingPosition,
+                                                                        uint prefetchCount,
+                                                                        long? prefetchSizeInBytes,
+                                                                        long? ownerLevel,
+                                                                        bool trackLastEnqueuedEventProperties,
+                                                                        TimeSpan timeout,
+                                                                        CancellationToken cancellationToken)
         {
+            // Determine if there is an active is an active exception that needs to be surfaced,
+            // do so now.
+            //
+            // Note that this is a benign race; it is possible that multiple threads
+            // will observe the active exception and surface it, even if the consumer is not
+            // considered invalid.  This is reasonable behavior for this scenario as the underlying
+            // condition is itself a race condition between multiple consumers.
+
+            var activeException = _activePartitionStolenException;
+
+            if (activeException != null)
+            {
+                // If the consumer should not be considered invalid, clear the active exception if
+                // it hasn't already been reset.
+
+                if (!InvalidateConsumerWhenPartitionStolen)
+                {
+                    Interlocked.CompareExchange(ref _activePartitionStolenException, null, activeException);
+                }
+
+                EventHubsEventSource.Log.AmqpConsumerLinkCreateCapturedErrorThrow(EventHubName, consumerGroup, partitionId, ownerLevel?.ToString(CultureInfo.InvariantCulture), eventStartingPosition.ToString(), activeException.Message);
+                ExceptionDispatchInfo.Capture(activeException).Throw();
+            }
+
+            // Create and open the consumer link.
+
             var link = default(ReceivingAmqpLink);
 
             try
@@ -422,6 +515,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     prefetchSizeInBytes,
                     ownerLevel,
                     trackLastEnqueuedEventProperties,
+                    consumerIdentifier,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -431,6 +525,61 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             return link;
         }
+
+        /// <summary>
+        ///   Closes the AMQP link used by the consumer, capturing the passive terminal exception that triggered
+        ///   closing if it should be surfaced during the next requested operation.
+        /// </summary>
+        ///
+        protected void CloseConsumerLink(ReceivingAmqpLink link)
+        {
+            // If there is no link, then no action needs to be
+            // taken.
+
+            if (link == null)
+            {
+                return;
+            }
+
+            // If the consumer is being closed, the sentinel variable will already be set, and
+            // the terminal exception need not be considered.
+
+            if (!_closed)
+            {
+                var linkException = GetTerminalException(link);
+
+                // If the terminal exception indicates that the partition was stolen from the consumer,
+                // capture it so that it can be surfaced when the next operation is requested.
+
+                if (linkException.IsConsumerPartitionStolenException())
+                {
+                    EventHubsEventSource.Log.AmqpConsumerLinkFaultCapture(EventHubName, ConsumerGroup, PartitionId, linkException.Message);
+                    _activePartitionStolenException = linkException;
+                }
+            }
+
+            // Close the link and it's associated session.
+
+            link.Session?.SafeClose();
+            link.SafeClose();
+
+            EventHubsEventSource.Log.FaultTolerantAmqpObjectClose(nameof(ReceivingAmqpLink), "", EventHubName, ConsumerGroup, PartitionId, link.TerminalException?.Message);
+        }
+
+        /// <summary>
+        ///   Gets the terminal exception that caused link closure.
+        /// </summary>
+        ///
+        /// <param name="link">The link to inspect for a terminal exception.</param>
+        ///
+        /// <returns>The terminal exception, if one was captured; otherwise, <c>null</c>.</returns>
+        ///
+        protected virtual Exception GetTerminalException(ReceivingAmqpLink link) =>
+            link switch
+            {
+                null => null,
+                _ => link.TerminalException
+            };
 
         /// <summary>
         ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.

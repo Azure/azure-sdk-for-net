@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourcegroups/galleryPsTestRg8010?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlZ3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzgwMTA/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourcegroups/galleryPsTestRg581?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Jlc291cmNlZ3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzU4MT9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"SoutheastAsia\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9a02ddd8-bd77-4030-bda3-34d56b563987"
+          "b3e689bb-5a03-4c2e-b6ad-62a751feef96"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ],
         "Content-Type": [
@@ -33,16 +33,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1199"
         ],
         "x-ms-request-id": [
-          "ab2f2ee3-8430-4320-a282-0f3486e4e7c8"
+          "68187e8d-9b77-47f7-af46-ae161143b334"
         ],
         "x-ms-correlation-request-id": [
-          "ab2f2ee3-8430-4320-a282-0f3486e4e7c8"
+          "68187e8d-9b77-47f7-af46-ae161143b334"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T233721Z:ab2f2ee3-8430-4320-a282-0f3486e4e7c8"
+          "WESTCENTRALUS:20210330T003304Z:68187e8d-9b77-47f7-af46-ae161143b334"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,10 +51,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:37:21 GMT"
+          "Tue, 30 Mar 2021 00:33:03 GMT"
         ],
         "Content-Length": [
-          "198"
+          "196"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,26 +63,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010\",\r\n  \"name\": \"galleryPsTestRg8010\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581\",\r\n  \"name\": \"galleryPsTestRg581\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzgwMTAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2dhbGxlcmllcy9nYWxsZXJ5UHNUZXN0R2FsbGVyeTM1MjE/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899?api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzU4MS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZ2FsbGVyaWVzL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5NDg5OT9hcGktdmVyc2lvbj0yMDIwLTA5LTMw",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"This is a sample gallery description\"\r\n  },\r\n  \"location\": \"SoutheastAsia\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "44e0b70a-aaea-4f49-a3bb-383be4e1ea78"
+          "eaeb2444-c2df-4a1f-a63e-7c30bbeb912e"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -99,7 +99,7 @@
           "no-cache"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/southeastasia/capsOperations/20b9476c-15c2-4463-a12f-6626b70c6318?api-version=2019-12-01"
+          "https://management.azure.com/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/providers/Microsoft.Compute/locations/southeastasia/capsOperations/bcf1cfa3-a935-452e-a6e8-f8e4279a0eb8?api-version=2020-09-30"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/CreateUpdateGallery3Min;49,Microsoft.Compute/CreateUpdateGallery30Min;299"
@@ -108,10 +108,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "20b9476c-15c2-4463-a12f-6626b70c6318"
+          "bcf1cfa3-a935-452e-a6e8-f8e4279a0eb8"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -121,19 +121,19 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "b75be299-c34b-4cdd-9090-4819ec213762"
+          "a6ef7ebc-0601-4471-b7fd-ba41266da851"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T233855Z:b75be299-c34b-4cdd-9090-4819ec213762"
+          "WESTCENTRALUS:20210330T003312Z:a6ef7ebc-0601-4471-b7fd-ba41266da851"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:38:55 GMT"
+          "Tue, 30 Mar 2021 00:33:12 GMT"
         ],
         "Content-Length": [
-          "514"
+          "578"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -142,20 +142,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGallery3521\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521\",\r\n  \"type\": \"Microsoft.Compute/galleries\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"description\": \"This is a sample gallery description\",\r\n    \"identifier\": {\r\n      \"uniqueName\": \"e37510d7-33b6-4676-886f-ee75bcc01871-GALLERYPSTESTGALLERY3521\"\r\n    },\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGallery4899\",\r\n  \"id\": \"/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899\",\r\n  \"type\": \"Microsoft.Compute/galleries\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"description\": \"This is a sample gallery description\",\r\n    \"identifier\": {\r\n      \"uniqueName\": \"97f78232-382b-46a7-8a72-964d692c4f3f-GALLERYPSTESTGALLERY4899\"\r\n    },\r\n    \"sharingProfile\": {\r\n      \"permissions\": \"Private\"\r\n    },\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/southeastasia/capsOperations/20b9476c-15c2-4463-a12f-6626b70c6318?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9jYXBzT3BlcmF0aW9ucy8yMGI5NDc2Yy0xNWMyLTQ0NjMtYTEyZi02NjI2YjcwYzYzMTg/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/providers/Microsoft.Compute/locations/southeastasia/capsOperations/bcf1cfa3-a935-452e-a6e8-f8e4279a0eb8?api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9jYXBzT3BlcmF0aW9ucy9iY2YxY2ZhMy1hOTM1LTQ1MmUtYTZlOC1mOGU0Mjc5YTBlYjg/YXBpLXZlcnNpb249MjAyMC0wOS0zMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -172,10 +172,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "9d4bfff8-1b02-469a-a8cf-a5eed4ecb8f8"
+          "8246d725-f1e9-4466-b6ce-7e0f48acc751"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -185,16 +185,16 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "6d1ff207-c1f4-48f6-b7d9-48a24e750f53"
+          "561d379f-df4b-4696-ba8c-f7e5f0e61549"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T234008Z:6d1ff207-c1f4-48f6-b7d9-48a24e750f53"
+          "WESTCENTRALUS:20210330T003343Z:561d379f-df4b-4696-ba8c-f7e5f0e61549"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:40:08 GMT"
+          "Tue, 30 Mar 2021 00:33:42 GMT"
         ],
         "Content-Length": [
           "184"
@@ -206,20 +206,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2020-12-29T23:38:53.0568604+00:00\",\r\n  \"endTime\": \"2020-12-29T23:38:53.9787548+00:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"20b9476c-15c2-4463-a12f-6626b70c6318\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-29T17:33:11.0763732-07:00\",\r\n  \"endTime\": \"2021-03-29T17:33:11.9826422-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"bcf1cfa3-a935-452e-a6e8-f8e4279a0eb8\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzgwMTAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2dhbGxlcmllcy9nYWxsZXJ5UHNUZXN0R2FsbGVyeTM1MjE/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899?api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzU4MS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZ2FsbGVyaWVzL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5NDg5OT9hcGktdmVyc2lvbj0yMDIwLTA5LTMw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -230,16 +230,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetGallery3Min;345,Microsoft.Compute/GetGallery30Min;2495"
+          "Microsoft.Compute/GetGallery3Min;346,Microsoft.Compute/GetGallery30Min;2496"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "15793772-c2fe-4197-a774-7b2be61e30e2"
+          "c660b8f4-e132-42b2-81f6-6f4fdbc25237"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -249,19 +249,19 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "cc6baf7d-04bd-43ba-9d20-2355b4ca7475"
+          "7e8f5a79-7190-4f64-ad16-7ce6e59ee038"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T234042Z:cc6baf7d-04bd-43ba-9d20-2355b4ca7475"
+          "WESTCENTRALUS:20210330T003343Z:7e8f5a79-7190-4f64-ad16-7ce6e59ee038"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:40:42 GMT"
+          "Tue, 30 Mar 2021 00:33:42 GMT"
         ],
         "Content-Length": [
-          "515"
+          "514"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -270,26 +270,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGallery3521\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521\",\r\n  \"type\": \"Microsoft.Compute/galleries\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"description\": \"This is a sample gallery description\",\r\n    \"identifier\": {\r\n      \"uniqueName\": \"e37510d7-33b6-4676-886f-ee75bcc01871-GALLERYPSTESTGALLERY3521\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGallery4899\",\r\n  \"id\": \"/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899\",\r\n  \"type\": \"Microsoft.Compute/galleries\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"description\": \"This is a sample gallery description\",\r\n    \"identifier\": {\r\n      \"uniqueName\": \"97f78232-382b-46a7-8a72-964d692c4f3f-GALLERYPSTESTGALLERY4899\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521/applications/galleryPsTestGalleryApplication3293?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzgwMTAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2dhbGxlcmllcy9nYWxsZXJ5UHNUZXN0R2FsbGVyeTM1MjEvYXBwbGljYXRpb25zL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5QXBwbGljYXRpb24zMjkzP2FwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899/applications/galleryPsTestGalleryApplication5395?api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzU4MS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZ2FsbGVyaWVzL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5NDg5OS9hcHBsaWNhdGlvbnMvZ2FsbGVyeVBzVGVzdEdhbGxlcnlBcHBsaWNhdGlvbjUzOTU/YXBpLXZlcnNpb249MjAyMC0wOS0zMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"This is the gallery application description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\",\r\n    \"supportedOSType\": \"Windows\"\r\n  },\r\n  \"location\": \"SoutheastAsia\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4af21b3f-ecd1-416b-9209-17ed15fc348f"
+          "45293549-c092-4976-9ba2-adcf63807446"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -312,32 +312,32 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "2fc00f34-7739-4210-8992-f58011ca5c79"
+          "525a09a9-feb0-4653-b0ae-f09e12d44933"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "3c617e63-3c9e-4d1c-acf6-3fdc02e3733f"
+          "588dced9-67bd-4088-8f95-cdf9ac3d14d2"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T234133Z:3c617e63-3c9e-4d1c-acf6-3fdc02e3733f"
+          "WESTCENTRALUS:20210330T003343Z:588dced9-67bd-4088-8f95-cdf9ac3d14d2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:41:32 GMT"
+          "Tue, 30 Mar 2021 00:33:43 GMT"
         ],
         "Content-Length": [
-          "634"
+          "633"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -346,26 +346,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGalleryApplication3293\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521/applications/galleryPsTestGalleryApplication3293\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"supportedOSType\": \"Windows\",\r\n    \"description\": \"This is the gallery application description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGalleryApplication5395\",\r\n  \"id\": \"/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899/applications/galleryPsTestGalleryApplication5395\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"supportedOSType\": \"Windows\",\r\n    \"description\": \"This is the gallery application description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521/applications/galleryPsTestGalleryApplication3293?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzgwMTAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2dhbGxlcmllcy9nYWxsZXJ5UHNUZXN0R2FsbGVyeTM1MjEvYXBwbGljYXRpb25zL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5QXBwbGljYXRpb24zMjkzP2FwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899/applications/galleryPsTestGalleryApplication5395?api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzU4MS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZ2FsbGVyaWVzL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5NDg5OS9hcHBsaWNhdGlvbnMvZ2FsbGVyeVBzVGVzdEdhbGxlcnlBcHBsaWNhdGlvbjUzOTU/YXBpLXZlcnNpb249MjAyMC0wOS0zMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"Updated description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\",\r\n    \"supportedOSType\": \"Windows\"\r\n  },\r\n  \"location\": \"SoutheastAsia\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dc2a70ff-7add-496a-bce9-b770e5c2594f"
+          "bdaa94c2-4067-4175-96d1-9b99928e5226"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -388,32 +388,32 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "000b4e8e-0925-4ea3-9eac-c6734214c47d"
+          "688db625-2e80-4ee1-b4da-8c972250c3d3"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "f7724ba8-2a2a-4c2f-aae7-12c745e904e0"
+          "173221b2-12bd-48a8-9258-f9535ef16ffd"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T234203Z:f7724ba8-2a2a-4c2f-aae7-12c745e904e0"
+          "WESTCENTRALUS:20210330T003414Z:173221b2-12bd-48a8-9258-f9535ef16ffd"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:42:03 GMT"
+          "Tue, 30 Mar 2021 00:34:14 GMT"
         ],
         "Content-Length": [
-          "610"
+          "609"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -422,20 +422,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGalleryApplication3293\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521/applications/galleryPsTestGalleryApplication3293\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"supportedOSType\": \"Windows\",\r\n    \"description\": \"Updated description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGalleryApplication5395\",\r\n  \"id\": \"/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899/applications/galleryPsTestGalleryApplication5395\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"supportedOSType\": \"Windows\",\r\n    \"description\": \"Updated description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521/applications/galleryPsTestGalleryApplication3293?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzgwMTAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2dhbGxlcmllcy9nYWxsZXJ5UHNUZXN0R2FsbGVyeTM1MjEvYXBwbGljYXRpb25zL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5QXBwbGljYXRpb24zMjkzP2FwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899/applications/galleryPsTestGalleryApplication5395?api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzU4MS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZ2FsbGVyaWVzL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5NDg5OS9hcHBsaWNhdGlvbnMvZ2FsbGVyeVBzVGVzdEdhbGxlcnlBcHBsaWNhdGlvbjUzOTU/YXBpLXZlcnNpb249MjAyMC0wOS0zMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -452,10 +452,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "a0e51d44-4aaf-412e-b793-23f38b53079e"
+          "06051a85-b957-4d45-b6fc-8cdd2465cba2"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -465,19 +465,19 @@
           "11997"
         ],
         "x-ms-correlation-request-id": [
-          "2e657f3d-d43f-4f4a-a5d9-dfe0760c8058"
+          "49f419ae-2b71-4c05-a8e0-03568f518a3c"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T234203Z:2e657f3d-d43f-4f4a-a5d9-dfe0760c8058"
+          "WESTCENTRALUS:20210330T003414Z:49f419ae-2b71-4c05-a8e0-03568f518a3c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:42:02 GMT"
+          "Tue, 30 Mar 2021 00:34:13 GMT"
         ],
         "Content-Length": [
-          "634"
+          "633"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -486,26 +486,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGalleryApplication3293\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521/applications/galleryPsTestGalleryApplication3293\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"supportedOSType\": \"Windows\",\r\n    \"description\": \"This is the gallery application description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGalleryApplication5395\",\r\n  \"id\": \"/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899/applications/galleryPsTestGalleryApplication5395\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"supportedOSType\": \"Windows\",\r\n    \"description\": \"This is the gallery application description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521/applications/galleryPsTestGalleryApplication3293?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzgwMTAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2dhbGxlcmllcy9nYWxsZXJ5UHNUZXN0R2FsbGVyeTM1MjEvYXBwbGljYXRpb25zL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5QXBwbGljYXRpb24zMjkzP2FwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899/applications/galleryPsTestGalleryApplication5395?api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzU4MS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZ2FsbGVyaWVzL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5NDg5OS9hcHBsaWNhdGlvbnMvZ2FsbGVyeVBzVGVzdEdhbGxlcnlBcHBsaWNhdGlvbjUzOTU/YXBpLXZlcnNpb249MjAyMC0wOS0zMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e6b7e6fd-f880-4f7a-915d-06e6df2e5a97"
+          "471d6ca3-fdc9-4760-8830-05b9f66658c5"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -522,10 +522,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "f852f84e-a270-466c-91e8-ef492d0c2eac"
+          "ffd5ea9b-6091-4c73-b135-c8756a23433a"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -535,19 +535,19 @@
           "11996"
         ],
         "x-ms-correlation-request-id": [
-          "e5c8242a-3c0f-4200-9236-780c141f81cc"
+          "a83d1c58-a4c4-4012-ab65-1b4face6a322"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T234203Z:e5c8242a-3c0f-4200-9236-780c141f81cc"
+          "WESTCENTRALUS:20210330T003414Z:a83d1c58-a4c4-4012-ab65-1b4face6a322"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:42:02 GMT"
+          "Tue, 30 Mar 2021 00:34:13 GMT"
         ],
         "Content-Length": [
-          "634"
+          "633"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -556,26 +556,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGalleryApplication3293\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521/applications/galleryPsTestGalleryApplication3293\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"supportedOSType\": \"Windows\",\r\n    \"description\": \"This is the gallery application description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGalleryApplication5395\",\r\n  \"id\": \"/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899/applications/galleryPsTestGalleryApplication5395\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"supportedOSType\": \"Windows\",\r\n    \"description\": \"This is the gallery application description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521/applications/galleryPsTestGalleryApplication3293?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzgwMTAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2dhbGxlcmllcy9nYWxsZXJ5UHNUZXN0R2FsbGVyeTM1MjEvYXBwbGljYXRpb25zL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5QXBwbGljYXRpb24zMjkzP2FwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899/applications/galleryPsTestGalleryApplication5395?api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzU4MS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZ2FsbGVyaWVzL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5NDg5OS9hcHBsaWNhdGlvbnMvZ2FsbGVyeVBzVGVzdEdhbGxlcnlBcHBsaWNhdGlvbjUzOTU/YXBpLXZlcnNpb249MjAyMC0wOS0zMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b3fe1340-c25a-4845-ac11-da0fef057a5c"
+          "311cbecb-abad-423a-bbad-f2d58e2bae4a"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -592,10 +592,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "b901edb0-554c-4cc6-9e75-b03eb6078334"
+          "d267568c-f2e7-4368-8041-77145ad45525"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -605,19 +605,19 @@
           "11995"
         ],
         "x-ms-correlation-request-id": [
-          "18f6d7a4-6647-4c43-a918-c3156aa4410a"
+          "6aaebe1b-0944-4b89-b771-e0dc70b2da78"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T234204Z:18f6d7a4-6647-4c43-a918-c3156aa4410a"
+          "WESTCENTRALUS:20210330T003414Z:6aaebe1b-0944-4b89-b771-e0dc70b2da78"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:42:03 GMT"
+          "Tue, 30 Mar 2021 00:34:14 GMT"
         ],
         "Content-Length": [
-          "610"
+          "609"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -626,26 +626,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGalleryApplication3293\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521/applications/galleryPsTestGalleryApplication3293\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"supportedOSType\": \"Windows\",\r\n    \"description\": \"Updated description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"galleryPsTestGalleryApplication5395\",\r\n  \"id\": \"/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899/applications/galleryPsTestGalleryApplication5395\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"supportedOSType\": \"Windows\",\r\n    \"description\": \"Updated description.\",\r\n    \"eula\": \"This is the gallery application EULA.\",\r\n    \"privacyStatementUri\": \"www.privacystatement.com\",\r\n    \"releaseNoteUri\": \"www.releasenote.com\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521/applications/galleryPsTestGalleryApplication3293?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzgwMTAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2dhbGxlcmllcy9nYWxsZXJ5UHNUZXN0R2FsbGVyeTM1MjEvYXBwbGljYXRpb25zL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5QXBwbGljYXRpb24zMjkzP2FwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899/applications/galleryPsTestGalleryApplication5395?api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzU4MS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZ2FsbGVyaWVzL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5NDg5OS9hcHBsaWNhdGlvbnMvZ2FsbGVyeVBzVGVzdEdhbGxlcnlBcHBsaWNhdGlvbjUzOTU/YXBpLXZlcnNpb249MjAyMC0wOS0zMA==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f1a12d03-2b89-4cf0-aa12-bea89769c2aa"
+          "5c6302a6-1e1c-41bb-aec9-173d4d334aa5"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -662,10 +662,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "0d8b8c78-1546-44cb-9a09-3747065b56bd"
+          "cbe602ca-947a-457a-b3d5-810ada530ae5"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -675,16 +675,16 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "2cde3625-1bdd-4049-acc7-6956070cba71"
+          "04b0e9f7-a911-46e7-9e84-0107fd01d0aa"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T234204Z:2cde3625-1bdd-4049-acc7-6956070cba71"
+          "WESTCENTRALUS:20210330T003415Z:04b0e9f7-a911-46e7-9e84-0107fd01d0aa"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:42:03 GMT"
+          "Tue, 30 Mar 2021 00:34:14 GMT"
         ],
         "Expires": [
           "-1"
@@ -697,22 +697,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg8010/providers/Microsoft.Compute/galleries/galleryPsTestGallery3521?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzgwMTAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2dhbGxlcmllcy9nYWxsZXJ5UHNUZXN0R2FsbGVyeTM1MjE/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/galleryPsTestRg581/providers/Microsoft.Compute/galleries/galleryPsTestGallery4899?api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Jlc291cmNlR3JvdXBzL2dhbGxlcnlQc1Rlc3RSZzU4MS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZ2FsbGVyaWVzL2dhbGxlcnlQc1Rlc3RHYWxsZXJ5NDg5OT9hcGktdmVyc2lvbj0yMDIwLTA5LTMw",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4caeef53-4fcb-49b3-ad6b-db181a1660a9"
+          "876a9764-6c8e-480d-b4f1-3145f23c3437"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -723,22 +723,22 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/southeastasia/capsOperations/9f8859b8-81b6-48a5-abae-602f73e9de62?monitor=true&api-version=2019-12-01"
+          "https://management.azure.com/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/providers/Microsoft.Compute/locations/southeastasia/capsOperations/160b0f51-0401-4e6b-bc23-a07c7ab52937?monitor=true&api-version=2020-09-30"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/southeastasia/capsOperations/9f8859b8-81b6-48a5-abae-602f73e9de62?api-version=2019-12-01"
+          "https://management.azure.com/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/providers/Microsoft.Compute/locations/southeastasia/capsOperations/160b0f51-0401-4e6b-bc23-a07c7ab52937?api-version=2020-09-30"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/DeleteGallery3Min;49,Microsoft.Compute/DeleteGallery30Min;299"
+          "Microsoft.Compute/DeleteGallery3Min;49,Microsoft.Compute/DeleteGallery30Min;899"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "9f8859b8-81b6-48a5-abae-602f73e9de62"
+          "160b0f51-0401-4e6b-bc23-a07c7ab52937"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -748,16 +748,16 @@
           "14998"
         ],
         "x-ms-correlation-request-id": [
-          "a7ed0622-0a3c-4969-a5fb-5a8d8d1d307f"
+          "2ba9e383-4b16-4566-9ce8-9b2f0f2697dd"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T234205Z:a7ed0622-0a3c-4969-a5fb-5a8d8d1d307f"
+          "WESTCENTRALUS:20210330T003416Z:2ba9e383-4b16-4566-9ce8-9b2f0f2697dd"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:42:05 GMT"
+          "Tue, 30 Mar 2021 00:34:15 GMT"
         ],
         "Expires": [
           "-1"
@@ -770,16 +770,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/southeastasia/capsOperations/9f8859b8-81b6-48a5-abae-602f73e9de62?api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9jYXBzT3BlcmF0aW9ucy85Zjg4NTliOC04MWI2LTQ4YTUtYWJhZS02MDJmNzNlOWRlNjI/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/providers/Microsoft.Compute/locations/southeastasia/capsOperations/160b0f51-0401-4e6b-bc23-a07c7ab52937?api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9jYXBzT3BlcmF0aW9ucy8xNjBiMGY1MS0wNDAxLTRlNmItYmMyMy1hMDdjN2FiNTI5Mzc/YXBpLXZlcnNpb249MjAyMC0wOS0zMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -790,16 +790,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperationStatus3Min;1197,Microsoft.Compute/GetOperationStatus30Min;4196"
+          "Microsoft.Compute/GetOperationStatus3Min;1196,Microsoft.Compute/GetOperationStatus30Min;4196"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "0e57ddcd-edd2-4439-924f-b6dd70377039"
+          "a87417f1-ceb8-43e1-aa82-379a42802a0e"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -809,16 +809,16 @@
           "11994"
         ],
         "x-ms-correlation-request-id": [
-          "a31b35d3-80de-4a1d-b27e-5e6e235ce31e"
+          "8733e8a3-ba22-46fc-85c6-938f66367dd5"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T234236Z:a31b35d3-80de-4a1d-b27e-5e6e235ce31e"
+          "WESTCENTRALUS:20210330T003446Z:8733e8a3-ba22-46fc-85c6-938f66367dd5"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:42:36 GMT"
+          "Tue, 30 Mar 2021 00:34:45 GMT"
         ],
         "Content-Length": [
           "184"
@@ -830,20 +830,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2020-12-29T23:42:05.7607852+00:00\",\r\n  \"endTime\": \"2020-12-29T23:42:06.4639173+00:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"9f8859b8-81b6-48a5-abae-602f73e9de62\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-29T17:34:15.8580901-07:00\",\r\n  \"endTime\": \"2021-03-29T17:34:16.1550054-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"160b0f51-0401-4e6b-bc23-a07c7ab52937\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/southeastasia/capsOperations/9f8859b8-81b6-48a5-abae-602f73e9de62?monitor=true&api-version=2019-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9jYXBzT3BlcmF0aW9ucy85Zjg4NTliOC04MWI2LTQ4YTUtYWJhZS02MDJmNzNlOWRlNjI/bW9uaXRvcj10cnVlJmFwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/providers/Microsoft.Compute/locations/southeastasia/capsOperations/160b0f51-0401-4e6b-bc23-a07c7ab52937?monitor=true&api-version=2020-09-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9jYXBzT3BlcmF0aW9ucy8xNjBiMGY1MS0wNDAxLTRlNmItYmMyMy1hMDdjN2FiNTI5Mzc/bW9uaXRvcj10cnVlJmFwaS12ZXJzaW9uPTIwMjAtMDktMzA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/44.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -854,16 +854,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperationStatus3Min;1196,Microsoft.Compute/GetOperationStatus30Min;4195"
+          "Microsoft.Compute/GetOperationStatus3Min;1195,Microsoft.Compute/GetOperationStatus30Min;4195"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909,adca2259-35bd-4fa3-8e2f-6c63ec822b0d_132494674941394909"
+          "060de95e-c116-496e-9451-1806a389aa56_132573019786508288,060de95e-c116-496e-9451-1806a389aa56_132573019786508288"
         ],
         "x-ms-request-id": [
-          "26373249-3296-4738-ad3a-88c7a31aefd4"
+          "22449719-0535-4b90-b10d-8b3f5c1cc351"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -873,16 +873,16 @@
           "11993"
         ],
         "x-ms-correlation-request-id": [
-          "438dd96d-c14a-4919-9e71-e663c4c8347c"
+          "772155e1-ee94-4bc4-9160-38d2318d95f9"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T234236Z:438dd96d-c14a-4919-9e71-e663c4c8347c"
+          "WESTCENTRALUS:20210330T003446Z:772155e1-ee94-4bc4-9160-38d2318d95f9"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 23:42:36 GMT"
+          "Tue, 30 Mar 2021 00:34:45 GMT"
         ],
         "Expires": [
           "-1"
@@ -897,12 +897,12 @@
   ],
   "Names": {
     "GalleryApplication_CRUD_Tests": [
-      "galleryPsTestRg8010",
-      "galleryPsTestGallery3521",
-      "galleryPsTestGalleryApplication3293"
+      "galleryPsTestRg581",
+      "galleryPsTestGallery4899",
+      "galleryPsTestGalleryApplication5395"
     ]
   },
   "Variables": {
-    "SubscriptionId": "e37510d7-33b6-4676-886f-ee75bcc01871"
+    "SubscriptionId": "97f78232-382b-46a7-8a72-964d692c4f3f"
   }
 }

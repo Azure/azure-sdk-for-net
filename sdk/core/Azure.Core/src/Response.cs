@@ -72,7 +72,7 @@ namespace Azure
                 }
                 else
                 {
-                    throw new InvalidOperationException($"The {nameof(ContentStream)}'s internal buffer cannot be accessed.");
+                    return new BinaryData(memoryContent.ToArray());
                 }
             }
         }
@@ -130,6 +130,19 @@ namespace Azure
         public override string ToString()
         {
             return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
+        }
+
+        internal static void DisposeStreamIfNotBuffered(ref Stream? stream)
+        {
+            // We want to keep the ContentStream readable
+            // even after the response is disposed but only if it's a
+            // buffered memory stream otherwise we can leave a network
+            // connection hanging open
+            if (stream is not MemoryStream)
+            {
+                stream?.Dispose();
+                stream = null;
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ namespace ServiceFabricManagedClusters.Tests
                 var clusterName = TestUtilities.GenerateName(ClusterNamePrefix);
                 var nodeTypeName = TestUtilities.GenerateName("nt");
 
-                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricMcClient, resourceGroupName, Location, clusterName, sku: "Basic");
+                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricMcClient, resourceGroupName, Location, clusterName, sku: SkuName.Basic);
                 cluster = serviceFabricMcClient.ManagedClusters.Get(resourceGroupName, clusterName);
                 Assert.NotNull(cluster);
 

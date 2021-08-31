@@ -191,7 +191,7 @@ namespace TemplateSpecs.Tests
                     {
                         Description = "My first version",
                         Location = TestLocation,
-                        Template = JObject.Parse(
+                        MainTemplate = JObject.Parse(
                             File.ReadAllText(
                                 Path.Combine("ScenarioTests", "simple-storage-account.json")
                             )
@@ -214,7 +214,7 @@ namespace TemplateSpecs.Tests
                     Assert.Equal(TestLocation, createdTemplateSpecVersion.Location);
                     Assert.Equal(createdTemplateSpecVersion.Name, versionName);
                     Assert.Equal(createdTemplateSpecVersion.Description, templateSpecVersionToCreate.Description);
-                    Assert.Equal(createdTemplateSpecVersion.Template?.ToString(), templateSpecVersionToCreate.Template.ToString());
+                    Assert.Equal(createdTemplateSpecVersion.MainTemplate?.ToString(), templateSpecVersionToCreate.MainTemplate.ToString());
 
                     // Validate readonly properties are present:
 

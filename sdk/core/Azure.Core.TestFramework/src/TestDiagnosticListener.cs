@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 namespace Azure.Core.Tests
 {
+    // DO NOT USE - use ClientDiagnosticListener instead
     public class TestDiagnosticListener : IObserver<DiagnosticListener>, IDisposable
     {
         private readonly Func<DiagnosticListener, bool> _selector;

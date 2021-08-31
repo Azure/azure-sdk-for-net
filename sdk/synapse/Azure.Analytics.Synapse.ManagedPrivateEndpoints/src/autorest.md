@@ -6,13 +6,14 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-vnet-2019-06-01-preview
+title: Managed Private Endpoints
+tag: package-vnet-2021-06-01-preview
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/aa19725fe79aea2a9dc580f3c66f77f89cc34563/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/37c4ff1612668f5acec62dea729ca3a66b591d7f/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.ManagedPrivateEndpoints
 public-clients: true
-credential-types: TokenCredential
-credential-scopes: https://dev.azuresynapse.net/.default
+security: AADToken
+security-scopes: https://dev.azuresynapse.net/.default
 ```
 
 ### Make Endpoint type as Uri

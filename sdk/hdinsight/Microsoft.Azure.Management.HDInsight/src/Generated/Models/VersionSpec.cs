@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// version.</param>
         /// <param name="componentVersions">The component version
         /// property.</param>
-        public VersionSpec(string friendlyName = default(string), string displayName = default(string), string isDefault = default(string), IDictionary<string, string> componentVersions = default(IDictionary<string, string>))
+        public VersionSpec(string friendlyName = default(string), string displayName = default(string), bool? isDefault = default(bool?), IDictionary<string, string> componentVersions = default(IDictionary<string, string>))
         {
             FriendlyName = friendlyName;
             DisplayName = displayName;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Gets or sets whether or not the version is the default version.
         /// </summary>
         [JsonProperty(PropertyName = "isDefault")]
-        public string IsDefault { get; set; }
+        public bool? IsDefault { get; set; }
 
         /// <summary>
         /// Gets or sets the component version property.

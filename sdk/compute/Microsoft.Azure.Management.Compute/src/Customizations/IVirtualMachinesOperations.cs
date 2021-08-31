@@ -18,8 +18,10 @@
         /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
+        /// </param>
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
@@ -35,6 +37,7 @@
         /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -56,8 +59,10 @@
         /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
+        /// </param>
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
@@ -73,6 +78,7 @@
         /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>

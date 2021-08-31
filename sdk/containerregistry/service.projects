@@ -7,32 +7,22 @@
   the set of projects to match what type of SDK we are interested in building.
 
   SDKType values
-   - empty or "client" will build the new track 2 client/data libraries
+   - "all" will build all projects
+   - "client" will build the new track 2 client/data libraries
    - "data" will build the track 1 data plane libraries
    - "mgmt" will build the track 1 mgmt libraries
 -->
 
 <Project>
-  <ItemGroup Condition="'$(SDKType)' == '' or '$(SDKType)' == 'client'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Azure.Containers.*\**\*.csproj" />
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Containers.*\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'data'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Microsoft.Azure.ContainerRegistry*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.ContainerRegistry*\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'mgmt'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Management.ContainerRegistry*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Management.ContainerRegistry*\**\*.csproj" />
   </ItemGroup>
-
-  <!-- Remove all projects under this directory but the included projects based on sdk type -->
-  <ItemGroup>
-    <ProjectsToRemove Include="$(MSBuildThisFileDirectory)**\*.csproj" Exclude="@(ProjectsToInclude)" />
-    <ProjectReference Remove="@(ProjectsToRemove)" />
-  </ItemGroup>
-
-  <Target Name="ContainerRegistryOutput" BeforeTargets="Build">
-    <Message Text="Final Build References:" Importance="high"/>
-    <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
-  </Target>
 </Project>

@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     public partial class PhoneNumberSearchResult
     {

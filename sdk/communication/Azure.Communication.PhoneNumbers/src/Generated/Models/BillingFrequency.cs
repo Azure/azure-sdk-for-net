@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The frequency with which the cost gets billed. </summary>
     public readonly partial struct BillingFrequency : IEquatable<BillingFrequency>

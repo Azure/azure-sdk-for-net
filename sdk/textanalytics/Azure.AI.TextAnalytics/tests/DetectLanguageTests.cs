@@ -4,13 +4,24 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
     public class DetectLanguageTests : TextAnalyticsClientLiveTestBase
     {
-        public DetectLanguageTests(bool isAsync) : base(isAsync) { }
+        /// <summary>
+        /// The version of the REST API to test against.  This will be passed
+        /// to the .ctor via ClientTestFixture's values.
+        /// </summary>
+        private readonly TextAnalyticsClientOptions.ServiceVersion _serviceVersion;
+
+        public DetectLanguageTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+            _serviceVersion = serviceVersion;
+        }
 
         private const string SingleEnglish = "This is written in English.";
         private const string SingleSpanish = "Este documento está en español";
@@ -42,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
-        [Test]
+        [RecordedTest]
         public async Task DetectLanguageWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -53,7 +64,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(language);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DetectLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -64,7 +75,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(language);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DetectLanguageWithCountryHintTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -75,7 +86,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(language);
         }
 
-        [Test]
+        [RecordedTest]
         public void DetectLanguageWithErrorCountryHintTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -85,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidCountryHint, ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DetectLanguageWithNoneCountryHintTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -96,10 +107,10 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(language);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DetectLanguageWithNoneDefaultCountryHintTest()
         {
-            var options = new TextAnalyticsClientOptions()
+            var options = new TextAnalyticsClientOptions(_serviceVersion)
             {
                 DefaultCountryHint = DetectLanguageInput.None
             };
@@ -112,7 +123,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(language);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DetectLanguageBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -127,7 +138,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DetectLanguageBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -148,7 +159,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DetectLanguageBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -164,7 +175,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("(Unknown)", results[3].PrimaryLanguage.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DetectLanguageBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -186,7 +197,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("(Unknown)", results[3].PrimaryLanguage.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DetectLanguageBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -208,7 +219,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public void DetectLanguageBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -219,7 +230,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DetectLanguageBatchWithNullTextTest()
         {
             TextAnalyticsClient client = GetClient();

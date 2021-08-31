@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.MachineLearningServices.RunStatusChanged event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.RunStatusChanged event. </summary>
     public partial class MachineLearningServicesRunStatusChangedEventData
     {
         /// <summary> Initializes a new instance of MachineLearningServicesRunStatusChangedEventData. </summary>

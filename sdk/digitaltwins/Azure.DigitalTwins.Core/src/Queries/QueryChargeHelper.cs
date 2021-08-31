@@ -22,9 +22,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="queryCharge">The query charge extracted from the header.</param>
         /// <returns>True if the header contains a query-charge field, otherwise false.</returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
-        /// <code snippet="Snippet:DigitalTwinsSampleQueryTwinsWithQueryCharge">
+        /// <code snippet="Snippet:DigitalTwinsSampleQueryTwinsWithQueryCharge" language="csharp">
         /// // This code snippet demonstrates how you could extract the query charges incurred when calling
         /// // the query API. It iterates over the response pages first to access to the query-charge header,
         /// // and then the digital twin results within each page.

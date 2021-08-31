@@ -24,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2020-06-12";
+        public const string DefaultSasVersion = "2020-08-04";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -104,6 +104,9 @@ namespace Azure.Storage
 
         public const string Iso8601Format = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
 
+        public const string DisableRequestConditionsValidationSwitchName = "Azure.Storage.DisableRequestConditionsValidation";
+        public const string DisableRequestConditionsValidationEnvVar = "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>
@@ -169,6 +172,7 @@ namespace Azure.Storage
             public const string ContentRange = "Content-Range";
             public const string VersionId = "x-ms-version-id";
             public const string LeaseTime = "x-ms-lease-time";
+            public const string LastModified = "Last-Modified";
         }
 
         internal static class ErrorCodes
@@ -176,6 +180,8 @@ namespace Azure.Storage
             public const string InternalError = "InternalError";
             public const string OperationTimedOut = "OperationTimedOut";
             public const string ServerBusy = "ServerBusy";
+            public const string ContainerAlreadyExists = "ContainerAlreadyExists";
+            public const string BlobAlreadyExists = "BlobAlreadyExists";
         }
 
         /// <summary>
@@ -339,6 +345,10 @@ namespace Azure.Storage
             public const string IsDirectoryKey = "hdi_isFolder";
 
             public const string FileSystemName = "FileSystem";
+
+            public const string DeletionId = "deletionid";
+
+            public const string DirectoryResourceType = "directory";
         }
 
         /// <summary>
@@ -461,6 +471,7 @@ namespace Azure.Storage
                 public const char FilterByTags = 'f';
                 public const char Move = 'm';
                 public const char Execute = 'e';
+                public const char SetImmutabilityPolicy = 'i';
                 public const char ManageOwnership = 'o';
                 public const char ManageAccessControl = 'p';
             }
@@ -613,6 +624,12 @@ namespace Azure.Storage
         {
             internal const int NotFound = 404;
             internal const int NotModified = 304;
+        }
+
+        internal static class ServerTimeout
+        {
+            internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
+            internal const string QueryParameterKey = "timeout";
         }
     }
 }

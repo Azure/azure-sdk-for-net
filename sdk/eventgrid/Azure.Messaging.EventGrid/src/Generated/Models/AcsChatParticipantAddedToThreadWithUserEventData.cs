@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.ChatParticipantAddedToThreadWithUser event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatParticipantAddedToThreadWithUser event. </summary>
     public partial class AcsChatParticipantAddedToThreadWithUserEventData : AcsChatThreadEventBaseProperties
     {
         /// <summary> Initializes a new instance of AcsChatParticipantAddedToThreadWithUserEventData. </summary>

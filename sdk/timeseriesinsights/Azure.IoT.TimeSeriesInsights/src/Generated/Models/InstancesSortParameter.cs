@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.IoT.TimeSeriesInsights.Models;
-
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Definition of how time series instances are sorted before being returned by search instances call. </summary>
-    public partial class InstancesSortParameter
+    internal partial class InstancesSortParameter
     {
         /// <summary> Initializes a new instance of InstancesSortParameter. </summary>
         public InstancesSortParameter()

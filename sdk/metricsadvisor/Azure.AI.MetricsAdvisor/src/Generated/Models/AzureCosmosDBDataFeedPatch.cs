@@ -13,9 +13,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AzureCosmosDBDataFeedPatch. </summary>
         public AzureCosmosDBDataFeedPatch()
         {
-            DataSourceType = DataFeedSourceType.AzureCosmosDb;
+            DataSourceType = DataFeedSourceKind.AzureCosmosDb;
         }
 
-        public AzureCosmosDBParameter DataSourceParameter { get; set; }
+        public AzureCosmosDBParameterPatch DataSourceParameter { get; set; }
     }
 }

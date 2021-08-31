@@ -35,12 +35,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="name">A rule name can contain any combination of alpha
         /// numeric characters. Rule name is case-sensitive. It must be unique
         /// within a policy.</param>
+        /// <param name="destination">Container name where blob inventory files
+        /// are stored. Must be pre-created.</param>
         /// <param name="definition">An object that defines the blob inventory
         /// policy rule.</param>
-        public BlobInventoryPolicyRule(bool enabled, string name, BlobInventoryPolicyDefinition definition)
+        public BlobInventoryPolicyRule(bool enabled, string name, string destination, BlobInventoryPolicyDefinition definition)
         {
             Enabled = enabled;
             Name = name;
+            Destination = destination;
             Definition = definition;
             CustomInit();
         }
@@ -65,6 +68,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets container name where blob inventory files are stored.
+        /// Must be pre-created.
+        /// </summary>
+        [JsonProperty(PropertyName = "destination")]
+        public string Destination { get; set; }
+
+        /// <summary>
         /// Gets or sets an object that defines the blob inventory policy rule.
         /// </summary>
         [JsonProperty(PropertyName = "definition")]
@@ -81,6 +91,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Destination == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Destination");
             }
             if (Definition == null)
             {

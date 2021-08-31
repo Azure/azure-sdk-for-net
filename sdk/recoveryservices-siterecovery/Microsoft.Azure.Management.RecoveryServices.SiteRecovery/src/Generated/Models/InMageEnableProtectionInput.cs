@@ -39,11 +39,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="processServerId">The Process Server Id.</param>
         /// <param name="retentionDrive">The retention drive to use on the
         /// MT.</param>
-        /// <param name="multiVmGroupId">The multi vm group Id.</param>
-        /// <param name="multiVmGroupName">The multi vm group name.</param>
-        /// <param name="vmFriendlyName">The Vm Name.</param>
+        /// <param name="multiVmGroupId">The multi VM group Id.</param>
+        /// <param name="multiVmGroupName">The multi VM group name.</param>
+        /// <param name="vmFriendlyName">The VM Name.</param>
         /// <param name="runAsAccountId">The CS account Id.</param>
-        /// <param name="datastoreName">The target data store name.</param>
+        /// <param name="datastoreName">The target datastore name.</param>
         /// <param name="diskExclusionInput">The enable disk exclusion
         /// input.</param>
         /// <param name="disksToInclude">The disks to include list.</param>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Vm Name.
+        /// Gets or sets the VM Name.
         /// </summary>
         [JsonProperty(PropertyName = "vmFriendlyName")]
         public string VmFriendlyName { get; set; }
@@ -98,19 +98,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string RunAsAccountId { get; set; }
 
         /// <summary>
-        /// Gets or sets the multi vm group Id.
+        /// Gets or sets the multi VM group Id.
         /// </summary>
         [JsonProperty(PropertyName = "multiVmGroupId")]
         public string MultiVmGroupId { get; set; }
 
         /// <summary>
-        /// Gets or sets the multi vm group name.
+        /// Gets or sets the multi VM group name.
         /// </summary>
         [JsonProperty(PropertyName = "multiVmGroupName")]
         public string MultiVmGroupName { get; set; }
 
         /// <summary>
-        /// Gets or sets the target data store name.
+        /// Gets or sets the target datastore name.
         /// </summary>
         [JsonProperty(PropertyName = "datastoreName")]
         public string DatastoreName { get; set; }

@@ -1,13 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <Description>This is the Microsoft Azure Cognitive Services Metrics Advisor client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.MetricsAdvisor client library</AssemblyTitle>
-    <Version>1.0.0-beta.4</Version>
+    <Version>1.2.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.1.0</ApiCompatVersion>
+    <PackageTags>Microsoft Azure Metrics Advisor</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>
       $(NoWarn);
       AZC0007; <!-- https://github.com/Azure/azure-sdk-for-net/issues/16435 -->
     </NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
@@ -21,5 +29,4 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>

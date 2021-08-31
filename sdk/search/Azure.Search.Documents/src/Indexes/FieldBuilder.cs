@@ -9,11 +9,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Azure.Core;
+using Azure.Core.GeoJson;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
-#if EXPERIMENTAL_SPATIAL
-using Azure.Core.GeoJson;
-#endif
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -35,9 +33,7 @@ namespace Azure.Search.Documents.Indexes
                     [typeof(bool)] = SearchFieldDataType.Boolean,
                     [typeof(DateTime)] = SearchFieldDataType.DateTimeOffset,
                     [typeof(DateTimeOffset)] = SearchFieldDataType.DateTimeOffset,
-#if EXPERIMENTAL_SPATIAL
                     [typeof(GeoPoint)] = SearchFieldDataType.GeographyPoint,
-#endif
                 });
 
         private static readonly ISet<Type> s_unsupportedTypes =

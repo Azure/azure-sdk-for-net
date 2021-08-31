@@ -8,7 +8,7 @@
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Request to execute a time series query over events. Exactly one of &quot;getEvents&quot;, &quot;getSeries&quot; or &quot;aggregateSeries&quot; must be set. </summary>
-    public partial class QueryRequest
+    internal partial class QueryRequest
     {
         /// <summary> Initializes a new instance of QueryRequest. </summary>
         public QueryRequest()

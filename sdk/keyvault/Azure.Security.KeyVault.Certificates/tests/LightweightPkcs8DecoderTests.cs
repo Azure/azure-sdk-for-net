@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
@@ -16,15 +17,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     public class LightweightPkcs8DecoderTests
     {
         [Test]
-        public void VerifyECDecoderPrime256v1Imported()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                Assert.Ignore("The curve is not supported by the current platform");
-            }
-
+        [RunOnlyOnPlatforms(Linux = true, Windows = true, Reason = "The curve is not supported by the current platform")]
+        public void VerifyECDecoderPrime256v1Imported() =>
             VerifyECDecoder(EcPrime256v1PrivateKeyImported, CertificateKeyCurveName.P256, @"DFTTJrKrtao7G/B0bK5yv+mX0/3Sefv2MS1gzd6DfYH2ASe9Tw7rSbLjZ8wM0p7I/opbIG1+zHhpYqOGnQNQyw==", EcPrime256v1CertificateImported);
-        }
 
         [Test]
         public void VerifyECDecoderSecp256k1() =>

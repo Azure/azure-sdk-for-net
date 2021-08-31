@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.ResourceGraph
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// API version.
+        /// Api Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.ResourceGraph
         {
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-04-01";
+            ApiVersion = "2021-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -354,8 +354,8 @@ namespace Microsoft.Azure.Management.ResourceGraph
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
         /// <summary>
-        /// Queries the resources managed by Azure Resource Manager for all
-        /// subscriptions specified in the request.
+        /// Queries the resources managed by Azure Resource Manager for scopes
+        /// specified in the request.
         /// <see href="https://aka.ms/resource-graph/learntoquery" />
         /// </summary>
         /// <param name='query'>

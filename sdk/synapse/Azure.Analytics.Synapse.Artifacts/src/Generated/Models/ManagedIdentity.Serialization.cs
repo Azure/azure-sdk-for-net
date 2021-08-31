@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ManagedIdentityConverter))]
     public partial class ManagedIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -58,6 +60,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new ManagedIdentity(principalId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(type));
+        }
+
+        internal partial class ManagedIdentityConverter : JsonConverter<ManagedIdentity>
+        {
+            public override void Write(Utf8JsonWriter writer, ManagedIdentity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ManagedIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeManagedIdentity(document.RootElement);
+            }
         }
     }
 }

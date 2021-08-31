@@ -16,7 +16,7 @@ steps:
           if (($LASTEXITCODE -eq 0) -and ($filesInCommonDir.Count -gt 0))
           {
             Write-Host "##vso[task.LogIssue type=error;]Changes to files under 'eng/common' directory should not be made in this Repo`n${filesInCommonDir}"
-            Write-Host "##vso[task.LogIssue type=error;]Please follow workflow at https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md"
+            Write-Host "##vso[task.LogIssue type=error;]Please follow workflow at https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md"
             exit 1
           }
         }

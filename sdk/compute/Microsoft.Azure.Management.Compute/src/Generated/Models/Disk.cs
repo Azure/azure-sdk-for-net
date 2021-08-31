@@ -114,7 +114,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="burstingEnabled">Set to true to enable bursting beyond
         /// the provisioned performance target of the disk. Bursting is
         /// disabled by default. Does not apply to Ultra disks.</param>
-        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), IList<string> managedByExtended = default(IList<string>), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?))
+        /// <param name="propertyUpdatesInProgress">Properties of the disk for
+        /// which update is pending.</param>
+        /// <param name="supportsHibernation">Indicates the OS on a disk
+        /// supports hibernation.</param>
+        /// <param name="securityProfile">Contains the security related
+        /// information for the resource.</param>
+        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), IList<string> managedByExtended = default(IList<string>), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), DiskSecurityProfile securityProfile = default(DiskSecurityProfile))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -144,6 +150,9 @@ namespace Microsoft.Azure.Management.Compute.Models
             DiskAccessId = diskAccessId;
             Tier = tier;
             BurstingEnabled = burstingEnabled;
+            PropertyUpdatesInProgress = propertyUpdatesInProgress;
+            SupportsHibernation = supportsHibernation;
+            SecurityProfile = securityProfile;
             CustomInit();
         }
 
@@ -350,6 +359,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.burstingEnabled")]
         public bool? BurstingEnabled { get; set; }
+
+        /// <summary>
+        /// Gets properties of the disk for which update is pending.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.propertyUpdatesInProgress")]
+        public PropertyUpdatesInProgress PropertyUpdatesInProgress { get; private set; }
+
+        /// <summary>
+        /// Gets or sets indicates the OS on a disk supports hibernation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportsHibernation")]
+        public bool? SupportsHibernation { get; set; }
+
+        /// <summary>
+        /// Gets or sets contains the security related information for the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityProfile")]
+        public DiskSecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
         /// Validate the object.

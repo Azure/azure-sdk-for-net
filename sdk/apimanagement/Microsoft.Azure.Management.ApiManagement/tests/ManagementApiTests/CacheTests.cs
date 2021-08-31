@@ -15,7 +15,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class CacheTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -41,7 +41,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var cacheContract = new CacheContract()
                     {
                         ConnectionString = TestUtilities.GenerateName(),
-                        Description = TestUtilities.GenerateName()
+                        Description = TestUtilities.GenerateName(),
+                        UseFromLocation = TestUtilities.GenerateName()
                     };
 
                     var createResponse = await testBase.client.Cache.CreateOrUpdateAsync(

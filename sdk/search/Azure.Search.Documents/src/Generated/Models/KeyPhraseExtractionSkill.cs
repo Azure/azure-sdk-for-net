@@ -40,10 +40,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
         /// <param name="maxKeyPhraseCount"> A number indicating how many key phrases to return. If absent, all identified key phrases will be returned. </param>
-        internal KeyPhraseExtractionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, KeyPhraseExtractionSkillLanguage? defaultLanguageCode, int? maxKeyPhraseCount) : base(oDataType, name, description, context, inputs, outputs)
+        /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
+        internal KeyPhraseExtractionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, KeyPhraseExtractionSkillLanguage? defaultLanguageCode, int? maxKeyPhraseCount, string modelVersion) : base(oDataType, name, description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
             MaxKeyPhraseCount = maxKeyPhraseCount;
+            ModelVersion = modelVersion;
             ODataType = oDataType ?? "#Microsoft.Skills.Text.KeyPhraseExtractionSkill";
         }
 

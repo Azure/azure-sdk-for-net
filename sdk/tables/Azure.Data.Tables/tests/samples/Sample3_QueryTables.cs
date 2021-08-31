@@ -29,7 +29,7 @@ namespace Azure.Data.Tables.Samples
             #region Snippet:TablesSample3QueryTables
             // Use the <see cref="TableServiceClient"> to query the service. Passing in OData filter strings is optional.
 
-            Pageable<TableItem> queryTableResults = serviceClient.GetTables(filter: $"TableName eq '{tableName}'");
+            Pageable<TableItem> queryTableResults = serviceClient.Query(filter: $"TableName eq '{tableName}'");
 
             Console.WriteLine("The following are the names of the tables in the query results:");
 
@@ -37,7 +37,7 @@ namespace Azure.Data.Tables.Samples
 
             foreach (TableItem table in queryTableResults)
             {
-                Console.WriteLine(table.TableName);
+                Console.WriteLine(table.Name);
             }
             #endregion
 

@@ -17,6 +17,7 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Remove="Shared\AzuriteFixture.cs" />
     <Compile Remove="Shared\AzuriteNUnitFixture.cs" />
+    <Compile Remove="Shared\StorageTestBase.SasVersion.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- To test shared resources that aren't included in Azure.Storage.Common itself. -->
@@ -25,6 +26,7 @@
     <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)ProgressIncrementingStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)SlicedStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)StorageServerTimeoutPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>

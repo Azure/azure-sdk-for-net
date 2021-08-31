@@ -3,7 +3,6 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
@@ -14,7 +13,6 @@ trigger:
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
@@ -31,5 +29,3 @@ extends:
     Artifacts:
     - name: Azure.AI.TextAnalytics
       safeName: AzureAITextAnalytics
-    - name: Azure.AI.TextAnalytics.Protocol
-      safeName: AzureAITextAnalyticsProtocol

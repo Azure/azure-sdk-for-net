@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
-    [JsonConverter(typeof(PolicyCertificateModificationResultConverter))]
+    [CodeGenModel("PolicyCertificatesModificationResult")]
     public partial class PolicyCertificatesModificationResult
     {
     }

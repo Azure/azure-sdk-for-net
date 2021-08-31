@@ -171,6 +171,8 @@ Importing can be useful, for example, in cases where there is a shared base matr
 once for each instance of a language version. Importing does not support overriding duplicate parameters. To achieve
 this, use the [Replace](#replace-values) argument instead.
 
+The `Selection` and `NonSparseParameters` parameters are respected when generating an imported matrix.
+
 The processing order is as follows:
 
 Given a matrix and import matrix like below:
@@ -493,6 +495,8 @@ Given a matrix like below with `JavaTestVersion` marked as a non-sparse paramete
 
 A matrix with 6 entries will be generated: A sparse matrix of Agent, AZURE_TEST_HTTP_CLIENTS and ArmTemplateParameters
 (3 total entries) will be multipled by the two `JavaTestVersion` parameters `1.8` and `1.11`.
+
+NOTE: NonSparseParameters are also applied when generating an imported matrix.
 
 #### Under the hood
 

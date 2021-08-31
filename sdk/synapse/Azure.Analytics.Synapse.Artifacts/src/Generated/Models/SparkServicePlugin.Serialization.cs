@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SparkServicePluginConverter))]
     public partial class SparkServicePlugin
     {
         internal static SparkServicePlugin DeserializeSparkServicePlugin(JsonElement element)
@@ -85,6 +87,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SparkServicePlugin(Optional.ToNullable(preparationStartedAt), Optional.ToNullable(resourceAcquisitionStartedAt), Optional.ToNullable(submissionStartedAt), Optional.ToNullable(monitoringStartedAt), Optional.ToNullable(cleanupStartedAt), Optional.ToNullable(currentState));
+        }
+
+        internal partial class SparkServicePluginConverter : JsonConverter<SparkServicePlugin>
+        {
+            public override void Write(Utf8JsonWriter writer, SparkServicePlugin model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SparkServicePlugin Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSparkServicePlugin(document.RootElement);
+            }
         }
     }
 }

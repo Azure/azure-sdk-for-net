@@ -37,9 +37,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static void Send(this IUserConfirmationPasswordOperations operations, string resourceGroupName, string serviceName, string userId)
+            /// <param name='appType'>
+            /// Determines the type of application which send the create user request.
+            /// Default is legacy publisher portal. Possible values include: 'portal',
+            /// 'developerPortal'
+            /// </param>
+            public static void Send(this IUserConfirmationPasswordOperations operations, string resourceGroupName, string serviceName, string userId, string appType = default(string))
             {
-                operations.SendAsync(resourceGroupName, serviceName, userId).GetAwaiter().GetResult();
+                operations.SendAsync(resourceGroupName, serviceName, userId, appType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -58,12 +63,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
+            /// <param name='appType'>
+            /// Determines the type of application which send the create user request.
+            /// Default is legacy publisher portal. Possible values include: 'portal',
+            /// 'developerPortal'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SendAsync(this IUserConfirmationPasswordOperations operations, string resourceGroupName, string serviceName, string userId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SendAsync(this IUserConfirmationPasswordOperations operations, string resourceGroupName, string serviceName, string userId, string appType = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.SendWithHttpMessagesAsync(resourceGroupName, serviceName, userId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.SendWithHttpMessagesAsync(resourceGroupName, serviceName, userId, appType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

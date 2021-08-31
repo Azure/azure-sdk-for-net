@@ -15,6 +15,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The routes that specify the endpoints used for login and logout
+    /// requests.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class LoginRoutes : ProxyOnlyResource
     {
@@ -33,6 +37,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="logoutEndpoint">The endpoint at which a logout request
+        /// should be made.</param>
         public LoginRoutes(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string logoutEndpoint = default(string))
             : base(id, name, kind, type)
         {
@@ -46,6 +52,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the endpoint at which a logout request should be made.
         /// </summary>
         [JsonProperty(PropertyName = "properties.logoutEndpoint")]
         public string LogoutEndpoint { get; set; }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -17,6 +18,8 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    // Avoid running these tests in parallel with anything else that's sharing the event source
+    [NonParallelizable]
     public class BatchingTests : SearchTestBase
     {
         public BatchingTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -348,6 +351,8 @@ namespace Azure.Search.Documents.Tests
                         AutoFlushInterval = null
                     });
 
+            int removeFailedCount = 0;
+
             List<IndexDocumentsAction<SimpleDocument>> pending = new List<IndexDocumentsAction<SimpleDocument>>();
             indexer.ActionAdded +=
                 (IndexActionEventArgs<SimpleDocument> e) =>
@@ -358,13 +363,15 @@ namespace Azure.Search.Documents.Tests
             indexer.ActionCompleted +=
                 (IndexActionCompletedEventArgs<SimpleDocument> e) =>
                 {
-                    pending.Remove(e.Action);
+                    if (!pending.Remove(e.Action))
+                    { removeFailedCount++; }
                     return Task.CompletedTask;
                 };
             indexer.ActionFailed +=
                 (IndexActionFailedEventArgs<SimpleDocument> e) =>
                 {
-                    pending.Remove(e.Action);
+                    if (!pending.Remove(e.Action))
+                    { removeFailedCount++; }
                     return Task.CompletedTask;
                 };
 
@@ -372,11 +379,15 @@ namespace Azure.Search.Documents.Tests
             await indexer.MergeDocumentsAsync(new[] { new SimpleDocument { Id = "Fake" } });
             await indexer.UploadDocumentsAsync(data.Skip(500));
 
-            await DelayAsync(TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(250));
-            Assert.AreEqual(1001 - BatchSize, pending.Count);
+            int expectedPendingQueueSize = 1001 - BatchSize;
+
+            await ConditionallyDelayAsync(() => (pending.Count == expectedPendingQueueSize), TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(250), 5);
+            Assert.AreEqual(expectedPendingQueueSize, pending.Count);
+            Assert.AreEqual(0, removeFailedCount);
 
             await indexer.FlushAsync();
             Assert.AreEqual(0, pending.Count);
+            Assert.AreEqual(0, removeFailedCount);
         }
         #endregion
 
@@ -428,11 +439,12 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
             SearchClient client = resources.GetSearchClient();
+
             LessSimpleDocument[] data = LessSimpleDocument.GetDocuments(10);
 
-            await using SearchIndexingBufferedSender<LessSimpleDocument> indexer =
-                new SearchIndexingBufferedSender<LessSimpleDocument>(client);
+            await using SearchIndexingBufferedSender<LessSimpleDocument> indexer = new(GetOriginal(client));
             AssertNoFailures(indexer);
+
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -985,7 +997,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
             BatchingSearchClient client = GetBatchingSearchClient(resources);
-            SimpleDocument[] data = SimpleDocument.GetDocuments(BatchSize);
+            SimpleDocument[] data = SimpleDocument.GetDocuments(2);
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
                 client.CreateIndexingBufferedSender(
@@ -1013,6 +1025,19 @@ namespace Azure.Search.Documents.Tests
         }
         #endregion
 
+        #region EventSource
+        [Test]
+        public void EventSourceMatchesNameAndGuid()
+        {
+            Type eventSourceType = typeof(AzureSearchDocumentsEventSource);
+
+            Assert.NotNull(eventSourceType);
+            Assert.AreEqual("Azure-Search-Documents", EventSource.GetName(eventSourceType));
+            Assert.AreEqual(Guid.Parse("ecf8d17a-8cd1-5cb8-7adb-5d7d3221a642"), EventSource.GetGuid(eventSourceType));
+            Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
+        }
+        #endregion
+
         #region Behavior
         [Test]
         public async Task Behavior_Split()
@@ -1024,9 +1049,46 @@ namespace Azure.Search.Documents.Tests
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
                 client.CreateIndexingBufferedSender<SimpleDocument>();
             AssertNoFailures(indexer);
+
             client.SplitNextBatch = true;
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureSearchDocumentsEventSource.Instance, EventLevel.Verbose);
+
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
+
+            List<EventWrittenEventArgs> eventData = listener.EventData.ToList();
+
+            Assert.AreEqual(10, eventData.Count);
+            Assert.AreEqual("PendingQueueResized", eventData[0].EventName);         // 1. All events are pushed into the pending queue.
+            Assert.AreEqual(512, eventData[0].GetProperty<int>("queueSize"));
+            Assert.AreEqual("PublishingDocuments", eventData[1].EventName);         // 2. Documents are being published.
+            Assert.IsTrue(eventData[1].GetProperty<bool>("flush"));
+            Assert.AreEqual("PendingQueueResized", eventData[2].EventName);         // 3. All events are pulled out of the pending queue.
+            Assert.AreEqual(0, eventData[2].GetProperty<int>("queueSize"));
+            Assert.AreEqual("BatchSubmitted", eventData[3].EventName);              // 4. A batch is created for submission and contains all events.
+            Assert.NotNull(eventData[3].GetProperty<string>("endPoint"));
+            Assert.AreEqual(512, eventData[3].GetProperty<int>("batchSize"));
+            Assert.AreEqual("BatchActionPayloadTooLarge", eventData[4].EventName);  // 5. Service responded to the index request with a 'payload too large' exception.
+            Assert.AreEqual(EventLevel.Warning, eventData[4].Level);                //    This event is logged at 'Warning' level.
+            Assert.AreEqual(512, eventData[4].GetProperty<int>("batchActionCount"));
+            Assert.AreEqual("BatchActionCountUpdated", eventData[5].EventName);     // 6. Batch is split up and default action count is updated.
+            Assert.AreEqual(EventLevel.Warning, eventData[5].Level);                //    This event is logged at 'Warning' level.
+            Assert.NotNull(eventData[5].GetProperty<string>("endPoint"));
+            Assert.AreEqual(512, eventData[5].GetProperty<int>("oldBatchCount"));
+            Assert.AreEqual(256, eventData[5].GetProperty<int>("newBatchCount"));
+            Assert.AreEqual("RetryQueueResized", eventData[6].EventName);           // 7. Second part of the batch is pushed into the retry queue.
+            Assert.AreEqual(256, eventData[6].GetProperty<int>("queueSize"));
+            Assert.AreEqual("BatchSubmitted", eventData[7].EventName);              // 8. First part of the batch is submitted.
+            Assert.NotNull(eventData[7].GetProperty<string>("endPoint"));
+            Assert.AreEqual(256, eventData[7].GetProperty<int>("batchSize"));
+            Assert.AreEqual("RetryQueueResized", eventData[8].EventName);           // 9. Remaining events are pulled out of the retry queue.
+            Assert.AreEqual(0, eventData[8].GetProperty<int>("queueSize"));
+            Assert.AreEqual("BatchSubmitted", eventData[9].EventName);              // 10. Second part of the batch is submitted.
+            Assert.NotNull(eventData[9].GetProperty<string>("endPoint"));
+            Assert.AreEqual(256, eventData[9].GetProperty<int>("batchSize"));
+
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
         }
 
@@ -1078,7 +1140,6 @@ namespace Azure.Search.Documents.Tests
                         InitialBatchActionCount = numberOfDocuments + 1,
                     });
 
-            // Throw from every handler
             int sent = 0, completed = 0;
             indexer.ActionSent += e =>
             {
@@ -1088,7 +1149,7 @@ namespace Azure.Search.Documents.Tests
                 // So, 3 documents will be sent before any are submitted, but 3 submissions will be made before the last 2 are sent
                 Assert.AreEqual((sent <= 3) ? 0 : 3, completed);
 
-                throw new InvalidOperationException("ActionSentAsync: Should not be seen!");
+                return Task.CompletedTask;
             };
 
             indexer.ActionCompleted += e =>
@@ -1099,7 +1160,7 @@ namespace Azure.Search.Documents.Tests
                 // So, 3 documents will be submitted after 3 are sent, and the last 2 submissions will be made after all 5 are sent
                 Assert.AreEqual((completed <= 3) ? 3 : 5, sent);
 
-                throw new InvalidOperationException("ActionCompletedAsync: Should not be seen!");
+                return Task.CompletedTask;
             };
 
             AssertNoFailures(indexer);
@@ -1138,7 +1199,6 @@ namespace Azure.Search.Documents.Tests
                         InitialBatchActionCount = numberOfDocuments + 1,
                     });
 
-            // Throw from every handler
             int sent = 0, completed = 0;
             indexer.ActionSent += e =>
             {
@@ -1147,7 +1207,7 @@ namespace Azure.Search.Documents.Tests
                 // Batch will not be split. So, no document will be submitted before all are sent.
                 Assert.AreEqual(0, completed);
 
-                throw new InvalidOperationException("ActionSentAsync: Should not be seen!");
+                return Task.CompletedTask;
             };
 
             indexer.ActionCompleted += e =>
@@ -1157,7 +1217,7 @@ namespace Azure.Search.Documents.Tests
                 // Batch will not be split. So, all documents will be sent before any are submitted.
                 Assert.AreEqual(5, sent);
 
-                throw new InvalidOperationException("ActionCompletedAsync: Should not be seen!");
+                return Task.CompletedTask;
             };
 
             AssertNoFailures(indexer);

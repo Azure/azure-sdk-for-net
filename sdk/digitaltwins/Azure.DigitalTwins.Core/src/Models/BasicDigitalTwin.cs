@@ -15,12 +15,12 @@ namespace Azure.DigitalTwins.Core
     /// This helper class will only work with <see cref="System.Text.Json"/>. When used with the <see cref="Azure.Core.Serialization.ObjectSerializer"/>,
     /// parameter to <see cref="DigitalTwinsClientOptions" /> it will only work with the default (<see cref="Azure.Core.Serialization.JsonObjectSerializer"/>).
     /// </para>
-    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
     /// <example>
     /// Here's an example of  how to use the BasicDigitalTwin helper class to serialize and create a digital twin.
     ///
-    /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicTwin">
+    /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicTwin" language="csharp">
     /// // Create digital twin with component payload using the BasicDigitalTwin serialization helper
     ///
     /// var basicTwin = new BasicDigitalTwin
@@ -55,7 +55,7 @@ namespace Azure.DigitalTwins.Core
     ///
     /// Here's an example of  how to use the BasicDigitalTwin helper class to get and deserialize a digital twin.
     ///
-    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin">
+    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin" language="csharp">
     /// Response&lt;BasicDigitalTwin&gt; getBasicDtResponse = await client.GetDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId);
     /// BasicDigitalTwin basicDt = getBasicDtResponse.Value;
     ///
@@ -101,7 +101,7 @@ namespace Azure.DigitalTwins.Core
         /// If the property is a component, use the <see cref="BasicDigitalTwinComponent"/> class to deserialize the payload.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin" language="csharp">
         /// Response&lt;BasicDigitalTwin&gt; getBasicDtResponse = await client.GetDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId);
         /// BasicDigitalTwin basicDt = getBasicDtResponse.Value;
         ///

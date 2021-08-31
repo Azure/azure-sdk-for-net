@@ -170,8 +170,13 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation. Possible values
-        /// include: 'instanceView'
+        /// The expand expression to apply on the operation. 'InstanceView'
+        /// retrieves a snapshot of the runtime properties of the virtual
+        /// machine that is managed by the platform and can change outside of
+        /// control plane operations. 'UserData' retrieves the UserData
+        /// property as part of the VM model view that was provided by the user
+        /// during the VM Create/Update operation. Possible values include:
+        /// 'instanceView', 'userData'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -268,10 +273,10 @@ namespace Microsoft.Azure.Management.Compute
         /// recommended to sysprep the virtual machine before performing this
         /// operation. &lt;br&gt;For Windows, please refer to [Create a managed
         /// image of a generalized VM in
-        /// Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
         /// Linux, please refer to [How to create an image of a virtual machine
         /// or
-        /// VHD](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image).
+        /// VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

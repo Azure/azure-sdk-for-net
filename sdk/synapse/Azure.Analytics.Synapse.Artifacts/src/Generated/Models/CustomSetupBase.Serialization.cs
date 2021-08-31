@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(CustomSetupBaseConverter))]
     public partial class CustomSetupBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -32,6 +35,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new CustomSetupBase(type);
+        }
+
+        internal partial class CustomSetupBaseConverter : JsonConverter<CustomSetupBase>
+        {
+            public override void Write(Utf8JsonWriter writer, CustomSetupBase model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CustomSetupBase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCustomSetupBase(document.RootElement);
+            }
         }
     }
 }

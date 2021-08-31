@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Create or update a gallery Image Version.
+        /// Create or update a gallery image version.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -60,17 +60,17 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the Shared Image Gallery in which the Image Definition resides.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition in which the Image Version is to
+        /// The name of the gallery image definition in which the Image Version is to
         /// be created.
         /// </param>
         /// <param name='galleryImageVersionName'>
-        /// The name of the gallery Image Version to be created. Needs to follow
+        /// The name of the gallery image version to be created. Needs to follow
         /// semantic version name pattern: The allowed characters are digit and period.
         /// Digits must be within the range of a 32-bit integer. Format:
         /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
         /// </param>
         /// <param name='galleryImageVersion'>
-        /// Parameters supplied to the create or update gallery Image Version
+        /// Parameters supplied to the create or update gallery image version
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Update a gallery Image Version.
+        /// Update a gallery image version.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -96,17 +96,17 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the Shared Image Gallery in which the Image Definition resides.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition in which the Image Version is to
+        /// The name of the gallery image definition in which the Image Version is to
         /// be updated.
         /// </param>
         /// <param name='galleryImageVersionName'>
-        /// The name of the gallery Image Version to be updated. Needs to follow
+        /// The name of the gallery image version to be updated. Needs to follow
         /// semantic version name pattern: The allowed characters are digit and period.
         /// Digits must be within the range of a 32-bit integer. Format:
         /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
         /// </param>
         /// <param name='galleryImageVersion'>
-        /// Parameters supplied to the update gallery Image Version operation.
+        /// Parameters supplied to the update gallery image version operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Retrieves information about a gallery Image Version.
+        /// Retrieves information about a gallery image version.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -131,11 +131,11 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the Shared Image Gallery in which the Image Definition resides.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition in which the Image Version
+        /// The name of the gallery image definition in which the Image Version
         /// resides.
         /// </param>
         /// <param name='galleryImageVersionName'>
-        /// The name of the gallery Image Version to be retrieved.
+        /// The name of the gallery image version to be retrieved.
         /// </param>
         /// <param name='expand'>
         /// The expand expression to apply on the operation. Possible values include:
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryImageVersionName");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -344,7 +344,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Delete a gallery Image Version.
+        /// Delete a gallery image version.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -353,11 +353,11 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the Shared Image Gallery in which the Image Definition resides.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition in which the Image Version
+        /// The name of the gallery image definition in which the Image Version
         /// resides.
         /// </param>
         /// <param name='galleryImageVersionName'>
-        /// The name of the gallery Image Version to be deleted.
+        /// The name of the gallery image version to be deleted.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// List gallery Image Versions in a gallery Image Definition.
+        /// List gallery image versions in a gallery image definition.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryImageName");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -577,7 +577,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Create or update a gallery Image Version.
+        /// Create or update a gallery image version.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -586,17 +586,17 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the Shared Image Gallery in which the Image Definition resides.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition in which the Image Version is to
+        /// The name of the gallery image definition in which the Image Version is to
         /// be created.
         /// </param>
         /// <param name='galleryImageVersionName'>
-        /// The name of the gallery Image Version to be created. Needs to follow
+        /// The name of the gallery image version to be created. Needs to follow
         /// semantic version name pattern: The allowed characters are digit and period.
         /// Digits must be within the range of a 32-bit integer. Format:
         /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
         /// </param>
         /// <param name='galleryImageVersion'>
-        /// Parameters supplied to the create or update gallery Image Version
+        /// Parameters supplied to the create or update gallery image version
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -650,7 +650,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 galleryImageVersion.Validate();
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -848,7 +848,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Update a gallery Image Version.
+        /// Update a gallery image version.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -857,17 +857,17 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the Shared Image Gallery in which the Image Definition resides.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition in which the Image Version is to
+        /// The name of the gallery image definition in which the Image Version is to
         /// be updated.
         /// </param>
         /// <param name='galleryImageVersionName'>
-        /// The name of the gallery Image Version to be updated. Needs to follow
+        /// The name of the gallery image version to be updated. Needs to follow
         /// semantic version name pattern: The allowed characters are digit and period.
         /// Digits must be within the range of a 32-bit integer. Format:
         /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
         /// </param>
         /// <param name='galleryImageVersion'>
-        /// Parameters supplied to the update gallery Image Version operation.
+        /// Parameters supplied to the update gallery image version operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -916,7 +916,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryImageVersion");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1078,7 +1078,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Delete a gallery Image Version.
+        /// Delete a gallery image version.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1087,11 +1087,11 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the Shared Image Gallery in which the Image Definition resides.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition in which the Image Version
+        /// The name of the gallery image definition in which the Image Version
         /// resides.
         /// </param>
         /// <param name='galleryImageVersionName'>
-        /// The name of the gallery Image Version to be deleted.
+        /// The name of the gallery image version to be deleted.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1133,7 +1133,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryImageVersionName");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1270,7 +1270,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// List gallery Image Versions in a gallery Image Definition.
+        /// List gallery image versions in a gallery image definition.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

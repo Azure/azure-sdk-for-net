@@ -17,7 +17,6 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             #region Snippet:FormRecognizerSampleManageCustomModelsAsync
 
@@ -43,7 +42,11 @@ namespace Azure.AI.FormRecognizer.Samples
             }
 
             // Create a new model to store in the account
-            //@@ Uri trainingFileUri = <trainingFileUri>;
+#if SNIPPET
+            Uri trainingFileUri = <trainingFileUri>;
+#else
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+#endif
             TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My new model");
             Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
             CustomFormModel model = operationResponse.Value;

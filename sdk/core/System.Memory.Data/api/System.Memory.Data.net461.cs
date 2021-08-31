@@ -6,6 +6,7 @@ namespace System
         public BinaryData(object? jsonSerializable, System.Text.Json.JsonSerializerOptions? options = null, System.Type? type = null) { }
         public BinaryData(System.ReadOnlyMemory<byte> data) { }
         public BinaryData(string data) { }
+        public static System.BinaryData Empty { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         public static System.BinaryData FromBytes(byte[] data) { throw null; }

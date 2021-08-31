@@ -28,12 +28,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public ContainerRegistryBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-
-            this.url = url;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -81,7 +76,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 307:
-                    return ResponseWithHeaders.FromValue<Stream, ContainerRegistryBlobGetBlobHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -114,7 +109,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 307:
-                    return ResponseWithHeaders.FromValue<Stream, ContainerRegistryBlobGetBlobHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

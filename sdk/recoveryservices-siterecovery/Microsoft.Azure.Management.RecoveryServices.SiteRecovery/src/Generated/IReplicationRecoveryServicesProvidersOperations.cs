@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// fabric.
         /// </remarks>
         /// <param name='fabricName'>
-        /// Fabric name
+        /// Fabric name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Fabric name.
         /// </param>
         /// <param name='providerName'>
-        /// Recovery services provider name
+        /// Recovery services provider name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<RecoveryServicesProvider>> CreateWithHttpMessagesAsync(string fabricName, string providerName, AddRecoveryServicesProviderInput addProviderInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Purges recovery service provider from fabric
+        /// Purges recovery service provider from fabric.
         /// </summary>
         /// <remarks>
         /// The operation to purge(force delete) a recovery services provider
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to removes/delete(unregister) a recovery services
-        /// provider from the vault
+        /// provider from the vault.
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// vault. This is a view only api.
         /// </summary>
         /// <remarks>
-        /// Lists the registered recovery services providers in the vault
+        /// Lists the registered recovery services providers in the vault.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<RecoveryServicesProvider>> BeginCreateWithHttpMessagesAsync(string fabricName, string providerName, AddRecoveryServicesProviderInput addProviderInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Purges recovery service provider from fabric
+        /// Purges recovery service provider from fabric.
         /// </summary>
         /// <remarks>
         /// The operation to purge(force delete) a recovery services provider
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to removes/delete(unregister) a recovery services
-        /// provider from the vault
+        /// provider from the vault.
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// vault. This is a view only api.
         /// </summary>
         /// <remarks>
-        /// Lists the registered recovery services providers in the vault
+        /// Lists the registered recovery services providers in the vault.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

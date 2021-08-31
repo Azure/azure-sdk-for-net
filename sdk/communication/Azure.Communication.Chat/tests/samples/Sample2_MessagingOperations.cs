@@ -16,14 +16,14 @@ namespace Azure.Communication.Chat.Tests.samples
         [Test]
         public async Task SendGetUpdateDeleteMessagesSendNotificationReadReceiptsAsync()
         {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
+            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
             Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync();
             AccessToken communicationUserToken = await communicationIdentityClient.GetTokenAsync(threadMember.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
             string theadCreatorMemberId = threadMember.Value.Id;
 
             ChatClient chatClient = new ChatClient(
-                TestEnvironment.Endpoint,
+                TestEnvironment.LiveTestDynamicEndpoint,
                 new CommunicationTokenCredential(userToken));
 
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier(theadCreatorMemberId))

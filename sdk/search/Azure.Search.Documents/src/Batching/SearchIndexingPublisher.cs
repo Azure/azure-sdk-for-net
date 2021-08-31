@@ -124,6 +124,8 @@ namespace Azure.Search.Documents.Batching
                 await _sender.OnActionSentAsync(action.Document, cancellationToken).ConfigureAwait(false);
             }
 
+            AzureSearchDocumentsEventSource.Instance.BatchSubmitted($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, batch.Count);
+
             // Send the request to the service
             Response<IndexDocumentsResult> response = null;
             try
@@ -136,17 +138,20 @@ namespace Azure.Search.Documents.Batching
             // Handle batch level failures
             catch (RequestFailedException ex) when (ex.Status == 413) // Payload Too Large
             {
+                AzureSearchDocumentsEventSource.Instance.BatchActionPayloadTooLarge($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, BatchActionCount);
+
+                int oldBatchActionCount = BatchActionCount;
+
                 // Split the batch and try with smaller payloads
                 // Update 'BatchActionCount' so future submissions can avoid this error.
                 BatchActionCount = (int)Math.Floor((double)batch.Count / 2.0);
 
+                AzureSearchDocumentsEventSource.Instance.BatchActionCountUpdated($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, oldBatchActionCount, BatchActionCount);
+
                 var smaller = new List<PublisherAction<IndexDocumentsAction<T>>>(batch.Take(BatchActionCount));
-                foreach (PublisherAction<IndexDocumentsAction<T>> action in batch.Skip(BatchActionCount))
-                {
-                    // Add the second half to the retry queue without
-                    // counting this as a retry attempt
-                    _ = EnqueueRetry(action, skipIncrement: true);
-                }
+
+                // Add the second half to the retry queue without counting this as a retry attempt
+                EnqueueRetry(batch.Skip(BatchActionCount));
 
                 // Try resubmitting with just the smaller half
                 await SubmitBatchAsync(smaller, cancellationToken).ConfigureAwait(false);
@@ -202,6 +207,9 @@ namespace Azure.Search.Documents.Batching
             }
             return throttled;
         }
+
+        /// <inheritdoc />
+        protected override Uri GetEndpoint() => _sender.Endpoint;
 
         /// <summary>
         /// Attempt to add an item to the retry queue or raise a failure

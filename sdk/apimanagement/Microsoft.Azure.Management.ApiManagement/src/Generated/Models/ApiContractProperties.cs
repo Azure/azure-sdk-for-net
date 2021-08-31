@@ -134,11 +134,45 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (Path == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Path");
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 300);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+            }
+            if (ServiceUrl != null)
+            {
+                if (ServiceUrl.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ServiceUrl", 2000);
+                }
+                if (ServiceUrl.Length < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ServiceUrl", 0);
+                }
+            }
+            if (Path != null)
+            {
+                if (Path.Length > 400)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Path", 400);
+                }
+                if (Path.Length < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Path", 0);
+                }
             }
         }
     }

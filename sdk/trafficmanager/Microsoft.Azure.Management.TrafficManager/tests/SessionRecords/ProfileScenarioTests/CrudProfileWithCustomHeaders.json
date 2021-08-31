@@ -65,8 +65,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217?api-version=2018-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNz9hcGktdmVyc2lvbj0yMDE4LTA0LTAx",
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217?api-version=2018-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNz9hcGktdmVyc2lvbj0yMDE4LTA4LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"azuresdkfornetautoresttrafficmanager8217\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"protocol\": \"http\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\",\r\n      \"customHeaders\": [\r\n        {\r\n          \"name\": \"host\",\r\n          \"value\": \"www.contoso.com\"\r\n        },\r\n        {\r\n          \"name\": \"custom-name\",\r\n          \"value\": \"custom-value\"\r\n        }\r\n      ],\r\n      \"expectedStatusCodeRanges\": [\r\n        {\r\n          \"min\": 200,\r\n          \"max\": 499\r\n        }\r\n      ]\r\n    },\r\n    \"trafficViewEnrollmentStatus\": \"Disabled\"\r\n  },\r\n  \"location\": \"global\"\r\n}",
       "RequestHeaders": {
@@ -132,8 +132,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217/ExternalEndpoints/My%20external%20endpoint%200?api-version=2018-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNy9FeHRlcm5hbEVuZHBvaW50cy9NeSUyMGV4dGVybmFsJTIwZW5kcG9pbnQlMjAwP2FwaS12ZXJzaW9uPTIwMTgtMDQtMDE=",
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217/ExternalEndpoints/My%20external%20endpoint%200?api-version=2018-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNy9FeHRlcm5hbEVuZHBvaW50cy9NeSUyMGV4dGVybmFsJTIwZW5kcG9pbnQlMjAwP2FwaS12ZXJzaW9uPTIwMTgtMDgtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"target\": \"foobar.Contoso0.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointLocation\": \"North Europe\",\r\n    \"customHeaders\": [\r\n      {\r\n        \"name\": \"custom-name\",\r\n        \"value\": \"custom-value-overriden\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
@@ -199,8 +199,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217/ExternalEndpoints/My%20external%20endpoint%201?api-version=2018-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNy9FeHRlcm5hbEVuZHBvaW50cy9NeSUyMGV4dGVybmFsJTIwZW5kcG9pbnQlMjAxP2FwaS12ZXJzaW9uPTIwMTgtMDQtMDE=",
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217/ExternalEndpoints/My%20external%20endpoint%201?api-version=2018-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNy9FeHRlcm5hbEVuZHBvaW50cy9NeSUyMGV4dGVybmFsJTIwZW5kcG9pbnQlMjAxP2FwaS12ZXJzaW9uPTIwMTgtMDgtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"target\": \"foobar.Contoso1.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointLocation\": \"North Europe\",\r\n    \"customHeaders\": [\r\n      {\r\n        \"name\": \"custom-name\",\r\n        \"value\": \"custom-value-overriden\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
@@ -266,8 +266,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217/ExternalEndpoints/My%20external%20endpoint%202?api-version=2018-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNy9FeHRlcm5hbEVuZHBvaW50cy9NeSUyMGV4dGVybmFsJTIwZW5kcG9pbnQlMjAyP2FwaS12ZXJzaW9uPTIwMTgtMDQtMDE=",
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217/ExternalEndpoints/My%20external%20endpoint%202?api-version=2018-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNy9FeHRlcm5hbEVuZHBvaW50cy9NeSUyMGV4dGVybmFsJTIwZW5kcG9pbnQlMjAyP2FwaS12ZXJzaW9uPTIwMTgtMDgtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"target\": \"foobar.Contoso2.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointLocation\": \"North Europe\",\r\n    \"customHeaders\": [\r\n      {\r\n        \"name\": \"custom-name\",\r\n        \"value\": \"custom-value-overriden\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
@@ -333,8 +333,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217?api-version=2018-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNz9hcGktdmVyc2lvbj0yMDE4LTA0LTAx",
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217?api-version=2018-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNz9hcGktdmVyc2lvbj0yMDE4LTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -397,8 +397,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217?api-version=2018-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNz9hcGktdmVyc2lvbj0yMDE4LTA0LTAx",
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkfornetautoresttrafficmanager1098/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager8217?api-version=2018-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjEwOTgvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyODIxNz9hcGktdmVyc2lvbj0yMDE4LTA4LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {

@@ -142,6 +142,26 @@ namespace Microsoft.Azure.Management.Compute
         IImagesOperations Images { get; }
 
         /// <summary>
+        /// Gets the IRestorePointCollectionsOperations.
+        /// </summary>
+        IRestorePointCollectionsOperations RestorePointCollections { get; }
+
+        /// <summary>
+        /// Gets the IRestorePointsOperations.
+        /// </summary>
+        IRestorePointsOperations RestorePoints { get; }
+
+        /// <summary>
+        /// Gets the ICapacityReservationGroupsOperations.
+        /// </summary>
+        ICapacityReservationGroupsOperations CapacityReservationGroups { get; }
+
+        /// <summary>
+        /// Gets the ICapacityReservationsOperations.
+        /// </summary>
+        ICapacityReservationsOperations CapacityReservations { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetExtensionsOperations.
         /// </summary>
         IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; }
@@ -230,6 +250,51 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IGalleryApplicationVersionsOperations.
         /// </summary>
         IGalleryApplicationVersionsOperations GalleryApplicationVersions { get; }
+
+        /// <summary>
+        /// Gets the IGallerySharingProfileOperations.
+        /// </summary>
+        IGallerySharingProfileOperations GallerySharingProfile { get; }
+
+        /// <summary>
+        /// Gets the ISharedGalleriesOperations.
+        /// </summary>
+        ISharedGalleriesOperations SharedGalleries { get; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImagesOperations.
+        /// </summary>
+        ISharedGalleryImagesOperations SharedGalleryImages { get; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImageVersionsOperations.
+        /// </summary>
+        ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; }
+
+        /// <summary>
+        /// Gets the ICloudServiceRoleInstancesOperations.
+        /// </summary>
+        ICloudServiceRoleInstancesOperations CloudServiceRoleInstances { get; }
+
+        /// <summary>
+        /// Gets the ICloudServiceRolesOperations.
+        /// </summary>
+        ICloudServiceRolesOperations CloudServiceRoles { get; }
+
+        /// <summary>
+        /// Gets the ICloudServicesOperations.
+        /// </summary>
+        ICloudServicesOperations CloudServices { get; }
+
+        /// <summary>
+        /// Gets the ICloudServicesUpdateDomainOperations.
+        /// </summary>
+        ICloudServicesUpdateDomainOperations CloudServicesUpdateDomain { get; }
+
+        /// <summary>
+        /// Gets the ICloudServiceOperatingSystemsOperations.
+        /// </summary>
+        ICloudServiceOperatingSystemsOperations CloudServiceOperatingSystems { get; }
 
     }
 }

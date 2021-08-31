@@ -43,19 +43,29 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             #endregion
 
             #region Snippet:SendEGEventsToTopic
+            // Example of a custom ObjectSerializer used to serialize the event payload to JSON
+            var myCustomDataSerializer = new JsonObjectSerializer(
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+
             // Add EventGridEvents to a list to publish to the topic
             List<EventGridEvent> eventsList = new List<EventGridEvent>
             {
+                // EventGridEvent with custom model serialized to JSON
                 new EventGridEvent(
                     "ExampleEventSubject",
                     "Example.EventType",
                     "1.0",
-                    "This is the data for the first event"),
-               new EventGridEvent(
+                    new CustomModel() { A = 5, B = true }),
+
+                // EventGridEvent with custom model serialized to JSON using a custom serializer
+                new EventGridEvent(
                     "ExampleEventSubject",
                     "Example.EventType",
                     "1.0",
-                    "This is the data for the second event")
+                    myCustomDataSerializer.Serialize(new CustomModel() { A = 5, B = true })),
             };
 
             // Send the events
@@ -82,6 +92,31 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             EventGridPublisherClient client = new EventGridPublisherClient(
                 new Uri(topicEndpoint),
                 sasCredential);
+            #endregion
+
+            // Add EventGridEvents to a list to publish to the topic
+            List<EventGridEvent> eventsList = new List<EventGridEvent>
+            {
+                new EventGridEvent(
+                    "ExampleEventSubject",
+                    "Example.EventType",
+                    "1.0",
+                    "This is the event data")
+            };
+
+            // Send the events
+            await client.SendEventsAsync(eventsList);
+        }
+
+        [Test]
+        public async Task AuthenticateWithAAD()
+        {
+            string topicEndpoint = TestEnvironment.TopicHost;
+
+            #region Snippet:EventGridAAD
+            EventGridPublisherClient client = new EventGridPublisherClient(
+                new Uri(topicEndpoint),
+                new DefaultAzureCredential());
             #endregion
 
             // Add EventGridEvents to a list to publish to the topic

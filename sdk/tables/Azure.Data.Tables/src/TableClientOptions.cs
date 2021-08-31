@@ -16,7 +16,6 @@ namespace Azure.Data.Tables
         /// library.
         /// </summary>
         private const ServiceVersion Latest = ServiceVersion.V2019_02_02;
-        internal static TableClientOptions Default { get; } = new TableClientOptions();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClientOptions"/> class.
@@ -44,10 +43,19 @@ namespace Azure.Data.Tables
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The Tables API version 20019-02-02
+            /// The Tables API version 2019-02-02
             /// </summary>
             V2019_02_02 = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
+
+        internal static TableClientOptions DefaultOptions => new()
+        {
+            Diagnostics =
+            {
+                LoggedHeaderNames = { "x-ms-request-id", "DataServiceVersion" },
+                LoggedQueryParameters = { "api-version", "format", "filter" }
+            }
+        };
     }
 }

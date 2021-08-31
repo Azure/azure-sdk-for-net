@@ -26,12 +26,12 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
+            string vaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CreateCertificateClient
             // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            var client = new CertificateClient(vaultUri: new Uri(vaultUrl), credential: new DefaultAzureCredential());
             #endregion
 
             this.client = client;
@@ -186,8 +186,11 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                     Transport = new HttpClientTransport(httpClient)
                 };
 
-                //@@CertificateClient client = new CertificateClient(
-                /*@@*/ CertificateClient _ = new CertificateClient(
+#if SNIPPET
+                CertificateClient client = new CertificateClient(
+#else
+                CertificateClient _ = new CertificateClient(
+#endif
                     new Uri("https://myvault.vault.azure.net"),
                     new DefaultAzureCredential(),
                     options);
@@ -221,8 +224,11 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
 
             #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
-            //@@CertificatePolicy policy = CertificatePolicy.Default;
-            /*@@*/ policy = CertificatePolicy.Default;
+#if SNIPPET
+            CertificatePolicy policy = CertificatePolicy.Default;
+#else
+            policy = CertificatePolicy.Default;
+#endif
             #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
             {
                 #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateCertificate

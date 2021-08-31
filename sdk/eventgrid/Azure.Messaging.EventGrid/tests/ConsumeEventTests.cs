@@ -32,6 +32,21 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [Test]
+        public void ParsesEventGridEnvelopeUsingConverter()
+        {
+            string requestContent = "[{  \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"topic\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"mySubject\",  \"data\": {    \"validationCode\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"validationUrl\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"eventType\": \"Microsoft.EventGrid.SubscriptionValidationEvent\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\",  \"dataVersion\": \"1\"}]";
+
+            EventGridEvent[] events = JsonSerializer.Deserialize<EventGridEvent[]>(requestContent);
+            var egEvent = events[0];
+            Assert.AreEqual("/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", egEvent.Topic);
+            Assert.AreEqual("2d1781af-3a4c-4d7c-bd0c-e34b19da4e66", egEvent.Id);
+            Assert.AreEqual("mySubject", egEvent.Subject);
+            Assert.AreEqual(SystemEventNames.EventGridSubscriptionValidation, egEvent.EventType);
+            Assert.AreEqual(DateTimeOffset.Parse("2018-01-25T22:12:19.4556811Z"), egEvent.EventTime);
+            Assert.AreEqual("1", egEvent.DataVersion);
+        }
+
+        [Test]
         public void ConsumeStorageBlobDeletedEventWithExtraProperty()
         {
             string requestContent = "[{  \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}]";
@@ -69,6 +84,23 @@ namespace Azure.Messaging.EventGrid.Tests
                         Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                         break;
                 }
+            }
+        }
+
+        [Test]
+        public void ConsumeEventNotWrappedInAnArrayWithConverter()
+        {
+            string requestContent = "{  \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}";
+
+            EventGridEvent egEvent = JsonSerializer.Deserialize<EventGridEvent>(requestContent);
+
+            Assert.NotNull(egEvent);
+            switch (egEvent.EventType)
+            {
+                case SystemEventNames.StorageBlobDeleted:
+                    StorageBlobDeletedEventData blobDeleted = egEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
+                    Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
+                    break;
             }
         }
 
@@ -942,58 +974,102 @@ namespace Azure.Messaging.EventGrid.Tests
         #endregion
 
         #region Resource Manager (Azure Subscription/Resource Group) events
+
+        private const string Authorization = "{\"scope\":\"/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default\",\"action\":\"Microsoft.Web/sites/host/listKeys/action\",\"evidence\":{\"role\":\"Azure EventGrid Service BuiltIn Role\",\"roleAssignmentScope\":\"/subscriptions/sub\",\"roleAssignmentId\":\"rid\",\"roleDefinitionId\":\"rd\",\"principalId\":\"principal\",\"principalType\":\"ServicePrincipal\"}}";
+
+        private const string Claims = "{\"aud\":\"https://management.core.windows.net\",\"iat\":\"16303066\",\"nbf\":\"16303066\",\"exp\":\"16303066\"}";
+
+        private const string HttpRequest = "{\"clientRequestId\":\"\",\"clientIpAddress\":\"ip\",\"method\":\"POST\",\"url\":\"https://management.azure.com/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default/listKeys?api-version=2018-11-01\"}";
+
         [Test]
         public void ConsumeResourceWriteSuccessEvent()
         {
-            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceWriteSuccess\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+            string requestContent = $@"[{{""topic"":""/subscriptions/subscription-id"", ""subject"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",    ""eventType"":""Microsoft.Resources.ResourceWriteSuccess"",    ""eventTime"":""2017-08-16T03:54:38.2696833Z"",    ""id"":""25b3b0d0-d79b-44d5-9963-440d4e6a9bba"",    ""data"": {{ ""authorization"":{Authorization},   ""claims"":{Claims},  ""correlationId"":""54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6"",  ""httpRequest"":{HttpRequest},   ""resourceProvider"":""Microsoft.EventGrid"",  ""resourceUri"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",        ""operationName"":""Microsoft.EventGrid/eventSubscriptions/write"",    ""status"":""Succeeded"",   ""subscriptionId"":""subscription-id"",  ""tenantId"":""72f988bf-86f1-41af-91ab-2d7cd011db47""        }},      ""dataVersion"": """",    ""metadataVersion"": ""1""  }}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
+
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteSuccessEventData).TenantId);
+
+            var authorizationJson = JsonDocument.Parse((eventData as ResourceWriteSuccessEventData).Authorization).RootElement;
+            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
+
+            var claimsJson = JsonDocument.Parse((eventData as ResourceWriteSuccessEventData).Claims).RootElement;
+            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
+
+            var httpRequestJson = JsonDocument.Parse((eventData as ResourceWriteSuccessEventData).HttpRequest).RootElement;
+            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
         }
 
         [Test]
         public void ConsumeResourceWriteFailureEvent()
         {
-            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceWriteFailure\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+            string requestContent = $@"[{{""topic"":""/subscriptions/subscription-id"", ""subject"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",    ""eventType"":""Microsoft.Resources.ResourceWriteFailure"",    ""eventTime"":""2017-08-16T03:54:38.2696833Z"",    ""id"":""25b3b0d0-d79b-44d5-9963-440d4e6a9bba"",    ""data"": {{ ""authorization"":{Authorization},   ""claims"":{Claims},  ""correlationId"":""54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6"",  ""httpRequest"":{HttpRequest},   ""resourceProvider"":""Microsoft.EventGrid"",  ""resourceUri"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",        ""operationName"":""Microsoft.EventGrid/eventSubscriptions/write"",    ""status"":""Succeeded"",   ""subscriptionId"":""subscription-id"",  ""tenantId"":""72f988bf-86f1-41af-91ab-2d7cd011db47""        }},      ""dataVersion"": """",    ""metadataVersion"": ""1""  }}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteFailureEventData).TenantId);
+
+            var authorizationJson = JsonDocument.Parse((eventData as ResourceWriteFailureEventData).Authorization).RootElement;
+            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
+
+            var claimsJson = JsonDocument.Parse((eventData as ResourceWriteFailureEventData).Claims).RootElement;
+            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
+
+            var httpRequestJson = JsonDocument.Parse((eventData as ResourceWriteFailureEventData).HttpRequest).RootElement;
+            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
         }
 
         [Test]
         public void ConsumeResourceWriteCancelEvent()
         {
-            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceWriteCancel\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+            string requestContent = $@"[{{""topic"":""/subscriptions/subscription-id"", ""subject"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",    ""eventType"":""Microsoft.Resources.ResourceWriteCancel"",    ""eventTime"":""2017-08-16T03:54:38.2696833Z"",    ""id"":""25b3b0d0-d79b-44d5-9963-440d4e6a9bba"",    ""data"": {{ ""authorization"":{Authorization},   ""claims"":{Claims},  ""correlationId"":""54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6"",  ""httpRequest"":{HttpRequest},   ""resourceProvider"":""Microsoft.EventGrid"",  ""resourceUri"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",        ""operationName"":""Microsoft.EventGrid/eventSubscriptions/write"",    ""status"":""Succeeded"",   ""subscriptionId"":""subscription-id"",  ""tenantId"":""72f988bf-86f1-41af-91ab-2d7cd011db47""        }},      ""dataVersion"": """",    ""metadataVersion"": ""1""  }}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteCancelEventData).TenantId);
+
+            var authorizationJson = JsonDocument.Parse((eventData as ResourceWriteCancelEventData).Authorization).RootElement;
+            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
+
+            var claimsJson = JsonDocument.Parse((eventData as ResourceWriteCancelEventData).Claims).RootElement;
+            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
+
+            var httpRequestJson = JsonDocument.Parse((eventData as ResourceWriteCancelEventData).HttpRequest).RootElement;
+            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
         }
 
         [Test]
         public void ConsumeResourceDeleteSuccessEvent()
         {
-            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceDeleteSuccess\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+            string requestContent = $@"[{{""topic"":""/subscriptions/subscription-id"", ""subject"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",    ""eventType"":""Microsoft.Resources.ResourceDeleteSuccess"",    ""eventTime"":""2017-08-16T03:54:38.2696833Z"",    ""id"":""25b3b0d0-d79b-44d5-9963-440d4e6a9bba"",    ""data"": {{ ""authorization"":{Authorization},   ""claims"":{Claims},  ""correlationId"":""54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6"",  ""httpRequest"":{HttpRequest},   ""resourceProvider"":""Microsoft.EventGrid"",  ""resourceUri"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",        ""operationName"":""Microsoft.EventGrid/eventSubscriptions/write"",    ""status"":""Succeeded"",   ""subscriptionId"":""subscription-id"",  ""tenantId"":""72f988bf-86f1-41af-91ab-2d7cd011db47""        }},      ""dataVersion"": """",    ""metadataVersion"": ""1""  }}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteSuccessEventData).TenantId);
+
+            var authorizationJson = JsonDocument.Parse((eventData as ResourceDeleteSuccessEventData).Authorization).RootElement;
+            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
+
+            var claimsJson = JsonDocument.Parse((eventData as ResourceDeleteSuccessEventData).Claims).RootElement;
+            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
+
+            var httpRequestJson = JsonDocument.Parse((eventData as ResourceDeleteSuccessEventData).HttpRequest).RootElement;
+            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
         }
 
         [Test]
         public void ConsumeResourceDeleteFailureEvent()
         {
-            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceDeleteFailure\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+            string requestContent = $@"[{{""topic"":""/subscriptions/subscription-id"", ""subject"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",    ""eventType"":""Microsoft.Resources.ResourceDeleteFailure"",    ""eventTime"":""2017-08-16T03:54:38.2696833Z"",    ""id"":""25b3b0d0-d79b-44d5-9963-440d4e6a9bba"",    ""data"": {{ ""authorization"":{Authorization},   ""claims"":{Claims},  ""correlationId"":""54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6"",  ""httpRequest"":{HttpRequest},   ""resourceProvider"":""Microsoft.EventGrid"",  ""resourceUri"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",        ""operationName"":""Microsoft.EventGrid/eventSubscriptions/write"",    ""status"":""Succeeded"",   ""subscriptionId"":""subscription-id"",  ""tenantId"":""72f988bf-86f1-41af-91ab-2d7cd011db47""        }},      ""dataVersion"": """",    ""metadataVersion"": ""1""  }}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
@@ -1005,49 +1081,85 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeResourceDeleteCancelEvent()
         {
-            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceDeleteCancel\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+            string requestContent = $@"[{{""topic"":""/subscriptions/subscription-id"", ""subject"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",    ""eventType"":""Microsoft.Resources.ResourceDeleteCancel"",    ""eventTime"":""2017-08-16T03:54:38.2696833Z"",    ""id"":""25b3b0d0-d79b-44d5-9963-440d4e6a9bba"",    ""data"": {{ ""authorization"":{Authorization},   ""claims"":{Claims},  ""correlationId"":""54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6"",  ""httpRequest"":{HttpRequest},   ""resourceProvider"":""Microsoft.EventGrid"",  ""resourceUri"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",        ""operationName"":""Microsoft.EventGrid/eventSubscriptions/write"",    ""status"":""Succeeded"",   ""subscriptionId"":""subscription-id"",  ""tenantId"":""72f988bf-86f1-41af-91ab-2d7cd011db47""        }},      ""dataVersion"": """",    ""metadataVersion"": ""1""  }}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteCancelEventData).TenantId);
+
+            var authorizationJson = JsonDocument.Parse((eventData as ResourceDeleteCancelEventData).Authorization).RootElement;
+            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
+
+            var claimsJson = JsonDocument.Parse((eventData as ResourceDeleteCancelEventData).Claims).RootElement;
+            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
+
+            var httpRequestJson = JsonDocument.Parse((eventData as ResourceDeleteCancelEventData).HttpRequest).RootElement;
+            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
         }
 
         [Test]
         public void ConsumeResourceActionSuccessEvent()
         {
-            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceActionSuccess\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+            string requestContent = $@"[{{""topic"":""/subscriptions/subscription-id"", ""subject"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",    ""eventType"":""Microsoft.Resources.ResourceActionSuccess"",    ""eventTime"":""2017-08-16T03:54:38.2696833Z"",    ""id"":""25b3b0d0-d79b-44d5-9963-440d4e6a9bba"",    ""data"": {{ ""authorization"":{Authorization},   ""claims"":{Claims},  ""correlationId"":""54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6"",  ""httpRequest"":{HttpRequest},   ""resourceProvider"":""Microsoft.EventGrid"",  ""resourceUri"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",        ""operationName"":""Microsoft.EventGrid/eventSubscriptions/write"",    ""status"":""Succeeded"",   ""subscriptionId"":""subscription-id"",  ""tenantId"":""72f988bf-86f1-41af-91ab-2d7cd011db47""        }},      ""dataVersion"": """",    ""metadataVersion"": ""1""  }}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionSuccessEventData).TenantId);
+
+            var authorizationJson = JsonDocument.Parse((eventData as ResourceActionSuccessEventData).Authorization).RootElement;
+            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
+
+            var claimsJson = JsonDocument.Parse((eventData as ResourceActionSuccessEventData).Claims).RootElement;
+            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
+
+            var httpRequestJson = JsonDocument.Parse((eventData as ResourceActionSuccessEventData).HttpRequest).RootElement;
+            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
         }
 
         [Test]
         public void ConsumeResourceActionFailureEvent()
         {
-            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceActionFailure\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+            string requestContent = $@"[{{""topic"":""/subscriptions/subscription-id"", ""subject"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",    ""eventType"":""Microsoft.Resources.ResourceActionFailure"",    ""eventTime"":""2017-08-16T03:54:38.2696833Z"",    ""id"":""25b3b0d0-d79b-44d5-9963-440d4e6a9bba"",    ""data"": {{ ""authorization"":{Authorization},   ""claims"":{Claims},  ""correlationId"":""54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6"",  ""httpRequest"":{HttpRequest},   ""resourceProvider"":""Microsoft.EventGrid"",  ""resourceUri"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",        ""operationName"":""Microsoft.EventGrid/eventSubscriptions/write"",    ""status"":""Succeeded"",   ""subscriptionId"":""subscription-id"",  ""tenantId"":""72f988bf-86f1-41af-91ab-2d7cd011db47""        }},      ""dataVersion"": """",    ""metadataVersion"": ""1""  }}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionFailureEventData).TenantId);
+
+            var authorizationJson = JsonDocument.Parse((eventData as ResourceActionFailureEventData).Authorization).RootElement;
+            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
+
+            var claimsJson = JsonDocument.Parse((eventData as ResourceActionFailureEventData).Claims).RootElement;
+            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
+
+            var httpRequestJson = JsonDocument.Parse((eventData as ResourceActionFailureEventData).HttpRequest).RootElement;
+            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
         }
 
         [Test]
         public void ConsumeResourceActionCancelEvent()
         {
-            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceActionCancel\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+            string requestContent = $@"[{{""topic"":""/subscriptions/subscription-id"", ""subject"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",    ""eventType"":""Microsoft.Resources.ResourceActionCancel"",    ""eventTime"":""2017-08-16T03:54:38.2696833Z"",    ""id"":""25b3b0d0-d79b-44d5-9963-440d4e6a9bba"",    ""data"": {{ ""authorization"":{Authorization},   ""claims"":{Claims},  ""correlationId"":""54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6"",  ""httpRequest"":{HttpRequest},   ""resourceProvider"":""Microsoft.EventGrid"",  ""resourceUri"":""/subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501"",        ""operationName"":""Microsoft.EventGrid/eventSubscriptions/write"",    ""status"":""Succeeded"",   ""subscriptionId"":""subscription-id"",  ""tenantId"":""72f988bf-86f1-41af-91ab-2d7cd011db47""        }},      ""dataVersion"": """",    ""metadataVersion"": ""1""  }}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionCancelEventData).TenantId);
+
+            var authorizationJson = JsonDocument.Parse((eventData as ResourceActionCancelEventData).Authorization).RootElement;
+            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default", authorizationJson.GetProperty("scope").GetString());
+
+            var claimsJson = JsonDocument.Parse((eventData as ResourceActionCancelEventData).Claims).RootElement;
+            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
+
+            var httpRequestJson = JsonDocument.Parse((eventData as ResourceActionCancelEventData).HttpRequest).RootElement;
+            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
         }
         #endregion
 
@@ -1067,7 +1179,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeServiceBusDeadletterMessagesAvailableWithNoListenersEvent()
         {
-            string requestContent = "[{  \"topic\": \"/subscriptions/id/resourcegroups/rg/providers/Microsoft.ServiceBus/namespaces/testns1\",  \"subject\": \"topics/topic1/subscriptions/sub1\",  \"eventType\": \"Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListener\",  \"eventTime\": \"2018-02-14T05:12:53.4133526Z\",  \"id\": \"dede87b0-3656-419c-acaf-70c95ddc60f5\",  \"data\": {    \"namespaceName\": \"testns1\",    \"requestUri\": \"https://testns1.servicebus.windows.net/t1/subscriptions/sub1/messages/head\",    \"entityType\": \"subscriber\",    \"queueName\": \"queue1\",    \"topicName\": \"topic1\",    \"subscriptionName\": \"sub1\"  },  \"dataVersion\": \"1\",  \"metadataVersion\": \"1\"}]";
+            string requestContent = "[{  \"topic\": \"/subscriptions/id/resourcegroups/rg/providers/Microsoft.ServiceBus/namespaces/testns1\",  \"subject\": \"topics/topic1/subscriptions/sub1\",  \"eventType\": \"Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListeners\",  \"eventTime\": \"2018-02-14T05:12:53.4133526Z\",  \"id\": \"dede87b0-3656-419c-acaf-70c95ddc60f5\",  \"data\": {    \"namespaceName\": \"testns1\",    \"requestUri\": \"https://testns1.servicebus.windows.net/t1/subscriptions/sub1/messages/head\",    \"entityType\": \"subscriber\",    \"queueName\": \"queue1\",    \"topicName\": \"topic1\",    \"subscriptionName\": \"sub1\"  },  \"dataVersion\": \"1\",  \"metadataVersion\": \"1\"}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
@@ -1148,6 +1260,28 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryRenamedEventData).DestinationUrl);
+        }
+
+        [Test]
+        public void ConsumeStorageAsyncOperationInitiatedEvent()
+        {
+            string requestContent = "[{    \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"eventType\": \"Microsoft.Storage.AsyncOperationInitiated\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"RenameDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"1.0\"}]";
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageAsyncOperationInitiatedEventData).Url);
+        }
+
+        [Test]
+        public void ConsumeStorageBlobTierChangedEvent()
+        {
+            string requestContent = "[{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"eventType\": \"Microsoft.Storage.BlobTierChanged\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"RenameDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"1.0\"}]";
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageBlobTierChangedEventData).Url);
         }
         #endregion
 
@@ -1325,6 +1459,44 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual(planName, (eventData as WebAppServicePlanUpdatedEventData).Name);
+        }
+        #endregion
+
+        #region Policy Insights
+        [Test]
+        public void ConsumePolicyInsightsPolicyStateChangedEvent()
+        {
+            string requestContent = "[   {     \"source\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.PolicyInsights.PolicyStateChanged\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"timestamp\":\"2017-08-16T03:54:38.2696833Z\",  \"policyDefinitionId\":\"4c2359fe-001e-00ba-0e04-585868000000\",       \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"subscriptionId\":\"{subscription-id}\"   },   \"dataVersion\": \"1.0\"  }]";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("4c2359fe-001e-00ba-0e04-585868000000", (eventData as PolicyInsightsPolicyStateChangedEventData).PolicyDefinitionId);
+        }
+
+        [Test]
+        public void ConsumePolicyInsightsPolicyStateCreatedEvent()
+        {
+            string requestContent = "[   {     \"source\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.PolicyInsights.PolicyStateCreated\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"timestamp\":\"2017-08-16T03:54:38.2696833Z\",  \"policyDefinitionId\":\"4c2359fe-001e-00ba-0e04-585868000000\",       \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"subscriptionId\":\"{subscription-id}\"   },   \"dataVersion\": \"1.0\"  }]";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("4c2359fe-001e-00ba-0e04-585868000000", (eventData as PolicyInsightsPolicyStateCreatedEventData).PolicyDefinitionId);
+        }
+
+        [Test]
+        public void ConsumePolicyInsightsPolicyStateDeletedEvent()
+        {
+            string requestContent = "[   {     \"source\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.PolicyInsights.PolicyStateDeleted\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"timestamp\":\"2017-08-16T03:54:38.2696833Z\",  \"policyDefinitionId\":\"4c2359fe-001e-00ba-0e04-585868000000\",       \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"subscriptionId\":\"{subscription-id}\"   },   \"dataVersion\": \"1.0\"  }]";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("4c2359fe-001e-00ba-0e04-585868000000", (eventData as PolicyInsightsPolicyStateDeletedEventData).PolicyDefinitionId);
         }
         #endregion
         #endregion
@@ -2415,7 +2587,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeCloudEventServiceBusDeadletterMessagesAvailableWithNoListenersEvent()
         {
-            string requestContent = "[{  \"source\": \"/subscriptions/id/resourcegroups/rg/providers/Microsoft.ServiceBus/namespaces/testns1\",  \"subject\": \"topics/topic1/subscriptions/sub1\",  \"type\": \"Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListener\",  \"time\": \"2018-02-14T05:12:53.4133526Z\",  \"id\": \"dede87b0-3656-419c-acaf-70c95ddc60f5\",  \"data\": {    \"namespaceName\": \"testns1\",    \"requestUri\": \"https://testns1.servicebus.windows.net/t1/subscriptions/sub1/messages/head\",    \"entityType\": \"subscriber\",    \"queueName\": \"queue1\",    \"topicName\": \"topic1\",    \"subscriptionName\": \"sub1\"  },  \"specversion\": \"1.0\"}]";
+            string requestContent = "[{  \"source\": \"/subscriptions/id/resourcegroups/rg/providers/Microsoft.ServiceBus/namespaces/testns1\",  \"subject\": \"topics/topic1/subscriptions/sub1\",  \"type\": \"Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListeners\",  \"time\": \"2018-02-14T05:12:53.4133526Z\",  \"id\": \"dede87b0-3656-419c-acaf-70c95ddc60f5\",  \"data\": {    \"namespaceName\": \"testns1\",    \"requestUri\": \"https://testns1.servicebus.windows.net/t1/subscriptions/sub1/messages/head\",    \"entityType\": \"subscriber\",    \"queueName\": \"queue1\",    \"topicName\": \"topic1\",    \"subscriptionName\": \"sub1\"  },  \"specversion\": \"1.0\"}]";
 
             CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
 
@@ -2496,6 +2668,28 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryRenamedEventData).DestinationUrl);
+        }
+
+        [Test]
+        public void ConsumeCloudEventStorageAsyncOperationInitiatedEvent()
+        {
+            string requestContent = "[{   \"source\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"type\": \"Microsoft.Storage.AsyncOperationInitiated\",  \"time\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"RenameDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"specversion\": \"1.0\"}]";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageAsyncOperationInitiatedEventData).Url);
+        }
+
+        [Test]
+        public void ConsumeCloudEventStorageBlobTierChangedEvent()
+        {
+            string requestContent = "[{   \"source\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"type\": \"Microsoft.Storage.BlobTierChanged\",  \"time\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"RenameDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"specversion\": \"1.0\"}]";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageBlobTierChangedEventData).Url);
         }
         #endregion
 
@@ -2666,6 +2860,44 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual(planName, (eventData as WebAppServicePlanUpdatedEventData).Name);
+        }
+        #endregion
+
+        #region Policy Insights
+        [Test]
+        public void ConsumeCloudEventPolicyInsightsPolicyStateChangedEvent()
+        {
+            string requestContent = "[   {     \"source\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"type\":\"Microsoft.PolicyInsights.PolicyStateChanged\",    \"time\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"timestamp\":\"2017-08-16T03:54:38.2696833Z\",  \"policyDefinitionId\":\"4c2359fe-001e-00ba-0e04-585868000000\",       \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"subscriptionId\":\"{subscription-id}\"   },   \"specversion\": \"1.0\"  }]";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("4c2359fe-001e-00ba-0e04-585868000000", (eventData as PolicyInsightsPolicyStateChangedEventData).PolicyDefinitionId);
+        }
+
+        [Test]
+        public void ConsumeCloudEventPolicyInsightsPolicyStateCreatedEvent()
+        {
+            string requestContent = "[   {     \"source\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"type\":\"Microsoft.PolicyInsights.PolicyStateCreated\",    \"time\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"timestamp\":\"2017-08-16T03:54:38.2696833Z\",  \"policyDefinitionId\":\"4c2359fe-001e-00ba-0e04-585868000000\",       \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"subscriptionId\":\"{subscription-id}\"   },   \"specversion\": \"1.0\"  }]";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("4c2359fe-001e-00ba-0e04-585868000000", (eventData as PolicyInsightsPolicyStateCreatedEventData).PolicyDefinitionId);
+        }
+
+        [Test]
+        public void ConsumeCloudEventPolicyInsightsPolicyStateDeletedEvent()
+        {
+            string requestContent = "[   {     \"source\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"type\":\"Microsoft.PolicyInsights.PolicyStateDeleted\",    \"time\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"timestamp\":\"2017-08-16T03:54:38.2696833Z\",  \"policyDefinitionId\":\"4c2359fe-001e-00ba-0e04-585868000000\",       \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"subscriptionId\":\"{subscription-id}\"   },   \"specversion\": \"1.0\"  }]";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("4c2359fe-001e-00ba-0e04-585868000000", (eventData as PolicyInsightsPolicyStateDeletedEventData).PolicyDefinitionId);
         }
         #endregion
         #endregion

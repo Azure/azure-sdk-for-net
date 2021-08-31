@@ -1,13 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);RESOURCES_RP</DefineConstants>
-    <TestHelperProjects>;</TestHelperProjects>
+    <UseNewMgmtFramework>false</UseNewMgmtFramework>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
   <PropertyGroup>
     <NoWarn>SA1649</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Resources.csproj" />
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <None Update="ScenarioTests\*.json">

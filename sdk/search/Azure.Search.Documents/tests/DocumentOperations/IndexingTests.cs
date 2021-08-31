@@ -7,10 +7,8 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure.Core.Serialization;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
@@ -152,6 +150,7 @@ namespace Azure.Search.Documents.Tests
                         ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         ["rating"] = 4,
                         ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586),
+                        ["geoLocation"] = TestExtensions.CreateDynamicGeoPoint(-73.975403, 40.760586),
                         ["address"] = new SearchDocument()
                         {
                             ["streetAddress"] = "677 5th Ave",
@@ -200,6 +199,7 @@ namespace Azure.Search.Documents.Tests
                         ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         ["rating"] = 4,
                         ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586),
+                        ["geoLocation"] = TestExtensions.CreateDynamicGeoPoint(-73.975403, 40.760586),
                         ["address"] = new SearchDocument()
                         {
                             ["streetAddress"] = "677 5th Ave",
@@ -297,6 +297,7 @@ namespace Azure.Search.Documents.Tests
                         LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         Rating = 4,
                         Location = TestExtensions.CreatePoint(-73.975403, 40.760586),
+                        GeoLocation = TestExtensions.CreateGeoPoint(-73.975403, 40.760586),
                         Address = new HotelAddress
                         {
                             StreetAddress = "677 5th Ave",
@@ -345,6 +346,7 @@ namespace Azure.Search.Documents.Tests
                         LastRenovationDate = new DateTimeOffset(1999, 9, 6, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                         Rating = 3,
                         Location = TestExtensions.CreatePoint(-78.940483, 35.904160),
+                        GeoLocation = TestExtensions.CreateGeoPoint(-78.940483, 35.904160),
                         Address = new HotelAddress()
                         {
                             StreetAddress = "6910 Fayetteville Rd",
@@ -427,18 +429,12 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
             SearchClient client = resources.GetSearchClient(
-                new SearchClientOptions()
+                new SearchClientOptions(ServiceVersion)
                 {
                     Serializer = new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
-                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                            Converters =
-                            {
-#if EXPERIMENTAL_SPATIAL
-                                new GeoJsonConverter()
-#endif
-                            }
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                         })
                 });
             UncasedHotel expected = new UncasedHotel
@@ -454,6 +450,7 @@ namespace Azure.Search.Documents.Tests
                 LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                 Rating = 4,
                 Location = TestExtensions.CreatePoint(-73.975403, 40.760586),
+                GeoLocation = TestExtensions.CreateGeoPoint(-73.975403, 40.760586),
                 Address = new HotelAddress
                 {
                     StreetAddress = "677 5th Ave",
@@ -881,6 +878,7 @@ namespace Azure.Search.Documents.Tests
                     ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                     ["rating"] = 4L,
                     ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586),
+                    ["geoLocation"] = TestExtensions.CreateDynamicGeoPoint(-73.975403, 40.760586),
                     ["address"] = new SearchDocument
                     {
                         ["streetAddress"] = "677 5th Ave",
@@ -926,6 +924,7 @@ namespace Azure.Search.Documents.Tests
                     ["lastRenovationDate"] = null,
                     ["rating"] = 3L,
                     ["location"] = null,
+                    ["geoLocation"] = null,
                     ["address"] = new SearchDocument(),
                     ["rooms"] = new[]
                     {
@@ -955,6 +954,7 @@ namespace Azure.Search.Documents.Tests
                     ["lastRenovationDate"] = null,
                     ["rating"] = 3L,
                     ["location"] = null,
+                    ["geoLocation"] = null,
                     ["address"] = new SearchDocument
                     {
                         ["streetAddress"] = "677 5th Ave",
@@ -1021,6 +1021,7 @@ namespace Azure.Search.Documents.Tests
                     LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                     Rating = 4,
                     Location = TestExtensions.CreatePoint(-73.975403, 40.760586),
+                    GeoLocation = TestExtensions.CreateGeoPoint(-73.975403, 40.760586),
                     Address = new HotelAddress
                     {
                         StreetAddress = "677 5th Ave",
@@ -1067,6 +1068,7 @@ namespace Azure.Search.Documents.Tests
                     LastRenovationDate = null,
                     Rating = 3,
                     Location = null,
+                    GeoLocation = null,
                     Address = new HotelAddress(),
                     Rooms = new[]
                     {
@@ -1095,6 +1097,7 @@ namespace Azure.Search.Documents.Tests
                     LastRenovationDate = new DateTimeOffset(1970, 1, 18, 5, 0, 0, TimeSpan.Zero),
                     Rating = 3,
                     Location = TestExtensions.CreatePoint(-73.975403, 40.760586),
+                    GeoLocation = TestExtensions.CreateGeoPoint(-73.975403, 40.760586),
                     Address = new HotelAddress()
                     {
                         StreetAddress = "677 5th Ave",
@@ -1310,6 +1313,7 @@ namespace Azure.Search.Documents.Tests
                     LastRenovationDate = DateTimeOffset.MinValue,
                     // South pole, date line from the west
                     Location = TestExtensions.CreatePoint(-180, -90),
+                    GeoLocation = TestExtensions.CreateGeoPoint(-180, -90),
                     ParkingIncluded = false,
                     Rating = int.MinValue,
                     Tags = new string[0],
@@ -1330,6 +1334,7 @@ namespace Azure.Search.Documents.Tests
                     LastRenovationDate = DateTimeOffset.MaxValue,
                     // North pole, date line from the east
                     Location = TestExtensions.CreatePoint(180, 90),
+                    GeoLocation = TestExtensions.CreateGeoPoint(180, 90),
                     ParkingIncluded = true,
                     Rating = int.MaxValue,
                     // No meaningful string max; see above.
@@ -1349,6 +1354,7 @@ namespace Azure.Search.Documents.Tests
                     LastRenovationDate = null,
                     // Equator, meridian
                     Location = TestExtensions.CreatePoint(0, 0),
+                    GeoLocation = TestExtensions.CreateGeoPoint(0, 0),
                     ParkingIncluded = null,
                     Rating = null,
                     Tags = new string[0],
@@ -1367,6 +1373,7 @@ namespace Azure.Search.Documents.Tests
                 {
                     HotelId = "4",
                     Location = null,
+                    GeoLocation = null,
                     Tags = new string[0],
                     Rooms = new[]
                     {

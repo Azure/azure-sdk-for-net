@@ -54,6 +54,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// type.</param>
         /// <param name="password">The password used in Basic authentication
         /// type.</param>
+        /// <param name="authHeaders">The additional HTTP headers in the
+        /// request to RESTful API used for authorization. Type: object (or
+        /// Expression with resultType object).</param>
         /// <param name="servicePrincipalId">The application's client ID used
         /// in AadServicePrincipal authentication type.</param>
         /// <param name="servicePrincipalKey">The application's key used in
@@ -72,7 +75,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public RestServiceLinkedService(object url, string authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object enableServerCertificateValidation = default(object), object userName = default(object), SecretBase password = default(SecretBase), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), object aadResourceId = default(object), object encryptedCredential = default(object))
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        public RestServiceLinkedService(object url, string authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object enableServerCertificateValidation = default(object), object userName = default(object), SecretBase password = default(SecretBase), object authHeaders = default(object), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), object aadResourceId = default(object), object encryptedCredential = default(object), CredentialReference credential = default(CredentialReference))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Url = url;
@@ -80,12 +85,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             AuthenticationType = authenticationType;
             UserName = userName;
             Password = password;
+            AuthHeaders = authHeaders;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             AzureCloudType = azureCloudType;
             AadResourceId = aadResourceId;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
             CustomInit();
         }
 
@@ -127,6 +134,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
         public SecretBase Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the additional HTTP headers in the request to RESTful
+        /// API used for authorization. Type: object (or Expression with
+        /// resultType object).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.authHeaders")]
+        public object AuthHeaders { get; set; }
 
         /// <summary>
         /// Gets or sets the application's client ID used in
@@ -175,6 +190,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object EncryptedCredential { get; set; }
 
         /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.credential")]
+        public CredentialReference Credential { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -190,6 +212,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (AuthenticationType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AuthenticationType");
+            }
+            if (Credential != null)
+            {
+                Credential.Validate();
             }
         }
     }

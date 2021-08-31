@@ -9,30 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary> The JsonWebKey. </summary>
     internal partial class JsonWebKey
     {
         /// <summary> Initializes a new instance of JsonWebKey. </summary>
-        /// <param name="alg">
-        /// The &quot;alg&quot; (algorithm) parameter identifies the algorithm intended for
-        /// use with the key.  The values used should either be registered in the
-        /// IANA &quot;JSON Web Signature and Encryption Algorithms&quot; registry
-        /// established by [JWA] or be a value that contains a Collision-
-        /// Resistant Name.
-        /// </param>
-        /// <param name="kid">
-        /// The &quot;kid&quot; (key ID) parameter is used to match a specific key.  This
-        /// is used, for instance, to choose among a set of keys within a JWK Set
-        /// during key rollover.  The structure of the &quot;kid&quot; value is
-        /// unspecified.  When &quot;kid&quot; values are used within a JWK Set, different
-        /// keys within the JWK Set SHOULD use distinct &quot;kid&quot; values.  (One
-        /// example in which different keys might use the same &quot;kid&quot; value is if
-        /// they have different &quot;kty&quot; (key type) values but are considered to be
-        /// equivalent alternatives by the application using them.)  The &quot;kid&quot;
-        /// value is a case-sensitive string.
-        /// </param>
         /// <param name="kty">
         /// The &quot;kty&quot; (key type) parameter identifies the cryptographic algorithm
         /// family used with the key, such as &quot;RSA&quot; or &quot;EC&quot;. &quot;kty&quot; values should
@@ -40,36 +22,15 @@ namespace Azure.Security.Attestation.Models
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.  The &quot;kty&quot; value is a case-sensitive string.
         /// </param>
-        /// <param name="use">
-        /// Use (&quot;public key use&quot;) identifies the intended use of
-        /// the public key. The &quot;use&quot; parameter is employed to indicate whether
-        /// a public key is used for encrypting data or verifying the signature
-        /// on data. Values are commonly &quot;sig&quot; (signature) or &quot;enc&quot; (encryption).
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alg"/>, <paramref name="kid"/>, <paramref name="kty"/>, or <paramref name="use"/> is null. </exception>
-        internal JsonWebKey(string alg, string kid, string kty, string use)
+        /// <exception cref="ArgumentNullException"> <paramref name="kty"/> is null. </exception>
+        public JsonWebKey(string kty)
         {
-            if (alg == null)
-            {
-                throw new ArgumentNullException(nameof(alg));
-            }
-            if (kid == null)
-            {
-                throw new ArgumentNullException(nameof(kid));
-            }
             if (kty == null)
             {
                 throw new ArgumentNullException(nameof(kty));
             }
-            if (use == null)
-            {
-                throw new ArgumentNullException(nameof(use));
-            }
 
-            Alg = alg;
-            Kid = kid;
             Kty = kty;
-            Use = use;
             X5C = new ChangeTrackingList<string>();
         }
 
@@ -126,7 +87,7 @@ namespace Azure.Security.Attestation.Models
         /// certificate.
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
-        internal JsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IReadOnlyList<string> x5C, string y)
+        internal JsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5C, string y)
         {
             Alg = alg;
             Crv = crv;
@@ -154,19 +115,19 @@ namespace Azure.Security.Attestation.Models
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.
         /// </summary>
-        public string Alg { get; }
+        public string Alg { get; set; }
         /// <summary> The &quot;crv&quot; (curve) parameter identifies the curve type. </summary>
-        public string Crv { get; }
+        public string Crv { get; set; }
         /// <summary> RSA private exponent or ECC private key. </summary>
-        public string D { get; }
+        public string D { get; set; }
         /// <summary> RSA Private Key Parameter. </summary>
-        public string Dp { get; }
+        public string Dp { get; set; }
         /// <summary> RSA Private Key Parameter. </summary>
-        public string Dq { get; }
+        public string Dq { get; set; }
         /// <summary> RSA public exponent, in Base64. </summary>
-        public string E { get; }
+        public string E { get; set; }
         /// <summary> Symmetric key. </summary>
-        public string K { get; }
+        public string K { get; set; }
         /// <summary>
         /// The &quot;kid&quot; (key ID) parameter is used to match a specific key.  This
         /// is used, for instance, to choose among a set of keys within a JWK Set
@@ -178,7 +139,7 @@ namespace Azure.Security.Attestation.Models
         /// equivalent alternatives by the application using them.)  The &quot;kid&quot;
         /// value is a case-sensitive string.
         /// </summary>
-        public string Kid { get; }
+        public string Kid { get; set; }
         /// <summary>
         /// The &quot;kty&quot; (key type) parameter identifies the cryptographic algorithm
         /// family used with the key, such as &quot;RSA&quot; or &quot;EC&quot;. &quot;kty&quot; values should
@@ -186,24 +147,24 @@ namespace Azure.Security.Attestation.Models
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.  The &quot;kty&quot; value is a case-sensitive string.
         /// </summary>
-        public string Kty { get; }
+        public string Kty { get; set; }
         /// <summary> RSA modulus, in Base64. </summary>
-        public string N { get; }
+        public string N { get; set; }
         /// <summary> RSA secret prime. </summary>
-        public string P { get; }
+        public string P { get; set; }
         /// <summary> RSA secret prime, with p &lt; q. </summary>
-        public string Q { get; }
+        public string Q { get; set; }
         /// <summary> RSA Private Key Parameter. </summary>
-        public string Qi { get; }
+        public string Qi { get; set; }
         /// <summary>
         /// Use (&quot;public key use&quot;) identifies the intended use of
         /// the public key. The &quot;use&quot; parameter is employed to indicate whether
         /// a public key is used for encrypting data or verifying the signature
         /// on data. Values are commonly &quot;sig&quot; (signature) or &quot;enc&quot; (encryption).
         /// </summary>
-        public string Use { get; }
+        public string Use { get; set; }
         /// <summary> X coordinate for the Elliptic Curve point. </summary>
-        public string X { get; }
+        public string X { get; set; }
         /// <summary>
         /// The &quot;x5c&quot; (X.509 certificate chain) parameter contains a chain of one
         /// or more PKIX certificates [RFC5280].  The certificate chain is
@@ -213,8 +174,8 @@ namespace Azure.Security.Attestation.Models
         /// The PKIX certificate containing the key value MUST be the first
         /// certificate.
         /// </summary>
-        public IReadOnlyList<string> X5C { get; }
+        public IList<string> X5C { get; }
         /// <summary> Y coordinate for the Elliptic Curve point. </summary>
-        public string Y { get; }
+        public string Y { get; set; }
     }
 }

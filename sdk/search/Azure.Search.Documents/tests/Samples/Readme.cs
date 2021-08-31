@@ -63,12 +63,16 @@ namespace Azure.Search.Documents.Tests.Samples
             // Get the service endpoint and API key from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
-            //@@ string indexName = "hotels";
+#if SNIPPET
+            string indexName = "hotels";
+#endif
 
             // Create a client
             AzureKeyCredential credential = new AzureKeyCredential(key);
             SearchClient client = new SearchClient(endpoint, indexName, credential);
-            /*@@*/ client = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
+#if !SNIPPET
+            client = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
+#endif
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Client
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Dict
@@ -76,17 +80,23 @@ namespace Azure.Search.Documents.Tests.Samples
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 SearchDocument doc = result.Document;
-                //@@ string id = (string)doc["HotelId"];
-                /*@@*/ string id = (string)doc["hotelId"];
-                //@@ string name = (string)doc["HotelName"];
-                /*@@*/ string name = (string)doc["hotelName"];
+#if SNIPPET
+                string id = (string)doc["HotelId"];
+                string name = (string)doc["HotelName"];
+#else
+                string id = (string)doc["hotelId"];
+                string name = (string)doc["hotelName"];
+#endif
                 Console.WriteLine("{id}: {name}");
             }
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dict
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Dynamic
-            //@@ SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
-            /*@@*/ response = client.Search<SearchDocument>("luxury");
+#if SNIPPET
+            SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
+#else
+            response = client.Search<SearchDocument>("luxury");
+#endif
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 dynamic doc = result.Document;
@@ -100,13 +110,19 @@ namespace Azure.Search.Documents.Tests.Samples
         #region Snippet:Azure_Search_Tests_Samples_Readme_StaticType
         public class Hotel
         {
-            //@@ [JsonPropertyName("HotelId")]
-            /*@@*/ [JsonPropertyName("hotelId")]
+#if SNIPPET
+            [JsonPropertyName("HotelId")]
+#else
+            [JsonPropertyName("hotelId")]
+#endif
             [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
             public string Id { get; set; }
 
-            //@@ [JsonPropertyName("HotelName")]
-            /*@@*/ [JsonPropertyName("hotelName")]
+#if SNIPPET
+            [JsonPropertyName("HotelName")]
+#else
+            [JsonPropertyName("hotelName")]
+#endif
             [SearchableField(IsFilterable = true, IsSortable = true)]
             public string Name { get; set; }
         }
@@ -129,8 +145,11 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_StaticQuery
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_StaticQueryAsync
-            //@@SearchResults<Hotel> response = await client.SearchAsync<Hotel>("luxury");
-            /*@@*/ response = await client.SearchAsync<Hotel>("luxury");
+#if SNIPPET
+            SearchResults<Hotel> response = await client.SearchAsync<Hotel>("luxury");
+#else
+            response = await client.SearchAsync<Hotel>("luxury");
+#endif
             await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
             {
                 Hotel doc = result.Document;
@@ -151,11 +170,17 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchOptions options = new SearchOptions
             {
                 // Filter to only Rating greater than or equal our preference
-                //@@ Filter = SearchFilter.Create($"Rating ge {stars}"),
-                /*@@*/ Filter = SearchFilter.Create($"rating ge {stars}"),
+#if SNIPPET
+                Filter = SearchFilter.Create($"Rating ge {stars}"),
+#else
+                Filter = SearchFilter.Create($"rating ge {stars}"),
+#endif
                 Size = 5, // Take only 5 results
-                //@@ OrderBy = { "Rating desc" } // Sort by Rating from high to low
-                /*@@*/ OrderBy = { "rating desc" } // Sort by rating from high to low
+#if SNIPPET
+                OrderBy = { "Rating desc" } // Sort by Rating from high to low
+#else
+                OrderBy = { "rating desc" } // Sort by rating from high to low
+#endif
             };
             SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
             // ...
@@ -177,12 +202,17 @@ namespace Azure.Search.Documents.Tests.Samples
             // Create a service client
             AzureKeyCredential credential = new AzureKeyCredential(key);
             SearchIndexClient client = new SearchIndexClient(endpoint, credential);
-            /*@@*/ client = resources.GetIndexClient();
+#if !SNIPPET
+            client = resources.GetIndexClient();
+#endif
 
             // Create the index using FieldBuilder.
             #region Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex_New_SearchIndex
-            //@@SearchIndex index = new SearchIndex("hotels")
-            /*@@*/ SearchIndex index = new SearchIndex(Recording.Random.GetName())
+#if SNIPPET
+            SearchIndex index = new SearchIndex("hotels")
+#else
+            SearchIndex index = new SearchIndex(Recording.Random.GetName())
+#endif
             {
                 Fields = new FieldBuilder().Build(typeof(Hotel)),
                 Suggesters =
@@ -209,8 +239,11 @@ namespace Azure.Search.Documents.Tests.Samples
             #region Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex
             // Create the index using field definitions.
             #region Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_New_SearchIndex
-            //@@SearchIndex index = new SearchIndex("hotels")
-            /*@@*/ SearchIndex index = new SearchIndex(Recording.Random.GetName())
+#if SNIPPET
+            SearchIndex index = new SearchIndex("hotels")
+#else
+            SearchIndex index = new SearchIndex(Recording.Random.GetName())
+#endif
             {
                 Fields =
                 {

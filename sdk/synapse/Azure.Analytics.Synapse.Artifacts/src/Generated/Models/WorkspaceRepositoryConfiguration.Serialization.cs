@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(WorkspaceRepositoryConfigurationConverter))]
     public partial class WorkspaceRepositoryConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -129,6 +131,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new WorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId));
+        }
+
+        internal partial class WorkspaceRepositoryConfigurationConverter : JsonConverter<WorkspaceRepositoryConfiguration>
+        {
+            public override void Write(Utf8JsonWriter writer, WorkspaceRepositoryConfiguration model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override WorkspaceRepositoryConfiguration Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWorkspaceRepositoryConfiguration(document.RootElement);
+            }
         }
     }
 }

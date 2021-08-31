@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using CommandLine;
+using System;
 
 namespace Azure.Test.Perf
 {
@@ -9,9 +10,6 @@ namespace Azure.Test.Perf
     {
         [Option('d', "duration", Default = 10, HelpText = "Duration of test in seconds")]
         public int Duration { get; set; }
-
-        [Option("host", HelpText = "Host to redirect HTTP requests")]
-        public string Host { get; set; }
 
         [Option("insecure", HelpText = "Allow untrusted SSL certs")]
         public bool Insecure { get; set; }
@@ -25,14 +23,23 @@ namespace Azure.Test.Perf
         [Option('l', "latency", HelpText = "Track and print per-operation latency statistics")]
         public bool Latency { get; set; }
 
+        [Option("max-io-completion-threads", HelpText = "The maximum number of asynchronous I/O threads that the thread pool creates on demand")]
+        public int? MaxIOCompletionThreads { get; set; }
+
+        [Option("max-worker-threads", HelpText = "The maximum number of worker threads that the thread pool creates on demand")]
+        public int? MaxWorkerThreads { get; set; }
+
+        [Option("min-io-completion-threads", HelpText = "The minimum number of asynchronous I/O threads that the thread pool creates on demand")]
+        public int? MinIOCompletionThreads { get; set; }
+
+        [Option("min-worker-threads", HelpText = "The minimum number of worker threads that the thread pool creates on demand")]
+        public int? MinWorkerThreads { get; set; }
+
         [Option("no-cleanup", HelpText = "Disables test cleanup")]
         public bool NoCleanup { get; set; }
 
         [Option('p', "parallel", Default = 1, HelpText = "Number of operations to execute in parallel")]
         public int Parallel { get; set; }
-
-        [Option("port", HelpText = "Port to redirect HTTP requests")]
-        public int? Port { get; set; }
 
         [Option('r', "rate", HelpText = "Target throughput (ops/sec)")]
         public int? Rate { get; set; }
@@ -42,6 +49,9 @@ namespace Azure.Test.Perf
 
         [Option("sync", HelpText = "Runs sync version of test")]
         public bool Sync { get; set; }
+
+        [Option('x', "test-proxy", HelpText = "URI of TestProxy Server")]
+        public Uri TestProxy { get; set; }
 
         [Option('w', "warmup", Default = 5, HelpText = "Duration of warmup in seconds")]
         public int Warmup { get; set; }

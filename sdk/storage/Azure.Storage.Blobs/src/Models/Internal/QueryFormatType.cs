@@ -21,6 +21,11 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// arrow.
         /// </summary>
-        Arrow
+        Arrow,
+
+        /// <summary>
+        /// parquet.
+        /// </summary>
+        Parquet
     }
 }

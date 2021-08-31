@@ -7,9 +7,10 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class HealthcareEntityInternal
     {
@@ -19,7 +20,7 @@ namespace Azure.AI.TextAnalytics
             Optional<string> name = default;
             Optional<IReadOnlyList<EntityDataSource>> links = default;
             string text = default;
-            string category = default;
+            HealthcareEntityCategory category = default;
             Optional<string> subcategory = default;
             int offset = default;
             int length = default;
@@ -63,7 +64,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("category"))
                 {
-                    category = property.Value.GetString();
+                    category = new HealthcareEntityCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subcategory"))

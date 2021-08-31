@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -21,7 +22,7 @@ namespace Azure.Core.Tests
             var content = RequestContent.Create(source);
             var cancellation = new CancellationTokenSource();
             cancellation.Cancel();
-            Assert.Throws<OperationCanceledException>(() => { content.WriteTo(destination, cancellation.Token); });
+            Assert.Throws<TaskCanceledException>(() => { content.WriteTo(destination, cancellation.Token); });
         }
 
         [Test]

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ManagedVirtualNetworkSettingsConverter))]
     public partial class ManagedVirtualNetworkSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -83,6 +86,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new ManagedVirtualNetworkSettings(Optional.ToNullable(preventDataExfiltration), Optional.ToNullable(linkedAccessCheckOnTargetResource), Optional.ToList(allowedAadTenantIdsForLinking));
+        }
+
+        internal partial class ManagedVirtualNetworkSettingsConverter : JsonConverter<ManagedVirtualNetworkSettings>
+        {
+            public override void Write(Utf8JsonWriter writer, ManagedVirtualNetworkSettings model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ManagedVirtualNetworkSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeManagedVirtualNetworkSettings(document.RootElement);
+            }
         }
     }
 }

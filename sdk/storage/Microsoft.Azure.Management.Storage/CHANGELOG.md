@@ -1,5 +1,35 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 22.0.0
+- Upgrade to rest api version 2021-04-01.
+- Support File Share lease and delete share with leased share snapshots.
+- Support File Share access policy
+- Support Blob Container with ImmutableStorageWithVersioning enabled.
+- Support new account property AllowCrossTenantReplication
+- Support DefaultSharePermission
+- Support Blob Inventory GA policy
+
+**Breaking changes**
+
+- BlobInventoryPolicySchema property Destination is removed, and Destination is added to BlobInventoryPolicyRule.
+- Following Enum are removed: PutSharesExpand, GetShareExpand, ListSharesExpand. Need to input the expand string in Put/Get/List file share API according to the parameter description.
+
+### Changes in 21.0.0
+
+**Breaking changes**
+
+- StorageAccount.KeyCreationTime type change from Dictionary to 'Microsoft.Azure.Management.Storage.Models.KeyCreationTime'.
+
+### Changes in 20.0.0
+- Upgrade to rest api version 2021-02-01.
+- Support KeyPolicy,SasPolicy in create/update Storage account.
+- Added a new property "CreationTime" to Microsoft.Azure.Management.Storage.Models.StorageAccountKey object.
+
+**Breaking changes**
+
+- StorageManagementClient.FileShares.List() parameter "expand" type change to enum to string.
+- StorageManagementClient.FileShares.Create() parameter "expand" type change to enum to string.
+
 ### Changes in 19.0.0
 - Upgrade to rest api version 2021-01-01
 - Support create/get/delete/list File share snapshot

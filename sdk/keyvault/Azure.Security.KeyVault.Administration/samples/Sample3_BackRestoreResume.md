@@ -1,7 +1,7 @@
 # Checking the status of a previously started full key backup and restore
 
 This sample demonstrates how to a check the status and get the result of previously started full key backup and restore operations in Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
 
 ## Checking status of a full key backup operation
 
@@ -12,13 +12,13 @@ and check for status or wait for completion.
 
 ```C# Snippet:ResumeBackupAsync
 // Construct a new KeyVaultBackupClient or use an existing one.
-KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
 
 // Construct a BackupOperation using a KeyVaultBackupClient and the Id from a previously started operation.
-BackupOperation backupOperation = new BackupOperation(client, backupOperationId);
+KeyVaultBackupOperation backupOperation = new KeyVaultBackupOperation(client, backupOperationId);
 
 // Wait for completion of the BackupOperation.
-Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
+Response<KeyVaultBackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
 // Get the Uri for the location of you backup blob.
 Uri folderUri = backupResult.Value.FolderUri;
@@ -33,13 +33,13 @@ and check for status or wait for completion.
 
 ```C# Snippet:ResumeRestoreAsync
 // Construct a new KeyVaultBackupClient or use an existing one.
-KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
 
 // Construct a RestoreOperation using a KeyVaultBackupClient and the Id from a previously started operation.
-RestoreOperation restoreOperation = new RestoreOperation(client, restoreOperationId);
+KeyVaultRestoreOperation restoreOperation = new KeyVaultRestoreOperation(client, restoreOperationId);
 
 // Wait for completion of the RestoreOperation.
-RestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
+KeyVaultRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
 ```
 
 <!-- LINKS -->

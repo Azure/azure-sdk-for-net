@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// primary side.</param>
         /// <param name="enableRdpOnTargetOption">The selected option to enable
         /// RDP\SSH on target vm after failover. String value of
-        /// {SrsDataContract.EnableRDPOnTargetOption} enum.</param>
+        /// SrsDataContract.EnableRDPOnTargetOption enum.</param>
         /// <param name="recoveryAzureResourceGroupId">The target resource
         /// group Id.</param>
         /// <param name="recoveryAvailabilitySetId">The recovery availability
@@ -82,7 +82,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// disks should be used during failover.</param>
         /// <param name="licenseType">License Type of the VM to be
         /// used.</param>
-        public HyperVReplicaAzureReplicationDetails(IList<AzureVmDiskDetails> azureVmDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVmName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), System.DateTime? lastReplicatedTime = default(System.DateTime?), long? rpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), InitialReplicationDetails initialReplicationDetails = default(InitialReplicationDetails), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string selectedSourceNicId = default(string), string encryption = default(string), OSDetails oSDetails = default(OSDetails), int? sourceVmRamSizeInMB = default(int?), int? sourceVmCpuCount = default(int?), string enableRdpOnTargetOption = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string useManagedDisks = default(string), string licenseType = default(string))
+        /// <param name="sqlServerLicenseType">The SQL Server license
+        /// type.</param>
+        /// <param name="lastRecoveryPointReceived">The last recovery point
+        /// received time.</param>
+        /// <param name="targetVmTags">The target VM tags.</param>
+        /// <param name="seedManagedDiskTags">The tags for the seed managed
+        /// disks.</param>
+        /// <param name="targetManagedDiskTags">The tags for the target managed
+        /// disks.</param>
+        /// <param name="targetNicTags">The tags for the target NICs.</param>
+        /// <param name="protectedManagedDisks">The list of protected managed
+        /// disks.</param>
+        public HyperVReplicaAzureReplicationDetails(IList<AzureVmDiskDetails> azureVmDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVmName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), System.DateTime? lastReplicatedTime = default(System.DateTime?), long? rpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), InitialReplicationDetails initialReplicationDetails = default(InitialReplicationDetails), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string selectedSourceNicId = default(string), string encryption = default(string), OSDetails oSDetails = default(OSDetails), int? sourceVmRamSizeInMB = default(int?), int? sourceVmCpuCount = default(int?), string enableRdpOnTargetOption = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string useManagedDisks = default(string), string licenseType = default(string), string sqlServerLicenseType = default(string), System.DateTime? lastRecoveryPointReceived = default(System.DateTime?), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IDictionary<string, string> seedManagedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetManagedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>), IList<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = default(IList<HyperVReplicaAzureManagedDiskDetails>))
         {
             AzureVmDiskDetails = azureVmDiskDetails;
             RecoveryAzureVmName = recoveryAzureVmName;
@@ -110,6 +122,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
             UseManagedDisks = useManagedDisks;
             LicenseType = licenseType;
+            SqlServerLicenseType = sqlServerLicenseType;
+            LastRecoveryPointReceived = lastRecoveryPointReceived;
+            TargetVmTags = targetVmTags;
+            SeedManagedDiskTags = seedManagedDiskTags;
+            TargetManagedDiskTags = targetManagedDiskTags;
+            TargetNicTags = targetNicTags;
+            ProtectedManagedDisks = protectedManagedDisks;
             CustomInit();
         }
 
@@ -238,7 +257,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Gets or sets the selected option to enable RDP\SSH on target vm
         /// after failover. String value of
-        /// {SrsDataContract.EnableRDPOnTargetOption} enum.
+        /// SrsDataContract.EnableRDPOnTargetOption enum.
         /// </summary>
         [JsonProperty(PropertyName = "enableRdpOnTargetOption")]
         public string EnableRdpOnTargetOption { get; set; }
@@ -279,6 +298,48 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "licenseType")]
         public string LicenseType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SQL Server license type.
+        /// </summary>
+        [JsonProperty(PropertyName = "sqlServerLicenseType")]
+        public string SqlServerLicenseType { get; set; }
+
+        /// <summary>
+        /// Gets the last recovery point received time.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastRecoveryPointReceived")]
+        public System.DateTime? LastRecoveryPointReceived { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the target VM tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetVmTags")]
+        public IDictionary<string, string> TargetVmTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the seed managed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "seedManagedDiskTags")]
+        public IDictionary<string, string> SeedManagedDiskTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the target managed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetManagedDiskTags")]
+        public IDictionary<string, string> TargetManagedDiskTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the target NICs.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetNicTags")]
+        public IDictionary<string, string> TargetNicTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of protected managed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "protectedManagedDisks")]
+        public IList<HyperVReplicaAzureManagedDiskDetails> ProtectedManagedDisks { get; set; }
 
     }
 }

@@ -1,15 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/general?showStats=true\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://tacanaryjava.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/entities/recognition/general?showStats=true\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "190",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-3d8b12b3fc06514789ba36c53927c471-e2b196df0186df4c-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-5ee0aade8d9e4c4a97cc1dc5efc50af2-f2c70931ee60404d-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210803.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "3c7b09ea57a0a9f84c938c05ff06e377",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,14 +35,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4f026eb4-9949-4e33-8abe-771259c42cf4",
+        "apim-request-id": "bb3eb469-5644-483e-9eff-08646f8c6ef3",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Wed, 24 Feb 2021 16:56:06 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
+        "Date": "Tue, 03 Aug 2021 18:39:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "47"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "57"
       },
       "ResponseBody": {
         "statistics": {
@@ -58,7 +64,7 @@
                 "category": "Organization",
                 "offset": 0,
                 "length": 9,
-                "confidenceScore": 0.97
+                "confidenceScore": 1.0
               },
               {
                 "text": "Bill Gates",
@@ -72,7 +78,7 @@
                 "category": "Person",
                 "offset": 40,
                 "length": 10,
-                "confidenceScore": 0.99
+                "confidenceScore": 1.0
               }
             ],
             "warnings": []
@@ -89,14 +95,14 @@
                 "category": "Organization",
                 "offset": 0,
                 "length": 9,
-                "confidenceScore": 0.97
+                "confidenceScore": 1.0
               },
               {
                 "text": "Bill Gates",
                 "category": "Person",
                 "offset": 26,
                 "length": 10,
-                "confidenceScore": 0.99
+                "confidenceScore": 1.0
               },
               {
                 "text": "Paul Allen",
@@ -110,13 +116,13 @@
           }
         ],
         "errors": [],
-        "modelVersion": "2021-01-15"
+        "modelVersion": "2021-06-01"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "541291504",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://tacanaryjava.cognitiveservices.azure.com/"
   }
 }

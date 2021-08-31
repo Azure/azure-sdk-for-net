@@ -82,13 +82,6 @@ namespace Microsoft.Azure.Management.IotHub.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
             }
-            if (Name != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Name, "^(?![0-9]+$)(?!-)[a-zA-Z0-9-]{2,49}[a-zA-Z0-9]$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Name", "^(?![0-9]+$)(?!-)[a-zA-Z0-9-]{2,49}[a-zA-Z0-9]$");
-                }
-            }
         }
     }
 }

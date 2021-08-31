@@ -1,11 +1,11 @@
 # Azure SDK diagnostics
 
-**NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`. 
+**NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`. The samples make use of the `SecretClientOptions` type, but the same functionality is available for any of the `Azure.` packages that contain client options types that derive from [ClientOptions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/ClientOptions.cs), e.g. `BlobClientOptions`, `TextAnalyticsClientOptions`, etc.
 
 ## Logging
 
 Azure SDKs produce various log messages that include information about:
-1. Requests and reponses
+1. Requests and responses
 2. Authentication attempts
 3. Retries
 
@@ -18,7 +18,7 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 ### Enabling content logging
 
-By default only URI and headers are logged to enable content logging set the `Diagnostics.IsLoggingContentEnabled` client option:
+By default only URI and headers are logged. To enable content logging, set the `Diagnostics.IsLoggingContentEnabled` client option:
 
 ```C# Snippet:LoggingContent
 SecretClientOptions options = new SecretClientOptions()
@@ -70,7 +70,7 @@ SecretClientOptions options = new SecretClientOptions()
 
 ### ASP.NET Core applications
 
-If your are using Azure SDK libraries in ASP.NET Core application consider using the `Microsoft.Extensions.Azure` package that provides integration with `Microsoft.Extensions.Logging` library. See [Microsoft.Extensions.Azure readme](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/extensions/Microsoft.Extensions.Azure/README.md) for more details.
+If your are using Azure SDK libraries in ASP.NET Core application consider using the `Microsoft.Extensions.Azure` package that provides integration with `Microsoft.Extensions.Logging` library. See [Microsoft.Extensions.Azure readme](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extensions/Microsoft.Extensions.Azure/README.md) for more details.
 
 
 ### Custom logging callback
@@ -103,7 +103,7 @@ To setup ApplicationInsights tracking for your application follow the [Start Mon
 Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
 
 ### Sample
-To see an example of distributed tracing in action, take a look at our [sample app](https://github.com/Azure/azure-sdk-for-net/blob/master/samples/linecounter/README.md) that combines several Azure SDKs.
+To see an example of distributed tracing in action, take a look at our [sample app](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/linecounter/README.md) that combines several Azure SDKs.
 
 ## Setting x-ms-client-request-id value sent with requests
 

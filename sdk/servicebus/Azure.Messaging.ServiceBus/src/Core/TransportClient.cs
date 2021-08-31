@@ -47,14 +47,15 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         public abstract TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy, string identifier);
 
-        public abstract TransportReceiver CreateReceiver(
-            string entityPath,
+        public abstract TransportReceiver CreateReceiver(string entityPath,
             ServiceBusRetryPolicy retryPolicy,
             ServiceBusReceiveMode receiveMode,
             uint prefetchCount,
             string identifier,
             string sessionId,
-            bool isSessionReceiver);
+            bool isSessionReceiver,
+            bool isProcessor,
+            CancellationToken cancellationToken);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.

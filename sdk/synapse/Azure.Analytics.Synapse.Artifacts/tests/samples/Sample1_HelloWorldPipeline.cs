@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeletePipeline
             PipelineDeletePipelineOperation deleteOperation = client.StartDeletePipeline(pipelineName);
-            await deleteOperation.WaitForCompletionAsync();
+            await deleteOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

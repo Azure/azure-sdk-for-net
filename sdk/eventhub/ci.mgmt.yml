@@ -3,19 +3,18 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
   paths:
     include:
     - sdk/eventhub/ci.mgmt.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Azure.ResourceManager.EventHubs
 
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
@@ -23,6 +22,7 @@ pr:
   paths:
     include:
     - sdk/eventhub/ci.mgmt.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Azure.ResourceManager.EventHubs
 
 extends:

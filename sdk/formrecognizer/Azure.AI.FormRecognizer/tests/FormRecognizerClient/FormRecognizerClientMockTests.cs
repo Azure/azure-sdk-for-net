@@ -217,7 +217,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var options = new FormRecognizerClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(options);
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             var recognizeOptions = new RecognizeReceiptsOptions { Locale = locale };
             await client.StartRecognizeReceiptsAsync(stream, recognizeOptions);
 
@@ -310,9 +310,9 @@ namespace Azure.AI.FormRecognizer.Tests
             var options = new FormRecognizerClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(options);
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
-            var recognizeOptions = new RecognizeReceiptsOptions { Locale = locale };
-            await client.StartRecognizeReceiptsAsync(stream, recognizeOptions);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+            var recognizeOptions = new RecognizeBusinessCardsOptions { Locale = locale };
+            await client.StartRecognizeBusinessCardsAsync(stream, recognizeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
 
@@ -403,7 +403,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var options = new FormRecognizerClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(options);
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceJpg);
             var recognizeOptions = new RecognizeInvoicesOptions { Locale = locale };
             await client.StartRecognizeInvoicesAsync(stream, recognizeOptions);
 

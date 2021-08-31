@@ -20,6 +20,7 @@ namespace Azure.AI.TextAnalytics
     internal partial class TextAnalyticsRestClient
     {
         private string endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -27,15 +28,12 @@ namespace Azure.AI.TextAnalytics
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus.api.cognitive.microsoft.com). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public TextAnalyticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        /// <param name="apiVersion"> Text Analytics API version (for example, v3.0). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public TextAnalyticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "v3.2-preview.1")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -47,7 +45,8 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -102,7 +101,8 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/analyze/jobs/", false);
             uri.AppendPath(jobId, true);
             if (showStats != null)
@@ -189,7 +189,8 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendPath(jobId, true);
             if (top != null)
@@ -264,7 +265,8 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendPath(jobId, true);
             request.Uri = uri;
@@ -306,14 +308,15 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateHealthRequest(MultiLanguageBatchInput input, string modelVersion, StringIndexType? stringIndexType)
+        internal HttpMessage CreateHealthRequest(MultiLanguageBatchInput input, string modelVersion, StringIndexType? stringIndexType, bool? loggingOptOut)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/health/jobs", false);
             if (modelVersion != null)
             {
@@ -322,6 +325,10 @@ namespace Azure.AI.TextAnalytics
             if (stringIndexType != null)
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -336,16 +343,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TextAnalyticsHealthHeaders>> HealthAsync(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TextAnalyticsHealthHeaders>> HealthAsync(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateHealthRequest(input, modelVersion, stringIndexType);
+            using var message = CreateHealthRequest(input, modelVersion, stringIndexType, loggingOptOut);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TextAnalyticsHealthHeaders(message.Response);
             switch (message.Response.Status)
@@ -361,16 +369,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public ResponseWithHeaders<TextAnalyticsHealthHeaders> Health(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TextAnalyticsHealthHeaders> Health(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateHealthRequest(input, modelVersion, stringIndexType);
+            using var message = CreateHealthRequest(input, modelVersion, stringIndexType, loggingOptOut);
             _pipeline.Send(message, cancellationToken);
             var headers = new TextAnalyticsHealthHeaders(message.Response);
             switch (message.Response.Status)
@@ -382,14 +391,15 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateEntitiesRecognitionGeneralRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, StringIndexType? stringIndexType)
+        internal HttpMessage CreateEntitiesRecognitionGeneralRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, StringIndexType? stringIndexType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/recognition/general", false);
             if (modelVersion != null)
             {
@@ -398,6 +408,10 @@ namespace Azure.AI.TextAnalytics
             if (showStats != null)
             {
                 uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
             }
             if (stringIndexType != null)
             {
@@ -416,17 +430,18 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<EntitiesResult>> EntitiesRecognitionGeneralAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EntitiesResult>> EntitiesRecognitionGeneralAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateEntitiesRecognitionGeneralRequest(input, modelVersion, showStats, stringIndexType);
+            using var message = CreateEntitiesRecognitionGeneralRequest(input, modelVersion, showStats, loggingOptOut, stringIndexType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -446,17 +461,18 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<EntitiesResult> EntitiesRecognitionGeneral(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public Response<EntitiesResult> EntitiesRecognitionGeneral(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateEntitiesRecognitionGeneralRequest(input, modelVersion, showStats, stringIndexType);
+            using var message = CreateEntitiesRecognitionGeneralRequest(input, modelVersion, showStats, loggingOptOut, stringIndexType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -472,14 +488,15 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateEntitiesRecognitionPiiRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, string domain, StringIndexType? stringIndexType, IEnumerable<PiiEntityCategory> piiCategories)
+        internal HttpMessage CreateEntitiesRecognitionPiiRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, string domain, StringIndexType? stringIndexType, IEnumerable<PiiEntityCategory> piiCategories)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/recognition/pii", false);
             if (modelVersion != null)
             {
@@ -488,6 +505,10 @@ namespace Azure.AI.TextAnalytics
             if (showStats != null)
             {
                 uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
             }
             if (domain != null)
             {
@@ -512,24 +533,25 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The API returns a list of entities with personal information (\&quot;SSN\&quot;, \&quot;Bank Account\&quot; etc) in the document. For the list of supported entity types, check &lt;a href=&quot;https://aka.ms/tanerpii&quot;&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages.
-        /// .
+        /// 
         /// </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="domain"> (Optional) if specified, will set the PII domain to include only a subset of the entity categories. Possible values include: &apos;PHI&apos;, &apos;none&apos;. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<PiiEntitiesResult>> EntitiesRecognitionPiiAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityCategory> piiCategories = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PiiEntitiesResult>> EntitiesRecognitionPiiAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateEntitiesRecognitionPiiRequest(input, modelVersion, showStats, domain, stringIndexType, piiCategories);
+            using var message = CreateEntitiesRecognitionPiiRequest(input, modelVersion, showStats, loggingOptOut, domain, stringIndexType, piiCategories);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -547,24 +569,25 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The API returns a list of entities with personal information (\&quot;SSN\&quot;, \&quot;Bank Account\&quot; etc) in the document. For the list of supported entity types, check &lt;a href=&quot;https://aka.ms/tanerpii&quot;&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages.
-        /// .
+        /// 
         /// </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="domain"> (Optional) if specified, will set the PII domain to include only a subset of the entity categories. Possible values include: &apos;PHI&apos;, &apos;none&apos;. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<PiiEntitiesResult> EntitiesRecognitionPii(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityCategory> piiCategories = null, CancellationToken cancellationToken = default)
+        public Response<PiiEntitiesResult> EntitiesRecognitionPii(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateEntitiesRecognitionPiiRequest(input, modelVersion, showStats, domain, stringIndexType, piiCategories);
+            using var message = CreateEntitiesRecognitionPiiRequest(input, modelVersion, showStats, loggingOptOut, domain, stringIndexType, piiCategories);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -580,14 +603,15 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateEntitiesLinkingRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, StringIndexType? stringIndexType)
+        internal HttpMessage CreateEntitiesLinkingRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, StringIndexType? stringIndexType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/linking", false);
             if (modelVersion != null)
             {
@@ -596,6 +620,10 @@ namespace Azure.AI.TextAnalytics
             if (showStats != null)
             {
                 uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
             }
             if (stringIndexType != null)
             {
@@ -614,17 +642,18 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<EntityLinkingResult>> EntitiesLinkingAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EntityLinkingResult>> EntitiesLinkingAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateEntitiesLinkingRequest(input, modelVersion, showStats, stringIndexType);
+            using var message = CreateEntitiesLinkingRequest(input, modelVersion, showStats, loggingOptOut, stringIndexType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -644,17 +673,18 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<EntityLinkingResult> EntitiesLinking(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public Response<EntityLinkingResult> EntitiesLinking(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateEntitiesLinkingRequest(input, modelVersion, showStats, stringIndexType);
+            using var message = CreateEntitiesLinkingRequest(input, modelVersion, showStats, loggingOptOut, stringIndexType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -670,14 +700,15 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateKeyPhrasesRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats)
+        internal HttpMessage CreateKeyPhrasesRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/keyPhrases", false);
             if (modelVersion != null)
             {
@@ -687,6 +718,10 @@ namespace Azure.AI.TextAnalytics
             {
                 uri.AppendQuery("showStats", showStats.Value, true);
             }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -700,16 +735,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<KeyPhraseResult>> KeyPhrasesAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyPhraseResult>> KeyPhrasesAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateKeyPhrasesRequest(input, modelVersion, showStats);
+            using var message = CreateKeyPhrasesRequest(input, modelVersion, showStats, loggingOptOut);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -729,16 +765,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<KeyPhraseResult> KeyPhrases(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        public Response<KeyPhraseResult> KeyPhrases(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateKeyPhrasesRequest(input, modelVersion, showStats);
+            using var message = CreateKeyPhrasesRequest(input, modelVersion, showStats, loggingOptOut);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -754,14 +791,15 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateLanguagesRequest(LanguageBatchInput input, string modelVersion, bool? showStats)
+        internal HttpMessage CreateLanguagesRequest(LanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/languages", false);
             if (modelVersion != null)
             {
@@ -771,6 +809,10 @@ namespace Azure.AI.TextAnalytics
             {
                 uri.AppendQuery("showStats", showStats.Value, true);
             }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -784,16 +826,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze for language endpoint. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<LanguageResult>> LanguagesAsync(LanguageBatchInput input, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LanguageResult>> LanguagesAsync(LanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateLanguagesRequest(input, modelVersion, showStats);
+            using var message = CreateLanguagesRequest(input, modelVersion, showStats, loggingOptOut);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -813,16 +856,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze for language endpoint. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<LanguageResult> Languages(LanguageBatchInput input, string modelVersion = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        public Response<LanguageResult> Languages(LanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateLanguagesRequest(input, modelVersion, showStats);
+            using var message = CreateLanguagesRequest(input, modelVersion, showStats, loggingOptOut);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -838,14 +882,15 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateSentimentRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? opinionMining, StringIndexType? stringIndexType)
+        internal HttpMessage CreateSentimentRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, bool? opinionMining, StringIndexType? stringIndexType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/sentiment", false);
             if (modelVersion != null)
             {
@@ -854,6 +899,10 @@ namespace Azure.AI.TextAnalytics
             if (showStats != null)
             {
                 uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
             }
             if (opinionMining != null)
             {
@@ -876,18 +925,19 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="opinionMining"> (Optional) if set to true, response will contain not only sentiment prediction but also opinion mining (aspect-based sentiment analysis) results. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<SentimentResponse>> SentimentAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? opinionMining = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SentimentResponse>> SentimentAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, bool? opinionMining = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateSentimentRequest(input, modelVersion, showStats, opinionMining, stringIndexType);
+            using var message = CreateSentimentRequest(input, modelVersion, showStats, loggingOptOut, opinionMining, stringIndexType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -907,18 +957,19 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="opinionMining"> (Optional) if set to true, response will contain not only sentiment prediction but also opinion mining (aspect-based sentiment analysis) results. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<SentimentResponse> Sentiment(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? opinionMining = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public Response<SentimentResponse> Sentiment(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, bool? opinionMining = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateSentimentRequest(input, modelVersion, showStats, opinionMining, stringIndexType);
+            using var message = CreateSentimentRequest(input, modelVersion, showStats, loggingOptOut, opinionMining, stringIndexType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -934,20 +985,17 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateHealthStatusNextPageRequest(string nextLink, bool? showStats)
+        internal HttpMessage CreateHealthStatusNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendRawNextLink(nextLink, false);
-            if (showStats != null)
-            {
-                uri.AppendQuery("showStats", showStats.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             return message;
@@ -955,17 +1003,16 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
         /// <param name="nextLink"> Next link for list operation. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<HealthcareJobState>> HealthStatusNextPageAsync(string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
+        public async Task<Response<HealthcareJobState>> HealthStatusNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateHealthStatusNextPageRequest(nextLink, showStats);
+            using var message = CreateHealthStatusNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -983,17 +1030,16 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
         /// <param name="nextLink"> Next link for list operation. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<HealthcareJobState> HealthStatusNextPage(string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
+        public Response<HealthcareJobState> HealthStatusNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateHealthStatusNextPageRequest(nextLink, showStats);
+            using var message = CreateHealthStatusNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1009,20 +1055,17 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateAnalyzeStatusNextPageRequest(string nextLink, bool? showStats)
+        internal HttpMessage CreateAnalyzeStatusNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/analyze/jobs/", false);
             uri.AppendRawNextLink(nextLink, false);
-            if (showStats != null)
-            {
-                uri.AppendQuery("showStats", showStats.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             return message;
@@ -1030,17 +1073,16 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
         /// <param name="nextLink"> Next link for list operation. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<AnalyzeJobState>> AnalyzeStatusNextPageAsync(string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeJobState>> AnalyzeStatusNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateAnalyzeStatusNextPageRequest(nextLink, showStats);
+            using var message = CreateAnalyzeStatusNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1058,17 +1100,16 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
         /// <param name="nextLink"> Next link for list operation. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<AnalyzeJobState> AnalyzeStatusNextPage(string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
+        public Response<AnalyzeJobState> AnalyzeStatusNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateAnalyzeStatusNextPageRequest(nextLink, showStats);
+            using var message = CreateAnalyzeStatusNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1084,14 +1125,15 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateHealthStatusNextPageNextPageRequest(string nextLink, bool? showStats)
+        internal HttpMessage CreateHealthStatusNextPageNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -1100,17 +1142,16 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<HealthcareJobState>> HealthStatusNextPageNextPageAsync(string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
+        public async Task<Response<HealthcareJobState>> HealthStatusNextPageNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateHealthStatusNextPageNextPageRequest(nextLink, showStats);
+            using var message = CreateHealthStatusNextPageNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1128,17 +1169,16 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<HealthcareJobState> HealthStatusNextPageNextPage(string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
+        public Response<HealthcareJobState> HealthStatusNextPageNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateHealthStatusNextPageNextPageRequest(nextLink, showStats);
+            using var message = CreateHealthStatusNextPageNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1154,14 +1194,15 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        internal HttpMessage CreateAnalyzeStatusNextPageNextPageRequest(string nextLink, bool? showStats)
+        internal HttpMessage CreateAnalyzeStatusNextPageNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.4", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -1170,17 +1211,16 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<AnalyzeJobState>> AnalyzeStatusNextPageNextPageAsync(string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeJobState>> AnalyzeStatusNextPageNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateAnalyzeStatusNextPageNextPageRequest(nextLink, showStats);
+            using var message = CreateAnalyzeStatusNextPageNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1198,17 +1238,16 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<AnalyzeJobState> AnalyzeStatusNextPageNextPage(string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
+        public Response<AnalyzeJobState> AnalyzeStatusNextPageNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateAnalyzeStatusNextPageNextPageRequest(nextLink, showStats);
+            using var message = CreateAnalyzeStatusNextPageNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

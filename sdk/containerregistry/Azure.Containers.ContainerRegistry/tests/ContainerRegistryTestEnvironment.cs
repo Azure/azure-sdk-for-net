@@ -8,10 +8,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
     public class ContainerRegistryTestEnvironment : TestEnvironment
     {
         public string Endpoint => GetRecordedVariable("CONTAINERREGISTRY_ENDPOINT");
-        public string UserName => GetRecordedVariable("CONTAINERREGISTRY_USERNAME", options => options.IsSecret());
-        public string Password => GetRecordedVariable("CONTAINERREGISTRY_PASSWORD", options => options.IsSecret());
         public string Registry => GetRecordedVariable("CONTAINERREGISTRY_REGISTRY_NAME");
-
-        public bool IsTestModeLive => this.Mode != RecordedTestMode.Playback;
+        public string AnonymousAccessEndpoint => GetRecordedVariable("CONTAINERREGISTRY_ANONREGISTRY_ENDPOINT");
+        public string AnonymousAccessRegistry => GetRecordedVariable("CONTAINERREGISTRY_ANONREGISTRY_NAME");
     }
 }

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(RecurrenceScheduleConverter))]
     public partial class RecurrenceSchedule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -164,6 +167,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new RecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), additionalProperties);
+        }
+
+        internal partial class RecurrenceScheduleConverter : JsonConverter<RecurrenceSchedule>
+        {
+            public override void Write(Utf8JsonWriter writer, RecurrenceSchedule model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override RecurrenceSchedule Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeRecurrenceSchedule(document.RootElement);
+            }
         }
     }
 }

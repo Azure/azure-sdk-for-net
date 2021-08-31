@@ -4,6 +4,9 @@
 using System;
 using System.ComponentModel;
 using System.Net;
+using System.Net.Security;
+using System.Net.Sockets;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -14,6 +17,9 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventHubConnectionOptions
     {
+        // <summary>The amount of time to allow a connection to have no observed traffic before considering it idle.</summary>
+        private TimeSpan _connectionIdleTimeout = TimeSpan.FromMinutes(1);
+
         /// <summary>
         ///   The type of protocol and transport that will be used for communicating with the Event Hubs
         ///   service.
@@ -24,12 +30,66 @@ namespace Azure.Messaging.EventHubs
         public EventHubsTransportType TransportType { get; set; } = EventHubsTransportType.AmqpTcp;
 
         /// <summary>
+        ///   The amount of time to allow a connection to have no observed traffic before considering
+        ///   it idle and eligible to close.
+        /// </summary>
+        ///
+        /// <value>The default idle timeout is 60 seconds.  The timeout must be a positive value.</value>
+        ///
+        /// <remarks>
+        ///   If a connection is closed due to being idle, the Event Hubs clients will automatically
+        ///   reopen the connection when it is needed for a network operation.  An idle connection
+        ///   being closed does not cause client errors or interfere with normal operation.
+        ///
+        ///   It is recommended to use the default value unless your application has special needs and
+        ///   you've tested the impact of changing the idle timeout.
+        /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested timeout is negative.</exception>
+        ///
+        public TimeSpan ConnectionIdleTimeout
+        {
+            get => _connectionIdleTimeout;
+            set
+            {
+                Argument.AssertNotNegative(value, nameof(ConnectionIdleTimeout));
+                _connectionIdleTimeout = value;
+            }
+        }
+
+        /// <summary>
+        ///   The size of the buffer used for sending information via the active transport.
+        /// </summary>
+        ///
+        /// <value>The size of the buffer, in bytes.  The default size is 8,192 bytes.</value>
+        ///
+        /// <remarks>
+        ///   This value is used to configure the <see cref="Socket.SendBufferSize" /> used by
+        ///   the active transport.
+        /// </remarks>
+        ///
+        public int SendBufferSizeInBytes { get; set; } = 8192;
+
+        /// <summary>
+        ///   The size of the buffer used for receiving information via the active transport.
+        /// </summary>
+        ///
+        /// <value>The size of the buffer, in bytes.  The default size is 8,192 bytes.</value>
+        ///
+        /// <remarks>
+        ///   This value is used to configure the <see cref="Socket.ReceiveBufferSize" /> used by
+        ///   the active transport.
+        /// </remarks>
+        ///
+        public int ReceiveBufferSizeInBytes { get; set; } = 8192;
+
+        /// <summary>
         ///   The proxy to use for communication over web sockets.
         /// </summary>
         ///
         /// <remarks>
-        ///   A proxy cannot be used for communication over TCP; if web sockets are not in
-        ///   use, specifying a proxy is an invalid option.
+        ///   A proxy cannot be used for communication over TCP; if the <see cref="TransportType" /> is not set
+        ///   to <see cref="EventHubsTransportType.AmqpWebSockets" />, specifying a proxy is invalid.
         /// </remarks>
         ///
         public IWebProxy Proxy { get; set; }
@@ -46,6 +106,15 @@ namespace Azure.Messaging.EventHubs
         /// </value>
         ///
         public Uri CustomEndpointAddress { get; set; }
+
+        /// <summary>
+        ///   A <see cref="RemoteCertificateValidationCallback" /> delegate allowing custom logic to be considered for
+        ///   validation of the remote certificate responsible for encrypting communication.
+        /// </summary>
+        ///
+        /// <value>The callback will be invoked any time a connection is established, including any reconnect attempts.</value>
+        ///
+        public RemoteCertificateValidationCallback CertificateValidationCallback { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

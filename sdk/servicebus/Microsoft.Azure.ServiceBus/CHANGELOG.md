@@ -1,8 +1,8 @@
 # Release History
-## 5.2.0-beta.1 (Unreleased)
 
+## 5.1.3 (2021-04-15)
 
-## 5.1.0-beta.1 (Unreleased)
+Update package description to include pointer to the new Azure.Messaging.ServiceBus package and the migration guide.
 
 ## 5.1.2 (2021-02-24)
 - Update dependency of Microsoft.Azure.Amqp to version 2.4.11 to take in the fix: In auto-flow mode, do not issue more credits when the receiver link is closing. 

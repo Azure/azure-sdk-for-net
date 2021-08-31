@@ -19,8 +19,8 @@ namespace Automation.Tests.TestSupport
 {
     public class AutomationTestBase : TestBase, IDisposable
     {
-        private const string ResourceGroup = "automation-sdk-test";
-        private const string AutomationAccount = "automation-sdk-test-account";
+        private const string ResourceGroup = "automation-sdk-test-RG";
+        private const string AutomationAccount = "automation-sdk-test-AA";
         private const string Location = "East US 2";
 
         public AutomationTestBase(MockContext context)

@@ -13,15 +13,15 @@ namespace Azure.AI.TextAnalytics
     {
         public static string ToSerialString(this EntityConditionality value) => value switch
         {
-            EntityConditionality.Hypothetical => "Hypothetical",
-            EntityConditionality.Conditional => "Conditional",
+            EntityConditionality.Hypothetical => "hypothetical",
+            EntityConditionality.Conditional => "conditional",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityConditionality value.")
         };
 
         public static EntityConditionality ToEntityConditionality(this string value)
         {
-            if (string.Equals(value, "Hypothetical", StringComparison.InvariantCultureIgnoreCase)) return EntityConditionality.Hypothetical;
-            if (string.Equals(value, "Conditional", StringComparison.InvariantCultureIgnoreCase)) return EntityConditionality.Conditional;
+            if (string.Equals(value, "hypothetical", StringComparison.InvariantCultureIgnoreCase)) return EntityConditionality.Hypothetical;
+            if (string.Equals(value, "conditional", StringComparison.InvariantCultureIgnoreCase)) return EntityConditionality.Conditional;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityConditionality value.");
         }
     }

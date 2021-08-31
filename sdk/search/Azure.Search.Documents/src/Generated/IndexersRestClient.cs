@@ -31,20 +31,11 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2020-06-30")
+        public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2021-04-30-Preview")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             this.xMsClientRequestId = xMsClientRequestId;
-            this.apiVersion = apiVersion;
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -169,7 +160,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string indexerName, SearchIndexer indexer, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string indexerName, SearchIndexer indexer, string ifMatch, string ifNoneMatch, bool? disableCacheReprocessingChangeDetection, bool? ignoreResetRequirements)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -180,6 +171,14 @@ namespace Azure.Search.Documents
             uri.AppendPath(indexerName, true);
             uri.AppendPath("')", false);
             uri.AppendQuery("api-version", apiVersion, true);
+            if (disableCacheReprocessingChangeDetection != null)
+            {
+                uri.AppendQuery("disableCacheReprocessingChangeDetection", disableCacheReprocessingChangeDetection.Value, true);
+            }
+            if (ignoreResetRequirements != null)
+            {
+                uri.AppendQuery("ignoreResetRequirements", ignoreResetRequirements.Value, true);
+            }
             request.Uri = uri;
             if (ifMatch != null)
             {
@@ -203,9 +202,11 @@ namespace Azure.Search.Documents
         /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
+        /// <param name="ignoreResetRequirements"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexer"/> is null. </exception>
-        public async Task<Response<SearchIndexer>> CreateOrUpdateAsync(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexer>> CreateOrUpdateAsync(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, bool? disableCacheReprocessingChangeDetection = null, bool? ignoreResetRequirements = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
@@ -216,7 +217,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var message = CreateCreateOrUpdateRequest(indexerName, indexer, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(indexerName, indexer, ifMatch, ifNoneMatch, disableCacheReprocessingChangeDetection, ignoreResetRequirements);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -238,9 +239,11 @@ namespace Azure.Search.Documents
         /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
+        /// <param name="ignoreResetRequirements"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexer"/> is null. </exception>
-        public Response<SearchIndexer> CreateOrUpdate(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexer> CreateOrUpdate(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, bool? disableCacheReprocessingChangeDetection = null, bool? ignoreResetRequirements = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
@@ -251,7 +254,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var message = CreateCreateOrUpdateRequest(indexerName, indexer, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(indexerName, indexer, ifMatch, ifNoneMatch, disableCacheReprocessingChangeDetection, ignoreResetRequirements);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

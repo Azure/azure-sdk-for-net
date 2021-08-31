@@ -62,9 +62,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheConsumerGroup(string consumerGroup)
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             Assert.That(() => new EventHubConsumerClient(consumerGroup, "dummyNamespace", "dummyEventHub", credential.Object, new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate the consumer group.");
-            Assert.That(() => new EventHubConsumerClient(consumerGroup, "dummyNamespace", "dummyEventHub", new EventHubsSharedAccessKeyCredential("key", "value"), new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate the consumer group.");
+            Assert.That(() => new EventHubConsumerClient(consumerGroup, "dummyNamespace", "dummyEventHub", new AzureNamedKeyCredential("key", "value"), new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate the consumer group.");
+            Assert.That(() => new EventHubConsumerClient(consumerGroup, "dummyNamespace", "dummyEventHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The SAS credential constructor should validate the consumer group.");
             Assert.That(() => new EventHubConsumerClient(consumerGroup, "dummyConnection", new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate the consumer group.");
         }
 
@@ -136,9 +137,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("amqp://namespace.place.ext")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", credential.Object), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate.");
-            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", new EventHubsSharedAccessKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate.");
+            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate.");
+            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), new EventHubConsumerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The SAS credential constructor should validate.");
         }
 
         /// <summary>
@@ -150,9 +152,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHub(string constructorArgument)
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, credential.Object), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate.");
-            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, new EventHubsSharedAccessKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate.");
+            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate.");
+            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value)), Throws.InstanceOf<ArgumentException>(), "The SAS credential constructor should validate.");
         }
 
         /// <summary>
@@ -163,7 +166,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheCredential()
         {
             Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(TokenCredential)), Throws.ArgumentNullException, "The token credential constructor should validate.");
-            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(EventHubsSharedAccessKeyCredential)), Throws.ArgumentNullException, "The shared key credential constructor should validate.");
+            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(AzureNamedKeyCredential)), Throws.ArgumentNullException, "The shared key credential constructor should validate.");
+            Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(AzureSasCredential)), Throws.ArgumentNullException, "The SAS credential constructor should validate.");
         }
 
         /// <summary>
@@ -199,7 +203,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TokenCredentialConstructorSetsTheRetryPolicy()
         {
             var expected = Mock.Of<EventHubsRetryPolicy>();
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hub", credential.Object, options);
 
@@ -214,7 +218,22 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SharedKeyCredentialConstructorSetsTheRetryPolicy()
         {
             var expected = Mock.Of<EventHubsRetryPolicy>();
-            var credential = new EventHubsSharedAccessKeyCredential("key", "value");
+            var credential = new AzureNamedKeyCredential("key", "value");
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hub", credential, options);
+
+            Assert.That(GetRetryPolicy(consumer), Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorSetsTheRetryPolicy()
+        {
+            var expected = Mock.Of<EventHubsRetryPolicy>();
+            var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
             var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hub", credential, options);
 
@@ -241,11 +260,88 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void ConnectionStringConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var options = new EventHubConsumerClientOptions { Identifier = expected };
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString, options);
+
+            Assert.That(consumer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void TokenCredentialConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
+            var options = new EventHubConsumerClientOptions { Identifier = expected };
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hub", credential.Object, options);
+
+            Assert.That(consumer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var credential = new AzureNamedKeyCredential("key", "value");
+            var options = new EventHubConsumerClientOptions { Identifier = expected };
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hub", credential, options);
+
+            Assert.That(consumer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
+            var options = new EventHubConsumerClientOptions { Identifier = expected };
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hub", credential, options);
+
+            Assert.That(consumer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConnectionConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var options = new EventHubConsumerClientOptions { Identifier = expected };
+            var mockConnection = new MockConnection();
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection, options);
+
+            Assert.That(consumer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
         public void ConnectionStringConstructorCreatesDefaultOptions()
         {
             var expected = new EventHubConsumerClientOptions().RetryOptions;
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
+            Assert.That(consumer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(consumer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -262,9 +358,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void TokenCredentialConstructorCreatesDefaultOptions()
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var expected = new EventHubConsumerClientOptions().RetryOptions;
+
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "some-namespace", "hubName", credential.Object);
+            Assert.That(consumer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(consumer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -281,9 +379,32 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SharedKeyCredentialConstructorCreatesDefaultOptions()
         {
-            var credential = new EventHubsSharedAccessKeyCredential("key", "value");
+            var credential = new AzureNamedKeyCredential("key", "value");
             var expected = new EventHubConsumerClientOptions().RetryOptions;
+
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "some-namespace", "hubName", credential);
+            Assert.That(consumer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
+
+            var policy = GetRetryPolicy(consumer);
+            Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
+            Assert.That(policy, Is.InstanceOf<BasicRetryPolicy>(), "The default retry policy should be a basic policy.");
+
+            var actual = ((BasicRetryPolicy)policy).Options;
+            Assert.That(actual.IsEquivalentTo(expected), Is.True, "The default retry policy should be based on the default retry options.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorCreatesDefaultOptions()
+        {
+            var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
+            var expected = new EventHubConsumerClientOptions().RetryOptions;
+
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, "some-namespace", "hubName", credential);
+            Assert.That(consumer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(consumer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -302,7 +423,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expected = new EventHubConsumerClientOptions().RetryOptions;
             var mockConnection = new MockConnection();
+
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
+            Assert.That(consumer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(consumer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -334,7 +457,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TokenCredentialConstructorSetsTheConsumerGroup()
         {
             var consumerGroup = "SomeGroup";
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var consumer = new EventHubConsumerClient(consumerGroup, "namespace", "eventHub", credential.Object);
 
             Assert.That(consumer.ConsumerGroup, Is.EqualTo(consumerGroup));
@@ -348,7 +471,21 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SharedKeyCredentialConstructorSetsTheConsumerGroup()
         {
             var consumerGroup = "SomeGroup";
-            var credential = new EventHubsSharedAccessKeyCredential("key", "value");
+            var credential = new AzureNamedKeyCredential("key", "value");
+            var consumer = new EventHubConsumerClient(consumerGroup, "namespace", "eventHub", credential);
+
+            Assert.That(consumer.ConsumerGroup, Is.EqualTo(consumerGroup));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorSetsTheConsumerGroup()
+        {
+            var consumerGroup = "SomeGroup";
+            var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
             var consumer = new EventHubConsumerClient(consumerGroup, "namespace", "eventHub", credential);
 
             Assert.That(consumer.ConsumerGroup, Is.EqualTo(consumerGroup));
@@ -580,7 +717,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(new[] { "0", "1" }));
 
             mockConnection
-                .Setup(conn => conn.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>(), It.IsAny<long?>()))
+                .Setup(conn => conn.CreateTransportConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(transportConsumer);
 
             await using var enumerator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(12), options).GetAsyncEnumerator();
@@ -590,8 +737,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(conn => conn.CreateTransportConsumer(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
                     (uint)options.PrefetchCount,
@@ -1315,7 +1464,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(new[] { "0", "1" }));
 
             mockConnection
-                .Setup(conn => conn.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>(), It.IsAny<long?>()))
+                .Setup(conn => conn.CreateTransportConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(transportConsumer);
 
             await using var enumerator = consumer.ReadEventsAsync(options).GetAsyncEnumerator();
@@ -1325,8 +1484,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(conn => conn.CreateTransportConsumer(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
                     (uint)options.PrefetchCount,
@@ -2466,10 +2627,8 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            private static EventHubTokenCredential CreateMockCredentials()
-            {
-                return new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net").Object;
-            }
+            private static EventHubTokenCredential CreateMockCredentials() =>
+                new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>()).Object;
 
             public MockConnection(Func<TransportConsumer> transportConsumerFactory,
                                   string namespaceName,
@@ -2505,9 +2664,12 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             internal override TransportConsumer CreateTransportConsumer(string consumerGroup,
-                                                                        string partitionId, EventPosition eventPosition,
+                                                                        string partitionId,
+                                                                        string consumerIdentifier,
+                                                                        EventPosition eventPosition,
                                                                         EventHubsRetryPolicy retryPolicy,
                                                                         bool trackLastEnqueuedEventProperties = true,
+                                                                        bool invalidateConsumerWhenPartitionIsStolen = false,
                                                                         long? ownerLevel = default,
                                                                         uint? prefetchCount = default,
                                                                         long? prefetchSizeInBytes = default) => TransportConsumerFactory();

@@ -17,9 +17,10 @@ namespace Azure.Storage.Test
     [ClientTestFixture(
     BlobClientOptions.ServiceVersion.V2020_06_12,
     BlobClientOptions.ServiceVersion.V2020_08_04,
-    RecordingServiceVersion = BlobClientOptions.ServiceVersion.V2020_08_04,
+    BlobClientOptions.ServiceVersion.V2020_10_02,
+    RecordingServiceVersion = BlobClientOptions.ServiceVersion.V2020_10_02,
     LiveServiceVersions = new object[] { BlobClientOptions.ServiceVersion.V2020_06_12 })]
-    public abstract class CommonTestBase : StorageTestBase
+    public abstract class CommonTestBase : StorageTestBase<StorageTestEnvironment>
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
 

@@ -17,9 +17,9 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static AnalyzeJobState DeserializeAnalyzeJobState(JsonElement element)
         {
+            AnalyzeTasks tasks = default;
             Optional<IReadOnlyList<TextAnalyticsErrorInternal>> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
-            AnalyzeTasks tasks = default;
             Optional<string> nextLink = default;
             Optional<string> displayName = default;
             DateTimeOffset createdDateTime = default;
@@ -29,6 +29,11 @@ namespace Azure.AI.TextAnalytics.Models
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("tasks"))
+                {
+                    tasks = AnalyzeTasks.DeserializeAnalyzeTasks(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("errors"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -52,11 +57,6 @@ namespace Azure.AI.TextAnalytics.Models
                         continue;
                     }
                     statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("tasks"))
-                {
-                    tasks = AnalyzeTasks.DeserializeAnalyzeTasks(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@nextLink"))
@@ -100,7 +100,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AnalyzeJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, displayName.Value, Optional.ToList(errors), statistics.Value, tasks, nextLink.Value);
+            return new AnalyzeJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, displayName.Value, tasks, Optional.ToList(errors), statistics.Value, nextLink.Value);
         }
     }
 }

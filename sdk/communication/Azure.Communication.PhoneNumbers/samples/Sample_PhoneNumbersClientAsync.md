@@ -1,7 +1,7 @@
 # Searching, reserving, purchasing, releasing phone numbers (Async)
 
 This sample demonstrates how to search, reserve, purchase and release phone numbers in Azure Communication Services.
-To get started, you'll need a URI to an Azure Communication Services. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.PhoneNumbers/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Communication Services. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/README.md) for links and instructions.
 
 ## Creating a PhoneNumbersClient
 
@@ -53,7 +53,7 @@ await foreach (var phoneNumber in purchasedPhoneNumbers)
 Phone number's capabilities can be updated by started by `StartUpdateCapabilities` function.
 
 ```C# Snippet:UpdateCapabilitiesNumbersAsync
-var updateCapabilitiesOperation = client.StartUpdateCapabilities(purchasedPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.InboundOutbound);
+var updateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(purchasedPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.InboundOutbound);
 
 await updateCapabilitiesOperation.WaitForCompletionAsync();
 ```
@@ -64,6 +64,6 @@ If you no longer need a phone number you can release it.
 
 ```C# Snippet:ReleasePhoneNumbersAsync
 var purchasedPhoneNumber = "<purchased_phone_number>";
-var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber);
+var releaseOperation = await client.StartReleasePhoneNumberAsync(purchasedPhoneNumber);
 await releaseOperation.WaitForCompletionResponseAsync();
 ```

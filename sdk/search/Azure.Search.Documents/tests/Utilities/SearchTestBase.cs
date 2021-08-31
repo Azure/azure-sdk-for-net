@@ -7,10 +7,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -56,7 +54,7 @@ namespace Azure.Search.Documents.Tests
         /// value is pulled from the AZURE_TEST_MODE environment variable.
         /// </param>
         public SearchTestBase(bool async, SearchClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(async, mode)
         {
             ServiceVersion = serviceVersion;
             Sanitizer = new SearchRecordedTestSanitizer();
@@ -110,6 +108,54 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
+        /// A number of our tests have built in delays while we wait an expected
+        /// amount of time for a service operation to complete and this method
+        /// allows us to wait (unless we're playing back recordings, which can
+        /// complete immediately).
+        /// <para>This method allows us to return early if the <paramref name="predicate"/> condition evaluates to true.
+        /// It evaluates the predicate after every <paramref name="delayPerIteration"/> or <paramref name="playbackDelayPerIteration"/> time span.
+        /// It returns when the condition evaluates to <c>true</c>, or if the condition stays false after <paramref name="maxIterations"/> checks.</para>
+        /// </summary>
+        /// <param name="predicate">Condition that will result in early end of delay when it evaluates to <c>true</c>.</param>
+        /// <param name="delayPerIteration">The time to wait per iteration.  Defaults to 1s.</param>
+        /// <param name="playbackDelayPerIteration">
+        /// An optional time wait if we're playing back a recorded test.  This
+        /// is useful for allowing client side events to get processed.
+        /// </param>
+        /// <param name="maxIterations">Maximum number of iterations of the wait-and-check cycle.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to check.</param>
+        /// <returns>A task that will (optionally) delay.</returns>
+        /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was signaled.</exception>
+        public async Task ConditionallyDelayAsync(Func<bool> predicate, TimeSpan ? delayPerIteration = null, TimeSpan? playbackDelayPerIteration = null, uint maxIterations = 1, CancellationToken cancellationToken = default)
+        {
+            TimeSpan waitPeriod = TimeSpan.Zero;
+
+            for (int i = 0; i < maxIterations; i++)
+            {
+                if (predicate())
+                {
+                    TestContext.WriteLine($"{nameof(ConditionallyDelayAsync)}: Condition evaluated to true in {waitPeriod.TotalSeconds} seconds.");
+                    return;
+                }
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    waitPeriod += delayPerIteration ?? TimeSpan.FromSeconds(1);
+                    await Task.Delay(delayPerIteration ?? TimeSpan.FromSeconds(1));
+                }
+                else if (playbackDelayPerIteration != null)
+                {
+                    waitPeriod += playbackDelayPerIteration.Value;
+                    await Task.Delay(playbackDelayPerIteration.Value);
+                }
+            }
+
+            TestContext.WriteLine($"{nameof(ConditionallyDelayAsync)}: Condition did not evaluate to true in {waitPeriod.TotalSeconds} seconds.");
+        }
+
+        /// <summary>
         /// Assert that we can catch the desired exception.  NUnit's default
         /// forces everything to be sync.
         /// </summary>
@@ -149,24 +195,33 @@ namespace Azure.Search.Documents.Tests
         /// <param name="path">Optional expression path.</param>
         public static void AssertApproximate(object expected, object actual, string path = null)
         {
-            if (expected is SearchDocument e && actual is SearchDocument a)
+            if (expected is SearchDocument e)
             {
-                foreach (string key in e.Keys)
+                if (actual is SearchDocument a)
                 {
-                    object eValue = e[key];
-                    object aValue =
-                        (eValue is DateTimeOffset) ? a.GetDateTimeOffset(key) :
-                        (eValue is double) ? a.GetDouble(key) :
-                        a[key];
-                    AssertApproximate(eValue, aValue, path != null ? path + "." + key : key);
+                    foreach (string key in e.Keys)
+                    {
+                        object eValue = e[key];
+                        object aValue =
+                            (eValue is DateTimeOffset) ? a.GetDateTimeOffset(key) :
+                            (eValue is double) ? a.GetDouble(key) :
+                            a[key];
+                        AssertApproximate(eValue, aValue, path != null ? path + "." + key : key);
+                    }
+                }
+                else if (actual is GeoPoint agPt)
+                {
+                    var eValue = (double[])e["coordinates"];
+
+                    var expectedGeoPosition = new GeoPosition(eValue[0], eValue[1], eValue.Length == 3 ? eValue[2] : null);
+
+                    AssertEqual(expectedGeoPosition, agPt.Coordinates, path != null ? $"{path}.{nameof(GeoPoint.Coordinates)}" : nameof(GeoPoint.Coordinates));
                 }
             }
-#if EXPERIMENTAL_SPATIAL
             else if (expected is GeoPoint ePt && actual is GeoPoint aPt)
             {
-                AssertEqual(ePt.Position, aPt.Position, path != null ? $"{path}.{nameof(GeoPoint.Position)}" : nameof(GeoPoint.Position));
+                AssertEqual(ePt.Coordinates, aPt.Coordinates, path != null ? $"{path}.{nameof(GeoPoint.Coordinates)}" : nameof(GeoPoint.Coordinates));
             }
-#endif
             else if (expected is GeographyPoint eGpt && actual is GeographyPoint aGpt)
             {
                 AssertEqual(eGpt, aGpt, path);

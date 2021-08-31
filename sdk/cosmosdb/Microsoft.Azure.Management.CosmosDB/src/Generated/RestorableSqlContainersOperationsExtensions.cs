@@ -42,9 +42,15 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='restorableSqlDatabaseRid'>
             /// The resource ID of the SQL database.
             /// </param>
-            public static IEnumerable<RestorableSqlContainerGetResult> List(this IRestorableSqlContainersOperations operations, string location, string instanceId, string restorableSqlDatabaseRid = default(string))
+            /// <param name='startTime'>
+            /// The snapshot create timestamp after which snapshots need to be listed.
+            /// </param>
+            /// <param name='endTime'>
+            /// The snapshot create timestamp before which snapshots need to be listed.
+            /// </param>
+            public static IEnumerable<RestorableSqlContainerGetResult> List(this IRestorableSqlContainersOperations operations, string location, string instanceId, string restorableSqlDatabaseRid = default(string), string startTime = default(string), string endTime = default(string))
             {
-                return operations.ListAsync(location, instanceId, restorableSqlDatabaseRid).GetAwaiter().GetResult();
+                return operations.ListAsync(location, instanceId, restorableSqlDatabaseRid, startTime, endTime).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -66,12 +72,18 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='restorableSqlDatabaseRid'>
             /// The resource ID of the SQL database.
             /// </param>
+            /// <param name='startTime'>
+            /// The snapshot create timestamp after which snapshots need to be listed.
+            /// </param>
+            /// <param name='endTime'>
+            /// The snapshot create timestamp before which snapshots need to be listed.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<RestorableSqlContainerGetResult>> ListAsync(this IRestorableSqlContainersOperations operations, string location, string instanceId, string restorableSqlDatabaseRid = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<RestorableSqlContainerGetResult>> ListAsync(this IRestorableSqlContainersOperations operations, string location, string instanceId, string restorableSqlDatabaseRid = default(string), string startTime = default(string), string endTime = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(location, instanceId, restorableSqlDatabaseRid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, instanceId, restorableSqlDatabaseRid, startTime, endTime, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

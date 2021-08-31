@@ -89,7 +89,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void LoadRSACertificate()
         {
-#if NET461 || NETCOREAPP2_1
+#if NET461
             // Compatible with previous release. Goes through the LightweightPkcs8Decoder.DecodeECDsaPkcs8().
             Assert.Throws<InvalidDataException>(() => PemReader.LoadCertificate(RSACertificate.AsSpan(), keyType: PemReader.KeyType.ECDsa));
 #else

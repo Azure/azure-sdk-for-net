@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Cache.ScalingCompleted event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Cache.ScalingCompleted event. </summary>
     public partial class RedisScalingCompletedEventData
     {
         /// <summary> Initializes a new instance of RedisScalingCompletedEventData. </summary>

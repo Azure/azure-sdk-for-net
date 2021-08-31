@@ -71,13 +71,14 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateClientOptions : Azure.Core.ClientOptions
     {
-        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_2) { }
+        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_3_Preview) { }
         public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V7_0 = 0,
             V7_1 = 1,
             V7_2 = 2,
+            V7_3_Preview = 3,
         }
     }
     public partial class CertificateContact
@@ -206,7 +207,7 @@ namespace Azure.Security.KeyVault.Certificates
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public Azure.Security.KeyVault.Certificates.CertificateOperationProperties Properties { get { throw null; } }
+        public virtual Azure.Security.KeyVault.Certificates.CertificateOperationProperties Properties { get { throw null; } }
         public override Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy Value { get { throw null; } }
         public virtual void Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -362,8 +363,13 @@ namespace Azure.Security.KeyVault.Certificates
         public System.Uri VaultUri { get { throw null; } }
         public string Version { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Certificates.KeyVaultCertificateIdentifier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+        public static bool TryCreate(System.Uri id, out Azure.Security.KeyVault.Certificates.KeyVaultCertificateIdentifier identifier) { throw null; }
     }
     public partial class KeyVaultCertificateWithPolicy : Azure.Security.KeyVault.Certificates.KeyVaultCertificate
     {

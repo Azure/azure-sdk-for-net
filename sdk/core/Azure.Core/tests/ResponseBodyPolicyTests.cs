@@ -169,6 +169,45 @@ namespace Azure.Core.Tests
             Assert.That(async () => await getRequestTask, Throws.InstanceOf<OperationCanceledException>());
         }
 
+        [Test]
+        public void CanOverrideDefaultNetworkTimeout()
+        {
+            var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            MockTransport mockTransport = MockTransport.FromMessageCallback(message =>
+            {
+                tcs.Task.Wait(message.CancellationToken);
+                return null;
+            });
+
+            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await SendRequestAsync(mockTransport, message =>
+            {
+                message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
+            }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false));
+            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.03. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
+        }
+
+        [Test]
+        public async Task CanOverrideDefaultNetworkTimeout_Stream()
+        {
+            var hangingStream = new HangingReadStream();
+
+            MockResponse mockResponse = new MockResponse(200)
+            {
+                ContentStream = hangingStream
+            };
+
+            MockTransport mockTransport = new MockTransport(mockResponse);
+            Response response = await SendRequestAsync(mockTransport, message =>
+            {
+                message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
+            }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false);
+
+            Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
+            Assert.AreEqual(30, hangingStream.ReadTimeout);
+        }
+
         private class SlowReadStream : TestReadStream
         {
             public readonly TaskCompletionSource<object> StartedReader = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);

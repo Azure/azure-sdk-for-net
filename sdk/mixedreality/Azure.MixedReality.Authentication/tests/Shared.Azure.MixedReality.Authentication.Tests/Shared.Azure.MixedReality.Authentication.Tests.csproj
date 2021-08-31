@@ -1,14 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <IsClientLibrary>true</IsClientLibrary>
-    <IsDataPlaneProject>true</IsDataPlaneProject>
-    <IsTestProject>true</IsTestProject>
     <Nullable>Enable</Nullable>
-  </PropertyGroup>
-
-  <Import Project="$(RepoEngPath)\Directory.Build.Data.props" />
-
-  <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.MixedReality.Authentication.Tests</RootNamespace>
   </PropertyGroup>

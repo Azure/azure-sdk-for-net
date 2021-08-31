@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(CosmosDbSqlApiSourceConverter))]
     public partial class CosmosDbSqlApiSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -30,6 +33,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("preferredRegions");
                 writer.WriteObjectValue(PreferredRegions);
+            }
+            if (Optional.IsDefined(DetectDatetime))
+            {
+                writer.WritePropertyName("detectDatetime");
+                writer.WriteObjectValue(DetectDatetime);
+            }
+            if (Optional.IsCollectionDefined(AdditionalColumns))
+            {
+                writer.WritePropertyName("additionalColumns");
+                writer.WriteStartArray();
+                foreach (var item in AdditionalColumns)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -61,6 +79,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> query = default;
             Optional<object> pageSize = default;
             Optional<object> preferredRegions = default;
+            Optional<object> detectDatetime = default;
+            Optional<IList<AdditionalColumns>> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -97,6 +117,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     preferredRegions = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("detectDatetime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    detectDatetime = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("additionalColumns"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<AdditionalColumns> array = new List<AdditionalColumns>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.AdditionalColumns.DeserializeAdditionalColumns(item));
+                    }
+                    additionalColumns = array;
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -137,7 +182,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CosmosDbSqlApiSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, pageSize.Value, preferredRegions.Value);
+            return new CosmosDbSqlApiSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, pageSize.Value, preferredRegions.Value, detectDatetime.Value, Optional.ToList(additionalColumns));
+        }
+
+        internal partial class CosmosDbSqlApiSourceConverter : JsonConverter<CosmosDbSqlApiSource>
+        {
+            public override void Write(Utf8JsonWriter writer, CosmosDbSqlApiSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CosmosDbSqlApiSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCosmosDbSqlApiSource(document.RootElement);
+            }
         }
     }
 }

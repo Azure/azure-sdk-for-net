@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="enabled">Whether or not the schedule is
         /// enabled.</param>
         /// <param name="interval">Value of the schedule's recurring interval,
-        /// if the schedule type is recurring. ISO8601 duration format.</param>
+        /// if the ScheduleType is recurring. ISO8601 duration format.</param>
         public JobSchedule(System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), JobScheduleType? type = default(JobScheduleType?), bool? enabled = default(bool?), string interval = default(string))
         {
             StartTime = startTime;
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets value of the schedule's recurring interval, if the
-        /// schedule type is recurring. ISO8601 duration format.
+        /// ScheduleType is recurring. ISO8601 duration format.
         /// </summary>
         [JsonProperty(PropertyName = "interval")]
         public string Interval { get; set; }

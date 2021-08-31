@@ -38,15 +38,17 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="state">Specifies the state of the policy, whether it
         /// is enabled or disabled or a policy has not been applied yet on the
-        /// specific database. Possible values include: 'New', 'Enabled',
+        /// specific database. Possible values include: 'Enabled',
         /// 'Disabled'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="systemData">SystemData of
+        /// SecurityAlertPolicyResource.</param>
         /// <param name="disabledAlerts">Specifies an array of alerts that are
         /// disabled. Allowed values are: Sql_Injection,
         /// Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration,
-        /// Unsafe_Action</param>
+        /// Unsafe_Action, Brute_Force</param>
         /// <param name="emailAddresses">Specifies an array of e-mail addresses
         /// to which the alert is sent.</param>
         /// <param name="emailAccountAdmins">Specifies that the alert is sent
@@ -60,9 +62,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// the Threat Detection audit logs.</param>
         /// <param name="creationTime">Specifies the UTC creation time of the
         /// policy.</param>
-        public ManagedServerSecurityAlertPolicy(SecurityAlertPolicyState state, string id = default(string), string name = default(string), string type = default(string), IList<string> disabledAlerts = default(IList<string>), IList<string> emailAddresses = default(IList<string>), bool? emailAccountAdmins = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), System.DateTime? creationTime = default(System.DateTime?))
+        public ManagedServerSecurityAlertPolicy(SecurityAlertsPolicyState state, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<string> disabledAlerts = default(IList<string>), IList<string> emailAddresses = default(IList<string>), bool? emailAccountAdmins = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), System.DateTime? creationTime = default(System.DateTime?))
             : base(id, name, type)
         {
+            SystemData = systemData;
             State = state;
             DisabledAlerts = disabledAlerts;
             EmailAddresses = emailAddresses;
@@ -80,18 +83,23 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets systemData of SecurityAlertPolicyResource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
         /// Gets or sets specifies the state of the policy, whether it is
         /// enabled or disabled or a policy has not been applied yet on the
-        /// specific database. Possible values include: 'New', 'Enabled',
-        /// 'Disabled'
+        /// specific database. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public SecurityAlertPolicyState State { get; set; }
+        public SecurityAlertsPolicyState State { get; set; }
 
         /// <summary>
         /// Gets or sets specifies an array of alerts that are disabled.
         /// Allowed values are: Sql_Injection, Sql_Injection_Vulnerability,
-        /// Access_Anomaly, Data_Exfiltration, Unsafe_Action
+        /// Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force
         /// </summary>
         [JsonProperty(PropertyName = "properties.disabledAlerts")]
         public IList<string> DisabledAlerts { get; set; }

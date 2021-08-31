@@ -14,7 +14,7 @@ namespace Azure.Core.TestFramework
     public class RecordedTestSanitizer
     {
         public const string SanitizeValue = "Sanitized";
-        public List<string> JsonPathSanitizers { get; } = new List<string>();
+        private List<(string JsonPath, Func<JToken, JToken> Sanitizer)> JsonPathSanitizers { get; } = new();
 
         /// <summary>
         /// This is just a temporary workaround to avoid breaking tests that need to be re-recorded
@@ -25,12 +25,27 @@ namespace Azure.Core.TestFramework
 
         private static readonly string[] s_sanitizeValueArray = { SanitizeValue };
 
+        public RecordedTestSanitizer()
+        {
+            // Lazy sanitize fields in the request and response bodies
+            AddJsonPathSanitizer("$..primaryKey");
+            AddJsonPathSanitizer("$..secondaryKey");
+            AddJsonPathSanitizer("$..primaryConnectionString");
+            AddJsonPathSanitizer("$..secondaryConnectionString");
+            AddJsonPathSanitizer("$..connectionString");
+        }
+
         private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
         {
             DateParseHandling = DateParseHandling.None
         };
 
         public List<string> SanitizedHeaders { get; } = new List<string> { "Authorization" };
+
+        public void AddJsonPathSanitizer(string jsonPath, Func<JToken, JToken> sanitizer = null)
+        {
+            JsonPathSanitizers.Add((jsonPath, sanitizer ?? (_ => JToken.FromObject(SanitizeValue))));
+        }
 
         public virtual string SanitizeUri(string uri)
         {
@@ -50,8 +65,14 @@ namespace Azure.Core.TestFramework
 
         public virtual string SanitizeTextBody(string contentType, string body)
         {
+            bool modified = false;
+
+            if (string.IsNullOrWhiteSpace(body))
+                return body;
+
             if (JsonPathSanitizers.Count == 0)
                 return body;
+
             try
             {
                 JToken jsonO;
@@ -66,14 +87,23 @@ namespace Azure.Core.TestFramework
                     jsonO = JToken.Parse(body);
                 }
 
-                foreach (string jsonPath in JsonPathSanitizers)
+                foreach (var (jsonPath, sanitizer) in JsonPathSanitizers)
                 {
                     foreach (JToken token in jsonO.SelectTokens(jsonPath))
                     {
-                        token.Replace(JToken.FromObject(SanitizeValue));
+                        token.Replace(sanitizer(token));
+                        modified = true;
                     }
                 }
-                return JsonConvert.SerializeObject(jsonO, SerializerSettings);
+
+                if (modified || LegacyConvertJsonDateTokens)
+                {
+                    return JsonConvert.SerializeObject(jsonO, SerializerSettings);
+                }
+                else
+                {
+                    return body;
+                }
             }
             catch
             {

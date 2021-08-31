@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(HDInsightStreamingActivityConverter))]
     public partial class HDInsightStreamingActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -363,6 +366,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HDInsightStreamingActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), mapper, reducer, input, output, filePaths, fileLinkedService.Value, combiner.Value, Optional.ToList(commandEnvironment), Optional.ToDictionary(defines));
+        }
+
+        internal partial class HDInsightStreamingActivityConverter : JsonConverter<HDInsightStreamingActivity>
+        {
+            public override void Write(Utf8JsonWriter writer, HDInsightStreamingActivity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override HDInsightStreamingActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeHDInsightStreamingActivity(document.RootElement);
+            }
         }
     }
 }

@@ -105,6 +105,35 @@ Configuration file used in the sample above:
 }
 ```
 
+### Registering a custom client factory
+
+If you want to take control over how the client instance is created or need to use other dependencies during the client construction use the `AddClient<TClient, TOptions>` method.
+
+Here's and example of how to use `IOptions<T>` instance to construct the client:
+
+```C# Snippet:UsingOptionsForClientConstruction
+public class MyApplicationOptions
+{
+    public Uri KeyVaultEndpoint { get; set; }
+}
+
+public void ConfigureServices(IServiceCollection services)
+{
+    // Configure a custom options instance
+    services.Configure<MyApplicationOptions>(options => options.KeyVaultEndpoint = new Uri("http://localhost/"));
+
+    services.AddAzureClients(builder =>
+    {
+        // Register a client using MyApplicationOptions to get constructor parameters
+        builder.AddClient<SecretClient, SecretClientOptions>((options, credential, provider) =>
+        {
+            var appOptions = provider.GetService<IOptions<MyApplicationOptions>>();
+            return new SecretClient(appOptions.Value.KeyVaultEndpoint, credential, options);
+        });
+    });
+}
+```
+
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
@@ -114,7 +143,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 
 <!-- LINKS -->
-[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Microsoft.Extensions.Azure/src
+[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/extensions/Microsoft.Extensions.Azure/src
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Microsoft.Extensions.Azure/
 [configuration]: https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.0

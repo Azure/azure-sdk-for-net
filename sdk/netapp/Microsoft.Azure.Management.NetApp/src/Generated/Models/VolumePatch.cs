@@ -172,10 +172,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
                 {
                     throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 1);
                 }
-                if (ThroughputMibps % 0.001 != 0)
-                {
-                    throw new ValidationException(ValidationRules.MultipleOf, "ThroughputMibps", 0.001);
-                }
             }
         }
     }

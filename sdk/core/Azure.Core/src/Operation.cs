@@ -79,7 +79,7 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final response of the operation.
         /// </remarks>
-        public abstract ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken);
+        public abstract ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

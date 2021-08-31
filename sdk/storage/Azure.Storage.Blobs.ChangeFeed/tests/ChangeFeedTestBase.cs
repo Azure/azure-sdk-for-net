@@ -13,11 +13,13 @@ using Azure.Storage.Test.Shared;
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     [ClientTestFixture(
-    BlobClientOptions.ServiceVersion.V2020_06_12,
-    BlobClientOptions.ServiceVersion.V2020_08_04,
+        BlobClientOptions.ServiceVersion.V2020_06_12,
+        BlobClientOptions.ServiceVersion.V2020_08_04,
+        StorageVersionExtensions.LatestVersion,
+        StorageVersionExtensions.MaxVersion,
     RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
     LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
-    public class ChangeFeedTestBase : StorageTestBase
+    public class ChangeFeedTestBase : StorageTestBase<StorageTestEnvironment>
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
 

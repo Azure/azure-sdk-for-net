@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeleteNotebook
             NotebookDeleteNotebookOperation deleteNotebookOperation = client.StartDeleteNotebook(notebookName);
-            await deleteNotebookOperation.WaitForCompletionAsync();
+            await deleteNotebookOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

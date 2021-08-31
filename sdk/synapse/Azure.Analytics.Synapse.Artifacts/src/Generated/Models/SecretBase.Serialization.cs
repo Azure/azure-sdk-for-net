@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SecretBaseConverter))]
     public partial class SecretBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -40,6 +43,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SecretBase(type);
+        }
+
+        internal partial class SecretBaseConverter : JsonConverter<SecretBase>
+        {
+            public override void Write(Utf8JsonWriter writer, SecretBase model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SecretBase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSecretBase(document.RootElement);
+            }
         }
     }
 }

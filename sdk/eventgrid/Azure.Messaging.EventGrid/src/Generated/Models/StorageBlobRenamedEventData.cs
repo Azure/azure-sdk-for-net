@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.BlobRenamed event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.BlobRenamed event. </summary>
     public partial class StorageBlobRenamedEventData
     {
         /// <summary> Initializes a new instance of StorageBlobRenamedEventData. </summary>

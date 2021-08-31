@@ -57,14 +57,20 @@ namespace Azure.Search.Documents.Indexes.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Skills.Custom.WebApiSkill": return WebApiSkill.DeserializeWebApiSkill(element);
+                    case "#Microsoft.Skills.Text.CustomEntityLookupSkill": return CustomEntityLookupSkill.DeserializeCustomEntityLookupSkill(element);
                     case "#Microsoft.Skills.Text.EntityRecognitionSkill": return EntityRecognitionSkill.DeserializeEntityRecognitionSkill(element);
                     case "#Microsoft.Skills.Text.KeyPhraseExtractionSkill": return KeyPhraseExtractionSkill.DeserializeKeyPhraseExtractionSkill(element);
                     case "#Microsoft.Skills.Text.LanguageDetectionSkill": return LanguageDetectionSkill.DeserializeLanguageDetectionSkill(element);
                     case "#Microsoft.Skills.Text.MergeSkill": return MergeSkill.DeserializeMergeSkill(element);
+                    case "#Microsoft.Skills.Text.PIIDetectionSkill": return PiiDetectionSkill.DeserializePiiDetectionSkill(element);
                     case "#Microsoft.Skills.Text.SentimentSkill": return SentimentSkill.DeserializeSentimentSkill(element);
                     case "#Microsoft.Skills.Text.SplitSkill": return SplitSkill.DeserializeSplitSkill(element);
                     case "#Microsoft.Skills.Text.TranslationSkill": return TextTranslationSkill.DeserializeTextTranslationSkill(element);
+                    case "#Microsoft.Skills.Text.V3.EntityLinkingSkill": return EntityLinkingSkill.DeserializeEntityLinkingSkill(element);
+                    case "#Microsoft.Skills.Text.V3.EntityRecognitionSkill": return EntityRecognitionSkillV3.DeserializeEntityRecognitionSkillV3(element);
+                    case "#Microsoft.Skills.Text.V3.SentimentSkill": return SentimentSkillV3.DeserializeSentimentSkillV3(element);
                     case "#Microsoft.Skills.Util.ConditionalSkill": return ConditionalSkill.DeserializeConditionalSkill(element);
+                    case "#Microsoft.Skills.Util.DocumentExtractionSkill": return DocumentExtractionSkill.DeserializeDocumentExtractionSkill(element);
                     case "#Microsoft.Skills.Util.ShaperSkill": return ShaperSkill.DeserializeShaperSkill(element);
                     case "#Microsoft.Skills.Vision.ImageAnalysisSkill": return ImageAnalysisSkill.DeserializeImageAnalysisSkill(element);
                     case "#Microsoft.Skills.Vision.OcrSkill": return OcrSkill.DeserializeOcrSkill(element);

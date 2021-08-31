@@ -16,8 +16,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// The settings for the Upstream when the Azure SignalR is in server-less
-    /// mode.
+    /// The settings for the Upstream when the service is in server-less mode.
     /// </summary>
     public partial class ServerlessUpstreamSettings
     {

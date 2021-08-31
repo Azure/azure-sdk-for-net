@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server that the alias is pointing to.
         /// </param>
         /// <param name='dnsAliasName'>
-        /// The name of the server DNS alias.
+        /// The name of the server dns alias.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-03-01-preview";
+            string apiVersion = "2020-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Creates a server dns alias.
+        /// Creates a server DNS alias.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server that the alias is pointing to.
         /// </param>
         /// <param name='dnsAliasName'>
-        /// The name of the server DNS alias.
+        /// The name of the server dns alias.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server that the alias is pointing to.
         /// </param>
         /// <param name='dnsAliasName'>
-        /// The name of the server DNS alias.
+        /// The name of the server dns alias.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -351,7 +351,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-03-01-preview";
+            string apiVersion = "2020-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -522,15 +522,15 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> AcquireWithHttpMessagesAsync(string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerDnsAlias>> AcquireWithHttpMessagesAsync(string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginAcquireWithHttpMessagesAsync(resourceGroupName, serverName, dnsAliasName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ServerDnsAlias> _response = await BeginAcquireWithHttpMessagesAsync(resourceGroupName, serverName, dnsAliasName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Creates a server dns alias.
+        /// Creates a server DNS alias.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -540,7 +540,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server that the alias is pointing to.
         /// </param>
         /// <param name='dnsAliasName'>
-        /// The name of the server DNS alias.
+        /// The name of the server dns alias.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -581,7 +581,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-03-01-preview";
+            string apiVersion = "2020-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -762,7 +762,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server that the alias is pointing to.
         /// </param>
         /// <param name='dnsAliasName'>
-        /// The name of the server DNS alias.
+        /// The name of the server dns alias.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -800,7 +800,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-03-01-preview";
+            string apiVersion = "2020-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -958,6 +958,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -967,7 +970,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginAcquireWithHttpMessagesAsync(string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerDnsAlias>> BeginAcquireWithHttpMessagesAsync(string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -985,11 +988,15 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            if (parameters != null)
+            {
+                parameters.Validate();
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-03-01-preview";
+            string apiVersion = "2020-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1116,12 +1123,30 @@ namespace Microsoft.Azure.Management.Sql
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<ServerDnsAlias>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServerDnsAlias>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {

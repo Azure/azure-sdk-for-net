@@ -24,27 +24,27 @@ namespace Azure.Storage.Blobs
                 return default;
             }
 
-            QuerySerialization serialization = new QuerySerialization(new QueryFormat());
-
-            serialization.Format.DelimitedTextConfiguration = default;
-            serialization.Format.JsonTextConfiguration = default;
-            serialization.Format.ArrowConfiguration = default;
+            QuerySerialization serialization;
 
             if (textConfiguration is BlobQueryCsvTextOptions cvsTextConfiguration)
             {
-                serialization.Format.Type = QueryFormatType.Delimited;
-                serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal(
-                    columnSeparator: cvsTextConfiguration.ColumnSeparator?.ToString(CultureInfo.InvariantCulture),
-                    fieldQuote: cvsTextConfiguration.QuotationCharacter?.ToString(CultureInfo.InvariantCulture),
-                    recordSeparator: cvsTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture),
-                    escapeChar: cvsTextConfiguration.EscapeCharacter?.ToString(CultureInfo.InvariantCulture),
-                    headersPresent: cvsTextConfiguration.HasHeaders);
+                serialization = new QuerySerialization(new QueryFormat(QueryFormatType.Delimited));
+                serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal
+                {
+                    ColumnSeparator = cvsTextConfiguration.ColumnSeparator?.ToString(CultureInfo.InvariantCulture),
+                    FieldQuote = cvsTextConfiguration.QuotationCharacter?.ToString(CultureInfo.InvariantCulture),
+                    RecordSeparator = cvsTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture),
+                    EscapeChar = cvsTextConfiguration.EscapeCharacter?.ToString(CultureInfo.InvariantCulture),
+                    HeadersPresent = cvsTextConfiguration.HasHeaders
+                };
             }
             else if (textConfiguration is BlobQueryJsonTextOptions jsonTextConfiguration)
             {
-                serialization.Format.Type = QueryFormatType.Json;
-                serialization.Format.JsonTextConfiguration = new JsonTextConfigurationInternal(
-                    jsonTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture));
+                serialization = new QuerySerialization(new QueryFormat(QueryFormatType.Json));
+                serialization.Format.JsonTextConfiguration = new JsonTextConfigurationInternal
+                {
+                    RecordSeparator = jsonTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture)
+                };
             }
             else if (textConfiguration is BlobQueryArrowOptions arrowConfiguration)
             {
@@ -53,13 +53,22 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException($"{nameof(BlobQueryArrowOptions)} can only be used for output serialization.");
                 }
 
-                serialization.Format.Type = QueryFormatType.Arrow;
+                serialization = new QuerySerialization(new QueryFormat(QueryFormatType.Arrow));
                 serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal(
                     arrowConfiguration.Schema?.Select(ToArrowFieldInternal).ToList());
             }
+            else if (textConfiguration is BlobQueryParquetTextOptions parquetTextConfiguration)
+            {
+                if (!isInput)
+                {
+                    throw new ArgumentException($"{nameof(BlobQueryParquetTextOptions)} can only be used for input serialization.");
+                }
+
+                serialization = new QuerySerialization(new QueryFormat(QueryFormatType.Parquet));
+            }
             else
             {
-                throw new ArgumentException($"Invalid options type.  Valid options are {nameof(BlobQueryCsvTextOptions)}, {nameof(BlobQueryJsonTextOptions)}, and {nameof(BlobQueryArrowOptions)}");
+                throw new ArgumentException($"Invalid options type.  Valid options are {nameof(BlobQueryCsvTextOptions)}, {nameof(BlobQueryJsonTextOptions)}, {nameof(BlobQueryArrowOptions)}, and {nameof(BlobQueryParquetTextOptions)}");
             }
 
             return serialization;

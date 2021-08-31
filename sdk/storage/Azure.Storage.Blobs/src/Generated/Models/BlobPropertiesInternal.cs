@@ -13,8 +13,8 @@ namespace Azure.Storage.Blobs.Models
     internal partial class BlobPropertiesInternal
     {
         /// <summary> Initializes a new instance of BlobPropertiesInternal. </summary>
-        /// <param name="lastModified"> . </param>
-        /// <param name="etag"> . </param>
+        /// <param name="lastModified"></param>
+        /// <param name="etag"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
         internal BlobPropertiesInternal(DateTimeOffset lastModified, string etag)
         {
@@ -28,44 +28,47 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of BlobPropertiesInternal. </summary>
-        /// <param name="creationTime"> . </param>
-        /// <param name="lastModified"> . </param>
-        /// <param name="etag"> . </param>
+        /// <param name="creationTime"></param>
+        /// <param name="lastModified"></param>
+        /// <param name="etag"></param>
         /// <param name="contentLength"> Size in bytes. </param>
-        /// <param name="contentType"> . </param>
-        /// <param name="contentEncoding"> . </param>
-        /// <param name="contentLanguage"> . </param>
-        /// <param name="contentMD5"> . </param>
-        /// <param name="contentDisposition"> . </param>
-        /// <param name="cacheControl"> . </param>
-        /// <param name="blobSequenceNumber"> . </param>
-        /// <param name="blobType"> . </param>
-        /// <param name="leaseStatus"> . </param>
-        /// <param name="leaseState"> . </param>
-        /// <param name="leaseDuration"> . </param>
-        /// <param name="copyId"> . </param>
-        /// <param name="copyStatus"> . </param>
-        /// <param name="copySource"> . </param>
-        /// <param name="copyProgress"> . </param>
-        /// <param name="copyCompletionTime"> . </param>
-        /// <param name="copyStatusDescription"> . </param>
-        /// <param name="serverEncrypted"> . </param>
-        /// <param name="incrementalCopy"> . </param>
-        /// <param name="destinationSnapshot"> . </param>
-        /// <param name="deletedTime"> . </param>
-        /// <param name="remainingRetentionDays"> . </param>
-        /// <param name="accessTier"> . </param>
-        /// <param name="accessTierInferred"> . </param>
-        /// <param name="archiveStatus"> . </param>
-        /// <param name="customerProvidedKeySha256"> . </param>
+        /// <param name="contentType"></param>
+        /// <param name="contentEncoding"></param>
+        /// <param name="contentLanguage"></param>
+        /// <param name="contentMD5"></param>
+        /// <param name="contentDisposition"></param>
+        /// <param name="cacheControl"></param>
+        /// <param name="blobSequenceNumber"></param>
+        /// <param name="blobType"></param>
+        /// <param name="leaseStatus"></param>
+        /// <param name="leaseState"></param>
+        /// <param name="leaseDuration"></param>
+        /// <param name="copyId"></param>
+        /// <param name="copyStatus"></param>
+        /// <param name="copySource"></param>
+        /// <param name="copyProgress"></param>
+        /// <param name="copyCompletionTime"></param>
+        /// <param name="copyStatusDescription"></param>
+        /// <param name="serverEncrypted"></param>
+        /// <param name="incrementalCopy"></param>
+        /// <param name="destinationSnapshot"></param>
+        /// <param name="deletedTime"></param>
+        /// <param name="remainingRetentionDays"></param>
+        /// <param name="accessTier"></param>
+        /// <param name="accessTierInferred"></param>
+        /// <param name="archiveStatus"></param>
+        /// <param name="customerProvidedKeySha256"></param>
         /// <param name="encryptionScope"> The name of the encryption scope under which the blob is encrypted. </param>
-        /// <param name="accessTierChangeTime"> . </param>
-        /// <param name="tagCount"> . </param>
-        /// <param name="expiresOn"> . </param>
-        /// <param name="isSealed"> . </param>
+        /// <param name="accessTierChangeTime"></param>
+        /// <param name="tagCount"></param>
+        /// <param name="expiresOn"></param>
+        /// <param name="isSealed"></param>
         /// <param name="rehydratePriority"> If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard. </param>
-        /// <param name="lastAccessedOn"> . </param>
-        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, byte[] contentMD5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn)
+        /// <param name="lastAccessedOn"></param>
+        /// <param name="immutabilityPolicyExpiresOn"></param>
+        /// <param name="immutabilityPolicyMode"></param>
+        /// <param name="legalHold"></param>
+        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, byte[] contentMD5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
             CreationTime = creationTime;
             LastModified = lastModified;
@@ -104,6 +107,9 @@ namespace Azure.Storage.Blobs.Models
             IsSealed = isSealed;
             RehydratePriority = rehydratePriority;
             LastAccessedOn = lastAccessedOn;
+            ImmutabilityPolicyExpiresOn = immutabilityPolicyExpiresOn;
+            ImmutabilityPolicyMode = immutabilityPolicyMode;
+            LegalHold = legalHold;
         }
 
         public DateTimeOffset? CreationTime { get; }
@@ -146,5 +152,8 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard. </summary>
         public RehydratePriority? RehydratePriority { get; }
         public DateTimeOffset? LastAccessedOn { get; }
+        public DateTimeOffset? ImmutabilityPolicyExpiresOn { get; }
+        public BlobImmutabilityPolicyMode? ImmutabilityPolicyMode { get; }
+        public bool? LegalHold { get; }
     }
 }

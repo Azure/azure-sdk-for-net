@@ -8,7 +8,7 @@
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Response containing full time series model settings which include model name, Time Series ID properties and default type ID. </summary>
-    public partial class ModelSettingsResponse
+    internal partial class ModelSettingsResponse
     {
         /// <summary> Initializes a new instance of ModelSettingsResponse. </summary>
         internal ModelSettingsResponse()

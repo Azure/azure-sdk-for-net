@@ -26,11 +26,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        public IngestionJobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "0.2-preview.0")
+        public IngestionJobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "0.2-preview.1")
         {
-            endpoint ??= new Uri("");
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? new Uri("");
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;

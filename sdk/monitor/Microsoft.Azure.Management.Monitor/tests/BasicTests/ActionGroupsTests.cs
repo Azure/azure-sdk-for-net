@@ -154,7 +154,7 @@ namespace Monitor.Tests.BasicTests
             monitorManagementClient = GetMonitorManagementClient(handler);
 
             AzureOperationResponse response = monitorManagementClient.ActionGroups.DeleteWithHttpMessagesAsync(
-                resourceGroupName: " rg1",
+                resourceGroupName: "rg1",
                 actionGroupName: "name1").Result;
 
             Assert.Equal(HttpStatusCode.OK, response.Response.StatusCode);
@@ -172,7 +172,7 @@ namespace Monitor.Tests.BasicTests
             monitorManagementClient = GetMonitorManagementClient(handler);
 
             AzureOperationResponse response = monitorManagementClient.ActionGroups.EnableReceiverWithHttpMessagesAsync(
-                resourceGroupName: " rg1", 
+                resourceGroupName: "rg1", 
                 actionGroupName: "name1",
                 receiverName: "receiverName1").Result;
 

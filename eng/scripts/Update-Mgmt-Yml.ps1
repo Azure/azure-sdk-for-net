@@ -38,7 +38,14 @@ $PrIncludes = New-Object "System.Collections.Generic.List[String]"
 
 $MgmtDirs = Get-ChildItem -Path "$PackagesPath" -Directory -Recurse -Depth 1 | Where-Object { $_.FullName -match "(.Microsoft\.Azure(Stack)?\.Management.)|(.\\mgmt)" }
 
+$Includes.Add('Directory.Build.props')
+$Includes.Add('Directory.Build.targets')
+$Includes.Add('mgmt.proj')
+$Includes.Add('eng/mgmt.proj')
 $Includes.Add('eng/pipelines/mgmt.yml')
+$Includes.Add('eng/mgmt')
+$Includes.Add('sdk/mgmtcommon')
+
 # Add Each client path to the exclude list
 foreach ($Item in $MgmtDirs) {
     $IncludePath = $Item.FullName.Substring($Item.FullName.IndexOf("sdk\"))
@@ -50,6 +57,7 @@ foreach ($Item in $MgmtDirs) {
 
 # Ci and Pr section
 $PrIncludes.Add('master')
+$PrIncludes.Add('main')
 $PrIncludes.Add('*-preview')
 $PrBranches.Add("include", $PrIncludes)
 $PrPaths.Add("include", $Includes)

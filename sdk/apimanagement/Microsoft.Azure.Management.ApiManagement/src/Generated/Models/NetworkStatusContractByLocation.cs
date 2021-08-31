@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -60,11 +61,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Location != null)
+            {
+                if (Location.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Location", 1);
+                }
+            }
             if (NetworkStatus != null)
             {
                 NetworkStatus.Validate();

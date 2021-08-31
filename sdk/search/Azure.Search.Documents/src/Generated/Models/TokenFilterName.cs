@@ -89,7 +89,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TokenFilterName Length { get; } = new TokenFilterName(LengthValue);
         /// <summary> Limits the number of tokens while indexing. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/LimitTokenCountFilter.html. </summary>
         public static TokenFilterName Limit { get; } = new TokenFilterName(LimitValue);
-        /// <summary> Normalizes token text to lower case. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/LowerCaseFilter.htm. </summary>
+        /// <summary> Normalizes token text to lower case. See https://lucene.apache.org/core/6_6_1/analyzers-common/org/apache/lucene/analysis/core/LowerCaseFilter.html. </summary>
         public static TokenFilterName Lowercase { get; } = new TokenFilterName(LowercaseValue);
         /// <summary> Generates n-grams of the given size(s). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenFilter.html. </summary>
         public static TokenFilterName NGram { get; } = new TokenFilterName(NGramValue);
@@ -121,7 +121,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TokenFilterName Truncate { get; } = new TokenFilterName(TruncateValue);
         /// <summary> Filters out tokens with same text as the previous token. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/RemoveDuplicatesTokenFilter.html. </summary>
         public static TokenFilterName Unique { get; } = new TokenFilterName(UniqueValue);
-        /// <summary> Normalizes token text to upper case. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/UpperCaseFilter.html. </summary>
+        /// <summary> Normalizes token text to upper case. See https://lucene.apache.org/core/6_6_1/analyzers-common/org/apache/lucene/analysis/core/UpperCaseFilter.html. </summary>
         public static TokenFilterName Uppercase { get; } = new TokenFilterName(UppercaseValue);
         /// <summary> Splits words into subwords and performs optional transformations on subword groups. </summary>
         public static TokenFilterName WordDelimiter { get; } = new TokenFilterName(WordDelimiterValue);

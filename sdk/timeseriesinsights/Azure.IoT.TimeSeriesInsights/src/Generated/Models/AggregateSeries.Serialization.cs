@@ -10,49 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class AggregateSeries : IUtf8JsonSerializable
+    internal partial class AggregateSeries : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("timeSeriesId");
-            writer.WriteStartArray();
-            foreach (var item in TimeSeriesId)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("searchSpan");
-            writer.WriteObjectValue(SearchSpan);
-            if (Optional.IsDefined(Filter))
-            {
-                writer.WritePropertyName("filter");
-                writer.WriteObjectValue(Filter);
-            }
-            writer.WritePropertyName("interval");
-            writer.WriteStringValue(Interval, "P");
-            if (Optional.IsCollectionDefined(ProjectedVariables))
-            {
-                writer.WritePropertyName("projectedVariables");
-                writer.WriteStartArray();
-                foreach (var item in ProjectedVariables)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(InlineVariables))
-            {
-                writer.WritePropertyName("inlineVariables");
-                writer.WriteStartObject();
-                foreach (var item in InlineVariables)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WriteEndObject();
-        }
     }
 }

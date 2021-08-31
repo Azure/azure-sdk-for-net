@@ -32,10 +32,19 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// the subnet.</param>
         /// <param name="utilityAddresses">Array of additional IP addresses
         /// used by this Cache.</param>
-        public CacheNetworkSettings(int? mtu = default(int?), IList<string> utilityAddresses = default(IList<string>))
+        /// <param name="dnsServers">DNS servers for the cache to use.  It will
+        /// be set from the network configuration if no value is
+        /// provided.</param>
+        /// <param name="dnsSearchDomain">DNS search domain</param>
+        /// <param name="ntpServer">NTP server IP Address or FQDN for the cache
+        /// to use. The default is time.windows.com.</param>
+        public CacheNetworkSettings(int? mtu = default(int?), IList<string> utilityAddresses = default(IList<string>), IList<string> dnsServers = default(IList<string>), string dnsSearchDomain = default(string), string ntpServer = default(string))
         {
             Mtu = mtu;
             UtilityAddresses = utilityAddresses;
+            DnsServers = dnsServers;
+            DnsSearchDomain = dnsSearchDomain;
+            NtpServer = ntpServer;
             CustomInit();
         }
 
@@ -56,6 +65,26 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </summary>
         [JsonProperty(PropertyName = "utilityAddresses")]
         public IList<string> UtilityAddresses { get; private set; }
+
+        /// <summary>
+        /// Gets or sets DNS servers for the cache to use.  It will be set from
+        /// the network configuration if no value is provided.
+        /// </summary>
+        [JsonProperty(PropertyName = "dnsServers")]
+        public IList<string> DnsServers { get; set; }
+
+        /// <summary>
+        /// Gets or sets DNS search domain
+        /// </summary>
+        [JsonProperty(PropertyName = "dnsSearchDomain")]
+        public string DnsSearchDomain { get; set; }
+
+        /// <summary>
+        /// Gets or sets NTP server IP Address or FQDN for the cache to use.
+        /// The default is time.windows.com.
+        /// </summary>
+        [JsonProperty(PropertyName = "ntpServer")]
+        public string NtpServer { get; set; }
 
         /// <summary>
         /// Validate the object.

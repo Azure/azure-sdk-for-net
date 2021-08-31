@@ -218,7 +218,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeDirectoryClient(Uri directoryUri, TokenCredential credential)
-            : this(directoryUri, credential.AsPolicy(), null, null)
+            : this(directoryUri, credential.AsPolicy(new DataLakeClientOptions()), null, null)
         {
             Errors.VerifyHttpsTokenAuth(directoryUri);
         }
@@ -241,7 +241,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeDirectoryClient(Uri directoryUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(directoryUri, credential.AsPolicy(), options, null)
+            : this(directoryUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(directoryUri);
         }
@@ -2434,6 +2434,15 @@ namespace Azure.Storage.Files.DataLake
         public override Uri GenerateSasUri(DataLakeSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+
+            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
+            builder = DataLakeSasBuilder.DeepCopy(builder);
+
+            // Assign builder's IsDirectory, FileSystemName, and Path, if they are null.
+            builder.IsDirectory ??= GetType() == typeof(DataLakeDirectoryClient);
+            builder.FileSystemName ??= FileSystemName;
+            builder.Path ??= Path;
+
             if (!builder.IsDirectory.GetValueOrDefault(false))
             {
                 throw Errors.SasIncorrectResourceType(
@@ -2458,7 +2467,7 @@ namespace Azure.Storage.Files.DataLake
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };
             return sasUri.ToUri();
         }

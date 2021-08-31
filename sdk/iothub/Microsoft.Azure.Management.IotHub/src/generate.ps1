@@ -1,10 +1,10 @@
 # Important to note: 
 # Configuration for the code generation including target swagger file and code generation settings can be found here:
-# https://github.com/Azure/azure-rest-api-specs/tree/master/specification/digitaltwins/resource-manager
+# https://github.com/Azure/azure-rest-api-specs/tree/master/specification/iothub/resource-manager
 
 try
 {
-	Start-AutoRestCodeGeneration -ResourceProvider "iothub/resource-manager" -AutoRestVersion "v2" -ConfigFileTag "package-2020-03"
+	Start-AutoRestCodeGeneration -ResourceProvider "iothub/resource-manager" -AutoRestVersion "v2"
 }
 catch
 {

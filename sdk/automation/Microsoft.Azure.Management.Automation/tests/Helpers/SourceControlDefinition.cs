@@ -47,15 +47,15 @@ namespace Automation.Tests.Helpers
         public static SourceControlDefinition TestSimpleSourceControlDefinition = 
             new SourceControlDefinition(
                 "swaggerSourceControl",
-                "https://miaromero.visualstudio.com/_git/Marvin",
-                "master",
-                "/FolderOne",
+                "https://dev.azure.com/vinkumar0563/_git/VinKumar-AzureAutomation",
+                "sdkTest",
+                "/Runbooks/PowershellScripts",
                 false,
                 true,
                 "VsoGit",
-                "xjarxmpjtlv3bqxs22nxfhsimfy6joouqa2sq5sl2hvi6hnrrnyq",
+                "p26mwl3frnfa4l5i6a7zjfog7k75qeac7otyfa76q3ceajmrnjoq",
                 "test creating a Source Control",
-                "BranchTwo",
+                "sdkTest2",
                 false
             );
     }

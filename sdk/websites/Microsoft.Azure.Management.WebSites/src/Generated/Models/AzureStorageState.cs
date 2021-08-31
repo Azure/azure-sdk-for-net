@@ -26,7 +26,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [EnumMember(Value = "InvalidCredentials")]
         InvalidCredentials,
         [EnumMember(Value = "InvalidShare")]
-        InvalidShare
+        InvalidShare,
+        [EnumMember(Value = "NotValidated")]
+        NotValidated
     }
     internal static class AzureStorageStateEnumExtension
     {
@@ -45,6 +47,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return "InvalidCredentials";
                 case AzureStorageState.InvalidShare:
                     return "InvalidShare";
+                case AzureStorageState.NotValidated:
+                    return "NotValidated";
             }
             return null;
         }
@@ -59,6 +63,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return AzureStorageState.InvalidCredentials;
                 case "InvalidShare":
                     return AzureStorageState.InvalidShare;
+                case "NotValidated":
+                    return AzureStorageState.NotValidated;
             }
             return null;
         }

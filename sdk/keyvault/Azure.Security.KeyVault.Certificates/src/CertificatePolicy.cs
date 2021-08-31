@@ -127,7 +127,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// Use this constructor if, for example, you want to import a PEM-encoded certificate. The <see cref="IssuerName"/> will be
         /// <see cref="WellKnownIssuerNames.Unknown"/> and the <see cref="Subject"/> and <see cref="SubjectAlternativeNames"/> will
         /// be parsed from the imported certificate.
-        /// <code snippet="Snippet:CertificateClientLiveTests_VerifyImportCertificatePem">
+        /// <code snippet="Snippet:CertificateClientLiveTests_VerifyImportCertificatePem" language="csharp">
         /// byte[] certificateBytes = File.ReadAllBytes(&quot;certificate.pem&quot;);
         ///
         /// ImportCertificateOptions options = new ImportCertificateOptions(certificateName, certificateBytes)

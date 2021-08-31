@@ -130,14 +130,14 @@ namespace Azure.Storage.Blobs.Models
                 {
                     blobSizeIndex = 3;
 
-                    start = int.Parse(tokens[1], CultureInfo.InvariantCulture);
-                    end = int.Parse(tokens[2], CultureInfo.InvariantCulture);
+                    start = long.Parse(tokens[1], CultureInfo.InvariantCulture);
+                    end = long.Parse(tokens[2], CultureInfo.InvariantCulture);
                 }
 
                 var rawSize = tokens[blobSizeIndex];
                 if (rawSize != WildcardMarker)
                 {
-                    size = int.Parse(rawSize, CultureInfo.InvariantCulture);
+                    size = long.Parse(rawSize, CultureInfo.InvariantCulture);
                 }
 
                 return new ContentRange(unit, start, end, size);

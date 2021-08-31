@@ -5,13 +5,13 @@
 
 #nullable disable
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary> The body of the JWT used for the PolicyCertificates APIs. </summary>
-    public partial class PolicyCertificateModification
+    internal partial class PolicyCertificateModification
     {
         /// <summary> Initializes a new instance of PolicyCertificateModification. </summary>
-        internal PolicyCertificateModification()
+        public PolicyCertificateModification()
         {
         }
 

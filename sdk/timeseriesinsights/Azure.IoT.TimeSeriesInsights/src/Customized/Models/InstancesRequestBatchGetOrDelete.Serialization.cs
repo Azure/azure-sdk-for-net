@@ -10,7 +10,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// This class definition overrides serialization implementation in order to turn Time
     /// Series Ids from a strongly typed object to an list of objects that the service can understand.
     /// </summary>
-    public partial class InstancesRequestBatchGetOrDelete : IUtf8JsonSerializable
+    internal partial class InstancesRequestBatchGetOrDelete : IUtf8JsonSerializable
     {
         // This class declaration overrides the logic that serializes the object. More specifically, to
         // serialize "timeSeriesIds". Since TimeSeriesIds changed from a list of objects to a strongly
@@ -28,7 +28,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 foreach (TimeSeriesId item in TimeSeriesIds)
                 {
                     writer.WriteStartArray();
-                    foreach (var item0 in item.ToArray())
+                    foreach (var item0 in item.ToStringArray())
                     {
                         writer.WriteObjectValue(item0);
                     }

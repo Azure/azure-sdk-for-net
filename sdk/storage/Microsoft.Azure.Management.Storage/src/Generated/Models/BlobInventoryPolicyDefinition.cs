@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An object that defines the blob inventory rule. Each definition
-    /// consists of a set of filters.
+    /// An object that defines the blob inventory rule.
     /// </summary>
     public partial class BlobInventoryPolicyDefinition
     {
@@ -33,11 +34,39 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the BlobInventoryPolicyDefinition
         /// class.
         /// </summary>
+        /// <param name="format">This is a required field, it specifies the
+        /// format for the inventory files. Possible values include: 'Csv',
+        /// 'Parquet'</param>
+        /// <param name="schedule">This is a required field. This field is used
+        /// to schedule an inventory formation. Possible values include:
+        /// 'Daily', 'Weekly'</param>
+        /// <param name="objectType">This is a required field. This field
+        /// specifies the scope of the inventory created either at the blob or
+        /// container level. Possible values include: 'Blob',
+        /// 'Container'</param>
+        /// <param name="schemaFields">This is a required field. This field
+        /// specifies the fields and properties of the object to be included in
+        /// the inventory. The Schema field value 'Name' is always required.
+        /// The valid values for this field for the 'Blob'
+        /// definition.objectType include 'Name, Creation-Time, Last-Modified,
+        /// Content-Length, Content-MD5, BlobType, AccessTier,
+        /// AccessTierChangeTime, Expiry-Time, hdi_isfolder, Owner, Group,
+        /// Permissions, Acl, Snapshot, VersionId, IsCurrentVersion, Metadata,
+        /// LastAccessTime'. The valid values for 'Container'
+        /// definition.objectType include 'Name, Last-Modified, Metadata,
+        /// LeaseStatus, LeaseState, LeaseDuration, PublicAccess,
+        /// HasImmutabilityPolicy, HasLegalHold'. Schema field values
+        /// 'Expiry-Time, hdi_isfolder, Owner, Group, Permissions, Acl' are
+        /// valid only for Hns enabled accounts.</param>
         /// <param name="filters">An object that defines the filter
         /// set.</param>
-        public BlobInventoryPolicyDefinition(BlobInventoryPolicyFilter filters)
+        public BlobInventoryPolicyDefinition(string format, string schedule, string objectType, IList<string> schemaFields, BlobInventoryPolicyFilter filters = default(BlobInventoryPolicyFilter))
         {
             Filters = filters;
+            Format = format;
+            Schedule = schedule;
+            ObjectType = objectType;
+            SchemaFields = schemaFields;
             CustomInit();
         }
 
@@ -53,6 +82,47 @@ namespace Microsoft.Azure.Management.Storage.Models
         public BlobInventoryPolicyFilter Filters { get; set; }
 
         /// <summary>
+        /// Gets or sets this is a required field, it specifies the format for
+        /// the inventory files. Possible values include: 'Csv', 'Parquet'
+        /// </summary>
+        [JsonProperty(PropertyName = "format")]
+        public string Format { get; set; }
+
+        /// <summary>
+        /// Gets or sets this is a required field. This field is used to
+        /// schedule an inventory formation. Possible values include: 'Daily',
+        /// 'Weekly'
+        /// </summary>
+        [JsonProperty(PropertyName = "schedule")]
+        public string Schedule { get; set; }
+
+        /// <summary>
+        /// Gets or sets this is a required field. This field specifies the
+        /// scope of the inventory created either at the blob or container
+        /// level. Possible values include: 'Blob', 'Container'
+        /// </summary>
+        [JsonProperty(PropertyName = "objectType")]
+        public string ObjectType { get; set; }
+
+        /// <summary>
+        /// Gets or sets this is a required field. This field specifies the
+        /// fields and properties of the object to be included in the
+        /// inventory. The Schema field value 'Name' is always required. The
+        /// valid values for this field for the 'Blob' definition.objectType
+        /// include 'Name, Creation-Time, Last-Modified, Content-Length,
+        /// Content-MD5, BlobType, AccessTier, AccessTierChangeTime,
+        /// Expiry-Time, hdi_isfolder, Owner, Group, Permissions, Acl,
+        /// Snapshot, VersionId, IsCurrentVersion, Metadata, LastAccessTime'.
+        /// The valid values for 'Container' definition.objectType include
+        /// 'Name, Last-Modified, Metadata, LeaseStatus, LeaseState,
+        /// LeaseDuration, PublicAccess, HasImmutabilityPolicy, HasLegalHold'.
+        /// Schema field values 'Expiry-Time, hdi_isfolder, Owner, Group,
+        /// Permissions, Acl' are valid only for Hns enabled accounts.
+        /// </summary>
+        [JsonProperty(PropertyName = "schemaFields")]
+        public IList<string> SchemaFields { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -60,13 +130,21 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Filters == null)
+            if (Format == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Filters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Format");
             }
-            if (Filters != null)
+            if (Schedule == null)
             {
-                Filters.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "Schedule");
+            }
+            if (ObjectType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ObjectType");
+            }
+            if (SchemaFields == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SchemaFields");
             }
         }
     }

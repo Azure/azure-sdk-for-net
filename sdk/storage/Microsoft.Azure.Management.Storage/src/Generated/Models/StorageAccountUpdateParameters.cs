@@ -55,6 +55,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// name property.</param>
         /// <param name="encryption">Provides the encryption settings on the
         /// account. The default setting is unencrypted.</param>
+        /// <param name="sasPolicy">SasPolicy assigned to the storage
+        /// account.</param>
+        /// <param name="keyPolicy">KeyPolicy assigned to the storage
+        /// account.</param>
         /// <param name="accessTier">Required for storage accounts where kind =
         /// BlobStorage. The access tier used for billing. Possible values
         /// include: 'Hot', 'Cool'</param>
@@ -81,17 +85,22 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// access signatures, must be authorized with Azure Active Directory
         /// (Azure AD). The default value is null, which is equivalent to
         /// true.</param>
+        /// <param name="allowCrossTenantReplication">Allow or disallow cross
+        /// AAD tenant object replication. The default interpretation is true
+        /// for this property.</param>
         /// <param name="kind">Optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
         /// 'BlockBlobStorage'</param>
-        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), string kind = default(string))
+        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? allowCrossTenantReplication = default(bool?), string kind = default(string))
         {
             Sku = sku;
             Tags = tags;
             Identity = identity;
             CustomDomain = customDomain;
             Encryption = encryption;
+            SasPolicy = sasPolicy;
+            KeyPolicy = keyPolicy;
             AccessTier = accessTier;
             AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
@@ -101,6 +110,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             AllowBlobPublicAccess = allowBlobPublicAccess;
             MinimumTlsVersion = minimumTlsVersion;
             AllowSharedKeyAccess = allowSharedKeyAccess;
+            AllowCrossTenantReplication = allowCrossTenantReplication;
             Kind = kind;
             CustomInit();
         }
@@ -149,6 +159,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets sasPolicy assigned to the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sasPolicy")]
+        public SasPolicy SasPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets keyPolicy assigned to the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyPolicy")]
+        public KeyPolicy KeyPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets required for storage accounts where kind =
@@ -220,6 +242,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         public bool? AllowSharedKeyAccess { get; set; }
 
         /// <summary>
+        /// Gets or sets allow or disallow cross AAD tenant object replication.
+        /// The default interpretation is true for this property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowCrossTenantReplication")]
+        public bool? AllowCrossTenantReplication { get; set; }
+
+        /// <summary>
         /// Gets or sets optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
@@ -251,6 +280,14 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (Encryption != null)
             {
                 Encryption.Validate();
+            }
+            if (SasPolicy != null)
+            {
+                SasPolicy.Validate();
+            }
+            if (KeyPolicy != null)
+            {
+                KeyPolicy.Validate();
             }
             if (AzureFilesIdentityBasedAuthentication != null)
             {

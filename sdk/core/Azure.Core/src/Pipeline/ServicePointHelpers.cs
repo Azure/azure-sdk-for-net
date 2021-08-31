@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Azure.Core.Pipeline
@@ -26,7 +28,12 @@ namespace Azure.Core.Pipeline
         private const int IncreasedConnectionLimit = 50;
         private const int IncreasedConnectionLeaseTimeout = 300 * 1000;
 
-#if NETFRAMEWORK || NETSTANDARD
+#pragma warning disable CA1823 // Unused field
+        private static TimeSpan DefaultConnectionLeaseTimeoutTimeSpan = Timeout.InfiniteTimeSpan;
+        private static TimeSpan IncreasedConnectionLeaseTimeoutTimeSpan = TimeSpan.FromMilliseconds(IncreasedConnectionLeaseTimeout);
+#pragma warning restore
+
+#if NETFRAMEWORK
         private const int DefaultConnectionLeaseTimeout = Timeout.Infinite;
 
         public static void SetLimits(ServicePoint requestServicePoint)
@@ -42,30 +49,52 @@ namespace Azure.Core.Pipeline
                 requestServicePoint.ConnectionLeaseTimeout = IncreasedConnectionLeaseTimeout;
             }
         }
-
-        public static void SetLimits(HttpClientHandler httpClientHandler)
-        {
-            // Only change when the default runtime limit is used
-            if (httpClientHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
-            {
-                httpClientHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
-            }
-        }
-#else // NETCOREAPP +
-        private static TimeSpan DefaultConnectionLeaseTimeoutTimeSpan = Timeout.InfiniteTimeSpan;
-        private static TimeSpan IncreasedConnectionLeaseTimeoutTimeSpan = TimeSpan.FromMilliseconds(IncreasedConnectionLeaseTimeout);
-
-        public static void SetLimits(SocketsHttpHandler socketsHttpHandler)
-        {
-            if (socketsHttpHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
-            {
-                socketsHttpHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
-            }
-            if (socketsHttpHandler.PooledConnectionLifetime == DefaultConnectionLeaseTimeoutTimeSpan)
-            {
-                socketsHttpHandler.PooledConnectionLifetime = IncreasedConnectionLeaseTimeoutTimeSpan;
-            }
-        }
 #endif
+        public static void SetLimits(HttpMessageHandler messageHandler)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+            {
+                return;
+            }
+
+            try
+            {
+                switch (messageHandler)
+                {
+                    case HttpClientHandler httpClientHandler:
+                        // Only change when the default runtime limit is used
+                        if (httpClientHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
+                        {
+                            httpClientHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
+                        }
+                        break;
+#if NETCOREAPP
+                case SocketsHttpHandler socketsHttpHandler:
+                    if (socketsHttpHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
+                    {
+                        socketsHttpHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
+                    }
+                    if (socketsHttpHandler.PooledConnectionLifetime == DefaultConnectionLeaseTimeoutTimeSpan)
+                    {
+                        socketsHttpHandler.PooledConnectionLifetime = IncreasedConnectionLeaseTimeoutTimeSpan;
+                    }
+                    break;
+#endif
+                    default:
+                        Debug.Assert(false, "Unknown handler type");
+                        break;
+                }
+            }
+            catch (NotSupportedException)
+            {
+                // Some platforms might throw NotSupportedException
+                // when accessing handler options
+            }
+            catch (NotImplementedException)
+            {
+                // Some platforms (like Unity) might throw NotImplementedException
+                // when accessing handler options
+            }
+        }
     }
 }

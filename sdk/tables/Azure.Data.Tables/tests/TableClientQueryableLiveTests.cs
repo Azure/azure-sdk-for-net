@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Data.Tables.Queryable;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
@@ -463,7 +462,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(2));
 
             // 8. Filter on Binary
-            results = await client.QueryAsync<TableEntity>(ent => ent.GetBinary("Binary") == thirdEntity.Binary).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetBinaryData("Binary") == thirdEntity.Binary).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(1));
 

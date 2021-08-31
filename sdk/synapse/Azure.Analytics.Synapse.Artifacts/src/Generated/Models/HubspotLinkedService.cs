@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="clientId"> The client ID associated with your Hubspot application. </param>
         /// <param name="clientSecret"> The client secret associated with your Hubspot application. </param>
         /// <param name="accessToken"> The access token obtained when initially authenticating your OAuth integration. </param>

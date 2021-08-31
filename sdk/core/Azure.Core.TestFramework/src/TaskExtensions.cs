@@ -27,6 +27,20 @@ namespace Azure.Core.TestFramework
             return task.TimeoutAfter(DefaultTimeout, filePath, lineNumber);
         }
 
+        public static ValueTask<T> TimeoutAfterDefault<T>(this ValueTask<T> task,
+            [CallerFilePath] string filePath = null,
+            [CallerLineNumber] int lineNumber = default)
+        {
+            return task.TimeoutAfter(DefaultTimeout, filePath, lineNumber);
+        }
+
+        public static ValueTask TimeoutAfterDefault(this ValueTask task,
+            [CallerFilePath] string filePath = null,
+            [CallerLineNumber] int lineNumber = default)
+        {
+            return task.TimeoutAfter(DefaultTimeout, filePath, lineNumber);
+        }
+
         public static async Task<T> TimeoutAfter<T>(this Task<T> task, TimeSpan timeout,
             [CallerFilePath] string filePath = null,
             [CallerLineNumber] int lineNumber = default)
@@ -72,6 +86,20 @@ namespace Azure.Core.TestFramework
             {
                 throw new TimeoutException(CreateMessage(timeout, filePath, lineNumber));
             }
+        }
+
+        public static ValueTask<T> TimeoutAfter<T>(this ValueTask<T> task, TimeSpan timeout,
+            [CallerFilePath] string filePath = null,
+            [CallerLineNumber] int lineNumber = default)
+        {
+            return new(TimeoutAfter(task.AsTask(), timeout, filePath, lineNumber));
+        }
+
+        public static ValueTask TimeoutAfter(this ValueTask task, TimeSpan timeout,
+            [CallerFilePath] string filePath = null,
+            [CallerLineNumber] int lineNumber = default)
+        {
+            return new(TimeoutAfter(task.AsTask(), timeout, filePath, lineNumber));
         }
 
         private static string CreateMessage(TimeSpan timeout, string filePath, int lineNumber)

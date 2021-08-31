@@ -11,6 +11,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
@@ -124,7 +125,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [Ignore("#10044: Re-enable failing Storage tests")]
         public void Ctor_CPK_EncryptionScope()
         {
             // Arrange
@@ -172,6 +172,25 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new BlobClient(blobUri, new AzureSasCredential(sas)),
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
+        public void Ctor_With_Sas_Does_Not_Reorder_Services()
+        {
+            // Arrange
+            var uri = new Uri("http://127.0.0.1/accountName/foo/bar?sv=2015-04-05&ss=bqtf&srt=sco&st=2021-03-29T02%3A25%3A53Z&se=2021-06-09T02%3A40%3A53Z&sp=crwdlaup&sig=XXXXX");
+            var transport = new MockTransport(r => new MockResponse(404));
+            var clientOptions = new BlobClientOptions()
+            {
+                Transport = transport
+            };
+
+            // Act
+            var client = new BlobClient(uri, clientOptions);
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetPropertiesAsync());
+
+            // Act
+            StringAssert.Contains("ss=bqtf", transport.SingleRequest.Uri.ToString());
         }
 
         #region Upload
@@ -1268,8 +1287,8 @@ namespace Azure.Storage.Blobs.Test
             string containerName = GetNewContainerName();
             string blobName = "my/blob/name";
             string snapshot = "2020-07-03T12:45:46.1234567Z";
-            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
-            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?snapshot={snapshot}");
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}");
+            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}?snapshot={snapshot}");
 
             // Act
             BlobClient blobClient = new BlobClient(uri);
@@ -1297,8 +1316,8 @@ namespace Azure.Storage.Blobs.Test
             string containerName = GetNewContainerName();
             string blobName = "my/blob/name";
             string versionId = "2020-07-03T12:45:46.1234567Z";
-            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
-            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?versionid={versionId}");
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}");
+            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}?versionid={versionId}");
 
             // Act
             BlobClient blobClient = new BlobClient(uri);

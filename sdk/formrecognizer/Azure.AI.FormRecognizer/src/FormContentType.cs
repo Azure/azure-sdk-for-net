@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
@@ -46,28 +44,10 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Used for BMP files.
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// </remarks>
         [CodeGenMember("ImageBmp")]
         Bmp,
-    }
-
-    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Small extensions, good to keep here.")]
-    internal static class FormContentTypeExtension
-    {
-        /// <summary>
-        /// Converts this instance into an equivalent <see cref="ContentType1"/>.
-        /// </summary>
-        /// <returns>The equivalent <see cref="ContentType1"/>.</returns>
-
-        internal static ContentType1 ConvertToContentType1(this FormContentType type)
-        {
-            return type switch
-            {
-                FormContentType.Pdf => ContentType1.ApplicationPdf,
-                FormContentType.Jpeg => ContentType1.ImageJpeg,
-                FormContentType.Png => ContentType1.ImagePng,
-                FormContentType.Tiff => ContentType1.ImageTiff,
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown FormContentType value."),
-            };
-        }
     }
 }

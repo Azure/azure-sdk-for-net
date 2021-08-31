@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DeleteDataFlowDebugSessionRequestConverter))]
     public partial class DeleteDataFlowDebugSessionRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -26,6 +29,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(DataFlowName);
             }
             writer.WriteEndObject();
+        }
+
+        internal partial class DeleteDataFlowDebugSessionRequestConverter : JsonConverter<DeleteDataFlowDebugSessionRequest>
+        {
+            public override void Write(Utf8JsonWriter writer, DeleteDataFlowDebugSessionRequest model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DeleteDataFlowDebugSessionRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

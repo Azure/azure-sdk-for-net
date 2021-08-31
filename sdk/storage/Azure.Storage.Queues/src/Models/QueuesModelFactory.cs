@@ -4,12 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
     /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
+    [CodeGenType("AzureQueueStorageModelFactory")]
     public static partial class QueuesModelFactory
     {
         /// <summary>

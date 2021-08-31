@@ -3,7 +3,7 @@ resources:
   - pipeline: net-core
     project: internal
     source: net - core
-    branch: master
+    branch: main
     tags: 
     - scheduled
 
@@ -12,7 +12,7 @@ trigger: none
 pr:
   branches:
     include:
-      - master
+      - main
   paths:
     include:
       - eng/pipelines/aggregate-reports.yml
@@ -31,6 +31,17 @@ jobs:
       - download: net-core
         artifact: packages
         patterns: '*'
+
+      - pwsh: |
+          npx cspell lint `
+            --config ./.vscode/cspell.json `
+            --no-must-find-files `
+            'sdk/*/*/api/*.cs'
+        displayName: Check spelling of public API surface
+        # Spelling errors in public api surface are not blockers yet but will
+        # become blockers when this is rolled out to all services. For now, turn
+        # the pipeline yellow if spelling errors are detected but do not block.
+        continueOnError: true
 
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:

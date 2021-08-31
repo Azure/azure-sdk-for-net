@@ -4,8 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/cf9d9c44d990d82a763cf8c23a324de337e387a5/specification/eventgrid/data-plane/readme.md
-
+require: https://github.com/Azure/azure-rest-api-specs/blob/504bc4ece6c4a1ad983f148237c71a3f72fc977f/specification/eventgrid/data-plane/readme.md
 ```
 
 ## Swagger workarounds
@@ -38,7 +37,7 @@ directive:
     $.ResourceWriteSuccessData["x-ms-client-name"] = "ResourceWriteSuccessEventData";
 ```
 
-### Fix casing
+### Fix casing of Redis events
 
 ``` yaml
 directive:
@@ -47,6 +46,35 @@ directive:
   transform: >
     $.RedisExportRDBCompletedEventData["x-ms-client-name"] = "RedisExportRdbCompletedEventData";
     $.RedisImportRDBCompletedEventData["x-ms-client-name"] = "RedisImportRdbCompletedEventData";
+```
+
+### Fix casing of KeyVault events
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.KeyVaultVaultAccessPolicyChangedEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultVaultAccessPolicyChangedEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultCertificateNewVersionCreatedEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultCertificateNewVersionCreatedEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultCertificateNearExpiryEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultCertificateNearExpiryEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultCertificateExpiredEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultCertificateExpiredEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultKeyNewVersionCreatedEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultKeyNewVersionCreatedEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultKeyNearExpiryEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultKeyNearExpiryEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultKeyExpiredEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultKeyExpiredEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultSecretNewVersionCreatedEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultSecretNewVersionCreatedEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultSecretNearExpiryEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultSecretNearExpiryEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultSecretExpiredEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultSecretExpiredEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
 ```
 
 ### Apply converters and update namespace for system event data models
@@ -63,11 +91,14 @@ directive:
         $[path]["x-namespace"] = namespace;
       }
       if (path.endsWith("EventData") || 
-          path.endsWith("SubscriptionValidationResponse") || 
           path.includes("EventGridEvent") || 
          ($[path]["x-ms-client-name"] && $[path]["x-ms-client-name"].endsWith("EventData")))
       {
         $[path]["x-csharp-usage"] = "model,output,converter";
+      }
+      if (path.endsWith("SubscriptionValidationResponse"))
+      {
+        $[path]["x-csharp-usage"] = "model,input,output,converter";
       }
       $[path]["x-csharp-formats"] = "json";
       if (path.includes("WebAppServicePlanUpdatedEventData"))
@@ -83,4 +114,13 @@ directive:
           $[path]["properties"]["x509Thumbprint"]["x-csharp-formats"] = "json";
       }
     }
+```
+
+### Discriminator properties have to be required
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.MediaJobOutput
+  transform: $.required.push("@odata.type")
 ```

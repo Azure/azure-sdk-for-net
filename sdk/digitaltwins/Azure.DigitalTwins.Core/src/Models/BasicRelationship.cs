@@ -17,13 +17,13 @@ namespace Azure.DigitalTwins.Core
     /// parameter to <see cref="DigitalTwinsClientOptions" /> it will only work with the default (<see cref="Azure.Core.Serialization.JsonObjectSerializer"/>).
     /// </para>
     /// <para>
-    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </para>
     /// </remarks>
     /// <example>
     /// Here's an example of how to use the BasicRelationship helper class to serialize and create a relationship from a building digital twin to a floor digital twin.
     ///
-    /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicRelationship">
+    /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicRelationship" language="csharp">
     /// var buildingFloorRelationshipPayload = new BasicRelationship
     /// {
     ///     Id = &quot;buildingFloorRelationshipId&quot;,
@@ -45,7 +45,7 @@ namespace Azure.DigitalTwins.Core
     ///
     /// Here's an example of how to use the BasicRelationship helper class to get and deserialize a relationship.
     ///
-    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicRelationship">
+    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicRelationship" language="csharp">
     /// Response&lt;BasicRelationship&gt; getBasicRelationshipResponse = await client.GetRelationshipAsync&lt;BasicRelationship&gt;(
     ///     &quot;buildingTwinId&quot;,
     ///     &quot;buildingFloorRelationshipId&quot;);
@@ -98,6 +98,7 @@ namespace Azure.DigitalTwins.Core
         [JsonExtensionData]
 #pragma warning disable CA2227 // Collection properties should be readonly
         public IDictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
+
 #pragma warning restore CA2227 // Collection properties should be readonly
     }
 }

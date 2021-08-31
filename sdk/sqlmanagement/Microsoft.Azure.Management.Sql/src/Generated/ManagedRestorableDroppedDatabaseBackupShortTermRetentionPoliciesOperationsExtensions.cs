@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Sets a database's long term retention policy.
+            /// Sets a database's short term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='restorableDroppedDatabaseId'>
             /// </param>
             /// <param name='parameters'>
-            /// The long term retention policy info.
+            /// The short term retention policy info.
             /// </param>
             public static ManagedBackupShortTermRetentionPolicy CreateOrUpdate(this IManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedBackupShortTermRetentionPolicy parameters)
             {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Sets a database's long term retention policy.
+            /// Sets a database's short term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='restorableDroppedDatabaseId'>
             /// </param>
             /// <param name='parameters'>
-            /// The long term retention policy info.
+            /// The short term retention policy info.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Sets a database's long term retention policy.
+            /// Sets a database's short term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='restorableDroppedDatabaseId'>
             /// </param>
             /// <param name='parameters'>
-            /// The long term retention policy info.
+            /// The short term retention policy info.
             /// </param>
             public static ManagedBackupShortTermRetentionPolicy Update(this IManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedBackupShortTermRetentionPolicy parameters)
             {
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Sets a database's long term retention policy.
+            /// Sets a database's short term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='restorableDroppedDatabaseId'>
             /// </param>
             /// <param name='parameters'>
-            /// The long term retention policy info.
+            /// The short term retention policy info.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Sets a database's long term retention policy.
+            /// Sets a database's short term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='restorableDroppedDatabaseId'>
             /// </param>
             /// <param name='parameters'>
-            /// The long term retention policy info.
+            /// The short term retention policy info.
             /// </param>
             public static ManagedBackupShortTermRetentionPolicy BeginCreateOrUpdate(this IManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedBackupShortTermRetentionPolicy parameters)
             {
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Sets a database's long term retention policy.
+            /// Sets a database's short term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='restorableDroppedDatabaseId'>
             /// </param>
             /// <param name='parameters'>
-            /// The long term retention policy info.
+            /// The short term retention policy info.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Sets a database's long term retention policy.
+            /// Sets a database's short term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='restorableDroppedDatabaseId'>
             /// </param>
             /// <param name='parameters'>
-            /// The long term retention policy info.
+            /// The short term retention policy info.
             /// </param>
             public static ManagedBackupShortTermRetentionPolicy BeginUpdate(this IManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedBackupShortTermRetentionPolicy parameters)
             {
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Sets a database's long term retention policy.
+            /// Sets a database's short term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='restorableDroppedDatabaseId'>
             /// </param>
             /// <param name='parameters'>
-            /// The long term retention policy info.
+            /// The short term retention policy info.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -4,10 +4,8 @@
 using System;
 using System.Globalization;
 using System.Text;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core;
 using Azure.Core.GeoJson;
-#endif
 
 namespace Azure.Search.Documents
 {
@@ -74,15 +72,13 @@ namespace Azure.Search.Documents
                     DateTimeOffset x => JsonSerialization.Date(x, formatProvider),
                     DateTime x => JsonSerialization.Date(x, formatProvider),
 
-#if EXPERIMENTAL_SPATIAL
                     // Points
                     GeoPosition x => EncodeGeography(x),
                     GeoPoint x => EncodeGeography(x),
 
                     // Polygons
-                    GeoLine x => EncodeGeography(x),
+                    GeoLineString x => EncodeGeography(x),
                     GeoPolygon x => EncodeGeography(x),
-#endif
 
                     // Text
                     string x => Quote(x),
@@ -125,7 +121,6 @@ namespace Azure.Search.Documents
             return builder.ToString();
         }
 
-#if EXPERIMENTAL_SPATIAL
         /// <summary>
         /// Convert a <see cref="GeoPosition"/> to an OData value.
         /// </summary>
@@ -142,18 +137,18 @@ namespace Azure.Search.Documents
         private static string EncodeGeography(GeoPoint point)
         {
             Argument.AssertNotNull(point, nameof(point));
-            return EncodeGeography(point.Position);
+            return EncodeGeography(point.Coordinates);
         }
 
         /// <summary>
-        /// Convert a <see cref="GeoLine"/> forming a polygon to an OData
+        /// Convert a <see cref="GeoLineString"/> forming a polygon to an OData
         /// value.  A GeoLine must have at least four
-        /// <see cref="GeoLine.Positions"/> and the first and last must
+        /// <see cref="GeoLineString.Coordinates"/> and the first and last must
         /// match to form a searchable polygon.
         /// </summary>
         /// <param name="line">The line forming a polygon.</param>
         /// <returns>The OData representation of the line.</returns>
-        private static string EncodeGeography(GeoLine line) =>
+        private static string EncodeGeography(GeoLineString line) =>
             SpatialFormatter.EncodePolygon(line);
 
         /// <summary>
@@ -165,6 +160,5 @@ namespace Azure.Search.Documents
         /// <returns>The OData representation of the polygon.</returns>
         private static string EncodeGeography(GeoPolygon polygon) =>
             SpatialFormatter.EncodePolygon(polygon);
-#endif
     }
 }

@@ -78,8 +78,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disabled by default. Does not apply to Ultra disks.</param>
         /// <param name="purchasePlan">Purchase plan information to be added on
         /// the OS disk</param>
+        /// <param name="propertyUpdatesInProgress">Properties of the disk for
+        /// which update is pending.</param>
+        /// <param name="supportsHibernation">Indicates the OS on a disk
+        /// supports hibernation.</param>
         /// <param name="tags">Resource tags</param>
-        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), int? maxShares = default(int?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PurchasePlan purchasePlan = default(PurchasePlan), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
+        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), int? maxShares = default(int?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PurchasePlan purchasePlan = default(PurchasePlan), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -95,6 +99,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             Tier = tier;
             BurstingEnabled = burstingEnabled;
             PurchasePlan = purchasePlan;
+            PropertyUpdatesInProgress = propertyUpdatesInProgress;
+            SupportsHibernation = supportsHibernation;
             Tags = tags;
             Sku = sku;
             CustomInit();
@@ -214,6 +220,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.purchasePlan")]
         public PurchasePlan PurchasePlan { get; set; }
+
+        /// <summary>
+        /// Gets properties of the disk for which update is pending.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.propertyUpdatesInProgress")]
+        public PropertyUpdatesInProgress PropertyUpdatesInProgress { get; private set; }
+
+        /// <summary>
+        /// Gets or sets indicates the OS on a disk supports hibernation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportsHibernation")]
+        public bool? SupportsHibernation { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags

@@ -3,6 +3,12 @@
 ## 1.3.0-beta.1 (Unreleased)
 
 
+## 1.2.2 (2021-04-12)
+
+### Fixes and improvements
+
+- Updated core dependencies to bring in security vulnerability fixes that are addressed in `Azure.Core v1.13.0` and `System.Memory.Data v1.0.2`
+
 ## 1.2.1 (2021-02-03)
 
 ### Fixes and improvements
@@ -46,7 +52,7 @@ Note that these breaking changes are only breaking changes from the **preview** 
 - Renamed model type `ModelData` to `DigitalTwinsModelData` to make type less generic, and less likely to conflict with other libraries.
 - Renamed model type `EventRoute` to `DigitalTwinsEventRoute` to make type less generic, and less likely to conflict with other libraries.
 - `EventRoute` (now `DigitalTwinsEventRoute`) object ctor now requires filter.
-- Removed `UpdateOperationsUtility` and replace it with a direct dependency on [JsonPatchDocument](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/src/JsonPatchDocument.cs) from Azure.Core.
+- Removed `UpdateOperationsUtility` and replace it with a direct dependency on [JsonPatchDocument](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/JsonPatchDocument.cs) from Azure.Core.
 - Removed `WritableProperty` since service no longer returns that type.
 - Removed `MaxItemCount` parameter as an option for `GetEventRoutes` APIs since users are expected to provide page size in pageable type's .AsPages() method instead.
 - Removed Serialization namespace, moving its contents to the base Azure.DigitalTwins.Core namespace.
@@ -76,23 +82,6 @@ Note that these breaking changes are only breaking changes from the **preview** 
 ### New features
 
 - Official public preview of [Azure.DigitalTwins.Core SDK](https://www.nuget.org/packages/Azure.DigitalTwins.Core)
-- [Azure Digital Twins Public Repo](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core)
-- [Azure Digital Twins Samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples)
+- [Azure Digital Twins Public Repo](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core)
+- [Azure Digital Twins Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples)
 
-## 1.0.0-preview.1 (Unreleased)
-
-### New features
-
-- Initial preview of Azure.DigitalTwins.Core SDK
-
-### Breaking changes
-
-- N/A
-
-### Added
-
-- N/A
-
-### Fixes and improvements
-
-- N/A

@@ -14,10 +14,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// HvrA provider specific input for failback.
+    /// HyperVReplicaAzureFailback specific planned failover input.
     /// </summary>
     [Newtonsoft.Json.JsonObject("HyperVReplicaAzureFailback")]
-    public partial class HyperVReplicaAzureFailbackProviderInput : ProviderSpecificFailoverInput
+    public partial class HyperVReplicaAzureFailbackProviderInput : PlannedFailoverProviderSpecificFailoverInput
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="dataSyncOption">Data sync option.</param>
         /// <param name="recoveryVmCreationOption">ALR options to create
         /// alternate recovery.</param>
-        /// <param name="providerIdForAlternateRecovery">Provider ID for
-        /// alternate location</param>
+        /// <param name="providerIdForAlternateRecovery">Provider Id for
+        /// alternate location.</param>
         public HyperVReplicaAzureFailbackProviderInput(string dataSyncOption = default(string), string recoveryVmCreationOption = default(string), string providerIdForAlternateRecovery = default(string))
         {
             DataSyncOption = dataSyncOption;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string RecoveryVmCreationOption { get; set; }
 
         /// <summary>
-        /// Gets or sets provider ID for alternate location
+        /// Gets or sets provider Id for alternate location.
         /// </summary>
         [JsonProperty(PropertyName = "providerIdForAlternateRecovery")]
         public string ProviderIdForAlternateRecovery { get; set; }

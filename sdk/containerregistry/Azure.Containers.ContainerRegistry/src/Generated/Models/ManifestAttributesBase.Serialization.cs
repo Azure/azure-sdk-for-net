@@ -16,16 +16,20 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ManifestAttributesBase DeserializeManifestAttributesBase(JsonElement element)
         {
-            Optional<string> digest = default;
+            string digest = default;
             Optional<long> imageSize = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<string> architecture = default;
-            Optional<string> os = default;
-            Optional<string> mediaType = default;
-            Optional<string> configMediaType = default;
+            DateTimeOffset createdTime = default;
+            DateTimeOffset lastUpdateTime = default;
+            Optional<ArtifactArchitecture?> architecture = default;
+            Optional<ArtifactOperatingSystem?> os = default;
+            Optional<IReadOnlyList<ArtifactManifestPlatform>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
-            Optional<ContentProperties> changeableAttributes = default;
+            Optional<bool> deleteEnabled = default;
+            Optional<bool> writeEnabled = default;
+            Optional<bool> listEnabled = default;
+            Optional<bool> readEnabled = default;
+            Optional<string> quarantineState = default;
+            Optional<string> quarantineDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"))
@@ -45,42 +49,47 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastUpdateTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("architecture"))
                 {
-                    architecture = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        architecture = null;
+                        continue;
+                    }
+                    architecture = new ArtifactArchitecture(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("os"))
                 {
-                    os = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        os = null;
+                        continue;
+                    }
+                    os = new ArtifactOperatingSystem(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mediaType"))
+                if (property.NameEquals("references"))
                 {
-                    mediaType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("configMediaType"))
-                {
-                    configMediaType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ArtifactManifestPlatform> array = new List<ArtifactManifestPlatform>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ArtifactManifestPlatform.DeserializeArtifactManifestPlatform(item));
+                    }
+                    references = array;
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -105,11 +114,63 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    changeableAttributes = ContentProperties.DeserializeContentProperties(property.Value);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("deleteEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            deleteEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("writeEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            writeEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("listEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            listEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("readEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            readEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("quarantineState"))
+                        {
+                            quarantineState = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("quarantineDetails"))
+                        {
+                            quarantineDetails = property0.Value.GetString();
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest.Value, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture.Value, os.Value, mediaType.Value, configMediaType.Value, Optional.ToList(tags), changeableAttributes.Value);
+            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), quarantineState.Value, quarantineDetails.Value);
         }
     }
 }

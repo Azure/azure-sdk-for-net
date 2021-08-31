@@ -15,23 +15,29 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
-                writer.WritePropertyName("connectionString");
-                writer.WriteStringValue(ConnectionString);
+                if (ConnectionString != null)
+                {
+                    writer.WritePropertyName("connectionString");
+                    writer.WriteStringValue(ConnectionString);
+                }
+                else
+                {
+                    writer.WriteNull("connectionString");
+                }
             }
-            else
+            if (Optional.IsDefined(Database))
             {
-                writer.WriteNull("connectionString");
-            }
-            if (Database != null)
-            {
-                writer.WritePropertyName("database");
-                writer.WriteStringValue(Database);
-            }
-            else
-            {
-                writer.WriteNull("database");
+                if (Database != null)
+                {
+                    writer.WritePropertyName("database");
+                    writer.WriteStringValue(Database);
+                }
+                else
+                {
+                    writer.WriteNull("database");
+                }
             }
             if (Command != null)
             {
@@ -47,8 +53,8 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MongoDBParameter DeserializeMongoDBParameter(JsonElement element)
         {
-            string connectionString = default;
-            string database = default;
+            Optional<string> connectionString = default;
+            Optional<string> database = default;
             string command = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -83,7 +89,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MongoDBParameter(connectionString, database, command);
+            return new MongoDBParameter(connectionString.Value, database.Value, command);
         }
     }
 }

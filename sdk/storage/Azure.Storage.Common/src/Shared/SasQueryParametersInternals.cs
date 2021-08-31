@@ -11,6 +11,11 @@ namespace Azure.Storage.Sas
     /// </summary>
     internal class SasQueryParametersInternals : SasQueryParameters
     {
+        /// <summary>
+        /// Settable internal property to allow different versions in test.
+        /// </summary>
+        internal static string DefaultSasVersionInternal { get; set; } = DefaultSasVersion;
+
         internal static new SasQueryParameters Create(IDictionary<string, string> values) =>
             SasQueryParameters.Create(values);
 

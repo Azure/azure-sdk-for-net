@@ -124,7 +124,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         {
             var scope = requestUri;
             var credential = (ServiceBusTokenCredential)_tokenCredential;
-            if (!credential.IsSharedAccessSignatureCredential)
+            if (!credential.IsSharedAccessCredential)
             {
                 scope = Constants.DefaultScope;
             }
@@ -222,7 +222,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 var token = await GetTokenAsync(forwardTo).ConfigureAwait(false);
                 request.Headers.Add(
                     AdministrationClientConstants.ServiceBusSupplementartyAuthorizationHeaderName,
-                    credential.IsSharedAccessSignatureCredential == true ? token : $"Bearer { token }");
+                    credential.IsSharedAccessCredential == true ? token : $"Bearer { token }");
             }
 
             if (!string.IsNullOrWhiteSpace(fwdDeadLetterTo))
@@ -230,7 +230,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 var token = await GetTokenAsync(fwdDeadLetterTo).ConfigureAwait(false);
                 request.Headers.Add(
                     AdministrationClientConstants.ServiceBusDlqSupplementaryAuthorizationHeaderName,
-                    credential.IsSharedAccessSignatureCredential == true ? token : $"Bearer { token }");
+                    credential.IsSharedAccessCredential == true ? token : $"Bearer { token }");
             }
 
             Response response = await SendHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);
@@ -266,7 +266,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             CancellationToken cancellationToken)
         {
             var credential = (ServiceBusTokenCredential)_tokenCredential;
-            if (credential.IsSharedAccessSignatureCredential)
+            if (credential.IsSharedAccessCredential)
             {
                 var token = await GetToken(request.Uri.ToUri()).ConfigureAwait(false);
                 request.Headers.Add("Authorization", token);

@@ -29,24 +29,15 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-03-01-preview5")
+        public ChatRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-04-05-preview6")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateChatThreadRequest(string topic, string idempotencyToken, IEnumerable<ChatParticipantInternal> participants)
+        internal HttpMessage CreateCreateChatThreadRequest(string topic, string repeatabilityRequestId, IEnumerable<ChatParticipantInternal> participants)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,16 +47,19 @@ namespace Azure.Communication.Chat
             uri.AppendPath("/chat/threads", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (idempotencyToken != null)
+            if (repeatabilityRequestId != null)
             {
-                request.Headers.Add("idempotency-token", idempotencyToken);
+                request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             CreateChatThreadRequest createChatThreadRequest = new CreateChatThreadRequest(topic);
-            foreach (var value in participants)
+            if (participants != null)
             {
-                createChatThreadRequest.Participants.Add(value);
+                foreach (var value in participants)
+                {
+                    createChatThreadRequest.Participants.Add(value);
+                }
             }
             var model = createChatThreadRequest;
             var content = new Utf8JsonRequestContent();
@@ -76,18 +70,18 @@ namespace Azure.Communication.Chat
 
         /// <summary> Creates a chat thread. </summary>
         /// <param name="topic"> The chat thread topic. </param>
-        /// <param name="idempotencyToken"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Idempotency-Token and get back an appropriate response without the server executing the request multiple times. The value of the Idempotency-Token is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
+        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="participants"> Participants to be added to the chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
-        public async Task<Response<CreateChatThreadResultInternal>> CreateChatThreadAsync(string topic, string idempotencyToken = null, IEnumerable<ChatParticipantInternal> participants = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateChatThreadResultInternal>> CreateChatThreadAsync(string topic, string repeatabilityRequestId = null, IEnumerable<ChatParticipantInternal> participants = null, CancellationToken cancellationToken = default)
         {
             if (topic == null)
             {
                 throw new ArgumentNullException(nameof(topic));
             }
 
-            using var message = CreateCreateChatThreadRequest(topic, idempotencyToken, participants);
+            using var message = CreateCreateChatThreadRequest(topic, repeatabilityRequestId, participants);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -105,18 +99,18 @@ namespace Azure.Communication.Chat
 
         /// <summary> Creates a chat thread. </summary>
         /// <param name="topic"> The chat thread topic. </param>
-        /// <param name="idempotencyToken"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Idempotency-Token and get back an appropriate response without the server executing the request multiple times. The value of the Idempotency-Token is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
+        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="participants"> Participants to be added to the chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
-        public Response<CreateChatThreadResultInternal> CreateChatThread(string topic, string idempotencyToken = null, IEnumerable<ChatParticipantInternal> participants = null, CancellationToken cancellationToken = default)
+        public Response<CreateChatThreadResultInternal> CreateChatThread(string topic, string repeatabilityRequestId = null, IEnumerable<ChatParticipantInternal> participants = null, CancellationToken cancellationToken = default)
         {
             if (topic == null)
             {
                 throw new ArgumentNullException(nameof(topic));
             }
 
-            using var message = CreateCreateChatThreadRequest(topic, idempotencyToken, participants);
+            using var message = CreateCreateChatThreadRequest(topic, repeatabilityRequestId, participants);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

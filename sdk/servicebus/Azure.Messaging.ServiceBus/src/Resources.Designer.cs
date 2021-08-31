@@ -214,6 +214,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The message processor is unable to continue and will stop processing; the host application has closed the connection to the Service Bus service..
+        /// </summary>
+        internal static string DisposedConnectionMessageProcessorMustStop {
+            get {
+                return ResourceManager.GetString("DisposedConnectionMessageProcessorMustStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The minimum back off period &apos;{0}&apos; cannot exceed the maximum back off period of &apos;{1}&apos;..
         /// </summary>
         internal static string ExponentialRetryBackoffRange {
@@ -250,11 +259,29 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is not a supported body type..
+        /// </summary>
+        internal static string InvalidAmqpMessageBodyType {
+            get {
+                return ResourceManager.GetString("InvalidAmqpMessageBodyType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} is not a supported user property type..
         /// </summary>
         internal static string InvalidAmqpMessageProperty {
             get {
                 return ResourceManager.GetString("InvalidAmqpMessageProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not a supported value body type..
+        /// </summary>
+        internal static string InvalidAmqpMessageValueBody {
+            get {
+                return ResourceManager.GetString("InvalidAmqpMessageValueBody", resourceCulture);
             }
         }
         
@@ -583,6 +610,16 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An attempt was made to reconnect the {0} sender link as part of a cross-entity transaction. This could not be completed successfully because the {1} receiver
+        ///needs to be re-established first. Attempting the transaction again will allow the correct link to be established first..
+        /// </summary>
+        internal static string TransactionReconnectionError {
+            get {
+                return ResourceManager.GetString("TransactionReconnectionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The specified connection type, &quot;{0}&quot;, is not recognized as valid in this context..
         /// </summary>
         internal static string UnknownConnectionType {
@@ -597,6 +634,15 @@ namespace Azure.Messaging.ServiceBus {
         internal static string UnknownRetryMode {
             get {
                 return ResourceManager.GetString("UnknownRetryMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The credential provided is not a supported type..
+        /// </summary>
+        internal static string UnsupportedCredential {
+            get {
+                return ResourceManager.GetString("UnsupportedCredential", resourceCulture);
             }
         }
         

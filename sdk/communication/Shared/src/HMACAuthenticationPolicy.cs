@@ -14,6 +14,7 @@ namespace Azure.Communication.Pipeline
 {
     internal class HMACAuthenticationPolicy : HttpPipelinePolicy
     {
+        private readonly String DATE_HEADER_NAME = "x-ms-date";
         private readonly AzureKeyCredential _keyCredential;
 
 		public HMACAuthenticationPolicy(AzureKeyCredential keyCredential)
@@ -63,22 +64,32 @@ namespace Azure.Communication.Pipeline
         private void AddHeaders(HttpMessage message, string contentHash)
         {
             var utcNowString = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
-            var authorization = GetAuthorizationHeader(message.Request.Method, message.Request.Uri.ToUri(), contentHash, utcNowString);
+            string authorization;
+
+            message.TryGetProperty("uriToSignRequestWith", out var uriToSignWith);
+            if (uriToSignWith != null && uriToSignWith.GetType() == typeof(Uri))
+            {
+                authorization = GetAuthorizationHeader(message.Request.Method, (Uri)uriToSignWith, contentHash, utcNowString);
+            }
+            else
+            {
+                authorization = GetAuthorizationHeader(message.Request.Method, message.Request.Uri.ToUri(), contentHash, utcNowString);
+            }
 
             message.Request.Headers.SetValue("x-ms-content-sha256", contentHash);
-            message.Request.Headers.SetValue(HttpHeader.Names.Date, utcNowString);
+            message.Request.Headers.SetValue(DATE_HEADER_NAME, utcNowString);
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, authorization);
         }
 
         private string GetAuthorizationHeader(RequestMethod method, Uri uri, string contentHash, string date)
         {
-            const string signedHeaders = "date;host;x-ms-content-sha256";
-
             var host = uri.Authority;
             var pathAndQuery = uri.PathAndQuery;
 
             var stringToSign = $"{method.Method}\n{pathAndQuery}\n{date};{host};{contentHash}";
             var signature = ComputeHMAC(stringToSign);
+
+            string signedHeaders = $"{DATE_HEADER_NAME};host;x-ms-content-sha256";
             return $"HMAC-SHA256 SignedHeaders={signedHeaders}&Signature={signature}";
         }
 

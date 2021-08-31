@@ -11,12 +11,11 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
-using Azure.Messaging.EventHubs.Tests;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Processor.Tests
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of tests for validating the diagnostics instrumentation

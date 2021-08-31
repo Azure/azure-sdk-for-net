@@ -1,25 +1,65 @@
 # intended to be used as part of a release process
 parameters:
-  ArtifactLocation: 'not-specified'
-  PackageRepository: 'not-specified'
-  ReleaseSha: 'not-specified'
-  RepoId: $(Build.Repository.Name)
-  WorkingDirectory: ''
-  ScriptDirectory: eng/common/scripts
-  TargetDocRepoName: ''
-  TargetDocRepoOwner: ''
-  PRBranchName: 'master-rdme'
-  SourceBranchName: 'master'
-  PRLabels: 'auto-merge'
-  ArtifactName: ''
-  Language: ''
-  DocRepoDestinationPath: '' #usually docs-ref-services/
-  CIConfigs: '[]'
-  GHReviewersVariable: '' 
-  GHTeamReviewersVariable: '' # externally set, as eng-common does not have the identity-resolver. Run as pre-step
-  OnboardingBranch: ''
-  CloseAfterOpenForTesting: false
-  SkipPackageJson: false
+  - name: ArtifactLocation
+    type: string
+    default: 'not-specified'
+  - name: PackageRepository
+    type: string
+    default: 'not-specified'
+  - name: ReleaseSha
+    type: string
+    default: 'not-specified'
+  - name: RepoId
+    type: string
+    default: $(Build.Repository.Name)
+  - name: WorkingDirectory
+    type: string
+    default: ''
+  - name: ScriptDirectory
+    type: string
+    default: eng/common/scripts
+  - name: TargetDocRepoName
+    type: string
+    default: ''
+  - name: TargetDocRepoOwner
+    type: string
+    default: ''
+  - name: PRBranchName
+    type: string
+    default: 'main-rdme'
+  - name: PRLabels
+    type: string
+    default: 'auto-merge'
+  - name: ArtifactName
+    type: string
+    default: ''
+  - name: Language
+    type: string
+    default: ''
+  - name: DocRepoDestinationPath
+    type: string
+    default: '' #usually docs-ref-services/
+  - name: CIConfigs
+    type: string
+    default: '[]'
+  - name: GHReviewersVariable
+    type: string
+    default: ''
+  - name: GHTeamReviewersVariable
+    type: string
+    default: ''  # externally set, as eng-common does not have the identity-resolver. Run as pre-step
+  - name: OnboardingBranch
+    type: string
+    default: ''
+  - name: CloseAfterOpenForTesting
+    type: boolean
+    default: false
+  - name: SkipPackageJson
+    type: object
+    default: false
+  - name: SparseCheckoutPaths
+    type: object
+    default: null
 
 steps:
 - pwsh: |
@@ -31,21 +71,25 @@ steps:
       Write-Host "This script is not executing on Windows, skipping registry modification."
     }
   displayName: Enable Long Paths if Necessary
-  
-- pwsh: |
-    git clone https://github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
 
-    try {
-      Push-Location ${{ parameters.WorkingDirectory }}/repo
+- ${{ if not(parameters.SparseCheckoutPaths) }}:
+  - pwsh: |
+      git clone https://github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
+    displayName: Clone Documentation Repository
+    ignoreLASTEXITCODE: false
 
-      Write-Host "git checkout ${{ parameters.SourceBranchName }}"
-      git checkout ${{ parameters.SourceBranchName }}
-    } finally {
-      Pop-Location
-    }
-  displayName: Clone Documentation Repository
-  ignoreLASTEXITCODE: false
+- ${{ if parameters.SparseCheckoutPaths }}:
+  - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+    parameters:
+      SkipDefaultCheckout: true
+      Repositories:
+        - Name: ${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }}
+          WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
+      Paths: ${{ parameters.SparseCheckoutPaths }}
 
+- template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+  parameters:
+    WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
 - task: PowerShell@2
   displayName: 'Apply Documentation Updates From Artifact'
   inputs:
@@ -64,76 +108,12 @@ steps:
   env:
     GH_TOKEN: $(azuresdk-github-pat)
 
-- task: PowerShell@2
-  displayName: 'Update Docs.MS CI Targeted Packages'
-  condition: and(succeededOrFailed(), eq('${{ parameters.OnboardingBranch }}',''), ne('${{ parameters.SkipPackageJson }}', true))
-  inputs:
-    targetType: filePath
-    filePath: ${{ parameters.ScriptDirectory }}/update-docs-ci.ps1
-    arguments: >
-      -ArtifactLocation ${{ parameters.ArtifactLocation }}
-      -WorkDirectory "${{ parameters.WorkingDirectory }}"
-      -RepoId ${{ parameters.RepoId }}
-      -Repository ${{ parameters.PackageRepository }}
-      -ReleaseSHA ${{ parameters.ReleaseSha }}
-      -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
-      -Configs "${{ parameters.CIConfigs }}"
-    pwsh: true
-  env:
-    GH_TOKEN: $(azuresdk-github-pat)
-
-- template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+- template: /eng/common/pipelines/templates/steps/git-push-changes.yml
   parameters:
-    RepoName: ${{ parameters.TargetDocRepoName }}
-    RepoOwner: ${{ parameters.TargetDocRepoOwner }}
-    PRBranchName: ${{ parameters.PRBranchName }}
+    BaseRepoBranch: $(DefaultBranch)
+    BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}
     CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
-    PRTitle: "Docs.MS Release Updates for ${{ parameters.ArtifactName }}"
-    BaseBranchName: ${{ parameters.SourceBranchName }}
+    TargetRepoName: ${{ parameters.TargetDocRepoName }}
+    TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
     WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-    GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
-    GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
-    PRLabels: ${{ parameters.PRLabels }}
-    CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}
-
-- ${{if ne( parameters['OnboardingBranch'], '')}}:
-  - pwsh: |
-      Push-Location ${{ parameters.WorkingDirectory }}/repo
-
-      git reset --hard HEAD
-      git remote rm azure-sdk-fork
-      git checkout ${{ parameters.OnboardingBranch}}
-    displayName: Reset Docs Repo, Checkout Onboarding Branch
-    ignoreLASTEXITCODE: false
-
-  - task: PowerShell@2
-    displayName: 'Update Docs.MS CI Targeted Packages'
-    inputs:
-      targetType: filePath
-      filePath: ${{ parameters.ScriptDirectory }}/update-docs-ci.ps1
-      arguments: >
-        -ArtifactLocation ${{ parameters.ArtifactLocation }}
-        -WorkDirectory "${{ parameters.WorkingDirectory }}"
-        -RepoId ${{ parameters.RepoId }}
-        -Repository ${{ parameters.PackageRepository }}
-        -ReleaseSHA ${{ parameters.ReleaseSha }}
-        -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
-        -Configs "${{ parameters.CIConfigs }}"
-      pwsh: true
-    env:
-      GH_TOKEN: $(azuresdk-github-pat)
-
-  - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
-    parameters:
-      RepoName: ${{ parameters.TargetDocRepoName }}
-      RepoOwner: ${{ parameters.TargetDocRepoOwner }}
-      PRBranchName: ${{ parameters.PRBranchName }}-ci
-      CommitMsg: "CI Update for release of ${{ parameters.ArtifactName }}"
-      PRTitle: "Docs.MS CI Updates for ${{ parameters.ArtifactName }}"
-      BaseBranchName: ${{ parameters.OnboardingBranch }}
-      WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
-      ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-      GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
-      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }}
-      CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}

@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(BigDataPoolResourceInfoConverter))]
     public partial class BigDataPoolResourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -367,6 +369,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily), Optional.ToNullable(lastSucceededTimestamp));
+        }
+
+        internal partial class BigDataPoolResourceInfoConverter : JsonConverter<BigDataPoolResourceInfo>
+        {
+            public override void Write(Utf8JsonWriter writer, BigDataPoolResourceInfo model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override BigDataPoolResourceInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeBigDataPoolResourceInfo(document.RootElement);
+            }
         }
     }
 }

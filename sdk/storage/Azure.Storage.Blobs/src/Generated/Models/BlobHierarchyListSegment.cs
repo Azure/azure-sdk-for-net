@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.Models
     internal partial class BlobHierarchyListSegment
     {
         /// <summary> Initializes a new instance of BlobHierarchyListSegment. </summary>
-        /// <param name="blobItems"> . </param>
+        /// <param name="blobItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobItems"/> is null. </exception>
         internal BlobHierarchyListSegment(IEnumerable<BlobItemInternal> blobItems)
         {
@@ -30,8 +30,8 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of BlobHierarchyListSegment. </summary>
-        /// <param name="blobPrefixes"> . </param>
-        /// <param name="blobItems"> . </param>
+        /// <param name="blobPrefixes"></param>
+        /// <param name="blobItems"></param>
         internal BlobHierarchyListSegment(IReadOnlyList<BlobPrefix> blobPrefixes, IReadOnlyList<BlobItemInternal> blobItems)
         {
             BlobPrefixes = blobPrefixes;

@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the legacy Azure Event Hubs .NET Standard Event Processor Host library. To view releases for the current generation of the Azure client libraries for .NET, please see: https://aka.ms/azsdk/releases.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
+    <Description>Please note, a newer package Azure.Messaging.EventHubs.Processor is available as of February 2020. While this package will continue to receive critical bug fixes, we strongly encourage you to upgrade. Read the migration guide at https://aka.ms/azsdk/net/migrate/eh for more details.</Description>
     <Version>4.4.0-beta.1</Version>
-    <ApiCompatVersion>4.3.1</ApiCompatVersion>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>4.3.2</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;Event Processor Host</PackageTags>
     <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/releases</PackageReleaseNotes>
     <DocumentationFile>$(OutputPath)$(TargetFramework)\Microsoft.Azure.EventHubs.Processor.xml</DocumentationFile>

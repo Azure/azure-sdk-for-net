@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class InstancesSuggestResponse
+    internal partial class InstancesSuggestResponse
     {
         internal static InstancesSuggestResponse DeserializeInstancesSuggestResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<SearchSuggestion>> suggestions = default;
+            Optional<IReadOnlyList<InstancesSearchStringSuggestion>> suggestions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("suggestions"))
@@ -25,10 +25,10 @@ namespace Azure.IoT.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SearchSuggestion> array = new List<SearchSuggestion>();
+                    List<InstancesSearchStringSuggestion> array = new List<InstancesSearchStringSuggestion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchSuggestion.DeserializeSearchSuggestion(item));
+                        array.Add(InstancesSearchStringSuggestion.DeserializeInstancesSearchStringSuggestion(item));
                     }
                     suggestions = array;
                     continue;

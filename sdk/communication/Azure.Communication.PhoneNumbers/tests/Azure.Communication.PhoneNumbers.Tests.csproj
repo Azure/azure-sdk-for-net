@@ -21,9 +21,9 @@
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\tests.yml" Link="\tests.yml" />
     <None Include="..\samples\README.md" Link="samples\README.md" />
     <None Include="..\samples\Sample_PhoneNumbersClient.md" Link="samples\Sample_PhoneNumbersClient.md" />
     <None Include="..\samples\Sample_PhoneNumbersClientAsync.md" Link="samples\Sample_PhoneNumbersClientAsync.md" />
-
   </ItemGroup>
 </Project>

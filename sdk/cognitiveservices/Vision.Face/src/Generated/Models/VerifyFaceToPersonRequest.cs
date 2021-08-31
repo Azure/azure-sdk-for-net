@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -92,12 +93,33 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (PersonGroupId != null)
+            {
+                if (PersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "PersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(PersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "PersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (LargePersonGroupId != null)
+            {
+                if (LargePersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "LargePersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(LargePersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "LargePersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
         }
     }
 }

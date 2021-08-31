@@ -34,7 +34,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </summary>
         /// <param name="faceIds">Array of candidate faceId created by Face -
         /// Detect. The maximum is 1000 faces</param>
-        public GroupRequest(IList<System.Guid?> faceIds)
+        public GroupRequest(IList<System.Guid> faceIds)
         {
             FaceIds = faceIds;
             CustomInit();
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// The maximum is 1000 faces
         /// </summary>
         [JsonProperty(PropertyName = "faceIds")]
-        public IList<System.Guid?> FaceIds { get; set; }
+        public IList<System.Guid> FaceIds { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -63,6 +63,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
             if (FaceIds == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FaceIds");
+            }
+            if (FaceIds != null)
+            {
+                if (FaceIds.Count > 1000)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "FaceIds", 1000);
+                }
             }
         }
     }

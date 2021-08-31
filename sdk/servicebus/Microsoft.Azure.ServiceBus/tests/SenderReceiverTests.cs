@@ -45,7 +45,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact(Skip="Flaky test. Tracked by #16265")]
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task ReceiveLotOfMessagesWithoutSettling()
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    await this.ReceiveDeleteTestCase(sender, receiver, messageCount);
+                    await this.ReceiveDeleteTestCase(sender, receiver, messageCount, TimeSpan.FromMinutes(2));
                 }
                 finally
                 {

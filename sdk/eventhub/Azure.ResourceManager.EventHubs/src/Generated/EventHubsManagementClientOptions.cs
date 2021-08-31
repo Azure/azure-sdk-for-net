@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> Client options for EventHubs. </summary>
-    public class EventHubsManagementClientOptions : ClientOptions
+    public partial class EventHubsManagementClientOptions : ClientOptions
     {
     }
 }
