@@ -28,6 +28,7 @@ namespace Azure.Search.Documents
 
             string text = reader.GetString();
             return DateTime.Parse(text, CultureInfo.InvariantCulture);
+            // return DateTimeOffset.Parse(text, CultureInfo.InvariantCulture).DateTime;
         }
 
         public override void Write(

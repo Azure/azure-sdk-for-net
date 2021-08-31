@@ -112,7 +112,7 @@ namespace Azure.Core.TestFramework
         [OneTimeSetUp]
         public void StartLoggingEvents()
         {
-            if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
+            // if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
             {
                 Logger = new TestLogger();
             }
