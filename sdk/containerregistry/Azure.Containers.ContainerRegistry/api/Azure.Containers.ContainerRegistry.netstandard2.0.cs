@@ -228,6 +228,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public ContainerRegistryBlobClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string repository, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
         public virtual Azure.Response DeleteBlob(string digest, Azure.Containers.ContainerRegistry.Specialized.DeleteBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBlobAsync(string digest, Azure.Containers.ContainerRegistry.Specialized.DeleteBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteManifest(string digest, Azure.Containers.ContainerRegistry.Specialized.DeleteManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteManifestAsync(string digest, Azure.Containers.ContainerRegistry.Specialized.DeleteManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult> DownloadBlob(string digest, Azure.Containers.ContainerRegistry.Specialized.DownloadBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult>> DownloadBlobAsync(string digest, Azure.Containers.ContainerRegistry.Specialized.DownloadBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadManifestResult> DownloadManifest(string digest, Azure.Containers.ContainerRegistry.Specialized.DownloadManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -240,6 +242,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public partial class DeleteBlobOptions
     {
         public DeleteBlobOptions() { }
+    }
+    public partial class DeleteManifestOptions
+    {
+        public DeleteManifestOptions() { }
     }
     public partial class DownloadBlobOptions
     {
@@ -254,6 +260,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public partial class DownloadManifestOptions
     {
         public DownloadManifestOptions() { }
+        public Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType MediaType { get { throw null; } set { } }
     }
     public partial class DownloadManifestResult
     {
