@@ -10,7 +10,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Blobs.Test
 {
     public class BlobSasTests : BlobTestBase
     {
@@ -217,6 +217,64 @@ namespace Azure.Storage.Blobs.Tests
             // Act
             AppendBlobClient sasBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
             await sasBlobClient.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task ContainerSas_AllPermissions()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(
+                permissions: BlobContainerSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddDays(1))
+            {
+                BlobContainerName = test.Container.Name,
+            };
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                BlobName = blobName,
+                Sas = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials())
+            };
+
+            // Act
+            AppendBlobClient appendBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+            await appendBlobClient.CreateAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task ContainerIdentitySas_AllPermissions()
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(
+                permissions: BlobContainerSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddDays(1))
+            {
+                BlobContainerName = test.Container.Name,
+            };
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                BlobName = blobName,
+                Sas = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName)
+            };
+
+            // Act
+            AppendBlobClient appendBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+            await appendBlobClient.CreateAsync();
         }
 
         [RecordedTest]
