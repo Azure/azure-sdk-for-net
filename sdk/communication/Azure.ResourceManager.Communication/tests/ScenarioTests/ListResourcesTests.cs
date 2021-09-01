@@ -36,9 +36,10 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task ListBySubscription()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            ResourceGroup rg = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
                 new ResourceGroupData(Location));
+            ResourceGroup rg = lro.Value;
 
             // Create a new resource with the test parameters
             CommunicationManagementClient acsClient = GetCommunicationManagementClient();
@@ -72,9 +73,10 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task ListByRg()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            ResourceGroup rg = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
                 new ResourceGroupData(Location));
+            ResourceGroup rg = lro.Value;
 
             // Create a new resource with the test parameters
             CommunicationManagementClient acsClient = GetCommunicationManagementClient();

@@ -36,9 +36,10 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task CrudSimpleResource()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            ResourceGroup rg = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
                 new ResourceGroupData(Location));
+            ResourceGroup rg = lro.Value;
 
             CommunicationManagementClient acsClient = GetCommunicationManagementClient();
             var resourceName = Recording.GenerateAssetName("sdk-test-crud-simple-");
@@ -107,9 +108,10 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task CrudResourceWithTags()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            ResourceGroup rg = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
                 new ResourceGroupData(Location));
+            ResourceGroup rg = lro.Value;
 
             CommunicationManagementClient acsClient = GetCommunicationManagementClient();
             var resourceName = Recording.GenerateAssetName("sdk-test-crud-with-tags-");
