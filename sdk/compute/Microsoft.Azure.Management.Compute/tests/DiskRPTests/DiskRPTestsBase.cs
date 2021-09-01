@@ -212,7 +212,7 @@ namespace Compute.Tests.DiskRPTests
 
         }
 
-        protected void SSDZRSDisk_CRUD_Execute(string diskCreateOption, string accountType, string methodName, int? diskSizeGB = null, string tier = null, string location = null)
+        protected void SSDZRSDisk_CRUD_Execute(string diskCreateOption, string accountType, string methodName, int? diskSizeGB = null, string tier = "E4", string location = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -331,8 +331,8 @@ namespace Compute.Tests.DiskRPTests
                     // **********
 
                     Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, snapshotName, snapshot);
-                    Validate(snapshot, snapshotOut, incremental: incremental);
-                    OperateSnapshot(snapshot, rgName, snapshotName);
+                    Validate(snapshot, snapshotOut, incremental);
+                    OperateSnapshot(snapshot, rgName, snapshotName, incremental);
                 }
                 finally
                 {
@@ -1872,11 +1872,11 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(inputPlan.PromotionCode, outPutPlan.PromotionCode);
         }
 
-        protected void OperateSnapshot(Snapshot snapshot, string rgName, string snapshotName)
+        protected void OperateSnapshot(Snapshot snapshot, string rgName, string snapshotName, bool incremental = false)
         {
             // Get
             Snapshot snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-            Validate(snapshot, snapshotOut, incremental: true);
+            Validate(snapshot, snapshotOut, incremental: incremental);
 
             // Get access
             AccessUri accessUri = m_CrpClient.Snapshots.GrantAccess(rgName, snapshotName, AccessDataDefault);
@@ -1884,18 +1884,18 @@ namespace Compute.Tests.DiskRPTests
 
             // Get
             snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-            Validate(snapshot, snapshotOut, incremental: true);
+            Validate(snapshot, snapshotOut, incremental: incremental);
 
             // Patch
             var updatesnapshot = new SnapshotUpdate();
             const string tagKey = "tageKey";
             updatesnapshot.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
             snapshotOut = m_CrpClient.Snapshots.Update(rgName, snapshotName, updatesnapshot);
-            Validate(snapshot, snapshotOut, incremental: true);
+            Validate(snapshot, snapshotOut, incremental: incremental);
 
             // Get
             snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-            Validate(snapshot, snapshotOut, incremental: true);
+            Validate(snapshot, snapshotOut, incremental: incremental);
 
             // End access
             m_CrpClient.Snapshots.RevokeAccess(rgName, snapshotName);

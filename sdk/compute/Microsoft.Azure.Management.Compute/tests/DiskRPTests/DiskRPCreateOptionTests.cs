@@ -131,7 +131,7 @@ namespace Compute.Tests.DiskRPTests
                     m_CrpClient.Snapshots.CreateOrUpdate(rgName, snapshotName, snapshot);
                     Snapshot snapshotOut = PollCloneSnaphotToCompletion(rgName, snapshotName);
                     Validate(snapshot, snapshotOut, incremental: true);
-                    OperateSnapshot(snapshot, rgName, snapshotName);
+                    OperateSnapshot(snapshot, rgName, snapshotName, incremental: true);
                 }
                 finally
                 {
