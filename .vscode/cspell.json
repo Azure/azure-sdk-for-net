@@ -112,6 +112,10 @@
       ]
     },
     {
+      "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
+      "words": ["Puid"]
+    },
+    {
       "filename": "**/sdk/search/**/*.cs",
       "words": [
         "Adls",

@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             string resourceId = default;
             ChangeType changeType = default;
+            Optional<string> unsupportedReason = default;
             Optional<object> before = default;
             Optional<object> after = default;
             Optional<IReadOnlyList<WhatIfPropertyChange>> delta = default;
@@ -30,6 +31,11 @@ namespace Azure.ResourceManager.Resources.Models
                 if (property.NameEquals("changeType"))
                 {
                     changeType = property.Value.GetString().ToChangeType();
+                    continue;
+                }
+                if (property.NameEquals("unsupportedReason"))
+                {
+                    unsupportedReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("before"))
@@ -68,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new WhatIfChange(resourceId, changeType, before.Value, after.Value, Optional.ToList(delta));
+            return new WhatIfChange(resourceId, changeType, unsupportedReason.Value, before.Value, after.Value, Optional.ToList(delta));
         }
     }
 }

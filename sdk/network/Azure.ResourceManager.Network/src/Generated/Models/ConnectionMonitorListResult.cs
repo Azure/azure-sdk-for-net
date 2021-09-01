@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorListResult. </summary>
         internal ConnectionMonitorListResult()
         {
-            Value = new ChangeTrackingList<ConnectionMonitorResult>();
+            Value = new ChangeTrackingList<ConnectionMonitorData>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorListResult. </summary>
         /// <param name="value"> Information about connection monitors. </param>
-        internal ConnectionMonitorListResult(IReadOnlyList<ConnectionMonitorResult> value)
+        internal ConnectionMonitorListResult(IReadOnlyList<ConnectionMonitorData> value)
         {
             Value = value;
         }
 
         /// <summary> Information about connection monitors. </summary>
-        public IReadOnlyList<ConnectionMonitorResult> Value { get; }
+        public IReadOnlyList<ConnectionMonitorData> Value { get; }
     }
 }
