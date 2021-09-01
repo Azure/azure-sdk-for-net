@@ -27,7 +27,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
         }
 
+        [PlaybackOnly]
         [Test]
+        [RecordedTest]
         public async Task ManagedHsmCreateUpdateDelete()
         {
             Location = "southcentralus";
@@ -148,7 +150,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
             });
         }
 
+        [PlaybackOnly]
         [Test]
+        [RecordedTest]
         public async Task ManagedHsmListKeys()
         {
             List<string> resourceIds = new List<string>();
@@ -188,8 +192,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
         }
 
-        [Ignore("Recovoer is not working, add back when it's verified")]
+        [Ignore("Recover is not working, add back when it's verified")]
+        [PlaybackOnly]
         [Test]
+        [RecordedTest]
         public async Task ManagedHsmRecoverDeletedVault()
         {
             Location = "westus";
