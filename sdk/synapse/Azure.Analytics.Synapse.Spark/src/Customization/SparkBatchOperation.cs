@@ -79,10 +79,26 @@ namespace Azure.Analytics.Synapse.Spark
         public override Response GetRawResponse() => _response.GetRawResponse();
 
         /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default) => UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) => UpdateStatusAsync(false, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Update the operation polling status.
+        /// </summary>
+        /// <param name="shouldWaitForJobExectuion">Indicates whether the method should wait for completion of job exectuion.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public Response UpdateStatus(bool shouldWaitForJobExectuion, CancellationToken cancellationToken = default) => UpdateStatusAsync(false, shouldWaitForJobExectuion, cancellationToken).EnsureCompleted();
 
         /// <inheritdoc/>
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => await UpdateStatusAsync(true, false, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Update the operation polling status.
+        /// </summary>
+        /// <param name="shouldWaitForJobExectuion">Indicates whether the method should wait for completion of job exectuion.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async ValueTask<Response> UpdateStatusAsync(bool shouldWaitForJobExectuion, CancellationToken cancellationToken = default) => await UpdateStatusAsync(true, shouldWaitForJobExectuion, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
         public override ValueTask<Response<SparkBatchJob>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
@@ -92,7 +108,7 @@ namespace Azure.Analytics.Synapse.Spark
         public override ValueTask<Response<SparkBatchJob>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<Response> UpdateStatusAsync(bool async, bool shouldWaitForJobExecution, CancellationToken cancellationToken)
         {
             if (!_completed)
             {
@@ -109,7 +125,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         _response = _client.RestClient.GetSparkBatchJob(_value.Id, true, cancellationToken);
                     }
-                    _completed = IsJobComplete(_response.Value.Result.ToString(), _response.Value.State);
+                    _completed = IsJobComplete(_response.Value.Result.ToString(), _response.Value.State, shouldWaitForJobExecution);
                 }
                 catch (RequestFailedException e)
                 {
@@ -134,7 +150,7 @@ namespace Azure.Analytics.Synapse.Spark
             return GetRawResponse();
         }
 
-        private static bool IsJobComplete(string jobState, string livyState)
+        private static bool IsJobComplete(string jobState, string livyState, bool shouldWaitForJobExecution)
         {
             switch (jobState)
             {
@@ -151,6 +167,16 @@ namespace Azure.Analytics.Synapse.Spark
                 case "success":
                 case "killed":
                     return true;
+            }
+
+            if (!shouldWaitForJobExecution)
+            {
+                switch (livyState)
+                {
+                    case "starting":
+                    case "running":
+                        return true;
+                }
             }
 
             return false;
