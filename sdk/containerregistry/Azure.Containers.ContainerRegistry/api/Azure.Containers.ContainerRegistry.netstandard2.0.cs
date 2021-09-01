@@ -234,32 +234,20 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         protected ContainerRegistryBlobClient() { }
         public ContainerRegistryBlobClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string repository) { }
         public ContainerRegistryBlobClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string repository, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
-        public virtual Azure.Response DeleteBlob(string digest, Azure.Containers.ContainerRegistry.Specialized.DeleteBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBlobAsync(string digest, Azure.Containers.ContainerRegistry.Specialized.DeleteBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteManifest(string digest, Azure.Containers.ContainerRegistry.Specialized.DeleteManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteManifestAsync(string digest, Azure.Containers.ContainerRegistry.Specialized.DeleteManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult> DownloadBlob(string digest, Azure.Containers.ContainerRegistry.Specialized.DownloadBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult>> DownloadBlobAsync(string digest, Azure.Containers.ContainerRegistry.Specialized.DownloadBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadManifestResult> DownloadManifest(string digest, Azure.Containers.ContainerRegistry.Specialized.DownloadManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadManifestResult>> DownloadManifestAsync(string digest, Azure.Containers.ContainerRegistry.Specialized.DownloadManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.UploadBlobResult> UploadBlob(System.IO.Stream stream, Azure.Containers.ContainerRegistry.Specialized.UploadBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.UploadBlobResult>> UploadBlobAsync(System.IO.Stream stream, Azure.Containers.ContainerRegistry.Specialized.UploadBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteBlob(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBlobAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteManifest(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteManifestAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult> DownloadBlob(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult>> DownloadBlobAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadManifestResult> DownloadManifest(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadManifestResult>> DownloadManifestAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.UploadBlobResult> UploadBlob(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.UploadBlobResult>> UploadBlobAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.UploadManifestResult> UploadManifest(Azure.Containers.ContainerRegistry.Specialized.OciManifest manifest, Azure.Containers.ContainerRegistry.Specialized.UploadManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.UploadManifestResult> UploadManifest(System.IO.Stream stream, Azure.Containers.ContainerRegistry.Specialized.UploadManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.UploadManifestResult>> UploadManifestAsync(Azure.Containers.ContainerRegistry.Specialized.OciManifest manifest, Azure.Containers.ContainerRegistry.Specialized.UploadManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.UploadManifestResult>> UploadManifestAsync(System.IO.Stream stream, Azure.Containers.ContainerRegistry.Specialized.UploadManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DeleteBlobOptions
-    {
-        public DeleteBlobOptions() { }
-    }
-    public partial class DeleteManifestOptions
-    {
-        public DeleteManifestOptions() { }
-    }
-    public partial class DownloadBlobOptions
-    {
-        public DownloadBlobOptions() { }
     }
     public partial class DownloadBlobResult
     {
@@ -267,46 +255,17 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public System.IO.Stream Content { get { throw null; } }
         public string Digest { get { throw null; } }
     }
-    public partial class DownloadManifestOptions
-    {
-        public DownloadManifestOptions() { }
-        public Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType MediaType { get { throw null; } set { } }
-    }
     public partial class DownloadManifestResult
     {
         internal DownloadManifestResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Containers.ContainerRegistry.Specialized.ArtifactBlobProperties> ArtifactFiles { get { throw null; } }
-        public System.IO.Stream Content { get { throw null; } }
         public string Digest { get { throw null; } }
-        public Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType MediaType { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManifestMediaType : System.IEquatable<Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public static readonly Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType OciManifest;
-        public bool Equals(Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType left, Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType right) { throw null; }
-        public static explicit operator string (Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType mediaType) { throw null; }
-        public static implicit operator Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType (string mediaType) { throw null; }
-        public static bool operator !=(Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType left, Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType right) { throw null; }
-        public override string ToString() { throw null; }
+        public Azure.Containers.ContainerRegistry.Specialized.OciManifest Manifest { get { throw null; } }
     }
     public partial class OciManifest
     {
         public OciManifest() { }
-        public OciManifest(Azure.Containers.ContainerRegistry.Specialized.ArtifactBlobDescriptor config, System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.Specialized.ArtifactBlobDescriptor> layers) { }
         public Azure.Containers.ContainerRegistry.Specialized.ArtifactBlobDescriptor Config { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.Specialized.ArtifactBlobDescriptor> Layers { get { throw null; } }
-    }
-    public partial class UploadBlobOptions
-    {
-        public UploadBlobOptions() { }
     }
     public partial class UploadBlobResult
     {
@@ -316,7 +275,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public partial class UploadManifestOptions
     {
         public UploadManifestOptions() { }
-        public Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType MediaType { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
     }
     public partial class UploadManifestResult
