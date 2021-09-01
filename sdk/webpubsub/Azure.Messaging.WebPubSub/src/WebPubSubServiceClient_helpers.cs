@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
 {
@@ -18,6 +18,7 @@ namespace Azure.Messaging.WebPubSub
         private const string EndpointPropertyName = "Endpoint";
         private const string AccessKeyPropertyName = "AccessKey";
         private const string PortPropertyName = "Port";
+        private const string ClientTokenResponseTokenPropertyName = "token";
         private static readonly char[] KeyValueSeparator = { '=' };
         private static readonly char[] PropertySeparator = { ';' };
 
@@ -30,41 +31,51 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"></param>
         /// <param name="roles"></param>
         /// <returns></returns>
-        public virtual Uri GenerateClientAccessUri(DateTimeOffset expiresAt, string userId = default, params string[] roles)
+        public virtual Response<Uri> GenerateClientAccessUri(DateTimeOffset expiresAt, string userId = default, params string[] roles)
         {
-            var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
-            // TODO: use _tokenCredential to construct keyBytes
+            string token;
+            Response clientTokenResponse = null;
 
-            var jwt = new JwtBuilder(keyBytes);
-            var now = DateTimeOffset.UtcNow;
-
-            string endpoint = this.endpoint.AbsoluteUri;
-            if (!endpoint.EndsWith("/", StringComparison.Ordinal))
+            if (_tokenCredential != null)
             {
-                endpoint += "/";
+                clientTokenResponse = GenerateClientToken(userId, roles, expiresAt.Minute);
+                token = JsonDocument.Parse(clientTokenResponse.Content).RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
             }
-            var audience = $"{endpoint}client/hubs/{hub}";
-
-            if (userId != default)
+            else
             {
-                jwt.AddClaim(JwtBuilder.Sub, userId);
+                token = GetTokenFromAzureKeyCredential(expiresAt, userId, roles);
             }
-            if (roles != default && roles.Length > 0)
+
+            Uri clientAccessUri = CreateClientAccessUri(token);
+
+            return Response.FromValue(clientAccessUri, clientTokenResponse);
+        }
+
+        /// <summary>
+        /// Creates a URI with authentication token.
+        /// </summary>
+        /// <param name="expiresAt">UTC time when the token expires.</param>
+        /// <param name="userId"></param>
+        /// <param name="roles"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<Uri>> GenerateClientAccessUriAsync(DateTimeOffset expiresAt, string userId = default, params string[] roles)
+        {
+            string token;
+            Response clientTokenResponse = null;
+
+            if (_tokenCredential != null)
             {
-                jwt.AddClaim(s_role, roles);
+                clientTokenResponse = await GenerateClientTokenAsync(userId, roles, expiresAt.Minute).ConfigureAwait(false);
+                token = JsonDocument.Parse(clientTokenResponse.Content).RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
             }
-            jwt.AddClaim(JwtBuilder.Nbf, now);
-            jwt.AddClaim(JwtBuilder.Exp, expiresAt);
-            jwt.AddClaim(JwtBuilder.Iat, now);
-            jwt.AddClaim(JwtBuilder.Aud, audience);
+            else
+            {
+                token = GetTokenFromAzureKeyCredential(expiresAt, userId, roles);
+            }
 
-            string token = jwt.BuildString();
+            Uri clientAccessUri = CreateClientAccessUri(token);
 
-            var clientEndpoint = new UriBuilder(endpoint);
-            clientEndpoint.Scheme = this.endpoint.Scheme == "http" ? "ws" : "wss";
-            var uriString = $"{clientEndpoint}client/hubs/{hub}?access_token={token}";
-
-            return new Uri(uriString);
+            return Response.FromValue(clientAccessUri, clientTokenResponse);
         }
 
         /// <summary>
@@ -92,7 +103,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Parse connection string to endpoint and credential
+        /// Parse connection string to endpoint and credential.
         /// </summary>
         /// <returns></returns>
         internal static (Uri Endpoint, AzureKeyCredential Credential) ParseConnectionString(string connectionString)
@@ -161,6 +172,46 @@ namespace Azure.Messaging.WebPubSub
                 default:
                     throw new ArgumentOutOfRangeException(nameof(permission));
             }
+        }
+
+        private string GetTokenFromAzureKeyCredential(DateTimeOffset expiresAt, string userId = default, params string[] roles)
+        {
+            var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
+
+            var jwt = new JwtBuilder(keyBytes);
+            var now = DateTimeOffset.UtcNow;
+
+            string endpoint = this.endpoint.AbsoluteUri;
+            if (!endpoint.EndsWith("/", StringComparison.Ordinal))
+            {
+                endpoint += "/";
+            }
+            var audience = $"{endpoint}client/hubs/{hub}";
+
+            if (userId != default)
+            {
+                jwt.AddClaim(JwtBuilder.Sub, userId);
+            }
+            if (roles != default && roles.Length > 0)
+            {
+                jwt.AddClaim(s_role, roles);
+            }
+            jwt.AddClaim(JwtBuilder.Nbf, now);
+            jwt.AddClaim(JwtBuilder.Exp, expiresAt);
+            jwt.AddClaim(JwtBuilder.Iat, now);
+            jwt.AddClaim(JwtBuilder.Aud, audience);
+
+            return jwt.BuildString();
+        }
+
+        private Uri CreateClientAccessUri(string token)
+        {
+            UriBuilder clientEndpoint = new(endpoint)
+            {
+                Scheme = endpoint.Scheme == "http" ? "ws" : "wss"
+            };
+
+            return new Uri($"{clientEndpoint}client/hubs/{hub}?access_token={token}");
         }
     }
 }
