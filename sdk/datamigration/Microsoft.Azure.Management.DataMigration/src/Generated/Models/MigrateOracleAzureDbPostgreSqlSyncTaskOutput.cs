@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output for the task that migrates Oracle databases to Azure Database
     /// for PostgreSQL for online migrations
     /// </summary>
-    [Newtonsoft.Json.JsonObject("MigrateOracleAzureDbPostgreSqlSyncTaskOutput")]
     public partial class MigrateOracleAzureDbPostgreSqlSyncTaskOutput
     {
         /// <summary>

@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Information for connecting to SQL database server
     /// </summary>
-    [Newtonsoft.Json.JsonObject("SqlConnectionInfo")]
     public partial class SqlConnectionInfo : ConnectionInfo
     {
         /// <summary>

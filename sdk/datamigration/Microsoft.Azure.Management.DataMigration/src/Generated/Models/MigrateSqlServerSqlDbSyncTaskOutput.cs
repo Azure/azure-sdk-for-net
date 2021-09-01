@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output for the task that migrates on-prem SQL Server databases to Azure
     /// SQL Database for online migrations
     /// </summary>
-    [Newtonsoft.Json.JsonObject("MigrateSqlServerSqlDbSyncTaskOutput")]
     public partial class MigrateSqlServerSqlDbSyncTaskOutput
     {
         /// <summary>

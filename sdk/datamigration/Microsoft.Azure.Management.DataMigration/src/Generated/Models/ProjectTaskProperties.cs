@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Base class for all types of DMS task properties. If task is not
     /// supported by current client, this object is returned.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ProjectTaskProperties")]
     public partial class ProjectTaskProperties
     {
         /// <summary>

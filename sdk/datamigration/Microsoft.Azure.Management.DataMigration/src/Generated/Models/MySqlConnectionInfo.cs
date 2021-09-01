@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Information for connecting to MySQL server
     /// </summary>
-    [Newtonsoft.Json.JsonObject("MySqlConnectionInfo")]
     public partial class MySqlConnectionInfo : ConnectionInfo
     {
         /// <summary>

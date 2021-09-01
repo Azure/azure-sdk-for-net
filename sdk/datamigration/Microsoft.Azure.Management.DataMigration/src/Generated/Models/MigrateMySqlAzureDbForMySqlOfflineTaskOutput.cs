@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output for the task that migrates MySQL databases to Azure Database for
     /// MySQL for offline migrations
     /// </summary>
-    [Newtonsoft.Json.JsonObject("MigrateMySqlAzureDbForMySqlOfflineTaskOutput")]
     public partial class MigrateMySqlAzureDbForMySqlOfflineTaskOutput
     {
         /// <summary>

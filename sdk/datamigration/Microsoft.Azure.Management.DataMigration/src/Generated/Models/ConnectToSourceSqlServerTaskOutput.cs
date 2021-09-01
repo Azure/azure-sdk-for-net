@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output for the task that validates connection to SQL Server and also
     /// validates source server requirements
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ConnectToSourceSqlServerTaskOutput")]
     public partial class ConnectToSourceSqlServerTaskOutput
     {
         /// <summary>

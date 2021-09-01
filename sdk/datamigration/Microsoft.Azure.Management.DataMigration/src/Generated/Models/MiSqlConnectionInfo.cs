@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Properties required to create a connection to Azure SQL database
     /// Managed instance
     /// </summary>
-    [Newtonsoft.Json.JsonObject("MiSqlConnectionInfo")]
     public partial class MiSqlConnectionInfo : ConnectionInfo
     {
         /// <summary>

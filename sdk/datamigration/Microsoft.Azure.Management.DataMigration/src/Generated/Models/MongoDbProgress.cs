@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Base class for MongoDB migration outputs
     /// </summary>
-    [Newtonsoft.Json.JsonObject("MongoDbProgress")]
     public partial class MongoDbProgress
     {
         /// <summary>

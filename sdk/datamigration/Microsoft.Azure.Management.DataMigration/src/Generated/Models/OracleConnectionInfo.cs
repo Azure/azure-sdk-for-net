@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Information for connecting to Oracle server
     /// </summary>
-    [Newtonsoft.Json.JsonObject("OracleConnectionInfo")]
     public partial class OracleConnectionInfo : ConnectionInfo
     {
         /// <summary>

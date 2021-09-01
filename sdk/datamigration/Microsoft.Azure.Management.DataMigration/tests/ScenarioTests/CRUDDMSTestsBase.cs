@@ -110,11 +110,6 @@ namespace DataMigration.Tests.ScenarioTests
 
             resourcesClient.ResourceGroups.Delete(resourceGroupName);
         }
-
-        protected string GetUniqueServiceName()
-        {
-            return DmsDeploymentName + Guid.NewGuid().ToString("n");
-        }
     }
 }
 

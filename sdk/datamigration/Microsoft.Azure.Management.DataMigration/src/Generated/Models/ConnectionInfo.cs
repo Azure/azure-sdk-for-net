@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Defines the connection properties of a server
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ConnectionInfo")]
     public partial class ConnectionInfo
     {
         /// <summary>

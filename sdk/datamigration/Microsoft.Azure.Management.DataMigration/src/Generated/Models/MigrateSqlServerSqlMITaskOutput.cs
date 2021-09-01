@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output for task that migrates SQL Server databases to Azure SQL
     /// Database Managed Instance.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("MigrateSqlServerSqlMITaskOutput")]
     public partial class MigrateSqlServerSqlMITaskOutput
     {
         /// <summary>
