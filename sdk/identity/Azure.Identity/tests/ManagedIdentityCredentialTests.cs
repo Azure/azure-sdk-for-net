@@ -340,7 +340,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentitySource.CannotConnectError));
+            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentitySource.NoResponseError));
 
             await Task.CompletedTask;
         }

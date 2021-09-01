@@ -21,8 +21,8 @@ namespace Azure.Identity
         private const string ImdsApiVersion = "2018-02-01";
 
         internal const string IdentityUnavailableError = "ManagedIdentityCredential authentication unavailable. The requested identity has not been assigned to this resource.";
-        internal const string CannotConnectError = "ManagedIdentityCredential authentication unavailable. Failed to connect to the managed identity endpoint.";
-        internal const string TimoutError = "ManagedIdentityCredential authentication unavailable. The request to the managed identity endpoint timed out.";
+        internal const string NoResponseError = "ManagedIdentityCredential authentication unavailable. No response received from the managed identity endpoint.";
+        internal const string TimeoutError = "ManagedIdentityCredential authentication unavailable. The request to the managed identity endpoint timed out.";
         internal const string GatewayError = "ManagedIdentityCredential authentication unavailable. The request failed due to a gateway error.";
         internal const string AggregateError = "ManagedIdentityCredential authentication unavailable. Multiple attempts failed to obtain a token from the managed identity endpoint.";
 
@@ -76,10 +76,14 @@ namespace Azure.Identity
             {
                 if (e.Status == 0)
                 {
-                    throw new CredentialUnavailableException(CannotConnectError, e);
+                    throw new CredentialUnavailableException(NoResponseError, e);
                 }
 
                 throw;
+            }
+            catch (TaskCanceledException e)
+            {
+                throw new CredentialUnavailableException(NoResponseError, e);
             }
             catch (AggregateException e)
             {
