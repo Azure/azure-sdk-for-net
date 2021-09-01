@@ -84,9 +84,9 @@
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.2.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0-beta.2" />
     <PackageReference Update="Azure.Identity" Version="1.4.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.2" />
-    <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.0.2" />
-    <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.2" />
+    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.8.0" />
     
     <!-- Other approved packages -->
@@ -161,8 +161,8 @@
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.0.0" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-beta.1" />
-    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.0.0-alpha.20210831.1" />
-    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-preview.2" />
+    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.0.0-beta.1" />
+    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-alpha.20210831.3" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.8.0" />
