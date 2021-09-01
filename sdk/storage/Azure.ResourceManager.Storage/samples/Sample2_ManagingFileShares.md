@@ -111,4 +111,4 @@ await fileShare.DeleteAsync();
 
 ## Next steps
 
-Take a look at the [Managing Blob Containers](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingBlobContainers.md) samples.
+Take a look at the [Managing Blob Containers](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingBlobContainers.md) samples.
