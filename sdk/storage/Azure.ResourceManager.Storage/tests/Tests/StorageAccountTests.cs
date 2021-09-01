@@ -331,6 +331,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         [RecordedTest]
+        [Ignore("Records keys")]
         public async Task StorageAccountListKeysTest()
         {
             //Create resource group
