@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// </summary>
         /// <param name="digest"></param>
         /// <param name="content"></param>
-        public DownloadBlobResult(string digest, Stream content)
+        internal DownloadBlobResult(string digest, Stream content)
         {
             Digest = digest;
             Content = content;

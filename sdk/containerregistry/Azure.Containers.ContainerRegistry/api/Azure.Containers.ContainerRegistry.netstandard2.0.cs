@@ -217,7 +217,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public partial class ArtifactBlobDescriptor
     {
         public ArtifactBlobDescriptor() { }
-        public ArtifactBlobDescriptor(string mediaType, string digest, long? size = default(long?)) { }
         public string Digest { get { throw null; } set { } }
         public string MediaType { get { throw null; } set { } }
         public long? Size { get { throw null; } set { } }
@@ -251,7 +250,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     }
     public partial class DownloadBlobResult
     {
-        public DownloadBlobResult(string digest, System.IO.Stream content) { }
+        internal DownloadBlobResult() { }
         public System.IO.Stream Content { get { throw null; } }
         public string Digest { get { throw null; } }
     }
