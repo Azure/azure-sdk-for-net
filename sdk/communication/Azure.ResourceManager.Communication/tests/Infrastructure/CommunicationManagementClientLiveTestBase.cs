@@ -30,21 +30,16 @@ namespace Azure.ResourceManager.Communication.Tests
             ResourceDataLocation = "UnitedStates";
             SubscriptionId = "";
             Location = "";
-            //Sanitizer = new CommunicationManagementRecordedTestSanitizer();
+            Sanitizer = new CommunicationManagementRecordedTestSanitizer();
         }
 
         protected void InitializeClients()
         {
-            SubscriptionId = "f3d94233-a9aa-4241-ac82-2dfb63ce637a";
-            Location = "westus";
-            NotificationHubsResourceGroupName = "rg-sdk-test-comm-link-notif-hub";
-            NotificationHubsResourceId = "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/rg-sdk-test-comm-link-notif-hub/providers/Microsoft.NotificationHubs/namespaces/notif-hub-namespace-test/notificationHubs/notif-hub-test-comm-link";
-            NotificationHubsConnectionString = "Sanitized";
-            //SubscriptionId = TestEnvironment.SubscriptionId;
-            //Location = TestEnvironment.Location;
-            //NotificationHubsResourceGroupName = TestEnvironment.NotificationHubsResourceGroupName;
-            //NotificationHubsResourceId = TestEnvironment.NotificationHubsResourceId;
-            //NotificationHubsConnectionString = TestEnvironment.NotificationHubsConnectionString;
+            SubscriptionId = TestEnvironment.SubscriptionId;
+            Location = TestEnvironment.Location;
+            NotificationHubsResourceGroupName = TestEnvironment.NotificationHubsResourceGroupName;
+            NotificationHubsResourceId = TestEnvironment.NotificationHubsResourceId;
+            NotificationHubsConnectionString = TestEnvironment.NotificationHubsConnectionString;
 
             ResourcesManagementClient = GetResourceManagementClient();
         }
