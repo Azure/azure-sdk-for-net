@@ -38,7 +38,8 @@
           "webpubsub"
         ],
         "summary": "Generate token for the client to connect Azure Web PubSub service.",
-        "operationId": "WebPubSubService_GenerateClientToken",
+        "operationId": "WebPubSubService_GenerateClientTokenImpl",
+        "x-accessibility": "internal",
         "produces": [
           "text/plain",
           "application/json",

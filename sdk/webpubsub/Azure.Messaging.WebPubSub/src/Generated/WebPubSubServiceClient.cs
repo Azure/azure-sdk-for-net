@@ -35,16 +35,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GenerateClientTokenAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
+        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGenerateClientTokenRequest(userId, role, minutesToExpire, options);
+            using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientToken");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
@@ -77,16 +77,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GenerateClientToken(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
+        internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGenerateClientTokenRequest(userId, role, minutesToExpire, options);
+            using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientToken");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
@@ -113,12 +113,12 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        /// <summary> Create Request for <see cref="GenerateClientToken"/> and <see cref="GenerateClientTokenAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GenerateClientTokenImpl"/> and <see cref="GenerateClientTokenImplAsync"/> operations. </summary>
         /// <param name="userId"> User Id. </param>
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGenerateClientTokenRequest(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
+        private HttpMessage CreateGenerateClientTokenImplRequest(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

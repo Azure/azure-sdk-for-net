@@ -4,6 +4,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 using NUnit.Framework;
@@ -37,8 +38,8 @@ namespace Azure.Messaging.WebPubSub.Tests
         {
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
             var expiresAt = DateTimeOffset.UtcNow + TimeSpan.FromMinutes(5);
-            var uriResponse = serviceClient.GenerateClientAccessUri(expiresAt, userId, roles);
-            var token = HttpUtility.ParseQueryString(uriResponse.Value.Query).Get("access_token");
+            var uri = serviceClient.GenerateClientAccessUri(expiresAt, userId, roles);
+            var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
             Assert.NotNull(token);
             var jwt = JwtTokenHandler.ReadJwtToken(token);
 
