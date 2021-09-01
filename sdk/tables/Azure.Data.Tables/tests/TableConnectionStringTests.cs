@@ -233,6 +233,11 @@ namespace Azure.Data.Tables.Tests
             yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}"), AccountName, TableName };
             yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}/"), AccountName, TableName };
             yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/Tables('{TableName}')/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://localhost:10002/{AccountName}/{AccountName}"), AccountName, AccountName };
+            yield return new object[] { new Uri($"https://localhost:10002/{AccountName}/{AccountName}/"), AccountName, AccountName };
+            yield return new object[] { new Uri($"https://localhost:10002/{AccountName}/{TableName}"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://localhost:10002/{AccountName}/{TableName}/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://localhost:10002/{AccountName}/Tables('{TableName}')/"), AccountName, TableName };
         }
 
         [Test]
