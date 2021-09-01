@@ -38,10 +38,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
             scope.Start();
             try
@@ -77,10 +74,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
             scope.Start();
             try
@@ -247,10 +241,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();
             try
@@ -400,10 +391,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();
             try
@@ -459,10 +447,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteCollectionRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
             scope.Start();
             try
@@ -498,10 +483,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteCollectionRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
             scope.Start();
             try
@@ -555,10 +537,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListChildCollectionNamesRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.ListChildCollectionNames");
             scope.Start();
             try
@@ -595,10 +574,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListChildCollectionNamesRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.ListChildCollectionNames");
             scope.Start();
             try
@@ -657,10 +633,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionPathRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
             scope.Start();
             try
@@ -696,10 +669,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionPathRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
             scope.Start();
             try

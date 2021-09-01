@@ -61,10 +61,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetAccountPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
@@ -100,10 +97,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetAccountPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
@@ -173,10 +167,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateUpdateAccountPropertiesRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
@@ -230,10 +221,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateUpdateAccountPropertiesRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
@@ -288,10 +276,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetAccessKeysRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
@@ -327,10 +312,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetAccessKeysRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
@@ -400,10 +382,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRegenerateAccessKeyRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
@@ -457,10 +436,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRegenerateAccessKeyRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
@@ -516,10 +492,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionsRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
             scope.Start();
             try
@@ -556,10 +529,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionsRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
             scope.Start();
             try
@@ -617,10 +587,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetResourceSetRulesRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
             scope.Start();
             try
@@ -657,10 +624,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetResourceSetRulesRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
             scope.Start();
             try
