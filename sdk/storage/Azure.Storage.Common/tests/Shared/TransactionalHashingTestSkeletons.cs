@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Tests.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
@@ -75,6 +76,93 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
+        #region UploadPartition Tests
+        public static async Task TestUploadPartitionSuccessfulHashComputationAsync<TClient, TParentClient, TClientOptions>(
+            TestRandom random,
+            TransactionalHashAlgorithm algorithm,
+            Func<TClientOptions> getOptions,
+            TParentClient parentClient,
+            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
+            Func<TClient, Stream, UploadTransactionalHashingOptions, Task> uploadPartitionAsync) where TClientOptions : ClientOptions
+        {
+            var data = TestHelper.GetRandomBuffer(2 * Constants.KB, random);
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm
+            };
+
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm));
+            var clientOptions = getOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await getObjectClientAsync(parentClient, clientOptions);
+
+            using (var stream = new MemoryStream(data))
+            {
+                hashPipelineAssertion.CheckRequest = true;
+                await uploadPartitionAsync(client, stream, hashingOptions);
+            }
+        }
+
+        public static async Task TestUploadPartitionUsePrecalculatedHashAsync<TClient, TParentClient, TClientOptions>(
+            TestRandom random,
+            TransactionalHashAlgorithm algorithm,
+            Func<TClientOptions> getOptions,
+            TParentClient parentClient,
+            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
+            Func<TClient, Stream, UploadTransactionalHashingOptions, Task> uploadPartitionAsync) where TClientOptions : ClientOptions
+        {
+            var data = TestHelper.GetRandomBuffer(2 * Constants.KB, random);
+            // hash needs to be wrong so we detect difference from auto-SDK correct calculation
+            var precalculatedHash = TestHelper.GetRandomBuffer(16, random);
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm,
+                PrecalculatedHash = precalculatedHash
+            };
+
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm, expectedHash: precalculatedHash));
+            var clientOptions = getOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await getObjectClientAsync(parentClient, clientOptions);
+
+            hashPipelineAssertion.CheckRequest = true;
+            using (var stream = new MemoryStream(data))
+            {
+                AssertWriteHashMismatch(async () => await uploadPartitionAsync(client, stream, hashingOptions), algorithm);
+            }
+        }
+
+        public static async Task TestUploadPartitionMismatchedHashThrowsAsync<TClient, TParentClient, TClientOptions>(
+            TestRandom random,
+            TransactionalHashAlgorithm algorithm,
+            Func<TClientOptions> getOptions,
+            TParentClient parentClient,
+            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
+            Func<TClient, Stream, UploadTransactionalHashingOptions, Task> uploadPartitionAsync) where TClientOptions : ClientOptions
+        {
+            var data = TestHelper.GetRandomBuffer(2 * Constants.KB, random);
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm
+            };
+
+            var streamTamperPolicy = new TamperStreamContentsPolicy();
+            var clientOptions = getOptions();
+            clientOptions.AddPolicy(streamTamperPolicy, HttpPipelinePosition.PerCall);
+
+            var client = await getObjectClientAsync(parentClient, clientOptions);
+
+            using (var stream = new MemoryStream(data))
+            {
+                streamTamperPolicy.TransformRequestBody = true;
+                AssertWriteHashMismatch(async () => await uploadPartitionAsync(client, stream, hashingOptions), algorithm);
+            }
+        }
+        #endregion
+
+        #region OpenWrite Tests
         // TODO make sync and async
         public static async Task TestOpenWriteSuccessfulHashComputationAsync<TClient, TParentClient, TClientOptions>(
             byte[] writeBuffer,
@@ -102,6 +190,7 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
+        // TODO make sync and async
         public static async Task TestOpenWriteMismatchedHashThrowsAsync<TClient, TParentClient, TClientOptions>(
             byte[] writeBuffer,
             TransactionalHashAlgorithm algorithm,
@@ -131,5 +220,6 @@ namespace Azure.Storage.Test.Shared
                 }
             }, algorithm);
         }
+        #endregion
     }
 }
