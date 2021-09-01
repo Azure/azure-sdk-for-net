@@ -15,10 +15,10 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     public class StorageAccountTests : StorageTestsManagementClientBase
     {
-        public StorageAccountTests(bool isAsync) : base(isAsync)
+        public StorageAccountTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -1228,6 +1228,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         [RecordedTest]
+        [Ignore("Remove after storage refresh")]
         public void StorageSKUListTest()
         {
             AsyncPageable<SkuInformation> skulist = SkusClient.ListAsync();
@@ -1472,7 +1473,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             // Create storage account with StorageV2
             Sku sku = new Sku(SkuName.PremiumLRS);
-            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.FileStorage, location: "centraluseuap");
+            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.FileStorage, location: "eastus");
             StorageAccount account = await _CreateStorageAccountAsync(rgname, accountName, parameters);
             VerifyAccountProperties(account, false);
             Assert.AreEqual(Kind.FileStorage, account.Kind);
@@ -1488,7 +1489,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             // Create storage account with StorageV2
             Sku sku = new Sku(SkuName.PremiumLRS);
-            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.BlockBlobStorage, location: "centraluseuap");
+            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.BlockBlobStorage, location: "eastus");
             StorageAccount account = await _CreateStorageAccountAsync(rgname, accountName, parameters);
             VerifyAccountProperties(account, false);
             Assert.AreEqual(Kind.BlockBlobStorage, account.Kind);
@@ -1708,7 +1709,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             // Create storage account
             Sku sku = new Sku(SkuName.StandardLRS);
-            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.StorageV2, location: "East US 2 EUAP")
+            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.StorageV2, location: "eastus")
             {
                 Encryption = new Encryption(keySource: KeySource.MicrosoftStorage)
                 {
@@ -1745,6 +1746,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         [RecordedTest]
+        [Ignore("Remove after storage refresh")]
         public async Task EcryptionScopeTest()
         {
             //Create resource group
@@ -1753,7 +1755,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             // Create storage account
             Sku sku = new Sku(SkuName.StandardLRS);
-            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.StorageV2, location: "East US 2 EUAP");
+            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.StorageV2, location: "eastus");
             await _CreateStorageAccountAsync(rgname, accountName, parameters);
 
             //Create EcryptionScope

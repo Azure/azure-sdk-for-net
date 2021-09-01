@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
         }
 
+        protected StorageTestsManagementClientBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        {
+        }
+
         protected void Initialize()
         {
             ArmClient = GetResourceManagementClient();
