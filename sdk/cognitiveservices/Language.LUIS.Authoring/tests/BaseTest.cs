@@ -10,7 +10,7 @@ namespace LUIS.Authoring.Tests.Luis
 
     public abstract class BaseTest
     {
-        private const HttpRecorderMode mode = HttpRecorderMode.Playback;
+        private const HttpRecorderMode mode = HttpRecorderMode.Record;
 
         protected readonly Guid GlobalAppId = new Guid("87c4b1be-ad31-42cd-9906-2faf9cb6e5cd");
         protected const string GlobalVersionId = "0.1";
