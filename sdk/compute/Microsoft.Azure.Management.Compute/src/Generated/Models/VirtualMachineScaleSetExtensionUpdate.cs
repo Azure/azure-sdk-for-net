@@ -66,7 +66,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="provisionAfterExtensions">Collection of extension
         /// names after which this extension needs to be provisioned.</param>
-        public VirtualMachineScaleSetExtensionUpdate(string id = default(string), string name = default(string), string type = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), IList<string> provisionAfterExtensions = default(IList<string>))
+        /// <param name="suppressFailures">Indicates whether failures stemming
+        /// from the extension will be suppressed (Operational failures such as
+        /// not connecting to the VM will not be suppressed regardless of this
+        /// value). The default is false.</param>
+        public VirtualMachineScaleSetExtensionUpdate(string id = default(string), string name = default(string), string type = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), IList<string> provisionAfterExtensions = default(IList<string>), bool? suppressFailures = default(bool?))
             : base(id)
         {
             Name = name;
@@ -81,6 +85,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             ProtectedSettings = protectedSettings;
             ProvisioningState = provisioningState;
             ProvisionAfterExtensions = provisionAfterExtensions;
+            SuppressFailures = suppressFailures;
             CustomInit();
         }
 
@@ -170,6 +175,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisionAfterExtensions")]
         public IList<string> ProvisionAfterExtensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether failures stemming from the extension
+        /// will be suppressed (Operational failures such as not connecting to
+        /// the VM will not be suppressed regardless of this value). The
+        /// default is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.suppressFailures")]
+        public bool? SuppressFailures { get; set; }
 
     }
 }
