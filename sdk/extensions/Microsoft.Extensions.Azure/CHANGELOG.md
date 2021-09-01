@@ -1,14 +1,8 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.1 (2021-09-07)
 
-### Features Added
-
-### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
+### Bugs Fixed
 
 - Improved the diagnostic message when a constructor can't be selected.
 - The issue where aggressive parameter validation caused constructor not to be selected.
