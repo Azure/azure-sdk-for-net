@@ -4,7 +4,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Threading;
 using System.Web;
 
 using NUnit.Framework;
