@@ -843,13 +843,9 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(CreateIfNotExists)}");
-
                 PageBlobRequestConditions conditions = new PageBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
                 try
                 {
-                    scope.Start();
-
                     return await CreateInternal(
                         size,
                         sequenceNumber,
@@ -872,13 +868,11 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
-                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
-                    scope.Dispose();
                 }
             }
         }
