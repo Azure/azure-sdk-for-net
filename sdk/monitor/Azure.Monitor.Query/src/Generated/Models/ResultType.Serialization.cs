@@ -13,14 +13,14 @@ namespace Azure.Monitor.Query.Models
     {
         public static string ToSerialString(this ResultType value) => value switch
         {
-            ResultType.Data => "Data",
+            ResultType.Data => "Values",
             ResultType.Metadata => "Metadata",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResultType value.")
         };
 
         public static ResultType ToResultType(this string value)
         {
-            if (string.Equals(value, "Data", StringComparison.InvariantCultureIgnoreCase)) return ResultType.Data;
+            if (string.Equals(value, "Values", StringComparison.InvariantCultureIgnoreCase)) return ResultType.Data;
             if (string.Equals(value, "Metadata", StringComparison.InvariantCultureIgnoreCase)) return ResultType.Metadata;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResultType value.");
         }

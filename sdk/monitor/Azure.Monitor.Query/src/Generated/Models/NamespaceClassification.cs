@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -30,8 +31,10 @@ namespace Azure.Monitor.Query.Models
         public static NamespaceClassification Platform { get; } = new NamespaceClassification(PlatformValue);
         /// <summary> Custom. </summary>
         public static NamespaceClassification Custom { get; } = new NamespaceClassification(CustomValue);
+
         /// <summary> Qos. </summary>
-        public static NamespaceClassification Qos { get; } = new NamespaceClassification(QosValue);
+        [CodeGenMember("Qos")]
+        public static NamespaceClassification QualityOfService { get; } = new NamespaceClassification(QosValue);
         /// <summary> Determines if two <see cref="NamespaceClassification"/> values are the same. </summary>
         public static bool operator ==(NamespaceClassification left, NamespaceClassification right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NamespaceClassification"/> values are not the same. </summary>

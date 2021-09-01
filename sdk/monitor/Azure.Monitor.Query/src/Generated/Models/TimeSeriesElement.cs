@@ -17,18 +17,20 @@ namespace Azure.Monitor.Query.Models
         internal TimeSeriesElement()
         {
             Metadatavalues = new ChangeTrackingList<MetadataValue>();
-            Data = new ChangeTrackingList<MetricValue>();
+            Values = new ChangeTrackingList<MetricValue>();
         }
 
         /// <summary> Initializes a new instance of TimeSeriesElement. </summary>
         /// <param name="metadatavalues"> the metadata values returned if $filter was specified in the call. </param>
-        /// <param name="data"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
-        internal TimeSeriesElement(IReadOnlyList<MetadataValue> metadatavalues, IReadOnlyList<MetricValue> data)
+        /// <param name="value"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
+        internal TimeSeriesElement(IReadOnlyList<MetadataValue> metadatavalues, IReadOnlyList<MetricValue> value)
         {
             Metadatavalues = metadatavalues;
-            Data = data;
+            Values = value;
         }
+
         /// <summary> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </summary>
-        public IReadOnlyList<MetricValue> Data { get; }
+        [CodeGenMember("Data")]
+        public IReadOnlyList<MetricValue> Values { get; }
     }
 }

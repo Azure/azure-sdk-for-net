@@ -5,7 +5,7 @@ namespace Azure.Monitor.Query.Models
 {
     internal enum ResultType
     {
-        /// <summary> Data. </summary>
+        /// <summary> Values. </summary>
         Data,
         /// <summary> Metadata. </summary>
         Metadata
