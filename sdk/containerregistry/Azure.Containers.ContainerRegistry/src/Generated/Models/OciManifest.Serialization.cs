@@ -8,38 +8,30 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Containers.ContainerRegistry;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    public partial class ArtifactBlobDescriptor : IUtf8JsonSerializable
+    [JsonConverter(typeof(OciManifestConverter))]
+    public partial class OciManifest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
+            if (Optional.IsDefined(Config))
             {
-                writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
+                writer.WritePropertyName("config");
+                writer.WriteObjectValue(Config);
             }
-            if (Optional.IsDefined(Size))
+            if (Optional.IsCollectionDefined(Layers))
             {
-                writer.WritePropertyName("size");
-                writer.WriteNumberValue(Size.Value);
-            }
-            if (Optional.IsDefined(Digest))
-            {
-                writer.WritePropertyName("digest");
-                writer.WriteStringValue(Digest);
-            }
-            if (Optional.IsCollectionDefined(Urls))
-            {
-                writer.WritePropertyName("urls");
+                writer.WritePropertyName("layers");
                 writer.WriteStartArray();
-                foreach (var item in Urls)
+                foreach (var item in Layers)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -58,48 +50,36 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             writer.WriteEndObject();
         }
 
-        internal static ArtifactBlobDescriptor DeserializeArtifactBlobDescriptor(JsonElement element)
+        internal static OciManifest DeserializeOciManifest(JsonElement element)
         {
-            Optional<string> mediaType = default;
-            Optional<long> size = default;
-            Optional<string> digest = default;
-            Optional<IList<Uri>> urls = default;
+            Optional<ArtifactBlobDescriptor> config = default;
+            Optional<IList<ArtifactBlobDescriptor>> layers = default;
             Optional<Annotations> annotations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mediaType"))
-                {
-                    mediaType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("config"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    size = property.Value.GetInt64();
+                    config = ArtifactBlobDescriptor.DeserializeArtifactBlobDescriptor(property.Value);
                     continue;
                 }
-                if (property.NameEquals("digest"))
-                {
-                    digest = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("urls"))
+                if (property.NameEquals("layers"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<ArtifactBlobDescriptor> array = new List<ArtifactBlobDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(ArtifactBlobDescriptor.DeserializeArtifactBlobDescriptor(item));
                     }
-                    urls = array;
+                    layers = array;
                     continue;
                 }
                 if (property.NameEquals("annotations"))
@@ -113,7 +93,20 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     continue;
                 }
             }
-            return new ArtifactBlobDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
+            return new OciManifest(config.Value, Optional.ToList(layers), annotations.Value);
+        }
+
+        internal partial class OciManifestConverter : JsonConverter<OciManifest>
+        {
+            public override void Write(Utf8JsonWriter writer, OciManifest model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override OciManifest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeOciManifest(document.RootElement);
+            }
         }
     }
 }

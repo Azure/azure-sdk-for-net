@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class Annotations
     {
         /// <summary> Initializes a new instance of Annotations. </summary>
-        internal Annotations()
+        public Annotations()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="title"> Human-readable title of the image. </param>
         /// <param name="description"> Human-readable description of the software packaged in the image. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Annotations(DateTimeOffset? created, string authors, string url, string documentation, string source, string version, string revision, string vendor, string licenses, string name, string title, string description, IReadOnlyDictionary<string, object> additionalProperties)
+        internal Annotations(DateTimeOffset? created, string authors, string url, string documentation, string source, string version, string revision, string vendor, string licenses, string name, string title, string description, IDictionary<string, object> additionalProperties)
         {
             Created = created;
             Authors = authors;
@@ -52,30 +52,30 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Date and time on which the image was built (string, date-time as defined by https://tools.ietf.org/html/rfc3339#section-5.6). </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? Created { get; set; }
         /// <summary> Contact details of the people or organization responsible for the image. </summary>
-        public string Authors { get; }
+        public string Authors { get; set; }
         /// <summary> URL to find more information on the image. </summary>
-        public string Url { get; }
+        public string Url { get; set; }
         /// <summary> URL to get documentation on the image. </summary>
-        public string Documentation { get; }
+        public string Documentation { get; set; }
         /// <summary> URL to get source code for building the image. </summary>
-        public string Source { get; }
+        public string Source { get; set; }
         /// <summary> Version of the packaged software. The version MAY match a label or tag in the source code repository, may also be Semantic versioning-compatible. </summary>
-        public string Version { get; }
+        public string Version { get; set; }
         /// <summary> Source control revision identifier for the packaged software. </summary>
-        public string Revision { get; }
+        public string Revision { get; set; }
         /// <summary> Name of the distributing entity, organization or individual. </summary>
-        public string Vendor { get; }
+        public string Vendor { get; set; }
         /// <summary> License(s) under which contained software is distributed as an SPDX License Expression. </summary>
-        public string Licenses { get; }
+        public string Licenses { get; set; }
         /// <summary> Name of the reference for a target. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> Human-readable title of the image. </summary>
-        public string Title { get; }
+        public string Title { get; set; }
         /// <summary> Human-readable description of the software packaged in the image. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

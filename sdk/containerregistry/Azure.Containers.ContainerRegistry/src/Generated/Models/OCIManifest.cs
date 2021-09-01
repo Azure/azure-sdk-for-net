@@ -15,14 +15,25 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public partial class OciManifest
     {
         /// <summary> Initializes a new instance of OciManifest. </summary>
-        internal OciManifest()
+        public OciManifest()
         {
             Layers = new ChangeTrackingList<ArtifactBlobDescriptor>();
         }
 
+        /// <summary> Initializes a new instance of OciManifest. </summary>
+        /// <param name="config"> V2 image config descriptor. </param>
+        /// <param name="layers"> List of V2 image layer information. </param>
+        /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
+        internal OciManifest(ArtifactBlobDescriptor config, IList<ArtifactBlobDescriptor> layers, Annotations annotations)
+        {
+            Config = config;
+            Layers = layers;
+            Annotations = annotations;
+        }
+
         /// <summary> V2 image config descriptor. </summary>
-        public ArtifactBlobDescriptor Config { get; }
+        public ArtifactBlobDescriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
-        public IReadOnlyList<ArtifactBlobDescriptor> Layers { get; }
+        public IList<ArtifactBlobDescriptor> Layers { get; }
     }
 }

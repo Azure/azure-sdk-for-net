@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public partial class ArtifactBlobDescriptor
     {
         /// <summary> Initializes a new instance of ArtifactBlobDescriptor. </summary>
-        internal ArtifactBlobDescriptor()
+        public ArtifactBlobDescriptor()
         {
             Urls = new ChangeTrackingList<Uri>();
         }

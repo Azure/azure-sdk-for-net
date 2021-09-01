@@ -51,6 +51,8 @@ directive:
   from: swagger-document
   where: $.definitions.OCIManifest
   transform: >
+    $["x-csharp-usage"] = "model,input,output,converter";
+    $["x-csharp-formats"] = "json";
     delete $["x-accessibility"];
     delete $["allOf"];
 ```

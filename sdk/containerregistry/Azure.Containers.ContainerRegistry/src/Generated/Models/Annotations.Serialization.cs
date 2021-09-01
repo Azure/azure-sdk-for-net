@@ -12,8 +12,79 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class Annotations
+    internal partial class Annotations : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Created))
+            {
+                writer.WritePropertyName("org.opencontainers.image.created");
+                writer.WriteStringValue(Created.Value, "O");
+            }
+            if (Optional.IsDefined(Authors))
+            {
+                writer.WritePropertyName("org.opencontainers.image.authors");
+                writer.WriteStringValue(Authors);
+            }
+            if (Optional.IsDefined(Url))
+            {
+                writer.WritePropertyName("org.opencontainers.image.url");
+                writer.WriteStringValue(Url);
+            }
+            if (Optional.IsDefined(Documentation))
+            {
+                writer.WritePropertyName("org.opencontainers.image.documentation");
+                writer.WriteStringValue(Documentation);
+            }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("org.opencontainers.image.source");
+                writer.WriteStringValue(Source);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("org.opencontainers.image.version");
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(Revision))
+            {
+                writer.WritePropertyName("org.opencontainers.image.revision");
+                writer.WriteStringValue(Revision);
+            }
+            if (Optional.IsDefined(Vendor))
+            {
+                writer.WritePropertyName("org.opencontainers.image.vendor");
+                writer.WriteStringValue(Vendor);
+            }
+            if (Optional.IsDefined(Licenses))
+            {
+                writer.WritePropertyName("org.opencontainers.image.licenses");
+                writer.WriteStringValue(Licenses);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("org.opencontainers.image.ref.name");
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Title))
+            {
+                writer.WritePropertyName("org.opencontainers.image.title");
+                writer.WriteStringValue(Title);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("org.opencontainers.image.description");
+                writer.WriteStringValue(Description);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static Annotations DeserializeAnnotations(JsonElement element)
         {
             Optional<DateTimeOffset> orgOpencontainersImageCreated = default;
@@ -28,7 +99,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> orgOpencontainersImageRefName = default;
             Optional<string> orgOpencontainersImageTitle = default;
             Optional<string> orgOpencontainersImageDescription = default;
-            IReadOnlyDictionary<string, object> additionalProperties = default;
+            IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
