@@ -11,9 +11,5 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// A tag to assign to the artifact represented by this manifest.
         /// </summary>
         public string Tag { get; set; }
-
-        /// <summary>
-        /// </summary>
-        public ManifestMediaType MediaType { get; set; } = ManifestMediaType.OciManifest;
     }
 }

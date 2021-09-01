@@ -3,11 +3,11 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Linq;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
@@ -22,30 +22,61 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
-            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
-            string digest = default;
 
             // Act
-            using (var fs = File.OpenRead(manifest))
+            OciManifest manifest = new OciManifest()
             {
-                var uploadResult = await client.UploadManifestAsync(fs, new UploadManifestOptions()
+                Config = new ArtifactBlobDescriptor()
                 {
-                    MediaType = ManifestMediaType.OciManifest
-                });
-                digest = uploadResult.Value.Digest;
-            }
+                    MediaType = "application/vnd.acme.rocket.config",
+                    Digest = "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8"
+                }
+            };
+            manifest.Layers.Add(new ArtifactBlobDescriptor()
+            {
+                MediaType = "application/vnd.oci.image.layer.v1.tar",
+                Digest = "sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
+                Size = 28
+            });
+
+            var uploadResult = await client.UploadManifestAsync(manifest);
+            string digest = uploadResult.Value.Digest;
 
             // Assert
             var downloadResult = await client.DownloadManifestAsync(digest);
             Assert.AreEqual(digest, downloadResult.Value.Digest);
-            Assert.AreEqual(ManifestMediaType.OciManifest, downloadResult.Value.MediaType);
+            ValidateManifest(downloadResult.Value.Manifest);
 
             // Clean up
             await client.DeleteManifestAsync(digest);
         }
 
         [RecordedTest, NonParallelizable]
-        public async Task CanUploadOciManifestWithTag()
+        public async Task CanUploadOciManifestStream()
+        {
+            // Arrange
+            var client = CreateBlobClient("oci-artifact");
+            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
+            string digest = default;
+
+            // Act
+            using (var fs = File.OpenRead(manifest))
+            {
+                var uploadResult = await client.UploadManifestAsync(fs);
+                digest = uploadResult.Value.Digest;
+            }
+
+            // Assert
+            var downloadResult = await client.DownloadManifestAsync(digest);
+            Assert.AreEqual(digest, downloadResult.Value.Digest);
+            ValidateManifest(downloadResult.Value.Manifest);
+
+            // Clean up
+            await client.DeleteManifestAsync(digest);
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanUploadOciManifestStreamWithTag()
         {
             // Arrange
             string repository = "oci-artifact";
@@ -60,8 +91,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 var uploadResult = await client.UploadManifestAsync(fs, new UploadManifestOptions()
                 {
-                    Tag = tag,
-                    MediaType = ManifestMediaType.OciManifest
+                    Tag = tag
                 });
                 digest = uploadResult.Value.Digest;
             }
@@ -69,7 +99,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             var downloadResult = await client.DownloadManifestAsync(digest);
             Assert.AreEqual(digest, downloadResult.Value.Digest);
-            Assert.AreEqual(ManifestMediaType.OciManifest, downloadResult.Value.MediaType);
+            ValidateManifest(downloadResult.Value.Manifest);
 
             var artifact = metadataClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -80,6 +110,23 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Clean up
             await client.DeleteManifestAsync(digest);
+        }
+
+        private static void ValidateManifest(OciManifest manifest)
+        {
+            // These are from the values in the Data\oci-artifact\manifest.json file.
+            Assert.IsNotNull(manifest);
+
+            Assert.IsNotNull(manifest.Config);
+            Assert.AreEqual("application/vnd.acme.rocket.config", manifest.Config.MediaType);
+            Assert.AreEqual("sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8", manifest.Config.Digest);
+            Assert.AreEqual(171, manifest.Config.Size);
+
+            Assert.IsNotNull(manifest.Layers);
+            Assert.AreEqual(1, manifest.Layers.Count);
+            Assert.AreEqual("application/vnd.oci.image.layer.v1.tar", manifest.Config.MediaType);
+            Assert.AreEqual("sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed", manifest.Config.Digest);
+            Assert.AreEqual(28, manifest.Config.Size);
         }
 
         [RecordedTest, NonParallelizable]
@@ -94,7 +141,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
             using (var fs = File.OpenRead(path))
             {
-                var uploadResult = await client.UploadBlobAsync(fs, new UploadBlobOptions());
+                var uploadResult = await client.UploadBlobAsync(fs);
                 digest = uploadResult.Value.Digest;
             }
 
@@ -105,48 +152,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Clean up
             await client.DeleteBlobAsync(digest);
-        }
-
-        [RecordedTest, NonParallelizable]
-        public async Task CanDownloadOciManifest()
-        {
-            // Arrange
-            var repository = "oci-artifact";
-            var client = CreateBlobClient(repository);
-            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
-            string digest = default;
-
-            using (var fs = File.OpenRead(manifest))
-            {
-                var uploadResult = await client.UploadManifestAsync(fs, new UploadManifestOptions()
-                {
-                    MediaType = ManifestMediaType.OciManifest
-                });
-                digest = uploadResult.Value.Digest;
-            }
-
-            // Act
-            var downloadResult = await client.DownloadManifestAsync(digest);
-
-            // Assert
-
-            Assert.AreEqual(digest, downloadResult.Value.Digest);
-            Assert.AreEqual(ManifestMediaType.OciManifest, downloadResult.Value.MediaType);
-
-            // Ensure known artifact files can be parsed from manifest data
-            Assert.IsNotNull(downloadResult.Value.ArtifactFiles);
-            Assert.AreEqual(2, downloadResult.Value.ArtifactFiles.Count);
-
-            Assert.AreEqual("config.json", downloadResult.Value.ArtifactFiles[0].FileName);
-            Assert.AreEqual("sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8", downloadResult.Value.ArtifactFiles[0].Digest);
-            Assert.AreEqual(repository, downloadResult.Value.ArtifactFiles[0].RepositoryName);
-
-            Assert.IsNull(downloadResult.Value.ArtifactFiles[0].FileName);
-            Assert.AreEqual("sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed", downloadResult.Value.ArtifactFiles[0].Digest);
-            Assert.AreEqual(repository, downloadResult.Value.ArtifactFiles[0].RepositoryName);
-
-            // Clean up
-            await client.DeleteManifestAsync(digest);
         }
 
         [RecordedTest, NonParallelizable]
@@ -162,7 +167,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
             using (var fs = File.OpenRead(path))
             {
-                var uploadResult = await client.UploadBlobAsync(fs, new UploadBlobOptions());
+                var uploadResult = await client.UploadBlobAsync(fs);
                 digest = uploadResult.Value.Digest;
             }
 

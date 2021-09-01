@@ -13,16 +13,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     [CodeGenModel("OCIManifest")]
     public partial class OciManifest
     {
-        /// <summary>
-        /// </summary>
-        /// <param name="config"></param>
-        /// <param name="layers"></param>
-        public OciManifest(ArtifactBlobDescriptor config, IList<ArtifactBlobDescriptor> layers)
-        {
-            Config = config;
-            Layers = layers;
-        }
-
         /// <summary> Additional information provided through arbitrary metadata. </summary>
         internal Annotations Annotations { get; }
     }

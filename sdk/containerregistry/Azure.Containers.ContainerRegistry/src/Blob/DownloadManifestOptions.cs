@@ -5,10 +5,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
     /// </summary>
-    public class DownloadManifestOptions
+    internal class DownloadManifestOptions
     {
-        /// <summary>
-        /// </summary>
-        public ManifestMediaType MediaType { get; set; } = ManifestMediaType.OciManifest;
     }
 }

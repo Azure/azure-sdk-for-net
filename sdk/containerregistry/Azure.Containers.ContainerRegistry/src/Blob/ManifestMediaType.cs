@@ -10,7 +10,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
     /// </summary>
-    public readonly struct ManifestMediaType : IEquatable<ManifestMediaType>
+    internal readonly struct ManifestMediaType : IEquatable<ManifestMediaType>
     {
         /// <summary>
         /// </summary>
