@@ -328,7 +328,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="id"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DocumentStatus, DocumentTranslationGetDocumentStatusHeaders>> GetDocumentStatusAsync(Guid id, Guid documentId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DocumentStatusResult, DocumentTranslationGetDocumentStatusHeaders>> GetDocumentStatusAsync(Guid id, Guid documentId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDocumentStatusRequest(id, documentId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -337,9 +337,9 @@ namespace Azure.AI.Translation.Document
             {
                 case 200:
                     {
-                        DocumentStatus value = default;
+                        DocumentStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DocumentStatus.DeserializeDocumentStatus(document.RootElement);
+                        value = DocumentStatusResult.DeserializeDocumentStatusResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -351,7 +351,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="id"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DocumentStatus, DocumentTranslationGetDocumentStatusHeaders> GetDocumentStatus(Guid id, Guid documentId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DocumentStatusResult, DocumentTranslationGetDocumentStatusHeaders> GetDocumentStatus(Guid id, Guid documentId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDocumentStatusRequest(id, documentId);
             _pipeline.Send(message, cancellationToken);
@@ -360,9 +360,9 @@ namespace Azure.AI.Translation.Document
             {
                 case 200:
                     {
-                        DocumentStatus value = default;
+                        DocumentStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DocumentStatus.DeserializeDocumentStatus(document.RootElement);
+                        value = DocumentStatusResult.DeserializeDocumentStatusResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -391,7 +391,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<TranslationStatus, DocumentTranslationGetTranslationStatusHeaders>> GetTranslationStatusAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetTranslationStatusHeaders>> GetTranslationStatusAsync(Guid id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTranslationStatusRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -400,9 +400,9 @@ namespace Azure.AI.Translation.Document
             {
                 case 200:
                     {
-                        TranslationStatus value = default;
+                        TranslationStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TranslationStatus.DeserializeTranslationStatus(document.RootElement);
+                        value = TranslationStatusResult.DeserializeTranslationStatusResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -416,7 +416,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<TranslationStatus, DocumentTranslationGetTranslationStatusHeaders> GetTranslationStatus(Guid id, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetTranslationStatusHeaders> GetTranslationStatus(Guid id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTranslationStatusRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -425,9 +425,9 @@ namespace Azure.AI.Translation.Document
             {
                 case 200:
                     {
-                        TranslationStatus value = default;
+                        TranslationStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TranslationStatus.DeserializeTranslationStatus(document.RootElement);
+                        value = TranslationStatusResult.DeserializeTranslationStatusResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -459,7 +459,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="id"> Format - uuid.  The operation-id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<TranslationStatus>> CancelTranslationAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<Response<TranslationStatusResult>> CancelTranslationAsync(Guid id, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelTranslationRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -467,9 +467,9 @@ namespace Azure.AI.Translation.Document
             {
                 case 200:
                     {
-                        TranslationStatus value = default;
+                        TranslationStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TranslationStatus.DeserializeTranslationStatus(document.RootElement);
+                        value = TranslationStatusResult.DeserializeTranslationStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -486,7 +486,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="id"> Format - uuid.  The operation-id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<TranslationStatus> CancelTranslation(Guid id, CancellationToken cancellationToken = default)
+        public Response<TranslationStatusResult> CancelTranslation(Guid id, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelTranslationRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -494,9 +494,9 @@ namespace Azure.AI.Translation.Document
             {
                 case 200:
                     {
-                        TranslationStatus value = default;
+                        TranslationStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TranslationStatus.DeserializeTranslationStatus(document.RootElement);
+                        value = TranslationStatusResult.DeserializeTranslationStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

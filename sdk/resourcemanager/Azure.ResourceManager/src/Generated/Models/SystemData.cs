@@ -8,7 +8,7 @@
 using System;
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Models
 {
     /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
     [PropertyReferenceType]

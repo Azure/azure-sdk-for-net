@@ -10,6 +10,8 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The managed application artifact type. </summary>
     public enum ApplicationArtifactType
     {
+        /// <summary> NotSpecified. </summary>
+        NotSpecified,
         /// <summary> Template. </summary>
         Template,
         /// <summary> Custom. </summary>

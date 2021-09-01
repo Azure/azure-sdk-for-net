@@ -5,10 +5,13 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> PrivateEndpointConnection resource. </summary>
-    public partial class PrivateEndpointConnection : SubResource
+    public partial class PrivateEndpointConnection : WritableSubResource
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnection. </summary>
         public PrivateEndpointConnection()
@@ -16,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnection. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="type"> The resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal PrivateEndpointConnection(string id, string name, string type, string etag, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
+        internal PrivateEndpointConnection(string id, string name, string type, string etag, PrivateEndpointData privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
         {
             Name = name;
             Type = type;
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The resource of private end point. </summary>
-        public PrivateEndpoint PrivateEndpoint { get; }
+        public PrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>

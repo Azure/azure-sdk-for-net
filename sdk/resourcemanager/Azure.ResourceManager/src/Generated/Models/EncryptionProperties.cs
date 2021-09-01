@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Models
 {
     /// <summary> Configuration of key for data encryption. </summary>
     [PropertyReferenceType]

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
             _data = tenantData;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, Guid.Empty.ToString(), BaseUri);
+            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Guid.Empty.ToString(), BaseUri);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources
             : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.RootResourceIdentifier)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, Guid.Empty.ToString(), BaseUri);
+            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Guid.Empty.ToString(), BaseUri);
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources

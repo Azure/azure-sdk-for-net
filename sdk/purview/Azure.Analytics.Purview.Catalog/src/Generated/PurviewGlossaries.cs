@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -415,7 +415,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -718,7 +718,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1067,7 +1067,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryCategoriesRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1397,7 +1397,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryCategoriesRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1746,7 +1746,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryCategoryRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryCategoryRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -2076,7 +2076,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryCategoryRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryCategoryRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -2135,7 +2135,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid, options);
+            using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -2175,7 +2175,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid, options);
+            using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -2524,7 +2524,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -2855,7 +2855,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -2916,7 +2916,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -2956,7 +2956,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -3014,7 +3014,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -3055,7 +3055,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -3120,7 +3120,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -3163,7 +3163,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -3240,7 +3240,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -3283,7 +3283,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -3925,7 +3925,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy, options);
+            using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -4533,7 +4533,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy, options);
+            using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -4598,7 +4598,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -4639,7 +4639,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -5270,7 +5270,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -5878,7 +5878,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -5939,7 +5939,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -5979,7 +5979,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -6038,7 +6038,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -6080,7 +6080,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -6715,7 +6715,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, options);
+            using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -7323,7 +7323,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, options);
+            using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -7390,7 +7390,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -7433,7 +7433,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -7600,7 +7600,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -7733,7 +7733,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -7887,7 +7887,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -8020,7 +8020,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -8174,7 +8174,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -8307,7 +8307,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -8371,7 +8371,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -8414,7 +8414,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -8488,7 +8488,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryRequest(glossaryGuid, options);
+            using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -8528,7 +8528,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryRequest(glossaryGuid, options);
+            using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -8850,7 +8850,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9154,7 +9154,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9215,7 +9215,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9255,7 +9255,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9315,7 +9315,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9358,7 +9358,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9435,7 +9435,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9478,7 +9478,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9553,7 +9553,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9594,7 +9594,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9660,7 +9660,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9702,7 +9702,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9773,7 +9773,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9817,7 +9817,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9899,7 +9899,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -9942,7 +9942,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -10018,7 +10018,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -10060,7 +10060,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -10130,7 +10130,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -10172,7 +10172,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -10240,7 +10240,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid, options);
+            using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -10280,7 +10280,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid, options);
+            using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -10341,7 +10341,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -10383,7 +10383,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -10454,7 +10454,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -10497,7 +10497,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);

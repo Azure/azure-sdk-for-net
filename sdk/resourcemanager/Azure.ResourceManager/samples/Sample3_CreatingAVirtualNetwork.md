@@ -23,7 +23,8 @@ ResourceGroupContainer rgContainer = armClient.DefaultSubscription.GetResourceGr
 
 string rgName = "myResourceGroup";
 ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName,rgData);
+ResourceGroupCreateOrUpdateOperation operation = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroup resourceGroup = operation.Value;
 ```
 ## Create a Virtual Network
 Now that we have a resource group, we'll create our virtual network. To do this, we will create a `VirtualNetworkData` object for the parameters that we want our Virtual Network to have, then we will get the Virtual Network container and from there we call `CreateOrUpdateAsync()`.

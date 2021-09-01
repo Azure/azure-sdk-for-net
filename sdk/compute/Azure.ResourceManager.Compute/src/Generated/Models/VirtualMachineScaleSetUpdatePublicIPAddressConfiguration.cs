@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The publicIP address configuration name. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
         /// <param name="dnsSettings"> The dns settings to be applied on the publicIP addresses . </param>
-        internal VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings)
+        /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
+        internal VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, DeleteOptions? deleteOption)
         {
             Name = name;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DnsSettings = dnsSettings;
+            DeleteOption = deleteOption;
         }
 
         /// <summary> The publicIP address configuration name. </summary>
@@ -32,5 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
         public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
+        /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>
+        public DeleteOptions? DeleteOption { get; set; }
     }
 }

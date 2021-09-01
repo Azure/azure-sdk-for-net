@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => Subscription.ResourceType;
 
-        private ProviderRestOperations RestClient => _restClient ??= new ProviderRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+        private ProviderRestOperations RestClient => _restClient ??= new ProviderRestOperations(Diagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
 
         private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 

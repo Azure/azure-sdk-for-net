@@ -162,25 +162,22 @@ namespace Azure.Identity
         }
 
         [NonEvent]
-        public void LogMsal(Microsoft.Identity.Client.LogLevel level, string message, bool containsPii)
+        public void LogMsal(Microsoft.Identity.Client.LogLevel level, string message)
         {
-            if (!containsPii)
+            switch (level)
             {
-                switch (level)
-                {
-                    case Microsoft.Identity.Client.LogLevel.Error when IsEnabled(EventLevel.Error, EventKeywords.All):
-                        LogMsalError(message);
-                        break;
-                    case Microsoft.Identity.Client.LogLevel.Warning when IsEnabled(EventLevel.Warning, EventKeywords.All):
-                        LogMsalWarning(message);
-                        break;
-                    case Microsoft.Identity.Client.LogLevel.Info when IsEnabled(EventLevel.Informational, EventKeywords.All):
-                        LogMsalInformational(message);
-                        break;
-                    case Microsoft.Identity.Client.LogLevel.Verbose when IsEnabled(EventLevel.Verbose, EventKeywords.All):
-                        LogMsalVerbose(message);
-                        break;
-                }
+                case Microsoft.Identity.Client.LogLevel.Error when IsEnabled(EventLevel.Error, EventKeywords.All):
+                    LogMsalError(message);
+                    break;
+                case Microsoft.Identity.Client.LogLevel.Warning when IsEnabled(EventLevel.Warning, EventKeywords.All):
+                    LogMsalWarning(message);
+                    break;
+                case Microsoft.Identity.Client.LogLevel.Info when IsEnabled(EventLevel.Informational, EventKeywords.All):
+                    LogMsalInformational(message);
+                    break;
+                case Microsoft.Identity.Client.LogLevel.Verbose when IsEnabled(EventLevel.Verbose, EventKeywords.All):
+                    LogMsalVerbose(message);
+                    break;
             }
         }
 
