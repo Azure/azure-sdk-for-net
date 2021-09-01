@@ -98,6 +98,12 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/cognitivelanguage/**/*.cs",
+      "words": [
+        "Qnas"
+      ]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
