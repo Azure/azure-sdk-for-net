@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using System.Threading.Tasks;
 
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
@@ -15,18 +17,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
     public abstract class EventHubsManagementClientBase : ManagementRecordedTestBase<EventHubsManagementTestEnvironment>
     {
         public string SubscriptionId { get; set; }
-        public ResourcesManagementClient ResourcesManagementClient { get; set; }
+        public ArmClient ArmClient { get; set; }
         public EventHubsManagementClient EventHubsManagementClient { get; set; }
         public Operations Operations { get; set; }
-        public ResourcesOperations ResourcesOperations { get; set; }
-        public ProvidersOperations ResourceProvidersOperations { get; set; }
         public EventHubsOperations EventHubsOperations { get; set; }
         public NamespacesOperations NamespacesOperations { get; set; }
         public ConsumerGroupsOperations ConsumerGroupsOperations { get; set; }
         public DisasterRecoveryConfigsOperations DisasterRecoveryConfigsOperations { get; set; }
-        public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
         public StorageManagementClient StorageManagementClient { get; set; }
-        public NetworkManagementClient NetworkManagementClient { get; set; }
 
         protected EventHubsManagementClientBase(bool isAsync)
              : base(isAsync)
@@ -36,10 +34,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         protected void InitializeClients()
         {
             SubscriptionId = TestEnvironment.SubscriptionId;
-            ResourcesManagementClient = GetResourceManagementClient();
-            ResourcesOperations = ResourcesManagementClient.Resources;
-            ResourceProvidersOperations = ResourcesManagementClient.Providers;
-            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
+            ArmClient = GetArmClient(); // TODO: use base.GetArmClient when switching to new mgmt test framework
 
             EventHubsManagementClient = GetEventHubManagementClient();
             EventHubsOperations = EventHubsManagementClient.EventHubs;
@@ -49,7 +44,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Operations = EventHubsManagementClient.Operations;
 
             StorageManagementClient = GetStorageManagementClient();
-            NetworkManagementClient = GetNetworkManagementClient();
         }
 
         internal EventHubsManagementClient GetEventHubManagementClient()
@@ -66,16 +60,28 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 InstrumentClientOptions(new StorageManagementClientOptions()));
         }
 
-        internal NetworkManagementClient GetNetworkManagementClient()
+        internal ArmClient GetArmClient()
         {
-            return CreateClient<NetworkManagementClient>(this.SubscriptionId,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new NetworkManagementClientOptions()));
-        }
+            var options = InstrumentClientOptions(new ArmClientOptions());
+            CleanupPolicy = new ResourceGroupCleanupPolicy();
+            options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 
+            return CreateClient<ArmClient>(this.TestEnvironment.SubscriptionId,
+                TestEnvironment.Credential,
+                options);
+        }
         public async Task<string> GetLocation()
         {
-            return await GetFirstUsableLocationAsync(ResourceProvidersOperations, "Microsoft.EventHub", "namespaces");
+            var provider = (await ArmClient.DefaultSubscription.GetProviders().GetAsync("Microsoft.EventHub")).Value;
+            return provider.Data.ResourceTypes.Where(
+                (resType) =>
+                {
+                    if (resType.ResourceType == "namespaces")
+                        return true;
+                    else
+                        return false;
+                }
+            ).First().Locations.FirstOrDefault();
         }
 
         public void DelayInTest(int seconds)

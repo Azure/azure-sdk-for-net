@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualNetworkTapListResult. </summary>
         internal VirtualNetworkTapListResult()
         {
-            Value = new ChangeTrackingList<VirtualNetworkTap>();
+            Value = new ChangeTrackingList<VirtualNetworkTapData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkTapListResult. </summary>
         /// <param name="value"> A list of VirtualNetworkTaps in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal VirtualNetworkTapListResult(IReadOnlyList<VirtualNetworkTap> value, string nextLink)
+        internal VirtualNetworkTapListResult(IReadOnlyList<VirtualNetworkTapData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of VirtualNetworkTaps in a resource group. </summary>
-        public IReadOnlyList<VirtualNetworkTap> Value { get; }
+        public IReadOnlyList<VirtualNetworkTapData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

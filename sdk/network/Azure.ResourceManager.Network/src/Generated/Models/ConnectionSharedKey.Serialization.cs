@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,18 +18,15 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value");
             writer.WriteStringValue(Value);
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static ConnectionSharedKey DeserializeConnectionSharedKey(JsonElement element)
         {
             string value = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -42,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionSharedKey(id.Value, value);
+            return new ConnectionSharedKey(id, value);
         }
     }
 }
