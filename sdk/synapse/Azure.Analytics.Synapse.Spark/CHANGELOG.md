@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix APIs on Long Running Operation (LRO) logic for `SparkBatchClient` to continue polling when job state is starting.
 
 ### Other Changes
 
