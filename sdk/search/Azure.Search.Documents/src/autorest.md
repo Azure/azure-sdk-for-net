@@ -14,7 +14,7 @@ copy them locally in `/sdk/search/generate.ps1` and reference them here.
 title: SearchServiceClient
 input-file:
 - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c99fbb96d7993daec8135a40681d9d807e3f5751/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c99fbb96d7993daec8135a40681d9d807e3f5751/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+- https://github.com/Azure/azure-rest-api-specs/blob/1df5cd4d0562f14d112edc77e72843d0d5132136/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
 ```
 
 ## Release hacks
