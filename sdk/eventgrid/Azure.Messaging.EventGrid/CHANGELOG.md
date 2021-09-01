@@ -1,10 +1,22 @@
 # Release History
 
-## 4.6.0 (2021-08-10)
+## 4.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.6.0 (2021-08-10)
+
+### Features Added
 - Added `ContainerServiceNewKubernetesVersionAvailableEventData` system event.
+
+### Bugs Fixed
+- Updated deserialization of KeyVault system events to match the casing used in the events published by the service.
 
 ## 4.5.0 (2021-07-19)
 

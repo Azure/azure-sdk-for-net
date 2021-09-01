@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Not yet
             Assert.IsEmpty(client.SentBatches);
 
-            // This will push it over the theshold
+            // This will push it over the threshold
             for (int i = 0; i < 60; i++)
             {
                 var e1 = new EventData(new byte[10 * 1024]);
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                     if (!expected.Remove(payloadStr))
                     {
                         // Already removed!
-                        Assert.False(true, "event payload occured multiple times");
+                        Assert.False(true, "event payload occurred multiple times");
                     }
                 }
             }

@@ -14,10 +14,10 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     public class BlobServiceTests : StorageTestsManagementClientBase
     {
-        public BlobServiceTests(bool isAsync) : base(isAsync)
+        public BlobServiceTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -119,6 +119,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         // create/update container with EncryptionScope
         [RecordedTest]
+        [Ignore("Remove after storage refresh")]
         public async Task BlobContainersEncryptionScopeTest()
         {
             // Create resource group
@@ -941,7 +942,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         private async Task<string> CreateResourceGroupAsync()
         {
-            return await CreateResourceGroup(ResourceGroupsClient, Recording);
+            return await CreateResourceGroup(GetResourceManagementClient(), Recording);
         }
 
         private async Task<StorageAccount> CreateStorageAccountAsync(string resourceGroupName, string accountName, StorageAccountCreateParameters parameters = null)

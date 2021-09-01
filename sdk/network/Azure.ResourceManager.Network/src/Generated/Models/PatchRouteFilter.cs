@@ -7,23 +7,25 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Route Filter Resource. </summary>
-    public partial class PatchRouteFilter : SubResource
+    public partial class PatchRouteFilter : WritableSubResource
     {
         /// <summary> Initializes a new instance of PatchRouteFilter. </summary>
         public PatchRouteFilter()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Rules = new ChangeTrackingList<RouteFilterRule>();
-            Peerings = new ChangeTrackingList<ExpressRouteCircuitPeering>();
-            Ipv6Peerings = new ChangeTrackingList<ExpressRouteCircuitPeering>();
+            Rules = new ChangeTrackingList<RouteFilterRuleData>();
+            Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
+            Ipv6Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
 
         /// <summary> Initializes a new instance of PatchRouteFilter. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Resource type. </param>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="peerings"> A collection of references to express route circuit peerings. </param>
         /// <param name="ipv6Peerings"> A collection of references to express route circuit ipv6 peerings. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter resource. </param>
-        internal PatchRouteFilter(string id, string name, string etag, string type, IDictionary<string, string> tags, IList<RouteFilterRule> rules, IReadOnlyList<ExpressRouteCircuitPeering> peerings, IReadOnlyList<ExpressRouteCircuitPeering> ipv6Peerings, ProvisioningState? provisioningState) : base(id)
+        internal PatchRouteFilter(string id, string name, string etag, string type, IDictionary<string, string> tags, IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> ipv6Peerings, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -53,11 +55,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Collection of RouteFilterRules contained within a route filter. </summary>
-        public IList<RouteFilterRule> Rules { get; }
+        public IList<RouteFilterRuleData> Rules { get; }
         /// <summary> A collection of references to express route circuit peerings. </summary>
-        public IReadOnlyList<ExpressRouteCircuitPeering> Peerings { get; }
+        public IReadOnlyList<ExpressRouteCircuitPeeringData> Peerings { get; }
         /// <summary> A collection of references to express route circuit ipv6 peerings. </summary>
-        public IReadOnlyList<ExpressRouteCircuitPeering> Ipv6Peerings { get; }
+        public IReadOnlyList<ExpressRouteCircuitPeeringData> Ipv6Peerings { get; }
         /// <summary> The provisioning state of the route filter resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

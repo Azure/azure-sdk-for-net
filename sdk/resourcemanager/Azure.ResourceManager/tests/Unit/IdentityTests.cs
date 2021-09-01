@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Tests
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport"] = userAssignedIdentity;
             ResourceIdentity identity = new ResourceIdentity(systemAssignedIdentity, dict1);
             string system = "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\",\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"";
-            string user = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";
+            string user = "{}";
             string expected = "{\"identity\":{" +
                 system + "," +
                 "\"type\":\"SystemAssigned, UserAssigned\"," +
@@ -306,16 +306,15 @@ namespace Azure.ResourceManager.Tests
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport2"] = userAssignedIdentity2;
             ResourceIdentity identity = new ResourceIdentity(systemAssignedIdentity, dict1);
             string system = "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\",\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"";
-            string user = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";
-            string user2 = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011cb47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddcebaa98\"}";
+            string emptyUser = "{}";
             string expected = "{\"identity\":{" +
                 system + "," +
                 "\"type\":\"SystemAssigned, UserAssigned\"," +
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport1\":" +
-                user + "," +
+                emptyUser + "," +
                 "\"/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport2\":" +
-                user2 + "}}}";
+                emptyUser + "}}}";
 
             JsonAsserts.AssertSerialization(expected, identity);
         }
@@ -341,7 +340,7 @@ namespace Azure.ResourceManager.Tests
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport"] = userAssignedIdentity;
             ResourceIdentity identity = new ResourceIdentity(dict1, true);
             string system = "\"principalId\":\"null\",\"tenantId\":\"null\"";
-            string user = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";
+            string user = "{}";
             string expected = "{\"identity\":{" +
                 system + "," +
                 "\"type\":\"SystemAssigned, UserAssigned\"," +
@@ -359,7 +358,7 @@ namespace Azure.ResourceManager.Tests
             var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport"] = userAssignedIdentity;
             ResourceIdentity identity = new ResourceIdentity(dict1, false);
-            string user = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";
+            string user = "{}";
             string expected = "{\"identity\":{" +
                 "\"type\":\"UserAssigned\"," +
                 "\"userAssignedIdentities\":" +

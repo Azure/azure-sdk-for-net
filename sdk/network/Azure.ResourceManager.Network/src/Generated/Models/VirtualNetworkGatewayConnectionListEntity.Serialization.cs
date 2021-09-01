@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,11 +17,6 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -37,6 +33,8 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthorizationKey))
@@ -67,6 +65,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("routingWeight");
                 writer.WriteNumberValue(RoutingWeight.Value);
+            }
+            if (Optional.IsDefined(ConnectionMode))
+            {
+                writer.WritePropertyName("connectionMode");
+                writer.WriteStringValue(ConnectionMode.Value.ToString());
             }
             if (Optional.IsDefined(SharedKey))
             {
@@ -120,11 +123,11 @@ namespace Azure.ResourceManager.Network.Models
         internal static VirtualNetworkGatewayConnectionListEntity DeserializeVirtualNetworkGatewayConnectionListEntity(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            ResourceIdentifier id = default;
             Optional<string> authorizationKey = default;
             VirtualNetworkConnectionGatewayReference virtualNetworkGateway1 = default;
             Optional<VirtualNetworkConnectionGatewayReference> virtualNetworkGateway2 = default;
@@ -132,6 +135,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkGatewayConnectionType connectionType = default;
             Optional<VirtualNetworkGatewayConnectionProtocol> connectionProtocol = default;
             Optional<int> routingWeight = default;
+            Optional<VirtualNetworkGatewayConnectionMode> connectionMode = default;
             Optional<string> sharedKey = default;
             Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
             Optional<IReadOnlyList<TunnelConnectionHealth>> tunnelConnectionStatus = default;
@@ -150,11 +154,6 @@ namespace Azure.ResourceManager.Network.Models
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -185,6 +184,11 @@ namespace Azure.ResourceManager.Network.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -249,6 +253,16 @@ namespace Azure.ResourceManager.Network.Models
                                 continue;
                             }
                             routingWeight = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("connectionMode"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            connectionMode = new VirtualNetworkGatewayConnectionMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sharedKey"))
@@ -390,7 +404,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayConnectionListEntity(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2.Value, localNetworkGateway2.Value, connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), sharedKey.Value, Optional.ToNullable(connectionStatus), Optional.ToList(tunnelConnectionStatus), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass));
+            return new VirtualNetworkGatewayConnectionListEntity(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2.Value, localNetworkGateway2.Value, connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), Optional.ToList(tunnelConnectionStatus), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass));
         }
     }
 }

@@ -35,12 +35,15 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// <param name="storageIops">Storage IOPS for a server.</param>
         /// <param name="storageAutogrow">Enable Storage Auto Grow. Possible
         /// values include: 'Enabled', 'Disabled'</param>
-        public StorageProfile(int? backupRetentionDays = default(int?), int? storageMB = default(int?), int? storageIops = default(int?), string storageAutogrow = default(string))
+        /// <param name="fileStorageSkuName">The sku name of the file
+        /// storage.</param>
+        public StorageProfile(int? backupRetentionDays = default(int?), int? storageMB = default(int?), int? storageIops = default(int?), string storageAutogrow = default(string), string fileStorageSkuName = default(string))
         {
             BackupRetentionDays = backupRetentionDays;
             StorageMB = storageMB;
             StorageIops = storageIops;
             StorageAutogrow = storageAutogrow;
+            FileStorageSkuName = fileStorageSkuName;
             CustomInit();
         }
 
@@ -73,6 +76,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "storageAutogrow")]
         public string StorageAutogrow { get; set; }
+
+        /// <summary>
+        /// Gets the sku name of the file storage.
+        /// </summary>
+        [JsonProperty(PropertyName = "fileStorageSkuName")]
+        public string FileStorageSkuName { get; private set; }
 
     }
 }

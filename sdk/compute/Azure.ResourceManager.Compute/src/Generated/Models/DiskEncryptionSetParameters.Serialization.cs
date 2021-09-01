@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,17 +16,14 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static DiskEncryptionSetParameters DeserializeDiskEncryptionSetParameters(JsonElement element)
         {
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -34,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DiskEncryptionSetParameters(id.Value);
+            return new DiskEncryptionSetParameters(id);
         }
     }
 }

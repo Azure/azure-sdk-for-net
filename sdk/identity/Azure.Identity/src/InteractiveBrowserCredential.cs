@@ -82,7 +82,7 @@ namespace Azure.Identity
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             LoginHint = (options as InteractiveBrowserCredentialOptions)?.LoginHint;
             var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
-            Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options as ITokenCacheOptions);
+            Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options as ITokenCacheOptions, options?.IsLoggingPIIEnabled ?? false);
         }
 
         /// <summary>

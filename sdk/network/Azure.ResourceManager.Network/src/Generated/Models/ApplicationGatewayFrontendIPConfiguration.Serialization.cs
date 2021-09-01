@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,11 +21,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateIPAddress))
@@ -47,6 +45,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("publicIPAddress");
                 writer.WriteObjectValue(PublicIPAddress);
             }
+            if (Optional.IsDefined(PrivateLinkConfiguration))
+            {
+                writer.WritePropertyName("privateLinkConfiguration");
+                writer.WriteObjectValue(PrivateLinkConfiguration);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -56,11 +59,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<string> privateIPAddress = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
             Optional<SubResource> subnet = default;
             Optional<SubResource> publicIPAddress = default;
+            Optional<SubResource> privateLinkConfiguration = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = DeserializeSubResource(property0.Value);
+                            subnet = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddress"))
@@ -125,7 +129,17 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddress = DeserializeSubResource(property0.Value);
+                            publicIPAddress = SubResource.DeserializeSubResource(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("privateLinkConfiguration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privateLinkConfiguration = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -142,7 +156,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayFrontendIPConfiguration(id.Value, name.Value, etag.Value, type.Value, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, publicIPAddress.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayFrontendIPConfiguration(id, name.Value, etag.Value, type.Value, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, publicIPAddress.Value, privateLinkConfiguration.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

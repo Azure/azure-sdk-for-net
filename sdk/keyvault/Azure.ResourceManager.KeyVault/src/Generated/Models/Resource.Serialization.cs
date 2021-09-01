@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -21,28 +22,13 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static Resource DeserializeResource(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
             Optional<string> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
@@ -63,8 +49,23 @@ namespace Azure.ResourceManager.KeyVault.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
             }
-            return new Resource(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags));
+            return new Resource(id, name, type, location.Value, Optional.ToDictionary(tags));
         }
     }
 }

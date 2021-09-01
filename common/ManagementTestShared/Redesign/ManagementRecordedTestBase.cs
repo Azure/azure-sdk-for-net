@@ -3,7 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using System;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.TestFramework
                     try
                     {
                         var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
-                        sub.Value?.GetResourceGroups().Get(resourceGroup).Value.StartDelete();
+                        sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete();
                     }
                     catch (RequestFailedException e) when (e.Status == 404)
                     {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        _cleanupClient.GetManagementGroupOperations(mgmtGroupId).StartDelete();
+                        _cleanupClient.GetManagementGroup(mgmtGroupId).Delete();
                     }
                     catch (RequestFailedException e) when (e.Status == 404 || e.Status == 403)
                     {
@@ -202,11 +202,11 @@ namespace Azure.ResourceManager.TestFramework
                 Parallel.ForEach(OneTimeResourceGroupCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
                     var sub = _cleanupClient.GetSubscriptions().GetIfExists(SessionEnvironment.SubscriptionId);
-                    sub.Value?.GetResourceGroups().Get(resourceGroup).Value.StartDelete();
+                    sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete();
                 });
                 Parallel.ForEach(OneTimeManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
                 {
-                    _cleanupClient.GetManagementGroupOperations(mgmtGroupId).StartDelete();
+                    _cleanupClient.GetManagementGroup(mgmtGroupId).Delete();
                 });
             }
 

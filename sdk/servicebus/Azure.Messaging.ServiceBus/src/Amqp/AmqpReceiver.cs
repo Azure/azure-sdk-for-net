@@ -1258,7 +1258,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         /// <param name="sequenceNumbers">A <see cref="IList{SequenceNumber}"/> containing the sequence numbers to receive.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
+        /// <returns>Messages identified by sequence number are returned.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
         public override async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(

@@ -1199,9 +1199,9 @@ namespace Compute.Tests
                     Assert.NotNull(vm.AdditionalCapabilities.UltraSSDEnabled);
                     Assert.True(vm.AdditionalCapabilities.UltraSSDEnabled.Value);
                 }
-                else
+                else if (vm.AdditionalCapabilities == null)
                 {
-                    Assert.Null(vm.AdditionalCapabilities);
+                    Assert.Null(vmOut.AdditionalCapabilities);
                 }
 
                 foreach (var dataDisk in vm.StorageProfile.DataDisks)

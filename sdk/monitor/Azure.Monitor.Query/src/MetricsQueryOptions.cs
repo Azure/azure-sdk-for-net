@@ -16,12 +16,14 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets or sets the timespan over which the metric will be queried.
         /// </summary>
-        public DateTimeRange? TimeSpan { get; set; }
+        [CodeGenMember("TimeSpan")]
+        public DateTimeRange? TimeRange { get; set; }
 
         /// <summary>
         /// Gets or sets the interval at which to sample metrics.
         /// </summary>
-        public TimeSpan? Interval { get; set; }
+        [CodeGenMember("Interval")]
+        public TimeSpan? Granularity { get; set; }
 
         /// <summary>
         /// Gets the list of metric aggregations to retrieve.
@@ -36,7 +38,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets or sets the filter that is used to refine the set of metric data returned.
         /// <example>
-        /// Metric contains metadata A, B and C.<br/>
+        /// MetricResult contains metadata A, B and C.<br/>
         /// <br/>
         ///     - Return all time series of C where A = a1 and B = b1 or b2:<br/>
         ///         <c>A eq 'a1' and B eq 'b1' or B eq 'b2' and C eq '*'</c><br/>

@@ -156,7 +156,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSearchRequest(content, options);
+            using HttpMessage message = CreateSearchRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -291,7 +291,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSearchRequest(content, options);
+            using HttpMessage message = CreateSearchRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -380,7 +380,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSuggestRequest(content, options);
+            using HttpMessage message = CreateSuggestRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -449,7 +449,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSuggestRequest(content, options);
+            using HttpMessage message = CreateSuggestRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -538,7 +538,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateAutoCompleteRequest(content, options);
+            using HttpMessage message = CreateAutoCompleteRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -607,7 +607,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateAutoCompleteRequest(content, options);
+            using HttpMessage message = CreateAutoCompleteRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -672,7 +672,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
+            using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -717,7 +717,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
+            using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -801,7 +801,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
+            using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -845,7 +845,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
+            using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);

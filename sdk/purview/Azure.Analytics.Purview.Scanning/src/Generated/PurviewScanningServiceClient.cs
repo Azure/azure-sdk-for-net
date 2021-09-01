@@ -61,7 +61,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetKeyVaultReferenceRequest(azureKeyVaultName, options);
+            using HttpMessage message = CreateGetKeyVaultReferenceRequest(azureKeyVaultName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetKeyVaultReferenceRequest(azureKeyVaultName, options);
+            using HttpMessage message = CreateGetKeyVaultReferenceRequest(azureKeyVaultName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(azureKeyVaultName, content, options);
+            using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(azureKeyVaultName, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -301,7 +301,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(azureKeyVaultName, content, options);
+            using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(azureKeyVaultName, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -362,7 +362,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteKeyVaultReferenceRequest(azureKeyVaultName, options);
+            using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(azureKeyVaultName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -404,7 +404,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteKeyVaultReferenceRequest(azureKeyVaultName, options);
+            using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(azureKeyVaultName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -463,7 +463,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetKeyVaultReferencesRequest(options);
+            using HttpMessage message = CreateGetKeyVaultReferencesRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -502,7 +502,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetKeyVaultReferencesRequest(options);
+            using HttpMessage message = CreateGetKeyVaultReferencesRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -557,7 +557,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationRulesRequest(options);
+            using HttpMessage message = CreateGetClassificationRulesRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -596,7 +596,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationRulesRequest(options);
+            using HttpMessage message = CreateGetClassificationRulesRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -651,7 +651,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataSourcesRequest(options);
+            using HttpMessage message = CreateGetDataSourcesRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -690,7 +690,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataSourcesRequest(options);
+            using HttpMessage message = CreateGetDataSourcesRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -745,7 +745,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetUnparentedDataSourcesRequest(options);
+            using HttpMessage message = CreateGetUnparentedDataSourcesRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -784,7 +784,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetUnparentedDataSourcesRequest(options);
+            using HttpMessage message = CreateGetUnparentedDataSourcesRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -840,7 +840,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName, options);
+            using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -880,7 +880,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName, options);
+            using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -986,7 +986,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateScanRuelsetRequest(scanRulesetName, content, options);
+            using HttpMessage message = CreateCreateOrUpdateScanRuelsetRequest(scanRulesetName, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1075,7 +1075,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateScanRuelsetRequest(scanRulesetName, content, options);
+            using HttpMessage message = CreateCreateOrUpdateScanRuelsetRequest(scanRulesetName, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1137,7 +1137,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName, options);
+            using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1179,7 +1179,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName, options);
+            using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1238,7 +1238,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetScanRulesetsRequest(options);
+            using HttpMessage message = CreateGetScanRulesetsRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1277,7 +1277,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetScanRulesetsRequest(options);
+            using HttpMessage message = CreateGetScanRulesetsRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1332,7 +1332,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetSystemRulesetsRequest(options);
+            using HttpMessage message = CreateGetSystemRulesetsRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1371,7 +1371,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetSystemRulesetsRequest(options);
+            using HttpMessage message = CreateGetSystemRulesetsRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1427,7 +1427,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1467,7 +1467,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1526,7 +1526,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1567,7 +1567,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1630,7 +1630,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLatestSystemRulestesRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetLatestSystemRulestesRequest(dataSourceType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1670,7 +1670,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLatestSystemRulestesRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetLatestSystemRulestesRequest(dataSourceType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1731,7 +1731,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetSystemRulesetsVersionsRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsVersionsRequest(dataSourceType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1771,7 +1771,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetSystemRulesetsVersionsRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsVersionsRequest(dataSourceType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);

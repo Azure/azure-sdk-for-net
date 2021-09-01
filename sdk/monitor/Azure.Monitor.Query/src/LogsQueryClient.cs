@@ -101,7 +101,7 @@ namespace Azure.Monitor.Query
         /// </code>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The query text to execute.</param>
+        /// <param name="query">The Kusto query to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -133,7 +133,7 @@ namespace Azure.Monitor.Query
         /// </code>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The query text to execute.</param>
+        /// <param name="query">The Kusto query to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -149,7 +149,7 @@ namespace Azure.Monitor.Query
         /// Executes the logs query.
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The query text to execute.</param>
+        /// <param name="query">The Kusto query to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -173,7 +173,7 @@ namespace Azure.Monitor.Query
         /// Executes the logs query.
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The query text to execute.</param>
+        /// <param name="query">The Kusto query to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -278,7 +278,7 @@ namespace Azure.Monitor.Query
         /// }
         /// </code>
         /// </summary>
-        /// <param name="batch">The batch of queries to send.</param>
+        /// <param name="batch">The batch of Kusto queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsBatchQueryResults"/> that allows retrieving query results.</returns>
         public virtual async Task<Response<LogsBatchQueryResults>> QueryBatchAsync(LogsBatchQuery batch, CancellationToken cancellationToken = default)

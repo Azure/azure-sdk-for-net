@@ -48,7 +48,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetServiceStatusRequest(options);
+            using HttpMessage message = CreateGetServiceStatusRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -87,7 +87,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetServiceStatusRequest(options);
+            using HttpMessage message = CreateGetServiceStatusRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);

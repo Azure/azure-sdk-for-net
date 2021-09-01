@@ -39,7 +39,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, options);
+            using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -81,7 +81,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, options);
+            using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -150,7 +150,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateConnectionExistsImplRequest(connectionId, options);
+            using HttpMessage message = CreateConnectionExistsImplRequest(connectionId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -191,7 +191,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateConnectionExistsImplRequest(connectionId, options);
+            using HttpMessage message = CreateConnectionExistsImplRequest(connectionId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -255,7 +255,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
+            using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -296,7 +296,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
+            using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -365,7 +365,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, options);
+            using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -407,7 +407,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, options);
+            using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -474,7 +474,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGroupExistsImplRequest(group, options);
+            using HttpMessage message = CreateGroupExistsImplRequest(group, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -515,7 +515,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGroupExistsImplRequest(group, options);
+            using HttpMessage message = CreateGroupExistsImplRequest(group, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -581,7 +581,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, options);
+            using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -624,7 +624,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, options);
+            using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -697,7 +697,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, options);
+            using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -739,7 +739,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, options);
+            using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -806,7 +806,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, options);
+            using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -847,7 +847,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, options);
+            using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -912,7 +912,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUserExistsImplRequest(userId, options);
+            using HttpMessage message = CreateUserExistsImplRequest(userId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -953,7 +953,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUserExistsImplRequest(userId, options);
+            using HttpMessage message = CreateUserExistsImplRequest(userId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1018,7 +1018,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToUserRequest(userId, content, contentType, options);
+            using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1060,7 +1060,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToUserRequest(userId, content, contentType, options);
+            using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1128,7 +1128,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateAddUserToGroupRequest(group, userId, options);
+            using HttpMessage message = CreateAddUserToGroupRequest(group, userId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1170,7 +1170,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateAddUserToGroupRequest(group, userId, options);
+            using HttpMessage message = CreateAddUserToGroupRequest(group, userId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1237,7 +1237,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, options);
+            using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1278,7 +1278,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, options);
+            using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1343,7 +1343,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, options);
+            using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1383,7 +1383,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, options);
+            using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1448,7 +1448,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, options);
+            using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1490,7 +1490,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, options);
+            using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1562,7 +1562,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, options);
+            using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1604,7 +1604,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, options);
+            using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1676,7 +1676,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, options);
+            using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1719,7 +1719,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, options);
+            using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);

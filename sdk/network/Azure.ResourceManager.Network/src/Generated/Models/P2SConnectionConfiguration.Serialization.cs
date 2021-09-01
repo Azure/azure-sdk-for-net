@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,11 +21,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(VpnClientAddressPool))
@@ -37,6 +35,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("routingConfiguration");
                 writer.WriteObjectValue(RoutingConfiguration);
             }
+            if (Optional.IsDefined(EnableInternetSecurity))
+            {
+                writer.WritePropertyName("enableInternetSecurity");
+                writer.WriteBooleanValue(EnableInternetSecurity.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -45,9 +48,10 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<AddressSpace> vpnClientAddressPool = default;
             Optional<RoutingConfiguration> routingConfiguration = default;
+            Optional<bool> enableInternetSecurity = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,6 +99,16 @@ namespace Azure.ResourceManager.Network.Models
                             routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("enableInternetSecurity"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enableInternetSecurity = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -109,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new P2SConnectionConfiguration(id.Value, name.Value, etag.Value, vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new P2SConnectionConfiguration(id, name.Value, etag.Value, vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(provisioningState));
         }
     }
 }

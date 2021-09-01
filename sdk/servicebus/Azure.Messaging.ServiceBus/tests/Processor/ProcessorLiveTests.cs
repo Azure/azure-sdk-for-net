@@ -853,8 +853,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
-                    var ct = Interlocked.Increment(ref receivedCount);
-                    if (ct == messageCount)
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
                     {
                         tcs.SetResult(true);
                     }
@@ -896,27 +896,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         await args.AbandonMessageAsync(args.Message);
                     }
 
-                    var ct = Interlocked.Increment(ref receivedCount);
-                    if (ct == messageCount)
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
                     {
                         tcs.SetResult(true);
                     }
 
                     // decrease concurrency
-                    if (ct == 100)
+                    if (count == 100)
                     {
                         processor.UpdateConcurrency(1);
                         Assert.AreEqual(1, processor.MaxConcurrentCalls);
                     }
 
                     // increase concurrency
-                    if (ct == 150)
+                    if (count == 150)
                     {
                         Assert.LessOrEqual(processor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
                         processor.UpdateConcurrency(10);
                         Assert.AreEqual(10, processor.MaxConcurrentCalls);
                     }
-                    if (ct == 175)
+                    if (count == 175)
                     {
                         Assert.GreaterOrEqual(processor._tasks.Where(t => !t.Task.IsCompleted).Count(), 5);
                     }

@@ -881,7 +881,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(ProcessorStoppingReceiveCanceledEvent, Level = EventLevel.Verbose, Message = "A receive operation was cancelled while stopping the processor. (Identifier '{0}'). Error Message: '{1}'")]
+        [Event(ProcessorStoppingReceiveCanceledEvent, Level = EventLevel.Verbose, Message = "A receive operation was cancelled while stopping the processor or scaling down concurrency. (Identifier '{0}'). Error Message: '{1}'")]
         public void ProcessorStoppingReceiveCanceled(string identifier, string exception)
         {
             if (IsEnabled())
@@ -890,7 +890,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(ProcessorStoppingAcceptSessionCanceledEvent, Level = EventLevel.Verbose, Message = "An accept session operation was cancelled while stopping the processor. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
+        [Event(ProcessorStoppingAcceptSessionCanceledEvent, Level = EventLevel.Verbose, Message = "An accept session operation was cancelled while stopping the processor or scaling down concurrency. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
         public void ProcessorStoppingAcceptSessionCanceled(string fullyQualifiedNamespace, string entityPath, string exception)
         {
             if (IsEnabled())

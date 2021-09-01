@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkInterfaceListResult. </summary>
         internal NetworkInterfaceListResult()
         {
-            Value = new ChangeTrackingList<NetworkInterface>();
+            Value = new ChangeTrackingList<NetworkInterfaceData>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceListResult. </summary>
         /// <param name="value"> A list of network interfaces in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal NetworkInterfaceListResult(IReadOnlyList<NetworkInterface> value, string nextLink)
+        internal NetworkInterfaceListResult(IReadOnlyList<NetworkInterfaceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of network interfaces in a resource group. </summary>
-        public IReadOnlyList<NetworkInterface> Value { get; }
+        public IReadOnlyList<NetworkInterfaceData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

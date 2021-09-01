@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleCondition. </summary>
         /// <param name="variable"> The condition parameter of the RewriteRuleCondition. </param>
         /// <param name="pattern"> The pattern, either fixed string or regular expression, that evaluates the truthfulness of the condition. </param>
-        /// <param name="ignoreCase"> Setting this paramter to truth value with force the pattern to do a case in-sensitive comparison. </param>
+        /// <param name="ignoreCase"> Setting this parameter to truth value with force the pattern to do a case in-sensitive comparison. </param>
         /// <param name="negate"> Setting this value as truth will force to check the negation of the condition given by the user. </param>
         internal ApplicationGatewayRewriteRuleCondition(string variable, string pattern, bool? ignoreCase, bool? negate)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Variable { get; set; }
         /// <summary> The pattern, either fixed string or regular expression, that evaluates the truthfulness of the condition. </summary>
         public string Pattern { get; set; }
-        /// <summary> Setting this paramter to truth value with force the pattern to do a case in-sensitive comparison. </summary>
+        /// <summary> Setting this parameter to truth value with force the pattern to do a case in-sensitive comparison. </summary>
         public bool? IgnoreCase { get; set; }
         /// <summary> Setting this value as truth will force to check the negation of the condition given by the user. </summary>
         public bool? Negate { get; set; }

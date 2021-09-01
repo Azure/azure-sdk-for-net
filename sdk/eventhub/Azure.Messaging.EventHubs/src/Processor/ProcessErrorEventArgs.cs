@@ -8,8 +8,8 @@ using Azure.Core;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Contains information about a partition whose processing threw an exception, as well as
-    ///   the exception that has been thrown.
+    ///   Contains information about a partition whose processing surfaced an exception, as well as
+    ///   the exception that occurred.
     /// </summary>
     ///
     /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
@@ -17,26 +17,33 @@ namespace Azure.Messaging.EventHubs.Processor
     public struct ProcessErrorEventArgs
     {
         /// <summary>
-        ///   The identifier of the partition whose processing threw an exception.
+        ///   The identifier of the partition being processed when the exception occurred.
         /// </summary>
         ///
         public string PartitionId { get; }
 
         /// <summary>
-        ///   A short description of the operation that was being performed when the exception was thrown.
+        ///   A short description of the operation that was being performed when the exception occurred.
         /// </summary>
         ///
         public string Operation { get; }
 
         /// <summary>
-        ///   The exception that was thrown by the <c>EventProcessorClient</c>.
+        ///   The exception that was occurred during partition processing.
         /// </summary>
         ///
         public Exception Exception { get; }
 
         /// <summary>
-        ///   A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.
+        ///   A <see cref="System.Threading.CancellationToken"/> to indicate that the processor is requesting that the handler
+        ///   stop its activities.  If this token is requesting cancellation, then  the processor is attempting to shutdown.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   The handler processing the error has responsibility for deciding whether or not to honor
+        ///   the cancellation request.  If the application chooses not to do so, the processor will wait for the
+        ///   handler to complete before taking further action.
+        /// </remarks>
         ///
         public CancellationToken CancellationToken { get; }
 

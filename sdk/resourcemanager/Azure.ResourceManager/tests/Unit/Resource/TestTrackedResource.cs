@@ -1,4 +1,5 @@
-﻿using Azure.ResourceManager.Resources.Models;
+﻿using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Tests
 {
@@ -9,7 +10,7 @@ namespace Azure.ResourceManager.Tests
         }
 
         public TestTrackedResource(ResourceIdentifier id, string location)
-            :base(id, id.Name, id.ResourceType, location, null)
+            :base(id, id.Name, id.ResourceType, null, location)
         {
         }
     }

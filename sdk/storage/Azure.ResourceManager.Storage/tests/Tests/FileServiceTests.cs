@@ -15,10 +15,10 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     public class FileServiceTests : StorageTestsManagementClientBase
     {
-        public FileServiceTests(bool isAsync) : base(isAsync)
+        public FileServiceTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         // create share
         // delete share
         [RecordedTest]
+        [Ignore("Remove after storage refresh")]
         public async Task FileSharesCreateDeleteListTest()
         {
             // Create resource group
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         private async Task<string> CreateResourceGroupAsync()
         {
-            return await CreateResourceGroup(ResourceGroupsClient, Recording);
+            return await CreateResourceGroup(GetResourceManagementClient(), Recording);
         }
 
         private async Task<StorageAccount> CreateStorageAccountAsync(string resourceGroupName, string accountName, StorageAccountCreateParameters parameters = null)

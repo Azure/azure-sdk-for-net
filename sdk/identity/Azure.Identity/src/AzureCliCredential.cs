@@ -46,6 +46,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
         private readonly string _tenantId;
+        private readonly bool _logPII;
 
         /// <summary>
         /// Create an instance of CliCredential class.
@@ -64,6 +65,7 @@ namespace Azure.Identity
 
         internal AzureCliCredential(CredentialPipeline pipeline, IProcessService processService, AzureCliCredentialOptions options = null)
         {
+            _logPII = options?.IsLoggingPIIEnabled ?? false;
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
@@ -117,7 +119,7 @@ namespace Azure.Identity
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(CliProcessTimeoutMs), cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(CliProcessTimeoutMs), _logPII, cancellationToken);
 
             string output;
             try

@@ -60,16 +60,26 @@ namespace Azure.Core.TestFramework
 
             _prefix = serviceName.ToUpperInvariant() + "_";
 
-            var testEnvironmentFile = Path.Combine(serviceSdkDirectory, "test-resources.json.env");
-            if (File.Exists(testEnvironmentFile))
+            var testEnvironmentFiles = new[]
             {
-                var json = JsonDocument.Parse(
-                    ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
-                );
+                Path.Combine(serviceSdkDirectory, "test-resources.bicep.env"),
+                Path.Combine(serviceSdkDirectory, "test-resources.json.env")
+            };
 
-                foreach (var property in json.RootElement.EnumerateObject())
+            foreach (var testEnvironmentFile in testEnvironmentFiles)
+            {
+                if (File.Exists(testEnvironmentFile))
                 {
-                    _environmentFile[property.Name] = property.Value.GetString();
+                    var json = JsonDocument.Parse(
+                        ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
+                    );
+
+                    foreach (var property in json.RootElement.EnumerateObject())
+                    {
+                        _environmentFile[property.Name] = property.Value.GetString();
+                    }
+
+                    break;
                 }
             }
         }
@@ -168,7 +178,11 @@ namespace Azure.Core.TestFramework
                     _credential = new ClientSecretCredential(
                         GetVariable("TENANT_ID"),
                         GetVariable("CLIENT_ID"),
-                        GetVariable("CLIENT_SECRET")
+                        GetVariable("CLIENT_SECRET"),
+                        new ClientSecretCredentialOptions()
+                        {
+                             AuthorityHost = new Uri(GetVariable("AZURE_AUTHORITY_HOST"))
+                        }
                     );
                 }
 
