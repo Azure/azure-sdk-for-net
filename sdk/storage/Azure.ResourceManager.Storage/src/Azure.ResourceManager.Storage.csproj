@@ -10,6 +10,3 @@
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
   </PropertyGroup>
 </Project>
-
-
-
