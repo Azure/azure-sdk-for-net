@@ -191,6 +191,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("ignored since response contains keys")]
         public async Task StorageAccountRegenerateKey()
         {
             //create storage account and get keys
