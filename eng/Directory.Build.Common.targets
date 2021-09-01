@@ -39,11 +39,15 @@
   </Target>
 
   <!--Run Aggregate Updates to Source -->
-  <Target Name="UpdateSourceOnBuild" AfterTargets="Build" Condition="'$(UpdateSourceOnBuild)' == 'true' and '$(IsShippingClientLibrary)' == 'true'" >
+  <Target Name="UpdateSourceOnBuild" AfterTargets="Build" Condition="'$(UpdateSourceOnBuild)' == 'true' and '$(IsShippingClientLibrary)' == 'true' and '$(RunCodeChecksWithThisProject)' == 'true'" >
     <PropertyGroup>
       <CodeChecksScriptPath Condition=" '$(CodeChecksScriptPath)'=='' ">$(MSBuildThisFileDirectory)scripts/CodeChecks.ps1</CodeChecksScriptPath>
     </PropertyGroup>
-    <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ProjectDirectory $(MSBuildProjectDirectory)"/>
+    <PropertyGroup Condition="'$(ServiceDirectory)' == ''">
+      <ServiceDirectoryPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../../))</ServiceDirectoryPath>
+      <ServiceDirectory>$([System.IO.Directory]::GetParent($(ServiceDirectoryPath)).Name)</ServiceDirectory>
+    </PropertyGroup>
+    <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ServiceDirectory $(ServiceDirectory)"/>
   </Target>
 
   <PropertyGroup>

@@ -12,6 +12,10 @@
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <RunCodeChecksWithThisProject>true</RunCodeChecksWithThisProject>
+  </PropertyGroup>
+
   <!-- Import the common SDK build properties. -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\.., Directory.Build.props))\Directory.Build.props" />
 </Project>
