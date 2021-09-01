@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
         }
 
         [PlaybackOnly("One location only support one MHSM")]
-        [Test]
         [RecordedTest]
         public async Task ManagedHsmCreateUpdateDelete()
         {
@@ -151,7 +150,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
         }
 
         [PlaybackOnly("One location only support one MHSM")]
-        [Test]
         [RecordedTest]
         public async Task ManagedHsmListKeys()
         {
@@ -194,7 +192,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         [Ignore("Recover is not working, add back when it's verified")]
         [PlaybackOnly("One location only support one MHSM")]
-        [Test]
         [RecordedTest]
         public async Task ManagedHsmRecoverDeletedVault()
         {
