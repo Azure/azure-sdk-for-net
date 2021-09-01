@@ -37,7 +37,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
+            using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -77,7 +77,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
+            using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);

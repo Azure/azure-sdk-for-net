@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static InboundNatRuleListResult DeserializeInboundNatRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<InboundNatRule>> value = default;
+            Optional<IReadOnlyList<InboundNatRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<InboundNatRule> array = new List<InboundNatRule>();
+                    List<InboundNatRuleData> array = new List<InboundNatRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatRule.DeserializeInboundNatRule(item));
+                        array.Add(InboundNatRuleData.DeserializeInboundNatRuleData(item));
                     }
                     value = array;
                     continue;

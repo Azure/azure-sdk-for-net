@@ -80,7 +80,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// list of supported Linux distributions, see [Linux on Azure-Endorsed
         /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).</param>
         /// <param name="secrets">Specifies set of certificates that should be
-        /// installed onto the virtual machines in the scale set.</param>
+        /// installed onto the virtual machines in the scale set. To install
+        /// certificates on a virtual machine it is recommended to use the
+        /// [Azure Key Vault virtual machine extension for
+        /// Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux)
+        /// or the [Azure Key Vault virtual machine extension for
+        /// Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).</param>
         public VirtualMachineScaleSetOSProfile(string computerNamePrefix = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>))
         {
             ComputerNamePrefix = computerNamePrefix;
@@ -180,7 +185,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies set of certificates that should be installed
-        /// onto the virtual machines in the scale set.
+        /// onto the virtual machines in the scale set. To install certificates
+        /// on a virtual machine it is recommended to use the [Azure Key Vault
+        /// virtual machine extension for
+        /// Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux)
+        /// or the [Azure Key Vault virtual machine extension for
+        /// Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).
         /// </summary>
         [JsonProperty(PropertyName = "secrets")]
         public IList<VaultSecretGroup> Secrets { get; set; }

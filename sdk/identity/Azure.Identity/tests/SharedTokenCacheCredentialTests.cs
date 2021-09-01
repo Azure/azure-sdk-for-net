@@ -78,7 +78,7 @@ namespace Azure.Identity.Tests
             var credential = new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions{ IsLoggingPIIEnabled = isLoggingPIIEnabled});
 
             Assert.NotNull(credential.Client);
-            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.LogPII);
+            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
         }
 
         [Test]

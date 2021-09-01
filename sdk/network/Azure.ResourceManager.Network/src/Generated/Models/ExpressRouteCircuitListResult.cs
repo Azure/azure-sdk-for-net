@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCircuitListResult. </summary>
         internal ExpressRouteCircuitListResult()
         {
-            Value = new ChangeTrackingList<ExpressRouteCircuit>();
+            Value = new ChangeTrackingList<ExpressRouteCircuitData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitListResult. </summary>
         /// <param name="value"> A list of ExpressRouteCircuits in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ExpressRouteCircuitListResult(IReadOnlyList<ExpressRouteCircuit> value, string nextLink)
+        internal ExpressRouteCircuitListResult(IReadOnlyList<ExpressRouteCircuitData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of ExpressRouteCircuits in a resource group. </summary>
-        public IReadOnlyList<ExpressRouteCircuit> Value { get; }
+        public IReadOnlyList<ExpressRouteCircuitData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

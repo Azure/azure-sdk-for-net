@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<bool> available = default;
             Optional<IReadOnlyList<string>> availableIPAddresses = default;
+            Optional<bool> isPlatformReserved = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("available"))
@@ -44,8 +45,18 @@ namespace Azure.ResourceManager.Network.Models
                     availableIPAddresses = array;
                     continue;
                 }
+                if (property.NameEquals("isPlatformReserved"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isPlatformReserved = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new IPAddressAvailabilityResult(Optional.ToNullable(available), Optional.ToList(availableIPAddresses));
+            return new IPAddressAvailabilityResult(Optional.ToNullable(available), Optional.ToList(availableIPAddresses), Optional.ToNullable(isPlatformReserved));
         }
     }
 }

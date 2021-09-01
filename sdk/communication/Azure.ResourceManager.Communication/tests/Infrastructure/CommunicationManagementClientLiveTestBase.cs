@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public string NotificationHubsResourceGroupName { get; set; }
         public string NotificationHubsResourceId { get; set; }
         public string NotificationHubsConnectionString { get; set; }
-        public ResourcesManagementClient ResourcesManagementClient { get; set; }
+        public ArmClient ResourcesManagementClient { get; set; }
 
         protected CommunicationManagementClientLiveTestBase(bool isAsync) : base(isAsync)
         {
