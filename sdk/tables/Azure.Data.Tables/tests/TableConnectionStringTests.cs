@@ -219,36 +219,38 @@ namespace Azure.Data.Tables.Tests
 
         public static IEnumerable<object[]> UriInputs()
         {
-            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/{TableName}") };
-            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/{TableName}/") };
-            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/Tables('{TableName}')/") };
-            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/{TableName}") };
-            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/{TableName}/") };
-            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/Tables('{TableName}')/") };
-            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{TableName}") };
-            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{TableName}/") };
-            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/Tables('{TableName}')/") };
-            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}") };
-            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}/") };
-            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/Tables('{TableName}')/") };
+            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/{TableName}"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/{TableName}/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/Tables('{TableName}')/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/{TableName}"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/{TableName}/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/Tables('{TableName}')/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{AccountName}"), AccountName, AccountName };
+            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{AccountName}/"), AccountName, AccountName };
+            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{TableName}"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{TableName}/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/Tables('{TableName}')/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/Tables('{TableName}')/"), AccountName, TableName };
         }
 
         [Test]
         [TestCaseSource(nameof(UriInputs))]
-        public void GetAccountNameFromUri(Uri uri)
+        public void GetAccountNameFromUri(Uri uri, string expectedAccountName, string expectedTableName)
         {
-            string expectedAccountName = TableConnectionString.GetAccountNameFromUri(uri);
+            string actualAccountName = TableConnectionString.GetAccountNameFromUri(uri);
 
-            Assert.That(expectedAccountName, Is.EqualTo(AccountName));
+            Assert.That(actualAccountName, Is.EqualTo(expectedAccountName));
         }
 
         [Test]
         [TestCaseSource(nameof(UriInputs))]
-        public void GetTableNameFromUri(Uri uri)
+        public void GetTableNameFromUri(Uri uri, string expectedAccountName, string expectedTableName)
         {
-            string expectedTableName = TableConnectionString.GetTableNameFromUri(uri);
+            string actualTableName = TableConnectionString.GetTableNameFromUri(uri);
 
-            Assert.That(expectedTableName, Is.EqualTo(TableName));
+            Assert.That(actualTableName, Is.EqualTo(expectedTableName));
         }
 
         private string GetExpectedHash(TableSharedKeyCredential cred) => cred.ComputeHMACSHA256("message");
