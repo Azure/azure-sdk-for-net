@@ -17,9 +17,13 @@
     /// </summary>
     internal partial class ResourceSkusOperations : IServiceOperations<ComputeManagementClient>, IResourceSkusOperations
     {
-        public async Task<AzureOperationResponse<IPage<ResourceSku>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ResourceSku>>> ListWithHttpMessagesAsync(string filter, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
         {
             return await ListWithHttpMessagesAsync(filter, null, customHeaders, cancellationToken);
+        }
+        public async Task<AzureOperationResponse<IPage<ResourceSku>>> ListWithHttpMessagesAsync(string filter, Dictionary<string, List<string>> customHeaders)
+        {
+            return await ListWithHttpMessagesAsync(filter, null, customHeaders, default(CancellationToken));
         }
     }
 }
