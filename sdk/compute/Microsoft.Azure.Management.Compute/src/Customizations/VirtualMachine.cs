@@ -484,6 +484,35 @@ namespace Microsoft.Azure.Management.Compute.Models
             Resources = resources;
             CustomInit();
         }
+        public VirtualMachine(string location, string id, string name, string type, IDictionary<string, string> tags, Plan plan, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, SubResource virtualMachineScaleSet, SubResource proximityPlacementGroup, string priority, string evictionPolicy, BillingProfile billingProfile, SubResource host, SubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ScheduledEventsProfile scheduledEventsProfile)
+            : base(location, id, name, type, tags)
+        {
+            Plan = plan;
+            HardwareProfile = hardwareProfile;
+            StorageProfile = storageProfile;
+            AdditionalCapabilities = additionalCapabilities;
+            OsProfile = osProfile;
+            NetworkProfile = networkProfile;
+            SecurityProfile = securityProfile;
+            DiagnosticsProfile = diagnosticsProfile;
+            AvailabilitySet = availabilitySet;
+            VirtualMachineScaleSet = virtualMachineScaleSet;
+            ProximityPlacementGroup = proximityPlacementGroup;
+            Priority = priority;
+            EvictionPolicy = evictionPolicy;
+            BillingProfile = billingProfile;
+            Host = host;
+            HostGroup = hostGroup;
+            ProvisioningState = provisioningState;
+            InstanceView = instanceView;
+            LicenseType = licenseType;
+            VmId = vmId;
+            ExtensionsTimeBudget = extensionsTimeBudget;
+            PlatformFaultDomain = platformFaultDomain;
+            ScheduledEventsProfile = scheduledEventsProfile;
+            CustomInit();
+        }
+
         public VirtualMachine(string location, string id, string name, string type, IDictionary<string, string> tags, Plan plan, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, SubResource virtualMachineScaleSet, SubResource proximityPlacementGroup, string priority, string evictionPolicy, BillingProfile billingProfile, SubResource host, SubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain)
             : base(location, id, name, type, tags)
         {
