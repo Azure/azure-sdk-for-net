@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This client library enables working with the Microsoft Azure Container Registry service to store and manage container images and deployment artifacts.</Description>
     <AssemblyTitle>Microsoft Azure.Containers.ContainerRegistry client library</AssemblyTitle>

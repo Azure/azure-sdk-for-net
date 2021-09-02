@@ -223,12 +223,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!rawResponse.Headers.TryGetValue("Docker-Content-Digest", out string registryDigest))
                 {
-                    _clientDiagnostics.CreateRequestFailedException(rawResponse, "Response did not contain \"Docker-Content-Digest\" header.");
+                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "Response did not contain \"Docker-Content-Digest\" header.");
                 }
 
                 if (!ValidateDigest(rawResponse.ContentStream, registryDigest))
                 {
-                    _clientDiagnostics.CreateRequestFailedException(rawResponse, "The manifest's digest according to the registry does not match the locally computed digest value.");
+                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The manifest's digest according to the registry does not match the locally computed digest value.");
                 }
 
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
@@ -298,9 +298,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
 
-                if (!ValidateDigest(blobResult.Value, blobResult.Headers.DockerContentDigest))
+                //if (blobResult.Headers.DockerContentDigest == null)
+                //{
+                //    throw _clientDiagnostics.CreateRequestFailedException(blobResult, "Response did not contain \"Docker-Content-Digest\" header.");
+                //}
+
+                // TODO: Should we validate against the one in the request or the one in the response header?
+                if (!ValidateDigest(blobResult.Value, digest))
                 {
-                    _clientDiagnostics.CreateRequestFailedException(blobResult.GetRawResponse(), "The manifest's digest according to the registry does not match the locally computed digest value.");
+                    throw _clientDiagnostics.CreateRequestFailedException(blobResult.GetRawResponse(), "The manifest's digest according to the registry does not match the locally computed digest value.");
                 }
 
                 return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
