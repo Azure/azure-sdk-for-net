@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> The result of the List EventHubs operation. </summary>
     internal partial class EventHubListResult

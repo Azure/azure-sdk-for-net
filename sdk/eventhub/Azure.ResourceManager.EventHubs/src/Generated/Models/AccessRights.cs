@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> The AccessRights. </summary>
     public readonly partial struct AccessRights : IEquatable<AccessRights>

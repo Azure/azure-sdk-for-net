@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> The access key to regenerate. </summary>
     public enum KeyType

@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventHub;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> The response from the List namespace operation. </summary>
     internal partial class IpFilterRuleListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of IpFilterRuleListResult. </summary>
         internal IpFilterRuleListResult()
         {
-            Value = new ChangeTrackingList<IpFilterRule>();
+            Value = new ChangeTrackingList<IpFilterRuleData>();
         }
 
         /// <summary> Initializes a new instance of IpFilterRuleListResult. </summary>
         /// <param name="value"> Result of the List IpFilter Rules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains an incomplete list of IpFilter Rules. </param>
-        internal IpFilterRuleListResult(IReadOnlyList<IpFilterRule> value, string nextLink)
+        internal IpFilterRuleListResult(IReadOnlyList<IpFilterRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the List IpFilter Rules operation. </summary>
-        public IReadOnlyList<IpFilterRule> Value { get; }
+        public IReadOnlyList<IpFilterRuleData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains an incomplete list of IpFilter Rules. </summary>
         public string NextLink { get; }
     }

@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHub;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     internal partial class AuthorizationRuleListResult
     {
         internal static AuthorizationRuleListResult DeserializeAuthorizationRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AuthorizationRule>> value = default;
+            Optional<IReadOnlyList<AuthorizationRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AuthorizationRule> array = new List<AuthorizationRule>();
+                    List<AuthorizationRuleData> array = new List<AuthorizationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationRule.DeserializeAuthorizationRule(item));
+                        array.Add(AuthorizationRuleData.DeserializeAuthorizationRuleData(item));
                     }
                     value = array;
                     continue;

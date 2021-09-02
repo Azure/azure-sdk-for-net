@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     public partial class VirtualNetworkRule : IUtf8JsonSerializable
     {
@@ -28,9 +29,9 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<string> virtualNetworkSubnetId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new VirtualNetworkRule(id.Value, name.Value, type.Value, virtualNetworkSubnetId.Value);
+            return new VirtualNetworkRule(id, name, type, virtualNetworkSubnetId.Value);
         }
     }
 }

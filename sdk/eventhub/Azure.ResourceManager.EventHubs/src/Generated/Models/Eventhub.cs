@@ -8,8 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> Single item in List or Get Event Hub operation. </summary>
     public partial class Eventhub : Resource
@@ -21,9 +23,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Initializes a new instance of Eventhub. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="partitionIds"> Current number of shards on the Event Hub. </param>
         /// <param name="createdAt"> Exact time the Event Hub was created. </param>
         /// <param name="updatedAt"> The exact time the message was updated. </param>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
         /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
         /// <param name="captureDescription"> Properties of capture description. </param>
-        internal Eventhub(string id, string name, string type, IReadOnlyList<string> partitionIds, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, type)
+        internal Eventhub(ResourceIdentifier id, string name, ResourceType type, IReadOnlyList<string> partitionIds, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, type)
         {
             PartitionIds = partitionIds;
             CreatedAt = createdAt;

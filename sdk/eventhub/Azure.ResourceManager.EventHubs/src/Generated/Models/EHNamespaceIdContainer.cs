@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> The full ARM ID of an Event Hubs Namespace. </summary>
     public partial class EHNamespaceIdContainer

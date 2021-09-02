@@ -6,25 +6,29 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> Messaging Region. </summary>
     public partial class MessagingRegions : TrackedResource
     {
         /// <summary> Initializes a new instance of MessagingRegions. </summary>
-        public MessagingRegions()
+        /// <param name="location"> The location. </param>
+        public MessagingRegions(Location location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of MessagingRegions. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of Messaging Region. </param>
-        internal MessagingRegions(string id, string name, string type, string location, IDictionary<string, string> tags, MessagingRegionsProperties properties) : base(id, name, type, location, tags)
+        internal MessagingRegions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, MessagingRegionsProperties properties) : base(id, name, type, tags, location)
         {
             Properties = properties;
         }

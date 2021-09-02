@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventHub;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> The response from the List namespace operation. </summary>
     internal partial class AuthorizationRuleListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
         internal AuthorizationRuleListResult()
         {
-            Value = new ChangeTrackingList<AuthorizationRule>();
+            Value = new ChangeTrackingList<AuthorizationRuleData>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
         /// <param name="value"> Result of the List Authorization Rules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains an incomplete list of Authorization Rules. </param>
-        internal AuthorizationRuleListResult(IReadOnlyList<AuthorizationRule> value, string nextLink)
+        internal AuthorizationRuleListResult(IReadOnlyList<AuthorizationRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the List Authorization Rules operation. </summary>
-        public IReadOnlyList<AuthorizationRule> Value { get; }
+        public IReadOnlyList<AuthorizationRuleData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains an incomplete list of Authorization Rules. </summary>
         public string NextLink { get; }
     }

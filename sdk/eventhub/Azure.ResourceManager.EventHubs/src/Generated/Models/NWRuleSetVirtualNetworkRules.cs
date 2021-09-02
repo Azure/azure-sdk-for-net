@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> The response from the List namespace operation. </summary>
     public partial class NWRuleSetVirtualNetworkRules

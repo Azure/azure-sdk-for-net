@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHub;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     internal partial class IpFilterRuleListResult
     {
         internal static IpFilterRuleListResult DeserializeIpFilterRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<IpFilterRule>> value = default;
+            Optional<IReadOnlyList<IpFilterRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IpFilterRule> array = new List<IpFilterRule>();
+                    List<IpFilterRuleData> array = new List<IpFilterRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IpFilterRule.DeserializeIpFilterRule(item));
+                        array.Add(IpFilterRuleData.DeserializeIpFilterRuleData(item));
                     }
                     value = array;
                     continue;

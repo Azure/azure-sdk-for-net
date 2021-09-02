@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     internal static partial class EntityStatusExtensions
     {

@@ -7,26 +7,31 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> Single Namespace item in List or Get Operation. </summary>
     public partial class EHNamespace : TrackedResource
     {
         /// <summary> Initializes a new instance of EHNamespace. </summary>
-        public EHNamespace()
+        /// <param name="location"> The location. </param>
+        public EHNamespace(Location location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of EHNamespace. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of sku resource. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
         /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
+        /// <param name="status"> Status of the Namespace. </param>
         /// <param name="createdAt"> The time the Namespace was created. </param>
         /// <param name="updatedAt"> The time the Namespace was updated. </param>
         /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
@@ -37,11 +42,12 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="kafkaEnabled"> Value that indicates whether Kafka is enabled for eventhub namespace. </param>
         /// <param name="zoneRedundant"> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </param>
         /// <param name="encryption"> Properties of BYOK Encryption description. </param>
-        internal EHNamespace(string id, string name, string type, string location, IDictionary<string, string> tags, Sku sku, Identity identity, string provisioningState, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, Encryption encryption) : base(id, name, type, location, tags)
+        internal EHNamespace(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Sku sku, Identity identity, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, Encryption encryption) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;
             ProvisioningState = provisioningState;
+            Status = status;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
@@ -60,6 +66,8 @@ namespace Azure.ResourceManager.EventHubs.Models
         public Identity Identity { get; set; }
         /// <summary> Provisioning state of the Namespace. </summary>
         public string ProvisioningState { get; }
+        /// <summary> Status of the Namespace. </summary>
+        public string Status { get; }
         /// <summary> The time the Namespace was created. </summary>
         public DateTimeOffset? CreatedAt { get; }
         /// <summary> The time the Namespace was updated. </summary>

@@ -5,7 +5,10 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHubs.Models
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> Single item in a List or Get VirtualNetworkRules operation. </summary>
     public partial class VirtualNetworkRule : Resource
@@ -16,11 +19,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="virtualNetworkSubnetId"> ARM ID of Virtual Network Subnet. </param>
-        internal VirtualNetworkRule(string id, string name, string type, string virtualNetworkSubnetId) : base(id, name, type)
+        internal VirtualNetworkRule(ResourceIdentifier id, string name, ResourceType type, string virtualNetworkSubnetId) : base(id, name, type)
         {
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
         }

@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventHub;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> The response of the List Event Hubs Clusters operation. </summary>
     internal partial class ClusterListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         internal ClusterListResult()
         {
-            Value = new ChangeTrackingList<Cluster>();
+            Value = new ChangeTrackingList<ClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         /// <param name="value"> The Event Hubs Clusters present in the List Event Hubs operation results. </param>
         /// <param name="nextLink"> Link to the next set of results. Empty unless the value parameter contains an incomplete list of Event Hubs Clusters. </param>
-        internal ClusterListResult(IReadOnlyList<Cluster> value, string nextLink)
+        internal ClusterListResult(IReadOnlyList<ClusterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The Event Hubs Clusters present in the List Event Hubs operation results. </summary>
-        public IReadOnlyList<Cluster> Value { get; }
+        public IReadOnlyList<ClusterData> Value { get; }
         /// <summary> Link to the next set of results. Empty unless the value parameter contains an incomplete list of Event Hubs Clusters. </summary>
         public string NextLink { get; }
     }
