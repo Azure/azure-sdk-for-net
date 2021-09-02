@@ -22,15 +22,11 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> Initializes a new instance of TimeSeriesElement. </summary>
         /// <param name="metadatavalues"> the metadata values returned if $filter was specified in the call. </param>
-        /// <param name="value"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
-        internal TimeSeriesElement(IReadOnlyList<MetadataValue> metadatavalues, IReadOnlyList<MetricValue> value)
+        /// <param name="values"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
+        internal TimeSeriesElement(IReadOnlyList<MetadataValue> metadatavalues, IReadOnlyList<MetricValue> values)
         {
             Metadatavalues = metadatavalues;
-            Values = value;
+            Values = values;
         }
-
-        /// <summary> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </summary>
-        [CodeGenMember("Data")]
-        public IReadOnlyList<MetricValue> Values { get; }
     }
 }
