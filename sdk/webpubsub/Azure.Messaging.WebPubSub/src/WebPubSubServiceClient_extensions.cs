@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
+
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -17,17 +15,43 @@ namespace Azure.Messaging.WebPubSub
     [CodeGenSuppress("WebPubSubServiceClient", typeof(string), typeof(Uri), typeof(WebPubSubServiceClientOptions))]
     public partial class WebPubSubServiceClient
     {
-        private AzureKeyCredential _credential;
-
         /// <summary>
         /// The hub.
         /// </summary>
         public virtual string Hub => hub;
 
         /// <summary>
-        /// The service endpoint.
+        /// The service endpoint url.
         /// </summary>
         public virtual Uri Endpoint => endpoint;
+
+        /// <summary>
+        /// The access token provider.
+        /// </summary>
+        internal ITokenProvider TokenProvider { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebPubSubServiceClient"/> class.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="hub"></param>
+        /// <param name="credential"></param>
+        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential credential)
+            : this(endpoint, hub, credential, new WebPubSubServiceClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebPubSubServiceClient"/> class.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="hub"></param>
+        /// <param name="credential"></param>
+        /// <param name="options"></param>
+        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential credential, WebPubSubServiceClientOptions options)
+            : this(hub, new AzureIdentityTokenProvider(endpoint, credential), options)
+        {
+        }
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
@@ -44,14 +68,38 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public WebPubSubServiceClient(Uri endpoint, string hub, AzureKeyCredential credential, WebPubSubServiceClientOptions options)
+            : this(hub, new AccessKeyTokenProvider(endpoint, credential), options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(hub, nameof(hub));
-            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
-            this._credential = credential;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebPubSubServiceClient"/>.
+        /// </summary>
+        /// <param name="connectionString">Connection string contains Endpoint and AccessKey.</param>
+        /// <param name="hub">Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.</param>
+        public WebPubSubServiceClient(string connectionString, string hub)
+            : this(connectionString, hub, new WebPubSubServiceClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebPubSubServiceClient"/>.
+        /// </summary>
+        /// <param name="connectionString">Connection string contains Endpoint and AccessKey.</param>
+        /// <param name="hub">Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.</param>
+        /// <param name="options"></param>
+        public WebPubSubServiceClient(string connectionString, string hub, WebPubSubServiceClientOptions options)
+            : this(ParseConnectionString(connectionString), hub, options)
+        {
+        }
+
+        private WebPubSubServiceClient(string hub, ITokenProvider endpoint, WebPubSubServiceClientOptions options)
+        {
+            Argument.AssertNotNull(hub, nameof(hub));
+
             this.hub = hub;
-            this.endpoint = endpoint;
+            this.endpoint = endpoint.Endpoint;
+            TokenProvider = endpoint;
 
             options ??= new WebPubSubServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -70,34 +118,9 @@ namespace Azure.Messaging.WebPubSub
             Pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
-                perRetryPolicies: new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
+                perRetryPolicies: new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(endpoint) },
                 new ResponseClassifier()
             );
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WebPubSubServiceClient"/>.
-        /// </summary>
-        /// <param name="connectionString">Connection string contains Endpoint and AccessKey.</param>
-        /// <param name="hub">Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.</param>
-        public WebPubSubServiceClient(string connectionString, string hub) : this(ParseConnectionString(connectionString), hub)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WebPubSubServiceClient"/>.
-        /// </summary>
-        /// <param name="connectionString">Connection string contains Endpoint and AccessKey.</param>
-        /// <param name="hub">Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.</param>
-        /// <param name="options"></param>
-        public WebPubSubServiceClient(string connectionString, string hub, WebPubSubServiceClientOptions options) :
-            this(ParseConnectionString(connectionString), hub, options)
-        {
-        }
-
-        private WebPubSubServiceClient((Uri Endpoint, AzureKeyCredential Credential) parsedConnectionString, string hub) :
-            this(parsedConnectionString.Endpoint, hub, parsedConnectionString.Credential)
-        {
         }
 
         private WebPubSubServiceClient((Uri Endpoint, AzureKeyCredential Credential) parsedConnectionString, string hub, WebPubSubServiceClientOptions options) :

@@ -3,10 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Text;
+
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
 {
@@ -18,6 +17,7 @@ namespace Azure.Messaging.WebPubSub
         private const string EndpointPropertyName = "Endpoint";
         private const string AccessKeyPropertyName = "AccessKey";
         private const string PortPropertyName = "Port";
+
         private static readonly char[] KeyValueSeparator = { '=' };
         private static readonly char[] PropertySeparator = { ';' };
 
@@ -32,34 +32,19 @@ namespace Azure.Messaging.WebPubSub
         /// <returns></returns>
         public virtual Uri GenerateClientAccessUri(DateTimeOffset expiresAt, string userId = default, params string[] roles)
         {
-            var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
-            var jwt = new JwtBuilder(keyBytes);
-            var now = DateTimeOffset.UtcNow;
-
-            string endpoint = this.endpoint.AbsoluteUri;
-            if (!endpoint.EndsWith("/", StringComparison.Ordinal))
+            var url = endpoint.AbsoluteUri;
+            if (!url.EndsWith("/", StringComparison.Ordinal))
             {
-                endpoint += "/";
+                url += "/";
             }
-            var audience = $"{endpoint}client/hubs/{hub}";
+            var audience = $"{url}client/hubs/{hub}";
 
-            if (userId != default)
+            var token = TokenProvider.GetClientToken(audience, userId, roles, expiresAt).Token;
+
+            var clientEndpoint = new UriBuilder(endpoint)
             {
-                jwt.AddClaim(JwtBuilder.Sub, userId);
-            }
-            if (roles != default && roles.Length > 0)
-            {
-                jwt.AddClaim(s_role, roles);
-            }
-            jwt.AddClaim(JwtBuilder.Nbf, now);
-            jwt.AddClaim(JwtBuilder.Exp, expiresAt);
-            jwt.AddClaim(JwtBuilder.Iat, now);
-            jwt.AddClaim(JwtBuilder.Aud, audience);
-
-            string token = jwt.BuildString();
-
-            var clientEndpoint = new UriBuilder(endpoint);
-            clientEndpoint.Scheme = this.endpoint.Scheme == "http" ? "ws" : "wss";
+                Scheme = endpoint.Scheme == "http" ? "ws" : "wss"
+            };
             var uriString = $"{clientEndpoint}client/hubs/{hub}?access_token={token}";
 
             return new Uri(uriString);
