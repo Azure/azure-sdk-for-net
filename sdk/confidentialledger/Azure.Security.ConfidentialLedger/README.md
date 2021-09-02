@@ -48,8 +48,8 @@ Constructing the client also requires your Confidential Ledger's URL and id, whi
 Because Confidential Ledgers use self-signed certificates securely generated and stored in an SGX enclave, the certificate for each Confidential Ledger  must first be retrieved from the Confidential Ledger Identity Service.
 
 ```C# Snippet:GetIdentity
-Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
-var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceEndpoint);
+Uri identityServiceUri = "<the identity service uri>";
+var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri);
 
 // Get the ledger's  TLS certificate for our ledger.
 string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
