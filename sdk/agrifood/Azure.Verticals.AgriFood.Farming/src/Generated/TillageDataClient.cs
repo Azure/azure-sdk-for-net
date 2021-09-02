@@ -94,10 +94,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListByFarmerIdRequest(farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.ListByFarmerId");
             scope.Start();
             try
@@ -165,10 +162,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListByFarmerIdRequest(farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.ListByFarmerId");
             scope.Start();
             try
@@ -385,10 +379,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListRequest(minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.List");
             scope.Start();
             try
@@ -455,10 +446,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListRequest(minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.List");
             scope.Start();
             try
@@ -643,10 +631,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetRequest(farmerId, tillageDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.Get");
             scope.Start();
             try
@@ -684,10 +669,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetRequest(farmerId, tillageDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.Get");
             scope.Start();
             try
@@ -897,10 +879,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, tillageDataId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.CreateOrUpdate");
             scope.Start();
             try
@@ -1090,10 +1069,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, tillageDataId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.CreateOrUpdate");
             scope.Start();
             try
@@ -1156,10 +1132,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(farmerId, tillageDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.Delete");
             scope.Start();
             try
@@ -1197,10 +1170,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(farmerId, tillageDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.Delete");
             scope.Start();
             try

@@ -68,10 +68,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
             scope.Start();
             try
@@ -107,10 +104,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
             scope.Start();
             try
@@ -193,10 +187,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
             scope.Start();
             try
@@ -263,10 +254,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
             scope.Start();
             try
@@ -323,10 +311,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
             scope.Start();
             try
@@ -364,10 +349,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
             scope.Start();
             try
@@ -422,10 +404,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetVersionsRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetVersions");
             scope.Start();
             try
@@ -461,10 +440,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetVersionsRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetVersions");
             scope.Start();
             try
@@ -520,10 +496,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateTagVersionRequest(classificationRuleVersion, action, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
             scope.Start();
             try
@@ -561,10 +534,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateTagVersionRequest(classificationRuleVersion, action, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
             scope.Start();
             try
