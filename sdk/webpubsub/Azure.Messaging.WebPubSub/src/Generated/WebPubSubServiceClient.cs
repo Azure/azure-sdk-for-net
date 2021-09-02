@@ -40,10 +40,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
@@ -82,10 +79,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
