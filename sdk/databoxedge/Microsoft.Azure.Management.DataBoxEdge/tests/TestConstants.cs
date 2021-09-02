@@ -23,7 +23,7 @@
         /// <summary>
         /// Encryption key of edge resource
         /// </summary>
-        public const string EdgeDeviceCIK = "5d21566d7f55501f02c06ddeaf4984370e499c340458f2f0775223bd316f93c1ff2390de554cf108c07b46f4d42dd302e78a46501d16bf485d515a0e62f7b811";
+        public const string EdgeDeviceCIK = "9e16239d72a75fed6401a8f20d7425dfe954c72635d3280323a81ef4246f2fca10cd4e94ac4a715add15b4583e1e2ebf348256603cff1148b40b73de91dc5e7d";
 
         /// <summary>
         /// Name of the gateway resource being used in the test
@@ -34,7 +34,7 @@
         /// <summary>
         /// Name of the edge resource being used in the test
         /// </summary>
-        public const string EdgeResourceName = "demo-edge-device";
+        public const string EdgeResourceName = "demo-sdk-2021";
         /// <summary>
         /// ARM Lite user name
         /// </summary>
