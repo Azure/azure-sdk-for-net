@@ -457,8 +457,9 @@ namespace Microsoft.Azure.EventHubs
         /// <returns>Returns <see cref="EventDataBatch" />.</returns>
         public EventDataBatch CreateBatch(BatchOptions options)
         {
-            return new EventDataBatch(options.MaxMessageSize > 0 ?
-                options.MaxMessageSize : this.InnerSender.MaxMessageSize, options.PartitionKey);
+            var isMaxSizeSet = options.MaxMessageSize > 0;
+            return new EventDataBatch(isMaxSizeSet ?
+                options.MaxMessageSize : this.InnerSender.MaxMessageSize, !isMaxSizeSet, options.PartitionKey);
         }
 
         /// <summary> Gets or sets a value indicating whether the runtime metric of a receiver is enabled. </summary>

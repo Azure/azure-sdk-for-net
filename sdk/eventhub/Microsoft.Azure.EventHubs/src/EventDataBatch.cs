@@ -25,6 +25,7 @@ namespace Microsoft.Azure.EventHubs
 
         long currentSize;
         bool disposed;
+        bool skipFirstMessageCheck = false;
 
         /// <summary>
         /// Creates a new <see cref="EventDataBatch"/>.
@@ -44,6 +45,11 @@ namespace Microsoft.Azure.EventHubs
                 AmqpMessageConverter.UpdateAmqpMessagePartitionKey(batchMessage, partitionKey);
                 this.currentSize = batchMessage.SerializedMessageSize;
             }
+        }
+
+        internal EventDataBatch(long maxSizeInBytes, bool skipFirstMessageCheck, string partitionKey = null) : this(maxSizeInBytes, partitionKey)
+        {
+            this.skipFirstMessageCheck = skipFirstMessageCheck;
         }
 
         /// <summary>Gets the current event count in the batch.</summary>
@@ -81,7 +87,7 @@ namespace Microsoft.Azure.EventHubs
 
             this.ThrowIfDisposed();
             long size = GetEventSizeForBatch(eventData);
-            if (this.eventDataList.Count > 0 && this.currentSize + size > this.maxSize)
+            if (!(this.skipFirstMessageCheck && this.eventDataList.Count == 0) && this.currentSize + size > this.maxSize)
             {
                 return false;
             }
