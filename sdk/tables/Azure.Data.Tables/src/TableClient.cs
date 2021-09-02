@@ -22,7 +22,7 @@ namespace Azure.Data.Tables
     public class TableClient
     {
         private static readonly char[] ContinuationTokenSplit = { ' ' };
-        internal readonly ClientDiagnostics _diagnostics;
+        private readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isCosmosEndpoint;
