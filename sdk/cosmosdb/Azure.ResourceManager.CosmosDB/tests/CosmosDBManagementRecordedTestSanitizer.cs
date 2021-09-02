@@ -25,4 +25,3 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
     }
 }
-
