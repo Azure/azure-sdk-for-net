@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListP2SVpnGatewaysResult DeserializeListP2SVpnGatewaysResult(JsonElement element)
         {
-            Optional<IReadOnlyList<P2SVpnGateway>> value = default;
+            Optional<IReadOnlyList<P2SVpnGatewayData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<P2SVpnGateway> array = new List<P2SVpnGateway>();
+                    List<P2SVpnGatewayData> array = new List<P2SVpnGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(P2SVpnGateway.DeserializeP2SVpnGateway(item));
+                        array.Add(P2SVpnGatewayData.DeserializeP2SVpnGatewayData(item));
                     }
                     value = array;
                     continue;

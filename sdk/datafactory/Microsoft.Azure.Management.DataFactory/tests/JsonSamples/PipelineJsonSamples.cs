@@ -6054,6 +6054,43 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample(version: "Copy")]
+        public const string AmazonRdsForOracleSourcePipeline = @"
+{
+    name: ""DataPipeline_PostgreSqlSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""AmazonRdsForOracleToPostgreSqlCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""AmazonRdsForOracleSource"",
+                        query: ""select * from faketable""
+                    },
+                    sink:
+                    {
+                        type: ""AzurePostgreSqlSink"",
+                        preCopyScript: ""fake script""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
         public const string OraclePartitionSourcePipeline = @"
 {
     name: ""DataPipeline_OraclePartitionSample"",
@@ -7387,6 +7424,54 @@ namespace DataFactory.Tests.JsonSamples
                 {
                     retry: 3,
                     timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+        [JsonSample]
+        public const string ExecuteWranglingDataFlowActivityPipeline = @"
+{
+    name: ""My Power Query Activity pipeline"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                type: ""ExecuteWranglingDataflow"",
+                typeProperties: {
+                    dataFlow: {
+                        referenceName: ""referenced1"",
+                        type: ""DataFlowReference""
+                    },
+                    staging: {
+                        linkedService: {
+                            referenceName: ""referenced2"",
+                            type: ""LinkedServiceReference""
+                        },
+                        folderPath: ""adfjobs/staging""
+                    },
+                    integrationRuntime: {
+                        referenceName: ""dataflowIR10minTTL"",
+                        type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType: ""MemoryOptimized"",
+                        coreCount: 8                         
+                    },
+                    sinks: {
+                        userquery: {
+                            name: ""sink1"",
+                            dataset: {
+                                referenceName: ""dataset1"",
+                                type: ""DatasetReference""
+                            },
+                            script: ""sink() ~> sink1""
+                        }
+                    }
                 }
             }
         ]

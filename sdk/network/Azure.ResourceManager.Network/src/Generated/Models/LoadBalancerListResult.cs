@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LoadBalancerListResult. </summary>
         internal LoadBalancerListResult()
         {
-            Value = new ChangeTrackingList<LoadBalancer>();
+            Value = new ChangeTrackingList<LoadBalancerData>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerListResult. </summary>
         /// <param name="value"> A list of load balancers in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LoadBalancerListResult(IReadOnlyList<LoadBalancer> value, string nextLink)
+        internal LoadBalancerListResult(IReadOnlyList<LoadBalancerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of load balancers in a resource group. </summary>
-        public IReadOnlyList<LoadBalancer> Value { get; }
+        public IReadOnlyList<LoadBalancerData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

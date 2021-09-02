@@ -360,6 +360,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         }
 
         [Test]
+        [Ignore("issue with AMQP lib not using link level timeout")]
         public async Task DoesNotLogAcceptSessionTimeoutAsError()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))

@@ -14,16 +14,14 @@ namespace Azure.Identity
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
         internal string RedirectUrl { get; }
-        internal bool LogPII { get; }
 
         protected MsalPublicClient()
         { }
 
-        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, ITokenCacheOptions cacheOptions, bool logPII)
-            : base(pipeline, tenantId, clientId, cacheOptions)
+        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, ITokenCacheOptions cacheOptions, bool isPiiLoggingEnabled)
+            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
         {
             RedirectUrl = redirectUrl;
-            LogPII = logPII;
         }
 
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
@@ -43,7 +41,7 @@ namespace Azure.Identity
                 .Create(ClientId)
                 .WithAuthority(authorityUri)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
-                .WithLogging(AzureIdentityEventSource.Singleton.LogMsal, enablePiiLogging: LogPII);
+                .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
 
             if (!string.IsNullOrEmpty(RedirectUrl))
             {

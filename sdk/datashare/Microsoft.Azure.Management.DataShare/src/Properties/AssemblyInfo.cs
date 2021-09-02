@@ -6,7 +6,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Microsoft Azure Data Share Management Library")]
-[assembly: AssemblyDescription("Provides Microsft Azure DataShare management functions for managing the Microsoft Azure DataShare service.")]
+[assembly: AssemblyDescription("Provides Microsoft Azure DataShare management functions for managing the Microsoft Azure DataShare service.")]
 
 [assembly: AssemblyVersion("1.2.0.0")]
 [assembly: AssemblyFileVersion("1.2.0.0")]

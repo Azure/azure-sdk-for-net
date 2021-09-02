@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Backend address pool settings of an application gateway. </summary>
-    public partial class ApplicationGatewayBackendHttpSettings : SubResource
+    public partial class ApplicationGatewayBackendHttpSettings : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHttpSettings. </summary>
         public ApplicationGatewayBackendHttpSettings()
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHttpSettings. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of the backend http settings that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>

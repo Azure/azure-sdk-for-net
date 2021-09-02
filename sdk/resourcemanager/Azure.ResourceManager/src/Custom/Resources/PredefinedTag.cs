@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
             : base(clientContext, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
             _data = data;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
@@ -157,53 +157,19 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
         /// <param name="tagName"> The name of the tag. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(string tagName, CancellationToken cancellationToken = default)
+        public virtual async Task<PredefinedTagDeleteOperation> DeleteAsync(string tagName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PredefinedTag.Delete");
-            scope.Start();
-            try
-            {
-                var operation = await StartDeleteAsync(tagName, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
-        /// <param name="tagName"> The name of the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(string tagName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.Delete");
-            scope.Start();
-            try
-            {
-                var operation = StartDelete(tagName, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
-        /// <param name="tagName"> The name of the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<PredefinedTagDeleteOperation> StartDeleteAsync(string tagName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(tagName, cancellationToken).ConfigureAwait(false);
-                return new PredefinedTagDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, response);
+                var operation = new PredefinedTagDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -214,15 +180,19 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
         /// <param name="tagName"> The name of the tag. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PredefinedTagDeleteOperation StartDelete(string tagName, CancellationToken cancellationToken = default)
+        public virtual PredefinedTagDeleteOperation Delete(string tagName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.Delete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(tagName, cancellationToken);
-                return new PredefinedTagDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, response);
+                var operation = new PredefinedTagDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

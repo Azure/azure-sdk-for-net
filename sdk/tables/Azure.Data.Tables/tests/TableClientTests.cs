@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Tests
 
         private const string TableName = "someTableName";
         private const string AccountName = "someaccount";
-        private readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
+        private static readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
         private MockTransport _transport;
         private TableClient client { get; set; }
@@ -104,10 +104,7 @@ namespace Azure.Data.Tables.Tests
 
         public static IEnumerable<object[]> ValidConnStrings()
         {
-            yield return new object[]
-            {
-                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;"
-            };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
             yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
             yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
             yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
@@ -375,14 +372,22 @@ namespace Azure.Data.Tables.Tests
                 _transport.Requests[0].Uri.ToString());
         }
 
-        [Test]
-        public void GenerateSasUri()
+        private static IEnumerable<object[]> TableClients()
+        {
+            var cred = new TableSharedKeyCredential(AccountName, Secret);
+            var sharedKeyClient = new TableClient(_url, TableName, cred);
+            var connStringClient = new TableClient(
+                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;",
+                TableName);
+            yield return new object[] { sharedKeyClient, cred };
+            yield return new object[] { connStringClient, cred };
+        }
+
+        [TestCaseSource(nameof(TableClients))]
+        public void GenerateSasUri(TableClient client, TableSharedKeyCredential cred)
         {
             TableSasPermissions permissions = TableSasPermissions.Add;
             var expires = DateTime.Now.AddDays(1);
-            var cred = new TableSharedKeyCredential(AccountName, Secret);
-            var client = new TableClient(_url, TableName, cred);
-
             var expectedSas = new TableSasBuilder(TableName, permissions, expires).Sign(cred);
 
             var actualSas = client.GenerateSasUri(permissions, expires);

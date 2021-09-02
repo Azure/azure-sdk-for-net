@@ -20,8 +20,6 @@ namespace Azure.IoT.Hub.Service.Tests
             // Sanitize SAS tokens in request body
             AddJsonPathSanitizer("outputBlobContainerUri");
             AddJsonPathSanitizer("inputBlobContainerUri");
-            AddJsonPathSanitizer("..primaryKey");
-            AddJsonPathSanitizer("..secondaryKey");
             // TODO: Remove when re-recording
             LegacyConvertJsonDateTokens = true;
         }

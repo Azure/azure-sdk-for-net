@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkProfileListResult. </summary>
         internal NetworkProfileListResult()
         {
-            Value = new ChangeTrackingList<NetworkProfile>();
+            Value = new ChangeTrackingList<NetworkProfileData>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfileListResult. </summary>
         /// <param name="value"> A list of network profiles that exist in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal NetworkProfileListResult(IReadOnlyList<NetworkProfile> value, string nextLink)
+        internal NetworkProfileListResult(IReadOnlyList<NetworkProfileData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of network profiles that exist in a resource group. </summary>
-        public IReadOnlyList<NetworkProfile> Value { get; }
+        public IReadOnlyList<NetworkProfileData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

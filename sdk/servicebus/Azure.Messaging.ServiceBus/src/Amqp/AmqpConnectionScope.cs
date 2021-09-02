@@ -167,28 +167,30 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private string _sendViaReceiverEntityPath;
 
         private readonly object _syncLock = new();
+        private readonly TimeSpan _operationTimeout;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
         /// </summary>
-        ///
         /// <param name="serviceEndpoint">Endpoint for the Service Bus service to which the scope is associated.</param>
         /// <param name="credential">The credential to use for authorization with the Service Bus service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="useSingleSession">If true, all links will use a single session.</param>
-        ///
+        /// <param name="operationTimeout">The timeout for operations associated with the connection.</param>
         public AmqpConnectionScope(
             Uri serviceEndpoint,
             ServiceBusTokenCredential credential,
             ServiceBusTransportType transport,
             IWebProxy proxy,
-            bool useSingleSession)
+            bool useSingleSession,
+            TimeSpan operationTimeout)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             ValidateTransport(transport);
 
+            _operationTimeout = operationTimeout;
             ServiceEndpoint = serviceEndpoint;
             Transport = transport;
             Proxy = proxy;
@@ -512,6 +514,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             var session = default(AmqpSession);
             var stopWatch = ValueStopwatch.StartNew();
+            RequestResponseAmqpLink link = null;
 
             try
             {
@@ -528,6 +531,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var linkSettings = new AmqpLinkSettings();
                 linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
                 linkSettings.AddProperty(AmqpClientConstants.EntityTypeName, AmqpClientConstants.EntityTypeManagement);
+                linkSettings.OperationTimeout = _operationTimeout;
                 entityPath += '/' + AmqpClientConstants.ManagementAddress;
 
                 // Perform the initial authorization for the link.
@@ -545,7 +549,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     identifier: identifier)
                     .ConfigureAwait(false);
 
-                var link = new RequestResponseAmqpLink(
+                link = new RequestResponseAmqpLink(
                     AmqpClientConstants.EntityTypeManagement,
                     session,
                     entityPath,
@@ -572,11 +576,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
+                StartTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
             catch (Exception exception)
             {
+                StopTrackingLinkAsActive(link);
+
                 // Aborting the session will perform any necessary cleanup of
                 // the associated link as well.
 
@@ -623,6 +629,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             var session = default(AmqpSession);
             var stopWatch = ValueStopwatch.StartNew();
+            ReceivingAmqpLink link = null;
 
             try
             {
@@ -661,10 +668,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = (receiveMode == ServiceBusReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
-                    Target = new Target { Address = Guid.NewGuid().ToString() }
+                    Target = new Target { Address = Guid.NewGuid().ToString() },
+                    OperationTimeout = _operationTimeout
                 };
 
-                var link = new ReceivingAmqpLink(linkSettings);
+                link = new ReceivingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}:{linkSettings.Source.ToString()}";
 
                 link.AttachTo(session);
@@ -690,14 +698,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
+                StartTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
             catch (Exception exception)
             {
+                StopTrackingLinkAsActive(link);
                 // Aborting the session will perform any necessary cleanup of
                 // the associated link as well.
-
                 session?.Abort();
                 ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
@@ -760,6 +768,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             var session = default(AmqpSession);
             var stopWatch = ValueStopwatch.StartNew();
+            SendingAmqpLink link = null;
 
             ValidateCanCreateSenderLink(entityPath);
 
@@ -799,12 +808,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Role = false,
                     InitialDeliveryCount = 0,
                     Source = new Source { Address = Guid.NewGuid().ToString() },
-                    Target = new Target { Address = destinationEndpoint.AbsolutePath }
+                    Target = new Target { Address = destinationEndpoint.AbsolutePath },
+                    OperationTimeout = _operationTimeout
                 };
 
                 linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
 
-                var link = new SendingAmqpLink(linkSettings);
+                link = new SendingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
                 link.AttachTo(session);
 
@@ -830,11 +840,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
+                StartTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
             catch (Exception exception)
             {
+                StopTrackingLinkAsActive(link);
+
                 // Aborting the session will perform any necessary cleanup of
                 // the associated link as well.
 
@@ -890,7 +902,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   for active tracking; no assumptions are made about the open/connected state of the link nor are
         ///   its communication properties modified.
         /// </remarks>
-        protected virtual void BeginTrackingLinkAsActive(
+        protected virtual void StartTrackingLinkAsActive(
             string entityPath,
             AmqpObject link,
             Timer authorizationRefreshTimer = null)
@@ -925,15 +937,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             closeHandler = (snd, args) =>
             {
-                ActiveLinks.TryRemove(link, out var timer);
-
-                timer?.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
-                timer?.Dispose();
+                StopTrackingLinkAsActive(link);
 
                 link.Closed -= closeHandler;
             };
 
             link.Closed += closeHandler;
+        }
+
+        private void StopTrackingLinkAsActive(AmqpObject link)
+        {
+            if (link != null)
+            {
+                ActiveLinks.TryRemove(link, out var timer);
+
+                timer?.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+                timer?.Dispose();
+            }
         }
 
         /// <summary>
@@ -1076,40 +1096,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityPath = default,
             bool isProcessor = default)
         {
-            CancellationTokenRegistration registration;
             try
             {
-                var openObjectCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-                // Only allow cancelling in-flight opens when it is from a processor.
-                // This would occur when the processor is stopped or closed by the user.
-                if (isProcessor)
-                {
-                    // use a static delegate with tuple state to avoid allocating a closure
-                    registration = cancellationToken.Register(static state =>
-                    {
-                        var (tcs, target) = ((TaskCompletionSource<object>, AmqpObject))state;
-                        if (tcs.TrySetCanceled())
-                        {
-                            target.SafeClose();
-                        }
-                    }, (openObjectCompletionSource, target), useSynchronizationContext: false);
-                }
-
-                static async Task Open(AmqpObject target, TimeSpan timeout, TaskCompletionSource<object> openObjectCompletionSource)
-                {
-                    try
-                    {
-                        await target.OpenAsync(timeout).ConfigureAwait(false);
-                        openObjectCompletionSource.TrySetResult(null);
-                    }
-                    catch (Exception ex)
-                    {
-                        openObjectCompletionSource.TrySetException(ex);
-                    }
-                }
-
-                _ = Open(target, timeout, openObjectCompletionSource);
-                await openObjectCompletionSource.Task.ConfigureAwait(false);
+                await target.OpenAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -1138,13 +1127,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     default:
                         throw;
-                }
-            }
-            finally
-            {
-                if (isProcessor)
-                {
-                    registration.Dispose();
                 }
             }
         }

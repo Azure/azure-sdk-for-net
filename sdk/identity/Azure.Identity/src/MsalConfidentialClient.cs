@@ -18,19 +18,17 @@ namespace Azure.Identity
         /// For mocking purposes only.
         /// </summary>
         protected MsalConfidentialClient()
-            : base()
-        {
-        }
+        { }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority)
-            : base(pipeline, tenantId, clientId, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
+            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
         {
             _clientSecret = clientSecret;
             RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, ClientCertificateCredential.IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority)
-            : base(pipeline, tenantId, clientId, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, ClientCertificateCredential.IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
+            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
@@ -43,7 +41,8 @@ namespace Azure.Identity
         {
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
                 .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId)
-                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline));
+                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
+                .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
 
             if (_clientSecret != null)
             {

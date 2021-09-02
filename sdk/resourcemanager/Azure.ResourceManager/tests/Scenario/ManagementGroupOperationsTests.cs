@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.Tests
         public async Task GetGlobalManagementGroup()
         {
             _mgmtGroupName = SessionRecording.GenerateAssetName("mgmt-group-");
-            _mgmtGroup = await GlobalClient.GetManagementGroups().CreateOrUpdateAsync(_mgmtGroupName, new CreateManagementGroupOptions());
+            var mgmtOp = await GlobalClient.GetManagementGroups().CreateOrUpdateAsync(_mgmtGroupName, new CreateManagementGroupOptions());
+            _mgmtGroup = mgmtOp.Value;
             _mgmtGroup = await _mgmtGroup.GetAsync();
             StopSessionRecording();
         }
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupOptions());
+            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupOptions());
+            ManagementGroup mgmtGroup = mgmtGroupOp.Value;
             await mgmtGroup.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await mgmtGroup.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -46,8 +48,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task StartDelete()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupOptions());
-            var deleteOp = await mgmtGroup.StartDeleteAsync();
+            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupOptions());
+            ManagementGroup mgmtGroup = mgmtGroupOp.Value;
+            var deleteOp = await mgmtGroup.DeleteAsync(waitForCompletion: false);
             await deleteOp.WaitForCompletionResponseAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await mgmtGroup.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -69,7 +72,8 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Update()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupOptions());
+            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupOptions());
+            ManagementGroup mgmtGroup = mgmtGroupOp.Value;
             PatchManagementGroupOptions patch = new PatchManagementGroupOptions();
             patch.DisplayName = "New Display Name";
             ManagementGroup patchedMgmtGroup = await mgmtGroup.UpdateAsync(patch);

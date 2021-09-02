@@ -50,7 +50,7 @@ param (
 
     [Parameter()]
     [ValidateRange(1, [int]::MaxValue)]
-    [int] $DeleteAfterHours = 48,
+    [int] $DeleteAfterHours = 120,
 
     [Parameter()]
     [string] $Location = '',
@@ -289,7 +289,8 @@ try {
                 $AzureTestPrincipal
             } else {
                 Log "TestApplicationId was not specified; creating a new service principal in subscription '$SubscriptionId'"
-                $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner -Scope "/subscriptions/$SubscriptionId"
+                $suffix = (New-Guid).ToString('n').Substring(0, 4)
+                $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner -Scope "/subscriptions/$SubscriptionId" -DisplayName "test-resources-$($baseName)$suffix.microsoft.com"
                 $global:AzureTestSubscription = $SubscriptionId
 
                 Log "Created service principal '$($AzureTestPrincipal.ApplicationId)'"
@@ -477,7 +478,13 @@ try {
             &$preDeploymentScript -ResourceGroupName $ResourceGroupName @PSBoundParameters
         }
 
-        Log "Deploying template '$($templateFile.originalFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
+        $msg = if ($templateFile.jsonFilePath -ne $templateFile.originalFilePath) {
+            "Deployment template $($templateFile.jsonFilePath) from $($templateFile.originalFilePath) to resource group $($resourceGroup.ResourceGroupName)"
+        } else {
+            "Deployment template $($templateFile.jsonFilePath) to resource group $($resourceGroup.ResourceGroupName)"
+        }
+        Log $msg
+        
         $deployment = Retry {
             $lastDebugPreference = $DebugPreference
             try {
@@ -538,7 +545,7 @@ try {
                 Write-Host 'File option is supported only on Windows'
             }
 
-            $outputFile = "$($templateFile.jsonFilePath).env"
+            $outputFile = "$($templateFile.originalFilePath).env"
 
             $environmentText = $deploymentOutputs | ConvertTo-Json;
             $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
