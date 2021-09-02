@@ -37,10 +37,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetResourceSetRuleRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
             try
@@ -76,10 +73,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetResourceSetRuleRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
             try
@@ -638,10 +632,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
@@ -1184,10 +1175,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
@@ -1242,10 +1230,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteResourceSetRuleRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();
             try
@@ -1282,10 +1267,7 @@ namespace Azure.Analytics.Purview.Account
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteResourceSetRuleRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();
             try

@@ -78,10 +78,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.List");
             scope.Start();
             try
@@ -133,10 +130,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.List");
             scope.Start();
             try
@@ -245,10 +239,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetRequest(farmerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.Get");
             scope.Start();
             try
@@ -285,10 +276,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetRequest(farmerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.Get");
             scope.Start();
             try
@@ -406,10 +394,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateOrUpdate");
             scope.Start();
             try
@@ -510,10 +495,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateOrUpdate");
             scope.Start();
             try
@@ -572,10 +554,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(farmerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.Delete");
             scope.Start();
             try
@@ -612,10 +591,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(farmerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.Delete");
             scope.Start();
             try
@@ -670,10 +646,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -710,10 +683,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -769,10 +739,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateCascadeDeleteJob");
             scope.Start();
             try
@@ -810,10 +777,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateCascadeDeleteJob");
             scope.Start();
             try
