@@ -61,10 +61,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetConstitutionRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
             try
@@ -100,10 +97,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetConstitutionRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
             try
@@ -155,10 +149,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetConsortiumMembersRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
             try
@@ -194,10 +185,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetConsortiumMembersRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
             try
@@ -249,10 +237,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetEnclaveQuotesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
             try
@@ -288,10 +273,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetEnclaveQuotesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
             try
@@ -346,10 +328,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntries");
             scope.Start();
             try
@@ -388,10 +367,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntries");
             scope.Start();
             try
@@ -489,10 +465,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
@@ -559,10 +532,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
@@ -624,10 +594,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
             try
@@ -665,10 +632,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
             try
@@ -728,10 +692,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetReceiptRequest(transactionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
             try
@@ -768,10 +729,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetReceiptRequest(transactionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
             try
@@ -827,10 +785,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetTransactionStatusRequest(transactionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
             try
@@ -867,10 +822,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetTransactionStatusRequest(transactionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
             try
@@ -926,10 +878,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
             try
@@ -966,10 +915,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
             try
@@ -1027,10 +973,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteUserRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
             try
@@ -1067,10 +1010,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteUserRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
             try
@@ -1125,10 +1065,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetUserRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
             try
@@ -1165,10 +1102,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetUserRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
             try
@@ -1247,10 +1181,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
             try
@@ -1311,10 +1242,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
             try

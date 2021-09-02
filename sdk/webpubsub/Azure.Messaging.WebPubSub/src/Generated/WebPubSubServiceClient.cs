@@ -40,10 +40,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
             try
@@ -82,10 +79,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
             try
@@ -151,10 +145,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateConnectionExistsImplRequest(connectionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
             try
@@ -192,10 +183,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateConnectionExistsImplRequest(connectionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
             try
@@ -256,10 +244,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
             try
@@ -297,10 +282,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
             try
@@ -366,10 +348,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
             scope.Start();
             try
@@ -408,10 +387,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
             scope.Start();
             try
@@ -475,10 +451,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGroupExistsImplRequest(group, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
             try
@@ -516,10 +489,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGroupExistsImplRequest(group, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
             try
@@ -582,10 +552,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
             scope.Start();
             try
@@ -625,10 +592,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
             scope.Start();
             try
@@ -698,10 +662,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
             try
@@ -740,10 +701,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
             try
@@ -807,10 +765,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
             try
@@ -848,10 +803,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
             try
@@ -913,10 +865,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateUserExistsImplRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
             try
@@ -954,10 +903,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateUserExistsImplRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
             try
@@ -1019,10 +965,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
             scope.Start();
             try
@@ -1061,10 +1004,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
             scope.Start();
             try
@@ -1129,10 +1069,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAddUserToGroupRequest(group, userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
             scope.Start();
             try
@@ -1171,10 +1108,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAddUserToGroupRequest(group, userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
             scope.Start();
             try
@@ -1238,10 +1172,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
             scope.Start();
             try
@@ -1279,10 +1210,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
             scope.Start();
             try
@@ -1344,10 +1272,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();
             try
@@ -1384,10 +1309,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();
             try
@@ -1449,10 +1371,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
             try
@@ -1491,10 +1410,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
             try
@@ -1563,10 +1479,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
             try
@@ -1605,10 +1518,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
             try
@@ -1677,10 +1587,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();
             try
@@ -1720,10 +1627,7 @@ namespace Azure.Messaging.WebPubSub
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();
             try

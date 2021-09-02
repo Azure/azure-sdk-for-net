@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ListQueueResource. </summary>
         internal ListQueueResource()
         {
-            Value = new ChangeTrackingList<ListQueue>();
+            Value = new ChangeTrackingList<StorageQueueData>();
         }
 
         /// <summary> Initializes a new instance of ListQueueResource. </summary>
         /// <param name="value"> List of queues returned. </param>
         /// <param name="nextLink"> Request URL that can be used to list next page of queues. </param>
-        internal ListQueueResource(IReadOnlyList<ListQueue> value, string nextLink)
+        internal ListQueueResource(IReadOnlyList<StorageQueueData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of queues returned. </summary>
-        public IReadOnlyList<ListQueue> Value { get; }
+        public IReadOnlyList<StorageQueueData> Value { get; }
         /// <summary> Request URL that can be used to list next page of queues. </summary>
         public string NextLink { get; }
     }
