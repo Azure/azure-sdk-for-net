@@ -12,25 +12,17 @@ namespace Microsoft.Azure.Management.NetApp.Models
 {
 
     /// <summary>
-    /// Defines values for ServiceLevel.
+    /// Defines values for EncryptionType.
     /// </summary>
-    public static class ServiceLevel
+    public static class EncryptionType
     {
         /// <summary>
-        /// Standard service level
+        /// EncryptionType Single, volumes will use single encryption at rest
         /// </summary>
-        public const string Standard = "Standard";
+        public const string Single = "Single";
         /// <summary>
-        /// Premium service level
+        /// EncryptionType Double, volumes will use double encryption at rest
         /// </summary>
-        public const string Premium = "Premium";
-        /// <summary>
-        /// Ultra service level
-        /// </summary>
-        public const string Ultra = "Ultra";
-        /// <summary>
-        /// Zone redundant storage service level
-        /// </summary>
-        public const string StandardZRS = "StandardZRS";
+        public const string Double = "Double";
     }
 }
