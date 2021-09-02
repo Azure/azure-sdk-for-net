@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryBlobClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -55,17 +55,23 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
             OciManifest manifest = new OciManifest()
             {
+                SchemaVersion = 2,
                 Config = new ArtifactBlobDescriptor()
                 {
                     MediaType = "application/vnd.acme.rocket.config",
-                    Digest = "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8"
+                    Digest = "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
+                    Size = 171
                 }
             };
             manifest.Layers.Add(new ArtifactBlobDescriptor()
             {
                 MediaType = "application/vnd.oci.image.layer.v1.tar",
                 Digest = "sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
-                Size = 28
+                Size = 28,
+                Annotations = new OciAnnotations()
+                {
+                    Name = "artifact.txt"
+                }
             });
 
             var uploadResult = await client.UploadManifestAsync(manifest);
@@ -85,7 +91,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
-            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData\\oci-artifact", "manifest.json");
+            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
             string digest = default;
 
             // Act
@@ -111,7 +117,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string repository = "oci-artifact";
             var client = CreateBlobClient(repository);
             var metadataClient = CreateClient();
-            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData\\oci-artifact", "manifest.json");
+            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
             string digest = default;
             string tag = $"v{DateTime.Now.Ticks}";
 
@@ -143,7 +149,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         private static void ValidateManifest(OciManifest manifest)
         {
-            // These are from the values in the TestData\oci-artifact\manifest.json file.
+            // These are from the values in the Data\oci-artifact\manifest.json file.
             Assert.IsNotNull(manifest);
 
             Assert.IsNotNull(manifest.Config);
@@ -153,9 +159,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             Assert.IsNotNull(manifest.Layers);
             Assert.AreEqual(1, manifest.Layers.Count);
-            Assert.AreEqual("application/vnd.oci.image.layer.v1.tar", manifest.Config.MediaType);
-            Assert.AreEqual("sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed", manifest.Config.Digest);
-            Assert.AreEqual(28, manifest.Config.Size);
+            Assert.AreEqual("application/vnd.oci.image.layer.v1.tar", manifest.Layers[0].MediaType);
+            Assert.AreEqual("sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed", manifest.Layers[0].Digest);
+            Assert.AreEqual(28, manifest.Layers[0].Size);
         }
 
         [RecordedTest, NonParallelizable]
@@ -164,7 +170,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             var client = CreateBlobClient("oci-artifact");
             var blob = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData\\oci-artifact", blob);
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", blob);
 
             string digest = default;
             // Act
@@ -189,7 +195,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             var client = CreateBlobClient("oci-artifact");
             var blob = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData\\oci-artifact", blob);
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", blob);
 
             string digest = default;
 

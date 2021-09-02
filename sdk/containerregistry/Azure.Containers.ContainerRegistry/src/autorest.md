@@ -33,18 +33,6 @@ directive:
         delete $.responses["201"].schema
 ```
 
-# Treat manifest as stream
-``` yaml
-directive:
-  from: swagger-document
-  where: $.parameters.ManifestBody
-  transform: >
-    $.schema = {
-        "type": "string",
-        "format": "binary"
-      }
-```
-
 # Change NextLink client name to nextLink
 ``` yaml
 directive:
@@ -63,7 +51,6 @@ directive:
     $["x-csharp-usage"] = "model,input,output,converter";
     $["x-csharp-formats"] = "json";
     delete $["x-accessibility"];
-    delete $["allOf"];
 ```
 
 # Make ArtifactBlobDescriptor a public type
@@ -71,6 +58,24 @@ directive:
 directive:
   from: swagger-document
   where: $.definitions.Descriptor
+  transform: >
+    delete $["x-accessibility"]
+```
+
+# Make OciAnnotations a public type
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.Annotations
+  transform: >
+    delete $["x-accessibility"]
+```
+
+# Make ArtifactManifest a public type
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.Manifest
   transform: >
     delete $["x-accessibility"]
 ```

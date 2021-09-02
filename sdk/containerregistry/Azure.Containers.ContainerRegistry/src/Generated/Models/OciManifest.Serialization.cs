@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Containers.ContainerRegistry;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
@@ -47,6 +46,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     writer.WriteNull("annotations");
                 }
             }
+            if (Optional.IsDefined(SchemaVersion))
+            {
+                writer.WritePropertyName("schemaVersion");
+                writer.WriteNumberValue(SchemaVersion.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -54,7 +58,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Optional<ArtifactBlobDescriptor> config = default;
             Optional<IList<ArtifactBlobDescriptor>> layers = default;
-            Optional<Annotations> annotations = default;
+            Optional<OciAnnotations> annotations = default;
+            Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("config"))
@@ -89,11 +94,21 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                         annotations = null;
                         continue;
                     }
-                    annotations = ContainerRegistry.Annotations.DeserializeAnnotations(property.Value);
+                    annotations = OciAnnotations.DeserializeOciAnnotations(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("schemaVersion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    schemaVersion = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new OciManifest(config.Value, Optional.ToList(layers), annotations.Value);
+            return new OciManifest(Optional.ToNullable(schemaVersion), config.Value, Optional.ToList(layers), annotations.Value);
         }
 
         internal partial class OciManifestConverter : JsonConverter<OciManifest>

@@ -6,13 +6,12 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Containers.ContainerRegistry;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> Returns the requested OCI Manifest file. </summary>
-    public partial class OciManifest
+    public partial class OciManifest : ArtifactManifest
     {
         /// <summary> Initializes a new instance of OciManifest. </summary>
         public OciManifest()
@@ -21,10 +20,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Initializes a new instance of OciManifest. </summary>
+        /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciManifest(ArtifactBlobDescriptor config, IList<ArtifactBlobDescriptor> layers, Annotations annotations)
+        internal OciManifest(int? schemaVersion, ArtifactBlobDescriptor config, IList<ArtifactBlobDescriptor> layers, OciAnnotations annotations) : base(schemaVersion)
         {
             Config = config;
             Layers = layers;

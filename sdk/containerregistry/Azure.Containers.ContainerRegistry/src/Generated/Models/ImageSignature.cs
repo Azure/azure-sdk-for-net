@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class ImageSignature
     {
         /// <summary> Initializes a new instance of ImageSignature. </summary>
-        internal ImageSignature()
+        public ImageSignature()
         {
         }
 
@@ -27,10 +27,10 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> A JSON web signature. </summary>
-        public JWK Header { get; }
+        public JWK Header { get; set; }
         /// <summary> A signature for the image manifest, signed by a libtrust private key. </summary>
-        public string Signature { get; }
+        public string Signature { get; set; }
         /// <summary> The signed protected header. </summary>
-        public string Protected { get; }
+        public string Protected { get; set; }
     }
 }

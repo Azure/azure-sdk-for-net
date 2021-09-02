@@ -10,8 +10,29 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ImageSignature
+    internal partial class ImageSignature : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Header))
+            {
+                writer.WritePropertyName("header");
+                writer.WriteObjectValue(Header);
+            }
+            if (Optional.IsDefined(Signature))
+            {
+                writer.WritePropertyName("signature");
+                writer.WriteStringValue(Signature);
+            }
+            if (Optional.IsDefined(Protected))
+            {
+                writer.WritePropertyName("protected");
+                writer.WriteStringValue(Protected);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static ImageSignature DeserializeImageSignature(JsonElement element)
         {
             Optional<JWK> header = default;

@@ -24,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         internal IList<Uri> Urls { get; }
 
         /// <summary> Additional information provided through arbitrary metadata. </summary>
-        internal Annotations Annotations { get; }
+        public OciAnnotations Annotations { get; set; }
 
         internal static string ComputeDigest(Stream stream)
         {

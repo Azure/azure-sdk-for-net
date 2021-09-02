@@ -8,11 +8,22 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    internal partial class Manifest
+    public partial class ArtifactManifest : IUtf8JsonSerializable
     {
-        internal static Manifest DeserializeManifest(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SchemaVersion))
+            {
+                writer.WritePropertyName("schemaVersion");
+                writer.WriteNumberValue(SchemaVersion.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ArtifactManifest DeserializeArtifactManifest(JsonElement element)
         {
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new Manifest(Optional.ToNullable(schemaVersion));
+            return new ArtifactManifest(Optional.ToNullable(schemaVersion));
         }
     }
 }

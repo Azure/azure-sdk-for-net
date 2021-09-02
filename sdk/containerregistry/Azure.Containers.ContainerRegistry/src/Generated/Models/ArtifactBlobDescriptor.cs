@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Containers.ContainerRegistry;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
@@ -27,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="digest"> Layer digest. </param>
         /// <param name="urls"> Specifies a list of URIs from which this object may be downloaded. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal ArtifactBlobDescriptor(string mediaType, long? size, string digest, IList<Uri> urls, Annotations annotations)
+        internal ArtifactBlobDescriptor(string mediaType, long? size, string digest, IList<Uri> urls, OciAnnotations annotations)
         {
             MediaType = mediaType;
             Size = size;

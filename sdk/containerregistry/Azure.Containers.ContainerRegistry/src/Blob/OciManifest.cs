@@ -11,6 +11,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public partial class OciManifest
     {
         /// <summary> Additional information provided through arbitrary metadata. </summary>
-        internal Annotations Annotations { get; }
+        public OciAnnotations Annotations { get; }
     }
 }

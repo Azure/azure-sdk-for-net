@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Containers.ContainerRegistry;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
@@ -64,7 +63,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Optional<long> size = default;
             Optional<string> digest = default;
             Optional<IList<Uri>> urls = default;
-            Optional<Annotations> annotations = default;
+            Optional<OciAnnotations> annotations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"))
@@ -109,7 +108,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                         annotations = null;
                         continue;
                     }
-                    annotations = ContainerRegistry.Annotations.DeserializeAnnotations(property.Value);
+                    annotations = OciAnnotations.DeserializeOciAnnotations(property.Value);
                     continue;
                 }
             }
