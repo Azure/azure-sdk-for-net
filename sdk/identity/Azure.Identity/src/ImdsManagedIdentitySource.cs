@@ -33,7 +33,7 @@ namespace Azure.Identity
         {
             _clientId = clientId;
 
-			if (!string.IsNullOrEmpty(EnvironmentVariables.PodIdentityEndpoint))
+            if (!string.IsNullOrEmpty(EnvironmentVariables.PodIdentityEndpoint))
 			{
 				var builder = new UriBuilder(EnvironmentVariables.PodIdentityEndpoint);
             	builder.Path = imddsTokenPath;
@@ -72,14 +72,9 @@ namespace Azure.Identity
             {
                 return await base.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
             }
-            catch (RequestFailedException e)
+            catch (RequestFailedException e) when (e.Status == 0)
             {
-                if (e.Status == 0)
-                {
-                    throw new CredentialUnavailableException(NoResponseError, e);
-                }
-
-                throw;
+                throw new CredentialUnavailableException(NoResponseError, e);
             }
             catch (TaskCanceledException e)
             {
