@@ -10,10 +10,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// <summary> Returns the requested manifest file. </summary>
     public partial class ArtifactManifest
     {
-        /// <summary> Initializes a new instance of ArtifactManifest. </summary>
-        public ArtifactManifest()
-        {
-        }
 
         /// <summary> Initializes a new instance of ArtifactManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
