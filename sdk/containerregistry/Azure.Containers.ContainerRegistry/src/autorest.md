@@ -21,7 +21,16 @@ directive:
             "in": "header",
             "type": "string",
             "description": "The manifest's Content-Type."
-        });
+        })
+```
+
+# Add content-type parameter
+``` yaml
+directive:
+    from: swagger-document
+    where: $.paths["/v2/{name}/manifests/{reference}"].put
+    transform: >
+        delete $.responses["201"].schema
 ```
 
 # Treat manifest as stream

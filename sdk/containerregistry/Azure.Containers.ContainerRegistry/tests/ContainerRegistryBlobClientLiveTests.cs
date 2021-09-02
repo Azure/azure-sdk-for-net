@@ -18,6 +18,35 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest, NonParallelizable]
+        public async Task CanUploadArtifact()
+        {
+            // Arrange
+            var client = CreateBlobClient("oci-artifact");
+            //var layer = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
+            var manifest = "manifest.json";
+            //var config = "config.json";
+            var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact");
+
+            //// Upload config
+            //using (var fs = File.OpenRead(Path.Combine(basePath, config)))
+            //{
+            //    var uploadResult = await client.UploadBlobAsync(fs);
+            //}
+
+            //// Upload layer
+            //using (var fs = File.OpenRead(Path.Combine(basePath, layer)))
+            //{
+            //    var uploadResult = await client.UploadBlobAsync(fs);
+            //}
+
+            // Upload manifest
+            using (var fs = File.OpenRead(Path.Combine(basePath, manifest)))
+            {
+                var uploadResult = await client.UploadManifestAsync(fs);
+            }
+        }
+
+        [RecordedTest, NonParallelizable]
         public async Task CanUploadOciManifest()
         {
             // Arrange
@@ -56,7 +85,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
-            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
+            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData\\oci-artifact", "manifest.json");
             string digest = default;
 
             // Act
@@ -82,7 +111,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string repository = "oci-artifact";
             var client = CreateBlobClient(repository);
             var metadataClient = CreateClient();
-            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
+            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData\\oci-artifact", "manifest.json");
             string digest = default;
             string tag = $"v{DateTime.Now.Ticks}";
 
@@ -114,7 +143,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         private static void ValidateManifest(OciManifest manifest)
         {
-            // These are from the values in the Data\oci-artifact\manifest.json file.
+            // These are from the values in the TestData\oci-artifact\manifest.json file.
             Assert.IsNotNull(manifest);
 
             Assert.IsNotNull(manifest.Config);
@@ -135,7 +164,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             var client = CreateBlobClient("oci-artifact");
             var blob = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", blob);
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData\\oci-artifact", blob);
 
             string digest = default;
             // Act
@@ -160,7 +189,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             var client = CreateBlobClient("oci-artifact");
             var blob = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", blob);
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData\\oci-artifact", blob);
 
             string digest = default;
 
