@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Tests
         private GalleryImage _galleryImage;
         private VirtualMachine _vm;
         public GalleryImageVersionContainerTests(bool isAsync)
-           : base(isAsync)// , RecordedTestMode.Record)
+           : base(isAsync , RecordedTestMode.Record)
         {
         }
         private async Task<GalleryImageVersionContainer> GetGalleryImageVersionContainerAsync()
