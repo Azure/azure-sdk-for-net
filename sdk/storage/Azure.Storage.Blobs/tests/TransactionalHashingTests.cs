@@ -345,32 +345,31 @@ namespace Azure.Storage.Blobs.Tests
         #endregion
 
         #region BlobClient PartitionedUpload
+        private Task<BlobClient> MakeBlobClient(BlobContainerClient container, BlobClientOptions testClientOptions)
+        {
+            container = InstrumentClient(new BlobContainerClient(container.Uri, GetNewSharedKeyCredentials(), testClientOptions));
+            return Task.FromResult(InstrumentClient(container.GetBlobClient(GetNewBlobName())));
+        }
+
+        private static async Task BlobParallelUploadAction(
+            BlobClient blob,
+            Stream stream,
+            UploadTransactionalHashingOptions hashingOptions,
+            StorageTransferOptions transferOptions)
+            => await blob.UploadAsync(stream, new BlobUploadOptions
+            {
+                TransactionalHashingOptions = hashingOptions,
+                TransferOptions = transferOptions
+            });
+
         [TestCase(TransactionalHashAlgorithm.MD5)]
         //[TestCase(TransactionalHashAlgorithm.StorageCrc64)] TODO #23578
         public async Task BlobClientUploadSuccessfulHashVerification(TransactionalHashAlgorithm algorithm)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(DefaultDataSize);
-
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: TransactionalHashingTestSkeletons.GetRequestHashAssertion(algorithm));
-            var clientOptions = GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
-
-            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
-            BlobClient blob = InstrumentClient(container.GetBlobClient(GetNewBlobName()));
-            var hashingOptions = new UploadTransactionalHashingOptions { Algorithm = algorithm };
-
-            // Act / Assert
-            using (var stream = new MemoryStream(data))
-            {
-                hashPipelineAssertion.CheckRequest = true;
-                await blob.UploadAsync(stream, new BlobUploadOptions
-                {
-                    TransactionalHashingOptions = hashingOptions
-                });
-            }
+            await TransactionalHashingTestSkeletons.TestParallelUploadSuccessfulHashComputationAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Container, MakeBlobClient, BlobParallelUploadAction);
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
@@ -379,44 +378,8 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(Constants.KB); // well below partition size
-
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: TransactionalHashingTestSkeletons.GetRequestHashAssertion(algorithm));
-            var clientOptions = GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
-
-            // create an incorrect hash to check on request pipeline, guaranteeing we didn't autocalculate
-            var precalculatedHash = GetRandomBuffer(16);
-            var hashingOptions = new UploadTransactionalHashingOptions
-            {
-                Algorithm = algorithm,
-                PrecalculatedHash = precalculatedHash
-            };
-
-            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
-            BlobClient blob = InstrumentClient(container.GetBlobClient(GetNewBlobName()));
-
-            // Act / Assert
-            using (var stream = new MemoryStream(data))
-            {
-                hashPipelineAssertion.CheckRequest = true;
-                var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await blob.UploadAsync(stream, new BlobUploadOptions
-                {
-                    TransactionalHashingOptions = hashingOptions,
-                }));
-                switch (algorithm)
-                {
-                    case TransactionalHashAlgorithm.MD5:
-                        Assert.AreEqual("Md5Mismatch", exception.ErrorCode);
-                        break;
-                    case TransactionalHashAlgorithm.StorageCrc64:
-                        Assert.AreEqual("Crc64Mismatch", exception.ErrorCode);
-                        break;
-                    default:
-                        throw new ArgumentException("Test arguments contain bad algorithm specifier.");
-                }
-            }
+            await TransactionalHashingTestSkeletons.TestParallelUploadUsePrecalculatedHashOnOneshotAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Container, MakeBlobClient, BlobParallelUploadAction);
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
@@ -425,71 +388,32 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            const int blockSize = Constants.KB;
-            var data = GetRandomBuffer(2 * blockSize);
-
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: TransactionalHashingTestSkeletons.GetRequestHashAssertion(
-                algorithm,
-                // only check put block, not put block list
-                isHashExpected: request => request.Uri.Query.Contains("blockid=")));
-            var clientOptions = GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
-
-            // create bad hash for to ignore
-            var precalculatedHash = GetRandomBuffer(16);
-            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
-            BlobClient blob = InstrumentClient(container.GetBlobClient(GetNewBlobName()));
-            var hashingOptions = new UploadTransactionalHashingOptions
-            {
-                Algorithm = algorithm,
-                PrecalculatedHash = precalculatedHash
-            };
-
-            // Act / Assert
-            using (var stream = new MemoryStream(data))
-            {
-                hashPipelineAssertion.CheckRequest = true;
-                await blob.UploadAsync(stream, new BlobUploadOptions
-                {
-                    TransactionalHashingOptions = hashingOptions,
-                    TransferOptions = new StorageTransferOptions
-                    {
-                        InitialTransferSize = blockSize,
-                        MaximumTransferSize = blockSize
-                    }
-                });
-            }
+            await TransactionalHashingTestSkeletons.TestParallelUploadIgnorePrecalculatedOnSplitAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Container, MakeBlobClient, BlobParallelUploadAction,
+                request => request.Uri.Query.Contains("blockid="));
         }
         #endregion
 
         #region BlockBlobClient PartitionedUpload
+        private static async Task BlockBlobParallelUploadAction(
+            BlockBlobClient blob,
+            Stream stream,
+            UploadTransactionalHashingOptions hashingOptions,
+            StorageTransferOptions transferOptions)
+            => await blob.UploadAsync(stream, new BlobUploadOptions
+            {
+                TransactionalHashingOptions = hashingOptions,
+                TransferOptions = transferOptions
+            });
+
         [TestCase(TransactionalHashAlgorithm.MD5)]
         //[TestCase(TransactionalHashAlgorithm.StorageCrc64)] TODO #23578
         public async Task BlockBlobClientUploadSuccessfulHashVerification(TransactionalHashAlgorithm algorithm)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(DefaultDataSize);
-
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: TransactionalHashingTestSkeletons.GetRequestHashAssertion(algorithm));
-            var clientOptions = GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
-
-            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
-            var hashingOptions = new UploadTransactionalHashingOptions { Algorithm = algorithm };
-
-            // Act / Assert
-            using (var stream = new MemoryStream(data))
-            {
-                hashPipelineAssertion.CheckRequest = true;
-                await blob.UploadAsync(stream, new BlobUploadOptions
-                {
-                    TransactionalHashingOptions = hashingOptions
-                });
-            }
+            await TransactionalHashingTestSkeletons.TestParallelUploadSuccessfulHashComputationAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Container, MakeBlockBlobClient, BlockBlobParallelUploadAction);
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
@@ -498,44 +422,8 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(Constants.KB); // well below partition size
-
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: TransactionalHashingTestSkeletons.GetRequestHashAssertion(algorithm));
-            var clientOptions = GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
-
-            // create an incorrect hash to check on request pipeline, guaranteeing we didn't autocalculate
-            var precalculatedHash = GetRandomBuffer(16);
-            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
-            var hashingOptions = new UploadTransactionalHashingOptions
-            {
-                Algorithm = algorithm,
-                PrecalculatedHash = precalculatedHash
-            };
-
-            // Act / Assert
-
-            using (var stream = new MemoryStream(data))
-            {
-                hashPipelineAssertion.CheckRequest = true;
-                var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await blob.UploadAsync(stream, new BlobUploadOptions
-                {
-                    TransactionalHashingOptions = hashingOptions,
-                }));
-                switch (algorithm)
-                {
-                    case TransactionalHashAlgorithm.MD5:
-                        Assert.AreEqual("Md5Mismatch", exception.ErrorCode);
-                        break;
-                    case TransactionalHashAlgorithm.StorageCrc64:
-                        Assert.AreEqual("Crc64Mismatch", exception.ErrorCode);
-                        break;
-                    default:
-                        throw new ArgumentException("Test arguments contain bad algorithm specifier.");
-                }
-            }
+            await TransactionalHashingTestSkeletons.TestParallelUploadUsePrecalculatedHashOnOneshotAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Container, MakeBlockBlobClient, BlockBlobParallelUploadAction);
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
@@ -544,42 +432,9 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            const int blockSize = Constants.KB;
-            var data = GetRandomBuffer(2 * blockSize);
-
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: TransactionalHashingTestSkeletons.GetRequestHashAssertion(
-                algorithm,
-                // only check put block, not put block list
-                isHashExpected: request => request.Uri.Query.Contains("blockid=")));
-            var clientOptions = GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
-
-            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
-
-            // create bad hash to ignore
-            var precalculatedHash = GetRandomBuffer(16);
-            var hashingOptions = new UploadTransactionalHashingOptions
-            {
-                Algorithm = algorithm,
-                PrecalculatedHash = precalculatedHash
-            };
-
-            // Act / Assert
-            using (var stream = new MemoryStream(data))
-            {
-                hashPipelineAssertion.CheckRequest = true;
-                await blob.UploadAsync(stream, new BlobUploadOptions
-                {
-                    TransactionalHashingOptions = hashingOptions,
-                    TransferOptions = new StorageTransferOptions
-                    {
-                        InitialTransferSize = blockSize,
-                        MaximumTransferSize = blockSize
-                    }
-                });
-            }
+            await TransactionalHashingTestSkeletons.TestParallelUploadIgnorePrecalculatedOnSplitAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Container, MakeBlockBlobClient, BlockBlobParallelUploadAction,
+                request => request.Uri.Query.Contains("blockid="));
         }
         #endregion
 

@@ -221,5 +221,113 @@ namespace Azure.Storage.Test.Shared
             }, algorithm);
         }
         #endregion
+
+        #region Parallel Upload Tests
+        public static async Task TestParallelUploadSuccessfulHashComputationAsync<TClient, TParentClient, TClientOptions>(
+            TestRandom random,
+            TransactionalHashAlgorithm algorithm,
+            Func<TClientOptions> getOptions,
+            TParentClient parentClient,
+            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
+            Func<TClient, Stream, UploadTransactionalHashingOptions, StorageTransferOptions, Task> parallelUploadAsync) where TClientOptions : ClientOptions
+        {
+            var data = TestHelper.GetRandomBuffer(Constants.KB, random);
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm
+            };
+            StorageTransferOptions transferOptions = default;
+
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm));
+            var clientOptions = getOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await getObjectClientAsync(parentClient, clientOptions);
+
+            using (var stream = new MemoryStream(data))
+            {
+                hashPipelineAssertion.CheckRequest = true;
+                await parallelUploadAsync(client, stream, hashingOptions, transferOptions);
+            }
+        }
+
+        public static async Task TestParallelUploadUsePrecalculatedHashOnOneshotAsync<TClient, TParentClient, TClientOptions>(
+            TestRandom random,
+            TransactionalHashAlgorithm algorithm,
+            Func<TClientOptions> getOptions,
+            TParentClient parentClient,
+            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
+            Func<TClient, Stream, UploadTransactionalHashingOptions, StorageTransferOptions, Task> parallelUploadAsync) where TClientOptions : ClientOptions
+        {
+            var data = TestHelper.GetRandomBuffer(Constants.KB, random);
+            // hash needs to be wrong so we detect difference from auto-SDK correct calculation
+            var precalculatedHash = TestHelper.GetRandomBuffer(16, random);
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm,
+                PrecalculatedHash = precalculatedHash
+            };
+            // excessively large threshold before split
+            var transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = long.MaxValue,
+                MaximumTransferSize = long.MaxValue
+            };
+
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm, expectedHash: precalculatedHash));
+            var clientOptions = getOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await getObjectClientAsync(parentClient, clientOptions);
+
+            hashPipelineAssertion.CheckRequest = true;
+            using (var stream = new MemoryStream(data))
+            {
+                AssertWriteHashMismatch(async () => await parallelUploadAsync(client, stream, hashingOptions, transferOptions), algorithm);
+            }
+        }
+
+        public static async Task TestParallelUploadIgnorePrecalculatedOnSplitAsync<TClient, TParentClient, TClientOptions>(
+            TestRandom random,
+            TransactionalHashAlgorithm algorithm,
+            Func<TClientOptions> getOptions,
+            TParentClient parentClient,
+            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
+            Func<TClient, Stream, UploadTransactionalHashingOptions, StorageTransferOptions, Task> parallelUploadAsync,
+            Func<Request, bool> isHashExpected) where TClientOptions : ClientOptions
+        {
+            const int blockSize = Constants.KB;
+            var data = TestHelper.GetRandomBuffer(2 * blockSize, random);
+            var transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = blockSize,
+                MaximumTransferSize = blockSize
+            };
+
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(
+                algorithm,
+                // only check put block, not put block list
+                isHashExpected: isHashExpected));
+            var clientOptions = getOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await getObjectClientAsync(parentClient, clientOptions);
+
+            // create bad hash to ignore
+            var precalculatedHash = TestHelper.GetRandomBuffer(16, random);
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm,
+                PrecalculatedHash = precalculatedHash
+            };
+
+            // Act / Assert
+            using (var stream = new MemoryStream(data))
+            {
+                hashPipelineAssertion.CheckRequest = true;
+                await parallelUploadAsync(client, stream, hashingOptions, transferOptions);
+            }
+        }
+        #endregion
     }
 }
