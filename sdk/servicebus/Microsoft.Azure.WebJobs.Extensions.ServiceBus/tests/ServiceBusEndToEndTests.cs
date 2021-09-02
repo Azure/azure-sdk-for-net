@@ -306,6 +306,20 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestSingle_OutputBinaryData()
+        {
+            var host = BuildHost<ServiceBusOutputBinaryDataTest>();
+            using (host)
+            {
+                var jobHost = host.GetJobHost();
+                await jobHost.CallAsync(nameof(ServiceBusOutputBinaryDataTest.OutputBinaryData));
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
         public async Task TestBatch_DataContractPoco()
         {
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>(true);
@@ -735,6 +749,22 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 Assert.AreEqual("value", received.Value);
                 Assert.AreEqual("name", received.Name);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusOutputBinaryDataTest
+        {
+            public static void OutputBinaryData(
+                [ServiceBus(FirstQueueNameKey)] out BinaryData output)
+            {
+                output = new BinaryData("message");
+            }
+
+            public static void TriggerBinaryData(
+                [ServiceBusTrigger(FirstQueueNameKey)] BinaryData received)
+            {
+                Assert.AreEqual("message", received.ToString());
                 _waitHandle1.Set();
             }
         }
