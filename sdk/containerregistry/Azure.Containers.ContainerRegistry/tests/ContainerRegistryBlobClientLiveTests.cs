@@ -22,22 +22,22 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
-            //var layer = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
+            var layer = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
             var manifest = "manifest.json";
-            //var config = "config.json";
+            var config = "config.json";
             var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact");
 
-            //// Upload config
-            //using (var fs = File.OpenRead(Path.Combine(basePath, config)))
-            //{
-            //    var uploadResult = await client.UploadBlobAsync(fs);
-            //}
+            // Upload config
+            using (var fs = File.OpenRead(Path.Combine(basePath, config)))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+            }
 
-            //// Upload layer
-            //using (var fs = File.OpenRead(Path.Combine(basePath, layer)))
-            //{
-            //    var uploadResult = await client.UploadBlobAsync(fs);
-            //}
+            // Upload layer
+            using (var fs = File.OpenRead(Path.Combine(basePath, layer)))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+            }
 
             // Upload manifest
             using (var fs = File.OpenRead(Path.Combine(basePath, manifest)))
