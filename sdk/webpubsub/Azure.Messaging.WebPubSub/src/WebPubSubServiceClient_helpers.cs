@@ -61,21 +61,34 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="roles">Roles that the connection with the generated token will have.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
-        public virtual Uri GenerateClientAccessUri(TimeSpan expiresAfter = default, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Uri GenerateClientAccessUri(
+            TimeSpan expiresAfter = default,
+            string userId = default,
+            IEnumerable<string> roles = default,
+            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            if (expiresAfter.TotalMilliseconds < 0)
-                throw new ArgumentOutOfRangeException(nameof(expiresAfter));
+            DateTimeOffset expiresAt = GetExpiryTimeFromTimeSpan(expiresAfter);
 
-            DateTimeOffset expiresAt = DateTimeOffset.UtcNow;
-            if (expiresAfter == default)
-            {
-                expiresAt += TimeSpan.FromHours(1);
-            }
-            else
-            {
-                expiresAt += expiresAfter;
-            }
             return GenerateClientAccessUri(expiresAt, userId, roles, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a URI with authentication token.
+        /// </summary>
+        /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
+        /// <param name="userId">User Id.</param>
+        /// <param name="roles">Roles that the connection with the generated token will have.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns></returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Uri> GenerateClientAccessUriAsync(TimeSpan expiresAfter = default, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
+            DateTimeOffset expiresAt = GetExpiryTimeFromTimeSpan(expiresAfter);
+
+            return await GenerateClientAccessUriAsync(expiresAt, userId, roles, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<Uri> GenerateClientAccessUriInternal(
@@ -102,7 +115,7 @@ namespace Azure.Messaging.WebPubSub
             }
             else
             {
-                throw new InvalidOperationException($"Exactly one of {typeof(TokenCredential)} or {typeof(AzureKeyCredential)} must be set.");
+                throw new InvalidOperationException($"{nameof(WebPubSubServiceClient)} must be constructed with either a {typeof(TokenCredential)} or {typeof(AzureKeyCredential)} to generate client access URIs.");
             }
 
             UriBuilder clientEndpoint = new(endpoint)
@@ -111,6 +124,32 @@ namespace Azure.Messaging.WebPubSub
             };
 
             return new Uri($"{clientEndpoint}client/hubs/{hub}?access_token={token}");
+        }
+
+        /// <summary>
+        /// Computes expiry time as a <see cref="DateTimeOffset"/> from <see cref="DateTimeOffset.UtcNow"/>
+        /// </summary>
+        /// <param name="expiresAfter">Interval of expiry represented as a <see cref="TimeSpan"/></param>
+        /// <returns>Expiration time.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">If <c>expiresAfter.TotalMilliseconds</c> is less than 0.</exception>
+        private static DateTimeOffset GetExpiryTimeFromTimeSpan(TimeSpan expiresAfter)
+        {
+            if (expiresAfter.TotalMilliseconds < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(expiresAfter));
+            }
+
+            DateTimeOffset expiresAt = DateTimeOffset.UtcNow;
+            if (expiresAfter == default)
+            {
+                expiresAt += TimeSpan.FromHours(1);
+            }
+            else
+            {
+                expiresAt += expiresAfter;
+            }
+
+            return expiresAt;
         }
 
         /// <summary>
