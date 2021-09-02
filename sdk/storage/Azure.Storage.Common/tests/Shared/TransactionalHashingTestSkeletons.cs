@@ -19,7 +19,7 @@ namespace Azure.Storage.Test.Shared
     {
         internal static Action<Request> GetRequestHashAssertion(TransactionalHashAlgorithm algorithm, Func<Request, bool> isHashExpected = default, byte[] expectedHash = default)
         {
-            Action<RequestHeaders, string> assertHash = (headers, headerName) =>
+            void AssertHash(RequestHeaders headers, string headerName)
             {
                 if (headers.TryGetValue(headerName, out string hash))
                 {
@@ -44,10 +44,10 @@ namespace Azure.Storage.Test.Shared
                 switch (algorithm)
                 {
                     case TransactionalHashAlgorithm.MD5:
-                        assertHash(request.Headers, "Content-MD5");
+                        AssertHash(request.Headers, "Content-MD5");
                         break;
                     case TransactionalHashAlgorithm.StorageCrc64:
-                        assertHash(request.Headers, "x-ms-content-crc64");
+                        AssertHash(request.Headers, "x-ms-content-crc64");
                         break;
                     default:
                         throw new Exception("Bad TransactionalHashAlgorithm provided to Request hash assertion.");
