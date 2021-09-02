@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string NotSpecifiedValue = "NotSpecified";
         private const string AcceptedValue = "Accepted";
         private const string RunningValue = "Running";
         private const string ReadyValue = "Ready";
@@ -34,6 +35,8 @@ namespace Azure.ResourceManager.Resources.Models
         private const string SucceededValue = "Succeeded";
         private const string UpdatingValue = "Updating";
 
+        /// <summary> NotSpecified. </summary>
+        public static ProvisioningState NotSpecified { get; } = new ProvisioningState(NotSpecifiedValue);
         /// <summary> Accepted. </summary>
         public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
         /// <summary> Running. </summary>

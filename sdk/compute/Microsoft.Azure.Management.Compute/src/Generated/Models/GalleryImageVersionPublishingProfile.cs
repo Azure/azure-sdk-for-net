@@ -51,8 +51,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// to be used to store the image. This property is not updatable.
         /// Possible values include: 'Standard_LRS', 'Standard_ZRS',
         /// 'Premium_LRS'</param>
-        public GalleryImageVersionPublishingProfile(IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string))
-            : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType)
+        /// <param name="replicationMode">Optional parameter which specifies
+        /// the mode to be used for replication. This property is not
+        /// updatable. Possible values include: 'Full', 'Shallow'</param>
+        public GalleryImageVersionPublishingProfile(IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string replicationMode = default(string))
+            : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType, replicationMode)
         {
             CustomInit();
         }

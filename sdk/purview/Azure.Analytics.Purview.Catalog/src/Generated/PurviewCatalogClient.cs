@@ -157,10 +157,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSearchRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
@@ -292,10 +289,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSearchRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
@@ -381,10 +375,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSuggestRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
@@ -450,10 +441,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSuggestRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
@@ -539,10 +527,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAutoCompleteRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
@@ -608,10 +593,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAutoCompleteRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
@@ -673,10 +655,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
             scope.Start();
             try
@@ -718,10 +697,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
             scope.Start();
             try
@@ -802,10 +778,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
             scope.Start();
             try
@@ -846,10 +819,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
             scope.Start();
             try
