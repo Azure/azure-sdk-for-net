@@ -22,7 +22,7 @@ namespace Azure.Data.Tables
     public class TableClient
     {
         private static readonly char[] ContinuationTokenSplit = { ' ' };
-        private readonly ClientDiagnostics _diagnostics;
+        internal readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isCosmosEndpoint;
@@ -438,7 +438,7 @@ namespace Azure.Data.Tables
                     cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
             {
                 return default;
             }
@@ -469,7 +469,7 @@ namespace Azure.Data.Tables
                     .ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
             {
                 return default;
             }

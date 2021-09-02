@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
 using Azure.Identity;
 using NUnit.Framework;
@@ -380,6 +381,25 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual(
                 $"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata",
                 _transport.Requests[0].Uri.ToString());
+        }
+
+        [Test]
+        public void CreateIfNotExistsThrowsWhenTableBeingDeleted()
+        {
+            _transport = new MockTransport(
+                request => throw new RequestFailedException(
+                    (int)HttpStatusCode.Conflict,
+                    null,
+                    TableErrorCode.TableBeingDeleted.ToString(),
+                    null));
+            var service_Instrumented = InstrumentClient(
+                new TableServiceClient(
+                    new Uri($"https://example.com?{signature}"),
+                    new AzureSasCredential("sig"),
+                    new TableClientOptions { Transport = _transport }));
+            client = service_Instrumented.GetTableClient(TableName);
+
+            Assert.ThrowsAsync<RequestFailedException>(() => client.CreateIfNotExistsAsync());
         }
 
         private static IEnumerable<object[]> TableClients()
