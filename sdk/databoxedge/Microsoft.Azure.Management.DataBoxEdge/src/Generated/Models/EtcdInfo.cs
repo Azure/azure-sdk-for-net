@@ -11,32 +11,30 @@
 namespace Microsoft.Azure.Management.DataBoxEdge.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The restriction info with locations and zones.
+    /// Etcd configuration
     /// </summary>
-    public partial class SkuRestrictionInfo
+    public partial class EtcdInfo
     {
         /// <summary>
-        /// Initializes a new instance of the SkuRestrictionInfo class.
+        /// Initializes a new instance of the EtcdInfo class.
         /// </summary>
-        public SkuRestrictionInfo()
+        public EtcdInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SkuRestrictionInfo class.
+        /// Initializes a new instance of the EtcdInfo class.
         /// </summary>
-        /// <param name="locations">The locations.</param>
-        /// <param name="zones">The zones.</param>
-        public SkuRestrictionInfo(IList<string> locations = default(IList<string>), IList<string> zones = default(IList<string>))
+        /// <param name="type">Etcd type</param>
+        /// <param name="version">Etcd version</param>
+        public EtcdInfo(string type = default(string), string version = default(string))
         {
-            Locations = locations;
-            Zones = zones;
+            Type = type;
+            Version = version;
             CustomInit();
         }
 
@@ -46,16 +44,16 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the locations.
+        /// Gets etcd type
         /// </summary>
-        [JsonProperty(PropertyName = "locations")]
-        public IList<string> Locations { get; private set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
-        /// Gets the zones.
+        /// Gets etcd version
         /// </summary>
-        [JsonProperty(PropertyName = "zones")]
-        public IList<string> Zones { get; private set; }
+        [JsonProperty(PropertyName = "version")]
+        public string Version { get; private set; }
 
     }
 }

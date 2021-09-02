@@ -18,7 +18,7 @@ namespace DataBoxEdge.Tests
             ContactDetails contactDetails = new ContactDetails("John Mcclane", "Microsoft", "8004269400", new List<string>() { "example@microsoft.com" });
 
             Address shippingAddress = new Address("Microsoft Corporation", "98052", "Redmond", "WA", "United States");
-            Order order = new Order(contactDetails, shippingAddress);
+            Order order = new Order(contactDetails);
             return order;
         }
 
