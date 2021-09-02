@@ -12,5 +12,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     {
         /// <summary> Additional information provided through arbitrary metadata. </summary>
         public OciAnnotations Annotations { get; }
+
+        /// <summary> Schema version. </summary>
+        public int? SchemaVersion { get; set; }
     }
 }

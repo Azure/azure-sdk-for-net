@@ -163,7 +163,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateCreateManifestRequest(string name, string reference, ArtifactManifest payload, string contentType)
+        internal HttpMessage CreateCreateManifestRequest(string name, string reference, OciManifest payload, string contentType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -193,7 +193,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="contentType"> The manifest&apos;s Content-Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, ArtifactManifest payload, string contentType = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, OciManifest payload, string contentType = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -227,7 +227,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="contentType"> The manifest&apos;s Content-Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
-        public ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, ArtifactManifest payload, string contentType = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, OciManifest payload, string contentType = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {

@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class OCIIndex : ArtifactManifest
     {
         /// <summary> Initializes a new instance of OCIIndex. </summary>
-        public OCIIndex()
+        internal OCIIndex()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
         }
@@ -24,15 +24,15 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="manifests"> List of OCI image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OCIIndex(int? schemaVersion, IList<ManifestListAttributes> manifests, OciAnnotations annotations) : base(schemaVersion)
+        internal OCIIndex(int? schemaVersion, IReadOnlyList<ManifestListAttributes> manifests, OciAnnotations annotations) : base(schemaVersion)
         {
             Manifests = manifests;
             Annotations = annotations;
         }
 
         /// <summary> List of OCI image layer information. </summary>
-        public IList<ManifestListAttributes> Manifests { get; }
+        public IReadOnlyList<ManifestListAttributes> Manifests { get; }
         /// <summary> Additional information provided through arbitrary metadata. </summary>
-        public OciAnnotations Annotations { get; set; }
+        public OciAnnotations Annotations { get; }
     }
 }

@@ -11,29 +11,30 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> Returns the requested OCI Manifest file. </summary>
-    public partial class OciManifest : ArtifactManifest
+    public partial class OciManifest
     {
         /// <summary> Initializes a new instance of OciManifest. </summary>
         public OciManifest()
         {
-            Layers = new ChangeTrackingList<ArtifactBlobDescriptor>();
+            Layers = new ChangeTrackingList<OciBlobDescriptor>();
         }
 
         /// <summary> Initializes a new instance of OciManifest. </summary>
-        /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciManifest(int? schemaVersion, ArtifactBlobDescriptor config, IList<ArtifactBlobDescriptor> layers, OciAnnotations annotations) : base(schemaVersion)
+        /// <param name="schemaVersion"> Schema version. </param>
+        internal OciManifest(OciBlobDescriptor config, IList<OciBlobDescriptor> layers, OciAnnotations annotations, int? schemaVersion)
         {
             Config = config;
             Layers = layers;
             Annotations = annotations;
+            SchemaVersion = schemaVersion;
         }
 
         /// <summary> V2 image config descriptor. </summary>
-        public ArtifactBlobDescriptor Config { get; set; }
+        public OciBlobDescriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
-        public IList<ArtifactBlobDescriptor> Layers { get; }
+        public IList<OciBlobDescriptor> Layers { get; }
     }
 }

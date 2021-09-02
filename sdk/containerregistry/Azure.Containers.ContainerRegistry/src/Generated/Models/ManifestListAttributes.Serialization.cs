@@ -10,34 +10,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestListAttributes : IUtf8JsonSerializable
+    internal partial class ManifestListAttributes
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
-            {
-                writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
-            }
-            if (Optional.IsDefined(Size))
-            {
-                writer.WritePropertyName("size");
-                writer.WriteNumberValue(Size.Value);
-            }
-            if (Optional.IsDefined(Digest))
-            {
-                writer.WritePropertyName("digest");
-                writer.WriteStringValue(Digest);
-            }
-            if (Optional.IsDefined(Platform))
-            {
-                writer.WritePropertyName("platform");
-                writer.WriteObjectValue(Platform);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ManifestListAttributes DeserializeManifestListAttributes(JsonElement element)
         {
             Optional<string> mediaType = default;

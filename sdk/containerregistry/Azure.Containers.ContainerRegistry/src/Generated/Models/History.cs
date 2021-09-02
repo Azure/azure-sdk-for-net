@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class History
     {
         /// <summary> Initializes a new instance of History. </summary>
-        public History()
+        internal History()
         {
         }
 
@@ -23,6 +23,6 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> The raw v1 compatibility information. </summary>
-        public string V1Compatibility { get; set; }
+        public string V1Compatibility { get; }
     }
 }

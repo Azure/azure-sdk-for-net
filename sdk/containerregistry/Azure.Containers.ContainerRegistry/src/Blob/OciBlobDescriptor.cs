@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     [CodeGenModel("Descriptor")]
-    public partial class ArtifactBlobDescriptor
+    public partial class OciBlobDescriptor
     {
         /// <summary> Layer media type. </summary>
         public string MediaType { get; set; }

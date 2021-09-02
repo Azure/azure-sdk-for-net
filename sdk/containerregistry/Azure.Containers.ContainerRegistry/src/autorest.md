@@ -51,6 +51,29 @@ directive:
     $["x-csharp-usage"] = "model,input,output,converter";
     $["x-csharp-formats"] = "json";
     delete $["x-accessibility"];
+    delete $["allOf"];
+```
+
+# Take only OciManifest
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.ManifestBody
+  transform: >
+    $.schema = {
+        "$ref": "#/definitions/OCIManifest"
+      }
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.OCIManifest
+  transform: >
+    $.properties["schemaVersion"] = {
+          "type": "integer",
+          "description": "Schema version"
+        }
 ```
 
 # Make ArtifactBlobDescriptor a public type

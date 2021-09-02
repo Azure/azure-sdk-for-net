@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     [CodeGenModel("Manifest")]
-    public abstract partial class ArtifactManifest
+    internal abstract partial class ArtifactManifest
     {
         /// <summary> Initializes a new instance of ArtifactManifest. </summary>
         internal ArtifactManifest()

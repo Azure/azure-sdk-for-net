@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> Docker V2 image layer descriptor including config and layers. </summary>
-    public partial class ArtifactBlobDescriptor
+    public partial class OciBlobDescriptor
     {
-        /// <summary> Initializes a new instance of ArtifactBlobDescriptor. </summary>
-        public ArtifactBlobDescriptor()
+        /// <summary> Initializes a new instance of OciBlobDescriptor. </summary>
+        public OciBlobDescriptor()
         {
             Urls = new ChangeTrackingList<Uri>();
         }
 
-        /// <summary> Initializes a new instance of ArtifactBlobDescriptor. </summary>
+        /// <summary> Initializes a new instance of OciBlobDescriptor. </summary>
         /// <param name="mediaType"> Layer media type. </param>
         /// <param name="size"> Layer size. </param>
         /// <param name="digest"> Layer digest. </param>
         /// <param name="urls"> Specifies a list of URIs from which this object may be downloaded. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal ArtifactBlobDescriptor(string mediaType, long? size, string digest, IList<Uri> urls, OciAnnotations annotations)
+        internal OciBlobDescriptor(string mediaType, long? size, string digest, IList<Uri> urls, OciAnnotations annotations)
         {
             MediaType = mediaType;
             Size = size;

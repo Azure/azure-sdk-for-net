@@ -7,23 +7,11 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    public partial class ArtifactManifest : IUtf8JsonSerializable
+    internal partial class ArtifactManifest
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ArtifactManifest DeserializeArtifactManifest(JsonElement element)
         {
             throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Containers.ContainerRegistry.Specialized.ArtifactManifest' not supported.");

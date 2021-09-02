@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryBlobClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -56,14 +56,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
             OciManifest manifest = new OciManifest()
             {
                 SchemaVersion = 2,
-                Config = new ArtifactBlobDescriptor()
+                Config = new OciBlobDescriptor()
                 {
                     MediaType = "application/vnd.acme.rocket.config",
                     Digest = "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
                     Size = 171
                 }
             };
-            manifest.Layers.Add(new ArtifactBlobDescriptor()
+            manifest.Layers.Add(new OciBlobDescriptor()
             {
                 MediaType = "application/vnd.oci.image.layer.v1.tar",
                 Digest = "sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
