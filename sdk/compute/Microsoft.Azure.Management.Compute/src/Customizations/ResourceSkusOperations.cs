@@ -21,10 +21,5 @@
         {
             return await ListWithHttpMessagesAsync(filter, null, customHeaders, cancellationToken);
         }
-
-        public async Task<AzureOperationResponse<IPage<ResourceSku>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null)
-        {
-            return await ListWithHttpMessagesAsync(filter, null, customHeaders, default(CancellationToken));
-        }
     }
 }
