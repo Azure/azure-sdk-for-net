@@ -114,6 +114,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
+            // Give the service time to process the start request.
+            await DelayAsync(TimeSpan.FromSeconds(2));
+
             OperationCanceledException ex = null;
             try
             {
@@ -151,6 +154,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
             RegisterForCleanup(certName);
+
+            // Give the service time to process the start request.
+            await DelayAsync(TimeSpan.FromSeconds(2));
 
             OperationCanceledException ex = null;
             try
