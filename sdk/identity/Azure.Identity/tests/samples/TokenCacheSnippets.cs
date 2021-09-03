@@ -12,8 +12,6 @@ namespace Azure.Identity.Samples
 {
     public class TokenCacheSnippets
     {
-        private const string TOKEN_CACHE_PATH = "./tokencache.bin";
-
         public void Identity_TokenCache_PersistentDefault()
         {
             #region Snippet:Identity_TokenCache_PersistentDefault
