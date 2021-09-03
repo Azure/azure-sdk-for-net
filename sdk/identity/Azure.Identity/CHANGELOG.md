@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Implement `OnBehalfOfCredential` which enables authentication to Azure Active Directory using an On-Behalf-Of flow.
+
 ### Breaking Changes
 
 ### Bugs Fixed

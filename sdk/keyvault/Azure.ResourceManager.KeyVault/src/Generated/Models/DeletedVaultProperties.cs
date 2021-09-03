@@ -26,13 +26,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="deletionDate"> The deleted date. </param>
         /// <param name="scheduledPurgeDate"> The scheduled purged date. </param>
         /// <param name="tags"> Tags of the original vault. </param>
-        internal DeletedVaultProperties(string vaultId, string location, DateTimeOffset? deletionDate, DateTimeOffset? scheduledPurgeDate, IReadOnlyDictionary<string, string> tags)
+        /// <param name="purgeProtectionEnabled"> Purge protection status of the original vault. </param>
+        internal DeletedVaultProperties(string vaultId, string location, DateTimeOffset? deletionDate, DateTimeOffset? scheduledPurgeDate, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled)
         {
             VaultId = vaultId;
             Location = location;
             DeletionDate = deletionDate;
             ScheduledPurgeDate = scheduledPurgeDate;
             Tags = tags;
+            PurgeProtectionEnabled = purgeProtectionEnabled;
         }
 
         /// <summary> The resource id of the original vault. </summary>
@@ -45,5 +47,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public DateTimeOffset? ScheduledPurgeDate { get; }
         /// <summary> Tags of the original vault. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
+        /// <summary> Purge protection status of the original vault. </summary>
+        public bool? PurgeProtectionEnabled { get; }
     }
 }

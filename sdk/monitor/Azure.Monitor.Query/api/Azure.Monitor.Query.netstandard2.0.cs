@@ -26,7 +26,7 @@ namespace Azure.Monitor.Query
         public string AuthenticationScope { get { throw null; } set { } }
         public enum ServiceVersion
         {
-            V1 = 0,
+            V1 = 1,
         }
     }
     public partial class LogsQueryOptions
@@ -55,7 +55,7 @@ namespace Azure.Monitor.Query
         public MetricsQueryClientOptions(Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion.V2018_01_01) { }
         public enum ServiceVersion
         {
-            V2018_01_01 = 0,
+            V2018_01_01 = 1,
         }
     }
     public partial class MetricsQueryOptions
@@ -66,8 +66,8 @@ namespace Azure.Monitor.Query
         public System.TimeSpan? Granularity { get { throw null; } set { } }
         public string MetricNamespace { get { throw null; } set { } }
         public string OrderBy { get { throw null; } set { } }
+        public int? Size { get { throw null; } set { } }
         public Azure.Core.DateTimeRange? TimeRange { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
     }
 }
 namespace Azure.Monitor.Query.Models
@@ -126,7 +126,6 @@ namespace Azure.Monitor.Query.Models
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsTableColumn> Columns { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsTableRow> Rows { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<T> Deserialize<T>() { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class LogsTableColumn
@@ -158,8 +157,6 @@ namespace Azure.Monitor.Query.Models
         public int GetInt32(string name) { throw null; }
         public long GetInt64(int index) { throw null; }
         public long GetInt64(string name) { throw null; }
-        public object GetObject(int index) { throw null; }
-        public object GetObject(string name) { throw null; }
         public string GetString(int index) { throw null; }
         public string GetString(string name) { throw null; }
         public System.TimeSpan GetTimeSpan(int index) { throw null; }
@@ -299,7 +296,7 @@ namespace Azure.Monitor.Query.Models
         public NamespaceClassification(string value) { throw null; }
         public static Azure.Monitor.Query.Models.NamespaceClassification Custom { get { throw null; } }
         public static Azure.Monitor.Query.Models.NamespaceClassification Platform { get { throw null; } }
-        public static Azure.Monitor.Query.Models.NamespaceClassification Qos { get { throw null; } }
+        public static Azure.Monitor.Query.Models.NamespaceClassification QualityOfService { get { throw null; } }
         public bool Equals(Azure.Monitor.Query.Models.NamespaceClassification other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -319,7 +316,7 @@ namespace Azure.Monitor.Query.Models
     public partial class TimeSeriesElement
     {
         internal TimeSeriesElement() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricValue> Data { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricValue> Values { get { throw null; } }
     }
 }

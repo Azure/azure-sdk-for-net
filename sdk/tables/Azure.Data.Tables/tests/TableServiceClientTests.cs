@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
 using NUnit.Framework;
 
@@ -173,6 +175,24 @@ namespace Azure.Data.Tables.Tests
             var service = InstrumentClient(new TableServiceClient(_url, new AzureSasCredential("sig"), new TableClientOptions { Transport = mockTransport }));
 
             await service.GetStatisticsAsync();
+        }
+
+        [Test]
+        public void CreateIfNotExistsThrowsWhenTableBeingDeleted()
+        {
+            var transport = new MockTransport(
+                request => throw new RequestFailedException(
+                    (int)HttpStatusCode.Conflict,
+                    null,
+                    TableErrorCode.TableBeingDeleted.ToString(),
+                    null));
+            var client = InstrumentClient(
+                new TableServiceClient(
+                    new Uri($"https://example.com"),
+                    new AzureSasCredential("sig"),
+                    new TableClientOptions { Transport = transport }));
+
+            Assert.ThrowsAsync<RequestFailedException>(() => client.CreateTableIfNotExistsAsync("table"));
         }
 
         public static IEnumerable<object[]> ValidConnStrings()

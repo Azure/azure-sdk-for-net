@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("delete");
                 writer.WriteObjectValue(Delete);
             }
+            if (Optional.IsDefined(EnableAutoTierToHotFromCool))
+            {
+                writer.WritePropertyName("enableAutoTierToHotFromCool");
+                writer.WriteBooleanValue(EnableAutoTierToHotFromCool.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<DateAfterModification> tierToCool = default;
             Optional<DateAfterModification> tierToArchive = default;
             Optional<DateAfterModification> delete = default;
+            Optional<bool> enableAutoTierToHotFromCool = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tierToCool"))
@@ -70,8 +76,18 @@ namespace Azure.ResourceManager.Storage.Models
                     delete = DateAfterModification.DeserializeDateAfterModification(property.Value);
                     continue;
                 }
+                if (property.NameEquals("enableAutoTierToHotFromCool"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enableAutoTierToHotFromCool = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new ManagementPolicyBaseBlob(tierToCool.Value, tierToArchive.Value, delete.Value);
+            return new ManagementPolicyBaseBlob(tierToCool.Value, tierToArchive.Value, delete.Value, Optional.ToNullable(enableAutoTierToHotFromCool));
         }
     }
 }

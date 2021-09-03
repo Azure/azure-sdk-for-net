@@ -832,6 +832,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             content = content?.WithNoDispose().WithProgress(progressHandler);
+            operationName ??= $"{nameof(BlockBlobClient)}.{nameof(Upload)}";
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
             // All BlobRequestConditions are valid.
@@ -2628,7 +2629,7 @@ namespace Azure.Storage.Blobs.Specialized
                     immutabilityPolicy: default,
                     legalHold: default,
                     progressHandler: default,
-                    operationName: operationName,
+                    operationName: default,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

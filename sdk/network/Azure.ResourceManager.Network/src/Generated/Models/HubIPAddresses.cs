@@ -5,32 +5,28 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP addresses associated with azure firewall. </summary>
     public partial class HubIPAddresses
     {
         /// <summary> Initializes a new instance of HubIPAddresses. </summary>
-        internal HubIPAddresses()
+        public HubIPAddresses()
         {
-            PublicIPAddresses = new ChangeTrackingList<AzureFirewallPublicIPAddress>();
         }
 
         /// <summary> Initializes a new instance of HubIPAddresses. </summary>
-        /// <param name="publicIPAddresses"> List of Public IP addresses associated with azure firewall. </param>
+        /// <param name="publicIPs"> Public IP addresses associated with azure firewall. </param>
         /// <param name="privateIPAddress"> Private IP Address associated with azure firewall. </param>
-        internal HubIPAddresses(IReadOnlyList<AzureFirewallPublicIPAddress> publicIPAddresses, string privateIPAddress)
+        internal HubIPAddresses(HubPublicIPAddresses publicIPs, string privateIPAddress)
         {
-            PublicIPAddresses = publicIPAddresses;
+            PublicIPs = publicIPs;
             PrivateIPAddress = privateIPAddress;
         }
 
-        /// <summary> List of Public IP addresses associated with azure firewall. </summary>
-        public IReadOnlyList<AzureFirewallPublicIPAddress> PublicIPAddresses { get; }
+        /// <summary> Public IP addresses associated with azure firewall. </summary>
+        public HubPublicIPAddresses PublicIPs { get; set; }
         /// <summary> Private IP Address associated with azure firewall. </summary>
-        public string PrivateIPAddress { get; }
+        public string PrivateIPAddress { get; set; }
     }
 }

@@ -53,6 +53,16 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
+            if (Optional.IsDefined(SasPolicy))
+            {
+                writer.WritePropertyName("sasPolicy");
+                writer.WriteObjectValue(SasPolicy);
+            }
+            if (Optional.IsDefined(KeyPolicy))
+            {
+                writer.WritePropertyName("keyPolicy");
+                writer.WriteObjectValue(KeyPolicy);
+            }
             if (Optional.IsDefined(AccessTier))
             {
                 writer.WritePropertyName("accessTier");
@@ -82,6 +92,26 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 writer.WritePropertyName("routingPreference");
                 writer.WriteObjectValue(RoutingPreference);
+            }
+            if (Optional.IsDefined(AllowBlobPublicAccess))
+            {
+                writer.WritePropertyName("allowBlobPublicAccess");
+                writer.WriteBooleanValue(AllowBlobPublicAccess.Value);
+            }
+            if (Optional.IsDefined(MinimumTlsVersion))
+            {
+                writer.WritePropertyName("minimumTlsVersion");
+                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
+            }
+            if (Optional.IsDefined(AllowSharedKeyAccess))
+            {
+                writer.WritePropertyName("allowSharedKeyAccess");
+                writer.WriteBooleanValue(AllowSharedKeyAccess.Value);
+            }
+            if (Optional.IsDefined(AllowCrossTenantReplication))
+            {
+                writer.WritePropertyName("allowCrossTenantReplication");
+                writer.WriteBooleanValue(AllowCrossTenantReplication.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

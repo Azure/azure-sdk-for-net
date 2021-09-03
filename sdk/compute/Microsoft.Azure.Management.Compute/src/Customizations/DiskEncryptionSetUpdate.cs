@@ -19,14 +19,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'EncryptionAtRestWithCustomerKey',
         /// 'EncryptionAtRestWithPlatformAndCustomerKeys'</param>
         /// <param name="activeKey">Active Key of the encryption</param>
-        public DiskEncryptionSetUpdate(string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet))
+        public DiskEncryptionSetUpdate(string encryptionType, KeyForDiskEncryptionSet activeKey)
         {
             EncryptionType = encryptionType;
             ActiveKey = activeKey;
             CustomInit();
         }
 
-        public DiskEncryptionSetUpdate(string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public DiskEncryptionSetUpdate(string encryptionType, KeyForDiskEncryptionSet activeKey, IDictionary<string, string> tags)
         {
             EncryptionType = encryptionType;
             ActiveKey = activeKey;

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualNetworkGatewayListResult. </summary>
         internal VirtualNetworkGatewayListResult()
         {
-            Value = new ChangeTrackingList<VirtualNetworkGateway>();
+            Value = new ChangeTrackingList<VirtualNetworkGatewayData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayListResult. </summary>
         /// <param name="value"> A list of VirtualNetworkGateway resources that exists in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal VirtualNetworkGatewayListResult(IReadOnlyList<VirtualNetworkGateway> value, string nextLink)
+        internal VirtualNetworkGatewayListResult(IReadOnlyList<VirtualNetworkGatewayData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of VirtualNetworkGateway resources that exists in a resource group. </summary>
-        public IReadOnlyList<VirtualNetworkGateway> Value { get; }
+        public IReadOnlyList<VirtualNetworkGatewayData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -2,32 +2,38 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using System.Threading.Channels;
-using Azure.Core.Diagnostics;
-using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventHubs.Producer
 {
     /// <summary>
     ///   A client responsible for publishing instances of <see cref="EventData"/> to a specific
-    ///   Event Hub.  The <see cref="EventHubBufferedProducerClient" /> does not publish immediately,
-    ///   instead collecting events so that they may be implicitly batched and published efficiently in the background.
-    ///   Depending on the options specified when enqueueing, events may be automatically assigned to a
-    ///   partition, specify a partition key for grouping, or request a specific partition.
+    ///   Event Hub.  Depending on the options specified when events are enqueued, they may be
+    ///   automatically assigned to a partition, grouped according to the specified partition
+    ///   key, or assigned a specifically requested partition.
+    ///
+    ///   The <see cref="EventHubBufferedProducerClient" /> does not publish immediately, instead using
+    ///   a deferred model where events are collected into a buffer so that they may be efficiently batched
+    ///   and published when the batch is full or the <see cref="EventHubBufferedProducerClientOptions.MaximumWaitTime" />
+    ///   has elapsed with no new events enqueued.
+    ///
+    ///   This model is intended to shift the burden of batch management from callers, at the cost of non-deterministic
+    ///   timing, for when events will be published. There are additional trade-offs to consider, as well:
+    ///   <list type="bullet">
+    ///     <item><description>If the application crashes, events in the buffer will not have been published.  To prevent data loss, callers are encouraged to track publishing progress using the <see cref="SendEventBatchSucceededAsync" /> and <see cref="SendEventBatchFailedAsync" /> handlers.</description></item>
+    ///     <item><description>Events specifying a partition key may be assigned a different partition than those using the same key with other producers.</description></item>
+    ///     <item><description>In the unlikely event that a partition becomes temporarily unavailable, the <see cref="EventHubBufferedProducerClient" /> may take longer to recover than other producers.</description></item>
+    ///   </list>
+    ///
+    ///   In scenarios where it is important to have events published immediately with a deterministic outcome, ensure
+    ///   that partition keys are assigned to a partition consistent with other publishers, or where maximizing availability
+    ///   is a requirement, using the <see cref="EventHubProducerClient" /> is recommended.
     /// </summary>
     ///
     /// <remarks>
-    ///   The client creates batches from a buffer of events, and does not require callers to manage batch creation.  To
-    ///   ensure publishing takes place in a timely manner for scenarios where events are published infrequently, a
-    ///   <see cref="EventHubBufferedProducerClientOptions.MaximumWaitTime"/> may be specified.  If no events were
-    ///   enqueued within that interval, pending batches will be published even if partially full.
-    ///
     ///   The <see cref="EventHubBufferedProducerClient"/> is safe to cache and use as a singleton for the lifetime of an
     ///   application. This is the recommended approach, since the client is responsible for efficient network,
     ///   CPU, and memory use. Calling <see cref="CloseAsync(bool, CancellationToken)"/> or <see cref="DisposeAsync"/>
@@ -42,10 +48,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The set of client options to use when options were not passed when the producer was instantiated.
         /// </summary>
         ///
-        private static EventHubBufferedProducerClientOptions DefaultOptions { get; } = new EventHubBufferedProducerClientOptions
-        {
-            RetryOptions = new EventHubsRetryOptions { MaximumRetries = 15, TryTimeout = TimeSpan.FromMinutes(3) }
-        };
+        private static EventHubBufferedProducerClientOptions DefaultOptions { get; } =
+            new EventHubBufferedProducerClientOptions
+            {
+                RetryOptions = new EventHubsRetryOptions { MaximumRetries = 15, TryTimeout = TimeSpan.FromMinutes(3) }
+            };
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that this producer is currently associated with, which will likely be similar
@@ -76,7 +83,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   <c>true</c> if the producer has been closed <c>false</c> otherwise.
         /// </summary>
         ///
-        public bool IsClosed => _isClosed;
+        public bool IsClosed
+        {
+            get => _isClosed;
+            protected set => _isClosed = value;
+        }
 
         /// <summary>The producer to use to send events to the Event Hub.</summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is being disposed but it must be in CloseAsync so that dispose can match the IAsyncDisposable signature.")]
@@ -101,6 +112,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result
         ///   in a deadlock scenario if those calls are awaited.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   It is not necessary to explicitly unregister this handler; it will be automatically unregistered when
+        ///   <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> is invoked.
+        /// </remarks>
         ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
@@ -158,6 +174,9 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   set a generous number of retries and try timeout interval in the <see cref="EventHubProducerClientOptions.RetryOptions"/>.
         ///   Doing so will allow the <see cref="EventHubBufferedProducerClient" /> a higher chance to recover from transient failures.  This is
         ///   especially important when ensuring the order of events is needed.
+        ///
+        ///   It is not necessary to explicitly unregister this handler; it will be automatically unregistered when
+        ///   <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> is invoked.
         /// </remarks>
         ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
@@ -457,6 +476,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The total number of events that are currently buffered and waiting to be published, across all partitions.</returns>
         ///
+        /// <exception cref="InvalidOperationException">Occurs when no <see cref="SendEventBatchFailedAsync" /> handler is currently registered.</exception>
+        ///
         /// <remarks>
         ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or
         ///   <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
@@ -483,6 +504,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The total number of events that are currently buffered and waiting to be published, across all partitions.</returns>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when no <see cref="SendEventBatchFailedAsync" /> handler is currently registered.</exception>
         ///
         /// <remarks>
         ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or
@@ -511,6 +534,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The total number of events that are currently buffered and waiting to be published, across all partitions.</returns>
         ///
+        /// <exception cref="InvalidOperationException">Occurs when no <see cref="SendEventBatchFailedAsync" /> handler is currently registered.</exception>
+        ///
         /// <remarks>
         ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
         ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
@@ -536,6 +561,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The total number of events that are currently buffered and waiting to be published, across all partitions.</returns>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when no <see cref="SendEventBatchFailedAsync" /> handler is currently registered.</exception>
         ///
         /// <remarks>
         ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
@@ -610,10 +637,14 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Closes the producer and performs the tasks needed to clean up all the resources used by the <see cref="EventHubBufferedProducerClient"/>.
         /// </summary>
         ///
-        /// <param name="flush">Indicates whether to abandon events in the buffer or attempt to publish them.</param>
+        /// <param name="flush"><c>true</c> if all buffered events that are pending should be published before closing; <c>false</c> to abandon all events and close immediately.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        /// <remarks>
+        ///   This method will automatically unregister the <see cref="SendEventBatchSucceededAsync"/> and <see cref="SendEventBatchFailedAsync"/> handlers.
+        /// </remarks>
         ///
         public virtual Task CloseAsync(bool flush = true,
                                        CancellationToken cancellationToken = default)
@@ -627,8 +658,9 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <remarks>
-        ///   Calling this method will also call <see cref="FlushAsync(CancellationToken)"/>, which will attempt to publish any events that are still pending,
-        ///   and finish any active sending.
+        ///   Calling this method will also invoke <see cref="FlushAsync(CancellationToken)"/>, which will attempt to publish any events that are still pending,
+        ///   and finish any active sending.  It will also automatically unregister the <see cref="SendEventBatchSucceededAsync"/> and <see cref="SendEventBatchFailedAsync"/>
+        ///   handlers.
         ///
         ///   This method is identical to <see cref="CloseAsync(bool, CancellationToken)"/> and either can be used to send pending events and clean up resources.
         /// </remarks>

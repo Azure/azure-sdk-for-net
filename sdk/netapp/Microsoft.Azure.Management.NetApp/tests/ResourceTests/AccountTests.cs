@@ -122,6 +122,30 @@ namespace NetApp.Tests.ResourceTests
         }
 
         [Fact]
+        public void ListAccountsBySubscription()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                var accountsBefore = netAppMgmtClient.Accounts.List(ResourceUtils.resourceGroup);
+                int count = accountsBefore.Count();
+                // create two accounts
+                ResourceUtils.CreateAccount(netAppMgmtClient);
+                ResourceUtils.CreateAccount(netAppMgmtClient, ResourceUtils.accountName2);
+
+                // get the account list and check
+                var accounts = netAppMgmtClient.Accounts.ListBySubscription();
+                Assert.Contains(accounts, item => item.Name == ResourceUtils.accountName1);
+                Assert.Contains(accounts, item => item.Name == ResourceUtils.accountName2);
+
+                // clean up - delete the two accounts
+                ResourceUtils.DeleteAccount(netAppMgmtClient);
+                ResourceUtils.DeleteAccount(netAppMgmtClient, ResourceUtils.accountName2);
+            }
+        }
+
+        [Fact]
         public void GetAccountByName()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();

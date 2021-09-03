@@ -18,7 +18,7 @@ namespace Azure.AI.Translation.Document.Models
         /// <summary> Initializes a new instance of SupportedFileFormats. </summary>
         /// <param name="value"> list of objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SupportedFileFormats(IEnumerable<FileFormat> value)
+        internal SupportedFileFormats(IEnumerable<DocumentTranslationFileFormat> value)
         {
             if (value == null)
             {
@@ -30,12 +30,12 @@ namespace Azure.AI.Translation.Document.Models
 
         /// <summary> Initializes a new instance of SupportedFileFormats. </summary>
         /// <param name="value"> list of objects. </param>
-        internal SupportedFileFormats(IReadOnlyList<FileFormat> value)
+        internal SupportedFileFormats(IReadOnlyList<DocumentTranslationFileFormat> value)
         {
             Value = value;
         }
 
         /// <summary> list of objects. </summary>
-        public IReadOnlyList<FileFormat> Value { get; }
+        public IReadOnlyList<DocumentTranslationFileFormat> Value { get; }
     }
 }

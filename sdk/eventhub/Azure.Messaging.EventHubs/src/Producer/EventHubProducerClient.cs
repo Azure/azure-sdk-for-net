@@ -46,8 +46,6 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   </para>
     /// </remarks>
     ///
-    /// <seealso cref="EventHubBufferedProducerClient" />
-    ///
     public class EventHubProducerClient : IAsyncDisposable
     {
         /// <summary>The maximum number of attempts that may be made to get a <see cref="TransportProducer" /> from the pool.</summary>

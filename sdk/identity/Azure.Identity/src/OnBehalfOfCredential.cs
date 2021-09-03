@@ -12,7 +12,7 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using an On-Behalf-Of flow.``
+    /// Enables authentication to Azure Active Directory using an On-Behalf-Of flow.
     /// </summary>
     public class OnBehalfOfCredential : TokenCredential
     {
