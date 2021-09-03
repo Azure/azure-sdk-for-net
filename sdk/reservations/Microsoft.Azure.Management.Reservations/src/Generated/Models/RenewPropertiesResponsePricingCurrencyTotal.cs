@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the
         /// RenewPropertiesResponsePricingCurrencyTotal class.
         /// </summary>
+        /// <param name="currencyCode">The ISO 4217 3-letter currency code for
+        /// the currency used by this purchase record.</param>
         public RenewPropertiesResponsePricingCurrencyTotal(string currencyCode = default(string), double? amount = default(double?))
         {
             CurrencyCode = currencyCode;
@@ -46,6 +48,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the ISO 4217 3-letter currency code for the currency
+        /// used by this purchase record.
         /// </summary>
         [JsonProperty(PropertyName = "currencyCode")]
         public string CurrencyCode { get; set; }

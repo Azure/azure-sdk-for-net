@@ -54,7 +54,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// 'BillingPaymentInstrumentHardError', 'BillingTransientError',
         /// 'BillingError', 'FulfillmentConfigurationError',
         /// 'FulfillmentOutOfStockError', 'FulfillmentTransientError',
-        /// 'FulfillmentError', 'CalculatePriceFailed'</param>
+        /// 'FulfillmentError', 'CalculatePriceFailed',
+        /// 'AppliedScopesSameAsExisting'</param>
         public ExtendedErrorInfo(string code = default(string), string message = default(string))
         {
             Code = code;
@@ -96,7 +97,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// 'BillingPaymentInstrumentHardError', 'BillingTransientError',
         /// 'BillingError', 'FulfillmentConfigurationError',
         /// 'FulfillmentOutOfStockError', 'FulfillmentTransientError',
-        /// 'FulfillmentError', 'CalculatePriceFailed'
+        /// 'FulfillmentError', 'CalculatePriceFailed',
+        /// 'AppliedScopesSameAsExisting'
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }

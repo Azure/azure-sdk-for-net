@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType, string location = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType = default(string), string location = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get list of applicable `Reservation`s.

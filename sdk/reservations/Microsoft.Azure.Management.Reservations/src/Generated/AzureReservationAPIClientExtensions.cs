@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Reservations
             /// Filters the skus based on the location specified in this parameter. This
             /// can be an azure region or global
             /// </param>
-            public static IList<Catalog> GetCatalog(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType, string location = default(string))
+            public static IList<Catalog> GetCatalog(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType = default(string), string location = default(string))
             {
                 return operations.GetCatalogAsync(subscriptionId, reservedResourceType, location).GetAwaiter().GetResult();
             }
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Reservations
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Catalog>> GetCatalogAsync(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType, string location = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<Catalog>> GetCatalogAsync(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType = default(string), string location = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetCatalogWithHttpMessagesAsync(subscriptionId, reservedResourceType, location, null, cancellationToken).ConfigureAwait(false))
                 {

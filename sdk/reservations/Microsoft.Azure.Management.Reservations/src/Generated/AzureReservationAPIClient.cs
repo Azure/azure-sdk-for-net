@@ -415,17 +415,13 @@ namespace Microsoft.Azure.Management.Reservations
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType, string location = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType = default(string), string location = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (subscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            if (reservedResourceType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "reservedResourceType");
-            }
-            string apiVersion = "2020-10-01-preview";
+            string apiVersion = "2021-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -614,7 +610,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            string apiVersion = "2020-10-01-preview";
+            string apiVersion = "2021-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
