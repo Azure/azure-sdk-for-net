@@ -20,15 +20,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary> Layer digest. </summary>
         public string Digest { get; set; }
 
-        /// <summary> Specifies a list of URIs from which this object may be downloaded. </summary>
-        internal IList<Uri> Urls { get; }
-
         /// <summary> Additional information provided through arbitrary metadata. </summary>
         public OciAnnotations Annotations { get; set; }
 
+        /// <summary> Specifies a list of URIs from which this object may be downloaded. </summary>
+        internal IList<Uri> Urls { get; }
+
         internal static string ComputeDigest(Stream stream)
         {
-            // TODO: cache and dispose SHA256?
             using (SHA256 sha256 = SHA256.Create())
             {
                 // Compute and print the hash values for each file in directory.

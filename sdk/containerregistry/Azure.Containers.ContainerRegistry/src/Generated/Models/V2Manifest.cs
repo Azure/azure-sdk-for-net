@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested Docker V2 Manifest file. </summary>
-    internal partial class V2Manifest : ArtifactManifest
+    internal partial class V2Manifest : Manifest
     {
         /// <summary> Initializes a new instance of V2Manifest. </summary>
         internal V2Manifest()

@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryBlobClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync)
+        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -90,7 +90,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var metadataClient = CreateClient();
             var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
             string digest = default;
-            string tag = $"v{DateTime.Now.Ticks}";
+            string tag = $"v1";
+
+            await UploadManifestPrerequisites(client);
 
             // Act
             using (var fs = File.OpenRead(manifest))
@@ -116,6 +118,25 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Clean up
             await client.DeleteManifestAsync(digest);
+        }
+
+        private async Task UploadManifestPrerequisites(ContainerRegistryBlobClient client)
+        {
+            var layer = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
+            var config = "config.json";
+            var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact");
+
+            // Upload config
+            using (var fs = File.OpenRead(Path.Combine(basePath, config)))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+            }
+
+            // Upload layer
+            using (var fs = File.OpenRead(Path.Combine(basePath, layer)))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+            }
         }
 
         private static void ValidateManifest(OciManifest manifest)

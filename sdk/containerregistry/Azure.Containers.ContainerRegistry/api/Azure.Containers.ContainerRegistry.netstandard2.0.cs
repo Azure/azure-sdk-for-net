@@ -214,13 +214,6 @@ namespace Azure.Containers.ContainerRegistry
 }
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    public partial class ArtifactBlobDescriptor
-    {
-        public ArtifactBlobDescriptor() { }
-        public string Digest { get { throw null; } set { } }
-        public string MediaType { get { throw null; } set { } }
-        public long? Size { get { throw null; } set { } }
-    }
     public partial class ArtifactBlobProperties
     {
         internal ArtifactBlobProperties() { }
@@ -260,11 +253,38 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string Digest { get { throw null; } }
         public Azure.Containers.ContainerRegistry.Specialized.OciManifest Manifest { get { throw null; } }
     }
+    public partial class OciAnnotations
+    {
+        public OciAnnotations() { }
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
+        public string Authors { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string Documentation { get { throw null; } set { } }
+        public string Licenses { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Revision { get { throw null; } set { } }
+        public string Source { get { throw null; } set { } }
+        public string Title { get { throw null; } set { } }
+        public string Url { get { throw null; } set { } }
+        public string Vendor { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+    }
+    public partial class OciBlobDescriptor
+    {
+        public OciBlobDescriptor() { }
+        public Azure.Containers.ContainerRegistry.Specialized.OciAnnotations Annotations { get { throw null; } set { } }
+        public string Digest { get { throw null; } set { } }
+        public string MediaType { get { throw null; } set { } }
+        public long? Size { get { throw null; } set { } }
+    }
     public partial class OciManifest
     {
         public OciManifest() { }
-        public Azure.Containers.ContainerRegistry.Specialized.ArtifactBlobDescriptor Config { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.Specialized.ArtifactBlobDescriptor> Layers { get { throw null; } }
+        public Azure.Containers.ContainerRegistry.Specialized.OciAnnotations Annotations { get { throw null; } }
+        public Azure.Containers.ContainerRegistry.Specialized.OciBlobDescriptor Config { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.Specialized.OciBlobDescriptor> Layers { get { throw null; } }
+        public int? SchemaVersion { get { throw null; } set { } }
     }
     public partial class UploadBlobResult
     {

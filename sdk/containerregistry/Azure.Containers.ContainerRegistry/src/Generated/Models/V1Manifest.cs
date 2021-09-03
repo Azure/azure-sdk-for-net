@@ -6,13 +6,12 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested V1 manifest file. </summary>
-    internal partial class V1Manifest : ArtifactManifest
+    internal partial class V1Manifest : Manifest
     {
         /// <summary> Initializes a new instance of V1Manifest. </summary>
         internal V1Manifest()

@@ -93,12 +93,3 @@ directive:
   transform: >
     delete $["x-accessibility"]
 ```
-
-# Make ArtifactManifest a public type
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.Manifest
-  transform: >
-    delete $["x-accessibility"]
-```

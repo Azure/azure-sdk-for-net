@@ -5,15 +5,19 @@
 
 #nullable disable
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested manifest file. </summary>
-    internal partial class ArtifactManifest
+    internal partial class Manifest
     {
+        /// <summary> Initializes a new instance of Manifest. </summary>
+        internal Manifest()
+        {
+        }
 
-        /// <summary> Initializes a new instance of ArtifactManifest. </summary>
+        /// <summary> Initializes a new instance of Manifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal ArtifactManifest(int? schemaVersion)
+        internal Manifest(int? schemaVersion)
         {
             SchemaVersion = schemaVersion;
         }
