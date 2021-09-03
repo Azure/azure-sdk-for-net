@@ -30,14 +30,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             using (SHA256 sha256 = SHA256.Create())
             {
+                var position = stream.Position;
+                string digest = default;
+
                 // Compute and print the hash values for each file in directory.
                 try
                 {
-                    var position = stream.Position;
                     stream.Position = 0;
                     var hashValue = sha256.ComputeHash(stream);
-                    stream.Position = position;
-                    return "sha256:" + PrintByteArray(hashValue);
+                    digest = "sha256:" + PrintByteArray(hashValue);
                 }
                 catch (IOException e)
                 {
@@ -49,6 +50,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     Console.WriteLine($"Access Exception: {e.Message}");
                     throw;
                 }
+                finally
+                {
+                    stream.Position = position;
+                }
+
+                return digest;
             }
         }
 
@@ -61,8 +68,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 #pragma warning disable CA1305 // Specify IFormatProvider
                 builder.AppendFormat($"{array[i]:X2}");
 #pragma warning restore CA1305 // Specify IFormatProvider
-                //if ((i % 4) == 3)
-                //    builder.AppendFormat(" ");
             }
 #pragma warning disable CA1304 // Specify CultureInfo
             return builder.ToString().ToLower();

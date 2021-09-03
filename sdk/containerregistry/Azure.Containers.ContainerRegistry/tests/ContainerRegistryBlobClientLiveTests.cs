@@ -11,13 +11,14 @@ using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
+    [NonParallelizable]
     public class ContainerRegistryBlobClientLiveTests : ContainerRegistryRecordedTestBase
     {
         public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [RecordedTest, NonParallelizable]
+        [RecordedTest]
         public async Task CanUploadOciManifest()
         {
             // Arrange
@@ -57,7 +58,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.DeleteManifestAsync(digest);
         }
 
-        [RecordedTest, NonParallelizable]
+        [RecordedTest]
         public async Task CanUploadOciManifestStream()
         {
             // Arrange
@@ -81,7 +82,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.DeleteManifestAsync(digest);
         }
 
-        [RecordedTest, NonParallelizable]
+        [RecordedTest]
         public async Task CanUploadOciManifestStreamWithTag()
         {
             // Arrange
@@ -156,7 +157,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(28, manifest.Layers[0].Size);
         }
 
-        [RecordedTest, NonParallelizable]
+        [RecordedTest]
         public async Task CanUploadBlob()
         {
             // Arrange
@@ -165,9 +166,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact", blob);
 
             string digest = default;
+            long streamLength;
             // Act
             using (var fs = File.OpenRead(path))
             {
+                streamLength = fs.Length;
                 var uploadResult = await client.UploadBlobAsync(fs);
                 digest = uploadResult.Value.Digest;
             }
@@ -175,7 +178,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             var downloadResult = await client.DownloadBlobAsync(digest);
             Assert.AreEqual(digest, downloadResult.Value.Digest);
-            Assert.AreEqual(28, downloadResult.Value.Content.Length);
+            Assert.AreEqual(streamLength, downloadResult.Value.Content.Length);
 
             // Clean up
             await client.DeleteBlobAsync(digest);

@@ -92,7 +92,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response<UploadManifestResult> UploadManifest(Stream stream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(stream, "stream");
+            Argument.AssertNotNull(stream, nameof(stream));
 
             options ??= new UploadManifestOptions();
 
@@ -109,7 +109,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public async virtual Task<Response<UploadManifestResult>> UploadManifestAsync(Stream stream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(stream, "stream");
+            Argument.AssertNotNull(stream, nameof(stream));
 
             options ??= new UploadManifestOptions();
 
@@ -126,7 +126,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response<UploadManifestResult> UploadManifest(OciManifest manifest, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(manifest, "manifest");
+            Argument.AssertNotNull(manifest, nameof(manifest));
 
             options ??= new UploadManifestOptions();
 
@@ -155,7 +155,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public async virtual Task<Response<UploadManifestResult>> UploadManifestAsync(OciManifest manifest, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(manifest, "manifest");
+            Argument.AssertNotNull(manifest, nameof(manifest));
 
             options ??= new UploadManifestOptions();
 
@@ -198,7 +198,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response<UploadBlobResult> UploadBlob(Stream stream, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(stream, "stream");
+            Argument.AssertNotNull(stream, nameof(stream));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
             scope.Start();
@@ -232,7 +232,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream stream, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(stream, "stream");
+            Argument.AssertNotNull(stream, nameof(stream));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
             scope.Start();
@@ -266,7 +266,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response<DownloadManifestResult> DownloadManifest(string digest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(digest, "digest");
+            Argument.AssertNotNull(digest, nameof(digest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
             scope.Start();
@@ -276,19 +276,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 Response rawResponse = response.GetRawResponse();
                 ManifestMediaType mediaType = rawResponse.Headers.ContentType;
 
-                if (!rawResponse.Headers.TryGetValue("Docker-Content-Digest", out string registryDigest))
+                if (!ValidateDigest(rawResponse.ContentStream, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "Response did not contain \"Docker-Content-Digest\" header.");
-                }
-
-                if (!ValidateDigest(rawResponse.ContentStream, registryDigest))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The manifest's digest according to the registry does not match the locally computed digest value.");
+                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The requested digest does not match the digest of the received manifest.");
                 }
 
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
-                return Response.FromValue(new DownloadManifestResult(registryDigest, manifest), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(digest, manifest), rawResponse);
             }
             catch (Exception e)
             {
@@ -305,7 +300,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(string digest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(digest, "digest");
+            Argument.AssertNotNull(digest, nameof(digest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
             scope.Start();
@@ -315,19 +310,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 Response rawResponse = response.GetRawResponse();
                 ManifestMediaType mediaType = rawResponse.Headers.ContentType;
 
-                if (!rawResponse.Headers.TryGetValue("Docker-Content-Digest", out string registryDigest))
+                if (!ValidateDigest(rawResponse.ContentStream, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "Response did not contain \"Docker-Content-Digest\" header.");
-                }
-
-                if (!ValidateDigest(rawResponse.ContentStream, registryDigest))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The manifest's digest according to the registry does not match the locally computed digest value.");
+                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The requested digest does not match the digest of the received manifest.");
                 }
 
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
-                return Response.FromValue(new DownloadManifestResult(registryDigest, manifest), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(digest, manifest), rawResponse);
             }
             catch (Exception e)
             {
@@ -354,7 +344,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response<DownloadBlobResult> DownloadBlob(string digest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(digest, "digest");
+            Argument.AssertNotNull(digest, nameof(digest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
             scope.Start();
@@ -364,7 +354,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(blobResult.Value, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(blobResult.GetRawResponse(), "The manifest's digest according to the registry does not match the locally computed digest value.");
+                    throw _clientDiagnostics.CreateRequestFailedException(blobResult, "The requested digest does not match the digest of the received manifest.");
                 }
 
                 return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
@@ -384,7 +374,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual async Task<Response<DownloadBlobResult>> DownloadBlobAsync(string digest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(digest, "digest");
+            Argument.AssertNotNull(digest, nameof(digest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
             scope.Start();
@@ -394,7 +384,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(blobResult.Value, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(blobResult.GetRawResponse(), "The manifest's digest according to the registry does not match the locally computed digest value.");
+                    throw _clientDiagnostics.CreateRequestFailedException(blobResult, "The requested digest does not match the digest of the received manifest.");
                 }
 
                 return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
@@ -407,14 +397,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Delete a blob. The blob will only be removed from the repository if no other artifacts reference it.
+        /// Delete a blob.
         /// </summary>
         /// <param name="digest">The digest of the blob to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual Response DeleteBlob(string digest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(digest, "digest");
+            Argument.AssertNotNull(digest, nameof(digest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteBlob)}");
             scope.Start();
@@ -431,14 +421,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Delete a blob. The blob will only be removed from the repository if no other artifacts reference it.
+        /// Delete a blob.
         /// </summary>
         /// <param name="digest">The digest of the blob to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual async Task<Response> DeleteBlobAsync(string digest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(digest, "digest");
+            Argument.AssertNotNull(digest, nameof(digest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteBlob)}");
             scope.Start();
@@ -462,7 +452,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response DeleteManifest(string digest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(digest, "digest");
+            Argument.AssertNotNull(digest, nameof(digest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
             scope.Start();
@@ -485,7 +475,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual async Task<Response> DeleteManifestAsync(string digest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(digest, "digest");
+            Argument.AssertNotNull(digest, nameof(digest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
             scope.Start();
