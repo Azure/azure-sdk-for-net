@@ -13,7 +13,7 @@ Azure Cosmos DB provides a Table API for applications that are written for Azure
 
 The Azure Tables client library can seamlessly target either Azure Table storage or Azure Cosmos DB table service endpoints with no code changes.
 
-[Source code][table_client_src] | [Package (NuGet)][table_client_nuget_package] | [API reference documentation][api_reference] | [Samples][table_client_samples]
+[Source code][table_client_src] | [Package (NuGet)][table_client_nuget_package] | [API reference documentation][api_reference] | [Samples][table_client_samples] | [Change Log][table_change_log]
 
 ## Getting started
 
@@ -279,6 +279,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [table_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Data.Tables
 [table_client_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples
 [table_client_src]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/src
+[table_change_log]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/CHANGELOG.md
 [api_reference]: https://docs.microsoft.com/dotnet/api/overview/azure/data.tables-readme-pre?view=azure-dotnet-preview
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [cla]: https://cla.microsoft.com
