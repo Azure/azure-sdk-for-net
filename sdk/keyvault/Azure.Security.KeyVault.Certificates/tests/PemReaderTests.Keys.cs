@@ -13,6 +13,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public partial class PemReaderTests
     {
+        /* This file is intended *only* for self-generated, fake keys used in tests in PemReaderTests.cs.
+         * This file, PemReaderTests.Keys.cs, should be ignored in eng/CredScanSuppression.json.
+         */
+
         private const string ECDsaPrivateKey = @"
 -----BEGIN PRIVATE KEY-----
 MIGiAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgEr3FyNKVWsTPq+qr
