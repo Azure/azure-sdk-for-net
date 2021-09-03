@@ -9,6 +9,9 @@ param (
     [string] $PipelineWorkspace
 )
 
+mkdir InstallationCheck
+cd "InstallationCheck"
+
 Write-Host "dotnet new console --no-restore"
 dotnet new console --no-restore
 $localFeed = "$PipelineWorkspace/$ArtifactsDirectory-signed/$Artifact"
@@ -35,8 +38,8 @@ while ($retries++ -lt 30) {
     if ($retries -ge 30) {
       exit $LASTEXITCODE
     }
-    Write-Host "dotnet nuget locals all --clear"
-    dotnet nuget locals all --clear
+    Write-Host "dotnet clean"
+    dotnet clean
     Write-Host "Restore failed, retrying in 1 minute..."
     sleep 60
   } else {

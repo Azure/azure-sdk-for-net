@@ -70,14 +70,10 @@ stages:
                         PackageName: ${{artifact.name}}
                         ServiceName: ${{parameters.ServiceDirectory}}
                         ForRelease: true
-                    - pwsh: mkdir InstallationCheck
-                      condition: ne('${{ artifact.skipPublishPackage }}', 'true')
-                      displayName: Create Testing Directory
                     - pwsh: |
                         $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1 -ArtifactsDirectory ${{parameters.ArtifactName}} -Artifact ${{artifact.name}} -PipelineWorkspace $(Pipeline.Workspace)
                       condition: ne('${{ artifact.skipPublishPackage }}', 'true')
                       displayName: Verify Package Installation
-                      workingDirectory: $(System.DefaultWorkingDirectory)/InstallationCheck
                     - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
                       parameters:
                         ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
