@@ -14,11 +14,6 @@ namespace Azure.Identity
         public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
 
         /// <summary>
-        /// A client secret that was generated for the App Registration used to authenticate the client.
-        /// </summary>
-        public string CertificatePath { get; set; }
-
-        /// <summary>
         /// Will include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the <see cref="ClientCertificateCredential"/>.
         /// </summary>
         public bool SendCertificateChain { get; set; }

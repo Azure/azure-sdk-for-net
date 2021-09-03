@@ -242,7 +242,6 @@ namespace Azure.Identity
         protected OnBehalfOfCredential() { }
         public OnBehalfOfCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, string userAssertion) { }
         public OnBehalfOfCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options) { }
-        public OnBehalfOfCredential(string tenantId, string clientId, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options) { }
         public OnBehalfOfCredential(string tenantId, string clientId, string clientSecret, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -250,7 +249,6 @@ namespace Azure.Identity
     public partial class OnBehalfOfCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public OnBehalfOfCredentialOptions() { }
-        public string CertificatePath { get { throw null; } set { } }
         public Azure.Identity.RegionalAuthority? RegionalAuthority { get { throw null; } set { } }
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }

@@ -12,13 +12,12 @@ namespace Azure.Identity
     {
         internal readonly string _clientSecret;
         internal readonly bool _includeX5CClaimHeader;
-        internal readonly ClientCertificateCredential.IX509Certificate2Provider _certificateProvider;
+        internal readonly IX509Certificate2Provider _certificateProvider;
 
         /// <summary>
         /// For mocking purposes only.
         /// </summary>
         protected MsalConfidentialClient()
-            : base()
         {
         }
 
@@ -30,7 +29,7 @@ namespace Azure.Identity
             LogPII = logPii;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, ClientCertificateCredential.IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool logPii)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool logPii)
             : base(pipeline, tenantId, clientId, cacheOptions)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
