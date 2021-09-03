@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Azure.Identity
     {
         internal const string MsiUnavailableError = "ManagedIdentityCredential authentication unavailable. No Managed Identity endpoint found.";
 
-        private readonly ManagedIdentitySource _identitySource;
+        private Lazy<ManagedIdentitySource> _identitySource;
 
         protected ManagedIdentityClient()
         {
@@ -27,12 +28,7 @@ namespace Azure.Identity
         {
             ClientId = options.ClientId;
             Pipeline = options.Pipeline;
-
-            _identitySource = AppServiceV2017ManagedIdentitySource.TryCreate(options) ??
-                                                    CloudShellManagedIdentitySource.TryCreate(options) ??
-                                                    AzureArcManagedIdentitySource.TryCreate(options) ??
-                                                    ServiceFabricManagedIdentitySource.TryCreate(options) ??
-                                                    new ImdsManagedIdentitySource(Pipeline, ClientId);
+            _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options));
         }
 
         internal CredentialPipeline Pipeline { get; }
@@ -41,7 +37,16 @@ namespace Azure.Identity
 
         public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
-            return await _identitySource.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
+            return await _identitySource.Value.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
+        }
+
+        private static ManagedIdentitySource SelectManagedIdentitySource(ManagedIdentityClientOptions options)
+        {
+             return AppServiceV2017ManagedIdentitySource.TryCreate(options) ??
+                    CloudShellManagedIdentitySource.TryCreate(options) ??
+                    AzureArcManagedIdentitySource.TryCreate(options) ??
+                    ServiceFabricManagedIdentitySource.TryCreate(options) ??
+                    new ImdsManagedIdentitySource(options.Pipeline, options.ClientId);
         }
     }
 }
