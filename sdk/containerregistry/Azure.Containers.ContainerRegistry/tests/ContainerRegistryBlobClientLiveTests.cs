@@ -62,7 +62,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
-            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
+            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact", "manifest.json");
             string digest = default;
 
             // Act
@@ -88,7 +88,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string repository = "oci-artifact";
             var client = CreateBlobClient(repository);
             var metadataClient = CreateClient();
-            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", "manifest.json");
+            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact", "manifest.json");
             string digest = default;
             string tag = $"v1";
 
@@ -124,7 +124,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             var layer = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
             var config = "config.json";
-            var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact");
+            var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
 
             // Upload config
             using (var fs = File.OpenRead(Path.Combine(basePath, config)))
@@ -162,7 +162,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             var client = CreateBlobClient("oci-artifact");
             var blob = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data\\oci-artifact", blob);
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact", blob);
 
             string digest = default;
             // Act
