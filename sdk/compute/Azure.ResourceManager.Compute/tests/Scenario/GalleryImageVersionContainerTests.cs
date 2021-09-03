@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
     public class GalleryImageVersionContainerTests : VirtualMachineTestBase
     {
-        private ResourceGroup _versionResourceGroup;
         private Gallery _gallery;
         private GalleryImage _galleryImage;
         private VirtualMachine _vm;
+
         public GalleryImageVersionContainerTests(bool isAsync)
            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
+
         private async Task<GalleryImageVersionContainer> GetGalleryImageVersionContainerAsync()
         {
-            _versionResourceGroup = await CreateResourceGroupAsync();
+            _resourceGroup = await CreateResourceGroupAsync();
             var galleryName = Recording.GenerateAssetName("testGallery_");
             var galleryImageName = Recording.GenerateAssetName("testGalleryImage_");
             var galleryImageData = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     Recording.GenerateAssetName("offer"),
                     Recording.GenerateAssetName("sku"));
             var input = ResourceDataHelper.GetBasicGalleryImageData(DefaultLocation, OperatingSystemTypes.Linux, identifier);
-            var lroGallery = await _versionResourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, galleryImageData);
+            var lroGallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, galleryImageData);
             _gallery = lroGallery.Value;
             var lroGalleryImage = await _gallery.GetGalleryImages().CreateOrUpdateAsync(galleryImageName, input);
             _galleryImage = lroGalleryImage.Value;

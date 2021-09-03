@@ -2,34 +2,32 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
     public class GalleryImageVersionOperationsTests : VirtualMachineTestBase
     {
-        private ResourceGroup _versionResourceGroup;
         private Gallery _gallery;
         private GalleryImage _galleryImage;
         private GalleryImageVersion _galleryImageVersion;
+
         public GalleryImageVersionOperationsTests(bool isAsync)
-        : base(isAsync)// , RecordedTestMode.Record)
+            : base(isAsync)// , RecordedTestMode.Record)
         {
         }
 
         private async Task<GalleryImageVersion> CreateGalleryImageVersionAsync(string galleryImageVersionName)
         {
-            _versionResourceGroup = await CreateResourceGroupAsync();
+            _resourceGroup = await CreateResourceGroupAsync();
             var galleryName = Recording.GenerateAssetName("testGallery");
             var galleryImageName = "1.0.0";
             var galleryInput = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            var lroGallery = await _versionResourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, galleryInput);
+            var lroGallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, galleryInput);
             _gallery = lroGallery.Value;
             var identifier = ResourceDataHelper.GetGalleryImageIdentifier(
                     Recording.GenerateAssetName("publisher"),
