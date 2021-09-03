@@ -142,7 +142,7 @@ Follow tne instructions [here](https://docs.microsoft.com/cli/azure/create-an-az
 
 The endpoints required to support the Managed Identity credential are only available on Azure Hosted machines/servers. So ensure that you are running your
 application on an Azure Hosted resource. Currently Azure Identity SDK
-supports [Managed Identity Authentication]((https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview))
+supports [Managed Identity Authentication](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview)
 in the below listed Azure Services. Ensure you're running your application in one of these environments and have enabled a Managed Identity on them by following the
 instructions at their configuration links below.
 
