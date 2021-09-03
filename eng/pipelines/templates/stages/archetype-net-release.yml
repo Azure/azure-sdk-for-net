@@ -43,18 +43,6 @@ stages:
         dependsOn: Signing
         condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
         jobs:
-          - job: InstallationCheck
-            condition: ne('${{ artifact.skipPublishPackage }}', 'true')
-            displayName: "Installation Check"
-            steps:
-              - download: current
-                artifact: ${{parameters.ArtifactName}}-signed
-              - pwsh: mkdir InstallationCheck
-                displayName: Create Testing Directory
-              - pwsh: |
-                  $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1 -ArtifactsDirectory ${{parameters.ArtifactName}} -Artifact ${{artifact.name}} -PipelineWorkspace $(Pipeline.Workspace)
-                displayName: Verify Package Installation
-                workingDirectory: $(System.DefaultWorkingDirectory)/InstallationCheck
           - deployment: TagRepository
             displayName: "Create release tag"
             condition: ne(variables['Skip.TagRepository'], 'true')
@@ -69,6 +57,8 @@ stages:
                 deploy:
                   steps:
                     - checkout: self
+                    - download: current
+                      artifact: ${{parameters.ArtifactName}}-signed
                     - template: /eng/common/pipelines/templates/steps/retain-run.yml
                     - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
                       parameters:
@@ -80,6 +70,10 @@ stages:
                         PackageName: ${{artifact.name}}
                         ServiceName: ${{parameters.ServiceDirectory}}
                         ForRelease: true
+                    - pwsh: |
+                        $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1 -ArtifactsDirectory ${{parameters.ArtifactName}} -Artifact ${{artifact.name}} -PipelineWorkspace $(Pipeline.Workspace)
+                      condition: ne('${{ artifact.skipPublishPackage }}', 'true')
+                      displayName: Verify Package Installation
                     - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
                       parameters:
                         ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
