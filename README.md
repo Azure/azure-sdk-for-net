@@ -10,6 +10,8 @@ To get started with a library, see the README.md file located in the library's p
 
 For tutorials, samples, quick starts, and other documentation, go to [Azure for .NET Developers](https://docs.microsoft.com/dotnet/azure/).
 
+For a list of changes made between releases, refer to the [change log](sdk/tables/Azure.Data.Tables/CHANGELOG.md).
+
 ## Packages available
 Each service might have a number of libraries available from each of the following categories:
 * [Client - New Releases](#client-new-releases)
