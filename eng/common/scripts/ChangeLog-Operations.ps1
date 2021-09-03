@@ -289,3 +289,52 @@ function Set-ChangeLogContent {
 
   Set-Content -Path $ChangeLogLocation -Value $changeLogContent
 }
+
+function Remove-EmptySections {
+  param (
+    [Parameter(Mandatory = $true)]
+    $ChangeLogEntry
+  )
+
+  $releaseContent = $ChangeLogEntry.ReleaseContent
+  $sectionsToRemove = @()
+
+  if ($releaseContent.Count -gt 0)
+  {
+    $parsedSections = $ChangeLogEntry.Sections
+    $sanitizedReleaseContent = New-Object System.Collections.ArrayList(,$releaseContent)
+  
+    foreach ($key in $parsedSections.Keys) 
+    {
+      if ([System.String]::IsNullOrWhiteSpace($parsedSections[$key]))
+      {
+        for ($i = 0; $i -lt $sanitizedReleaseContent.Count; $i++)
+        {
+          $line = $sanitizedReleaseContent[$i]
+          if ($line -eq "### $key")
+          {
+            $sanitizedReleaseContent.RemoveAt($i)
+            $j = $i
+            while($j -lt $sanitizedReleaseContent.Count)
+            {
+              $line = $sanitizedReleaseContent[$j]
+              if ([System.String]::IsNullOrWhiteSpace($line))
+              {
+                $sanitizedReleaseContent.RemoveAt($j)
+              }
+              else 
+              {
+                break
+              }
+            }
+            $sectionsToRemove += $key
+            break
+          }
+        }
+      }
+    }
+    $ChangeLogEntry.ReleaseContent = $sanitizedReleaseContent.ToArray()
+    $sectionsToRemove | % { $ChangeLogEntry.Sections.Remove($_) }
+  }
+  return $changeLogEntry
+}
