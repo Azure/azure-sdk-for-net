@@ -258,8 +258,7 @@ namespace Azure.Containers.ContainerRegistry
                 _endpoint,
                 repositoryName,
                 _clientDiagnostics,
-                _restClient,
-                _blobRestClient);
+                _restClient);
         }
 
         /// <summary>
@@ -282,8 +281,7 @@ namespace Azure.Containers.ContainerRegistry
                 repositoryName,
                 tagOrDigest,
                 _clientDiagnostics,
-                _restClient,
-                _blobRestClient);
+                _restClient);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public RegistryArtifactLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public RegistryArtifactLiveTests(bool isAsync) : base(isAsync)
         {
         }
 

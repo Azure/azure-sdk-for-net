@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -21,7 +19,6 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
-        private readonly ContainerRegistryBlobRestClient _blobRestClient;
 
         private readonly Uri _registryEndpoint;
         private readonly string _repositoryName;
@@ -47,7 +44,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        internal RegistryArtifact(Uri registryEndpoint, string repositoryName, string tagOrDigest, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient, ContainerRegistryBlobRestClient blobRestClient)
+        internal RegistryArtifact(Uri registryEndpoint, string repositoryName, string tagOrDigest, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
         {
             _repositoryName = repositoryName;
             _tagOrDigest = tagOrDigest;
@@ -56,7 +53,6 @@ namespace Azure.Containers.ContainerRegistry
 
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
-            _blobRestClient = blobRestClient;
         }
 
         /// <summary> Initializes a new instance of RegistryArtifact for mocking. </summary>

@@ -10,7 +10,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
