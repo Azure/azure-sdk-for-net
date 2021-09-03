@@ -8,6 +8,7 @@ using Azure.ResourceManager.Network.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Network.Tests
         private async Task<BastionHost> CreateBastionHost(string bastionName)
         {
             BastionHostData data = new BastionHostData();
-            data.Location = Location.WestUS2;
+            data.Location = TestEnvironment.Location;
             BastionHostIPConfiguration ipConfig = new BastionHostIPConfiguration();
             ipConfig.Name = Recording.GenerateAssetName("bastionIPConfig-");
             ipConfig.Subnet = new Models.SubResource();
@@ -78,13 +79,52 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task BastionHostBaseTest()
         {
+            // create Bastion
             string bastionName = Recording.GenerateAssetName("bastion-");
             BastionHost bastionHost = await CreateBastionHost(bastionName);
             Assert.IsNotNull(bastionHost.Data);
             Assert.AreEqual(bastionName, bastionHost.Data.Name);
-            Assert.AreEqual(Location.WestUS2.ToString(), bastionHost.Data.Location);
+            Assert.AreEqual(TestEnvironment.Location, bastionHost.Data.Location);
+            Assert.AreEqual(0, bastionHost.Data.Tags.Count);
+
+            // Put Bastion
+            var bastionContainer = _resourceGroup.GetBastionHosts();
+            string newBastionIpconfigName = Recording.GenerateAssetName("bastionIPConfig-");
+            var bastionData = new BastionHostData()
+            {
+                Location = TestEnvironment.Location,
+            };
+            bastionData.IpConfigurations.Add(new BastionHostIPConfiguration()
+            {
+                Name = newBastionIpconfigName,
+                Subnet = new Models.SubResource() { Id = _subnet.Id },
+                PublicIPAddress = new Models.SubResource() { Id = _publicIPAddress.Id },
+            });
+            bastionData.Tags.Add(new KeyValuePair<string, string>("key", "value"));
+            var putBastionOpereation = await bastionContainer.CreateOrUpdateAsync(bastionName, bastionData);
+            await putBastionOpereation.WaitForCompletionAsync();
+
+            // Get Bastion
+            var getBastion = await bastionContainer.GetAsync(bastionName);
+            Assert.IsNotNull(getBastion.Value);
+            Assert.AreEqual(newBastionIpconfigName, getBastion.Value.Data.IpConfigurations[0].Name);
+            Assert.AreEqual(1, getBastion.Value.Data.Tags.Count);
+
+            // Get List of Bastion
+            AsyncPageable<BastionHost> getBastionResponse = bastionContainer.GetAllAsync();
+            List<BastionHost> getBastionListResponse = await getBastionResponse.ToEnumerableAsync();
+            Has.One.EqualTo(getBastionListResponse);
+
+            // Delete Bastion
+            var deleteBastion = await getBastion.Value.DeleteAsync();
+            await deleteBastion.WaitForCompletionResponseAsync();
+
+            // Verify Bastion
+            getBastionResponse = bastionContainer.GetAllAsync();
+            getBastionListResponse = await getBastionResponse.ToEnumerableAsync();
+            Assert.IsEmpty(getBastionListResponse);
         }
     }
 }
