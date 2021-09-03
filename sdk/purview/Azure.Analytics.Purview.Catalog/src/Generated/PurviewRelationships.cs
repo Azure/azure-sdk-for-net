@@ -166,10 +166,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
@@ -334,10 +331,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
@@ -521,10 +515,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateUpdateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
@@ -689,10 +680,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateUpdateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
@@ -749,10 +737,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetRequest(guid, extendedInfo, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");
             scope.Start();
             try
@@ -790,10 +775,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetRequest(guid, extendedInfo, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");
             scope.Start();
             try
@@ -853,10 +835,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
@@ -893,10 +872,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try

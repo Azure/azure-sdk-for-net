@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static Snapshot Get(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static Snapshot Create(this ISnapshotsOperations operations, Snapshot body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static Snapshot Update(this ISnapshotsOperations operations, object body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static void Delete(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -371,7 +371,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static Snapshot BeginCreate(this ISnapshotsOperations operations, Snapshot body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -403,7 +403,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -441,7 +441,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static Snapshot BeginUpdate(this ISnapshotsOperations operations, object body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -508,7 +508,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static void BeginDelete(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -537,7 +537,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

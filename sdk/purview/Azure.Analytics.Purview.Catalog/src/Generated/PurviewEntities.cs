@@ -369,10 +369,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
@@ -739,10 +736,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
@@ -801,10 +795,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
@@ -844,10 +835,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
@@ -1247,10 +1235,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
@@ -1617,10 +1602,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
@@ -1676,10 +1658,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteByGuidsRequest(guids, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
@@ -1716,10 +1695,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteByGuidsRequest(guids, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
@@ -1887,10 +1863,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAddClassificationRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
@@ -2040,10 +2013,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAddClassificationRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
@@ -2100,10 +2070,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
@@ -2142,10 +2109,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
@@ -2217,10 +2181,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
@@ -2264,10 +2225,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
@@ -2327,10 +2285,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
@@ -2367,10 +2322,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
@@ -2426,10 +2378,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
@@ -2467,10 +2416,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
@@ -2529,10 +2475,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
@@ -2570,10 +2513,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
@@ -2630,10 +2570,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetClassificationsRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
@@ -2670,10 +2607,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetClassificationsRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
@@ -2822,10 +2756,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAddClassificationsRequest(guid, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
@@ -2955,10 +2886,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAddClassificationsRequest(guid, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
@@ -3109,10 +3037,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
@@ -3242,10 +3167,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
@@ -3313,10 +3235,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
@@ -3363,10 +3282,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
@@ -3773,10 +3689,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
@@ -4150,10 +4063,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
@@ -4224,10 +4134,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
@@ -4272,10 +4179,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
@@ -4337,10 +4241,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
@@ -4379,10 +4280,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
@@ -4538,10 +4436,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
@@ -4672,10 +4567,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
@@ -4832,10 +4724,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
@@ -4966,10 +4855,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
@@ -5277,10 +5163,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSetClassificationsRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
@@ -5562,10 +5445,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateSetClassificationsRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
@@ -5636,10 +5516,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
@@ -5691,10 +5568,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
@@ -5764,10 +5638,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetHeaderRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
@@ -5804,10 +5675,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetHeaderRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
