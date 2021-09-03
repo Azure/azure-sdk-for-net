@@ -14,12 +14,12 @@ namespace Microsoft.Azure.Management.Synapse
   internal static partial class SdkInfo
   {
       public static IEnumerable<Tuple<string, string, string>> ApiInfo_SynapseManagementClient
-      {
+        {
           get
           {
               return new Tuple<string, string, string>[]
               {
-                 new Tuple<string, string, string>("Synapse", "AzureADOnlyAuthentications", "2021-06-01"),
+                new Tuple<string, string, string>("Synapse", "AzureADOnlyAuthentications", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "BigDataPools", "2021-06-01-preview"),
                 new Tuple<string, string, string>("Synapse", "DataMaskingPolicies", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "DataMaskingRules", "2021-06-01"),
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Synapse
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/synapse/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\ZeshiLuo\\azure-sdk-for-net-1\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "51b37b069ecbb9d2fcd300eabd4b10b7911b7d7d";
+      public static readonly String GithubCommidId = "5d09c12c024fa7efbaca6a95b9741a46a886fe6f";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
