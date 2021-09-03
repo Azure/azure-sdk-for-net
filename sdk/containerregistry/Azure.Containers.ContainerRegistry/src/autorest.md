@@ -21,16 +21,8 @@ directive:
             "in": "header",
             "type": "string",
             "description": "The manifest's Content-Type."
-        })
-```
-
-# Add content-type parameter
-``` yaml
-directive:
-    from: swagger-document
-    where: $.paths["/v2/{name}/manifests/{reference}"].put
-    transform: >
-        delete $.responses["201"].schema
+        });        
+        delete $.responses["201"].schema;
 ```
 
 # Change NextLink client name to nextLink
@@ -42,7 +34,7 @@ directive:
     $["x-ms-client-name"] = "nextLink"
 ```
 
-# Make OciManifest a public type
+# Updates to OciManifest
 ``` yaml
 directive:
   from: swagger-document
@@ -52,6 +44,10 @@ directive:
     $["x-csharp-formats"] = "json";
     delete $["x-accessibility"];
     delete $["allOf"];
+    $.properties["schemaVersion"] = {
+          "type": "integer",
+          "description": "Schema version"
+        };
 ```
 
 # Take only OciManifest
@@ -63,17 +59,6 @@ directive:
     $.schema = {
         "$ref": "#/definitions/OCIManifest"
       }
-```
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.OCIManifest
-  transform: >
-    $.properties["schemaVersion"] = {
-          "type": "integer",
-          "description": "Schema version"
-        }
 ```
 
 # Make ArtifactBlobDescriptor a public type

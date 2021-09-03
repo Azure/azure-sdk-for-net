@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -39,15 +40,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [Test]
         public void ConstructorValidatesArguments()
         {
-            // TODO: Complete these
+            Assert.That(() => new ContainerRegistryBlobClient(null, GetCredential(), "<repo>"), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
 
-            Assert.That(() => new ContainerRegistryClient(null, GetCredential()), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
+            Assert.That(() => new ContainerRegistryBlobClient(_url, credential: null, "<repo>"), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null credential.");
 
-            Assert.That(() => new ContainerRegistryClient(_url, credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null credential.");
-
-            Assert.That(() => new ContainerRegistryClient(_url, GetCredential(), null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept null options.");
-
-            Assert.That(() => new ContainerRegistryClient(_url, GetCredential()), Throws.InstanceOf<InvalidOperationException>(), "The constructor should not accept default ClientOptions");
+            Assert.That(() => new ContainerRegistryBlobClient(_url, GetCredential(), null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept null repository.");
         }
 
         /// <summary>
@@ -56,7 +53,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [Test]
         public void ServiceMethodsValidateArguments()
         {
-            // TODO: Anything to address here?
+            Assert.That(async () => await client.DeleteBlobAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
+            Assert.That(async () => await client.DeleteManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
+            Assert.That(async () => await client.DownloadBlobAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
+            Assert.That(async () => await client.DownloadManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
+            Assert.That(async () => await client.UploadManifestAsync((Stream)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `stream` is not null.");
+            Assert.That(async () => await client.UploadManifestAsync((OciManifest)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
+            Assert.That(async () => await client.UploadBlobAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `stream` is not null.");
         }
     }
 }
