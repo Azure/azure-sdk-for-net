@@ -214,13 +214,6 @@ namespace Azure.Containers.ContainerRegistry
 }
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    public partial class ArtifactBlobProperties
-    {
-        internal ArtifactBlobProperties() { }
-        public string Digest { get { throw null; } }
-        public string FileName { get { throw null; } }
-        public string RepositoryName { get { throw null; } }
-    }
     public partial class ContainerRegistryBlobClient
     {
         protected ContainerRegistryBlobClient() { }
