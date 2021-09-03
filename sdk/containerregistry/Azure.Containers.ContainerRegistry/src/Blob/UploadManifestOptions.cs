@@ -4,6 +4,7 @@
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
+    /// Options for configuring the upload manifest operation.
     /// </summary>
     public class UploadManifestOptions
     {

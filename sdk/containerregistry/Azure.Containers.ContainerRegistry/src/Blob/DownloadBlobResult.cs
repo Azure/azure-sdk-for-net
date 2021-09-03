@@ -6,13 +6,10 @@ using System.IO;
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
+    /// The result from downloading a blob from the registry.
     /// </summary>
     public class DownloadBlobResult
     {
-        /// <summary>
-        /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="content"></param>
         internal DownloadBlobResult(string digest, Stream content)
         {
             Digest = digest;
@@ -20,10 +17,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// The blob's digest, calculated by the registry.
         /// </summary>
         public string Digest { get; }
 
         /// <summary>
+        /// The blob content.
         /// </summary>
         public Stream Content { get; }
     }

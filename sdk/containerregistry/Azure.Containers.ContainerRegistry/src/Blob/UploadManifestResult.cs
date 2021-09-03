@@ -4,6 +4,7 @@
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
+    /// The result from uploading a manifest.
     /// </summary>
     public class UploadManifestResult
     {
@@ -13,6 +14,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// The digest of the uploaded manifest, calculated by the registry.
         /// </summary>
         public string Digest { get; }
     }

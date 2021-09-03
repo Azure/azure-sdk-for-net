@@ -11,8 +11,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    /// <summary>
-    /// </summary>
+    /// <summary> The Azure Container Registry blob client, responsible for uploading and downloading
+    /// blobs and manifests, the building blocks of artifacts. </summary>
     public class ContainerRegistryBlobClient
     {
         private readonly Uri _endpoint;
@@ -26,14 +26,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         private readonly ContainerRegistryBlobRestClient _blobRestClient;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts.
+        /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing upload and download of container images and artifacts.
         /// </summary>
         /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
-        /// <param name="repository"></param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/>, <paramref name="credential"/>, or <paramref name="repository"/> is null. </exception>
         public ContainerRegistryBlobClient(Uri endpoint, TokenCredential credential, string repository) : this(endpoint, credential, repository, new ContainerRegistryClientOptions())
         {
         }
@@ -45,9 +45,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
-        /// <param name="repository"></param>
+        /// <param name="repository"> The name of the repository that logically groups the artifact parts</param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/>, <paramref name="credential"/>, or <paramref name="repository"/> is null. </exception>
         public ContainerRegistryBlobClient(Uri endpoint, TokenCredential credential, string repository, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -68,16 +68,27 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 
-        /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryBlobClient for mocking. </summary>
         protected ContainerRegistryBlobClient()
         {
         }
 
         /// <summary>
+        /// Gets the registry service endpoint for this client.
         /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
+        public virtual Uri Endpoint => _endpoint;
+
+        /// <summary>
+        /// Gets the name of the repository that logically groups the artifact parts.
+        /// </summary>
+        public virtual string RepositoryName => _repositoryName;
+
+        /// <summary>
+        /// Upload an artifact manifest from a stream.
+        /// </summary>
+        /// <param name="stream">The stream containing the serialized manifest.</param>
+        /// <param name="options">Options for configuring the upload operation.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual Response<UploadManifestResult> UploadManifest(Stream stream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
@@ -90,10 +101,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Upload an artifact manifest from a stream.
         /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="stream">The stream containing the serialized manifest.</param>
+        /// <param name="options">Options for configuring the upload operation.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public async virtual Task<Response<UploadManifestResult>> UploadManifestAsync(Stream stream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
@@ -106,10 +118,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Upload a manifest for an OCI Artifact.
         /// </summary>
-        /// <param name="manifest"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="manifest">The manifest to upload.</param>
+        /// <param name="options">Options for configuring the upload operation.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual Response<UploadManifestResult> UploadManifest(OciManifest manifest, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
@@ -134,10 +147,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Upload a manifest for an OCI Artifact.
         /// </summary>
-        /// <param name="manifest"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="manifest">The manifest to upload.</param>
+        /// <param name="options">Options for configuring the upload operation.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public async virtual Task<Response<UploadManifestResult>> UploadManifestAsync(OciManifest manifest, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
@@ -177,9 +191,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Upload an artifact blob.
         /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="stream">The stream containing the blob data.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual Response<UploadBlobResult> UploadBlob(Stream stream, CancellationToken cancellationToken = default)
         {
@@ -210,9 +225,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Upload an artifact blob.
         /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="stream">The stream containing the blob data.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream stream, CancellationToken cancellationToken = default)
         {
@@ -243,9 +259,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Download the manifest for an OCI Artifact.
         /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="digest">The digest of the manifest to download.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual Response<DownloadManifestResult> DownloadManifest(string digest, CancellationToken cancellationToken = default)
         {
@@ -281,9 +298,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Download the manifest for an OCI Artifact.
         /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="digest">The digest of the manifest to download.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(string digest, CancellationToken cancellationToken = default)
         {
@@ -329,9 +347,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Download a blob that is part of an artifact.
         /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual Response<DownloadBlobResult> DownloadBlob(string digest, CancellationToken cancellationToken = default)
         {
@@ -358,9 +377,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Download a blob that is part of an artifact.
         /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual async Task<Response<DownloadBlobResult>> DownloadBlobAsync(string digest, CancellationToken cancellationToken = default)
         {
@@ -372,12 +392,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
 
-                //if (blobResult.Headers.DockerContentDigest == null)
-                //{
-                //    throw _clientDiagnostics.CreateRequestFailedException(blobResult, "Response did not contain \"Docker-Content-Digest\" header.");
-                //}
-
-                // TODO: Should we validate against the one in the request or the one in the response header?
                 if (!ValidateDigest(blobResult.Value, digest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(blobResult.GetRawResponse(), "The manifest's digest according to the registry does not match the locally computed digest value.");
@@ -393,9 +407,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Delete a blob. The blob will only be removed from the repository if no other artifacts reference it.
         /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="digest">The digest of the blob to delete.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual Response DeleteBlob(string digest, CancellationToken cancellationToken = default)
         {
@@ -416,9 +431,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Delete a blob. The blob will only be removed from the repository if no other artifacts reference it.
         /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="digest">The digest of the blob to delete.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual async Task<Response> DeleteBlobAsync(string digest, CancellationToken cancellationToken = default)
         {
@@ -439,9 +455,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Delete a manifest.  Doing so effectively deletes the artifact from the registry.
         /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="digest">The digest of the manifest to delete.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual Response DeleteManifest(string digest, CancellationToken cancellationToken = default)
         {
@@ -461,9 +478,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
+        /// Delete a manifest.  Doing so effectively deletes the artifact from the registry.
         /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="digest">The digest of the manifest to delete.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual async Task<Response> DeleteManifestAsync(string digest, CancellationToken cancellationToken = default)
         {

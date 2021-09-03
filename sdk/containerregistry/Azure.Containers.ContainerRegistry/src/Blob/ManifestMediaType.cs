@@ -6,12 +6,8 @@ using System.ComponentModel;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    /// <summary>
-    /// </summary>
     internal readonly struct ManifestMediaType : IEquatable<ManifestMediaType>
     {
-        /// <summary>
-        /// </summary>
         public static readonly ManifestMediaType OciManifest = new ManifestMediaType("application/vnd.oci.image.manifest.v1+json");
 
         // The below manifest types will be added in in a later v1.1.0 library version -- keeping them here for when needed.
@@ -28,52 +24,22 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _value = mediaType;
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="mediaType"></param>
         public static implicit operator ManifestMediaType(string mediaType) => new ManifestMediaType(mediaType);
 
-        /// <summary>
-        /// </summary>
-        /// <param name="mediaType"></param>
         public static explicit operator string(ManifestMediaType mediaType) => mediaType._value;
 
-        /// <summary>
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
         public static bool operator ==(ManifestMediaType left, ManifestMediaType right) => Equals(left, right);
 
-        /// <summary>
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
         public static bool operator !=(ManifestMediaType left, ManifestMediaType right) => !Equals(left, right);
 
-        /// <summary>
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
         public bool Equals(ManifestMediaType other) => _value == other._value;
 
-        /// <summary>
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManifestMediaType mediaType && Equals(mediaType);
 
-        /// <summary>
-        /// </summary>
-        /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
 
-        /// <summary>
-        /// </summary>
-        /// <returns></returns>
         public override string ToString() => _value;
     }
 }
