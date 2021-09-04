@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -359,6 +360,37 @@ namespace Azure.Identity.Tests
             Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
 
             await Task.CompletedTask;
+        }
+
+        [Test]
+        [TestCaseSource("ExceptionalEnvironmentConfigs")]
+        public async Task VerifyAuthenticationFailedExceptionsAreDeferredToGetToken(Dictionary<string, string> environmentVariables)
+        {
+            using var environment = new TestEnvVar(environmentVariables);
+
+            var credential = InstrumentClient(new ManagedIdentityCredential());
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            await Task.CompletedTask;
+        }
+
+        private static IEnumerable<TestCaseData> ExceptionalEnvironmentConfigs()
+        {
+            // AppServiceV2017ManagedIdentitySource should throw
+            yield return new TestCaseData(new Dictionary<string, string>() { { "MSI_ENDPOINT", "http::@/bogusuri" }, { "MSI_SECRET", "mocksecret" }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            // CloudShellManagedIdentitySource should throw
+            yield return new TestCaseData(new Dictionary<string, string>() { { "MSI_ENDPOINT", "http::@/bogusuri" }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            // AzureArcManagedIdentitySource should throw
+            yield return new TestCaseData(new Dictionary<string, string>() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", "http::@/bogusuri" }, { "IMDS_ENDPOINT", "mockvalue" }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            // ServiceFabricManagedIdentitySource should throw
+            yield return new TestCaseData(new Dictionary<string, string>() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", "http::@/bogusuri" }, { "IDENTITY_HEADER", "mockvalue" }, { "IDENTITY_SERVER_THUMBPRINT", "mockvalue"}, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            // ImdsManagedIdentitySource should throw
+            yield return new TestCaseData(new Dictionary<string, string>() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "IDENTITY_SERVER_THUMBPRINT", "null" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "http::@/bogusuri" } });
         }
 
         private MockResponse CreateMockResponse(int responseCode, string token)
