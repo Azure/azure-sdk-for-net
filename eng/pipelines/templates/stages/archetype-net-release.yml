@@ -71,8 +71,8 @@ stages:
                         ServiceName: ${{parameters.ServiceDirectory}}
                         ForRelease: true
                     - pwsh: |
-                        $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1 -ArtifactsDirectory ${{parameters.ArtifactName}} -Artifact ${{artifact.name}} -PipelineWorkspace $(Pipeline.Workspace)
-                      condition: ne('${{ artifact.skipPublishPackage }}', 'true')
+                        $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1 -ArtifactsDirectory "$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed" -Artifact ${{artifact.name}}
+                      condition: and(succeeded(),ne('${{ artifact.skipPublishPackage }}', 'true'))
                       displayName: Verify Package Installation
                     - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
                       parameters:
