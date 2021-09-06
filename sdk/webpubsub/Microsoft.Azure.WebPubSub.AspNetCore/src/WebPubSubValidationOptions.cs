@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         {
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new ArgumentNullException(nameof(ConnectedEventRequest));
+                throw new ArgumentNullException(nameof(connectionString));
             }
 
             var properties = connectionString.Split(PropertySeparator, StringSplitOptions.RemoveEmptyEntries);

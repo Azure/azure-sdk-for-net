@@ -19,13 +19,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
     {
         private const string TestEndpoint = "https://my-host.webpubsub.net";
         private readonly WebPubSubValidationOptions _options;
-        private readonly IServiceRequestHandler _handler;
+        private readonly ServiceRequestHandler _handler;
         private readonly string _testHost;
 
         public ServiceRequestHandlerTests()
         {
             _options = new WebPubSubValidationOptions($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
-            _handler = new ServiceRequestHandler(_options);
+            _handler = new ServiceRequestHandlerAdapter(_options);
             _testHost = new Uri(TestEndpoint).Host;
         }
 

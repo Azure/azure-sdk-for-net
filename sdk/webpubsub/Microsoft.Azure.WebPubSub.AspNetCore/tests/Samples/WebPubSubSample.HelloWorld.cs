@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
         public void Configure(IApplicationBuilder app)
         {
             #region Snippet:WebPubSubValidationOptions
-            var wpsHandler = new WebPubSubRequestBuilder()
+            var wpsHandler = new WebPubSubRequestHandlerBuilder()
                 .AddValidationOptions(new WebPubSubValidationOptions("<connection-string>"))
                 .Build();
             #endregion
