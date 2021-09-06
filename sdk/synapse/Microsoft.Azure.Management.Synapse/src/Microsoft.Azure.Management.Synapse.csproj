@@ -11,7 +11,7 @@
 		<PackageTags>Microsoft Azure Synapse Management;Synapse;Synapse Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-			- SDK now consumes 2021-06-01 API version
+			- SDK now consumes 2021-06-01 and 2021-06-01-preview API version
       ]]>
 		</PackageReleaseNotes>
     
