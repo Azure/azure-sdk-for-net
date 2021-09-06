@@ -50,7 +50,7 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 ### Add upstream validation options
 
 ```C# Snippet:WebPubSubValidationOptions
-var wpsHandler = new WebPubSubRequestBuilder()
+var wpsHandler = new WebPubSubRequestHandlerBuilder()
     .AddValidationOptions(new WebPubSubValidationOptions("<connection-string>"))
     .Build();
 var testHub = new SampleHub();
@@ -60,7 +60,7 @@ await wpsHandler.HandleRequest(context, testHub);
 ### Handle Upstream event
 
 ```C# Snippet:WebPubSubConnectMethods
-public override Task<ServiceResponse> Connect(ConnectEventRequesrequest)
+public override Task<ServiceResponse> Connect(ConnectEventReques request)
 {
     var response = new ConnectResponse
     {

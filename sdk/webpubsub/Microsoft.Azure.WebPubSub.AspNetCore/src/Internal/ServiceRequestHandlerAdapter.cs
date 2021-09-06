@@ -7,16 +7,16 @@ using Microsoft.AspNetCore.Http;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
-    internal class ServiceRequestHandler : IServiceRequestHandler
+    internal class ServiceRequestHandlerAdapter : ServiceRequestHandler
     {
         private readonly WebPubSubValidationOptions _options;
 
-        public ServiceRequestHandler(WebPubSubValidationOptions options)
+        public ServiceRequestHandlerAdapter(WebPubSubValidationOptions options)
         {
             _options = options;
         }
 
-        public async Task HandleRequest<THub>(HttpContext context, THub serviceHub) where THub: ServiceHub
+        public override async Task HandleRequest<THub>(HttpContext context, THub serviceHub)
         {
             HttpRequest request = context.Request;
 

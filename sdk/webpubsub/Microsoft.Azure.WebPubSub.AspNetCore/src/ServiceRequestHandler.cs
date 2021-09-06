@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// <summary>
     /// Service request handler.
     /// </summary>
-    public interface IServiceRequestHandler
+    public abstract class ServiceRequestHandler
     {
         /// <summary>
         /// Handle request with methods defined by ServiceHub.
@@ -17,6 +17,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="context"></param>
         /// <param name="hub"></param>
         /// <returns></returns>
-        Task HandleRequest<THub>(HttpContext context, THub hub) where THub : ServiceHub;
+        public abstract Task HandleRequest<THub>(HttpContext context, THub hub) where THub : ServiceHub;
     }
 }
