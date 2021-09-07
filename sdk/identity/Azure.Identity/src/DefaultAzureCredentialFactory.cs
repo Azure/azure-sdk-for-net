@@ -28,9 +28,9 @@ namespace Azure.Identity
             return new ManagedIdentityCredential(clientId, Pipeline);
         }
 
-        public virtual TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username, string cliendId)
+        public virtual TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
         {
-            return new SharedTokenCacheCredential(tenantId, username, new SharedTokenCacheCredentialOptions{ ClientId = cliendId }, Pipeline);
+            return new SharedTokenCacheCredential(tenantId, username, null, Pipeline);
         }
 
         public virtual TokenCredential CreateInteractiveBrowserCredential(string tenantId, string clientId)

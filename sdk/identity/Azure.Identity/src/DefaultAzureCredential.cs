@@ -204,7 +204,7 @@ namespace Azure.Identity
 
             if (!options.ExcludeSharedTokenCacheCredential)
             {
-                chain[i++] = factory.CreateSharedTokenCacheCredential(options.SharedTokenCacheTenantId, options.SharedTokenCacheUsername, options.ClientId);
+                chain[i++] = factory.CreateSharedTokenCacheCredential(options.SharedTokenCacheTenantId, options.SharedTokenCacheUsername);
             }
 
             if (!options.ExcludeVisualStudioCredential)
@@ -229,7 +229,7 @@ namespace Azure.Identity
 
             if (!options.ExcludeInteractiveBrowserCredential)
             {
-                chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId, options.ClientId);
+                chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId, options.InteractiveBrowserCredentialClientId);
             }
 
             if (i == 0)

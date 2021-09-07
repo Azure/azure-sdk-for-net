@@ -139,7 +139,6 @@ namespace Azure.Identity
     public partial class DefaultAzureCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public DefaultAzureCredentialOptions() { }
-        public string ClientId { get { throw null; } set { } }
         public bool ExcludeAzureCliCredential { get { throw null; } set { } }
         public bool ExcludeAzurePowerShellCredential { get { throw null; } set { } }
         public bool ExcludeEnvironmentCredential { get { throw null; } set { } }
@@ -148,6 +147,7 @@ namespace Azure.Identity
         public bool ExcludeSharedTokenCacheCredential { get { throw null; } set { } }
         public bool ExcludeVisualStudioCodeCredential { get { throw null; } set { } }
         public bool ExcludeVisualStudioCredential { get { throw null; } set { } }
+        public string InteractiveBrowserCredentialClientId { get { throw null; } set { } }
         public string InteractiveBrowserTenantId { get { throw null; } set { } }
         public string ManagedIdentityClientId { get { throw null; } set { } }
         public string SharedTokenCacheTenantId { get { throw null; } set { } }

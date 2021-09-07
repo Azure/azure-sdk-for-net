@@ -54,7 +54,7 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies the client id of the selected credential
         /// </summary>
-        public string ClientId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.ClientId);
+        public string InteractiveBrowserCredentialClientId { get; set; }
 
         /// <summary>
         /// Specifies the client id of the azure ManagedIdentity in the case of user assigned identity.
