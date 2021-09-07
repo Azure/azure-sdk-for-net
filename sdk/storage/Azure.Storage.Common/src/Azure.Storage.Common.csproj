@@ -19,12 +19,7 @@
     <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <!-- TODO https://github.com/Azure/azure-sdk-for-net/issues/21875 - uncomment when Azure.Core ships 
     <PackageReference Include="Azure.Core" />
-    end TODO -->
-    <!-- TODOhttps://github.com/Azure/azure-sdk-for-net/issues/21875 - revert when Azure.Core ships -->
-      <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-    <!--  end TODO-->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
