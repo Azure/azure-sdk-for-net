@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -396,214 +395,6 @@ namespace Azure.ResourceManager.EventHub
             }
         }
 
-        /// <summary> Creates or updates an AuthorizationRule for a Namespace. </summary>
-        /// <param name="parameters"> The shared access AuthorizationRule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<AuthorizationRuleData>> CreateOrUpdateAuthorizationRuleAsync(AuthorizationRuleData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.CreateOrUpdateAuthorizationRule");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.CreateOrUpdateAuthorizationRuleAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates an AuthorizationRule for a Namespace. </summary>
-        /// <param name="parameters"> The shared access AuthorizationRule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<AuthorizationRuleData> CreateOrUpdateAuthorizationRule(AuthorizationRuleData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.CreateOrUpdateAuthorizationRule");
-            scope.Start();
-            try
-            {
-                var response = _restClient.CreateOrUpdateAuthorizationRule(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes an AuthorizationRule for a Namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAuthorizationRuleAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.DeleteAuthorizationRule");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.DeleteAuthorizationRuleAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes an AuthorizationRule for a Namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteAuthorizationRule(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.DeleteAuthorizationRule");
-            scope.Start();
-            try
-            {
-                var response = _restClient.DeleteAuthorizationRule(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AuthorizationRuleData>> GetAuthorizationRuleAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetAuthorizationRule");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAuthorizationRuleAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AuthorizationRuleData> GetAuthorizationRule(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetAuthorizationRule");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetAuthorizationRule(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the primary and secondary connection strings for the Namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the primary and secondary connection strings for the Namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccessKeys> GetKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Regenerates the primary or secondary connection strings for the specified Namespace. </summary>
-        /// <param name="parameters"> Parameters required to regenerate the connection string. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<AccessKeys>> RegenerateKeysAsync(RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.RegenerateKeys");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.RegenerateKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Regenerates the primary or secondary connection strings for the specified Namespace. </summary>
-        /// <param name="parameters"> Parameters required to regenerate the connection string. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<AccessKeys> RegenerateKeys(RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.RegenerateKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.RegenerateKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Check the give Namespace name availability. </summary>
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -654,81 +445,6 @@ namespace Azure.ResourceManager.EventHub
             }
         }
 
-        /// <summary> Gets a list of authorization rules for a Namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AuthorizationRuleData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AuthorizationRuleData> GetAuthorizationRules(CancellationToken cancellationToken = default)
-        {
-            Page<AuthorizationRuleData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetAuthorizationRules");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAuthorizationRules(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AuthorizationRuleData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetAuthorizationRules");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAuthorizationRulesNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of authorization rules for a Namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AuthorizationRuleData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AuthorizationRuleData> GetAuthorizationRulesAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<AuthorizationRuleData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetAuthorizationRules");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAuthorizationRulesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AuthorizationRuleData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetAuthorizationRules");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAuthorizationRulesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
         /// <summary> Gets lists of resources that supports Privatelinks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IReadOnlyList<PrivateLinkResource>>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
@@ -793,11 +509,25 @@ namespace Azure.ResourceManager.EventHub
             return new NetworkRuleSet(this, Id + "/networkRuleSets/default");
         }
 
+        /// <summary> Gets a list of AuthorizationRuleNamespaces in the EHNamespace. </summary>
+        /// <returns> An object representing collection of AuthorizationRuleNamespaces and their operations over a EHNamespace. </returns>
+        public AuthorizationRuleNamespaceContainer GetAuthorizationRuleNamespaces()
+        {
+            return new AuthorizationRuleNamespaceContainer(this);
+        }
+
         /// <summary> Gets a list of ArmDisasterRecoveries in the EHNamespace. </summary>
         /// <returns> An object representing collection of ArmDisasterRecoveries and their operations over a EHNamespace. </returns>
         public ArmDisasterRecoveryContainer GetArmDisasterRecoveries()
         {
             return new ArmDisasterRecoveryContainer(this);
+        }
+
+        /// <summary> Gets a list of Eventhubs in the EHNamespace. </summary>
+        /// <returns> An object representing collection of Eventhubs and their operations over a EHNamespace. </returns>
+        public EventhubContainer GetEventhubs()
+        {
+            return new EventhubContainer(this);
         }
     }
 }

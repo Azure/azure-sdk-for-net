@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventHub;
 
 namespace Azure.ResourceManager.EventHub.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.EventHub.Models
         /// <summary> Initializes a new instance of EventHubListResult. </summary>
         internal EventHubListResult()
         {
-            Value = new ChangeTrackingList<Eventhub>();
+            Value = new ChangeTrackingList<EventhubData>();
         }
 
         /// <summary> Initializes a new instance of EventHubListResult. </summary>
         /// <param name="value"> Result of the List EventHubs operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of EventHubs. </param>
-        internal EventHubListResult(IReadOnlyList<Eventhub> value, string nextLink)
+        internal EventHubListResult(IReadOnlyList<EventhubData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the List EventHubs operation. </summary>
-        public IReadOnlyList<Eventhub> Value { get; }
+        public IReadOnlyList<EventhubData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of EventHubs. </summary>
         public string NextLink { get; }
     }

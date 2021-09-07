@@ -9,20 +9,21 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EventHub.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHub
 {
-    /// <summary> Single item in List or Get Event Hub operation. </summary>
-    public partial class Eventhub : Resource
+    /// <summary> A class representing the Eventhub data model. </summary>
+    public partial class EventhubData : Resource
     {
-        /// <summary> Initializes a new instance of Eventhub. </summary>
-        public Eventhub()
+        /// <summary> Initializes a new instance of EventhubData. </summary>
+        public EventhubData()
         {
             PartitionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Eventhub. </summary>
+        /// <summary> Initializes a new instance of EventhubData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.EventHub.Models
         /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
         /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
         /// <param name="captureDescription"> Properties of capture description. </param>
-        internal Eventhub(ResourceIdentifier id, string name, ResourceType type, IReadOnlyList<string> partitionIds, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, type)
+        internal EventhubData(ResourceIdentifier id, string name, ResourceType type, IReadOnlyList<string> partitionIds, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, type)
         {
             PartitionIds = partitionIds;
             CreatedAt = createdAt;

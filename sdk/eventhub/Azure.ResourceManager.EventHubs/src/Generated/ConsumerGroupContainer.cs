@@ -18,7 +18,7 @@ using Azure.ResourceManager.EventHub.Models;
 
 namespace Azure.ResourceManager.EventHub
 {
-    /// <summary> A class representing collection of ConsumerGroup and their operations over a Parent. </summary>
+    /// <summary> A class representing collection of ConsumerGroup and their operations over a Eventhub. </summary>
     public partial class ConsumerGroupContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHub
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => "Microsoft.EventHub/namespaces/eventhubs";
+        protected override ResourceType ValidResourceType => Eventhub.ResourceType;
 
         // Container level operations.
 

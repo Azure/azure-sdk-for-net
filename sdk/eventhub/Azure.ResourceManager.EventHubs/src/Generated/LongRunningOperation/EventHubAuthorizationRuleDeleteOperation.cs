@@ -13,17 +13,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHub.Models
 {
-    /// <summary> Deletes an AuthorizationRule for a Namespace. </summary>
-    public partial class NamespaceDeleteAuthorizationRuleOperation : Operation
+    /// <summary> Deletes an Event Hub AuthorizationRule. </summary>
+    public partial class EventHubAuthorizationRuleDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of NamespaceDeleteAuthorizationRuleOperation for mocking. </summary>
-        protected NamespaceDeleteAuthorizationRuleOperation()
+        /// <summary> Initializes a new instance of EventHubAuthorizationRuleDeleteOperation for mocking. </summary>
+        protected EventHubAuthorizationRuleDeleteOperation()
         {
         }
 
-        internal NamespaceDeleteAuthorizationRuleOperation(Response response)
+        internal EventHubAuthorizationRuleDeleteOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }

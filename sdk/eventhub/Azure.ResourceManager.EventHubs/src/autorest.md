@@ -15,19 +15,21 @@ operation-group-to-resource-type:
     PrivateLinkResources: Microsoft.EventHub/namespaces/privateLinkResources
     Regions: Microsoft.EventHub/sku/regions
     Configuration: Microsoft.EventHub/clusters/quotaConfiguration/default
+    DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules
 operation-group-to-resource:
     PrivateLinkResources: NonResource
     Regions: NonResource
     Configuration: ClusterQuotaConfigurationProperties
+    DisasterRecoveryConfigAuthorizationRules: AuthorizationRule
 operation-group-to-parent:
     Namespaces: resourceGroups
     Configuration: Microsoft.EventHub/clusters
     ConsumerGroups: Microsoft.EventHub/namespaces/eventhubs
     NetworkRuleSets: Microsoft.EventHub/namespaces
-    EHNamespaceAuthorizationRules: Microsoft.EventHub/namespaces
-    ArmDisasterRecoveryAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs
-    EventhubAuthorizationRules: Microsoft.EventHub/namespaces/eventhubs
-operation-group-is-extension: EHNamespaceAuthorizationRules;ArmDisasterRecoveryAuthorizationRules;EventhubAuthorizationRules
+    NamespaceAuthorizationRules: Microsoft.EventHub/namespaces
+    DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs
+    EventHubAuthorizationRules: Microsoft.EventHub/namespaces/eventhubs
+operation-group-is-extension: NamespaceAuthorizationRules;DisasterRecoveryConfigAuthorizationRules;EventHubAuthorizationRules
 directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/ipfilterrules'].get.operationId
@@ -62,4 +64,55 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default'].get.operationId
       transform: return "NetworkRuleSets_Get"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules'].get.operationId
+      transform: return "NamespaceAuthorizationRules_List"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}'].put.operationId
+      transform: return "NamespaceAuthorizationRules_CreateOrUpdate"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}'].delete.operationId
+      transform: return "NamespaceAuthorizationRules_Delete"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}'].get.operationId
+      transform: return "NamespaceAuthorizationRules_Get"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/listKeys'].post.operationId
+      transform: return "NamespaceAuthorizationRules_ListKeys"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/regenerateKeys'].post.operationId
+      transform: return "NamespaceAuthorizationRules_RegenerateKeys"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules'].get.operationId
+      transform: return "DisasterRecoveryConfigAuthorizationRules_List"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}'].put.operationId
+      transform: return "DisasterRecoveryConfigAuthorizationRules_CreateOrUpdate"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}'].delete.operationId
+      transform: return "DisasterRecoveryConfigAuthorizationRules_Delete"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}'].get.operationId
+      transform: return "DisasterRecoveryConfigAuthorizationRules_Get"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys'].get.operationId
+      transform: return "DisasterRecoveryConfigAuthorizationRules_ListKeys"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules'].get.operationId
+      transform: return "EventHubAuthorizationRules_List"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}'].put.operationId
+      transform: return "EventHubAuthorizationRules_CreateOrUpdate"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}'].delete.operationId
+      transform: return "EventHubAuthorizationRules_Delete"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}'].get.operationId
+      transform: return "EventHubAuthorizationRules_Get"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}/listKeys'].post.operationId
+      transform: return "EventHubAuthorizationRules_ListKeys"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}/regenerateKeys'].post.operationId
+      transform: return "EventHubAuthorizationRules_RegenerateKeys"
 ```

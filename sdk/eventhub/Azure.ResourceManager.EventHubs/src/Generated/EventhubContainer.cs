@@ -18,27 +18,27 @@ using Azure.ResourceManager.EventHub.Models;
 
 namespace Azure.ResourceManager.EventHub
 {
-    /// <summary> A class representing collection of AuthorizationRule and their operations over a Parent. </summary>
-    public partial class AuthorizationRuleContainer : ArmContainer
+    /// <summary> A class representing collection of Eventhub and their operations over a EHNamespace. </summary>
+    public partial class EventhubContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly EventHubsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AuthorizationRuleContainer"/> class for mocking. </summary>
-        protected AuthorizationRuleContainer()
+        /// <summary> Initializes a new instance of the <see cref="EventhubContainer"/> class for mocking. </summary>
+        protected EventhubContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationRuleContainer class. </summary>
+        /// <summary> Initializes a new instance of EventhubContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal AuthorizationRuleContainer(ArmResource parent) : base(parent)
+        internal EventhubContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new EventHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => "Microsoft.EventHub/namespaces/eventhubs";
+        protected override ResourceType ValidResourceType => EHNamespace.ResourceType;
 
         // Container level operations.
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventHub
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual EventHubCreateOrUpdateOperation CreateOrUpdate(string eventHubName, Eventhub parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EventHubCreateOrUpdateOperation CreateOrUpdate(string eventHubName, EventhubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (eventHubName == null)
             {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.EventHub
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, eventHubName, parameters, cancellationToken);
-                var operation = new EventHubCreateOrUpdateOperation(response);
+                var operation = new EventHubCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventHub
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<EventHubCreateOrUpdateOperation> CreateOrUpdateAsync(string eventHubName, Eventhub parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EventHubCreateOrUpdateOperation> CreateOrUpdateAsync(string eventHubName, EventhubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (eventHubName == null)
             {
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.EventHub
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, eventHubName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubCreateOrUpdateOperation(response);
+                var operation = new EventHubCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,23 +111,23 @@ namespace Azure.ResourceManager.EventHub
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<AuthorizationRule> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<Eventhub> Get(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.Get");
             scope.Start();
             try
             {
-                if (authorizationRuleName == null)
+                if (eventHubName == null)
                 {
-                    throw new ArgumentNullException(nameof(authorizationRuleName));
+                    throw new ArgumentNullException(nameof(eventHubName));
                 }
 
-                var response = _restClient.GetAuthorizationRule(Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AuthorizationRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Eventhub(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,23 +137,23 @@ namespace Azure.ResourceManager.EventHub
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<AuthorizationRule>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Eventhub>> GetAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.Get");
             scope.Start();
             try
             {
-                if (authorizationRuleName == null)
+                if (eventHubName == null)
                 {
-                    throw new ArgumentNullException(nameof(authorizationRuleName));
+                    throw new ArgumentNullException(nameof(eventHubName));
                 }
 
-                var response = await _restClient.GetAuthorizationRuleAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AuthorizationRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Eventhub(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,23 +163,23 @@ namespace Azure.ResourceManager.EventHub
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<AuthorizationRule> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<Eventhub> GetIfExists(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (authorizationRuleName == null)
+                if (eventHubName == null)
                 {
-                    throw new ArgumentNullException(nameof(authorizationRuleName));
+                    throw new ArgumentNullException(nameof(eventHubName));
                 }
 
-                var response = _restClient.GetAuthorizationRule(Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<AuthorizationRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new AuthorizationRule(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<Eventhub>(null, response.GetRawResponse())
+                    : Response.FromValue(new Eventhub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,23 +189,23 @@ namespace Azure.ResourceManager.EventHub
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<AuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Eventhub>> GetIfExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (authorizationRuleName == null)
+                if (eventHubName == null)
                 {
-                    throw new ArgumentNullException(nameof(authorizationRuleName));
+                    throw new ArgumentNullException(nameof(eventHubName));
                 }
 
-                var response = await _restClient.GetAuthorizationRuleAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<AuthorizationRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new AuthorizationRule(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<Eventhub>(null, response.GetRawResponse())
+                    : Response.FromValue(new Eventhub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,20 +215,20 @@ namespace Azure.ResourceManager.EventHub
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (authorizationRuleName == null)
+                if (eventHubName == null)
                 {
-                    throw new ArgumentNullException(nameof(authorizationRuleName));
+                    throw new ArgumentNullException(nameof(eventHubName));
                 }
 
-                var response = GetIfExists(authorizationRuleName, cancellationToken: cancellationToken);
+                var response = GetIfExists(eventHubName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,20 +239,20 @@ namespace Azure.ResourceManager.EventHub
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (authorizationRuleName == null)
+                if (eventHubName == null)
                 {
-                    throw new ArgumentNullException(nameof(authorizationRuleName));
+                    throw new ArgumentNullException(nameof(eventHubName));
                 }
 
-                var response = await GetIfExistsAsync(authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await GetIfExistsAsync(eventHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -262,19 +262,21 @@ namespace Azure.ResourceManager.EventHub
             }
         }
 
-        /// <summary> Gets the authorization rules for an Event Hub. </summary>
+        /// <summary> Gets all the Event Hubs in a Namespace. </summary>
+        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AuthorizationRule> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Eventhub" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Eventhub> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<AuthorizationRule> FirstPageFunc(int? pageSizeHint)
+            Page<Eventhub> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAuthorizationRules(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _restClient.GetAllByNamespace(Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Eventhub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -282,14 +284,14 @@ namespace Azure.ResourceManager.EventHub
                     throw;
                 }
             }
-            Page<AuthorizationRule> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<Eventhub> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAuthorizationRulesNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _restClient.GetAllByNamespaceNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Eventhub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,19 +302,21 @@ namespace Azure.ResourceManager.EventHub
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets the authorization rules for an Event Hub. </summary>
+        /// <summary> Gets all the Event Hubs in a Namespace. </summary>
+        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AuthorizationRule> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="Eventhub" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Eventhub> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AuthorizationRule>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Eventhub>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAuthorizationRulesAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _restClient.GetAllByNamespaceAsync(Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Eventhub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -320,14 +324,14 @@ namespace Azure.ResourceManager.EventHub
                     throw;
                 }
             }
-            async Task<Page<AuthorizationRule>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Eventhub>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAuthorizationRulesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _restClient.GetAllByNamespaceNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Eventhub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,6 +343,6 @@ namespace Azure.ResourceManager.EventHub
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, AuthorizationRule, AuthorizationRuleData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, Eventhub, EventhubData> Construct() { }
     }
 }
