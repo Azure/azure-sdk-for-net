@@ -57,8 +57,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.That(async () => await client.DeleteManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
             Assert.That(async () => await client.DownloadBlobAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
             Assert.That(async () => await client.DownloadManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
-            Assert.That(async () => await client.UploadManifestAsync((Stream)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `stream` is not null.");
-            Assert.That(async () => await client.UploadManifestAsync((OciManifest)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
+            Assert.That(async () => await client.UploadManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
             Assert.That(async () => await client.UploadBlobAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `stream` is not null.");
         }
     }

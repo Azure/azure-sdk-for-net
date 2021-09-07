@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,13 +17,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
         }
 
-        [RecordedTest]
-        public async Task CanUploadOciManifest()
+        /// <summary>
+        /// Create an OciManifest type that matches the contents of the manifest.json test data file.
+        /// </summary>
+        /// <returns></returns>
+        private static OciManifest CreateManifest()
         {
-            // Arrange
-            var client = CreateBlobClient("oci-artifact");
-
-            // Act
             OciManifest manifest = new OciManifest()
             {
                 SchemaVersion = 2,
@@ -46,6 +44,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
             });
 
+            return manifest;
+        }
+
+        [RecordedTest]
+        public async Task CanUploadOciManifest()
+        {
+            // Arrange
+            var client = CreateBlobClient("oci-artifact");
+
+            // Act
+            var manifest = CreateManifest();
             var uploadResult = await client.UploadManifestAsync(manifest);
             string digest = uploadResult.Value.Digest;
 
@@ -59,51 +68,23 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanUploadOciManifestStream()
-        {
-            // Arrange
-            var client = CreateBlobClient("oci-artifact");
-            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact", "manifest.json");
-            string digest = default;
-
-            // Act
-            using (var fs = File.OpenRead(manifest))
-            {
-                var uploadResult = await client.UploadManifestAsync(fs);
-                digest = uploadResult.Value.Digest;
-            }
-
-            // Assert
-            var downloadResult = await client.DownloadManifestAsync(digest);
-            Assert.AreEqual(digest, downloadResult.Value.Digest);
-            ValidateManifest(downloadResult.Value.Manifest);
-
-            // Clean up
-            await client.DeleteManifestAsync(digest);
-        }
-
-        [RecordedTest]
-        public async Task CanUploadOciManifestStreamWithTag()
+        public async Task CanUploadOciManifestWithTag()
         {
             // Arrange
             string repository = "oci-artifact";
             var client = CreateBlobClient(repository);
             var metadataClient = CreateClient();
-            var manifest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact", "manifest.json");
-            string digest = default;
-            string tag = $"v1";
+            string tag = "v1";
 
             await UploadManifestPrerequisites(client);
 
             // Act
-            using (var fs = File.OpenRead(manifest))
+            var manifest = CreateManifest();
+            var uploadResult = await client.UploadManifestAsync(manifest, new UploadManifestOptions()
             {
-                var uploadResult = await client.UploadManifestAsync(fs, new UploadManifestOptions()
-                {
-                    Tag = tag
-                });
-                digest = uploadResult.Value.Digest;
-            }
+                Tag = tag
+            });
+            var digest = uploadResult.Value.Digest;
 
             // Assert
             var downloadResult = await client.DownloadManifestAsync(digest);

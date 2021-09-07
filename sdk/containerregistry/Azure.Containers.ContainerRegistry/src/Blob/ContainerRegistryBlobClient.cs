@@ -84,40 +84,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public virtual string RepositoryName => _repositoryName;
 
         /// <summary>
-        /// Upload an artifact manifest from a stream.
-        /// </summary>
-        /// <param name="stream">The stream containing the serialized manifest.</param>
-        /// <param name="options">Options for configuring the upload operation.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
-        public virtual Response<UploadManifestResult> UploadManifest(Stream stream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(stream, nameof(stream));
-
-            options ??= new UploadManifestOptions();
-
-            var manifest = DeserializeManifest(stream);
-            return UploadManifest(manifest, options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Upload an artifact manifest from a stream.
-        /// </summary>
-        /// <param name="stream">The stream containing the serialized manifest.</param>
-        /// <param name="options">Options for configuring the upload operation.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
-        public async virtual Task<Response<UploadManifestResult>> UploadManifestAsync(Stream stream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(stream, nameof(stream));
-
-            options ??= new UploadManifestOptions();
-
-            var manifest = DeserializeManifest(stream);
-            return await UploadManifestAsync(manifest, options, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// Upload a manifest for an OCI Artifact.
         /// </summary>
         /// <param name="manifest">The manifest to upload.</param>
