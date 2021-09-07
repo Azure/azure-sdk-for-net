@@ -37,10 +37,10 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryRegisterSchema
-            string schemaName = "employeeSample";
-            SerializationType schemaType = SerializationType.Avro;
+            string name = "employeeSample";
+            SerializationType type = SerializationType.Avro;
             // Example schema's content
-            string schemaContent = @"
+            string content = @"
             {
                ""type"" : ""record"",
                 ""namespace"" : ""TestSchema"",
@@ -51,7 +51,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 ]
             }";
 
-            Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, schemaName, schemaType, schemaContent);
+            Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, content, type);
             #endregion
 
             Assert.NotNull(schemaProperties);
@@ -65,10 +65,10 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryRetrieveSchemaId
-            string schemaName = "employeeSample";
-            SerializationType schemaType = SerializationType.Avro;
+            string name = "employeeSample";
+            SerializationType type = SerializationType.Avro;
             // Example schema's content
-            string schemaContent = @"
+            string content = @"
             {
                ""type"" : ""record"",
                 ""namespace"" : ""TestSchema"",
@@ -79,7 +79,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 ]
             }";
 
-            SchemaProperties schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
+            SchemaProperties schemaProperties = client.GetSchemaProperties(groupName, name, content, type);
             string schemaId = schemaProperties.Id;
             #endregion
 
@@ -94,10 +94,10 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
             #region Snippet:SchemaRegistryRetrieveSchema
             SchemaProperties schemaProperties = client.GetSchema(schemaId);
-            string schemaContent = schemaProperties.Content;
+            string content = schemaProperties.Content;
             #endregion
 
-            Assert.AreEqual(Regex.Replace(_schemaProperties.Content, @"\s+", string.Empty), schemaContent);
+            Assert.AreEqual(Regex.Replace(_schemaProperties.Content, @"\s+", string.Empty), content);
         }
     }
 }
