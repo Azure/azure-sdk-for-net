@@ -843,13 +843,9 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(CreateIfNotExists)}");
-
                 PageBlobRequestConditions conditions = new PageBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
                 try
                 {
-                    scope.Start();
-
                     return await CreateInternal(
                         size,
                         sequenceNumber,
@@ -872,13 +868,11 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
-                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
-                    scope.Dispose();
                 }
             }
         }
@@ -3156,16 +3150,16 @@ namespace Azure.Storage.Blobs.Specialized
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,
-            PageBlobUploadPagesFromUriOptions options,
+            PageBlobUploadPagesFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,
                 range,
-                options.SourceContentHash,
-                options.DestinationConditions,
-                options.SourceConditions,
-                options.SourceAuthentication,
+                options?.SourceContentHash,
+                options?.DestinationConditions,
+                options?.SourceConditions,
+                options?.SourceAuthentication,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3217,16 +3211,16 @@ namespace Azure.Storage.Blobs.Specialized
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,
-            PageBlobUploadPagesFromUriOptions options,
+            PageBlobUploadPagesFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             await UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,
                 range,
-                options.SourceContentHash,
-                options.DestinationConditions,
-                options.SourceConditions,
-                options.SourceAuthentication,
+                options?.SourceContentHash,
+                options?.DestinationConditions,
+                options?.SourceConditions,
+                options?.SourceAuthentication,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3290,14 +3284,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PageInfo> UploadPagesFromUri(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,
-            byte[] sourceContentHash = default,
-            PageBlobRequestConditions conditions = default,
-            PageBlobRequestConditions sourceConditions = default,
-            CancellationToken cancellationToken = default) =>
+            byte[] sourceContentHash,
+            PageBlobRequestConditions conditions,
+            PageBlobRequestConditions sourceConditions,
+            CancellationToken cancellationToken) =>
             UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,
@@ -3369,14 +3365,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PageInfo>> UploadPagesFromUriAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,
-            byte[] sourceContentHash = default,
-            PageBlobRequestConditions conditions = default,
-            PageBlobRequestConditions sourceConditions = default,
-            CancellationToken cancellationToken = default) =>
+            byte[] sourceContentHash,
+            PageBlobRequestConditions conditions,
+            PageBlobRequestConditions sourceConditions,
+            CancellationToken cancellationToken) =>
             await UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,

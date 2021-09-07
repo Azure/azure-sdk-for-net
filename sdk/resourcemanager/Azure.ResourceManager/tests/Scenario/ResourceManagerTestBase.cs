@@ -4,13 +4,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class ResourceManagerTestBase : ManagementRecordedTestBase<ResourceManagerTestEnvironment>
     {
@@ -34,10 +36,8 @@ namespace Azure.ResourceManager.Core.Tests
 
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
-            var data = new GenericResourceData();
-            data.Location = Location.WestUS2;
-            data.Sku = new Sku();
-            data.Sku.Name = "Aligned";
+            var data = new GenericResourceData(Location.WestUS2);
+            data.Sku = new Sku("Aligned");
             var propertyBag = new Dictionary<string, object>();
             propertyBag.Add("platformUpdateDomainCount", 5);
             propertyBag.Add("platformFaultDomainCount", 2);
@@ -45,20 +45,21 @@ namespace Azure.ResourceManager.Core.Tests
             return data;
         }
 
-        protected async Task<GenericResource> CreateGenericAvailabilitySetAsync(ResourceGroupResourceIdentifier rgId)
+        protected async Task<GenericResource> CreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
             var genericResources = Client.DefaultSubscription.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.CreateOrUpdateAsync(asetId, data);
+            var op = await genericResources.CreateOrUpdateAsync(asetId, data);
+            return op.Value;
         }
 
-        protected async Task<ResourcesCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceGroupResourceIdentifier rgId)
+        protected async Task<ResourceCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
             var genericResources = Client.DefaultSubscription.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.StartCreateOrUpdateAsync(asetId, data);
+            return await genericResources.CreateOrUpdateAsync(asetId, data, false);
         }
 
         protected static void AssertAreEqual(GenericResource aset, GenericResource aset2)
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Core.Tests
         protected static async Task<int> GetResourceCountAsync(GenericResourceContainer genericResources, ResourceGroup rg = default)
         {
             int result = 0;
-            var pageable = rg == null ? genericResources.ListAsync() : genericResources.ListByResourceGroupAsync(rg.Id.Name);
+            var pageable = rg == null ? genericResources.GetAllAsync() : genericResources.GetByResourceGroupAsync(rg.Id.Name);
             await foreach (var resource in pageable)
                 result++;
             return result;

@@ -4,7 +4,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class ResourceGroupBuilderTests : ResourceManagerTestBase
     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Assert.ThrowsAsync<ArgumentException>(async () =>
             {
-                var createOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).StartCreateOrUpdateAsync(value);
+                var createOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(value, false);
                 _ = await createOp.WaitForCompletionAsync();
             });
         }

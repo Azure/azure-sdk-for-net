@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,34 +20,12 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("certificateAuthority");
                 writer.WriteObjectValue(CertificateAuthority);
             }
-            if (Optional.IsCollectionDefined(ExcludedDomains))
-            {
-                writer.WritePropertyName("excludedDomains");
-                writer.WriteStartArray();
-                foreach (var item in ExcludedDomains)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(TrustedRootCertificates))
-            {
-                writer.WritePropertyName("trustedRootCertificates");
-                writer.WriteStartArray();
-                foreach (var item in TrustedRootCertificates)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
         }
 
         internal static FirewallPolicyTransportSecurity DeserializeFirewallPolicyTransportSecurity(JsonElement element)
         {
             Optional<FirewallPolicyCertificateAuthority> certificateAuthority = default;
-            Optional<IList<string>> excludedDomains = default;
-            Optional<IList<FirewallPolicyTrustedRootCertificate>> trustedRootCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateAuthority"))
@@ -61,38 +38,8 @@ namespace Azure.ResourceManager.Network.Models
                     certificateAuthority = FirewallPolicyCertificateAuthority.DeserializeFirewallPolicyCertificateAuthority(property.Value);
                     continue;
                 }
-                if (property.NameEquals("excludedDomains"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    excludedDomains = array;
-                    continue;
-                }
-                if (property.NameEquals("trustedRootCertificates"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<FirewallPolicyTrustedRootCertificate> array = new List<FirewallPolicyTrustedRootCertificate>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(FirewallPolicyTrustedRootCertificate.DeserializeFirewallPolicyTrustedRootCertificate(item));
-                    }
-                    trustedRootCertificates = array;
-                    continue;
-                }
             }
-            return new FirewallPolicyTransportSecurity(certificateAuthority.Value, Optional.ToList(excludedDomains), Optional.ToList(trustedRootCertificates));
+            return new FirewallPolicyTransportSecurity(certificateAuthority.Value);
         }
     }
 }

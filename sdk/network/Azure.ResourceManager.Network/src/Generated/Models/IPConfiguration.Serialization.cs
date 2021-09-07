@@ -7,6 +7,8 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateIPAddress))
@@ -55,11 +54,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<string> privateIPAddress = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<Subnet> subnet = default;
-            Optional<PublicIPAddress> publicIPAddress = default;
+            Optional<SubnetData> subnet = default;
+            Optional<PublicIPAddressData> publicIPAddress = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = Subnet.DeserializeSubnet(property0.Value);
+                            subnet = SubnetData.DeserializeSubnetData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddress"))
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddress = PublicIPAddress.DeserializePublicIPAddress(property0.Value);
+                            publicIPAddress = PublicIPAddressData.DeserializePublicIPAddressData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new IPConfiguration(id.Value, name.Value, etag.Value, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, publicIPAddress.Value, Optional.ToNullable(provisioningState));
+            return new IPConfiguration(id, name.Value, etag.Value, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, publicIPAddress.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -1341,7 +1341,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobAppendInfo> AppendBlockFromUri(
             Uri sourceUri,
-            AppendBlobAppendBlockFromUriOptions options,
+            AppendBlobAppendBlockFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             AppendBlockFromUriInternal(
                 sourceUri,
@@ -1389,7 +1389,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
             Uri sourceUri,
-            AppendBlobAppendBlockFromUriOptions options,
+            AppendBlobAppendBlockFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             await AppendBlockFromUriInternal(
                 sourceUri,
@@ -1457,13 +1457,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<BlobAppendInfo> AppendBlockFromUri(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
-            HttpRange sourceRange = default,
-            byte[] sourceContentHash = default,
-            AppendBlobRequestConditions conditions = default,
-            AppendBlobRequestConditions sourceConditions = default,
-            CancellationToken cancellationToken = default) =>
+            HttpRange sourceRange,
+            byte[] sourceContentHash,
+            AppendBlobRequestConditions conditions,
+            AppendBlobRequestConditions sourceConditions,
+            CancellationToken cancellationToken) =>
             AppendBlockFromUriInternal(
                 sourceUri,
                 sourceRange,
@@ -1530,13 +1532,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
-            HttpRange sourceRange = default,
-            byte[] sourceContentHash = default,
-            AppendBlobRequestConditions conditions = default,
-            AppendBlobRequestConditions sourceConditions = default,
-            CancellationToken cancellationToken = default) =>
+            HttpRange sourceRange,
+            byte[] sourceContentHash,
+            AppendBlobRequestConditions conditions,
+            AppendBlobRequestConditions sourceConditions,
+            CancellationToken cancellationToken) =>
             await AppendBlockFromUriInternal(
                 sourceUri,
                 sourceRange,

@@ -53,6 +53,21 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
+            if (Optional.IsDefined(NetworkAccessPolicy))
+            {
+                writer.WritePropertyName("networkAccessPolicy");
+                writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(DiskAccessId))
+            {
+                writer.WritePropertyName("diskAccessId");
+                writer.WriteStringValue(DiskAccessId);
+            }
+            if (Optional.IsDefined(SupportsHibernation))
+            {
+                writer.WritePropertyName("supportsHibernation");
+                writer.WriteBooleanValue(SupportsHibernation.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

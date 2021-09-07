@@ -2,11 +2,12 @@
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
     class PlanTests
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Plan plan = new(null, null, null, null, null);
             var json = JsonHelper.SerializePropertiesToString(plan);
-            Assert.IsTrue(json.Equals("{\"properties\":{}}"));
+            Assert.AreEqual("{\"properties\":{\"name\":null,\"publisher\":null,\"product\":null}}", json);
         }
 
         [Test]

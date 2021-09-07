@@ -4,7 +4,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class SubscriptionContainerTests : ResourceManagerTestBase
     {
@@ -13,31 +13,28 @@ namespace Azure.ResourceManager.Core.Tests
         {
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task List()
         {
             int count = 0;
-            await foreach (var rg in Client.GetSubscriptions().ListAsync())
+            await foreach (var rg in Client.GetSubscriptions().GetAllAsync())
             {
                 count++;
             }
             Assert.GreaterOrEqual(count, 1);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task TryGet()
         {
-            var foo = await Client.GetSubscriptions().TryGetAsync(new Guid().ToString()).ConfigureAwait(false);
-            Assert.IsNull(foo);
+            var foo = await Client.GetSubscriptions().GetIfExistsAsync(new Guid().ToString()).ConfigureAwait(false);
+            Assert.IsNull(foo.Value);
             string subscriptionId = Client.DefaultSubscription.Id.SubscriptionId;
-            var subscription = await Client.GetSubscriptions().TryGetAsync(subscriptionId).ConfigureAwait(false);
+            Subscription subscription = await Client.GetSubscriptions().GetIfExistsAsync(subscriptionId).ConfigureAwait(false);
             Assert.NotNull(subscription);
             Assert.IsTrue(subscription.Id.SubscriptionId.Equals(subscriptionId));
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -46,9 +43,10 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(subscriptionId, result.Id.SubscriptionId);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetSubscriptions().GetAsync(null).ConfigureAwait(false));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscriptions().GetAsync(new Guid().ToString()).ConfigureAwait(false));
+            Assert.AreEqual(404, ex.Status);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task CheckIfExists()
         {

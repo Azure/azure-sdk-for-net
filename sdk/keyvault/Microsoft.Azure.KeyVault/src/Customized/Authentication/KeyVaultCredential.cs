@@ -118,7 +118,7 @@ namespace Microsoft.Azure.KeyVault
                 HttpResponseMessage response;
 
                 // if this credential is tied to a specific KeyVaultClient reuse it's HttpClient to send the 
-                // initial unauthed request to get the challange, otherwise create a new HttpClient
+                // initial unauthed request to get the challenge, otherwise create a new HttpClient
                 HttpClient client = _client?.HttpClient ?? new HttpClient();
 
                 using (var r = new HttpRequestMessage(request.Method, request.RequestUri))

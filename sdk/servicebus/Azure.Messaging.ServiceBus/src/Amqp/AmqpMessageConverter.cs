@@ -144,12 +144,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 case BufferListStream bufferListStream:
                     return bufferListStream.ReadBytes((int)stream.Length);
+
+                case MemoryStream memStreamSource:
+                {
+                    using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
+                    memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                    return new ArraySegment<byte>(memStreamCopy.ToArray());
+                }
+
                 default:
-                    {
-                        using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-                        stream.CopyTo(memStream, StreamBufferSizeInBytes);
-                        return new ArraySegment<byte>(memStream.ToArray());
-                    }
+                {
+                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
+                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
+                    return new ArraySegment<byte>(memStream.ToArray());
+                }
             }
         }
 
@@ -403,7 +411,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (amqpMessage.Properties.AbsoluteExpiryTime != null)
                 {
-                    annotatedMessage.Properties.AbsoluteExpiryTime = amqpMessage.Properties.AbsoluteExpiryTime;
+                    annotatedMessage.Properties.AbsoluteExpiryTime =
+                        amqpMessage.Properties.AbsoluteExpiryTime >= DateTimeOffset.MaxValue.UtcDateTime
+                        ? DateTimeOffset.MaxValue
+                        : amqpMessage.Properties.AbsoluteExpiryTime;
                 }
             }
 

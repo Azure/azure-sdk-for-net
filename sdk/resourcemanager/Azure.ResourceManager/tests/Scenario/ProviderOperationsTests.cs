@@ -4,13 +4,22 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class ProviderOperationsTests : ResourceManagerTestBase
     {
         public ProviderOperationsTests(bool isAsync)
-         : base(isAsync) //, RecordedTestMode.Record)
+         : base(isAsync)//, RecordedTestMode.Record)
         {
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void NoDataValidation()
+        {
+            ///subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights
+            var resource = Client.GetProvider($"/subscriptions/{Guid.NewGuid()}/providers/microsoft.FakeNamespace");
+            Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
         }
 
         [TestCase]
@@ -21,6 +30,9 @@ namespace Azure.ResourceManager.Core.Tests
             Response<Provider> response = await providerContainer.GetAsync("microsoft.insights");
             Provider result = response.Value;
             Assert.IsNotNull(result);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetProvider(result.Data.Id + "x").GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         [TestCase]

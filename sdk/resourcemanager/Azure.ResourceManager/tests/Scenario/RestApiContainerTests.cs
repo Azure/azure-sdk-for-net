@@ -2,7 +2,7 @@
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class RestApiContainerTests : ResourceManagerTestBase
     {
@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             bool foundVirtualMachine = false;
             var restApiContainer = Client.GetRestApis("Microsoft.Compute");
-            await foreach (var restApi in restApiContainer.ListAsync())
+            await foreach (var restApi in restApiContainer.GetAllAsync())
             {
                 if (restApi.Resource == "Virtual Machines")
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             bool foundPrivateEndpoint = false;
             var restApiContainer = Client.GetRestApis("Microsoft.Network");
-            await foreach (var restApi in restApiContainer.ListAsync())
+            await foreach (var restApi in restApiContainer.GetAllAsync())
             {
                 if (restApi.Resource == "Private Endpoint")
                 {

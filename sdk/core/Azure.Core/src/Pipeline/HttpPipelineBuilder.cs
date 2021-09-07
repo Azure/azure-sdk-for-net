@@ -44,7 +44,24 @@ namespace Azure.Core.Pipeline
                 throw new ArgumentNullException(nameof(perRetryPolicies));
             }
 
-            var policies = new List<HttpPipelinePolicy>();
+            var policies = new List<HttpPipelinePolicy>(8 +
+                                                        (options.Policies?.Count ?? 0) +
+                                                        perCallPolicies.Length +
+                                                        perRetryPolicies.Length);
+
+            void AddCustomerPolicies(HttpPipelinePosition position)
+            {
+                if (options.Policies != null)
+                {
+                    foreach (var policy in options.Policies)
+                    {
+                        if (policy.Position == position)
+                        {
+                            policies.Add(policy.Policy);
+                        }
+                    }
+                }
+            }
 
             bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
 
@@ -52,7 +69,7 @@ namespace Azure.Core.Pipeline
 
             policies.AddRange(perCallPolicies);
 
-            policies.AddRange(options.PerCallPolicies);
+            AddCustomerPolicies(HttpPipelinePosition.PerCall);
 
             policies.Add(ClientRequestIdPolicy.Shared);
 
@@ -65,9 +82,11 @@ namespace Azure.Core.Pipeline
             RetryOptions retryOptions = options.Retry;
             policies.Add(new RetryPolicy(retryOptions.Mode, retryOptions.Delay, retryOptions.MaxDelay, retryOptions.MaxRetries));
 
+            policies.Add(RedirectPolicy.Shared);
+
             policies.AddRange(perRetryPolicies);
 
-            policies.AddRange(options.PerRetryPolicies);
+            AddCustomerPolicies(HttpPipelinePosition.PerRetry);
 
             if (diagnostics.IsLoggingEnabled)
             {
@@ -81,7 +100,9 @@ namespace Azure.Core.Pipeline
 
             policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly)));
 
-            policies.RemoveAll(policy => policy == null);
+            AddCustomerPolicies(HttpPipelinePosition.BeforeTransport);
+
+            policies.RemoveAll(static policy => policy == null);
 
             return new HttpPipeline(options.Transport,
                 policies.ToArray(),

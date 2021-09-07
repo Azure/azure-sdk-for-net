@@ -4108,7 +4108,7 @@ namespace Azure.Storage.Files.Shares
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
-            ShareFileUploadRangeFromUriOptions options,
+            ShareFileUploadRangeFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             UploadRangeFromUriInternal(
                 sourceUri: sourceUri,
@@ -4154,7 +4154,7 @@ namespace Azure.Storage.Files.Shares
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
-            ShareFileUploadRangeFromUriOptions options,
+            ShareFileUploadRangeFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             await UploadRangeFromUriInternal(
                 sourceUri: sourceUri,
@@ -4198,12 +4198,14 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareFileUploadInfo> UploadRangeFromUri(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             UploadRangeFromUriInternal(
                 sourceUri: sourceUri,
                 range: range,
@@ -4293,12 +4295,14 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeFromUriAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             await UploadRangeFromUriInternal(
                 sourceUri: sourceUri,
                 range: range,

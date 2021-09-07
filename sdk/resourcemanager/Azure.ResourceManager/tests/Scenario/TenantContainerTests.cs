@@ -2,7 +2,7 @@
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class TenantContainerTests : ResourceManagerTestBase
     {
@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task List()
         {
             int count = 0;
-            await foreach (var tenant in Client.GetTenants().ListAsync())
+            await foreach (var tenant in Client.GetTenants().GetAllAsync())
             {
                 count++;
             }

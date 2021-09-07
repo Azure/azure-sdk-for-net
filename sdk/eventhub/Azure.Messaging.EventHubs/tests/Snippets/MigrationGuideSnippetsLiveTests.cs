@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
@@ -18,7 +17,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class MigrationGuideSnippetsLiveTests
     {
         /// <summary>
@@ -29,13 +27,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         public void CreateWithConnectionString()
         {
             #region Snippet:EventHubs_Migrate_CreateWithConnectionString
-
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fake";
+#endif
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = "fake";
 
             var producer = new EventHubProducerClient(connectionString, eventHubName);
             var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName);
@@ -52,15 +51,16 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Migrate_CreateWithDefaultAzureCredential
 
-            TokenCredential credential = new DefaultAzureCredential();
-
+#if SNIPPET
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var credential = new DefaultAzureCredential();
+#else
+            var  fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var  eventHubName = "fake";
+            var  credential = EventHubsTestEnvironment.Instance.Credential;
+#endif
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = "fake";
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
 
             var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
             var consumer = new EventHubConsumerClient(consumerGroup, fullyQualifiedNamespace, eventHubName, credential);

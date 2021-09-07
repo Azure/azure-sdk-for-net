@@ -70,6 +70,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Grant the above mentioned application authorization to perform key operations on the Azure Key Vault:
     ```PowerShell
+    # Use --hsm-name instead of --name for Managed HSM
     az keyvault set-policy --name <your-key-vault-name> --spn $Env:AZURE_CLIENT_ID --key-permissions backup delete get list create encrypt decrypt update
     ```
     > --key-permissions:
@@ -80,7 +81,8 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Use the above mentioned Azure Key Vault name to retrieve details of your Vault which also contains your Azure Key Vault URL:
     ```PowerShell
-    az keyvault show --name <your-key-vault-name>
+    # Use properties.hsmUri instead of properties.vaultUri for Managed HSM
+    az keyvault show --name <your-key-vault-name> --query properties.vaultUri --output tsv
     ```
 
 * Create the Azure Key Vault or Managed HSM and grant the above mentioned application authorization to perform administrative operations on the Managed HSM 
@@ -91,7 +93,7 @@ If you are creating a standard Key Vault resource, use the following CLI command
 az keyvault create --resource-group <your-resource-group-name> --name <your-key-vault-name>
 ```
 
-If you are creating a Managed HSM resource, use the following CLI command: 
+If you are creating a Managed HSM resource, use the following CLI command:
 ```PowerShell
     az keyvault create --hsm-name <your-key-vault-name> --resource-group <your-resource-group-name> --administrators <your-service-principal-object-id> --location <your-azure-location>
 ```
@@ -124,12 +126,12 @@ az keyvault security-domain download --hsm-name <your-key-vault-name> --sd-wrapp
 ```
 
 #### Create KeyClient
-Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** with the above returned URI, you can create the [KeyClient][key_client_class]:
+Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET**, and **AZURE_TENANT_ID** environment variables, replace **vaultUrl** with the output of `az keyvault show` in the example below to create the [KeyClient][key_client_class]:
 
 ```C# Snippet:CreateKeyClient
 // Create a new key client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-var client = new KeyClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+var client = new KeyClient(vaultUri: new Uri(vaultUrl), credential: new DefaultAzureCredential());
 
 // Create a new key using the key client.
 KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);

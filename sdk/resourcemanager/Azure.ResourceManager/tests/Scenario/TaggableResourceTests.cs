@@ -9,7 +9,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class TaggableResourceTests : ResourceManagerTestBase
     {
@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.Core.Tests
         [SetUp]
         public async Task SetUpAsync()
         {
-            _rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
+            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
+            _rg = rgOp.Value;
             _rg = await _rg.AddTagAsync("key1", "value1");
             _rg = await _rg.AddTagAsync("key2", "value2");
         }

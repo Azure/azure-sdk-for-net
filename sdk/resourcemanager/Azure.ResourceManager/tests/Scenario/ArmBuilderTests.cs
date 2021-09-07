@@ -3,7 +3,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class ArmBuilderTests : ResourceManagerTestBase
     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void TestStartCreateOrUpdate(string value)
         {
-            Assert.ThrowsAsync<ArgumentException>(async delegate { await _client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).StartCreateOrUpdateAsync(value); });
+            Assert.ThrowsAsync<ArgumentException>(async delegate { await _client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(value, false); });
         }
     }
 }

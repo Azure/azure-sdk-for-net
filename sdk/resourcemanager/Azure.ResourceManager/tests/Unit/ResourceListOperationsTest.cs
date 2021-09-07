@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
     public class ResourceListOperationsTest
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Core.Tests
 
         private static Sku GetSku()
         {
-            return new Sku("name", "tier", "family", "size", "model", 10);
+            return new Sku("name", SkuTier.Basic, "family", "size", 10);
         }
 
         private static GenericResourceData GetGenericResource()
@@ -38,8 +39,8 @@ namespace Azure.ResourceManager.Core.Tests
             string managedBy,
             string location)
         {
-            TenantResourceIdentifier id = $"/subscriptions/{Guid.NewGuid().ToString()}/resourceGroups/myResourceGroup/providers/Microsoft.Widgets/widgets/myWidget";
-            return new GenericResourceData(id, id.Name, id.ResourceType, location, tags, plan, null, kind, managedBy, sku, null);
+            ResourceIdentifier id = $"/subscriptions/{Guid.NewGuid().ToString()}/resourceGroups/myResourceGroup/providers/Microsoft.Widgets/widgets/myWidget";
+            return new GenericResourceData(id, id.Name, id.ResourceType, location, tags, plan, null, kind, managedBy, sku, null, null, null, null);
         }
     }
 }

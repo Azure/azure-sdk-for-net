@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             Optional<SystemAssignedIdentity> systemAssignedIdentity = default;
-            IDictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
+            IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
             string type = string.Empty;
             foreach (var property in element.EnumerateObject())
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         resourceId = keyValuePair.Name;
                         var userAssignedIdentity = UserAssignedIdentity.DeserializeUserAssignedIdentity(keyValuePair.Value);
-                        userAssignedIdentities.Add(new ResourceGroupResourceIdentifier(resourceId), userAssignedIdentity);
+                        userAssignedIdentities.Add(new ResourceIdentifier(resourceId), userAssignedIdentity);
                     }
 
                     continue;

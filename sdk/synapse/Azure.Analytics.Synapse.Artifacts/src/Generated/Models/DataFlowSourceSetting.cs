@@ -19,6 +19,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
+        /// <summary> Initializes a new instance of DataFlowSourceSetting. </summary>
+        /// <param name="sourceName"> The data flow source name. </param>
+        /// <param name="rowLimit"> Defines the row limit of data flow source in debug. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal DataFlowSourceSetting(string sourceName, int? rowLimit, IDictionary<string, object> additionalProperties)
+        {
+            SourceName = sourceName;
+            RowLimit = rowLimit;
+            AdditionalProperties = additionalProperties;
+        }
+
         /// <summary> The data flow source name. </summary>
         public string SourceName { get; set; }
         /// <summary> Defines the row limit of data flow source in debug. </summary>

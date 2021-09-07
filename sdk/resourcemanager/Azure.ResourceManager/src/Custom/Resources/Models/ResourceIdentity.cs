@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Core;
 
@@ -28,14 +29,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         /// <param name="user"> Dictionary with a <see cref="ResourceIdentifier"/> key and a <see cref="UserAssignedIdentity"/> object value. </param>
         /// <param name="useSystemAssigned"> Flag for using <see cref="SystemAssignedIdentity"/> or not. </param>
-        public ResourceIdentity(Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> user, bool useSystemAssigned)
+        public ResourceIdentity(Dictionary<ResourceIdentifier, UserAssignedIdentity> user, bool useSystemAssigned)
         {
             // check for combination of user and system on the impact to type value
             SystemAssignedIdentity = useSystemAssigned ? new SystemAssignedIdentity() : null;
-            UserAssignedIdentities = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
+            UserAssignedIdentities = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
             if (user != null)
             {
-                foreach (KeyValuePair<ResourceGroupResourceIdentifier, UserAssignedIdentity> id in user)
+                foreach (KeyValuePair<ResourceIdentifier, UserAssignedIdentity> id in user)
                 {
                     UserAssignedIdentities.Add(id.Key, id.Value);
                 }
@@ -48,13 +49,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="systemAssigned"> The <see cref="SystemAssignedIdentity"/> to use. </param>
         /// <param name="user"> Dictionary with a <see cref="ResourceIdentifier"/> key and a <see cref="UserAssignedIdentity"/> object value. </param>
         [SerializationConstructor]
-        internal ResourceIdentity(SystemAssignedIdentity systemAssigned, IDictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> user)
+        internal ResourceIdentity(SystemAssignedIdentity systemAssigned, IDictionary<ResourceIdentifier, UserAssignedIdentity> user)
         {
             // TODO: remove this constructor later
             SystemAssignedIdentity = systemAssigned;
             if (user == null)
             {
-                UserAssignedIdentities = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
+                UserAssignedIdentities = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
             }
             else
             {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary>
         /// Gets a dictionary of the User Assigned Identities.
         /// </summary>
-        public IDictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> UserAssignedIdentities { get; private set; }
+        public IDictionary<ResourceIdentifier, UserAssignedIdentity> UserAssignedIdentities { get; private set; }
 
         /// <summary>
         /// Detects if this Identity is equals to another Identity instance.
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(this, obj))
@@ -114,6 +116,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return HashCodeBuilder.Combine(SystemAssignedIdentity, UserAssignedIdentities);

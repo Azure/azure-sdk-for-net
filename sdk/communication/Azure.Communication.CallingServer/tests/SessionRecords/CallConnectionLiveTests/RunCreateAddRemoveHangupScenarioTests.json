@@ -37,7 +37,7 @@
       }
     },
     {
-      "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections?api-version=2021-06-15-preview",
+      "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections?api-version=2021-08-30-preview",
       "RequestMethod": "POST",
         "RequestHeaders": {
             "Accept": "application/json",
@@ -92,7 +92,7 @@
       }
     },
     {
-      "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections/b21f1300-058d-40e5-88e6-fb85f42be0c7/participants?api-version=2021-06-15-preview",
+      "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections/b21f1300-058d-40e5-88e6-fb85f42be0c7/participants?api-version=2021-08-30-preview",
       "RequestMethod": "POST",
         "RequestHeaders": {
             "Accept": "application/json",
@@ -127,7 +127,7 @@
       }
     },
     {
-      "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections/b21f1300-058d-40e5-88e6-fb85f42be0c7/participants/ec6509bf-4263-4e92-ac07-7d08aaa2cb57?api-version=2021-06-15-preview",
+      "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections/b21f1300-058d-40e5-88e6-fb85f42be0c7/participants/ec6509bf-4263-4e92-ac07-7d08aaa2cb57?api-version=2021-08-30-preview",
       "RequestMethod": "DELETE",
         "RequestHeaders": {
             "Accept": "application/json",
@@ -151,7 +151,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections/b21f1300-058d-40e5-88e6-fb85f42be0c7/:hangup?api-version=2021-06-15-preview",
+      "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections/b21f1300-058d-40e5-88e6-fb85f42be0c7/:hangup?api-version=2021-08-30-preview",
       "RequestMethod": "POST",
         "RequestHeaders": {
             "Accept": "application/json",

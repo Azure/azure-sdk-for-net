@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="probesSent"> The number of sent probes. </param>
         /// <param name="probesFailed"> The number of failed probes. </param>
         /// <param name="hops"> List of hops between the source and the destination. </param>
-        internal ConnectionStateSnapshot(ConnectionState? connectionState, DateTimeOffset? startTime, DateTimeOffset? endTime, EvaluationState? evaluationState, int? avgLatencyInMs, int? minLatencyInMs, int? maxLatencyInMs, int? probesSent, int? probesFailed, IReadOnlyList<ConnectivityHop> hops)
+        internal ConnectionStateSnapshot(ConnectionState? connectionState, DateTimeOffset? startTime, DateTimeOffset? endTime, EvaluationState? evaluationState, long? avgLatencyInMs, long? minLatencyInMs, long? maxLatencyInMs, long? probesSent, long? probesFailed, IReadOnlyList<ConnectivityHop> hops)
         {
             ConnectionState = connectionState;
             StartTime = startTime;
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Connectivity analysis evaluation state. </summary>
         public EvaluationState? EvaluationState { get; }
         /// <summary> Average latency in ms. </summary>
-        public int? AvgLatencyInMs { get; }
+        public long? AvgLatencyInMs { get; }
         /// <summary> Minimum latency in ms. </summary>
-        public int? MinLatencyInMs { get; }
+        public long? MinLatencyInMs { get; }
         /// <summary> Maximum latency in ms. </summary>
-        public int? MaxLatencyInMs { get; }
+        public long? MaxLatencyInMs { get; }
         /// <summary> The number of sent probes. </summary>
-        public int? ProbesSent { get; }
+        public long? ProbesSent { get; }
         /// <summary> The number of failed probes. </summary>
-        public int? ProbesFailed { get; }
+        public long? ProbesFailed { get; }
         /// <summary> List of hops between the source and the destination. </summary>
         public IReadOnlyList<ConnectivityHop> Hops { get; }
     }

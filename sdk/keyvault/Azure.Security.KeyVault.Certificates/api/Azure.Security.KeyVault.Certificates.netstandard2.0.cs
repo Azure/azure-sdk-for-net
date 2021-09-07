@@ -369,6 +369,7 @@ namespace Azure.Security.KeyVault.Certificates
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public static bool TryCreate(System.Uri id, out Azure.Security.KeyVault.Certificates.KeyVaultCertificateIdentifier identifier) { throw null; }
     }
     public partial class KeyVaultCertificateWithPolicy : Azure.Security.KeyVault.Certificates.KeyVaultCertificate
     {

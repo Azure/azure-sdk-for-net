@@ -5,18 +5,19 @@ namespace Azure.Data.SchemaRegistry
         internal SchemaProperties() { }
         public string Content { get { throw null; } }
         public string Id { get { throw null; } }
+        public Azure.Data.SchemaRegistry.SerializationType Type { get { throw null; } }
     }
     public partial class SchemaRegistryClient
     {
         protected SchemaRegistryClient() { }
         public SchemaRegistryClient(string endpoint, Azure.Core.TokenCredential credential) { }
         public SchemaRegistryClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Data.SchemaRegistry.SchemaRegistryClientOptions options) { }
-        public virtual Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties> GetSchema(string schemaId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties>> GetSchemaAsync(string schemaId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties> GetSchemaId(string groupName, string schemaName, Azure.Data.SchemaRegistry.SerializationType serializationType, string schemaContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties>> GetSchemaIdAsync(string groupName, string schemaName, Azure.Data.SchemaRegistry.SerializationType serializationType, string schemaContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties> RegisterSchema(string groupName, string schemaName, Azure.Data.SchemaRegistry.SerializationType serializationType, string schemaContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties>> RegisterSchemaAsync(string groupName, string schemaName, Azure.Data.SchemaRegistry.SerializationType serializationType, string schemaContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Data.SchemaRegistry.SchemaProperties GetSchema(string schemaId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Azure.Data.SchemaRegistry.SchemaProperties> GetSchemaAsync(string schemaId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Data.SchemaRegistry.SchemaProperties GetSchemaProperties(string groupName, string name, string content, Azure.Data.SchemaRegistry.SerializationType serializationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Azure.Data.SchemaRegistry.SchemaProperties> GetSchemaPropertiesAsync(string groupName, string name, string content, Azure.Data.SchemaRegistry.SerializationType serializationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties> RegisterSchema(string groupName, string name, string content, Azure.Data.SchemaRegistry.SerializationType serializationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties>> RegisterSchemaAsync(string groupName, string name, string content, Azure.Data.SchemaRegistry.SerializationType serializationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SchemaRegistryClientOptions : Azure.Core.ClientOptions
     {
