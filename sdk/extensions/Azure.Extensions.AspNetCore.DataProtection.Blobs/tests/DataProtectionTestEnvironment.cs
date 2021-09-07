@@ -17,6 +17,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
         {
             try
             {
+                // Try multiple container and blob names to make sure we hit different blob servers
                 for (int i = 0; i < 10; i++)
                 {
                     var client = new BlobServiceClient(BlobStorageEndpoint, Credential);
