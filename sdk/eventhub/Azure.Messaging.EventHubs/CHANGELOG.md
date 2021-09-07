@@ -21,6 +21,8 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Serialization of event data from Event Hubs has been tweaked for greater efficiency.  _(A community contribution, courtesy of [johnthcall](https://github.com/johnthcall))_
 
+- Adjusted the approach used to abandon AMQP sessions when an exception occurs while opening a link to ensure that the transport library does not continue to hold an unnecessary reference.
+
 - Documentation has been enhanced to provide additional context for client library types, notably detailing non-obvious validations applied to parameters and options members.
 
 ## 5.6.0 (2021-08-10)
