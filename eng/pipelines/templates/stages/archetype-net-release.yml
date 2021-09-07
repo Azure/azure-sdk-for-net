@@ -77,7 +77,7 @@ stages:
                           -ArtifactsDirectory "$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed"
                           -Artifact ${{artifact.name}}
                       condition: and(succeeded(),ne('${{ artifact.skipPublishPackage }}', 'true'))
-                      displayName: Verify Package Installation
+                      displayName: Verify Package Installation                           
                     - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
                       parameters:
                         ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
