@@ -31,6 +31,11 @@ namespace Azure.Storage.Test.Shared
                     { "NumberOfFailedAssertions", failedAssertionsNumber.ToString() }
                 });
 
+                AppInsightsNUnitFixture.TelemetryClient.TrackMetric("TestPassed", context.Result.Outcome.Status == TestStatus.Passed ? 1 : 0);
+                AppInsightsNUnitFixture.TelemetryClient.TrackMetric("TestFailed", context.Result.Outcome.Status == TestStatus.Failed ? 1 : 0);
+                AppInsightsNUnitFixture.TelemetryClient.TrackMetric("NumberOfAssertions", assertionsNumber);
+                AppInsightsNUnitFixture.TelemetryClient.TrackMetric("NumberOfFailedAssertions", failedAssertionsNumber);
+
                 foreach (var assertion in context.Result.Assertions)
                 {
                     AppInsightsNUnitFixture.TelemetryClient.TrackTrace("Assertion Result", new Dictionary<string, string>()
