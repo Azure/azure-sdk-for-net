@@ -180,6 +180,45 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
+  <!-- Disable documentation for projects that need fixes before this can be enabled. -->
+  <PropertyGroup Condition="
+    $(MSBuildProjectName.Equals('Microsoft.Azure.ApplicationInsights.Query.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.AnomalyDetector.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.SpellCheck.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.TextAnalytics.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Personalizer.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingCustomImageSearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingAutoSuggest.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingLocalSearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingEntitySearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingVisualSearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingVideoSearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.ComputerVision.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.ContentModerator.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingNewsSearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingWebSearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingWebSearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingWebSearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingImageSearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingWebSearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingCustomSearch.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.Face.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.ContainerRegistry.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.EventGrid.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.HDInsight.Job.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.Graph.RBAC.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.WebKey.csproj')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.OperationalInsights.csproj'))">
+
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <!-- Use a full key for the new client libraries and disable delay signing -->
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
