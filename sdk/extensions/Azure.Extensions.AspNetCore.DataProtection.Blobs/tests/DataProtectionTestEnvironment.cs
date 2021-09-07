@@ -20,10 +20,10 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
                 for (int i = 0; i < 10; i++)
                 {
                     var client = new BlobServiceClient(BlobStorageEndpoint, Credential);
-                    var container = client.GetBlobContainerClient("test");
+                    var container = client.GetBlobContainerClient(Guid.NewGuid().ToString());
                     await container.CreateIfNotExistsAsync();
 
-                    var blob = container.GetBlobClient("test-blob");
+                    var blob = container.GetBlobClient(Guid.NewGuid().ToString());
                     await blob.UploadAsync(new MemoryStream());
                     await blob.DeleteAsync();
                     await container.DeleteAsync();
