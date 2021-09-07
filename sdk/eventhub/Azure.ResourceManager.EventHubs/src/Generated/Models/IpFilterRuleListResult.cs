@@ -7,9 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.EventHub;
+using Azure.ResourceManager.EventHubs;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response from the List namespace operation. </summary>
     internal partial class IpFilterRuleListResult

@@ -6,10 +6,10 @@
 #nullable disable
 
 using Azure.ResourceManager;
-using Azure.ResourceManager.EventHub.Models;
+using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing the IpFilterRule data model. </summary>
     public partial class IpFilterRuleData : Resource

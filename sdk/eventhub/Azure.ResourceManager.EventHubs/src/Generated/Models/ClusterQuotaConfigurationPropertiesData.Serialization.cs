@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     public partial class ClusterQuotaConfigurationPropertiesData : IUtf8JsonSerializable
     {

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Enumerates the possible values for the status of the Event Hub. </summary>
     public enum EntityStatus

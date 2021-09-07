@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A Class representing a AuthorizationRuleDisasterRecoveryConfig along with the instance operations that can be performed on it. </summary>
     public partial class AuthorizationRuleDisasterRecoveryConfig : ArmResource

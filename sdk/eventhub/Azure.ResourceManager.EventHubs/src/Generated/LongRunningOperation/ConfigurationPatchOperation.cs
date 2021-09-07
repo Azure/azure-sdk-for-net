@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHub;
+using Azure.ResourceManager.EventHubs;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Replace all specified Event Hubs Cluster settings with those contained in the request body. Leaves the settings not specified in the request body unmodified. </summary>
     public partial class ConfigurationPatchOperation : Operation<ClusterQuotaConfigurationProperties>

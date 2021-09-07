@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Pre-provisioned and readily available Event Hubs Cluster count per region. </summary>
     public partial class AvailableCluster

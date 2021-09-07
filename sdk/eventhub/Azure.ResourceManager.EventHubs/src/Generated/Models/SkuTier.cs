@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The billing tier of this particular SKU. </summary>
     public readonly partial struct SkuTier : IEquatable<SkuTier>

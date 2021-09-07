@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Parameter supplied to check Namespace name availability operation. </summary>
     public partial class CheckNameAvailabilityParameter

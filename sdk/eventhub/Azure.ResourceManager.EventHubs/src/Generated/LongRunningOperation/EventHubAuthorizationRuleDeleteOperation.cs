@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Deletes an Event Hub AuthorizationRule. </summary>
     public partial class EventHubAuthorizationRuleDeleteOperation : Operation

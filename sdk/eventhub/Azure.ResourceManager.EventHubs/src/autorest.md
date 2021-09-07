@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 csharp: true
-namespace: Azure.ResourceManager.EventHub
+namespace: Azure.ResourceManager.EventHubs
 require: D:\yukun\projects\azure-rest-api-specs\specification\eventhub\resource-manager\readme.md
 clear-output-folder: true
 skip-csproj: true

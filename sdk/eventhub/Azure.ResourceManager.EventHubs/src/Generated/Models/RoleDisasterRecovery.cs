@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </summary>
     public enum RoleDisasterRecovery

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Default Action for Network Rule Set. </summary>
     public readonly partial struct DefaultAction : IEquatable<DefaultAction>

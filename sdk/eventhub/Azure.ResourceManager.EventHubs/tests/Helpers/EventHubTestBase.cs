@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
     [ClientTestFixture]
     public class EventHubTestBase:ManagementRecordedTestBase<EventHubsManagementTestEnvironment>
     {
+        public static Location DefaultLocation => Location.EastUS2;
+        protected Subscription DefaultSubscription => Client.DefaultSubscription;
         protected ArmClient Client { get; private set; }
         protected EventHubTestBase(bool isAsync) : base(isAsync)
         {
@@ -26,6 +28,20 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         public void CreateCommonClient()
         {
             Client = GetArmClient();
+        }
+        public async Task<ResourceGroup> CreateResourceGroupAsync()
+        {
+            string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
+            ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                resourceGroupName,
+                new ResourceGroupData(DefaultLocation)
+                {
+                    Tags =
+                    {
+                        { "test", "env" }
+                    }
+                });
+            return operation.Value;
         }
     }
 }

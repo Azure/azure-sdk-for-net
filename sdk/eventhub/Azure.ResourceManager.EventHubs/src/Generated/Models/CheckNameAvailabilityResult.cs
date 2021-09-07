@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The Result of the CheckNameAvailability operation. </summary>
     public partial class CheckNameAvailabilityResult

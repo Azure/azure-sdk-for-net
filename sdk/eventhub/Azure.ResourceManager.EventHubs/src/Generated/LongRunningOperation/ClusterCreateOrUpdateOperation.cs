@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHub;
+using Azure.ResourceManager.EventHubs;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Creates or updates an instance of an Event Hubs Cluster. </summary>
     public partial class ClusterCreateOrUpdateOperation : Operation<Cluster>, IOperationSource<Cluster>

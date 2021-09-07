@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     internal static partial class RoleDisasterRecoveryExtensions
     {

@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions

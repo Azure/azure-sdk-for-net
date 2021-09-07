@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Capture storage details for capture description. </summary>
     public partial class Destination

@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Deletes an existing Event Hubs Cluster. This operation is idempotent. </summary>
     public partial class ClusterDeleteOperation : Operation

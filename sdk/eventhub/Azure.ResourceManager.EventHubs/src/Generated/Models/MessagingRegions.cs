@@ -10,7 +10,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Messaging Region. </summary>
     public partial class MessagingRegions : TrackedResource

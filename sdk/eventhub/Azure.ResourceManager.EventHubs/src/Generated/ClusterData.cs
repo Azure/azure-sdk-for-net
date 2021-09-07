@@ -7,11 +7,11 @@
 
 using System.Collections.Generic;
 using Azure.ResourceManager;
-using Azure.ResourceManager.EventHub.Models;
+using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing the Cluster data model. </summary>
     public partial class ClusterData : TrackedResource

@@ -9,7 +9,7 @@ using System;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing the ConsumerGroup data model. </summary>
     public partial class ConsumerGroupData : Resource

@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHub.Models;
+using Azure.ResourceManager.EventHubs.Models;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     internal partial class VirtualNetworkRulesRestOperations
     {

@@ -15,10 +15,10 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHub.Models;
+using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions

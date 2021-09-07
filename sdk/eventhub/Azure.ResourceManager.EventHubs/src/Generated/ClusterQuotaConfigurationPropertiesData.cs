@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing the ClusterQuotaConfigurationProperties data model. </summary>
     public partial class ClusterQuotaConfigurationPropertiesData

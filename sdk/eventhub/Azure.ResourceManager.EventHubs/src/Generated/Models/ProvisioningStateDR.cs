@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values &apos;Accepted&apos; or &apos;Succeeded&apos; or &apos;Failed&apos;. </summary>
     public enum ProvisioningStateDR

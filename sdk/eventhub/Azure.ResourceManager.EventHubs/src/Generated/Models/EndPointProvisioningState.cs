@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
     public readonly partial struct EndPointProvisioningState : IEquatable<EndPointProvisioningState>

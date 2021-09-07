@@ -14,9 +14,9 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHub.Models;
+using Azure.ResourceManager.EventHubs.Models;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing collection of ConsumerGroup and their operations over a Eventhub. </summary>
     public partial class ConsumerGroupContainer : ArmContainer

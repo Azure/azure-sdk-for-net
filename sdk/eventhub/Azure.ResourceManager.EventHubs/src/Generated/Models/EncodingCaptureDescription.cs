@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Enumerates the possible values for the encoding format of capture description. Note: &apos;AvroDeflate&apos; will be deprecated in New API Version. </summary>
     public enum EncodingCaptureDescription

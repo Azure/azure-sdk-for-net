@@ -8,10 +8,10 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.EventHub.Models;
+using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing the AuthorizationRule data model. </summary>
     public partial class AuthorizationRuleData : Resource

@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Deletes an existing namespace. This operation also removes all associated resources under the namespace. </summary>
     public partial class NamespaceDeleteOperation : Operation

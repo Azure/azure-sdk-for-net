@@ -7,9 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.EventHub;
+using Azure.ResourceManager.EventHubs;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Result of the list of all private endpoint connections operation. </summary>
     internal partial class PrivateEndpointConnectionListResult

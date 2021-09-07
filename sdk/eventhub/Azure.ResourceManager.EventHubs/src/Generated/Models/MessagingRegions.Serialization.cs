@@ -11,7 +11,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class MessagingRegions : IUtf8JsonSerializable
     {

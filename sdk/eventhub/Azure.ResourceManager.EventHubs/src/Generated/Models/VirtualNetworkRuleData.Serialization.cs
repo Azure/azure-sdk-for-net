@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     public partial class VirtualNetworkRuleData : IUtf8JsonSerializable
     {

@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHub;
+using Azure.ResourceManager.EventHubs;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Creates or updates an VirtualNetworkRule for a Namespace. </summary>
     public partial class VirtualNetworkRuleCreateOrUpdateOperation : Operation<VirtualNetworkRule>

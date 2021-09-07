@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Deletes a consumer group from the specified Event Hub and resource group. </summary>
     public partial class ConsumerGroupDeleteOperation : Operation

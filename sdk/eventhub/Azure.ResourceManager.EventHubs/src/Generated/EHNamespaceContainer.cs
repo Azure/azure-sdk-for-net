@@ -14,10 +14,10 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHub.Models;
+using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing collection of EHNamespace and their operations over a ResourceGroup. </summary>
     public partial class EHNamespaceContainer : ArmContainer

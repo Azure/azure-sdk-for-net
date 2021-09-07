@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Deletes an AuthorizationRule for a Namespace. </summary>
     public partial class NamespaceAuthorizationRuleDeleteOperation : Operation

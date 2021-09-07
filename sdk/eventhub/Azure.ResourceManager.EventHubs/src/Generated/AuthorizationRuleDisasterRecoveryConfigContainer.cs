@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.EventHub
+namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing collection of AuthorizationRuleDisasterRecoveryConfig and their operations over a ArmDisasterRecovery. </summary>
     public partial class AuthorizationRuleDisasterRecoveryConfigContainer : ArmContainer

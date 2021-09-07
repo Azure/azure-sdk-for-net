@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHub;
+using Azure.ResourceManager.EventHubs;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Modifies mutable properties on the Event Hubs Cluster. This operation is idempotent. </summary>
     public partial class ClusterUpdateOperation : Operation<Cluster>, IOperationSource<Cluster>

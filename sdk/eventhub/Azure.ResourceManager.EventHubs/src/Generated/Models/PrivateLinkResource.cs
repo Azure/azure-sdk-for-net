@@ -10,7 +10,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Information of the private link resource. </summary>
     public partial class PrivateLinkResource : Resource
