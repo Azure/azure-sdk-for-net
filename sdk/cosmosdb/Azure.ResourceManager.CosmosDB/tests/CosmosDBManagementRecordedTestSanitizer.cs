@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public CosmosDBManagementRecordedTestSanitizer() : base()
         {
             // Lazy sanitize fields in the request and response bodies
-            AddJsonPathSanitizer("$primaryMasterKey");
-            AddJsonPathSanitizer("$primaryReadOnlyMasterKey");
-            AddJsonPathSanitizer("$secondaryMasterKey");
-            AddJsonPathSanitizer("$secondaryReadOnlyMasterKey");
+            AddJsonPathSanitizer("$..primaryMasterKey");
+            AddJsonPathSanitizer("$..primaryReadonlyMasterKey");
+            AddJsonPathSanitizer("$..secondaryMasterKey");
+            AddJsonPathSanitizer("$..secondaryReadonlyMasterKey");
         }
 
         public override void Sanitize(RecordSession session)
