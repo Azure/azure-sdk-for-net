@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionMonitorListResult DeserializeConnectionMonitorListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ConnectionMonitorResult>> value = default;
+            Optional<IReadOnlyList<ConnectionMonitorData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectionMonitorResult> array = new List<ConnectionMonitorResult>();
+                    List<ConnectionMonitorData> array = new List<ConnectionMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionMonitorResult.DeserializeConnectionMonitorResult(item));
+                        array.Add(ConnectionMonitorData.DeserializeConnectionMonitorData(item));
                     }
                     value = array;
                     continue;

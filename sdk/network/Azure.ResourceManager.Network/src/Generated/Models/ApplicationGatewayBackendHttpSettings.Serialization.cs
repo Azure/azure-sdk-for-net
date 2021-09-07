@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Port))
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<int> port = default;
             Optional<ApplicationGatewayProtocol> protocol = default;
             Optional<ApplicationGatewayCookieBasedAffinity> cookieBasedAffinity = default;
@@ -205,7 +203,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            probe = DeserializeSubResource(property0.Value);
+                            probe = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationCertificates"))
@@ -218,7 +216,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             authenticationCertificates = array;
                             continue;
@@ -233,7 +231,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             trustedRootCertificates = array;
                             continue;
@@ -297,7 +295,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendHttpSettings(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(cookieBasedAffinity), Optional.ToNullable(requestTimeout), probe.Value, Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), connectionDraining.Value, hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), affinityCookieName.Value, Optional.ToNullable(probeEnabled), path.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayBackendHttpSettings(id, name.Value, etag.Value, type.Value, Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(cookieBasedAffinity), Optional.ToNullable(requestTimeout), probe.Value, Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), connectionDraining.Value, hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), affinityCookieName.Value, Optional.ToNullable(probeEnabled), path.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

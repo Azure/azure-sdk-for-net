@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Properties of the rule collection.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FirewallPolicyRuleCollection")]
     public partial class FirewallPolicyRuleCollection
     {
         /// <summary>
@@ -68,13 +69,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Priority > 65000)
+            if (Priority != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Priority", 65000);
-            }
-            if (Priority < 100)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Priority", 100);
+                if (Priority > 65000)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Priority", 65000);
+                }
+                if (Priority < 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Priority", 100);
+                }
             }
         }
     }

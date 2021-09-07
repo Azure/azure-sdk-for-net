@@ -80,12 +80,7 @@ namespace Azure.Identity.Tests
 
             var pipeline = CredentialPipeline.GetInstance(options);
 
-            // if we're in playback mode we need to mock the ImdsAvailable call since we won't be able to open a connection
-            var client = (Mode == RecordedTestMode.Playback)
-                ? new MockManagedIdentityClient(pipeline, clientId) { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline, clientId) }
-                : new ManagedIdentityClient(pipeline, clientId);
-
-            var cred = new ManagedIdentityCredential(client);
+            var cred = new ManagedIdentityCredential(new ManagedIdentityClient(pipeline, clientId));
 
             return cred;
         }
