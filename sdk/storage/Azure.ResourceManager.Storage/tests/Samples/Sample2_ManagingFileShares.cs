@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_FileShares_CreateFileShare
             FileShareContainer fileShareContainer = fileService.GetFileShares();
-            string blobContainerName = "myFileShare";
+            string fileShareName = "myFileShare";
             FileShareData fileShareData = new FileShareData();
-            FileShareCreateOperation fileShareCreateOperation = await fileShareContainer.CreateOrUpdateAsync(blobContainerName, fileShareData);
+            FileShareCreateOperation fileShareCreateOperation = await fileShareContainer.CreateOrUpdateAsync(fileShareName, fileShareData);
             FileShare fileShare =await fileShareCreateOperation.WaitForCompletionAsync();
             #endregion
         }
