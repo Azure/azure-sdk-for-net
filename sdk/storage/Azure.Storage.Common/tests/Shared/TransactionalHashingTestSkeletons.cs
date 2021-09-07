@@ -55,6 +55,44 @@ namespace Azure.Storage.Test.Shared
             };
         }
 
+        internal static Action<Response> GetResponseHashAssertion(TransactionalHashAlgorithm algorithm, Func<Response, bool> isHashExpected = default, byte[] expectedHash = default)
+        {
+            void AssertHash(ResponseHeaders headers, string headerName)
+            {
+                if (headers.TryGetValue(headerName, out string hash))
+                {
+                    if (expectedHash != default)
+                    {
+                        Assert.AreEqual(Convert.ToBase64String(expectedHash), hash);
+                    }
+                }
+                else
+                {
+                    Assert.Fail($"{headerName} expected on response but was not found.");
+                }
+            };
+
+            return response =>
+            {
+                if (isHashExpected != default && !isHashExpected(response))
+                {
+                    return;
+                }
+
+                switch (algorithm)
+                {
+                    case TransactionalHashAlgorithm.MD5:
+                        AssertHash(response.Headers, "Content-MD5");
+                        break;
+                    case TransactionalHashAlgorithm.StorageCrc64:
+                        AssertHash(response.Headers, "x-ms-content-crc64");
+                        break;
+                    default:
+                        throw new Exception("Bad TransactionalHashAlgorithm provided to Response hash assertion.");
+                }
+            };
+        }
+
         /// <summary>
         /// Checks if service returns an error that content and transactional hash did not match.
         /// </summary>
@@ -326,6 +364,135 @@ namespace Azure.Storage.Test.Shared
             {
                 hashPipelineAssertion.CheckRequest = true;
                 await parallelUploadAsync(client, stream, hashingOptions, transferOptions);
+            }
+        }
+        #endregion
+
+        #region Parallel Download Tests
+        public static async Task TestParallelDownloadSuccessfulHashVerificationAsync<TClient, TParentClient, TClientOptions>(
+            TestRandom random,
+            TransactionalHashAlgorithm algorithm,
+            int chunkSize,
+            Func<TClientOptions> getOptions,
+            TParentClient parentClient,
+            Func<byte[], Task> setupDataAsync,
+            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
+            Func<TClient, DownloadTransactionalHashingOptions, Task> parallelDownloadAsync) where TClientOptions : ClientOptions
+        {
+            var data = TestHelper.GetRandomBuffer(Constants.KB, random);
+            await setupDataAsync(data);
+
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseHashAssertion(algorithm));
+            var clientOptions = getOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await getObjectClientAsync(parentClient, clientOptions);
+            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+
+            // Act / Assert
+            hashPipelineAssertion.CheckResponse = true;
+            await parallelDownloadAsync(client, hashingOptions);
+        }
+        #endregion
+
+        #region OpenRead Tests
+        public static async Task TestOpenReadSuccessfulHashVerificationAsync<TClient, TParentClient, TClientOptions>(
+            TestRandom random,
+            TransactionalHashAlgorithm algorithm,
+            int dataSize,
+            Func<TClientOptions> getOptions,
+            TParentClient parentClient,
+            Func<byte[], Task> setupDataAsync,
+            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
+            Func<TClient, DownloadTransactionalHashingOptions, Task<Stream>> openReadAsync) where TClientOptions : ClientOptions
+        {
+            // Arrange
+            var data = TestHelper.GetRandomBuffer(dataSize, random);
+            await setupDataAsync(data);
+
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseHashAssertion(algorithm));
+            var clientOptions = getOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await getObjectClientAsync(parentClient, clientOptions);
+            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+
+            // Act
+            var readStream = await openReadAsync(client, hashingOptions);
+
+            // Assert
+            hashPipelineAssertion.CheckResponse = true;
+            Assert.DoesNotThrowAsync(async () => await readStream.CopyToAsync(Stream.Null));
+        }
+        #endregion
+
+        #region Download Streaming/Content Tests
+        public static async Task TestDownloadSuccessfulHashVerificationAsync<TClient, TParentClient, TClientOptions>(
+            TestRandom random,
+            TransactionalHashAlgorithm algorithm,
+            Func<TClientOptions> getOptions,
+            TParentClient parentClient,
+            Func<byte[], Task> setupDataAsync,
+            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
+            Func<TClient, DownloadTransactionalHashingOptions, Task<Response>> downloadAsync) where TClientOptions : ClientOptions
+        {
+            // Arrange
+            var data = TestHelper.GetRandomBuffer(Constants.KB, random);
+            await setupDataAsync(data);
+
+            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+            var client = await getObjectClientAsync(parentClient, getOptions());
+
+            // Act
+            var response = await downloadAsync(client, hashingOptions);
+
+            // Assert
+            switch (algorithm)
+            {
+                case TransactionalHashAlgorithm.MD5:
+                    Assert.True(response.Headers.Contains("Content-MD5"));
+                    break;
+                case TransactionalHashAlgorithm.StorageCrc64:
+                    Assert.True(response.Headers.Contains("x-ms-content-crc64"));
+                    break;
+                default:
+                    Assert.Fail("Test can't validate given algorithm type.");
+                    break;
+            }
+        }
+
+        public static async Task TestDownloadHashMismatchThrowsAsync<TClient, TParentClient, TClientOptions>(
+            TestRandom random,
+            TransactionalHashAlgorithm algorithm,
+            Func<TClientOptions> getOptions,
+            TParentClient parentClient,
+            Func<byte[], Task> setupDataAsync,
+            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
+            Func<TClient, DownloadTransactionalHashingOptions, HttpRange, Task<Response>> downloadAsync,
+            bool deferValidation) where TClientOptions : ClientOptions
+        {
+            // Arrange
+            var data = TestHelper.GetRandomBuffer(Constants.KB, random);
+            await setupDataAsync(data);
+
+            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm, DeferValidation = deferValidation };
+
+            // alter response contents in pipeline, forcing a hash mismatch on verification step
+            var clientOptions = getOptions();
+            clientOptions.AddPolicy(new TamperStreamContentsPolicy() { TransformResponseBody = true }, HttpPipelinePosition.PerCall);
+            var client = await getObjectClientAsync(parentClient, clientOptions);
+
+            // Act
+            AsyncTestDelegate operation = async () => await downloadAsync(client, hashingOptions, new HttpRange(length: data.Length));
+
+            // Assert
+            if (deferValidation)
+            {
+                Assert.DoesNotThrowAsync(operation);
+            }
+            else
+            {
+                Assert.ThrowsAsync<InvalidDataException>(operation);
             }
         }
         #endregion

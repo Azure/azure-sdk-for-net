@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test.Shared;
@@ -43,49 +41,6 @@ namespace Azure.Storage.Blobs.Tests
         {
         }
 
-        internal Action<Response> GetResponseHashAssertion(TransactionalHashAlgorithm algorithm, Func<Response, bool> isHashExpected = default, byte[] expectedHash = default)
-        {
-            return response =>
-            {
-                if (isHashExpected != default && !isHashExpected(response))
-                {
-                    return;
-                }
-
-                switch (algorithm)
-                {
-                    case TransactionalHashAlgorithm.MD5:
-                        if (response.Headers.TryGetValue("Content-MD5", out string md5))
-                        {
-                            if (expectedHash != default)
-                            {
-                                Assert.AreEqual(Convert.ToBase64String(expectedHash), md5);
-                            }
-                        }
-                        else
-                        {
-                            Assert.Fail("Content-MD5 expected on request but was not found.");
-                        }
-                        break;
-                    case TransactionalHashAlgorithm.StorageCrc64:
-                        if (response.Headers.TryGetValue("x-ms-content-crc64", out string crc))
-                        {
-                            if (expectedHash != default)
-                            {
-                                Assert.AreEqual(Convert.ToBase64String(expectedHash), crc);
-                            }
-                        }
-                        else
-                        {
-                            Assert.Fail("x-ms-content-crc64 expected on request but was not found.");
-                        }
-                        break;
-                    default:
-                        throw new Exception("Bad TransactionalHashAlgorithm provided to Request hash assertion.");
-                }
-            };
-        }
-
         #region DownloadContent
         [Test, Combinatorial]
         public async Task DownloadContentSuccessfulHashVerification(
@@ -94,36 +49,16 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(DefaultDataSize);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
-
-            // Act
-            Response<BlobDownloadResult> response = await blob.DownloadContentAsync(new BlobBaseDownloadOptions
-            {
-                TransactionalHashingOptions = hashingOptions,
-                Range = range
-            });
-
-            // Assert
-            // we didn't throw, so that's good
-            switch (algorithm)
-            {
-                case TransactionalHashAlgorithm.MD5:
-                    Assert.True(response.GetRawResponse().Headers.Contains("Content-MD5"));
-                    break;
-                case TransactionalHashAlgorithm.StorageCrc64:
-                    Assert.True(response.GetRawResponse().Headers.Contains("x-ms-content-crc64"));
-                    break;
-                default:
-                    Assert.Fail("Test can't validate given algorithm type.");
-                    break;
-            }
+            var blobName = GetNewBlobName();
+            await TransactionalHashingTestSkeletons.TestDownloadSuccessfulHashVerificationAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Container,
+                async data => await StageData(data, test.Container, blobName),
+                (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                async (blob, hashingOptions) => (await blob.DownloadContentAsync(new BlobBaseDownloadOptions
+                {
+                    TransactionalHashingOptions = hashingOptions,
+                    Range = range
+                })).GetRawResponse());
         }
 
         [Test, Combinatorial]
@@ -133,40 +68,30 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(DefaultDataSize);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm, DeferValidation = defers };
-
-            // alter response contents in pipeline, forcing a hash mismatch on verification step
-            var clientOptions = GetOptions();
-            clientOptions.AddPolicy(new TamperStreamContentsPolicy() { TransformResponseBody = true }, HttpPipelinePosition.PerCall);
-            blob = new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions);
-
-            // Act
-            AsyncTestDelegate operation = async () => await blob.DownloadContentAsync(new BlobBaseDownloadOptions
-            {
-                TransactionalHashingOptions = hashingOptions,
-                Range = new HttpRange(length: data.Length)
-            });
-
-            // Assert
-            if (defers)
-            {
-                Assert.DoesNotThrowAsync(operation);
-            }
-            else
-            {
-                Assert.ThrowsAsync<InvalidDataException>(operation);
-            }
+            var blobName = GetNewBlobName();
+            await TransactionalHashingTestSkeletons.TestDownloadHashMismatchThrowsAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Container,
+                async data => await StageData(data, test.Container, blobName),
+                (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                async (blob, hashingOptions, range) => (await blob.DownloadContentAsync(new BlobBaseDownloadOptions
+                {
+                    TransactionalHashingOptions = hashingOptions,
+                    Range = range
+                })).GetRawResponse(),
+                defers);
         }
         #endregion
 
         #region DownloadStreaming
+        private async Task StageData(byte[] data, BlobContainerClient container, string blobName)
+        {
+            BlobClient blob = InstrumentClient(container.GetBlobClient(blobName));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+        }
+
         [Test, Combinatorial]
         public async Task DownloadStreamingSuccessfulHashVerification(
             [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
@@ -174,24 +99,21 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(DefaultDataSize);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
-
-            // Act
-            var response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
-            {
-                TransactionalHashingOptions = hashingOptions,
-                Range = range
-            });
-
-            // Assert
-            Assert.DoesNotThrowAsync(async () => await response.Value.Content.CopyToAsync(Stream.Null));
+            var blobName = GetNewBlobName();
+            await TransactionalHashingTestSkeletons.TestDownloadSuccessfulHashVerificationAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Container,
+                async data => await StageData(data, test.Container, blobName),
+                (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                async (blob, hashingOptions) =>
+                {
+                    var response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
+                    {
+                        TransactionalHashingOptions = hashingOptions,
+                        Range = range
+                    });
+                    await response.Value.Content.CopyToAsync(Stream.Null);
+                    return response.GetRawResponse();
+                });
         }
 
         [Test, Combinatorial]
@@ -201,39 +123,22 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(DefaultDataSize);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm, DeferValidation = defers };
-
-            // alter response contents in pipeline, forcing a hash mismatch on verification step
-            var clientOptions = GetOptions();
-            clientOptions.AddPolicy(new TamperStreamContentsPolicy() { TransformResponseBody = true }, HttpPipelinePosition.PerCall);
-            blob = new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions);
-
-            // Act
-            AsyncTestDelegate operation = async () =>
-            {
-                await (await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
+            var blobName = GetNewBlobName();
+            await TransactionalHashingTestSkeletons.TestDownloadHashMismatchThrowsAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Container,
+                async data => await StageData(data, test.Container, blobName),
+                (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                async (blob, hashingOptions, range) =>
                 {
-                    TransactionalHashingOptions = hashingOptions,
-                    Range = new HttpRange(length: data.Length)
-                })).Value.Content.CopyToAsync(Stream.Null);
-            };
-
-            // Assert
-            if (defers)
-            {
-                Assert.DoesNotThrowAsync(operation);
-            }
-            else
-            {
-                Assert.ThrowsAsync<InvalidDataException>(operation);
-            }
+                    var response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
+                    {
+                        TransactionalHashingOptions = hashingOptions,
+                        Range = range
+                    });
+                    await response.Value.Content.CopyToAsync(Stream.Null);
+                    return response.GetRawResponse();
+                },
+                defers);
         }
 
         // hashing, so we buffered the stream to hash then rewind before returning to user
@@ -285,30 +190,30 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(storageStreamDefinitions.DataSize);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseHashAssertion(algorithm));
-            var clientOptions = GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
-            blob = InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions));
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
-
-            // Act
-            var readStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false)
-            {
-                TransactionalHashingOptions = hashingOptions,
-                BufferSize = storageStreamDefinitions.BufferSize
-            });
-
-            // Assert
-            hashPipelineAssertion.CheckResponse = true;
-            Assert.DoesNotThrowAsync(async () => await readStream.CopyToAsync(Stream.Null));
+            var blobName = GetNewBlobName();
+            await TransactionalHashingTestSkeletons.TestOpenReadSuccessfulHashVerificationAsync(
+                Recording.Random,
+                algorithm,
+                storageStreamDefinitions.DataSize,
+                () => GetOptions(),
+                test.Container,
+                async data =>
+                {
+                    BlobClient blob = InstrumentClient(test.Container.GetBlobClient(blobName));
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await blob.UploadAsync(stream);
+                    }
+                },
+                (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                async (blob, hashingOptions) =>
+                {
+                    return await blob.OpenReadAsync(new BlobOpenReadOptions(false)
+                    {
+                        TransactionalHashingOptions = hashingOptions,
+                        BufferSize = storageStreamDefinitions.BufferSize
+                    });
+                });
         }
         #endregion
 
@@ -320,35 +225,34 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(DefaultDataSize);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseHashAssertion(algorithm));
-            var clientOptions = GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
-            blob = InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions));
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
-
-            // Act / Assert
-            hashPipelineAssertion.CheckResponse = true;
-            await blob.DownloadToAsync(new BlobBaseDownloadToOptions(Stream.Null)
-            {
-                TransactionalHashingOptions = hashingOptions,
-                TransferOptions = new StorageTransferOptions { InitialTransferSize = chunkSize, MaximumTransferSize = chunkSize }
-            });
+            var blobName = GetNewBlobName();
+            await TransactionalHashingTestSkeletons.TestParallelDownloadSuccessfulHashVerificationAsync(
+                Recording.Random, algorithm, chunkSize, () => GetOptions(), test.Container,
+                async data =>
+                {
+                    BlobClient blob = InstrumentClient(test.Container.GetBlobClient(blobName));
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await blob.UploadAsync(stream);
+                    }
+                },
+                (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                (blob, hashingOptions) => blob.DownloadToAsync(new BlobBaseDownloadToOptions(Stream.Null)
+                {
+                    TransactionalHashingOptions = hashingOptions,
+                    TransferOptions = new StorageTransferOptions { InitialTransferSize = chunkSize, MaximumTransferSize = chunkSize }
+                }));
         }
         #endregion
 
         #region BlobClient PartitionedUpload
         private Task<BlobClient> MakeBlobClient(BlobContainerClient container, BlobClientOptions testClientOptions)
+            => MakeBlobClient(container, testClientOptions, GetNewBlobName());
+
+        private Task<BlobClient> MakeBlobClient(BlobContainerClient container, BlobClientOptions testClientOptions, string blobName)
         {
             container = InstrumentClient(new BlobContainerClient(container.Uri, GetNewSharedKeyCredentials(), testClientOptions));
-            return Task.FromResult(InstrumentClient(container.GetBlobClient(GetNewBlobName())));
+            return Task.FromResult(InstrumentClient(container.GetBlobClient(blobName)));
         }
 
         private static async Task BlobParallelUploadAction(
