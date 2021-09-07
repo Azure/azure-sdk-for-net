@@ -71,9 +71,9 @@ stages:
                         ServiceName: ${{parameters.ServiceDirectory}}
                         ForRelease: true
                     - task: PowerShell@2
-                      pwsh: true
                       inputs:
                         filePath: $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1
+                        pwsh: true
                         arguments: >
                           -ArtifactsDirectory "$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed"
                           -Artifact ${{artifact.name}}
