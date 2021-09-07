@@ -8,9 +8,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
-    public class ApplicationDefinitionOperationsTests : ResourcesTestBase
+    public class TemplateSpecOperationsTests : ResourcesTestBase
     {
-        public ApplicationDefinitionOperationsTests(bool isAsync)
+        public TemplateSpecOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
             var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
-            string applicationDefinitionName = Recording.GenerateAssetName("appDef-C-");
-            ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(applicationDefinitionName, applicationDefinitionData)).Value;
-            await applicationDefinition.DeleteAsync();
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await applicationDefinition.GetAsync());
+            string templateSpecName = Recording.GenerateAssetName("templateSpec-G-");
+            TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
+            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
+            await templateSpec.DeleteAsync();
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await templateSpec.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
     }
