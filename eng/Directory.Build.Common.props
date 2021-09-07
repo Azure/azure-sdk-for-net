@@ -182,39 +182,36 @@
 
   <!-- Disable documentation for projects that need fixes before this can be enabled. -->
   <PropertyGroup Condition="
-    $(MSBuildProjectName.Equals('Microsoft.Azure.ApplicationInsights.Query.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.AnomalyDetector.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.SpellCheck.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.TextAnalytics.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Personalizer.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingCustomImageSearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingAutoSuggest.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingLocalSearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingEntitySearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingVisualSearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingVideoSearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.ComputerVision.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.ContentModerator.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingNewsSearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingWebSearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingWebSearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingWebSearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingImageSearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingWebSearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingCustomSearch.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.Face.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.ContainerRegistry.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.EventGrid.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.HDInsight.Job.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.Graph.RBAC.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.WebKey.csproj')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.OperationalInsights.csproj'))">
+    $(MSBuildProjectName.Equals('Microsoft.Azure.ApplicationInsights.Query')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.AnomalyDetector')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.SpellCheck')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.TextAnalytics')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Personalizer')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingAutoSuggest')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingCustomImageSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingCustomSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingEntitySearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingImageSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingLocalSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingNewsSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingVideoSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingVisualSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingWebSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.ComputerVision')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.ContentModerator')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.Face')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.FormRecognizer')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.ContainerRegistry')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.EventGrid')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.HDInsight.Job')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.Graph.RBAC')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.WebKey')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.OperationalInsights'))">
 
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
