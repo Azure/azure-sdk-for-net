@@ -8,11 +8,30 @@
 namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> Namespace/EventHub Connection String. </summary>
-    internal partial class AccessKeys
+    public partial class AccessKeys
     {
         /// <summary> Initializes a new instance of AccessKeys. </summary>
         internal AccessKeys()
         {
+        }
+
+        /// <summary> Initializes a new instance of AccessKeys. </summary>
+        /// <param name="primaryConnectionString"> Primary connection string of the created namespace AuthorizationRule. </param>
+        /// <param name="secondaryConnectionString"> Secondary connection string of the created namespace AuthorizationRule. </param>
+        /// <param name="aliasPrimaryConnectionString"> Primary connection string of the alias if GEO DR is enabled. </param>
+        /// <param name="aliasSecondaryConnectionString"> Secondary  connection string of the alias if GEO DR is enabled. </param>
+        /// <param name="primaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
+        /// <param name="secondaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
+        /// <param name="keyName"> A string that describes the AuthorizationRule. </param>
+        internal AccessKeys(string primaryConnectionString, string secondaryConnectionString, string aliasPrimaryConnectionString, string aliasSecondaryConnectionString, string primaryKey, string secondaryKey, string keyName)
+        {
+            PrimaryConnectionString = primaryConnectionString;
+            SecondaryConnectionString = secondaryConnectionString;
+            AliasPrimaryConnectionString = aliasPrimaryConnectionString;
+            AliasSecondaryConnectionString = aliasSecondaryConnectionString;
+            PrimaryKey = primaryKey;
+            SecondaryKey = secondaryKey;
+            KeyName = keyName;
         }
 
         /// <summary> Primary connection string of the created namespace AuthorizationRule. </summary>
