@@ -210,6 +210,7 @@
     $(MSBuildProjectName.Equals('Microsoft.Azure.EventGrid')) or
     $(MSBuildProjectName.Equals('Microsoft.Azure.HDInsight.Job')) or
     $(MSBuildProjectName.Equals('Microsoft.Azure.Graph.RBAC')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault')) or
     $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.WebKey')) or
     $(MSBuildProjectName.Equals('Microsoft.Azure.OperationalInsights'))">
 
