@@ -7,6 +7,9 @@
 
     <MgmtAutorestVersion>3.0.0-beta.20210504.1</MgmtAutorestVersion>
 
+    <!-- Enable documentation for all projects unless explicitly disabled. -->
+    <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
+
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
 
@@ -183,7 +186,6 @@
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
     <ImportDefaultReferences>false</ImportDefaultReferences>
-    <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
 
     <!-- The set of tags that should be added to the packages -->
     <PackageCommonTags>windowsazureofficial;azureofficial</PackageCommonTags>
