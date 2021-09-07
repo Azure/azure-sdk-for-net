@@ -14,16 +14,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> Deletes an IpFilterRule for a Namespace. </summary>
-    public partial class NamespaceDeleteIpFilterRuleOperation : Operation
+    public partial class IpFilterRuleDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of NamespaceDeleteIpFilterRuleOperation for mocking. </summary>
-        protected NamespaceDeleteIpFilterRuleOperation()
+        /// <summary> Initializes a new instance of IpFilterRuleDeleteOperation for mocking. </summary>
+        protected IpFilterRuleDeleteOperation()
         {
         }
 
-        internal NamespaceDeleteIpFilterRuleOperation(Response response)
+        internal IpFilterRuleDeleteOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }

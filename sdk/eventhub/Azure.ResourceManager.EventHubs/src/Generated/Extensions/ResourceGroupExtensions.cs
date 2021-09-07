@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.EventHub
         }
         #endregion
 
-        #region IpFilterRule
-        /// <summary> Gets an object representing a IpFilterRuleContainer along with the instance operations that can be performed on it. </summary>
+        #region EHNamespace
+        /// <summary> Gets an object representing a EHNamespaceContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="IpFilterRuleContainer" /> object. </returns>
-        public static IpFilterRuleContainer GetIpFilterRules(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="EHNamespaceContainer" /> object. </returns>
+        public static EHNamespaceContainer GetEHNamespaces(this ResourceGroup resourceGroup)
         {
-            return new IpFilterRuleContainer(resourceGroup);
+            return new EHNamespaceContainer(resourceGroup);
         }
         #endregion
     }

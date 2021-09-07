@@ -10,6 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.EventHub;
 
 namespace Azure.ResourceManager.EventHub.Models
 {
@@ -23,9 +25,9 @@ namespace Azure.ResourceManager.EventHub.Models
         {
         }
 
-        internal NamespaceUpdateOperation(Response<EHNamespace> response)
+        internal NamespaceUpdateOperation(ArmResource operationsBase, Response<EHNamespaceData> response)
         {
-            _operation = new OperationOrResponseInternals<EHNamespace>(response);
+            _operation = new OperationOrResponseInternals<EHNamespace>(Response.FromValue(new EHNamespace(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

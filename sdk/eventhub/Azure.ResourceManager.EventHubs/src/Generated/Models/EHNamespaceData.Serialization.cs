@@ -10,11 +10,12 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EventHub.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHub
 {
-    public partial class EHNamespace : IUtf8JsonSerializable
+    public partial class EHNamespaceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.EventHub.Models
             writer.WriteEndObject();
         }
 
-        internal static EHNamespace DeserializeEHNamespace(JsonElement element)
+        internal static EHNamespaceData DeserializeEHNamespaceData(JsonElement element)
         {
             Optional<Sku> sku = default;
             Optional<Identity> identity = default;
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.EventHub.Models
                     continue;
                 }
             }
-            return new EHNamespace(id, name, type, tags, location, sku.Value, identity.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value);
+            return new EHNamespaceData(id, name, type, tags, location, sku.Value, identity.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value);
         }
     }
 }

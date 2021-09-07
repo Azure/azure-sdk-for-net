@@ -44,389 +44,6 @@ namespace Azure.ResourceManager.EventHub
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetIPFilterRulesRequest(string resourceGroupName, string namespaceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/ipfilterrules", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Gets a list of IP Filter rules for a Namespace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<IpFilterRuleListResult>> GetIPFilterRulesAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-
-            using var message = CreateGetIPFilterRulesRequest(resourceGroupName, namespaceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IpFilterRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets a list of IP Filter rules for a Namespace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public Response<IpFilterRuleListResult> GetIPFilterRules(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-
-            using var message = CreateGetIPFilterRulesRequest(resourceGroupName, namespaceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IpFilterRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCreateOrUpdateIpFilterRuleRequest(string resourceGroupName, string namespaceName, string ipFilterRuleName, IpFilterRuleData parameters)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/ipfilterrules/", false);
-            uri.AppendPath(ipFilterRuleName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Creates or updates an IpFilterRule for a Namespace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="ipFilterRuleName"> The IP Filter Rule name. </param>
-        /// <param name="parameters"> The Namespace IpFilterRule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="ipFilterRuleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<IpFilterRuleData>> CreateOrUpdateIpFilterRuleAsync(string resourceGroupName, string namespaceName, string ipFilterRuleName, IpFilterRuleData parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (ipFilterRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(ipFilterRuleName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateCreateOrUpdateIpFilterRuleRequest(resourceGroupName, namespaceName, ipFilterRuleName, parameters);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IpFilterRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IpFilterRuleData.DeserializeIpFilterRuleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Creates or updates an IpFilterRule for a Namespace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="ipFilterRuleName"> The IP Filter Rule name. </param>
-        /// <param name="parameters"> The Namespace IpFilterRule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="ipFilterRuleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<IpFilterRuleData> CreateOrUpdateIpFilterRule(string resourceGroupName, string namespaceName, string ipFilterRuleName, IpFilterRuleData parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (ipFilterRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(ipFilterRuleName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateCreateOrUpdateIpFilterRuleRequest(resourceGroupName, namespaceName, ipFilterRuleName, parameters);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IpFilterRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IpFilterRuleData.DeserializeIpFilterRuleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteIpFilterRuleRequest(string resourceGroupName, string namespaceName, string ipFilterRuleName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/ipfilterrules/", false);
-            uri.AppendPath(ipFilterRuleName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Deletes an IpFilterRule for a Namespace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="ipFilterRuleName"> The IP Filter Rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="ipFilterRuleName"/> is null. </exception>
-        public async Task<Response> DeleteIpFilterRuleAsync(string resourceGroupName, string namespaceName, string ipFilterRuleName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (ipFilterRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(ipFilterRuleName));
-            }
-
-            using var message = CreateDeleteIpFilterRuleRequest(resourceGroupName, namespaceName, ipFilterRuleName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Deletes an IpFilterRule for a Namespace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="ipFilterRuleName"> The IP Filter Rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="ipFilterRuleName"/> is null. </exception>
-        public Response DeleteIpFilterRule(string resourceGroupName, string namespaceName, string ipFilterRuleName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (ipFilterRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(ipFilterRuleName));
-            }
-
-            using var message = CreateDeleteIpFilterRuleRequest(resourceGroupName, namespaceName, ipFilterRuleName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetIpFilterRuleRequest(string resourceGroupName, string namespaceName, string ipFilterRuleName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/ipfilterrules/", false);
-            uri.AppendPath(ipFilterRuleName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Gets an IpFilterRule for a Namespace by rule name. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="ipFilterRuleName"> The IP Filter Rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="ipFilterRuleName"/> is null. </exception>
-        public async Task<Response<IpFilterRuleData>> GetIpFilterRuleAsync(string resourceGroupName, string namespaceName, string ipFilterRuleName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (ipFilterRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(ipFilterRuleName));
-            }
-
-            using var message = CreateGetIpFilterRuleRequest(resourceGroupName, namespaceName, ipFilterRuleName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IpFilterRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IpFilterRuleData.DeserializeIpFilterRuleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((IpFilterRuleData)null, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets an IpFilterRule for a Namespace by rule name. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="ipFilterRuleName"> The IP Filter Rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="ipFilterRuleName"/> is null. </exception>
-        public Response<IpFilterRuleData> GetIpFilterRule(string resourceGroupName, string namespaceName, string ipFilterRuleName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (ipFilterRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(ipFilterRuleName));
-            }
-
-            using var message = CreateGetIpFilterRuleRequest(resourceGroupName, namespaceName, ipFilterRuleName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IpFilterRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IpFilterRuleData.DeserializeIpFilterRuleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((IpFilterRuleData)null, message.Response);
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateGetAllRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -557,7 +174,7 @@ namespace Azure.ResourceManager.EventHub
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string namespaceName, EHNamespace parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string namespaceName, EHNamespaceData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -587,7 +204,7 @@ namespace Azure.ResourceManager.EventHub
         /// <param name="parameters"> Parameters for creating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, EHNamespace parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, EHNamespaceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -621,7 +238,7 @@ namespace Azure.ResourceManager.EventHub
         /// <param name="parameters"> Parameters for creating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string namespaceName, EHNamespace parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string namespaceName, EHNamespaceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -752,7 +369,7 @@ namespace Azure.ResourceManager.EventHub
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<EHNamespace>> GetAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<EHNamespaceData>> GetAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -770,11 +387,13 @@ namespace Azure.ResourceManager.EventHub
                 case 200:
                 case 201:
                     {
-                        EHNamespace value = default;
+                        EHNamespaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EHNamespace.DeserializeEHNamespace(document.RootElement);
+                        value = EHNamespaceData.DeserializeEHNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((EHNamespaceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -785,7 +404,7 @@ namespace Azure.ResourceManager.EventHub
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public Response<EHNamespace> Get(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<EHNamespaceData> Get(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -803,17 +422,19 @@ namespace Azure.ResourceManager.EventHub
                 case 200:
                 case 201:
                     {
-                        EHNamespace value = default;
+                        EHNamespaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EHNamespace.DeserializeEHNamespace(document.RootElement);
+                        value = EHNamespaceData.DeserializeEHNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((EHNamespaceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string namespaceName, EHNamespace parameters)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string namespaceName, EHNamespaceData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -843,7 +464,7 @@ namespace Azure.ResourceManager.EventHub
         /// <param name="parameters"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<EHNamespace>> UpdateAsync(string resourceGroupName, string namespaceName, EHNamespace parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<EHNamespaceData>> UpdateAsync(string resourceGroupName, string namespaceName, EHNamespaceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -865,13 +486,13 @@ namespace Azure.ResourceManager.EventHub
                 case 200:
                 case 201:
                     {
-                        EHNamespace value = default;
+                        EHNamespaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EHNamespace.DeserializeEHNamespace(document.RootElement);
+                        value = EHNamespaceData.DeserializeEHNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((EHNamespace)null, message.Response);
+                    return Response.FromValue((EHNamespaceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -883,7 +504,7 @@ namespace Azure.ResourceManager.EventHub
         /// <param name="parameters"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<EHNamespace> Update(string resourceGroupName, string namespaceName, EHNamespace parameters, CancellationToken cancellationToken = default)
+        public Response<EHNamespaceData> Update(string resourceGroupName, string namespaceName, EHNamespaceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -905,13 +526,13 @@ namespace Azure.ResourceManager.EventHub
                 case 200:
                 case 201:
                     {
-                        EHNamespace value = default;
+                        EHNamespaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EHNamespace.DeserializeEHNamespace(document.RootElement);
+                        value = EHNamespaceData.DeserializeEHNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((EHNamespace)null, message.Response);
+                    return Response.FromValue((EHNamespaceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -2135,94 +1756,6 @@ namespace Azure.ResourceManager.EventHub
                         CheckNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetIPFilterRulesNextPageRequest(string nextLink, string resourceGroupName, string namespaceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Gets a list of IP Filter rules for a Namespace. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<IpFilterRuleListResult>> GetIPFilterRulesNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-
-            using var message = CreateGetIPFilterRulesNextPageRequest(nextLink, resourceGroupName, namespaceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IpFilterRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets a list of IP Filter rules for a Namespace. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public Response<IpFilterRuleListResult> GetIPFilterRulesNextPage(string nextLink, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-
-            using var message = CreateGetIPFilterRulesNextPageRequest(nextLink, resourceGroupName, namespaceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IpFilterRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

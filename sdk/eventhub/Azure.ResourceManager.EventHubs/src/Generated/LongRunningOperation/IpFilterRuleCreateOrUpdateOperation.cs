@@ -16,16 +16,16 @@ using Azure.ResourceManager.EventHub;
 namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> Creates or updates an IpFilterRule for a Namespace. </summary>
-    public partial class NamespaceCreateOrUpdateIpFilterRuleOperation : Operation<IpFilterRule>
+    public partial class IpFilterRuleCreateOrUpdateOperation : Operation<IpFilterRule>
     {
         private readonly OperationOrResponseInternals<IpFilterRule> _operation;
 
-        /// <summary> Initializes a new instance of NamespaceCreateOrUpdateIpFilterRuleOperation for mocking. </summary>
-        protected NamespaceCreateOrUpdateIpFilterRuleOperation()
+        /// <summary> Initializes a new instance of IpFilterRuleCreateOrUpdateOperation for mocking. </summary>
+        protected IpFilterRuleCreateOrUpdateOperation()
         {
         }
 
-        internal NamespaceCreateOrUpdateIpFilterRuleOperation(ArmResource operationsBase, Response<IpFilterRuleData> response)
+        internal IpFilterRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<IpFilterRuleData> response)
         {
             _operation = new OperationOrResponseInternals<IpFilterRule>(Response.FromValue(new IpFilterRule(operationsBase, response.Value), response.GetRawResponse()));
         }

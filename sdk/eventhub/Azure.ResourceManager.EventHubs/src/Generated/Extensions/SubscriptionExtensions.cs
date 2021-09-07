@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.EventHub
         }
         #endregion
 
-        #region IpFilterRule
+        #region EHNamespace
         private static NamespacesRestOperations GetNamespacesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             return new NamespacesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.EventHub
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EHNamespace> GetIpFilterRulesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EHNamespace> GetEHNamespacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -125,12 +126,12 @@ namespace Azure.ResourceManager.EventHub
                 var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<EHNamespace>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetIpFilterRules");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEHNamespaces");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EHNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -140,12 +141,12 @@ namespace Azure.ResourceManager.EventHub
                 }
                 async Task<Page<EHNamespace>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetIpFilterRules");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEHNamespaces");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EHNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.EventHub
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EHNamespace> GetIpFilterRules(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<EHNamespace> GetEHNamespaces(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -170,12 +171,12 @@ namespace Azure.ResourceManager.EventHub
                 var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<EHNamespace> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetIpFilterRules");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEHNamespaces");
                     scope.Start();
                     try
                     {
                         var response = restOperations.GetAll(cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EHNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -185,12 +186,12 @@ namespace Azure.ResourceManager.EventHub
                 }
                 Page<EHNamespace> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetIpFilterRules");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEHNamespaces");
                     scope.Start();
                     try
                     {
                         var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EHNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -203,30 +204,30 @@ namespace Azure.ResourceManager.EventHub
             );
         }
 
-        /// <summary> Filters the list of IpFilterRules for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of EHNamespaces for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetIpFilterRuleByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetEHNamespaceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(IpFilterRule.ResourceType);
+            ResourceFilterCollection filters = new(EHNamespace.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of IpFilterRules for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of EHNamespaces for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetIpFilterRuleByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetEHNamespaceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(IpFilterRule.ResourceType);
+            ResourceFilterCollection filters = new(EHNamespace.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }

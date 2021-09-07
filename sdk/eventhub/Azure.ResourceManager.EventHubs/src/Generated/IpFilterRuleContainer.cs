@@ -15,15 +15,14 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.EventHub.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventHub
 {
-    /// <summary> A class representing collection of IpFilterRule and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of IpFilterRule and their operations over a EHNamespace. </summary>
     public partial class IpFilterRuleContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NamespacesRestOperations _restClient;
+        private readonly IpFilterRulesRestOperations _restClient;
 
         /// <summary> Initializes a new instance of the <see cref="IpFilterRuleContainer"/> class for mocking. </summary>
         protected IpFilterRuleContainer()
@@ -35,25 +34,25 @@ namespace Azure.ResourceManager.EventHub
         internal IpFilterRuleContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restClient = new IpFilterRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        protected override ResourceType ValidResourceType => EHNamespace.ResourceType;
 
         // Container level operations.
 
-        /// <summary> Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="parameters"> Parameters for creating a namespace resource. </param>
+        /// <summary> Creates or updates an IpFilterRule for a Namespace. </summary>
+        /// <param name="ipFilterRuleName"> The IP Filter Rule name. </param>
+        /// <param name="parameters"> The Namespace IpFilterRule. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NamespaceCreateOrUpdateOperation CreateOrUpdate(string namespaceName, EHNamespace parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ipFilterRuleName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual IpFilterRuleCreateOrUpdateOperation CreateOrUpdate(string ipFilterRuleName, IpFilterRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (ipFilterRuleName == null)
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentNullException(nameof(ipFilterRuleName));
             }
             if (parameters == null)
             {
@@ -64,8 +63,8 @@ namespace Azure.ResourceManager.EventHub
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, namespaceName, parameters, cancellationToken);
-                var operation = new NamespaceCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, namespaceName, parameters).Request, response);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, ipFilterRuleName, parameters, cancellationToken);
+                var operation = new IpFilterRuleCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -77,17 +76,17 @@ namespace Azure.ResourceManager.EventHub
             }
         }
 
-        /// <summary> Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="parameters"> Parameters for creating a namespace resource. </param>
+        /// <summary> Creates or updates an IpFilterRule for a Namespace. </summary>
+        /// <param name="ipFilterRuleName"> The IP Filter Rule name. </param>
+        /// <param name="parameters"> The Namespace IpFilterRule. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NamespaceCreateOrUpdateOperation> CreateOrUpdateAsync(string namespaceName, EHNamespace parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ipFilterRuleName"/> or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<IpFilterRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string ipFilterRuleName, IpFilterRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (ipFilterRuleName == null)
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentNullException(nameof(ipFilterRuleName));
             }
             if (parameters == null)
             {
@@ -98,8 +97,8 @@ namespace Azure.ResourceManager.EventHub
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, namespaceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NamespaceCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, namespaceName, parameters).Request, response);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, ipFilterRuleName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new IpFilterRuleCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.EventHub
                     throw new ArgumentNullException(nameof(ipFilterRuleName));
                 }
 
-                var response = _restClient.GetIpFilterRule(Id.ResourceGroupName, Id.Name, ipFilterRuleName, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, ipFilterRuleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IpFilterRule(Parent, response.Value), response.GetRawResponse());
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.EventHub
                     throw new ArgumentNullException(nameof(ipFilterRuleName));
                 }
 
-                var response = await _restClient.GetIpFilterRuleAsync(Id.ResourceGroupName, Id.Name, ipFilterRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, ipFilterRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new IpFilterRule(Parent, response.Value), response.GetRawResponse());
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.EventHub
                     throw new ArgumentNullException(nameof(ipFilterRuleName));
                 }
 
-                var response = _restClient.GetIpFilterRule(Id.ResourceGroupName, Id.Name, ipFilterRuleName, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, ipFilterRuleName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<IpFilterRule>(null, response.GetRawResponse())
                     : Response.FromValue(new IpFilterRule(this, response.Value), response.GetRawResponse());
@@ -203,7 +202,7 @@ namespace Azure.ResourceManager.EventHub
                     throw new ArgumentNullException(nameof(ipFilterRuleName));
                 }
 
-                var response = await _restClient.GetIpFilterRuleAsync(Id.ResourceGroupName, Id.Name, ipFilterRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, ipFilterRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<IpFilterRule>(null, response.GetRawResponse())
                     : Response.FromValue(new IpFilterRule(this, response.Value), response.GetRawResponse());
@@ -274,7 +273,7 @@ namespace Azure.ResourceManager.EventHub
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetIPFilterRules(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new IpFilterRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -289,7 +288,7 @@ namespace Azure.ResourceManager.EventHub
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetIPFilterRulesNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new IpFilterRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.EventHub
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetIPFilterRulesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new IpFilterRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.EventHub
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetIPFilterRulesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new IpFilterRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -337,52 +336,6 @@ namespace Azure.ResourceManager.EventHub
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="IpFilterRule" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("IpFilterRuleContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(IpFilterRule.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="IpFilterRule" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("IpFilterRuleContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(IpFilterRule.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         // Builders.

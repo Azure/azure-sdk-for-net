@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHub
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => "Microsoft.EventHub/namespaces";
+        protected override ResourceType ValidResourceType => "Microsoft.EventHub/namespaces/eventhubs";
 
         // Container level operations.
 

@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.EventHub;
 
 namespace Azure.ResourceManager.EventHub.Models
 {
@@ -20,14 +22,17 @@ namespace Azure.ResourceManager.EventHub.Models
     {
         private readonly OperationInternals<EHNamespace> _operation;
 
+        private readonly ArmResource _operationBase;
+
         /// <summary> Initializes a new instance of NamespaceCreateOrUpdateOperation for mocking. </summary>
         protected NamespaceCreateOrUpdateOperation()
         {
         }
 
-        internal NamespaceCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NamespaceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<EHNamespace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NamespaceCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.EventHub.Models
         EHNamespace IOperationSource<EHNamespace>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return EHNamespace.DeserializeEHNamespace(document.RootElement);
+            return new EHNamespace(_operationBase, EHNamespaceData.DeserializeEHNamespaceData(document.RootElement));
         }
 
         async ValueTask<EHNamespace> IOperationSource<EHNamespace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return EHNamespace.DeserializeEHNamespace(document.RootElement);
+            return new EHNamespace(_operationBase, EHNamespaceData.DeserializeEHNamespaceData(document.RootElement));
         }
     }
 }

@@ -8,21 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EventHub.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHub
 {
-    /// <summary> Single Namespace item in List or Get Operation. </summary>
-    public partial class EHNamespace : TrackedResource
+    /// <summary> A class representing the EHNamespace data model. </summary>
+    public partial class EHNamespaceData : TrackedResource
     {
-        /// <summary> Initializes a new instance of EHNamespace. </summary>
+        /// <summary> Initializes a new instance of EHNamespaceData. </summary>
         /// <param name="location"> The location. </param>
-        public EHNamespace(Location location) : base(location)
+        public EHNamespaceData(Location location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of EHNamespace. </summary>
+        /// <summary> Initializes a new instance of EHNamespaceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.EventHub.Models
         /// <param name="kafkaEnabled"> Value that indicates whether Kafka is enabled for eventhub namespace. </param>
         /// <param name="zoneRedundant"> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </param>
         /// <param name="encryption"> Properties of BYOK Encryption description. </param>
-        internal EHNamespace(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Sku sku, Identity identity, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, Encryption encryption) : base(id, name, type, tags, location)
+        internal EHNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, Identity identity, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, Encryption encryption) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.EventHub.Models
         }
 
         /// <summary> Properties of sku resource. </summary>
-        public Sku Sku { get; set; }
+        public Models.Sku Sku { get; set; }
         /// <summary> Properties of BYOK Identity description. </summary>
         public Identity Identity { get; set; }
         /// <summary> Provisioning state of the Namespace. </summary>
