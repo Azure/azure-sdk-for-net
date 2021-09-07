@@ -8,22 +8,22 @@
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHub
 {
-    /// <summary> Single item in a List or Get VirtualNetworkRules operation. </summary>
-    public partial class VirtualNetworkRule : Resource
+    /// <summary> A class representing the VirtualNetworkRule data model. </summary>
+    public partial class VirtualNetworkRuleData : Resource
     {
-        /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
-        public VirtualNetworkRule()
+        /// <summary> Initializes a new instance of VirtualNetworkRuleData. </summary>
+        public VirtualNetworkRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of VirtualNetworkRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="virtualNetworkSubnetId"> ARM ID of Virtual Network Subnet. </param>
-        internal VirtualNetworkRule(ResourceIdentifier id, string name, ResourceType type, string virtualNetworkSubnetId) : base(id, name, type)
+        internal VirtualNetworkRuleData(ResourceIdentifier id, string name, ResourceType type, string virtualNetworkSubnetId) : base(id, name, type)
         {
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
         }

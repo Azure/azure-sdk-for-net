@@ -10,22 +10,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.EventHub;
 
 namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> Creates or updates an VirtualNetworkRule for a Namespace. </summary>
-    public partial class NamespaceCreateOrUpdateVirtualNetworkRuleOperation : Operation<VirtualNetworkRule>
+    public partial class VirtualNetworkRuleCreateOrUpdateOperation : Operation<VirtualNetworkRule>
     {
         private readonly OperationOrResponseInternals<VirtualNetworkRule> _operation;
 
-        /// <summary> Initializes a new instance of NamespaceCreateOrUpdateVirtualNetworkRuleOperation for mocking. </summary>
-        protected NamespaceCreateOrUpdateVirtualNetworkRuleOperation()
+        /// <summary> Initializes a new instance of VirtualNetworkRuleCreateOrUpdateOperation for mocking. </summary>
+        protected VirtualNetworkRuleCreateOrUpdateOperation()
         {
         }
 
-        internal NamespaceCreateOrUpdateVirtualNetworkRuleOperation(Response<VirtualNetworkRule> response)
+        internal VirtualNetworkRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<VirtualNetworkRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<VirtualNetworkRule>(response);
+            _operation = new OperationOrResponseInternals<VirtualNetworkRule>(Response.FromValue(new VirtualNetworkRule(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

@@ -10,22 +10,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.EventHub;
 
 namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> Create or update NetworkRuleSet for a Namespace. </summary>
-    public partial class NamespaceCreateOrUpdateNetworkRuleSetOperation : Operation<NetworkRuleSet>
+    public partial class NetworkRuleSetCreateOrUpdateOperation : Operation<NetworkRuleSet>
     {
         private readonly OperationOrResponseInternals<NetworkRuleSet> _operation;
 
-        /// <summary> Initializes a new instance of NamespaceCreateOrUpdateNetworkRuleSetOperation for mocking. </summary>
-        protected NamespaceCreateOrUpdateNetworkRuleSetOperation()
+        /// <summary> Initializes a new instance of NetworkRuleSetCreateOrUpdateOperation for mocking. </summary>
+        protected NetworkRuleSetCreateOrUpdateOperation()
         {
         }
 
-        internal NamespaceCreateOrUpdateNetworkRuleSetOperation(Response<NetworkRuleSet> response)
+        internal NetworkRuleSetCreateOrUpdateOperation(ArmResource operationsBase, Response<NetworkRuleSetData> response)
         {
-            _operation = new OperationOrResponseInternals<NetworkRuleSet>(response);
+            _operation = new OperationOrResponseInternals<NetworkRuleSet>(Response.FromValue(new NetworkRuleSet(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

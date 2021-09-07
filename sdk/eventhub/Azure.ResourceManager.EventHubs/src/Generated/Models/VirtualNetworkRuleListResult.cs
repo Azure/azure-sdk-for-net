@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventHub;
 
 namespace Azure.ResourceManager.EventHub.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.EventHub.Models
         /// <summary> Initializes a new instance of VirtualNetworkRuleListResult. </summary>
         internal VirtualNetworkRuleListResult()
         {
-            Value = new ChangeTrackingList<VirtualNetworkRule>();
+            Value = new ChangeTrackingList<VirtualNetworkRuleData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkRuleListResult. </summary>
         /// <param name="value"> Result of the List VirtualNetwork Rules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains an incomplete list of VirtualNetwork Rules. </param>
-        internal VirtualNetworkRuleListResult(IReadOnlyList<VirtualNetworkRule> value, string nextLink)
+        internal VirtualNetworkRuleListResult(IReadOnlyList<VirtualNetworkRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the List VirtualNetwork Rules operation. </summary>
-        public IReadOnlyList<VirtualNetworkRule> Value { get; }
+        public IReadOnlyList<VirtualNetworkRuleData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains an incomplete list of VirtualNetwork Rules. </summary>
         public string NextLink { get; }
     }

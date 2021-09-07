@@ -14,16 +14,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> Deletes an VirtualNetworkRule for a Namespace. </summary>
-    public partial class NamespaceDeleteVirtualNetworkRuleOperation : Operation
+    public partial class VirtualNetworkRuleDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of NamespaceDeleteVirtualNetworkRuleOperation for mocking. </summary>
-        protected NamespaceDeleteVirtualNetworkRuleOperation()
+        /// <summary> Initializes a new instance of VirtualNetworkRuleDeleteOperation for mocking. </summary>
+        protected VirtualNetworkRuleDeleteOperation()
         {
         }
 
-        internal NamespaceDeleteVirtualNetworkRuleOperation(Response response)
+        internal VirtualNetworkRuleDeleteOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }

@@ -9,9 +9,9 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHub
 {
-    public partial class VirtualNetworkRule : IUtf8JsonSerializable
+    public partial class VirtualNetworkRuleData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventHub.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
+        internal static VirtualNetworkRuleData DeserializeVirtualNetworkRuleData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventHub.Models
                     continue;
                 }
             }
-            return new VirtualNetworkRule(id, name, type, virtualNetworkSubnetId.Value);
+            return new VirtualNetworkRuleData(id, name, type, virtualNetworkSubnetId.Value);
         }
     }
 }

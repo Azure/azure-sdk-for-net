@@ -9,10 +9,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EventHub.Models;
 
-namespace Azure.ResourceManager.EventHub.Models
+namespace Azure.ResourceManager.EventHub
 {
-    public partial class NetworkRuleSet : IUtf8JsonSerializable
+    public partial class NetworkRuleSetData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.EventHub.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
+        internal static NetworkRuleSetData DeserializeNetworkRuleSetData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.EventHub.Models
                     continue;
                 }
             }
-            return new NetworkRuleSet(id, name, type, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules));
+            return new NetworkRuleSetData(id, name, type, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules));
         }
     }
 }

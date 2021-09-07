@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.EventHub
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/eventhub/resource-manager/readme.md
+require: D:\yukun\projects\azure-rest-api-specs\specification\eventhub\resource-manager\readme.md
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -23,6 +23,7 @@ operation-group-to-parent:
     Namespaces: resourceGroups
     Configuration: Microsoft.EventHub/clusters
     ConsumerGroups: Microsoft.EventHub/namespaces/eventhubs
+    NetworkRuleSets: Microsoft.EventHub/namespaces
     EHNamespaceAuthorizationRules: Microsoft.EventHub/namespaces
     ArmDisasterRecoveryAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs
     EventhubAuthorizationRules: Microsoft.EventHub/namespaces/eventhubs
@@ -40,4 +41,25 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/ipfilterrules/{ipFilterRuleName}'].get.operationId
       transform: return "IpFilterRules_Get"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/virtualnetworkrules'].get.operationId
+      transform: return "VirtualNetworkRules_List"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/virtualnetworkrules/{virtualNetworkRuleName}'].put.operationId
+      transform: return "VirtualNetworkRules_CreateOrUpdate"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/virtualnetworkrules/{virtualNetworkRuleName}'].delete.operationId
+      transform: return "VirtualNetworkRules_Delete"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/virtualnetworkrules/{virtualNetworkRuleName}'].get.operationId
+      transform: return "VirtualNetworkRules_Get"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default'].put.operationId
+      transform: return "NetworkRuleSets_CreateOrUpdate"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default'].delete.operationId
+      transform: return "NetworkRuleSets_Delete"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default'].get.operationId
+      transform: return "NetworkRuleSets_Get"
 ```

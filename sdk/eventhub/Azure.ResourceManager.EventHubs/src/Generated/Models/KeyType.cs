@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventHub.Models
 {
     /// <summary> The access key to regenerate. </summary>
-    public enum KeyType
+    internal enum KeyType
     {
         /// <summary> PrimaryKey. </summary>
         PrimaryKey,
