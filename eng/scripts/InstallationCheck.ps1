@@ -6,9 +6,6 @@ param (
     [string] $Artifact,
 
     [Parameter()]
-    [string] $PipelineWorkspace,
-
-    [Parameter()]
     [string] $RetryLimit = 30
 )
 
