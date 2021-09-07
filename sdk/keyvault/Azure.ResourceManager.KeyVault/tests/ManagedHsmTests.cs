@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
         }
 
-        [Test]
+        [PlaybackOnly("One location only support one MHSM")]
+        [RecordedTest]
         public async Task ManagedHsmCreateUpdateDelete()
         {
             Location = "southcentralus";
@@ -148,7 +149,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             });
         }
 
-        [Test]
+        [PlaybackOnly("One location only support one MHSM")]
+        [RecordedTest]
         public async Task ManagedHsmListKeys()
         {
             List<string> resourceIds = new List<string>();
@@ -188,8 +190,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
         }
 
-        [Ignore("Recovoer is not working, add back when it's verified")]
-        [Test]
+        [Ignore("Recover is not working, add back when it's verified")]
+        [PlaybackOnly("One location only support one MHSM")]
+        [RecordedTest]
         public async Task ManagedHsmRecoverDeletedVault()
         {
             Location = "westus";

@@ -583,10 +583,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 StopTrackingLinkAsActive(link, refreshTimer);
 
-                // Aborting the session will perform any necessary cleanup of
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
 
-                session?.Abort();
+                session?.SafeClose();
                 ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
@@ -703,9 +703,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             catch (Exception exception)
             {
                 StopTrackingLinkAsActive(link, refreshTimer);
-                // Aborting the session will perform any necessary cleanup of
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
-                session?.Abort();
+                session?.SafeClose();
                 ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
@@ -845,10 +845,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 StopTrackingLinkAsActive(link, refreshTimer);
 
-                // Aborting the session will perform any necessary cleanup of
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
 
-                session?.Abort();
+                session?.SafeClose();
                 ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,

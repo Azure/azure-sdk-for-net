@@ -1,16 +1,12 @@
 # Release History
 
-## 7.3.0-beta.2 (Unreleased)
+## 7.3.0 (2021-09-07)
 
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - John Call _([GitHub](https://github.com/johnthcall))_
-
-### Features Added
-
-### Breaking Changes
 
 ### Bugs Fixed
 

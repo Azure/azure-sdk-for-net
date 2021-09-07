@@ -38,10 +38,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();
             try
@@ -78,10 +75,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();
             try
