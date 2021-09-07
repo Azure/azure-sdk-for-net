@@ -21,37 +21,27 @@ namespace Azure.DigitalTwins.Core
             CreateModelsOptions digitalTwinModelsAddOptions = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.Add");
-            scope.Start();
-            try
+            using HttpMessage message = CreateAddRequest(models, digitalTwinModelsAddOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
             {
-                using HttpMessage message = CreateAddRequest(models, digitalTwinModelsAddOptions);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                    case 201:
+                case 200:
+                case 201:
+                    {
+                        IReadOnlyList<DigitalTwinsModelData> value = default;
+                        using JsonDocument document = await JsonDocument
+                            .ParseAsync(message.Response.ContentStream, default, cancellationToken)
+                            .ConfigureAwait(false);
+                        List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>(document.RootElement.GetArrayLength());
+                        foreach (JsonElement item in document.RootElement.EnumerateArray())
                         {
-                            IReadOnlyList<DigitalTwinsModelData> value = default;
-                            using JsonDocument document = await JsonDocument
-                                .ParseAsync(message.Response.ContentStream, default, cancellationToken)
-                                .ConfigureAwait(false);
-                            List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>(document.RootElement.GetArrayLength());
-                            foreach (JsonElement item in document.RootElement.EnumerateArray())
-                            {
-                                array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
-                            }
-                            value = array;
-                            return Response.FromValue(value, message.Response);
+                            array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
                         }
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
+                        value = array;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -62,35 +52,25 @@ namespace Azure.DigitalTwins.Core
             CreateModelsOptions digitalTwinModelsAddOptions = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.Add");
-            scope.Start();
-            try
+            using HttpMessage message = CreateAddRequest(models, digitalTwinModelsAddOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
             {
-                using HttpMessage message = CreateAddRequest(models, digitalTwinModelsAddOptions);
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                    case 201:
+                case 200:
+                case 201:
+                    {
+                        IReadOnlyList<DigitalTwinsModelData> value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>(document.RootElement.GetArrayLength());
+                        foreach (JsonElement item in document.RootElement.EnumerateArray())
                         {
-                            IReadOnlyList<DigitalTwinsModelData> value = default;
-                            using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>(document.RootElement.GetArrayLength());
-                            foreach (JsonElement item in document.RootElement.EnumerateArray())
-                            {
-                                array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
-                            }
-                            value = array;
-                            return Response.FromValue(value, message.Response);
+                            array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
                         }
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                }
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
+                        value = array;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -111,23 +91,13 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(modelUpdates));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.Update");
-            scope.Start();
-            try
+            using HttpMessage message = CreateUpdateRequest(id, modelUpdates, digitalTwinModelsUpdateOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            return message.Response.Status switch
             {
-                using HttpMessage message = CreateUpdateRequest(id, modelUpdates, digitalTwinModelsUpdateOptions);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                return message.Response.Status switch
-                {
-                    204 => message.Response,
-                    _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                204 => message.Response,
+                _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false),
+            };
         }
 
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
@@ -147,23 +117,13 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(modelUpdates));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.Update");
-            scope.Start();
-            try
+            using HttpMessage message = CreateUpdateRequest(id, modelUpdates, digitalTwinModelsUpdateOptions);
+            _pipeline.Send(message, cancellationToken);
+            return message.Response.Status switch
             {
-                using HttpMessage message = CreateUpdateRequest(id, modelUpdates, digitalTwinModelsUpdateOptions);
-                _pipeline.Send(message, cancellationToken);
-                return message.Response.Status switch
-                {
-                    204 => message.Response,
-                    _ => throw _clientDiagnostics.CreateRequestFailedException(message.Response),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                204 => message.Response,
+                _ => throw _clientDiagnostics.CreateRequestFailedException(message.Response),
+            };
         }
 
         // The strings are already json, so we do not want them to be serialized.

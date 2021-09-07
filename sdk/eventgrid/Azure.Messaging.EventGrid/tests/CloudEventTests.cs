@@ -42,7 +42,8 @@ namespace Azure.Messaging.EventGrid.Tests
 
             using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
 
-            var activity = new Activity($"{nameof(EventGridPublisherClient)}.{nameof(EventGridPublisherClient.SendEvents)}");
+            // simulating some other activity already being started before doing operations with the client
+            var activity = new Activity("ParentEvent");
             activity.SetW3CFormat();
             activity.Start();
             activity.TraceStateString = "tracestatevalue";
@@ -155,7 +156,8 @@ namespace Azure.Messaging.EventGrid.Tests
                    options);
             using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
 
-            var activity = new Activity($"{nameof(EventGridPublisherClient)}.{nameof(EventGridPublisherClient.SendEvents)}");
+            // simulating some other activity already being started before doing operations with the client
+            var activity = new Activity("ParentEvent");
             activity.SetW3CFormat();
             activity.Start();
             activity.TraceStateString = "tracestatevalue";

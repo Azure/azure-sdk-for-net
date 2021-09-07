@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,18 +16,13 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TroubleshootingDetails DeserializeTroubleshootingDetails(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> reasonType = default;
             Optional<string> summary = default;
             Optional<string> detail = default;
             Optional<IReadOnlyList<TroubleshootingRecommendedActions>> recommendedActions = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("reasonType"))
                 {
                     reasonType = property.Value.GetString();
@@ -57,8 +53,13 @@ namespace Azure.ResourceManager.Network.Models
                     recommendedActions = array;
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new TroubleshootingDetails(id.Value, reasonType.Value, summary.Value, detail.Value, Optional.ToList(recommendedActions));
+            return new TroubleshootingDetails(id, reasonType.Value, summary.Value, detail.Value, Optional.ToList(recommendedActions));
         }
     }
 }

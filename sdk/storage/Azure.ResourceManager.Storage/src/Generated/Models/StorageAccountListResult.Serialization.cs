@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageAccountListResult DeserializeStorageAccountListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<StorageAccount>> value = default;
+            Optional<IReadOnlyList<StorageAccountData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StorageAccount> array = new List<StorageAccount>();
+                    List<StorageAccountData> array = new List<StorageAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccount.DeserializeStorageAccount(item));
+                        array.Add(StorageAccountData.DeserializeStorageAccountData(item));
                     }
                     value = array;
                     continue;

@@ -29,7 +29,9 @@ namespace Azure.Identity
         public bool AllowMultiTenantAuthentication { get; set; }
 
         /// <summary>
-        /// Gets or sets value indicating if logging that contains PII content should be logged.
+        /// Gets or sets value indicating if ETW logging that contains PII content should be logged.
+        /// Setting this property will not disable redaction of <see cref="Request"/> Content. To enable logging of sensitive <see cref="Request.Content"/>
+        /// the <see cref="DiagnosticsOptions.IsLoggingContentEnabled"/> property must be set to <c>true</c>.
         /// </summary>
         public bool IsLoggingPIIEnabled { get; set; }
     }

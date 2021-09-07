@@ -2,6 +2,7 @@
 
 ## 12.7.0 (2021-09-07)
 - Includes all features from 12.7.0-beta.1 and 12.7.0-beta.2.
+- Fixed bug where Batch Delete was not property parsing DeleteSnapshotsOption.
 
 ## 12.7.0-beta.2 (2021-07-23)
 - This release contains bug fixes to improve quality.

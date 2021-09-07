@@ -21,6 +21,16 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("bypass");
                 writer.WriteStringValue(Bypass.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(ResourceAccessRules))
+            {
+                writer.WritePropertyName("resourceAccessRules");
+                writer.WriteStartArray();
+                foreach (var item in ResourceAccessRules)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules");
@@ -49,6 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
         {
             Optional<Bypass> bypass = default;
+            Optional<IList<ResourceAccessRule>> resourceAccessRules = default;
             Optional<IList<VirtualNetworkRule>> virtualNetworkRules = default;
             Optional<IList<IPRule>> ipRules = default;
             DefaultAction defaultAction = default;
@@ -62,6 +73,21 @@ namespace Azure.ResourceManager.Storage.Models
                         continue;
                     }
                     bypass = new Bypass(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceAccessRules"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ResourceAccessRule> array = new List<ResourceAccessRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceAccessRule.DeserializeResourceAccessRule(item));
+                    }
+                    resourceAccessRules = array;
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkRules"))
@@ -100,7 +126,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new NetworkRuleSet(Optional.ToNullable(bypass), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), defaultAction);
+            return new NetworkRuleSet(Optional.ToNullable(bypass), Optional.ToList(resourceAccessRules), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), defaultAction);
         }
     }
 }
