@@ -11,6 +11,9 @@ namespace DataBoxEdge.Tests
     /// </summary>
     public class DeviceTests : DataBoxEdgeTestBase
     {
+        #region Constants
+        private const int StandardSizeOfCIK = 128;
+        #endregion
         #region Constructor
         /// <summary>
         /// Initializes an instance to test device operations
@@ -91,8 +94,41 @@ namespace DataBoxEdge.Tests
             Client.Devices.CreateOrUpdateSecuritySettings(TestConstants.EdgeResourceName, new SecuritySettings(asymmetricEncryptedSecret), TestConstants.DefaultResourceGroupName);
         }
 
-        #endregion Test Methods
+        [Fact]
+        public void Test_GenerageActivationKey()
+        {
+            // Create Edge Resource
+            DataBoxEdgeDevice device = new DataBoxEdgeDevice();
 
+            // Populate device properties as a Gateway resource
+            device.PopulateGatewayDeviceProperties();
+
+            // Create a gateway resource
+            device.CreateOrUpdate(TestConstants.GatewayResourceName, Client, TestConstants.DefaultResourceGroupName);
+
+            // Get a device by name
+            var gatewayDevice = Client.Devices.Get(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName);
+
+            // GenerateCIK
+            var cik = Client.Devices.GenerateCIK();
+
+            // GenerateActivationKey
+            var activationKey = Client.Devices.GenerateActivationKey(TestConstants.DefaultResourceGroupName, TestConstants.GatewayResourceName,
+                TestConstants.DefaultResourceLocation, TestConstants.SubscriptionId, cik);
+        }
+
+        /// <summary>
+        /// Test to generate the CIK
+        /// </summary>
+        [Fact]
+        public void Test_GenerateCIK()
+        {
+            var cik = Client.Devices.GenerateCIK();
+            Assert.NotNull(cik);
+            Assert.True(cik.Length == StandardSizeOfCIK);
+        }
+
+        #endregion Test Methods
     }
 }
 

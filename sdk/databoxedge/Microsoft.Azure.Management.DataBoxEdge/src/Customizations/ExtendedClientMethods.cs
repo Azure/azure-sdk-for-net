@@ -1,17 +1,17 @@
-﻿using Microsoft.Azure.Management.DataBoxEdge.Models;
+﻿using Microsoft.Azure.Management.DataBoxEdge.Customizations;
+using Microsoft.Azure.Management.DataBoxEdge.Models;
 using Microsoft.Rest;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.DataBoxEdge
 {
     public static partial class ExtendedClientMethods
     {
+        private const int StandardSizeOfCIK = 128;
 
         /// <summary>
         /// Use this method to encrypt the user secrets (Storage Account Access Key, Volume Container Encryption Key etc.) using activation key
@@ -118,6 +118,38 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             var jsondata = (JObject)JsonConvert.DeserializeObject(decodedString);
             string serviceDataIntegrityKey = jsondata["serviceDataIntegrityKey"].Value<string>();
             return serviceDataIntegrityKey;
+        }
+
+        /// <summary>
+        /// Use this method to generate the activation key for any device to register it with the ASE resource
+        /// </summary>
+        /// <param name="resourceGroupName">Provide ResourceGroupName, where resource exists</param>
+        /// <param name="resourceName">Name of the resource</param>
+        /// <param name="resourceLocation">Location of the resource</param>
+        /// <param name="subscriptionId">Subscription Id of the resource</param>
+        /// <returns></returns>
+        public static string GenerateActivationKey(this IDevicesOperations operations, string resourceGroupName, string resourceName, string resourceLocation, string subscriptionId, string cik)
+        {
+            var generateCertResponse = ActivationKeyHelper.GenerateVaultCertificate(operations, resourceGroupName, resourceName);
+            var certPublicPart = ActivationKeyHelper.ImportCertificate(generateCertResponse.PublicKey);
+            var uploadCertificateResponse = ActivationKeyHelper.UploadVaultCertificate(operations, resourceGroupName, resourceName, certPublicPart);
+            var activationKeyToRegisterTheResource = ActivationKeyHelper.GetAadActivationKey(resourceGroupName, resourceName, resourceLocation,
+                generateCertResponse.PrivateKey, uploadCertificateResponse, subscriptionId, cik);
+
+            return activationKeyToRegisterTheResource;
+        }
+
+        /// <summary>
+        /// This method generates the CIK of length 128 chars
+        /// </summary>
+        /// <returns></returns>
+        public static string GenerateCIK(this IDevicesOperations operations)
+        {
+            var randomNumberGenerator = RandomNumberGenerator.Create();
+            var byteArr = new byte[128];
+            randomNumberGenerator.GetBytes(byteArr);
+            var cik = Convert.ToBase64String(byteArr).Substring(0, StandardSizeOfCIK);
+            return cik;
         }
     }
 }

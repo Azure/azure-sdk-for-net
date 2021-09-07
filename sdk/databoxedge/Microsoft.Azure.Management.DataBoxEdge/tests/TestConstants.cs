@@ -28,7 +28,7 @@
         /// <summary>
         /// Name of the gateway resource being used in the test
         /// </summary>
-        public const string GatewayResourceName = "demo-gateway-device";
+        public const string GatewayResourceName = "demo-gateway-device-5";
 
 
         /// <summary>
@@ -39,6 +39,11 @@
         /// ARM Lite user name
         /// </summary>
         public const string ARMLiteUserName = "EdgeArmUser";
+
+        /// <summary>
+        /// SubscriptionId for the test resources
+        /// </summary>
+        public const string SubscriptionId = "706c087b-4c6c-46bf-8adf-766ae266d5bf";
 
 
     }
