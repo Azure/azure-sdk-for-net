@@ -8,8 +8,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 {
     public class CosmosDBManagementRecordedTestSanitizer : RecordedTestSanitizer
     {
-        public string SubscriptionId { get; set; }
-
         public CosmosDBManagementRecordedTestSanitizer() : base()
         {
             // Lazy sanitize fields in the request and response bodies
