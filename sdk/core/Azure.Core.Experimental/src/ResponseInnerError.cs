@@ -13,7 +13,7 @@ namespace Azure.Core
     /// Represents an inner error.
     /// </summary>
     [JsonConverter(typeof(Converter))]
-    public sealed class ResponseInnerError
+    internal sealed class ResponseInnerError
     {
         private readonly JsonElement _innerErrorElement;
 
@@ -96,14 +96,19 @@ namespace Azure.Core
         {
             var builder = new StringBuilder();
 
+            Append(builder);
+
+            return builder.ToString();
+        }
+
+        internal void Append(StringBuilder builder)
+        {
             builder.AppendFormat(CultureInfo.InvariantCulture, "{0}: {1}", Code, Environment.NewLine);
             if (InnerError != null)
             {
                 builder.AppendLine("Inner Error:");
                 builder.Append(InnerError);
             }
-
-            return builder.ToString();
         }
     }
 }
