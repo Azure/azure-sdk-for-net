@@ -213,6 +213,7 @@
     $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault')) or
     $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.Core')) or
     $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.Cryptography')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.Extensions')) or
     $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.WebKey')) or
     $(MSBuildProjectName.Equals('Microsoft.Azure.OperationalInsights'))">
 
