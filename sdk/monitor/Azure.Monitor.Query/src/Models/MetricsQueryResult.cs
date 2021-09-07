@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query.Models
         /// The timespan for which the data was retrieved.
         /// This may be adjusted in the future and returned back from what was originally requested.
         /// </summary>
-        public DateTimeRange TimeSpan => DateTimeRange.Parse(_timespan);
+        public MonitorQueryDateTimeRange TimeSpan => MonitorQueryDateTimeRange.Parse(_timespan);
 
         /// <summary> The region of the resource being queried for metrics. </summary>
         [CodeGenMember("Resourceregion")]

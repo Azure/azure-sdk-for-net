@@ -29,6 +29,6 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Gets the error that occurred while querying the metric.
         /// </summary>
-        public ResponseError Error => ErrorCode == SuccessErrorCode ? null : new ResponseError(ErrorCode, ErrorMessage, null, null, null);
+        public ResponseError Error => ErrorCode == SuccessErrorCode ? null : new ResponseError(ErrorCode, ErrorMessage);
     }
 }

@@ -11,12 +11,12 @@ namespace Azure.Core
     /// <summary>
     /// Represents a span of time over which the query would be executed.
     /// </summary>
-    public readonly struct DateTimeRange : IEquatable<DateTimeRange>
+    public readonly struct MonitorQueryDateTimeRange : IEquatable<MonitorQueryDateTimeRange>
     {
         /// <summary>
-        /// Represents the maximum <see cref="DateTimeRange"/>.
+        /// Represents the maximum <see cref="MonitorQueryDateTimeRange"/>.
         /// </summary>
-        public static DateTimeRange All => new DateTimeRange(TimeSpan.MaxValue);
+        public static MonitorQueryDateTimeRange All => new MonitorQueryDateTimeRange(TimeSpan.MaxValue);
 
         /// <summary>
         /// Gets the duration of the range.
@@ -34,11 +34,11 @@ namespace Azure.Core
         public DateTimeOffset? End { get; }
 
         /// <summary>
-        /// Initializes an instance of <see cref="DateTimeRange"/> using a duration value.
+        /// Initializes an instance of <see cref="MonitorQueryDateTimeRange"/> using a duration value.
         /// The exact query range would be determined by the service when executing the query.
         /// </summary>
         /// <param name="duration">The duration of the range.</param>
-        public DateTimeRange(TimeSpan duration)
+        public MonitorQueryDateTimeRange(TimeSpan duration)
         {
             Duration = duration;
             Start = null;
@@ -46,11 +46,11 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Initializes an instance of <see cref="DateTimeRange"/> using a start time and a duration value.
+        /// Initializes an instance of <see cref="MonitorQueryDateTimeRange"/> using a start time and a duration value.
         /// </summary>
         /// <param name="start">The start of the range.</param>
         /// <param name="duration">The duration of the range.</param>
-        public DateTimeRange(DateTimeOffset start, TimeSpan duration)
+        public MonitorQueryDateTimeRange(DateTimeOffset start, TimeSpan duration)
         {
             Duration = duration;
             Start = start;
@@ -58,11 +58,11 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Initializes an instance of <see cref="DateTimeRange"/> using a duration and an end time.
+        /// Initializes an instance of <see cref="MonitorQueryDateTimeRange"/> using a duration and an end time.
         /// </summary>
         /// <param name="duration">The duration of the range.</param>
         /// <param name="end">The end of the range.</param>
-        public DateTimeRange(TimeSpan duration, DateTimeOffset end)
+        public MonitorQueryDateTimeRange(TimeSpan duration, DateTimeOffset end)
         {
             Duration = duration;
             Start = null;
@@ -70,11 +70,11 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Initializes an instance of <see cref="DateTimeRange"/> using a start time and an end time.
+        /// Initializes an instance of <see cref="MonitorQueryDateTimeRange"/> using a start time and an end time.
         /// </summary>
         /// <param name="start">The start of the range.</param>
         /// <param name="end">The end of the range.</param>
-        public DateTimeRange(DateTimeOffset start, DateTimeOffset end)
+        public MonitorQueryDateTimeRange(DateTimeOffset start, DateTimeOffset end)
         {
             Duration = end - start;
             Start = start;
@@ -82,13 +82,28 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Converts a <see cref="TimeSpan"/> to a <see cref="DateTimeRange"/>.
+        /// Converts a <see cref="TimeSpan"/> to a <see cref="MonitorQueryDateTimeRange"/>.
         /// </summary>
         /// <param name="timeSpan">The <see cref="TimeSpan"/> value to convert.</param>
-        public static implicit operator DateTimeRange(TimeSpan timeSpan) => new DateTimeRange(timeSpan);
+        public static implicit operator MonitorQueryDateTimeRange(TimeSpan timeSpan) => new MonitorQueryDateTimeRange(timeSpan);
 
         /// <inheritdoc />
         public override string ToString()
+        {
+            switch (Start, End, Duration)
+            {
+                case (DateTimeOffset, DateTimeOffset, _):
+                    return $"Start: {Start} End: {End}";
+                case (DateTimeOffset, null, TimeSpan):
+                    return $"Start: {Start} Duration: {Duration}";
+                case (null, DateTimeOffset, TimeSpan):
+                    return $"Duration: {Duration} End: {End}";
+                default:
+                    return $"Duration: {Duration}";
+            }
+        }
+
+        internal string ToIsoString()
         {
             string ToString(DateTimeOffset value)
             {
@@ -121,7 +136,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc />
-        public bool Equals(DateTimeRange other)
+        public bool Equals(MonitorQueryDateTimeRange other)
         {
             return Duration.Equals(other.Duration) &&
                    Nullable.Equals(Start, other.Start) &&
@@ -131,27 +146,27 @@ namespace Azure.Core
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
-            return obj is DateTimeRange other && Equals(other);
+            return obj is MonitorQueryDateTimeRange other && Equals(other);
         }
 
         /// <summary>
-        /// Determines if two <see cref="DateTimeRange"/> values are the same.
+        /// Determines if two <see cref="MonitorQueryDateTimeRange"/> values are the same.
         /// </summary>
-        /// <param name="left">The first <see cref="DateTimeRange"/> to compare.</param>
-        /// <param name="right">The second <see cref="DateTimeRange"/> to compare.</param>
+        /// <param name="left">The first <see cref="MonitorQueryDateTimeRange"/> to compare.</param>
+        /// <param name="right">The second <see cref="MonitorQueryDateTimeRange"/> to compare.</param>
         /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
-        public static bool operator ==(DateTimeRange left, DateTimeRange right)
+        public static bool operator ==(MonitorQueryDateTimeRange left, MonitorQueryDateTimeRange right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        /// Determines if two <see cref="DateTimeRange"/> values are different.
+        /// Determines if two <see cref="MonitorQueryDateTimeRange"/> values are different.
         /// </summary>
-        /// <param name="left">The first <see cref="DateTimeRange"/> to compare.</param>
-        /// <param name="right">The second <see cref="DateTimeRange"/> to compare.</param>
+        /// <param name="left">The first <see cref="MonitorQueryDateTimeRange"/> to compare.</param>
+        /// <param name="right">The second <see cref="MonitorQueryDateTimeRange"/> to compare.</param>
         /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
-        public static bool operator !=(DateTimeRange left, DateTimeRange right)
+        public static bool operator !=(MonitorQueryDateTimeRange left, MonitorQueryDateTimeRange right)
         {
             return !left.Equals(right);
         }
@@ -163,16 +178,16 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Converts a <see cref="string"/> value to it's <see cref="DateTimeRange"/> representation.
+        /// Converts a <see cref="string"/> value to it's <see cref="MonitorQueryDateTimeRange"/> representation.
         /// </summary>
         /// <param name="value">The string to convert.</param>
         /// <returns>A <see langword="DateTimeRange" /> equivalent of the string.</returns>
         /// <exception cref="FormatException"><paramref name="value" /> is not in correct format to represent a <see langword="DateTimeRange" /> value.</exception>
-        public static DateTimeRange Parse(string value)
+        internal static MonitorQueryDateTimeRange Parse(string value)
         {
             Argument.AssertNotNullOrWhiteSpace(value, nameof(value));
 
-            FormatException CreateFormatException(Exception? inner = null) =>
+            FormatException CreateFormatException(Exception inner = null) =>
                 new("Unable to parse the DateTimeRange value. " +
                       "Expected one of the following formats:" +
                       " Duration," +
@@ -203,9 +218,9 @@ namespace Azure.Core
 
                     return (firstIsDateTime, secondIsDateTime) switch
                     {
-                        (true, true) => new DateTimeRange(dateTimeFirst, dateTimeSecond),
-                        (true, false) => new DateTimeRange(dateTimeFirst, ParseTimeSpan(parts[1])),
-                        (false, true) => new DateTimeRange(ParseTimeSpan(parts[0]), dateTimeSecond),
+                        (true, true) => new MonitorQueryDateTimeRange(dateTimeFirst, dateTimeSecond),
+                        (true, false) => new MonitorQueryDateTimeRange(dateTimeFirst, ParseTimeSpan(parts[1])),
+                        (false, true) => new MonitorQueryDateTimeRange(ParseTimeSpan(parts[0]), dateTimeSecond),
                         _ => throw CreateFormatException()
                     };
                 default:

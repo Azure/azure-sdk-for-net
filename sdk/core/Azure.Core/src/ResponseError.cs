@@ -23,6 +23,15 @@ namespace Azure
         /// </summary>
         /// <param name="code">The error code.</param>
         /// <param name="message">The error message.</param>
+        public ResponseError(string? code, string? message) : this(code, message, null, default)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="ResponseError"/>.
+        /// </summary>
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
         /// <param name="element">The raw JSON element the error was parsed from.</param>
         /// <param name="innerError">The inner error.</param>
         /// <param name="target">The error target.</param>
@@ -168,7 +177,7 @@ namespace Azure
                 }
             }
 
-            if (includeRaw)
+            if (includeRaw && _element.ValueKind != JsonValueKind.Undefined)
             {
                 builder.AppendLine();
                 builder.AppendLine("Raw:");
