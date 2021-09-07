@@ -1,8 +1,10 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.1.0-beta.1 (2021-09-07)
 
 ### Features Added
+
+- Added `ContainerRegistryBlobClient` with methods to upload and download OCI Manifests and artifact blobs, to enable implementation of push/pull for OCI artifacts.
 
 ### Breaking Changes
 
