@@ -210,7 +210,7 @@ namespace Azure
     }
     public sealed partial class ResponseError
     {
-        internal ResponseError() { }
+        public ResponseError(string? code, string? message) { }
         public string? Code { get { throw null; } }
         public string? Message { get { throw null; } }
         public override string ToString() { throw null; }
