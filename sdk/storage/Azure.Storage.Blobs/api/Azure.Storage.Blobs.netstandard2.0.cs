@@ -1727,6 +1727,7 @@ namespace Azure.Storage.Sas
         Move = 256,
         Execute = 512,
         SetImmutabilityPolicy = 1024,
+        PermanentDelete = 2048,
     }
     public sealed partial class BlobSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
     {
@@ -1746,6 +1747,7 @@ namespace Azure.Storage.Sas
         All = -1,
         Delete = 1,
         SetImmutabilityPolicy = 2,
+        PermanentDelete = 4,
     }
     [System.FlagsAttribute]
     public enum SnapshotSasPermissions
@@ -1755,6 +1757,7 @@ namespace Azure.Storage.Sas
         Write = 2,
         Delete = 4,
         SetImmutabilityPolicy = 8,
+        PermanentDelete = 16,
     }
 }
 namespace Microsoft.Extensions.Azure
