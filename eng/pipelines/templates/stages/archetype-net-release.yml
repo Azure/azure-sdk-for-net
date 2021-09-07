@@ -71,6 +71,7 @@ stages:
                         ServiceName: ${{parameters.ServiceDirectory}}
                         ForRelease: true
                     - task: PowerShell@2
+                      pwsh: true
                       inputs:
                         filePath: $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1
                         arguments: >
