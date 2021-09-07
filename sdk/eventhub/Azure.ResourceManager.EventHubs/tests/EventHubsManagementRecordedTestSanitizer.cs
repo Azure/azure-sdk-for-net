@@ -4,17 +4,15 @@
 using Azure.Core.TestFramework;
 using Castle.Core.Internal;
 
-namespace Azure.ResourceManager.CosmosDB.Tests
+namespace Azure.ResourceManager.EventHubs.Tests
 {
     public class EventHubsManagementRecordedTestSanitizer : RecordedTestSanitizer
     {
         public EventHubsManagementRecordedTestSanitizer() : base()
         {
             // Lazy sanitize fields in the request and response bodies
-            AddJsonPathSanitizer("$..primaryMasterKey");
-            AddJsonPathSanitizer("$..primaryReadonlyMasterKey");
-            AddJsonPathSanitizer("$..secondaryMasterKey");
-            AddJsonPathSanitizer("$..secondaryReadonlyMasterKey");
+            AddJsonPathSanitizer("$..UpdatePrimaryKey");
+            AddJsonPathSanitizer("$..CreatePrimaryKey");
         }
 
         public override void Sanitize(RecordSession session)
