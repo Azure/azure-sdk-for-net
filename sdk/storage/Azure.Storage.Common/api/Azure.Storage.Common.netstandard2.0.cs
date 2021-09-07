@@ -12,6 +12,20 @@ namespace Azure.Storage
     {
         V1_0 = 1,
     }
+    public partial class DownloadTransactionalHashingOptions
+    {
+        public DownloadTransactionalHashingOptions() { }
+        public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
+        public bool DeferValidation { get { throw null; } set { } }
+    }
+    public partial class StorageCrc64HashAlgorithm : System.Security.Cryptography.HashAlgorithm
+    {
+        internal StorageCrc64HashAlgorithm() { }
+        public static new Azure.Storage.StorageCrc64HashAlgorithm Create() { throw null; }
+        protected override void HashCore(byte[] array, int ibStart, int cbSize) { }
+        protected override byte[] HashFinal() { throw null; }
+        public override void Initialize() { }
+    }
     public static partial class StorageExtensions
     {
         public static System.IDisposable CreateServiceTimeoutScope(System.TimeSpan? timeout) { throw null; }
@@ -43,6 +57,18 @@ namespace Azure.Storage
         public static bool operator ==(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
+    }
+    public enum TransactionalHashAlgorithm
+    {
+        None = 0,
+        StorageCrc64 = 1,
+        MD5 = 2,
+    }
+    public partial class UploadTransactionalHashingOptions
+    {
+        public UploadTransactionalHashingOptions() { }
+        public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
+        public byte[] PrecalculatedHash { get { throw null; } set { } }
     }
 }
 namespace Azure.Storage.Sas
