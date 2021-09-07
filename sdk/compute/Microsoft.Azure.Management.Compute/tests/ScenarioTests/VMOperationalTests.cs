@@ -7,7 +7,9 @@ using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Compute.Tests
@@ -456,6 +458,88 @@ namespace Compute.Tests
                     // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     // of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rg1Name);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
+        /// Create VM
+        /// Hibernate VM
+        /// Start VM
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMOperations_HibernateResume()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Hard code the location to "eastus2euap".
+                // This is because Hibernate support is in canary currently and is not available worldwide.
+                // Before changing the default location, we have to save it to be reset it at the end of the test.
+                // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true, sku: "2019-Datacenter");
+
+                // Create resource group
+                string rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix) + 1;
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+
+                try
+                {
+                    // Create Storage Account, so that both the VMs can share it
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    Action<VirtualMachine> vmCustomizer = customizedVM =>
+                    {
+                        customizedVM.AvailabilitySet = null;
+                        customizedVM.AdditionalCapabilities = new AdditionalCapabilities
+                        {
+                            HibernationEnabled = true
+                        };
+                    };
+                    VirtualMachine vm = CreateVM(rgName, asName, storageAccountName, imageRef, out VirtualMachine inputVM, vmCustomizer: vmCustomizer,
+                        hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardD2sV3);
+                    Assert.NotNull(vm.AdditionalCapabilities);
+                    Assert.True(vm.AdditionalCapabilities.HibernationEnabled, "VM should have hibernation enabled");
+
+                    // Hibernating the VM and validating instance view status
+                    m_CrpClient.VirtualMachines.Deallocate(rgName, vm.Name, hibernate: true);
+                    var instanceViewResponse = m_CrpClient.VirtualMachines.InstanceView(rgName, inputVM.Name);
+                    Assert.NotNull(instanceViewResponse);
+                    List<InstanceViewStatus> actualInstanceViewStatuses = instanceViewResponse.Statuses.ToList();
+                    Assert.True(actualInstanceViewStatuses[1].Code == "PowerState/deallocated",
+                        "Powerstates doesn't match after hibernate operation");
+                    Assert.True(actualInstanceViewStatuses[1].DisplayStatus == "VM deallocated",
+                        "Powerstates doesn't match after hibernate operation");
+                    Assert.True(instanceViewResponse.Statuses[2].Code == "HibernationState/Hibernated",
+                        "Hibernation status doesn't match after hibernate operation");
+                    Assert.True(instanceViewResponse.Statuses[2].DisplayStatus == "VM hibernated",
+                        "Hibernation status doesn't match after hibernate operation");
+
+                    // Resuming the VM and validating instance view status
+                    m_CrpClient.VirtualMachines.Start(rgName, vm.Name);
+                    instanceViewResponse = m_CrpClient.VirtualMachines.InstanceView(rgName, inputVM.Name);
+                    Assert.NotNull(instanceViewResponse);
+                    actualInstanceViewStatuses = instanceViewResponse.Statuses.ToList();
+                    Assert.True(actualInstanceViewStatuses[1].Code == "PowerState/running",
+                        "Powerstates doesn't match after resume operation");
+                    Assert.True(actualInstanceViewStatuses[1].DisplayStatus == "VM running",
+                        "Powerstates doesn't match after resume operation");
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
                 }
             }
         }

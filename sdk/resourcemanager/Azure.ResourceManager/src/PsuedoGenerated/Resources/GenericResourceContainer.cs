@@ -296,9 +296,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Create a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Create or update resource parameters. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<GenericResource> CreateOrUpdate(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceCreateOrUpdateByIdOperation CreateOrUpdate(string resourceId, GenericResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -310,72 +311,15 @@ namespace Azure.ResourceManager.Resources
             }
 
             using var scope = Diagnostics.CreateScope("GenericResourceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(resourceId, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a resource by ID. </summary>
-        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="parameters"> Create or update resource parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<GenericResource>> CreateOrUpdateAsync(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(resourceId, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a resource by ID. </summary>
-        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="parameters"> Create or update resource parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceCreateOrUpdateByIdOperation StartCreateOrUpdate(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var apiVersion = GetApiVersion(resourceId, cancellationToken);
                 var originalResponse = RestClient.CreateOrUpdateById(resourceId, apiVersion, parameters, cancellationToken);
-                return new ResourceCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
+                var operation = new ResourceCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -387,9 +331,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Create a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Create or update resource parameters. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ResourceCreateOrUpdateByIdOperation> StartCreateOrUpdateAsync(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceCreateOrUpdateByIdOperation> CreateOrUpdateAsync(string resourceId, GenericResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -400,13 +345,16 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.StartCreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("GenericResourceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var apiVersion = await GetApiVersionAsync(resourceId, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourceCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
+                var operation = new ResourceCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {

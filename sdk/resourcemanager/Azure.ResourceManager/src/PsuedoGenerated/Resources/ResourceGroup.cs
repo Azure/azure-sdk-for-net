@@ -89,64 +89,21 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A response with the <see cref="Response"/> operation for this resource. </returns>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
+        public virtual ResourceGroupDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ResourceGroup.Delete");
-            scope.Start();
-
-            try
-            {
-                var operation = StartDelete(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response"/> operation for this resource. </returns>
-        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.Delete");
-            scope.Start();
-
-            try
-            {
-                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ResourceGroupDeleteOperation"/> operation for this resource. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual ResourceGroupDeleteOperation StartDelete(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.StartDelete");
             scope.Start();
 
             try
             {
                 var originalResponse = _restClient.Delete(Id.Name, cancellationToken);
-                return new ResourceGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
+                var operation = new ResourceGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -158,20 +115,21 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ResourceGroupDeleteOperation"/> operation for this resource. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual async Task<ResourceGroupDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response"/> operation for this resource. </returns>
+        public virtual async Task<ResourceGroupDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.Delete");
             scope.Start();
 
             try
             {
                 var originalResponse = await _restClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
+                var operation = new ResourceGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -182,20 +140,24 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Captures the specified resource group as a template. </summary>
         /// <param name="parameters"> Parameters for exporting the template. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ResourceGroupExportTemplateOperation StartExportTemplate(ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceGroupExportTemplateOperation ExportTemplate(ExportTemplateRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.StartExportTemplate");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
             scope.Start();
             try
             {
                 var originalResponse = _restClient.ExportTemplate(Id.Name, parameters, cancellationToken);
-                return new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
+                var operation = new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -206,20 +168,24 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Captures the specified resource group as a template. </summary>
         /// <param name="parameters"> Parameters for exporting the template. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ResourceGroupExportTemplateOperation> StartExportTemplateAsync(ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupExportTemplateOperation> ExportTemplateAsync(ExportTemplateRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.StartExportTemplate");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
             scope.Start();
             try
             {
                 var originalResponse = await _restClient.ExportTemplateAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
+                var operation = new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -329,7 +295,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = TagResource.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.Name, cancellationToken);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -359,7 +325,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -386,10 +352,10 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                TagResource.Delete(cancellationToken);
+                TagResource.Delete(cancellationToken: cancellationToken);
                 var newTags = TagResource.Get(cancellationToken);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(new TagResourceData(newTags.Value.Data.Properties), cancellationToken);
+                TagContainer.CreateOrUpdate(new TagResourceData(newTags.Value.Data.Properties), cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.Name, cancellationToken);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -416,10 +382,10 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                await TagResource.DeleteAsync(cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var newTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(new TagResourceData(newTags.Value.Data.Properties), cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(new TagResourceData(newTags.Value.Data.Properties), cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -448,7 +414,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = TagResource.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.Name, cancellationToken);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -477,7 +443,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -533,9 +499,10 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> The resources to move must be in the same source resource group. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
         /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response MoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceMoveResourcesOperation MoveResources(ResourcesMoveInfo parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -543,61 +510,14 @@ namespace Azure.ResourceManager.Resources
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroup.MoveResources");
-            scope.Start();
-            try
-            {
-                var originalResponse = StartMoveResources(parameters, cancellationToken);
-                return originalResponse.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> The resources to move must be in the same source resource group. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
-        /// <param name="parameters"> Parameters for moving resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response> MoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.MoveResources");
-            scope.Start();
-            try
-            {
-                var originalResponse = await StartMoveResourcesAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return await originalResponse.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> The resources to move must be in the same source resource group. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
-        /// <param name="parameters"> Parameters for moving resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceMoveResourcesOperation StartMoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.StartMoveResources");
             scope.Start();
             try
             {
                 var originalResponse = _genericRestClient.MoveResources(Id.Name, parameters, cancellationToken);
-                return new ResourceMoveResourcesOperation(_clientDiagnostics, Pipeline, _genericRestClient.CreateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                var operation = new ResourceMoveResourcesOperation(_clientDiagnostics, Pipeline, _genericRestClient.CreateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -608,21 +528,25 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> The resources to move must be in the same source resource group. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
         /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ResourceMoveResourcesOperation> StartMoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceMoveResourcesOperation> MoveResourcesAsync(ResourcesMoveInfo parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.StartMoveResources");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.MoveResources");
             scope.Start();
             try
             {
                 var originalResponse = await _genericRestClient.MoveResourcesAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourceMoveResourcesOperation(_clientDiagnostics, Pipeline, _genericRestClient.CreateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                var operation = new ResourceMoveResourcesOperation(_clientDiagnostics, Pipeline, _genericRestClient.CreateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -633,9 +557,10 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to move must be in the same source resource group. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
         /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response ValidateMoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceValidateMoveResourcesOperation ValidateMoveResources(ResourcesMoveInfo parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -643,61 +568,14 @@ namespace Azure.ResourceManager.Resources
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ValidateMoveResources");
-            scope.Start();
-            try
-            {
-                var operation = StartValidateMoveResources(parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to move must be in the same source resource group. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
-        /// <param name="parameters"> Parameters for moving resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response> ValidateMoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ValidateMoveResources");
-            scope.Start();
-            try
-            {
-                var operation = await StartValidateMoveResourcesAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to move must be in the same source resource group. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
-        /// <param name="parameters"> Parameters for moving resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceValidateMoveResourcesOperation StartValidateMoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.StartValidateMoveResources");
             scope.Start();
             try
             {
                 var originalResponse = _genericRestClient.ValidateMoveResources(Id.Name, parameters, cancellationToken);
-                return new ResourceValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _genericRestClient.CreateValidateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                var operation = new ResourceValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _genericRestClient.CreateValidateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -708,21 +586,25 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to move must be in the same source resource group. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
         /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ResourceValidateMoveResourcesOperation> StartValidateMoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceValidateMoveResourcesOperation> ValidateMoveResourcesAsync(ResourcesMoveInfo parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.StartValidateMoveResources");
+            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ValidateMoveResources");
             scope.Start();
             try
             {
                 var originalResponse = await _genericRestClient.ValidateMoveResourcesAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourceValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _genericRestClient.CreateValidateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                var operation = new ResourceValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _genericRestClient.CreateValidateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {

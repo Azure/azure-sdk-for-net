@@ -72,11 +72,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
             scope.Start();
             try
@@ -123,11 +120,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
             scope.Start();
             try
@@ -212,11 +206,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
@@ -252,11 +243,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
@@ -434,11 +422,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
             try
@@ -598,11 +583,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
             try
@@ -659,11 +641,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
@@ -699,11 +678,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
@@ -881,11 +857,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try
@@ -1045,11 +1018,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try

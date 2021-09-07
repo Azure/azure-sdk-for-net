@@ -44,7 +44,7 @@ namespace Azure.Monitor.Query.Models
         /// Maps table rows to a model of type <typeparamref name="T"/>.
         /// </summary>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
-        public IReadOnlyList<T> Deserialize<T>()
+        internal IReadOnlyList<T> Deserialize<T>()
         {
             return RowBinder.Shared.BindResults<T>(new[] { this });
         }

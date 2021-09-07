@@ -77,11 +77,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.List");
             scope.Start();
             try
@@ -132,11 +129,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.List");
             scope.Start();
             try
@@ -244,11 +238,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.Get");
             scope.Start();
             try
@@ -284,11 +275,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.Get");
             scope.Start();
             try
@@ -426,11 +414,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(oauthProviderId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(oauthProviderId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.CreateOrUpdate");
             scope.Start();
             try
@@ -551,11 +536,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(oauthProviderId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(oauthProviderId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.CreateOrUpdate");
             scope.Start();
             try
@@ -613,11 +595,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.Delete");
             scope.Start();
             try
@@ -653,11 +632,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.Delete");
             scope.Start();
             try

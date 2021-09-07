@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(BackendAddresses))
@@ -47,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<IReadOnlyList<NetworkInterfaceIPConfiguration>> backendIPConfigurations = default;
             Optional<IList<ApplicationGatewayBackendAddress>> backendAddresses = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -126,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendAddressPool(id.Value, name.Value, etag.Value, type.Value, Optional.ToList(backendIPConfigurations), Optional.ToList(backendAddresses), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayBackendAddressPool(id, name.Value, etag.Value, type.Value, Optional.ToList(backendIPConfigurations), Optional.ToList(backendAddresses), Optional.ToNullable(provisioningState));
         }
     }
 }

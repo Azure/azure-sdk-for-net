@@ -73,11 +73,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.List");
             scope.Start();
             try
@@ -124,11 +121,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.List");
             scope.Start();
             try
@@ -263,11 +257,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetOAuthConnectionLink");
             scope.Start();
             try
@@ -338,11 +329,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetOAuthConnectionLink");
             scope.Start();
             try
@@ -397,11 +385,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -437,11 +422,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -497,11 +479,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.CreateCascadeDeleteJob");
             scope.Start();
             try
@@ -539,11 +518,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.CreateCascadeDeleteJob");
             scope.Start();
             try

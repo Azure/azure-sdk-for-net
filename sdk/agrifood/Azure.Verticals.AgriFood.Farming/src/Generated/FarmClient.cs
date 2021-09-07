@@ -167,11 +167,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmClient.CreateDataIngestionJob");
             scope.Start();
             try
@@ -313,11 +310,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmClient.CreateDataIngestionJob");
             scope.Start();
             try
@@ -374,11 +368,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmClient.GetDataIngestionJobDetails");
             scope.Start();
             try
@@ -414,11 +405,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmClient.GetDataIngestionJobDetails");
             scope.Start();
             try

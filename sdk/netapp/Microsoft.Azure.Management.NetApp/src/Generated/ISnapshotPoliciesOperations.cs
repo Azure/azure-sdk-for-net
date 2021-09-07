@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the NetApp account
         /// </param>
         /// <param name='snapshotPolicyName'>
-        /// The name of the snapshot policy target
+        /// The name of the snapshot policy
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the NetApp account
         /// </param>
         /// <param name='snapshotPolicyName'>
-        /// The name of the snapshot policy target
+        /// The name of the snapshot policy
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the NetApp account
         /// </param>
         /// <param name='snapshotPolicyName'>
-        /// The name of the snapshot policy target
+        /// The name of the snapshot policy
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the NetApp account
         /// </param>
         /// <param name='snapshotPolicyName'>
-        /// The name of the snapshot policy target
+        /// The name of the snapshot policy
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the NetApp account
         /// </param>
         /// <param name='snapshotPolicyName'>
-        /// The name of the snapshot policy target
+        /// The name of the snapshot policy
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the NetApp account
         /// </param>
         /// <param name='snapshotPolicyName'>
-        /// The name of the snapshot policy target
+        /// The name of the snapshot policy
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// The name of the NetApp account
         /// </param>
         /// <param name='snapshotPolicyName'>
-        /// The name of the snapshot policy target
+        /// The name of the snapshot policy
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

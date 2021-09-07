@@ -470,6 +470,9 @@ namespace Azure.Core
     public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
+        public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken) { throw null; }
+        public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken, System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<Azure.Core.AccessToken>> getTokenAsync) { throw null; }
+        public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<Azure.Core.AccessToken>> getTokenAsync) { throw null; }
         public abstract Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
     }

@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name.Value.ToString());
             }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier");
+                writer.WriteStringValue(Tier.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static PublicIPPrefixSku DeserializePublicIPPrefixSku(JsonElement element)
         {
             Optional<PublicIPPrefixSkuName> name = default;
+            Optional<PublicIPPrefixSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -38,8 +44,18 @@ namespace Azure.ResourceManager.Network.Models
                     name = new PublicIPPrefixSkuName(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("tier"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tier = new PublicIPPrefixSkuTier(property.Value.GetString());
+                    continue;
+                }
             }
-            return new PublicIPPrefixSku(Optional.ToNullable(name));
+            return new PublicIPPrefixSku(Optional.ToNullable(name), Optional.ToNullable(tier));
         }
     }
 }
