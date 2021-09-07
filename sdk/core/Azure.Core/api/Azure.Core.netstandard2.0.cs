@@ -208,6 +208,13 @@ namespace Azure
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
+    public sealed partial class ResponseError
+    {
+        internal ResponseError() { }
+        public string? Code { get { throw null; } }
+        public string? Message { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class Response<T>
     {
         protected Response() { }
