@@ -17,18 +17,22 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
         {
             try
             {
-                var client = new BlobServiceClient(BlobStorageEndpoint, Credential);
-                var container = client.GetBlobContainerClient("test");
-                await container.CreateIfNotExistsAsync();
+                // Try multiple container and blob names to make sure we hit different blob servers
+                for (int i = 0; i < 10; i++)
+                {
+                    var client = new BlobServiceClient(BlobStorageEndpoint, Credential);
+                    var container = client.GetBlobContainerClient(Guid.NewGuid().ToString());
+                    await container.CreateIfNotExistsAsync();
 
-                var blob = container.GetBlobClient("test-blob");
-                await blob.UploadAsync(new MemoryStream());
-                await blob.DeleteAsync();
-                await container.DeleteAsync();
+                    var blob = container.GetBlobClient(Guid.NewGuid().ToString());
+                    await blob.UploadAsync(new MemoryStream());
+                    await blob.DeleteAsync();
+                    await container.DeleteAsync();
+                }
 
                 return await base.IsEnvironmentReadyAsync();
             }
-            catch (RequestFailedException e) when (e is { Status: 403})
+            catch (RequestFailedException e) when (e is { Status: 403, ErrorCode: "AuthorizationPermissionMismatch"})
             {
                 return false;
             }
