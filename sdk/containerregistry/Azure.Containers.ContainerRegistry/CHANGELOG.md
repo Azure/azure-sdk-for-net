@@ -6,12 +6,6 @@
 
 - Added `ContainerRegistryBlobClient` with methods to upload and download OCI Manifests and artifact blobs, to enable implementation of push/pull for OCI artifacts.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.4 (2021-08-10)
 
 ### Breaking Changes
