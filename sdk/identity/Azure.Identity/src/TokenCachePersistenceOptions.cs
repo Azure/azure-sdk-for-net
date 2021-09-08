@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace Azure.Identity
@@ -11,6 +11,11 @@ namespace Azure.Identity
     ///
     /// </para>
     /// <code snippet="Snippet:CustomChainedTokenCredential" language="csharp">
+    /// // Authenticate using managed identity if it is available; otherwise use the Azure CLI to authenticate.
+    ///
+    /// var credential = new ChainedTokenCredential(new ManagedIdentityCredential(), new AzureCliCredential());
+    ///
+    /// var eventHubProducerClient = new EventHubProducerClient(&quot;myeventhub.eventhubs.windows.net&quot;, &quot;myhubpath&quot;, credential);
     /// </code>
     /// </example>
     public class TokenCachePersistenceOptions
