@@ -39,6 +39,7 @@
     "sdk/dns/*/api/*.cs",
     "sdk/eventgrid/*/api/*.cs",
     "sdk/insights/*/api/*.cs",
+    "sdk/keyvault/*/api/*.cs",
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/*/api/*.cs",
@@ -109,6 +110,10 @@
         "oaep",
         "setsas"
       ]
+    },
+    {
+      "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
+      "words": ["Puid"]
     },
     {
       "filename": "**/sdk/search/**/*.cs",

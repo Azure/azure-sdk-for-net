@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The protocol used to connect to the target. </summary>
-    public readonly partial struct BastionConnectProtocol : IEquatable<BastionConnectProtocol>
+    internal readonly partial struct BastionConnectProtocol : IEquatable<BastionConnectProtocol>
     {
         private readonly string _value;
 

@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Http listener of an application gateway. </summary>
-    public partial class ApplicationGatewayHttpListener : SubResource
+    public partial class ApplicationGatewayHttpListener : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
         public ApplicationGatewayHttpListener()
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of the HTTP listener that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>
@@ -30,12 +31,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="protocol"> Protocol of the HTTP listener. </param>
         /// <param name="hostName"> Host name of HTTP listener. </param>
         /// <param name="sslCertificate"> SSL certificate resource of an application gateway. </param>
+        /// <param name="sslProfile"> SSL profile resource of the application gateway. </param>
         /// <param name="requireServerNameIndication"> Applicable only if protocol is https. Enables SNI for multi-hosting. </param>
         /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
         /// <param name="customErrorConfigurations"> Custom error configurations of the HTTP listener. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
         /// <param name="hostNames"> List of Host names for HTTP Listener that allows special wildcard characters as well. </param>
-        internal ApplicationGatewayHttpListener(string id, string name, string etag, string type, SubResource frontendIPConfiguration, SubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, SubResource sslCertificate, bool? requireServerNameIndication, ProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, SubResource firewallPolicy, IList<string> hostNames) : base(id)
+        internal ApplicationGatewayHttpListener(string id, string name, string etag, string type, SubResource frontendIPConfiguration, SubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, SubResource sslCertificate, SubResource sslProfile, bool? requireServerNameIndication, ProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, SubResource firewallPolicy, IList<string> hostNames) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.Network.Models
             Protocol = protocol;
             HostName = hostName;
             SslCertificate = sslCertificate;
+            SslProfile = sslProfile;
             RequireServerNameIndication = requireServerNameIndication;
             ProvisioningState = provisioningState;
             CustomErrorConfigurations = customErrorConfigurations;
@@ -68,6 +71,8 @@ namespace Azure.ResourceManager.Network.Models
         public string HostName { get; set; }
         /// <summary> SSL certificate resource of an application gateway. </summary>
         public SubResource SslCertificate { get; set; }
+        /// <summary> SSL profile resource of the application gateway. </summary>
+        public SubResource SslProfile { get; set; }
         /// <summary> Applicable only if protocol is https. Enables SNI for multi-hosting. </summary>
         public bool? RequireServerNameIndication { get; set; }
         /// <summary> The provisioning state of the HTTP listener resource. </summary>

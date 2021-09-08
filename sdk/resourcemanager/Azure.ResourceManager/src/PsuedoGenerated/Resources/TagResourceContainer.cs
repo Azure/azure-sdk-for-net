@@ -49,9 +49,10 @@ namespace Azure.ResourceManager.Resources
         /// Create or update tags with the resource.
         /// </summary>
         /// <param name="parameters"> The tags to create or update. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The created or updated tags. </returns>
-        public virtual Response<TagResource> CreateOrUpdate(TagResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual TagCreateOrUpdateOperation CreateOrUpdate(TagResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters is null)
                 throw new ArgumentException($"{nameof(parameters)} provided cannot be null.", nameof(parameters));
@@ -59,61 +60,13 @@ namespace Azure.ResourceManager.Resources
             using var scope = Diagnostics.CreateScope("TagsOperations.CreateOrUpdateAtScope");
             scope.Start();
 
-            try
-            {
-                var operation = StartCreateOrUpdate(parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or update tags with the resource.
-        /// </summary>
-        /// <param name="parameters"> The tags to create or update. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The created or updated tags. </returns>
-        public virtual async Task<Response<TagResource>> CreateOrUpdateAsync(TagResourceData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters is null)
-                throw new ArgumentException($"{nameof(parameters)} provided cannot be null.", nameof(parameters));
-
-            using var scope = Diagnostics.CreateScope("TagsOperations.CreateOrUpdateAtScope");
-            scope.Start();
-
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or update tags with the resource.
-        /// </summary>
-        /// <param name="parameters"> The tags to create or update. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The created or updated tags. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual TagCreateOrUpdateOperation StartCreateOrUpdate(TagResourceData parameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("TagsOperations.StartCreateOrUpdateAtScope");
-            scope.Start();
             try
             {
                 var response = RestClient.CreateOrUpdateAtScope(Id, parameters, cancellationToken);
-                return new TagCreateOrUpdateOperation(this, response);
+                var operation = new TagCreateOrUpdateOperation(this, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -126,19 +79,24 @@ namespace Azure.ResourceManager.Resources
         /// Create or update tags with the resource.
         /// </summary>
         /// <param name="parameters"> The tags to create or update. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The created or updated tags. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual async Task<TagCreateOrUpdateOperation> StartCreateOrUpdateAsync(TagResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<TagCreateOrUpdateOperation> CreateOrUpdateAsync(TagResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagsOperations.StartCreateOrUpdateAtScope");
+            if (parameters is null)
+                throw new ArgumentException($"{nameof(parameters)} provided cannot be null.", nameof(parameters));
+
+            using var scope = Diagnostics.CreateScope("TagsOperations.CreateOrUpdateAtScope");
             scope.Start();
+
             try
             {
                 var response = await RestClient.CreateOrUpdateAtScopeAsync(Id, parameters, cancellationToken).ConfigureAwait(false);
-                return new TagCreateOrUpdateOperation(this, response);
+                var operation = new TagCreateOrUpdateOperation(this, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {

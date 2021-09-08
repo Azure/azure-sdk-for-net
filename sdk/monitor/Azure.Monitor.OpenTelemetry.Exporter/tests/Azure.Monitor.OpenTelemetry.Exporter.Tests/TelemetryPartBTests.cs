@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
 
-            var httpResponsCode = httpStatusCode ?? "0";
+            var httpResponseCode = httpStatusCode ?? "0";
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
 
@@ -83,14 +83,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
 
-            Assert.Equal(httpResponsCode, requestData.ResponseCode);
+            Assert.Equal(httpResponseCode, requestData.ResponseCode);
         }
 
         [Theory]
-        [InlineData("Ok")]
-        [InlineData("Error")]
-        [InlineData("Unset")]
-        public void ValidateRequestDataSuccess(string activityStatus)
+        [InlineData("Ok", null)]
+        [InlineData("Error", null)]
+        [InlineData("Unset", null)]
+        [InlineData("Ok", "statusdescription")]
+        [InlineData("Error", "statusdescription")]
+        [InlineData("Unset", "statusdescription")]
+        public void ValidateSuccessForRequestAndRemoteDependency(string activityStatusCode, string activityStatusDescription)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -99,25 +102,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
 
-            if (activityStatus == "Ok")
-            {
-                activity.SetStatus(Status.Ok);
-            }
-            else if (activityStatus == "Error")
-            {
-                activity.SetStatus(Status.Error);
-            }
-            else
-            {
-                activity.SetStatus(Status.Unset);
-            }
+            activity.SetTag("otel.status_code", activityStatusCode);
+            activity.SetTag("otel.status_description", activityStatusDescription);
+
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
 
             var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
 
             var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
+            var remoteDependencyData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
 
-            Assert.Equal(activity.GetStatus() != Status.Error, requestData.Success);
+            Assert.Equal(activity.GetStatus().StatusCode != StatusCode.Error, requestData.Success);
+            Assert.Equal(activity.GetStatus().StatusCode != StatusCode.Error, remoteDependencyData.Success);
         }
 
         [Theory]
@@ -140,6 +136,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             var expectedType = TelemetryPartB.SqlDbs.Contains(dbSystem) ? "SQL" : dbSystem;
 
             Assert.Equal(expectedType, remoteDependencyDataType);
+        }
+
+        [Fact]
+        public void DependencyTypeisSetToInProcForInternalSpanWithParent()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var parentActivity = activitySource.StartActivity("ParentActivity", ActivityKind.Internal);
+            using var childActivity = activitySource.StartActivity("ChildActivity", ActivityKind.Internal);
+
+            var monitorTagsParent = AzureMonitorConverter.EnumerateActivityTags(parentActivity);
+
+            var remoteDependencyDataTypeForParent = TelemetryPartB.GetRemoteDependencyData(parentActivity, ref monitorTagsParent).Type;
+
+            Assert.Null(remoteDependencyDataTypeForParent);
+
+            var monitorTagsChild = AzureMonitorConverter.EnumerateActivityTags(childActivity);
+
+            var remoteDependencyDataTypeForChild = TelemetryPartB.GetRemoteDependencyData(childActivity, ref monitorTagsChild).Type;
+
+            Assert.Equal("InProc", remoteDependencyDataTypeForChild);
         }
     }
 }

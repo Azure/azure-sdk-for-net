@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Tests
         {
             var tagName = Recording.GenerateAssetName("tagName");
             var container = Client.DefaultSubscription.GetPredefinedTags();
-            var result = await container.StartCreateOrUpdateAsync(tagName);
+            var result = await container.CreateOrUpdateAsync(tagName);
             Assert.IsTrue(result.Value.Data.TagName.Equals(tagName));
         }
 

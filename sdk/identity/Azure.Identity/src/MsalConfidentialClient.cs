@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,33 +11,37 @@ namespace Azure.Identity
 {
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
-        private readonly string _clientSecret;
-        private readonly bool _includeX5CClaimHeader;
-        private readonly ClientCertificateCredential.IX509Certificate2Provider _certificateProvider;
+        internal readonly string _clientSecret;
+        internal readonly bool _includeX5CClaimHeader;
+        internal readonly IX509Certificate2Provider _certificateProvider;
+        private readonly Func<string> _assertionCallback;
 
         /// <summary>
         /// For mocking purposes only.
         /// </summary>
         protected MsalConfidentialClient()
-            : base()
-        {
-        }
+        { }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool logPii)
-            : base(pipeline, tenantId, clientId, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
+            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
         {
             _clientSecret = clientSecret;
             RegionalAuthority = regionalAuthority;
-            LogPII = logPii;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, ClientCertificateCredential.IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool logPii)
-            : base(pipeline, tenantId, clientId, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
+            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
             RegionalAuthority = regionalAuthority;
-            LogPII = logPii;
+        }
+
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
+            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        {
+            _assertionCallback = assertionCallback;
+            RegionalAuthority = regionalAuthority;
         }
 
         internal RegionalAuthority? RegionalAuthority { get; }
@@ -46,11 +51,16 @@ namespace Azure.Identity
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
                 .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
-                .WithLogging(AzureIdentityEventSource.Singleton.LogMsal, enablePiiLogging: LogPII);
+                .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
 
             if (_clientSecret != null)
             {
                 confClientBuilder.WithClientSecret(_clientSecret);
+            }
+
+            if (_assertionCallback != null)
+            {
+                confClientBuilder.WithClientAssertion(_assertionCallback);
             }
 
             if (_certificateProvider != null)
@@ -119,6 +129,26 @@ namespace Azure.Identity
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenByAuthorizationCode(scopes, code);
+
+            if (!string.IsNullOrEmpty(tenantId))
+            {
+                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+            }
+            return await builder
+                .ExecuteAsync(async, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenOnBehalfOf(
+            string[] scopes,
+            string tenantId,
+            UserAssertion userAssertionValue,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+
+            var builder = client.AcquireTokenOnBehalfOf(scopes, userAssertionValue);
 
             if (!string.IsNullOrEmpty(tenantId))
             {

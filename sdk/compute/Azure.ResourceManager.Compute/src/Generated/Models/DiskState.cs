@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The state of the disk. </summary>
+    /// <summary> This enumerates the possible state of the disk. </summary>
     public readonly partial struct DiskState : IEquatable<DiskState>
     {
         private readonly string _value;

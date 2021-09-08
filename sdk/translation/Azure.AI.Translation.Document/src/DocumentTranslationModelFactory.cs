@@ -33,19 +33,19 @@ namespace Azure.AI.Translation.Document
 
         #region Statuses
         /// <summary>
-        /// Initializes a new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="Document.DocumentStatusResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="id">Sets the <see cref="DocumentStatus.Id"/> property.</param>
-        /// <param name="sourceDocumentUri">Sets the <see cref="DocumentStatus.SourceDocumentUri"/> property.</param>
-        /// <param name="translatedDocumentUri">Sets the <see cref="DocumentStatus.TranslatedDocumentUri"/> property.</param>
-        /// <param name="createdOn">Sets the <see cref="DocumentStatus.CreatedOn"/> property.</param>
-        /// <param name="lastModified">Sets the <see cref="DocumentStatus.LastModified"/> property.</param>
-        /// <param name="status">Sets the <see cref="DocumentStatus.Status"/> property.</param>
-        /// <param name="translatedTo">Sets the <see cref="DocumentStatus.TranslatedTo"/> property.</param>
-        /// <param name="progress">Sets the <see cref="DocumentStatus.Progress"/> property.</param>
-        /// <param name="charactersCharged">Sets the <see cref="DocumentStatus.CharactersCharged"/> property.</param>
-        /// <returns>A new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.</returns>
-        public static DocumentStatus DocumentStatus(
+        /// <param name="id">Sets the <see cref="DocumentStatusResult.Id"/> property.</param>
+        /// <param name="sourceDocumentUri">Sets the <see cref="DocumentStatusResult.SourceDocumentUri"/> property.</param>
+        /// <param name="translatedDocumentUri">Sets the <see cref="DocumentStatusResult.TranslatedDocumentUri"/> property.</param>
+        /// <param name="createdOn">Sets the <see cref="DocumentStatusResult.CreatedOn"/> property.</param>
+        /// <param name="lastModified">Sets the <see cref="DocumentStatusResult.LastModified"/> property.</param>
+        /// <param name="status">Sets the <see cref="DocumentStatusResult.Status"/> property.</param>
+        /// <param name="translatedTo">Sets the <see cref="DocumentStatusResult.TranslatedToLanguageCode"/> property.</param>
+        /// <param name="progress">Sets the <see cref="DocumentStatusResult.Progress"/> property.</param>
+        /// <param name="charactersCharged">Sets the <see cref="DocumentStatusResult.CharactersCharged"/> property.</param>
+        /// <returns>A new instance of <see cref="Document.DocumentStatusResult"/> for mocking purposes.</returns>
+        public static DocumentStatusResult DocumentStatus(
             string id,
             Uri sourceDocumentUri,
             Uri translatedDocumentUri,
@@ -57,23 +57,23 @@ namespace Azure.AI.Translation.Document
             long charactersCharged
             )
         {
-            return new DocumentStatus(translatedDocumentUri, sourceDocumentUri, createdOn, lastModified, status, translatedTo, default, progress, id, charactersCharged);
+            return new DocumentStatusResult(translatedDocumentUri, sourceDocumentUri, createdOn, lastModified, status, translatedTo, default, progress, id, charactersCharged);
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="Document.DocumentStatusResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="id">Sets the <see cref="DocumentStatus.Id"/> property.</param>
-        /// <param name="sourceDocumentUri">Sets the <see cref="DocumentStatus.SourceDocumentUri"/> property.</param>
-        /// <param name="error">Sets the <see cref="DocumentStatus.Error"/> property.</param>
-        /// <param name="createdOn">Sets the <see cref="DocumentStatus.CreatedOn"/> property.</param>
-        /// <param name="lastModified">Sets the <see cref="DocumentStatus.LastModified"/> property.</param>
-        /// <param name="status">Sets the <see cref="DocumentStatus.Status"/> property.</param>
-        /// <param name="translatedTo">Sets the <see cref="DocumentStatus.TranslatedTo"/> property.</param>
-        /// <param name="progress">Sets the <see cref="DocumentStatus.Progress"/> property.</param>
-        /// <param name="charactersCharged">Sets the <see cref="DocumentStatus.CharactersCharged"/> property.</param>
-        /// <returns>A new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.</returns>
-        public static DocumentStatus DocumentStatus(
+        /// <param name="id">Sets the <see cref="DocumentStatusResult.Id"/> property.</param>
+        /// <param name="sourceDocumentUri">Sets the <see cref="DocumentStatusResult.SourceDocumentUri"/> property.</param>
+        /// <param name="error">Sets the <see cref="DocumentStatusResult.Error"/> property.</param>
+        /// <param name="createdOn">Sets the <see cref="DocumentStatusResult.CreatedOn"/> property.</param>
+        /// <param name="lastModified">Sets the <see cref="DocumentStatusResult.LastModified"/> property.</param>
+        /// <param name="status">Sets the <see cref="DocumentStatusResult.Status"/> property.</param>
+        /// <param name="translatedTo">Sets the <see cref="DocumentStatusResult.TranslatedToLanguageCode"/> property.</param>
+        /// <param name="progress">Sets the <see cref="DocumentStatusResult.Progress"/> property.</param>
+        /// <param name="charactersCharged">Sets the <see cref="DocumentStatusResult.CharactersCharged"/> property.</param>
+        /// <returns>A new instance of <see cref="Document.DocumentStatusResult"/> for mocking purposes.</returns>
+        public static DocumentStatusResult DocumentStatus(
             string id,
             Uri sourceDocumentUri,
             DocumentTranslationError error,
@@ -85,26 +85,26 @@ namespace Azure.AI.Translation.Document
             long charactersCharged
             )
         {
-            return new DocumentStatus(default, sourceDocumentUri, createdOn, lastModified, status, translatedTo, error, progress, id, charactersCharged);
+            return new DocumentStatusResult(default, sourceDocumentUri, createdOn, lastModified, status, translatedTo, error, progress, id, charactersCharged);
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Document.TranslationStatus"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="Document.TranslationStatusResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="id">Sets the <see cref="TranslationStatus.Id"/> property.</param>
-        /// <param name="createdOn">Sets the <see cref="TranslationStatus.CreatedOn"/> property.</param>
-        /// <param name="lastModified">Sets the <see cref="TranslationStatus.LastModified"/> property.</param>
-        /// <param name="status">Sets the <see cref="TranslationStatus.Status"/> property.</param>
-        /// <param name="error">Sets the <see cref="TranslationStatus.Error"/> property.</param>
-        /// <param name="total">Sets the <see cref="StatusSummary.Total"/> and the <see cref="TranslationStatus.DocumentsTotal"/> properties.</param>
-        /// <param name="failed">Sets the <see cref="StatusSummary.Failed"/> and the <see cref="TranslationStatus.DocumentsFailed"/> properties.</param>
-        /// <param name="success">Sets the <see cref="StatusSummary.Success"/> and the <see cref="TranslationStatus.DocumentsSucceeded"/> properties.</param>
-        /// <param name="inProgress">Sets the <see cref="StatusSummary.InProgress"/> and the <see cref="TranslationStatus.DocumentsInProgress"/> properties.</param>
-        /// <param name="notYetStarted">Sets the <see cref="StatusSummary.NotYetStarted"/> and the <see cref="TranslationStatus.DocumentsNotStarted"/> properties.</param>
-        /// <param name="canceled">Sets the <see cref="StatusSummary.Cancelled"/> and the <see cref="TranslationStatus.DocumentsCanceled"/> properties.</param>
-        /// <param name="totalCharacterCharged">Sets the <see cref="StatusSummary.TotalCharacterCharged"/> and the <see cref="TranslationStatus.TotalCharactersCharged"/> properties.</param>
-        /// <returns>A new instance of <see cref="Document.TranslationStatus"/> for mocking purposes.</returns>
-        public static TranslationStatus TranslationStatus(
+        /// <param name="id">Sets the <see cref="TranslationStatusResult.Id"/> property.</param>
+        /// <param name="createdOn">Sets the <see cref="TranslationStatusResult.CreatedOn"/> property.</param>
+        /// <param name="lastModified">Sets the <see cref="TranslationStatusResult.LastModified"/> property.</param>
+        /// <param name="status">Sets the <see cref="TranslationStatusResult.Status"/> property.</param>
+        /// <param name="error">Sets the <see cref="TranslationStatusResult.Error"/> property.</param>
+        /// <param name="total">Sets the <see cref="StatusSummary.Total"/> and the <see cref="TranslationStatusResult.DocumentsTotal"/> properties.</param>
+        /// <param name="failed">Sets the <see cref="StatusSummary.Failed"/> and the <see cref="TranslationStatusResult.DocumentsFailed"/> properties.</param>
+        /// <param name="success">Sets the <see cref="StatusSummary.Success"/> and the <see cref="TranslationStatusResult.DocumentsSucceeded"/> properties.</param>
+        /// <param name="inProgress">Sets the <see cref="StatusSummary.InProgress"/> and the <see cref="TranslationStatusResult.DocumentsInProgress"/> properties.</param>
+        /// <param name="notYetStarted">Sets the <see cref="StatusSummary.NotYetStarted"/> and the <see cref="TranslationStatusResult.DocumentsNotStarted"/> properties.</param>
+        /// <param name="canceled">Sets the <see cref="StatusSummary.Cancelled"/> and the <see cref="TranslationStatusResult.DocumentsCanceled"/> properties.</param>
+        /// <param name="totalCharacterCharged">Sets the <see cref="StatusSummary.TotalCharacterCharged"/> and the <see cref="TranslationStatusResult.TotalCharactersCharged"/> properties.</param>
+        /// <returns>A new instance of <see cref="Document.TranslationStatusResult"/> for mocking purposes.</returns>
+        public static TranslationStatusResult TranslationStatus(
             string id,
             DateTimeOffset createdOn,
             DateTimeOffset lastModified,
@@ -120,7 +120,7 @@ namespace Azure.AI.Translation.Document
             )
         {
             StatusSummary newSummary = new StatusSummary(total, failed, success, inProgress, notYetStarted, canceled, totalCharacterCharged);
-            return new TranslationStatus(id, createdOn, lastModified, status, error, newSummary);
+            return new TranslationStatusResult(id, createdOn, lastModified, status, error, newSummary);
         }
         #endregion Statuses
     }

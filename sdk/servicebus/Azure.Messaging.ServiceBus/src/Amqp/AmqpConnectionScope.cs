@@ -513,7 +513,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var session = default(AmqpSession);
+            var refreshTimer = default(Timer);
             var stopWatch = ValueStopwatch.StartNew();
+            RequestResponseAmqpLink link = null;
 
             try
             {
@@ -548,7 +550,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     identifier: identifier)
                     .ConfigureAwait(false);
 
-                var link = new RequestResponseAmqpLink(
+                link = new RequestResponseAmqpLink(
                     AmqpClientConstants.EntityTypeManagement,
                     session,
                     entityPath,
@@ -556,7 +558,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}";
 
                 // Track the link before returning it, so that it can be managed with the scope.
-                var refreshTimer = default(Timer);
 
                 TimerCallback refreshHandler = CreateAuthorizationRefreshHandler
                 (
@@ -575,15 +576,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
+                StartTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
             catch (Exception exception)
             {
-                // Aborting the session will perform any necessary cleanup of
+                StopTrackingLinkAsActive(link, refreshTimer);
+
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
 
-                session?.Abort();
+                session?.SafeClose();
                 ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
@@ -625,7 +628,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var session = default(AmqpSession);
+            var refreshTimer = default(Timer);
             var stopWatch = ValueStopwatch.StartNew();
+            ReceivingAmqpLink link = null;
 
             try
             {
@@ -668,14 +673,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     OperationTimeout = _operationTimeout
                 };
 
-                var link = new ReceivingAmqpLink(linkSettings);
+                link = new ReceivingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}:{linkSettings.Source.ToString()}";
 
                 link.AttachTo(session);
 
                 // Configure refresh for authorization of the link.
-
-                var refreshTimer = default(Timer);
 
                 TimerCallback refreshHandler = CreateAuthorizationRefreshHandler
                 (
@@ -694,15 +697,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
+                StartTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
             catch (Exception exception)
             {
-                // Aborting the session will perform any necessary cleanup of
+                StopTrackingLinkAsActive(link, refreshTimer);
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
-
-                session?.Abort();
+                session?.SafeClose();
                 ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
@@ -763,7 +766,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var session = default(AmqpSession);
+            var refreshTimer = default(Timer);
             var stopWatch = ValueStopwatch.StartNew();
+            SendingAmqpLink link = null;
 
             ValidateCanCreateSenderLink(entityPath);
 
@@ -809,13 +814,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
 
-                var link = new SendingAmqpLink(linkSettings);
+                link = new SendingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
                 link.AttachTo(session);
 
                 // Configure refresh for authorization of the link.
-
-                var refreshTimer = default(Timer);
 
                 TimerCallback refreshHandler = CreateAuthorizationRefreshHandler
                 (
@@ -835,15 +838,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
+                StartTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
             catch (Exception exception)
             {
-                // Aborting the session will perform any necessary cleanup of
+                StopTrackingLinkAsActive(link, refreshTimer);
+
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
 
-                session?.Abort();
+                session?.SafeClose();
                 ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
@@ -895,7 +900,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   for active tracking; no assumptions are made about the open/connected state of the link nor are
         ///   its communication properties modified.
         /// </remarks>
-        protected virtual void BeginTrackingLinkAsActive(
+        protected virtual void StartTrackingLinkAsActive(
             string entityPath,
             AmqpObject link,
             Timer authorizationRefreshTimer = null)
@@ -930,15 +935,49 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             closeHandler = (snd, args) =>
             {
-                ActiveLinks.TryRemove(link, out var timer);
-
-                timer?.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
-                timer?.Dispose();
+                StopTrackingLinkAsActive(link);
 
                 link.Closed -= closeHandler;
             };
 
             link.Closed += closeHandler;
+        }
+
+        private void StopTrackingLinkAsActive(AmqpObject link, Timer authorizationRefreshTimer = null)
+        {
+            var activeTimer = default(Timer);
+
+            if (link != null)
+            {
+                ActiveLinks.TryRemove(link, out activeTimer);
+
+                if (activeTimer != null)
+                {
+                    try
+                    {
+                        activeTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+                        activeTimer.Dispose();
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                    }
+                }
+            }
+
+            // If the refresh timer was created but not associated with the link, then it will need
+            // to be cleaned up.
+
+            if ((authorizationRefreshTimer != null) && (!ReferenceEquals(authorizationRefreshTimer, activeTimer)))
+            {
+                try
+                {
+                    authorizationRefreshTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+                    authorizationRefreshTimer.Dispose();
+                }
+                catch (ObjectDisposedException)
+                {
+                }
+            }
         }
 
         /// <summary>

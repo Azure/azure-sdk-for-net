@@ -46,8 +46,8 @@ namespace Azure.AI.Translation.Document.Samples
             {
                 operation.UpdateStatus();
 
-                Pageable<DocumentStatus> documentsStatus = operation.GetDocumentStatuses();
-                foreach (DocumentStatus docStatus in documentsStatus)
+                Pageable<DocumentStatusResult> documentsStatus = operation.GetDocumentStatuses();
+                foreach (DocumentStatusResult docStatus in documentsStatus)
                 {
                     if (documentscompleted.Contains(docStatus.Id))
                         continue;

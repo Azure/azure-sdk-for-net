@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -18,6 +15,7 @@ namespace Azure.Messaging.WebPubSub
     public partial class WebPubSubServiceClient
     {
         private AzureKeyCredential _credential;
+        private TokenCredential _tokenCredential;
 
         /// <summary>
         /// The hub.
@@ -44,23 +42,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public WebPubSubServiceClient(Uri endpoint, string hub, AzureKeyCredential credential, WebPubSubServiceClientOptions options)
+            : this(endpoint, hub, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(hub, nameof(hub));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            this._credential = credential;
-            this.hub = hub;
-            this.endpoint = endpoint;
-
-            options ??= new WebPubSubServiceClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            apiVersion = options.Version;
+            _credential = credential;
 
             HttpPipelinePolicy[] perCallPolicies;
             if (options.ReverseProxyEndpoint != null)
             {
-                perCallPolicies = new HttpPipelinePolicy[] { new ApimPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
+                perCallPolicies = new HttpPipelinePolicy[] { new ReverseProxyPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
             }
             else
             {
@@ -71,6 +62,45 @@ namespace Azure.Messaging.WebPubSub
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
+                new ResponseClassifier()
+            );
+        }
+
+        /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="credential"> A token credential used to authenticate to an Azure Service. </param>
+        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential credential)
+            : this(endpoint, hub, credential, new WebPubSubServiceClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="credential"> A token credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential credential, WebPubSubServiceClientOptions options)
+            : this(endpoint, hub, options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            _tokenCredential = credential;
+
+            HttpPipelinePolicy[] perCallPolicies;
+            if (options.ReverseProxyEndpoint != null)
+            {
+                perCallPolicies = new HttpPipelinePolicy[] { new ReverseProxyPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
+            }
+            else
+            {
+                perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
+            }
+
+            Pipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: perCallPolicies,
+                perRetryPolicies: new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, WebPubSubServiceClientOptions.CredentialScopeName) },
                 new ResponseClassifier()
             );
         }
@@ -103,6 +133,19 @@ namespace Azure.Messaging.WebPubSub
         private WebPubSubServiceClient((Uri Endpoint, AzureKeyCredential Credential) parsedConnectionString, string hub, WebPubSubServiceClientOptions options) :
             this(parsedConnectionString.Endpoint, hub, parsedConnectionString.Credential, options)
         {
+        }
+
+        private WebPubSubServiceClient(Uri endpoint, string hub, WebPubSubServiceClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(hub, nameof(hub));
+
+            this.hub = hub;
+            this.endpoint = endpoint;
+
+            options ??= new WebPubSubServiceClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            apiVersion = options.Version;
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>

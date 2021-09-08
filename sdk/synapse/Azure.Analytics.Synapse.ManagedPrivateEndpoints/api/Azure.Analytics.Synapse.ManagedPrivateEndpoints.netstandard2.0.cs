@@ -15,11 +15,10 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
     }
     public partial class ManagedPrivateEndpointsClientOptions : Azure.Core.ClientOptions
     {
-        public ManagedPrivateEndpointsClientOptions(Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions.ServiceVersion version = Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions.ServiceVersion.V2021_06_01_Preview) { }
+        public ManagedPrivateEndpointsClientOptions(Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions.ServiceVersion version = Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions.ServiceVersion.V2020_12_01) { }
         public enum ServiceVersion
         {
             V2020_12_01 = 1,
-            V2021_06_01_Preview = 2,
         }
     }
 }
