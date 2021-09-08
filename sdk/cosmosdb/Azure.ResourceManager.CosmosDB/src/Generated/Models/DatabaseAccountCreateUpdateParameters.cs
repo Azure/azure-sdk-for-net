@@ -9,16 +9,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB database accounts. </summary>
-    public partial class DatabaseAccountCreateUpdateParameters : ARMResourceProperties
+    public partial class DatabaseAccountCreateUpdateParameters : TrackedResource
     {
         /// <summary> Initializes a new instance of DatabaseAccountCreateUpdateParameters. </summary>
+        /// <param name="location"> The location. </param>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
-        public DatabaseAccountCreateUpdateParameters(IEnumerable<Location> locations)
+        public DatabaseAccountCreateUpdateParameters(Resources.Models.Location location, IEnumerable<Location> locations) : base(location)
         {
             if (locations == null)
             {
@@ -31,15 +35,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Capabilities = new ChangeTrackingList<Capability>();
             VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
             Cors = new ChangeTrackingList<CorsPolicy>();
+            NetworkAclBypassResourceIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DatabaseAccountCreateUpdateParameters. </summary>
-        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
-        /// <param name="name"> The name of the ARM resource. </param>
-        /// <param name="type"> The type of Azure resource. </param>
-        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with &quot;defaultExperience&quot;: &quot;Cassandra&quot;. Current &quot;defaultExperience&quot; values also include &quot;Table&quot;, &quot;Graph&quot;, &quot;DocumentDB&quot;, and &quot;MongoDB&quot;. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="consistencyPolicy"> The consistency policy for the Cosmos DB account. </param>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <param name="databaseAccountOfferType"> The offer type for the database. </param>
@@ -53,14 +59,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="connectorOffer"> The cassandra connector offer type for the Cosmos DB database C* account. </param>
         /// <param name="disableKeyBasedMetadataWriteAccess"> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </param>
         /// <param name="keyVaultKeyUri"> The URI of the key vault. </param>
+        /// <param name="defaultIdentity"> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </param>
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
         /// <param name="enableFreeTier"> Flag to indicate whether Free Tier is enabled. </param>
         /// <param name="apiProperties"> API specific properties. Currently, supported only for MongoDB API. </param>
         /// <param name="enableAnalyticalStorage"> Flag to indicate whether to enable storage analytics. </param>
+        /// <param name="analyticalStorageConfiguration"> Analytical storage specific properties. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
+        /// <param name="backupPolicy"> The object representing the policy for taking backups on an account. </param>
         /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
-        internal DatabaseAccountCreateUpdateParameters(string id, string name, string type, string location, IDictionary<string, string> tags, DatabaseAccountKind? kind, ConsistencyPolicy consistencyPolicy, IList<Location> locations, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<Capability> capabilities, IList<VirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, IList<CorsPolicy> cors) : base(id, name, type, location, tags)
+        /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
+        /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
+        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
+        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
+        internal DatabaseAccountCreateUpdateParameters(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Resources.Models.Location location, DatabaseAccountKind? kind, ResourceIdentity identity, ConsistencyPolicy consistencyPolicy, IList<Location> locations, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<Capability> capabilities, IList<VirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, CreateMode? createMode, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth, RestoreParameters restoreParameters) : base(id, name, type, tags, location)
         {
             Kind = kind;
+            Identity = identity;
             ConsistencyPolicy = consistencyPolicy;
             Locations = locations;
             DatabaseAccountOfferType = databaseAccountOfferType;
@@ -74,15 +89,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ConnectorOffer = connectorOffer;
             DisableKeyBasedMetadataWriteAccess = disableKeyBasedMetadataWriteAccess;
             KeyVaultKeyUri = keyVaultKeyUri;
+            DefaultIdentity = defaultIdentity;
             PublicNetworkAccess = publicNetworkAccess;
             EnableFreeTier = enableFreeTier;
             ApiProperties = apiProperties;
             EnableAnalyticalStorage = enableAnalyticalStorage;
+            AnalyticalStorageConfiguration = analyticalStorageConfiguration;
+            CreateMode = createMode;
+            BackupPolicy = backupPolicy;
             Cors = cors;
+            NetworkAclBypass = networkAclBypass;
+            NetworkAclBypassResourceIds = networkAclBypassResourceIds;
+            DisableLocalAuth = disableLocalAuth;
+            RestoreParameters = restoreParameters;
         }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
         public DatabaseAccountKind? Kind { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public ResourceIdentity Identity { get; set; }
         /// <summary> The consistency policy for the Cosmos DB account. </summary>
         public ConsistencyPolicy ConsistencyPolicy { get; set; }
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
@@ -109,15 +134,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? DisableKeyBasedMetadataWriteAccess { get; set; }
         /// <summary> The URI of the key vault. </summary>
         public string KeyVaultKeyUri { get; set; }
+        /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </summary>
+        public string DefaultIdentity { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; }
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
         public bool? EnableFreeTier { get; set; }
         /// <summary> API specific properties. Currently, supported only for MongoDB API. </summary>
         public ApiProperties ApiProperties { get; set; }
         /// <summary> Flag to indicate whether to enable storage analytics. </summary>
         public bool? EnableAnalyticalStorage { get; set; }
+        /// <summary> Analytical storage specific properties. </summary>
+        public AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get; set; }
+        /// <summary> Enum to indicate the mode of account creation. </summary>
+        public CreateMode? CreateMode { get; set; }
+        /// <summary> The object representing the policy for taking backups on an account. </summary>
+        public BackupPolicy BackupPolicy { get; set; }
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
         public IList<CorsPolicy> Cors { get; }
+        /// <summary> Indicates what services are allowed to bypass firewall checks. </summary>
+        public NetworkAclBypass? NetworkAclBypass { get; set; }
+        /// <summary> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </summary>
+        public IList<string> NetworkAclBypassResourceIds { get; }
+        /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
+        public bool? DisableLocalAuth { get; set; }
+        /// <summary> Parameters to indicate the information about the restore. </summary>
+        public RestoreParameters RestoreParameters { get; set; }
     }
 }

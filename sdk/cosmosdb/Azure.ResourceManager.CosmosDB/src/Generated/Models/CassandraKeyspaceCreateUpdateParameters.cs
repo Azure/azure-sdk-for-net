@@ -7,40 +7,38 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB Cassandra keyspace. </summary>
-    public partial class CassandraKeyspaceCreateUpdateParameters : ARMResourceProperties
+    public partial class CassandraKeyspaceCreateUpdateParameters : TrackedResource
     {
         /// <summary> Initializes a new instance of CassandraKeyspaceCreateUpdateParameters. </summary>
+        /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Cassandra keyspace. </param>
-        /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> or <paramref name="options"/> is null. </exception>
-        public CassandraKeyspaceCreateUpdateParameters(CassandraKeyspaceResource resource, CreateUpdateOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
+        public CassandraKeyspaceCreateUpdateParameters(Resources.Models.Location location, CassandraKeyspaceResource resource) : base(location)
         {
             if (resource == null)
             {
                 throw new ArgumentNullException(nameof(resource));
             }
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
 
             Resource = resource;
-            Options = options;
         }
 
         /// <summary> Initializes a new instance of CassandraKeyspaceCreateUpdateParameters. </summary>
-        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
-        /// <param name="name"> The name of the ARM resource. </param>
-        /// <param name="type"> The type of Azure resource. </param>
-        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with &quot;defaultExperience&quot;: &quot;Cassandra&quot;. Current &quot;defaultExperience&quot; values also include &quot;Table&quot;, &quot;Graph&quot;, &quot;DocumentDB&quot;, and &quot;MongoDB&quot;. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Cassandra keyspace. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal CassandraKeyspaceCreateUpdateParameters(string id, string name, string type, string location, IDictionary<string, string> tags, CassandraKeyspaceResource resource, CreateUpdateOptions options) : base(id, name, type, location, tags)
+        internal CassandraKeyspaceCreateUpdateParameters(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Resources.Models.Location location, CassandraKeyspaceResource resource, CreateUpdateOptions options) : base(id, name, type, tags, location)
         {
             Resource = resource;
             Options = options;

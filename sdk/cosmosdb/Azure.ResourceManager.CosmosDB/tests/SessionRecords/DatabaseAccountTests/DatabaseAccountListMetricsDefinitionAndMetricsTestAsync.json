@@ -1,0 +1,1703 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/dbaccount-2574?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-694949c21903f04684f62298dee1893b-5b8ff9fcaf12f445-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "edda29dd44b2094221e62b061195f037",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "226",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 05 Nov 2021 08:56:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f32a4ed3-01b1-40f6-941a-fc35504e57cc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11548",
+        "x-ms-request-id": "f32a4ed3-01b1-40f6-941a-fc35504e57cc",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211105T085624Z:f32a4ed3-01b1-40f6-941a-fc35504e57cc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574",
+        "name": "dbaccount-2574",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus2",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053?api-version=2021-06-15",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "504",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20211105.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "857b99b1ef32017b388f4c998e1c8ec5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kind": "MongoDB",
+        "tags": {
+          "key1": "value1",
+          "key2": "value2"
+        },
+        "location": "westus2",
+        "properties": {
+          "consistencyPolicy": {
+            "defaultConsistencyLevel": "BoundedStaleness",
+            "maxStalenessPrefix": 300,
+            "maxIntervalInSeconds": 1000
+          },
+          "locations": [
+            {
+              "locationName": "westus2",
+              "isZoneRedundant": false
+            }
+          ],
+          "databaseAccountOfferType": "Standard",
+          "ipRules": [
+            {
+              "ipAddressOrRange": "23.43.230.120"
+            }
+          ],
+          "isVirtualNetworkFilterEnabled": true,
+          "enableAutomaticFailover": false,
+          "connectorOffer": "Small",
+          "disableKeyBasedMetadataWriteAccess": false
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/9994e2e3-8834-4fc9-8a83-931f587fb37b?api-version=2021-06-15",
+        "Cache-Control": [
+          "no-store",
+          "no-cache"
+        ],
+        "Content-Length": "2023",
+        "Content-Type": "application/json",
+        "Date": "Fri, 05 Nov 2021 08:56:31 GMT",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053/operationResults/9994e2e3-8834-4fc9-8a83-931f587fb37b?api-version=2021-06-15",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "da34fdad-8136-42d5-862a-e922db046b61",
+        "x-ms-gatewayversion": "version=2.14.0",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "9994e2e3-8834-4fc9-8a83-931f587fb37b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211105T085632Z:da34fdad-8136-42d5-862a-e922db046b61"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+        "name": "dbaccount-4053",
+        "location": "West US 2",
+        "type": "Microsoft.DocumentDB/databaseAccounts",
+        "kind": "MongoDB",
+        "tags": {
+          "key1": "value1",
+          "key2": "value2"
+        },
+        "systemData": {
+          "createdAt": "2021-11-05T08:56:28.607065Z"
+        },
+        "properties": {
+          "provisioningState": "Creating",
+          "publicNetworkAccess": "Enabled",
+          "enableAutomaticFailover": false,
+          "enableMultipleWriteLocations": false,
+          "enablePartitionKeyMonitor": false,
+          "isVirtualNetworkFilterEnabled": true,
+          "virtualNetworkRules": [],
+          "EnabledApiTypes": "MongoDB",
+          "disableKeyBasedMetadataWriteAccess": false,
+          "enableFreeTier": false,
+          "enableAnalyticalStorage": false,
+          "analyticalStorageConfiguration": {
+            "schemaType": "FullFidelity"
+          },
+          "instanceId": "5fff4e00-b3f8-4cda-9c5d-0de44a700f42",
+          "databaseAccountOfferType": "Standard",
+          "defaultIdentity": "",
+          "networkAclBypass": "None",
+          "disableLocalAuth": false,
+          "consistencyPolicy": {
+            "defaultConsistencyLevel": "BoundedStaleness",
+            "maxIntervalInSeconds": 1000,
+            "maxStalenessPrefix": 300
+          },
+          "apiProperties": {
+            "serverVersion": "3.6"
+          },
+          "configurationOverrides": {},
+          "writeLocations": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "provisioningState": "Creating",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "readLocations": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "provisioningState": "Creating",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "locations": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "provisioningState": "Creating",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "failoverPolicies": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "failoverPriority": 0
+            }
+          ],
+          "cors": [],
+          "capabilities": [
+            {
+              "name": "EnableMongo"
+            }
+          ],
+          "ipRules": [
+            {
+              "ipAddressOrRange": "23.43.230.120"
+            }
+          ],
+          "backupPolicy": {
+            "type": "Periodic",
+            "periodicModeProperties": {
+              "backupIntervalInMinutes": 240,
+              "backupRetentionIntervalInHours": 8,
+              "backupStorageRedundancy": "Invalid"
+            }
+          },
+          "networkAclBypassResourceIds": []
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/9994e2e3-8834-4fc9-8a83-931f587fb37b?api-version=2021-06-15",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "763f2fd35e9c5be334c0934738e7184f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store",
+          "no-cache"
+        ],
+        "Content-Length": "22",
+        "Content-Type": "application/json",
+        "Date": "Fri, 05 Nov 2021 09:01:03 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2e77b6af-6f26-4dac-8086-cd60ea65c1ff",
+        "x-ms-gatewayversion": "version=2.14.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11805",
+        "x-ms-request-id": "2e77b6af-6f26-4dac-8086-cd60ea65c1ff",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211105T090104Z:2e77b6af-6f26-4dac-8086-cd60ea65c1ff"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053?api-version=2021-06-15",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b88b9721fb9db34f54a81179d4633ece",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store",
+          "no-cache"
+        ],
+        "Content-Length": "2435",
+        "Content-Type": "application/json",
+        "Date": "Fri, 05 Nov 2021 09:01:04 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b6479331-995c-4c15-9fa8-9862d518be2e",
+        "x-ms-gatewayversion": "version=2.14.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11804",
+        "x-ms-request-id": "b6479331-995c-4c15-9fa8-9862d518be2e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211105T090105Z:b6479331-995c-4c15-9fa8-9862d518be2e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+        "name": "dbaccount-4053",
+        "location": "West US 2",
+        "type": "Microsoft.DocumentDB/databaseAccounts",
+        "kind": "MongoDB",
+        "tags": {
+          "key1": "value1",
+          "key2": "value2"
+        },
+        "systemData": {
+          "createdAt": "2021-11-05T09:00:41.810284Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "documentEndpoint": "https://dbaccount-4053.documents.azure.com:443/",
+          "mongoEndpoint": "https://dbaccount-4053.mongo.cosmos.azure.com:443/",
+          "publicNetworkAccess": "Enabled",
+          "enableAutomaticFailover": false,
+          "enableMultipleWriteLocations": false,
+          "enablePartitionKeyMonitor": false,
+          "isVirtualNetworkFilterEnabled": true,
+          "virtualNetworkRules": [],
+          "EnabledApiTypes": "MongoDB",
+          "disableKeyBasedMetadataWriteAccess": false,
+          "enableFreeTier": false,
+          "enableAnalyticalStorage": false,
+          "analyticalStorageConfiguration": {
+            "schemaType": "FullFidelity"
+          },
+          "instanceId": "5fff4e00-b3f8-4cda-9c5d-0de44a700f42",
+          "databaseAccountOfferType": "Standard",
+          "defaultIdentity": "FirstPartyIdentity",
+          "networkAclBypass": "None",
+          "disableLocalAuth": false,
+          "consistencyPolicy": {
+            "defaultConsistencyLevel": "BoundedStaleness",
+            "maxIntervalInSeconds": 1000,
+            "maxStalenessPrefix": 300
+          },
+          "apiProperties": {
+            "serverVersion": "3.6"
+          },
+          "configurationOverrides": {
+            "EnableBsonSchema": "True"
+          },
+          "writeLocations": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "documentEndpoint": "https://dbaccount-4053-westus2.documents.azure.com:443/",
+              "provisioningState": "Succeeded",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "readLocations": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "documentEndpoint": "https://dbaccount-4053-westus2.documents.azure.com:443/",
+              "provisioningState": "Succeeded",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "locations": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "documentEndpoint": "https://dbaccount-4053-westus2.documents.azure.com:443/",
+              "provisioningState": "Succeeded",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "failoverPolicies": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "failoverPriority": 0
+            }
+          ],
+          "cors": [],
+          "capabilities": [
+            {
+              "name": "EnableMongo"
+            }
+          ],
+          "ipRules": [
+            {
+              "ipAddressOrRange": "23.43.230.120"
+            }
+          ],
+          "backupPolicy": {
+            "type": "Periodic",
+            "periodicModeProperties": {
+              "backupIntervalInMinutes": 240,
+              "backupRetentionIntervalInHours": 8,
+              "backupStorageRedundancy": "Geo"
+            }
+          },
+          "networkAclBypassResourceIds": []
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053/metricDefinitions?api-version=2021-06-15",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20211105.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f1b9d4bf22f80b70605ee498d4246dc3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store",
+          "no-cache"
+        ],
+        "Content-Length": "18131",
+        "Content-Type": "application/json",
+        "Date": "Fri, 05 Nov 2021 09:01:04 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3d4859d1-9cf7-4ff6-9626-518f91505ce1",
+        "x-ms-gatewayversion": "version=2.14.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11803",
+        "x-ms-request-id": "3d4859d1-9cf7-4ff6-9626-518f91505ce1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211105T090105Z:3d4859d1-9cf7-4ff6-9626-518f91505ce1"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Last",
+            "unit": "Bytes",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Data Size",
+              "localizedValue": "Data Size"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Last",
+            "unit": "Bytes",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Index Size",
+              "localizedValue": "Index Size"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Last",
+            "unit": "Bytes",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Storage Capacity",
+              "localizedValue": "Storage Capacity"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Last",
+            "unit": "Bytes",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Available Storage",
+              "localizedValue": "Available Storage"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Last",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Document Count",
+              "localizedValue": "Document Count"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Average",
+            "unit": "Milliseconds",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Observed Read Latency",
+              "localizedValue": "Observed Read Latency"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Average",
+            "unit": "Milliseconds",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Observed Write Latency",
+              "localizedValue": "Observed Write Latency"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Total Requests",
+              "localizedValue": "Total Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Http 2xx",
+              "localizedValue": "Http 2xx"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Http 3xx",
+              "localizedValue": "Http 3xx"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Http 400",
+              "localizedValue": "Http 400"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Http 401",
+              "localizedValue": "Http 401"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Throttled Requests",
+              "localizedValue": "Throttled Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Internal Server Error",
+              "localizedValue": "Internal Server Error"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Service Unavailable",
+              "localizedValue": "Service Unavailable"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Total Request Units",
+              "localizedValue": "Total Request Units"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Average",
+            "unit": "CountPerSecond",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Average Requests per Second",
+              "localizedValue": "Average Requests per Second"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Maximum",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Max RUs Per Second",
+              "localizedValue": "Max RUs Per Second"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Maximum",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Max RUPM Consumed Per Minute",
+              "localizedValue": "Max RUPM Consumed Per Minute"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Query Request Charge",
+              "localizedValue": "Mongo Query Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Update Request Charge",
+              "localizedValue": "Mongo Update Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Delete Request Charge",
+              "localizedValue": "Mongo Delete Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Insert Request Charge",
+              "localizedValue": "Mongo Insert Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Count Request Charge",
+              "localizedValue": "Mongo Count Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Other Request Charge",
+              "localizedValue": "Mongo Other Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Query Request Rate",
+              "localizedValue": "Mongo Query Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Update Request Rate",
+              "localizedValue": "Mongo Update Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Delete Request Rate",
+              "localizedValue": "Mongo Delete Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Insert Request Rate",
+              "localizedValue": "Mongo Insert Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Count Request Rate",
+              "localizedValue": "Mongo Count Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Other Request Rate",
+              "localizedValue": "Mongo Other Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Query Failed Requests",
+              "localizedValue": "Mongo Query Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Update Failed Requests",
+              "localizedValue": "Mongo Update Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Delete Failed Requests",
+              "localizedValue": "Mongo Delete Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Insert Failed Requests",
+              "localizedValue": "Mongo Insert Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Count Failed Requests",
+              "localizedValue": "Mongo Count Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Mongo Other Failed Requests",
+              "localizedValue": "Mongo Other Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Average",
+            "unit": "Percent",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Service Availability",
+              "localizedValue": "Service Availability"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Average",
+            "unit": "Percent",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+            "name": {
+              "value": "Consistency Level",
+              "localizedValue": "Consistency Level"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053/metrics?api-version=2021-06-15&$filter=%28name.value%20eq%20%27Total%20Requests%27%29%20and%20timeGrain%20eq%20duration%27PT5M%27",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20211105.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "afa4495a2edfd877df8b21f44c6987d1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store",
+          "no-cache"
+        ],
+        "Content-Length": "12",
+        "Content-Type": "application/json",
+        "Date": "Fri, 05 Nov 2021 09:01:05 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c506ae4d-ab76-4d8e-ba63-9434349a269d",
+        "x-ms-gatewayversion": "version=2.14.0",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "49",
+        "x-ms-request-id": "c506ae4d-ab76-4d8e-ba63-9434349a269d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211105T090106Z:c506ae4d-ab76-4d8e-ba63-9434349a269d"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053/region/westus2/metrics?api-version=2021-06-15&$filter=%28name.value%20eq%20%27Total%20Requests%27%29%20and%20timeGrain%20eq%20duration%27PT5M%27",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fe802106bf1c084aa09595e9fdfce386-923036dcbf86bd41-00",
+        "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20211105.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "6388c481262efe56277f573e17b7df2f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store",
+          "no-cache"
+        ],
+        "Content-Length": "12",
+        "Content-Type": "application/json",
+        "Date": "Fri, 05 Nov 2021 09:01:05 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "af09bb82-6d30-425b-b6cb-dfd4aba70dae",
+        "x-ms-gatewayversion": "version=2.14.0",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "49",
+        "x-ms-request-id": "af09bb82-6d30-425b-b6cb-dfd4aba70dae",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211105T090106Z:af09bb82-6d30-425b-b6cb-dfd4aba70dae"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053?api-version=2021-06-15",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20211105.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "8b1f4d3a8ebe90ef5de0116c017cbff7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store",
+          "no-cache"
+        ],
+        "Content-Length": "2435",
+        "Content-Type": "application/json",
+        "Date": "Fri, 05 Nov 2021 09:01:06 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c649b343-2110-4592-9294-255b1f7a26e4",
+        "x-ms-gatewayversion": "version=2.14.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11802",
+        "x-ms-request-id": "c649b343-2110-4592-9294-255b1f7a26e4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211105T090107Z:c649b343-2110-4592-9294-255b1f7a26e4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053",
+        "name": "dbaccount-4053",
+        "location": "West US 2",
+        "type": "Microsoft.DocumentDB/databaseAccounts",
+        "kind": "MongoDB",
+        "tags": {
+          "key1": "value1",
+          "key2": "value2"
+        },
+        "systemData": {
+          "createdAt": "2021-11-05T09:00:41.810284Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "documentEndpoint": "https://dbaccount-4053.documents.azure.com:443/",
+          "mongoEndpoint": "https://dbaccount-4053.mongo.cosmos.azure.com:443/",
+          "publicNetworkAccess": "Enabled",
+          "enableAutomaticFailover": false,
+          "enableMultipleWriteLocations": false,
+          "enablePartitionKeyMonitor": false,
+          "isVirtualNetworkFilterEnabled": true,
+          "virtualNetworkRules": [],
+          "EnabledApiTypes": "MongoDB",
+          "disableKeyBasedMetadataWriteAccess": false,
+          "enableFreeTier": false,
+          "enableAnalyticalStorage": false,
+          "analyticalStorageConfiguration": {
+            "schemaType": "FullFidelity"
+          },
+          "instanceId": "5fff4e00-b3f8-4cda-9c5d-0de44a700f42",
+          "databaseAccountOfferType": "Standard",
+          "defaultIdentity": "FirstPartyIdentity",
+          "networkAclBypass": "None",
+          "disableLocalAuth": false,
+          "consistencyPolicy": {
+            "defaultConsistencyLevel": "BoundedStaleness",
+            "maxIntervalInSeconds": 1000,
+            "maxStalenessPrefix": 300
+          },
+          "apiProperties": {
+            "serverVersion": "3.6"
+          },
+          "configurationOverrides": {
+            "EnableBsonSchema": "True"
+          },
+          "writeLocations": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "documentEndpoint": "https://dbaccount-4053-westus2.documents.azure.com:443/",
+              "provisioningState": "Succeeded",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "readLocations": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "documentEndpoint": "https://dbaccount-4053-westus2.documents.azure.com:443/",
+              "provisioningState": "Succeeded",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "locations": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "documentEndpoint": "https://dbaccount-4053-westus2.documents.azure.com:443/",
+              "provisioningState": "Succeeded",
+              "failoverPriority": 0,
+              "isZoneRedundant": false
+            }
+          ],
+          "failoverPolicies": [
+            {
+              "id": "dbaccount-4053-westus2",
+              "locationName": "West US 2",
+              "failoverPriority": 0
+            }
+          ],
+          "cors": [],
+          "capabilities": [
+            {
+              "name": "EnableMongo"
+            }
+          ],
+          "ipRules": [
+            {
+              "ipAddressOrRange": "23.43.230.120"
+            }
+          ],
+          "backupPolicy": {
+            "type": "Periodic",
+            "periodicModeProperties": {
+              "backupIntervalInMinutes": 240,
+              "backupRetentionIntervalInHours": 8,
+              "backupStorageRedundancy": "Geo"
+            }
+          },
+          "networkAclBypassResourceIds": []
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2574/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4053?api-version=2021-06-15",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20211105.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "0f1613d7099c3495f2a58860d638c128",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/90d56b68-1846-4658-a25c-9ce8a19e4cc8?api-version=2021-06-15",
+        "Cache-Control": [
+          "no-store",
+          "no-cache"
+        ],
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "Date": "Fri, 05 Nov 2021 09:01:08 GMT",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationResults/90d56b68-1846-4658-a25c-9ce8a19e4cc8?api-version=2021-06-15",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "41455a6c-0311-4d62-a314-8eac9aaaa237",
+        "x-ms-gatewayversion": "version=2.14.0",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "90d56b68-1846-4658-a25c-9ce8a19e4cc8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211105T090109Z:41455a6c-0311-4d62-a314-8eac9aaaa237"
+      },
+      "ResponseBody": {
+        "status": "Enqueued"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/90d56b68-1846-4658-a25c-9ce8a19e4cc8?api-version=2021-06-15",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "eb0da3b219644770a70e6009093ea1a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store",
+          "no-cache"
+        ],
+        "Content-Length": "22",
+        "Content-Type": "application/json",
+        "Date": "Fri, 05 Nov 2021 09:12:09 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "532bf009-fecf-4cd8-81b2-ad39cdb92703",
+        "x-ms-gatewayversion": "version=2.14.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "532bf009-fecf-4cd8-81b2-ad39cdb92703",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211105T091209Z:532bf009-fecf-4cd8-81b2-ad39cdb92703"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1738130823",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
