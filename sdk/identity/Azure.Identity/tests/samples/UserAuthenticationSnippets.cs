@@ -26,7 +26,7 @@ namespace Azure.Identity.Samples
                 new InteractiveBrowserCredential()
             );
             #endregion
-        }
+    }
 
         public void Identity_ClientSideUserAuthentication_SimpleDeviceCode()
         {
@@ -120,41 +120,50 @@ namespace Azure.Identity.Samples
 
         public static async Task Main()
         {
-            InteractiveBrowserCredential credential;
+            #region Snippet:AuthenticationRecord_TokenCachePersistenceOptions
 
+            const string TOKEN_CACHE_NAME = "MyTokenCache";
+            InteractiveBrowserCredential credential;
+            AuthenticationRecord authRecord;
+
+            // Check if an AuthenticationRecord exists on disk.
+            // If it does not exist, get one and serialize it to disk.
+            // If it does exist, load it from disk and deserialize it.
             if (!File.Exists(AUTH_RECORD_PATH))
             {
+                // Construct a credential with TokenCachePersistenceOptions specified to ensure that the token cache is persisted to disk.
+                // We can also optionally specify a name for the cache to avoid having it cleared by other applications.
                 credential = new InteractiveBrowserCredential(
-                    new InteractiveBrowserCredentialOptions
-                    {
-                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
-                    });
+                    new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = new TokenCachePersistenceOptions { Name = TOKEN_CACHE_NAME } });
 
-                AuthenticationRecord authRecord = await credential.AuthenticateAsync();
+                // Call AuthenticateAsync to fetch a new AuthenticationRecord.
+                authRecord = await credential.AuthenticateAsync();
 
-                using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Create, FileAccess.Write))
-                {
-                    await authRecord.SerializeAsync(authRecordStream);
-                }
+                // Serialize the AuthenticationRecord to disk so that it can be re-used across executions of this initialization code.
+                using var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Create, FileAccess.Write);
+                await authRecord.SerializeAsync(authRecordStream);
             }
             else
             {
-                AuthenticationRecord authRecord;
-
-                using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, FileAccess.Read))
-                {
-                    authRecord = await AuthenticationRecord.DeserializeAsync(authRecordStream);
-                }
-
-                credential = new InteractiveBrowserCredential(
-                    new InteractiveBrowserCredentialOptions
-                    {
-                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
-                        AuthenticationRecord = authRecord
-                    });
+                // Load the previously serialized AuthenticationRecord from disk and deserialize it.
+                using var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, FileAccess.Read);
+                authRecord = await AuthenticationRecord.DeserializeAsync(authRecordStream);
             }
 
+            // Construct a new client with our TokenCachePersistenceOptions with the addition of the AuthenticationRecord property.
+            // This tells the credential to use the same token cache in addition to which account to try and fetch from cache when GetToken is called.
+            credential = new InteractiveBrowserCredential(
+                new InteractiveBrowserCredentialOptions
+                {
+                    TokenCachePersistenceOptions = new TokenCachePersistenceOptions { Name = TOKEN_CACHE_NAME },
+                    AuthenticationRecord = authRecord
+                });
+
+            // Construct our client with the credential which is connected to the token cache
+            // with the capability of silent authentication for the account specified in the AuthenticationRecord.
             var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+
+            #endregion
         }
     }
 }
