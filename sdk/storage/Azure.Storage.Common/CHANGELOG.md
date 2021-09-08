@@ -1,14 +1,7 @@
 # Release History
 
-## 12.9.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 12.9.0 (2021-09-08)
+- Includes all features from 12.9.0-beta.1 and 12.9.0-beta.2.
 
 ## 12.9.0-beta.2 (2021-07-23)
 - This release changes the dependency on Azure.Core to v1.16.0
