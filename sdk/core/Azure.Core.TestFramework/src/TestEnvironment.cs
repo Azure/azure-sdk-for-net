@@ -14,6 +14,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -39,10 +41,13 @@ namespace Azure.Core.TestFramework
         private readonly string _serviceSdkDirectory;
 
         private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = new();
+        private static readonly HashSet<Type> s_initializedEnvironmentTypes = new();
         private static readonly object s_syncLock = new();
         private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         private Exception _bootstrappingException;
         private readonly Type _type;
+
+        protected virtual bool AlwaysRunLiveTestsLocally => false;
 
         protected TestEnvironment()
         {
@@ -240,7 +245,34 @@ namespace Azure.Core.TestFramework
                         s_environmentStateCache[_type] = task;
                     }
                 }
+
                 await task;
+            }
+
+            if (!GlobalIsRunningInCI &&
+                Mode is RecordedTestMode.Live or RecordedTestMode.Record &&
+                !s_initializedEnvironmentTypes.Contains(_type))
+            {
+                s_initializedEnvironmentTypes.Add(_type);
+
+                string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
+                if (resourceGroup == null)
+                {
+                    return;
+                }
+
+                ArmClient armClient = new ArmClient(Credential);
+                ResourceGroup rg = await armClient.DefaultSubscription.GetResourceGroups().GetAsync(resourceGroup);
+
+                if (rg.HasData && rg.Data.Tags.TryGetValue("DeleteAfter", out string deleteTime))
+                {
+                    DateTimeOffset deleteDto = DateTimeOffset.Parse(deleteTime);
+                    // if the delete after tag is less than 5 days in the future, extend it an additional 5 days
+                    if (deleteDto.Subtract(DateTimeOffset.Now) < TimeSpan.FromDays(5))
+                    {
+                        await rg.AddTagAsync("DeleteAfter", deleteDto.Add(TimeSpan.FromDays(5)).ToString());
+                    }
+                }
             }
         }
 
@@ -281,7 +313,7 @@ namespace Azure.Core.TestFramework
 
             string value = GetOptionalVariable(name);
 
-            if (!Mode.HasValue)
+            if (Mode is null or RecordedTestMode.Live)
             {
                 return value;
             }

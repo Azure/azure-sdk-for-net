@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -15,7 +18,10 @@ namespace Azure.Core.TestFramework
     {
         protected LiveTestBase()
         {
-            TestEnvironment = new TEnvironment();
+            TestEnvironment = new TEnvironment()
+            {
+                Mode = RecordedTestMode.Live
+            };
         }
 
         protected TEnvironment TestEnvironment { get; }

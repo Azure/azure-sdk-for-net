@@ -14,9 +14,9 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
-    public abstract class ServiceBusTestBase
+    public static class ServiceBusTestUtilities
     {
-        protected List<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
+        internal static List<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
         {
             var messages = new List<ServiceBusMessage>();
             for (int i = 0; i < count; i++)
@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             return messages;
         }
 
-        protected ServiceBusMessageBatch AddMessages(ServiceBusMessageBatch batch, int count, string sessionId = null, string partitionKey = null)
+        internal static ServiceBusMessageBatch AddMessages(ServiceBusMessageBatch batch, int count, string sessionId = null, string partitionKey = null)
         {
             for (int i = 0; i < count; i++)
             {
@@ -36,14 +36,14 @@ namespace Azure.Messaging.ServiceBus.Tests
             return batch;
         }
 
-        protected Task ExceptionHandler(ProcessErrorEventArgs eventArgs)
+        internal static Task ExceptionHandler(ProcessErrorEventArgs eventArgs)
         {
             Assert.IsNotNull(eventArgs.CancellationToken);
             Assert.Fail(eventArgs.Exception.ToString());
             return Task.CompletedTask;
         }
 
-        protected ServiceBusMessage GetMessage(string sessionId = null, string partitionKey = null)
+        internal static ServiceBusMessage GetMessage(string sessionId = null, string partitionKey = null)
         {
             var msg = new ServiceBusMessage(GetRandomBuffer(100))
             {
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             return text;
         }
 
-        internal ServiceBusConnection GetMockedReceiverConnection()
+        internal static ServiceBusConnection GetMockedReceiverConnection()
         {
             var mockTransportReceiver = new Mock<TransportReceiver>();
             mockTransportReceiver
