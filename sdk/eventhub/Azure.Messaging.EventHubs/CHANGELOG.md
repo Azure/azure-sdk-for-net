@@ -1,6 +1,6 @@
 # Release History
 
-## 5.6.1 (20201-09-08)
+## 5.6.1 (2021-09-08)
 
 ### Acknowledgments
 
