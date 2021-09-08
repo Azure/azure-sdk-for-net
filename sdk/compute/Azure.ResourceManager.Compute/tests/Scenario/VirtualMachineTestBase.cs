@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Tests
         protected async Task<VirtualMachineContainer> GetVirtualMachineContainerAsync()
         {
             _genericResourceContainer = DefaultSubscription.GetGenericResources();
-            if (_resourceGroup != null)
+            if (_resourceGroup == null)
                 _resourceGroup = await CreateResourceGroupAsync();
             return _resourceGroup.GetVirtualMachines();
         }

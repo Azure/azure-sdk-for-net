@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Tests
         private GalleryImageVersion _galleryImageVersion;
 
         public GalleryImageVersionOperationsTests(bool isAsync)
-            : base(isAsync)// , RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
