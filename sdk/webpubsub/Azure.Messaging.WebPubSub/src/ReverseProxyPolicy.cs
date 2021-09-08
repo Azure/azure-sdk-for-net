@@ -8,20 +8,20 @@ using Azure.Core.Pipeline;
 namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
-    /// API Management Policy
+    /// The reverse proxy policy.
     /// </summary>
-    internal partial class ApimPolicy : HttpPipelineSynchronousPolicy
+    internal partial class ReverseProxyPolicy : HttpPipelineSynchronousPolicy
     {
-        private Uri _apimEndpoint;
+        private readonly Uri _reverseProxyEndpoint;
 
-        public ApimPolicy(Uri apimEndpoint) => _apimEndpoint = apimEndpoint;
+        public ReverseProxyPolicy(Uri reverseProxyEndpoint) => _reverseProxyEndpoint = reverseProxyEndpoint;
 
         /// <inheritdoc/>
         public override void OnSendingRequest(HttpMessage message)
         {
             var originalUri = message.Request.Uri.ToUri();
             var path = originalUri.PathAndQuery;
-            message.Request.Uri.Reset(_apimEndpoint);
+            message.Request.Uri.Reset(_reverseProxyEndpoint);
             message.Request.Uri.AppendPath(path, escape: false);
             WebPubSubAuthenticationPolicy.SetAudience(message, originalUri);
         }
