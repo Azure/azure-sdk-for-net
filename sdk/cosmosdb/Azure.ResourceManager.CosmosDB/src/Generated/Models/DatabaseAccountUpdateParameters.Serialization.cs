@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                JsonSerializer.Serialize(writer, Identity);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(ConsistencyPolicy))
@@ -113,6 +118,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("keyVaultKeyUri");
                 writer.WriteStringValue(KeyVaultKeyUri);
             }
+            if (Optional.IsDefined(DefaultIdentity))
+            {
+                writer.WritePropertyName("defaultIdentity");
+                writer.WriteStringValue(DefaultIdentity);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsDefined(EnableFreeTier))
             {
                 writer.WritePropertyName("enableFreeTier");
@@ -128,6 +143,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("enableAnalyticalStorage");
                 writer.WriteBooleanValue(EnableAnalyticalStorage.Value);
             }
+            if (Optional.IsDefined(AnalyticalStorageConfiguration))
+            {
+                writer.WritePropertyName("analyticalStorageConfiguration");
+                writer.WriteObjectValue(AnalyticalStorageConfiguration);
+            }
+            if (Optional.IsDefined(BackupPolicy))
+            {
+                writer.WritePropertyName("backupPolicy");
+                writer.WriteObjectValue(BackupPolicy);
+            }
             if (Optional.IsCollectionDefined(Cors))
             {
                 writer.WritePropertyName("cors");
@@ -137,6 +162,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NetworkAclBypass))
+            {
+                writer.WritePropertyName("networkAclBypass");
+                writer.WriteStringValue(NetworkAclBypass.Value.ToSerialString());
+            }
+            if (Optional.IsCollectionDefined(NetworkAclBypassResourceIds))
+            {
+                writer.WritePropertyName("networkAclBypassResourceIds");
+                writer.WriteStartArray();
+                foreach (var item in NetworkAclBypassResourceIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                writer.WritePropertyName("disableLocalAuth");
+                writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

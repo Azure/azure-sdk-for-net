@@ -8,6 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -21,22 +23,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("kind");
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Location))
+            if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName("identity");
+                JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            writer.WritePropertyName("tags");
+            writer.WriteStartObject();
+            foreach (var item in Tags)
             {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
             }
+            writer.WriteEndObject();
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(ConsistencyPolicy))
@@ -118,6 +119,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("keyVaultKeyUri");
                 writer.WriteStringValue(KeyVaultKeyUri);
             }
+            if (Optional.IsDefined(DefaultIdentity))
+            {
+                writer.WritePropertyName("defaultIdentity");
+                writer.WriteStringValue(DefaultIdentity);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsDefined(EnableFreeTier))
             {
                 writer.WritePropertyName("enableFreeTier");
@@ -133,6 +144,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("enableAnalyticalStorage");
                 writer.WriteBooleanValue(EnableAnalyticalStorage.Value);
             }
+            if (Optional.IsDefined(AnalyticalStorageConfiguration))
+            {
+                writer.WritePropertyName("analyticalStorageConfiguration");
+                writer.WriteObjectValue(AnalyticalStorageConfiguration);
+            }
+            if (Optional.IsDefined(CreateMode))
+            {
+                writer.WritePropertyName("createMode");
+                writer.WriteStringValue(CreateMode.Value.ToString());
+            }
+            if (Optional.IsDefined(BackupPolicy))
+            {
+                writer.WritePropertyName("backupPolicy");
+                writer.WriteObjectValue(BackupPolicy);
+            }
             if (Optional.IsCollectionDefined(Cors))
             {
                 writer.WritePropertyName("cors");
@@ -143,6 +169,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(NetworkAclBypass))
+            {
+                writer.WritePropertyName("networkAclBypass");
+                writer.WriteStringValue(NetworkAclBypass.Value.ToSerialString());
+            }
+            if (Optional.IsCollectionDefined(NetworkAclBypassResourceIds))
+            {
+                writer.WritePropertyName("networkAclBypassResourceIds");
+                writer.WriteStartArray();
+                foreach (var item in NetworkAclBypassResourceIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                writer.WritePropertyName("disableLocalAuth");
+                writer.WriteBooleanValue(DisableLocalAuth.Value);
+            }
+            if (Optional.IsDefined(RestoreParameters))
+            {
+                writer.WritePropertyName("restoreParameters");
+                writer.WriteObjectValue(RestoreParameters);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -150,11 +201,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static DatabaseAccountCreateUpdateParameters DeserializeDatabaseAccountCreateUpdateParameters(JsonElement element)
         {
             Optional<DatabaseAccountKind> kind = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Optional<ResourceIdentity> identity = default;
+            IDictionary<string, string> tags = default;
+            Resources.Models.Location location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<ConsistencyPolicy> consistencyPolicy = default;
             IList<Location> locations = default;
             string databaseAccountOfferType = default;
@@ -168,11 +220,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ConnectorOffer> connectorOffer = default;
             Optional<bool> disableKeyBasedMetadataWriteAccess = default;
             Optional<string> keyVaultKeyUri = default;
+            Optional<string> defaultIdentity = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<bool> enableFreeTier = default;
             Optional<ApiProperties> apiProperties = default;
             Optional<bool> enableAnalyticalStorage = default;
+            Optional<AnalyticalStorageConfiguration> analyticalStorageConfiguration = default;
+            Optional<CreateMode> createMode = default;
+            Optional<BackupPolicy> backupPolicy = default;
             Optional<IList<CorsPolicy>> cors = default;
+            Optional<NetworkAclBypass> networkAclBypass = default;
+            Optional<IList<string>> networkAclBypassResourceIds = default;
+            Optional<bool> disableLocalAuth = default;
+            Optional<RestoreParameters> restoreParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -183,6 +243,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     kind = new DatabaseAccountKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
+                    continue;
+                }
+                if (property.NameEquals("tags"))
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -198,26 +283,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -364,6 +429,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             keyVaultKeyUri = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("defaultIdentity"))
+                        {
+                            defaultIdentity = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("publicNetworkAccess"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -404,6 +474,36 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             enableAnalyticalStorage = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("analyticalStorageConfiguration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            analyticalStorageConfiguration = AnalyticalStorageConfiguration.DeserializeAnalyticalStorageConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("createMode"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            createMode = new CreateMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("backupPolicy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            backupPolicy = BackupPolicy.DeserializeBackupPolicy(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("cors"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -419,11 +519,56 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             cors = array;
                             continue;
                         }
+                        if (property0.NameEquals("networkAclBypass"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            networkAclBypass = property0.Value.GetString().ToNetworkAclBypass();
+                            continue;
+                        }
+                        if (property0.NameEquals("networkAclBypassResourceIds"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            networkAclBypassResourceIds = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("disableLocalAuth"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            disableLocalAuth = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("restoreParameters"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            restoreParameters = RestoreParameters.DeserializeRestoreParameters(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DatabaseAccountCreateUpdateParameters(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), Optional.ToNullable(kind), consistencyPolicy.Value, locations, databaseAccountOfferType, Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), Optional.ToList(capabilities), Optional.ToList(virtualNetworkRules), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), Optional.ToList(cors));
+            return new DatabaseAccountCreateUpdateParameters(id, name, type, tags, location, Optional.ToNullable(kind), identity, consistencyPolicy.Value, locations, databaseAccountOfferType, Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), Optional.ToList(capabilities), Optional.ToList(virtualNetworkRules), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, Optional.ToNullable(createMode), backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), Optional.ToNullable(disableLocalAuth), restoreParameters.Value);
         }
     }
 }
