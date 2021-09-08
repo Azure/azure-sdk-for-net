@@ -6,6 +6,13 @@ namespace Azure.Identity
     /// <summary>
     /// Options controlling the storage of the token cache.
     /// </summary>
+    /// <example>
+    /// <para>
+    ///
+    /// </para>
+    /// <code snippet="Snippet:CustomChainedTokenCredential" language="csharp">
+    /// </code>
+    /// </example>
     public class TokenCachePersistenceOptions
     {
         /// <summary>
