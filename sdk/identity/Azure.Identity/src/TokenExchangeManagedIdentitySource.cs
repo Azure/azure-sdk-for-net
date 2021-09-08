@@ -23,18 +23,18 @@ namespace Azure.Identity
             _clientAssertionCredential = new ClientAssertionCredential(tenantId, clientId, _tokenFileCache.GetTokenFileContents, new ClientAssertionCredentialOptions { Pipeline = pipeline });
         }
 
-        public static ManagedIdentitySource TryCreate(CredentialPipeline pipeline, string clientId)
+        public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
         {
             string tokenFilePath = EnvironmentVariables.AzureFederatedTokenFile;
             string tenantId = EnvironmentVariables.TenantId;
-            clientId = clientId ?? EnvironmentVariables.ClientId;
+            string clientId = options.ClientId ?? EnvironmentVariables.ClientId;
 
             if (string.IsNullOrEmpty(tokenFilePath) || string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(clientId))
             {
                 return default;
             }
 
-            return new TokenExchangeManagedIdentitySource(pipeline, tenantId, clientId, tokenFilePath);
+            return new TokenExchangeManagedIdentitySource(options.Pipeline, tenantId, clientId, tokenFilePath);
         }
 
         public async override ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
