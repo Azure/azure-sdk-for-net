@@ -47,8 +47,6 @@ namespace Azure.Core.TestFramework
         private Exception _bootstrappingException;
         private readonly Type _type;
 
-        protected virtual bool AlwaysRunLiveTestsLocally => false;
-
         protected TestEnvironment()
         {
             if (RepositoryRoot == null)
@@ -245,7 +243,6 @@ namespace Azure.Core.TestFramework
                         s_environmentStateCache[_type] = task;
                     }
                 }
-
                 await task;
             }
 

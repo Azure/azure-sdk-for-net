@@ -3,10 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
