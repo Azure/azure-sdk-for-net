@@ -16,10 +16,5 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AddJsonPathSanitizer("$..secondaryMasterKey");
             AddJsonPathSanitizer("$..secondaryReadonlyMasterKey");
         }
-
-        public override void Sanitize(RecordSession session)
-        {
-            base.Sanitize(session);
-        }
     }
 }
