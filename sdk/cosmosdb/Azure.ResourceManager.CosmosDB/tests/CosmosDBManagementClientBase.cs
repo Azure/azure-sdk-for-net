@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected CosmosDBManagementClientBase(bool isAsync)
             : base(isAsync)
         {
+            Sanitizer = new CosmosDBManagementRecordedTestSanitizer();
         }
 
         protected void InitializeClients()
