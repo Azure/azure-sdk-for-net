@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.KeyVault.Keys.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -1334,5 +1335,32 @@ namespace Azure.Security.KeyVault.Keys
                 throw;
             }
         }
+
+        /// <summary>
+        /// Get a <see cref="CryptographyClient"/> for the given key.
+        /// </summary>
+        /// <param name="name">The name of the key used to perform cryptographic operations.</param>
+        /// <param name="version">Optional version of the key used to perform cryptographic operations.</param>
+        /// <returns>A <see cref="CryptographyClient"/> using the same options and pipeline as this <see cref="KeyClient"/>.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        public virtual CryptographyClient GetCryptographyClient(string name, string version = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            Uri keyUri = CreateKeyUri(VaultUri, name, version);
+            return new(keyUri, _pipeline);
+        }
+
+        /// <summary>
+        /// Constructs a key <see cref="Uri"/>.
+        /// </summary>
+        /// <param name="vaultUri">The <see cref="Uri"/> to the Key Vault or Managed HSM.</param>
+        /// <param name="name">Name of the key.</param>
+        /// <param name="version">Optional version of the key.</param>
+        /// <returns>A key <see cref="Uri"/>.</returns>
+        internal static Uri CreateKeyUri(Uri vaultUri, string name, string version) => version is null
+            ? new Uri(vaultUri, KeysPath + name)
+            : new Uri(vaultUri, $"{KeysPath}{name}/{version}");
     }
 }
