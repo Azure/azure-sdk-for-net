@@ -57,7 +57,6 @@ namespace Azure.Monitor.Query
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public LogsQueryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
         {
-            Endpoint = endpoint;
         }
 
         /// <summary>
@@ -71,6 +70,7 @@ namespace Azure.Monitor.Query
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
+            Endpoint = endpoint;
             options ??= new LogsQueryClientOptions();
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -78,7 +78,6 @@ namespace Azure.Monitor.Query
                 credential,
                 options.AuthenticationScope ?? "https://api.loganalytics.io//.default"));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
-            Endpoint = endpoint;
         }
 
         /// <summary>
