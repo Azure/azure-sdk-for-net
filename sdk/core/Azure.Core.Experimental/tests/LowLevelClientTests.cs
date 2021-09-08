@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class LowLevelClientTests : ClientTestBase
+    public class LowLevelClientTests
     {
-        public LowLevelClientTests(bool isAsync) : base(isAsync)
+        public LowLevelClientTests()
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
         [SetUp]
         public void TestSetup()
         {
-            client = InstrumentClient(new PetStoreClient(_url, GetCredential()));
+            client = new PetStoreClient(_url, GetCredential());
         }
 
         [Test]
@@ -40,6 +40,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task CanCallHlcGetMethodAsync()
         {
+            // This currently fails to build.
             Response<Pet> pet = await client.GetPetAsync("pet1");
         }
     }
