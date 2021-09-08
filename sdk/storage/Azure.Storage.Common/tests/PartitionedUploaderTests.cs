@@ -67,7 +67,7 @@ namespace Azure.Storage.Tests
         private Mock<PartitionedUploader<object, object>.UploadPartitionInternal> GetMockUploadPartitionInternal(int maxSize)
         {
             var mock = new Mock<PartitionedUploader<object, object>.UploadPartitionInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<Stream>(), It.IsAny<long>(), s_objectArgs, It.IsAny<IProgress<long>>(), s_hashingOptions, IsAsync, s_cancellation))
+            mock.Setup(del => del(It.IsNotNull<Stream>(), It.IsAny<long>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsNotNull<UploadTransactionalHashingOptions>(), IsAsync, s_cancellation))
                 .Returns<Stream, long, object, IProgress<long>, UploadTransactionalHashingOptions, bool, CancellationToken>((stream, offset, obj, progress, s_hashingOptions, async, cancellation) =>
                 {
                     if (!stream.CanSeek)
