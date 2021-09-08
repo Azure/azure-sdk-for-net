@@ -1,7 +1,11 @@
-﻿using Microsoft.Azure.Management.DataBoxEdge;
+﻿using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Microsoft.Azure.Management.DataBoxEdge;
 using Microsoft.Azure.Management.DataBoxEdge.Models;
 using Microsoft.Rest.Azure;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DataBoxEdge.Tests
 {
@@ -130,5 +134,61 @@ namespace DataBoxEdge.Tests
             continuationToken = resourceList.NextPageLink;
             return resourceList;
         }
+
+        #region KeyVaultHelpers
+        /// <summary>
+        /// Set Secret to keyVault
+        /// </summary>
+        /// <param name="keyvaultName">Name of the keyVault</param>
+        /// <param name="secretName">Name of the Secret</param>
+        /// <param name="secretValue">Value of the Secret</param>
+        /// <returns></returns>
+        public static void SetSecretToKeyVault(string keyvaultName, string secretName, string secretValue)
+        {
+            var keyVaultClient = GetKeyVaultClient(keyvaultName);
+            keyVaultClient.SetSecret(secretName, secretValue);
+        }
+
+        /// <summary>
+        /// Fetch Secret from KeyVault
+        /// </summary>
+        /// <param name="keyVaultName">Name of the KeyVault</param>
+        /// <param name="secretName">Name of the Secret to be deleted from KeyVault</param>
+        /// <returns></returns>
+        public static Azure.Response  GetSecretFromKeyVault(string keyVaultName, string secretName)
+        {
+           return GetKeyVaultClient(keyVaultName).GetSecret(secretName).GetRawResponse();
+        }
+
+        /// <summary>
+        /// Delete Secret from KeyVault
+        /// </summary>
+        /// <param name="keyVaultName">Name of the KeyVault</param>
+        /// <param name="secretName">Name of the Secret</param>
+        /// <returns></returns>
+        public static void DeleteSecretFromKeyVault(string keyVaultName, string secretName)
+        {
+            var client = GetKeyVaultClient(keyVaultName);
+
+            var secretDeleteOperation = client.StartDeleteSecret(secretName);
+
+            secretDeleteOperation.WaitForCompletionAsync();
+
+            client.PurgeDeletedSecret(secretName);
+        }
+
+        /// <summary>
+        /// Creates and Returns KeyVault Client
+        /// </summary>
+        /// <param name="keyvaultName">Name of the KeyVault</param>
+        /// <returns>Returns keyVault Client</returns>
+        private static SecretClient GetKeyVaultClient(string keyvaultName)
+        {
+            var kvUri = $"https://{keyvaultName}.vault.azure.net";
+
+            return new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
+        }
+
+        #endregion
     }
 }

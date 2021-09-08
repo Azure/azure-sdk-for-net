@@ -1,10 +1,11 @@
 namespace DataBoxEdge.Tests
 {
+    using Microsoft.Azure.Management.DataBoxEdge;
     using Microsoft.Azure.Management.DataBoxEdge.Models;
+    using RestSharp;
+    using System.Linq;
     using Xunit;
     using Xunit.Abstractions;
-    using Microsoft.Azure.Management.DataBoxEdge;
-    using System.Linq;
 
     /// <summary>
     /// Contains the tests for device operations
@@ -13,7 +14,10 @@ namespace DataBoxEdge.Tests
     {
         #region Constants
         private const int StandardSizeOfCIK = 128;
+
+        private const string CIKName = "ase-cik";
         #endregion
+
         #region Constructor
         /// <summary>
         /// Initializes an instance to test device operations
@@ -23,6 +27,46 @@ namespace DataBoxEdge.Tests
         #endregion Constructor
 
         #region Test Methods
+
+        /// <summary>
+        /// Steps to Register an ASE Resource
+        /// 1. Create MSI enabled resource
+        /// 2. Generate CIK
+        /// 3. Save CIK in the keyVault
+        /// 4. Generate Activation Key and give CIK as input, generated at step 3 
+        /// </summary>
+        [Fact]
+        public void Test_DeviceRegistrationOperation()
+        {
+            // Step 1. Create Edge Resource Object
+            DataBoxEdgeDevice device = new DataBoxEdgeDevice();
+            device.PopulateEdgeDeviceProperties();
+
+            // Step 2. Enabel System Assigned MSI and Create Resource
+            device.Identity = new ResourceIdentity(type: "SystemAssigned");
+            device.CreateOrUpdate(TestConstants.EdgeResourceName, Client, TestConstants.DefaultResourceGroupName);
+
+            // Step 3. GenerateCIK
+            var cik = Client.Devices.GenerateCIK();
+            TestUtilities.SetSecretToKeyVault(TestConstants.EdgeDeviceKeyVault, CIKName, cik);
+
+            var secret = TestUtilities.GetSecretFromKeyVault(TestConstants.EdgeDeviceKeyVault, CIKName);
+
+            TestUtilities.DeleteSecretFromKeyVault(TestConstants.EdgeDeviceKeyVault, CIKName);
+
+            // Step 4: GenerateActivationKey
+            var activationKey = Client.Devices.GenerateActivationKey(TestConstants.DefaultResourceGroupName, TestConstants.EdgeResourceName,
+            TestConstants.DefaultResourceLocation, TestConstants.SubscriptionId, cik);
+        }
+
+        private void GenerateAndSaveCIKIn()
+        {
+            // GenerateAndSaveCIK()
+            // CreateKeyvault()
+            // SetKeyVault()
+            // SaveSecretToKeyVault()
+            // DeleteSecret()
+        }
 
         /// <summary>
         /// Tests create, update, get, list and delete device APIs
@@ -94,41 +138,7 @@ namespace DataBoxEdge.Tests
             Client.Devices.CreateOrUpdateSecuritySettings(TestConstants.EdgeResourceName, new SecuritySettings(asymmetricEncryptedSecret), TestConstants.DefaultResourceGroupName);
         }
 
-        [Fact]
-        public void Test_GenerageActivationKey()
-        {
-            // Create Edge Resource
-            DataBoxEdgeDevice device = new DataBoxEdgeDevice();
-
-            // Populate device properties as a Gateway resource
-            device.PopulateGatewayDeviceProperties();
-
-            // Create a gateway resource
-            device.CreateOrUpdate(TestConstants.GatewayResourceName, Client, TestConstants.DefaultResourceGroupName);
-
-            // Get a device by name
-            var gatewayDevice = Client.Devices.Get(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName);
-
-            // GenerateCIK
-            var cik = Client.Devices.GenerateCIK();
-
-            // GenerateActivationKey
-            var activationKey = Client.Devices.GenerateActivationKey(TestConstants.DefaultResourceGroupName, TestConstants.GatewayResourceName,
-                TestConstants.DefaultResourceLocation, TestConstants.SubscriptionId, cik);
-        }
-
-        /// <summary>
-        /// Test to generate the CIK
-        /// </summary>
-        [Fact]
-        public void Test_GenerateCIK()
-        {
-            var cik = Client.Devices.GenerateCIK();
-            Assert.NotNull(cik);
-            Assert.True(cik.Length == StandardSizeOfCIK);
-        }
-
-        #endregion Test Methods
+        #endregion
     }
 }
 

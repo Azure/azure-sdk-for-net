@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace Microsoft.Azure.Management.DataBoxEdge.Customizations
+namespace Microsoft.Azure.Management.DataBoxEdge
 {
     public static class ActivationKeyHelper
     {
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Customizations
         /// <param name="resourceGroupName"></param>
         /// <param name="resourceName"></param>
         /// <returns></returns>
-        public static GenerateCertResponse GenerateVaultCertificate(IDevicesOperations operations, string resourceGroupName,
+        internal static GenerateCertResponse GenerateVaultCertificate(IDevicesOperations operations, string resourceGroupName,
             string resourceName)
         {
             return operations.GenerateCertificate(resourceName,
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Customizations
         /// Imports the raw data of a certificate into a X509Certificate2 object
         /// </summary>
         /// <returns>Returns the X509Certificate2 format of public part of the certificate</returns>
-        public static X509Certificate2 ImportCertificate(string rawData)
+        internal static X509Certificate2 ImportCertificate(string rawData)
         {
             var rawDataByteArray = Encoding.ASCII.GetBytes(rawData);
             var cert = new X509Certificate2(rawDataByteArray);
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Customizations
         /// <param name="resourceName"></param>
         /// <param name="cert"></param>
         /// <returns></returns>
-        public static UploadCertificateResponse UploadVaultCertificate(IDevicesOperations operations, string resourceGroupName,
+        internal static UploadCertificateResponse UploadVaultCertificate(IDevicesOperations operations, string resourceGroupName,
             string resourceName, X509Certificate2 cert)
         {
             var request = new UploadCertificateRequest
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Customizations
         /// <param name="certWithPrivateKey"></param>
         /// <param name="uploadCertificate"></param>
         /// <returns></returns>
-        public static string GetAadActivationKey(string resourceGroupName, string resourceName,
+        internal static string GetAadActivationKey(string resourceGroupName, string resourceName,
             string resourceLocation, string certWithPrivateKey,
             UploadCertificateResponse uploadCertificate, string subscriptionId, string cik)
         {
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Customizations
         /// </summary>
         /// <param name="text">The text.</param>
         /// <returns></returns>
-        public static string GenerateSha512Hash(string text)
+        internal static string GenerateSha512Hash(string text)
         {
             var alg = SHA512.Create();
             byte[] result = alg.ComputeHash(Encoding.UTF8.GetBytes(text));
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Customizations
         #region Properties
 
         /// <summary>
-        /// Gets or sets the key name for SubscriptionId entry.
+        /// Gets or Sets the SubscriptionId
         /// </summary>
         public string SubscriptionId { get; set; }
 

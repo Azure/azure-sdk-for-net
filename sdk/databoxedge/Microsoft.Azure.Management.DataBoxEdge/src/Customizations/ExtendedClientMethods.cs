@@ -1,5 +1,4 @@
-﻿using Microsoft.Azure.Management.DataBoxEdge.Customizations;
-using Microsoft.Azure.Management.DataBoxEdge.Models;
+﻿using Microsoft.Azure.Management.DataBoxEdge.Models;
 using Microsoft.Rest;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -123,7 +122,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <summary>
         /// Use this method to generate the activation key for any device to register it with the ASE resource
         /// </summary>
-        /// <param name="resourceGroupName">Provide ResourceGroupName, where resource exists</param>
+        /// <param name="resourceGroupName">Name of the Resourcegroup</param>
         /// <param name="resourceName">Name of the resource</param>
         /// <param name="resourceLocation">Location of the resource</param>
         /// <param name="subscriptionId">Subscription Id of the resource</param>
@@ -149,6 +148,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             var byteArr = new byte[128];
             randomNumberGenerator.GetBytes(byteArr);
             var cik = Convert.ToBase64String(byteArr).Substring(0, StandardSizeOfCIK);
+
             return cik;
         }
     }
