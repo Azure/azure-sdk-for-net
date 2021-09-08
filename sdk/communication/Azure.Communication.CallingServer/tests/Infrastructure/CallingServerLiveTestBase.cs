@@ -218,6 +218,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await serverCall.PlayAudioAsync(
                 audioFileUri: new Uri(TestEnvironment.AudioFileUrl),
+                loop: false,
                 audioFileId: "ebb1d98d-fd86-4204-800c-f7bdfc2e515c",
                 callbackUri: new Uri(TestEnvironment.AppCallbackUrl),
                 operationContext: "de346f03-7f8d-41ab-a232-cc5e14990769"

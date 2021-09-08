@@ -868,6 +868,93 @@ namespace Azure.Communication.CallingServer
             }
         }
 
+        internal HttpMessage CreateCancelParticipantMediaOperationRequest(string serverCallId, string participantId, string mediaOperationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/serverCalls/", false);
+            uri.AppendPath(serverCallId, true);
+            uri.AppendPath("/participants/", false);
+            uri.AppendPath(participantId, true);
+            uri.AppendPath("/:cancelMediaOperation", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CancelMediaOperationRequest(mediaOperationId);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> cancel media operation for a participant. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="participantId"> The participant id. </param>
+        /// <param name="mediaOperationId"> The operationId of the media operation to cancel. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/>, <paramref name="participantId"/>, or <paramref name="mediaOperationId"/> is null. </exception>
+        public async Task<Response> CancelParticipantMediaOperationAsync(string serverCallId, string participantId, string mediaOperationId, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+            if (mediaOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(mediaOperationId));
+            }
+
+            using var message = CreateCancelParticipantMediaOperationRequest(serverCallId, participantId, mediaOperationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> cancel media operation for a participant. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="participantId"> The participant id. </param>
+        /// <param name="mediaOperationId"> The operationId of the media operation to cancel. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/>, <paramref name="participantId"/>, or <paramref name="mediaOperationId"/> is null. </exception>
+        public Response CancelParticipantMediaOperation(string serverCallId, string participantId, string mediaOperationId, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+            if (mediaOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(mediaOperationId));
+            }
+
+            using var message = CreateCancelParticipantMediaOperationRequest(serverCallId, participantId, mediaOperationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateStartRecordingRequest(string serverCallId, string recordingStateCallbackUri, RecordingContentType? recordingContentType, RecordingChannelType? recordingChannelType, RecordingFormatType? recordingFormatType)
         {
             var message = _pipeline.CreateMessage();
@@ -1474,6 +1561,81 @@ namespace Azure.Communication.CallingServer
                         value = PlayAudioResult.DeserializePlayAudioResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCancelMediaOperationRequest(string serverCallId, string mediaOperationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/serverCalls/", false);
+            uri.AppendPath(serverCallId, true);
+            uri.AppendPath("/:cancelMediaOperation", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CancelMediaOperationRequest(mediaOperationId);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> cancel media operation. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="mediaOperationId"> The operationId of the media operation to cancel. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> or <paramref name="mediaOperationId"/> is null. </exception>
+        public async Task<Response> CancelMediaOperationAsync(string serverCallId, string mediaOperationId, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (mediaOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(mediaOperationId));
+            }
+
+            using var message = CreateCancelMediaOperationRequest(serverCallId, mediaOperationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> cancel media operation. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="mediaOperationId"> The operationId of the media operation to cancel. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> or <paramref name="mediaOperationId"/> is null. </exception>
+        public Response CancelMediaOperation(string serverCallId, string mediaOperationId, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (mediaOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(mediaOperationId));
+            }
+
+            using var message = CreateCancelMediaOperationRequest(serverCallId, mediaOperationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

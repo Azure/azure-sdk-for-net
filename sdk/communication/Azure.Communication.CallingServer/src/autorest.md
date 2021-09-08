@@ -15,7 +15,7 @@ If any of the new objects needs to be overwritten, add the required changes to t
 title: Calling server
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/navali-msft/azure-rest-api-specs/c8cdff5ebd139be765973eb059b2ed1831dae609/specification/communication/data-plane/CallingServer/readme.md
+    -  https://raw.githubusercontent.com/navali-msft/azure-rest-api-specs/2b4bddc11bb41ab64fc3d4da7d7bb87c0b50beda/specification/communication/data-plane/CallingServer/readme.md
 payload-flattening-threshold: 10
 clear-output-folder: true
 ```
