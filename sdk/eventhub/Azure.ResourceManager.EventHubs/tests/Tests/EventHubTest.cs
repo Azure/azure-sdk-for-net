@@ -25,8 +25,13 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         public async Task CreateEventHub()
         {
             //create storage account
-            string accountName = Recording.GenerateAssetName("storage");
+            string namespaceName = Recording.GenerateAssetName("namespace");
             _resourceGroup = await CreateResourceGroupAsync();
+            EHNamespaceContainer container = _resourceGroup.GetEHNamespaces();
+            EHNamespace eHNamespace=(await container.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
+
+            //
+            await eHNamespace.DeleteAsync();
         }
     }
 }
