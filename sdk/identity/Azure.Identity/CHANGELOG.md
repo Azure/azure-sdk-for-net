@@ -15,7 +15,7 @@
 ### Other Changes
 
 - Updated credentials using `MsalConfidentialClient` to include MSAL log output in logs
-- Added logging to `ProcessRunner`
+- Added additional logging to `AzureCliCredential`, `AzurePowerShellCredential`, `VisualStudioCrednetial`, and `VisualStudioCodeCredential` when IsPIILoggingEnabled` is set to true.
 
 ## 1.5.0-beta.3 (2021-08-10)
 
