@@ -407,7 +407,7 @@ namespace Azure.Monitor.Query
             var queryBody = new QueryBody(query);
             if (timeRange != MonitorQueryDateTimeRange.All)
             {
-                queryBody.Timespan = timeRange.ToString();
+                queryBody.Timespan = timeRange.ToIsoString();
             }
 
             if (options != null)
@@ -421,7 +421,7 @@ namespace Azure.Monitor.Query
 
             if (options?.ServerTimeout is TimeSpan timeout)
             {
-                preferBuilder ??= new();
+                preferBuilder = new();
                 preferBuilder.Append("wait=");
                 preferBuilder.Append((int) timeout.TotalSeconds);
             }
