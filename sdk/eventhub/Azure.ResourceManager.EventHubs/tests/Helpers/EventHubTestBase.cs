@@ -9,6 +9,8 @@ using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
+using Sku = Azure.ResourceManager.EventHubs.Models.Sku;
+using SkuTier = Azure.ResourceManager.EventHubs.Models.SkuTier;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Helpers
 {
@@ -42,6 +44,21 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
                     }
                 });
             return operation.Value;
+        }
+        public static void VerifyNamespaceProperties(EHNamespace eHNamespace, bool useDefaults)
+        {
+            Assert.NotNull(eHNamespace);
+            Assert.NotNull(eHNamespace.Id);
+            Assert.NotNull(eHNamespace.Id.Name);
+            Assert.NotNull(eHNamespace.Data);
+            Assert.NotNull(eHNamespace.Data.Location);
+            Assert.NotNull(eHNamespace.Data.CreatedAt);
+            Assert.NotNull(eHNamespace.Data.Sku);
+            if (useDefaults)
+            {
+                Assert.AreEqual(DefaultLocation, eHNamespace.Data.Location);
+                Assert.AreEqual(SkuTier.Standard, eHNamespace.Data.Sku.Tier);
+            }
         }
     }
 }
