@@ -274,11 +274,11 @@
 
 # PRLabel: %Digital Twins
 # ServiceLabel: %Digital Twins %Service Attention
-/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @barustum @jamdavi
+/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @jamdavi
 
 # PRLabel: %IoT Models Repository
 # ServiceLabel: %IoT Models Repository %Service Attention
-/sdk/modelsrepository/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @barustum @jamdavi @digimaun
+/sdk/modelsrepository/                              @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @jamdavi @digimaun
 
 # PRLabel: %TimeSeriesInsights
 # ServiceLabel: %TimeSeriesInsights %Service Attention

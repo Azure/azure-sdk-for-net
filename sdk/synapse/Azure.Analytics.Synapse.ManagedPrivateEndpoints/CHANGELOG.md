@@ -1,14 +1,9 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.5 (2021-09-08)
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Removed `V2021_06_01_Preview` value from `ServiceVersion` enum, and set default `api-version` to `2020-12-01`.
 
 ## 1.0.0-beta.4 (2021-08-10)
 

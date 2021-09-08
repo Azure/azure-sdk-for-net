@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public abstract class CosmosDBManagementClientBase : ManagementRecordedTestBase<CosmosDBManagementTestEnvironment>
     {
         public string SubscriptionId { get; set; }
-        public ResourcesManagementClient ResourcesManagementClient { get; set; }
-        public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
+        public ArmClient ResourcesManagementClient { get; set; }
+        public ResourceGroupContainer ResourceGroupsOperations { get; set; }
         public CosmosDBManagementClient CosmosDBManagementClient { get; set; }
 
         protected CosmosDBManagementClientBase(bool isAsync)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             SubscriptionId = TestEnvironment.SubscriptionId;
             ResourcesManagementClient = GetResourceManagementClient();
-            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
+            ResourceGroupsOperations = ResourcesManagementClient.DefaultSubscription.GetResourceGroups();
             CosmosDBManagementClient = GetCosmosDBManagementClient();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         protected void initNewRecord()
         {
-            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
+            ResourceGroupsOperations = ResourcesManagementClient.DefaultSubscription.GetResourceGroups();
             CosmosDBManagementClient = GetCosmosDBManagementClient();
         }
     }

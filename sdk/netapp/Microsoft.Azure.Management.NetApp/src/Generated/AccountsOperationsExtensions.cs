@@ -22,6 +22,40 @@ namespace Microsoft.Azure.Management.NetApp
     public static partial class AccountsOperationsExtensions
     {
             /// <summary>
+            /// Describe all NetApp Accounts in a subscription
+            /// </summary>
+            /// <remarks>
+            /// List and describe all NetApp accounts in the subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<NetAppAccount> ListBySubscription(this IAccountsOperations operations)
+            {
+                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Describe all NetApp Accounts in a subscription
+            /// </summary>
+            /// <remarks>
+            /// List and describe all NetApp accounts in the subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetAppAccount>> ListBySubscriptionAsync(this IAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Describe all NetApp Accounts in a resource group
             /// </summary>
             /// <remarks>
@@ -396,6 +430,46 @@ namespace Microsoft.Azure.Management.NetApp
             public static async Task<NetAppAccount> BeginUpdateAsync(this IAccountsOperations operations, NetAppAccountPatch body, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(body, resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Describe all NetApp Accounts in a subscription
+            /// </summary>
+            /// <remarks>
+            /// List and describe all NetApp accounts in the subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<NetAppAccount> ListBySubscriptionNext(this IAccountsOperations operations, string nextPageLink)
+            {
+                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Describe all NetApp Accounts in a subscription
+            /// </summary>
+            /// <remarks>
+            /// List and describe all NetApp accounts in the subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetAppAccount>> ListBySubscriptionNextAsync(this IAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

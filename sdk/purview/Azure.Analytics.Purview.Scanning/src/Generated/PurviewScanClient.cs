@@ -75,10 +75,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetFilterRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
             try
@@ -114,10 +111,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetFilterRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
             try
@@ -224,10 +218,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateFilterRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
             try
@@ -315,10 +306,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateFilterRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
             try
@@ -639,10 +627,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
             try
@@ -940,10 +925,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
             try
@@ -1002,10 +984,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
             try
@@ -1041,10 +1020,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
             try
@@ -1099,10 +1075,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
             try
@@ -1140,10 +1113,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
             try
@@ -1202,10 +1172,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRunScanRequest(runId, scanLevel, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
             try
@@ -1243,10 +1210,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateRunScanRequest(runId, scanLevel, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
             try
@@ -1310,10 +1274,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCancelScanRequest(runId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
             try
@@ -1350,10 +1311,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCancelScanRequest(runId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
             try
@@ -1412,10 +1370,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetRunsRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetRuns");
             scope.Start();
             try
@@ -1451,10 +1406,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetRunsRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetRuns");
             scope.Start();
             try
@@ -1510,10 +1462,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetTriggerRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
             try
@@ -1549,10 +1498,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetTriggerRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
             try
@@ -1806,10 +1752,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
             try
@@ -2044,10 +1987,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
             try
@@ -2107,10 +2047,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteTriggerRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
             try
@@ -2148,10 +2085,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteTriggerRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
             try

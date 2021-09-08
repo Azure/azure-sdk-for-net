@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Net;
 using DataMigration.Tests.Helpers;
 using Microsoft.Azure.Management.DataMigration;
@@ -14,7 +15,7 @@ namespace DataMigration.Tests.ScenarioTests
     public class CRUDFileTests : CRUDDMSTestsBase
     {
         [Fact]
-        public void CreateResourceSucceeds()
+        public void CreateResourceApiBlock()
         {
             var dmsClientHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
             var resourcesHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
@@ -25,14 +26,14 @@ namespace DataMigration.Tests.ScenarioTests
                 var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
                 var project = CreateDMSSqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
-                var task = CreateDMSFile(context, dmsClient, resourceGroup, service, project.Name, DmsFileName);
+                Assert.Throws<ApiErrorException>(() => CreateDMSFile(context, dmsClient, resourceGroup, service, project.Name, DmsFileName));
             }
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
         }
 
         [Fact]
-        public void GetResourceSucceeds()
+        public void GetResourceApiBlock()
         {
             var dmsClientHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
             var resourcesHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
@@ -43,15 +44,15 @@ namespace DataMigration.Tests.ScenarioTests
                 var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
                 var project = CreateDMSSqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
-                var file = CreateDMSFile(context, dmsClient, resourceGroup, service, project.Name, DmsFileName);
-                var getResult = dmsClient.Files.Get(resourceGroup.Name, service.Name, project.Name, file.Name);
+                Assert.Throws<ApiErrorException>(() => CreateDMSFile(context, dmsClient, resourceGroup, service, project.Name, DmsFileName));
+                Assert.Throws<ApiErrorException>(() => dmsClient.Files.Get(resourceGroup.Name, service.Name, project.Name, DmsFileName));
             }
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
         }
 
         [Fact]
-        public void DeleteResourceSucceeds()
+        public void DeleteResourceApiBlock()
         {
             var dmsClientHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
             var resourcesHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
@@ -62,11 +63,11 @@ namespace DataMigration.Tests.ScenarioTests
                 var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
                 var project = CreateDMSSqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
-                var file = CreateDMSFile(context, dmsClient, resourceGroup, service, project.Name, DmsFileName);
-                var getResult = dmsClient.Files.Get(resourceGroup.Name, service.Name, project.Name, file.Name);
+                Assert.Throws<ApiErrorException>(() => CreateDMSFile(context, dmsClient, resourceGroup, service, project.Name, DmsFileName));
+                Assert.Throws<ApiErrorException>(() => dmsClient.Files.Get(resourceGroup.Name, service.Name, project.Name, DmsFileName));
                 Utilities.WaitIfNotInPlaybackMode(1);
-                dmsClient.Files.Delete(resourceGroup.Name, service.Name, project.Name, file.Name);
-                var x = Assert.Throws<ApiErrorException>(() => dmsClient.Files.Get(resourceGroup.Name, service.Name, project.Name, file.Name));
+                Assert.Throws<ApiErrorException>(() => dmsClient.Files.Delete(resourceGroup.Name, service.Name, project.Name, DmsFileName));
+                var x = Assert.Throws<ApiErrorException>(() => dmsClient.Files.Get(resourceGroup.Name, service.Name, project.Name, DmsFileName));
                 Assert.Equal(HttpStatusCode.NotFound, x.Response.StatusCode);
             }
             // Wait for resource group deletion to complete.

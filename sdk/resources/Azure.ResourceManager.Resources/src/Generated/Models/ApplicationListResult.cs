@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>
         internal ApplicationListResult()
         {
-            Value = new ChangeTrackingList<Application>();
+            Value = new ChangeTrackingList<ApplicationData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>
         /// <param name="value"> The array of managed applications. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ApplicationListResult(IReadOnlyList<Application> value, string nextLink)
+        internal ApplicationListResult(IReadOnlyList<ApplicationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The array of managed applications. </summary>
-        public IReadOnlyList<Application> Value { get; }
+        public IReadOnlyList<ApplicationData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Synapse.Tests
         /// </summary>
         public CommonTestFixture()
         {
-            Location = "eastus2euap";
+            Location = "eastus2";
             ResourceGroupName = TestUtilities.GenerateName("synapsesdkrp");
             StorageAccountName = TestUtilities.GenerateName("synapsesdkstorage");
             SshUsername = TestUtilities.GenerateName("sshuser");

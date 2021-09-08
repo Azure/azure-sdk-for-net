@@ -73,10 +73,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
             scope.Start();
             try
@@ -124,10 +121,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
             scope.Start();
             try
@@ -213,10 +207,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
@@ -253,10 +244,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
@@ -435,10 +423,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
             try
@@ -599,10 +584,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
             try
@@ -660,10 +642,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
@@ -700,10 +679,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
@@ -882,10 +858,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try
@@ -1046,10 +1019,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try

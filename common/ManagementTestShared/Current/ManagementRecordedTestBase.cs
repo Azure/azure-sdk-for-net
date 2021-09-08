@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ResourceGroupCleanupPolicy CleanupPolicy { get; set; }
 
+        private ArmClient _cleanupClient;
+
         protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
         {
         }
@@ -35,13 +37,13 @@ namespace Azure.ResourceManager.TestFramework
             return operation.WaitForCompletionResponseAsync();
         }
 
-        protected ResourcesManagementClient GetResourceManagementClient()
+        protected ArmClient GetResourceManagementClient()
         {
-            var options = InstrumentClientOptions(new ResourcesManagementClientOptions());
+            var options = InstrumentClientOptions(new ArmClientOptions());
             CleanupPolicy = new ResourceGroupCleanupPolicy();
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 
-            return CreateClient<ResourcesManagementClient>(
+            return CreateClient<ArmClient>(
                 TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
                 options);
@@ -51,21 +53,22 @@ namespace Azure.ResourceManager.TestFramework
         {
             if (CleanupPolicy != null && Mode != RecordedTestMode.Playback)
             {
-                var resourceGroupsClient = new ResourcesManagementClient(
+                _cleanupClient ??= new ArmClient(
                     TestEnvironment.SubscriptionId,
                     TestEnvironment.Credential,
-                    new ResourcesManagementClientOptions()).ResourceGroups;
+                    new ArmClientOptions());
+                var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
                 foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
                 {
-                    await resourceGroupsClient.StartDeleteAsync(resourceGroup);
+                    await sub.Value?.GetResourceGroups().Get(resourceGroup).Value.DeleteAsync();
                 }
             }
         }
 
-        protected async Task<string> GetFirstUsableLocationAsync(ProvidersOperations providersClient, string resourceProviderNamespace, string resourceType)
+        protected async Task<string> GetFirstUsableLocationAsync(ProviderContainer providersClient, string resourceProviderNamespace, string resourceType)
         {
             var provider = (await providersClient.GetAsync(resourceProviderNamespace)).Value;
-            return provider.ResourceTypes.Where(
+            return provider.Data.ResourceTypes.Where(
                 (resType) =>
                 {
                     if (resType.ResourceType == resourceType)

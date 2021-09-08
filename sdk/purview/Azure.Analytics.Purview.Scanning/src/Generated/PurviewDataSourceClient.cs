@@ -362,10 +362,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.CreateOrUpdate");
             scope.Start();
             try
@@ -696,10 +693,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.CreateOrUpdate");
             scope.Start();
             try
@@ -756,10 +750,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetProperties");
             scope.Start();
             try
@@ -795,10 +786,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetProperties");
             scope.Start();
             try
@@ -851,10 +839,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.Delete");
             scope.Start();
             try
@@ -892,10 +877,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.Delete");
             scope.Start();
             try
@@ -950,10 +932,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetChildrenRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetChildren");
             scope.Start();
             try
@@ -989,10 +968,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetChildrenRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetChildren");
             scope.Start();
             try
@@ -1046,10 +1022,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetScansRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetScans");
             scope.Start();
             try
@@ -1085,10 +1058,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetScansRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetScans");
             scope.Start();
             try

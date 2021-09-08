@@ -82,10 +82,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListByCropIdRequest(cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.ListByCropId");
             scope.Start();
             try
@@ -141,10 +138,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListByCropIdRequest(cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.ListByCropId");
             scope.Start();
             try
@@ -289,10 +283,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListRequest(cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.List");
             scope.Start();
             try
@@ -347,10 +338,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateListRequest(cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.List");
             scope.Start();
             try
@@ -475,10 +463,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetRequest(cropId, cropVarietyId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.Get");
             scope.Start();
             try
@@ -516,10 +501,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetRequest(cropId, cropVarietyId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.Get");
             scope.Start();
             try
@@ -659,10 +641,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(cropId, cropVarietyId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.CreateOrUpdate");
             scope.Start();
             try
@@ -782,10 +761,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateRequest(cropId, cropVarietyId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.CreateOrUpdate");
             scope.Start();
             try
@@ -848,10 +824,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(cropId, cropVarietyId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.Delete");
             scope.Start();
             try
@@ -889,10 +862,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteRequest(cropId, cropVarietyId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.Delete");
             scope.Start();
             try

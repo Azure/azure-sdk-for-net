@@ -7,16 +7,18 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using Azure.ResourceManager.Storage.Models;
+using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class PrivateEndpointTests : NetworkServiceClientTestBase
     {
         private VirtualNetwork virtualNetwork;
         private GenericResource privateDnsZone;
         private Resources.ResourceGroup resourceGroup;
-        private GenericResource storageAccount;
+        private StorageAccount storageAccount;
 
         public PrivateEndpointTests(bool isAsync) : base(isAsync)
         {
@@ -56,21 +58,23 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             return await resourceGroup.GetVirtualNetworks().CreateOrUpdate(name, vnet).WaitForCompletionAsync();
         }
 
-        private async Task<GenericResource> createStorageAccount()
+        private async Task<StorageAccount> createStorageAccount()
         {
             var name = Recording.GenerateAssetName("testsa");
-            var storageAccountId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{name}";
+            var parameters = new StorageAccountCreateParameters(new Storage.Models.Sku(SkuName.StandardLRS),Kind.Storage,TestEnvironment.Location);
+            return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(name,parameters)).Value;
+            //var storageAccountId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{name}";
 
         //var storageParameters = new Storage.Models.StorageAccountCreateParameters(new Storage.Models.Sku(Storage.Models.SkuName.StandardLRS), Storage.Models.Kind.Storage, TestEnvironment.Location);
         //var accountOperation = await StorageManagementClient.StorageAccounts.CreateAsync(resourceGroup.Data.Name, name, storageParameters);
         //Response<Storage.Models.StorageAccount> account = await accountOperation.WaitForCompletionAsync();
         //return account.Value;
 
-            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(storageAccountId, new GenericResourceData(TestEnvironment.Location)
-            {
-                //Sku = new Resources.Models.Sku(),
-                Kind = "storage",
-            })).Value;
+            //return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(storageAccountId, new GenericResourceData(TestEnvironment.Location)
+            //{
+            //    //Sku = new Resources.Models.Sku(),
+            //    Kind = "storage",
+            //})).Value;
         }
 
         private async Task CleanUpVirtualNetwork()
