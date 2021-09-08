@@ -49,6 +49,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -80,16 +85,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <summary>
         /// Lists all of the available Microsoft.Features REST API operations.
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<Operation>>> ListOperationsWithHttpMessagesAsync(string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Operation>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Lists all of the available Microsoft.Features REST API operations.

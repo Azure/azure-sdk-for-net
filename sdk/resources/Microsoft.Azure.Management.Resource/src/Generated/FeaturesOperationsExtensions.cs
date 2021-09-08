@@ -28,12 +28,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
-            public static IPage<FeatureResult> ListAll(this IFeaturesOperations operations, string apiVersion)
+            public static IPage<FeatureResult> ListAll(this IFeaturesOperations operations)
             {
-                return operations.ListAllAsync(apiVersion).GetAwaiter().GetResult();
+                return operations.ListAllAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -43,15 +40,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FeatureResult>> ListAllAsync(this IFeaturesOperations operations, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<FeatureResult>> ListAllAsync(this IFeaturesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -67,12 +61,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider for getting features.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
-            public static IPage<FeatureResult> List(this IFeaturesOperations operations, string resourceProviderNamespace, string apiVersion)
+            public static IPage<FeatureResult> List(this IFeaturesOperations operations, string resourceProviderNamespace)
             {
-                return operations.ListAsync(resourceProviderNamespace, apiVersion).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceProviderNamespace).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -85,15 +76,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider for getting features.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FeatureResult>> ListAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<FeatureResult>> ListAsync(this IFeaturesOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceProviderNamespace, apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -111,12 +99,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='featureName'>
             /// The name of the feature to get.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
-            public static FeatureResult Get(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, string apiVersion)
+            public static FeatureResult Get(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
             {
-                return operations.GetAsync(resourceProviderNamespace, featureName, apiVersion).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceProviderNamespace, featureName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -131,15 +116,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='featureName'>
             /// The name of the feature to get.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FeatureResult> GetAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FeatureResult> GetAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, featureName, apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -157,12 +139,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='featureName'>
             /// The name of the feature to register.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
-            public static FeatureResult Register(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, string apiVersion)
+            public static FeatureResult Register(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
             {
-                return operations.RegisterAsync(resourceProviderNamespace, featureName, apiVersion).GetAwaiter().GetResult();
+                return operations.RegisterAsync(resourceProviderNamespace, featureName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -177,15 +156,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='featureName'>
             /// The name of the feature to register.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FeatureResult> RegisterAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FeatureResult> RegisterAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, featureName, apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -203,12 +179,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='featureName'>
             /// The name of the feature to unregister.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
-            public static FeatureResult Unregister(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, string apiVersion)
+            public static FeatureResult Unregister(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
             {
-                return operations.UnregisterAsync(resourceProviderNamespace, featureName, apiVersion).GetAwaiter().GetResult();
+                return operations.UnregisterAsync(resourceProviderNamespace, featureName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,15 +196,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='featureName'>
             /// The name of the feature to unregister.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FeatureResult> UnregisterAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FeatureResult> UnregisterAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UnregisterWithHttpMessagesAsync(resourceProviderNamespace, featureName, apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UnregisterWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

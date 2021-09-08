@@ -27,12 +27,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
-            public static IPage<Operation> ListOperations(this IFeatureClient operations, string apiVersion)
+            public static IPage<Operation> ListOperations(this IFeatureClient operations)
             {
-                return operations.ListOperationsAsync(apiVersion).GetAwaiter().GetResult();
+                return operations.ListOperationsAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -41,15 +38,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListOperationsAsync(this IFeatureClient operations, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Operation>> ListOperationsAsync(this IFeatureClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListOperationsWithHttpMessagesAsync(apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListOperationsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

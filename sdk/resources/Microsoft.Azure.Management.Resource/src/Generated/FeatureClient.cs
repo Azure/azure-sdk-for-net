@@ -51,6 +51,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -322,6 +327,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             Features = new FeaturesOperations(this);
             SubscriptionFeatureRegistrations = new SubscriptionFeatureRegistrationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2021-07-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -356,9 +362,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <summary>
         /// Lists all of the available Microsoft.Features REST API operations.
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -380,11 +383,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Operation>>> ListOperationsWithHttpMessagesAsync(string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Operation>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (apiVersion == null)
+            if (ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -393,7 +396,6 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListOperations", tracingParameters);
             }
@@ -401,9 +403,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Features/operations").ToString();
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -53,9 +53,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <summary>
         /// Returns a feature registration
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='providerNamespace'>
         /// The provider namespace.
         /// </param>
@@ -83,11 +80,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionFeatureRegistration>> GetWithHttpMessagesAsync(string apiVersion, string providerNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SubscriptionFeatureRegistration>> GetWithHttpMessagesAsync(string providerNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (apiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (Client.SubscriptionId == null)
             {
@@ -108,7 +105,6 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("providerNamespace", providerNamespace);
                 tracingParameters.Add("featureName", featureName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -121,9 +117,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{providerNamespace}", System.Uri.EscapeDataString(providerNamespace));
             _url = _url.Replace("{featureName}", System.Uri.EscapeDataString(featureName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -248,9 +244,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <summary>
         /// Create or update a feature registration.
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='providerNamespace'>
         /// The provider namespace.
         /// </param>
@@ -281,11 +274,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionFeatureRegistration>> CreateOrUpdateWithHttpMessagesAsync(string apiVersion, string providerNamespace, string featureName, SubscriptionFeatureRegistration subscriptionFeatureRegistrationType = default(SubscriptionFeatureRegistration), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SubscriptionFeatureRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string featureName, SubscriptionFeatureRegistration subscriptionFeatureRegistrationType = default(SubscriptionFeatureRegistration), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (apiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (Client.SubscriptionId == null)
             {
@@ -310,7 +303,6 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("providerNamespace", providerNamespace);
                 tracingParameters.Add("featureName", featureName);
                 tracingParameters.Add("subscriptionFeatureRegistrationType", subscriptionFeatureRegistrationType);
@@ -324,9 +316,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{providerNamespace}", System.Uri.EscapeDataString(providerNamespace));
             _url = _url.Replace("{featureName}", System.Uri.EscapeDataString(featureName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -457,9 +449,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <summary>
         /// Deletes a feature registration
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='providerNamespace'>
         /// The provider namespace.
         /// </param>
@@ -484,11 +473,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string apiVersion, string providerNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string providerNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (apiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (Client.SubscriptionId == null)
             {
@@ -509,7 +498,6 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("providerNamespace", providerNamespace);
                 tracingParameters.Add("featureName", featureName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -522,9 +510,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{providerNamespace}", System.Uri.EscapeDataString(providerNamespace));
             _url = _url.Replace("{featureName}", System.Uri.EscapeDataString(featureName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -632,9 +620,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Returns subscription feature registrations for given subscription and
         /// provider namespace.
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='providerNamespace'>
         /// The provider namespace.
         /// </param>
@@ -659,11 +644,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SubscriptionFeatureRegistration>>> ListBySubscriptionWithHttpMessagesAsync(string apiVersion, string providerNamespace, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SubscriptionFeatureRegistration>>> ListBySubscriptionWithHttpMessagesAsync(string providerNamespace, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (apiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (Client.SubscriptionId == null)
             {
@@ -680,7 +665,6 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("providerNamespace", providerNamespace);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListBySubscription", tracingParameters);
@@ -691,9 +675,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{providerNamespace}", System.Uri.EscapeDataString(providerNamespace));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -818,9 +802,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <summary>
         /// Returns subscription feature registrations for given subscription.
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -842,11 +823,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SubscriptionFeatureRegistration>>> ListAllBySubscriptionWithHttpMessagesAsync(string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SubscriptionFeatureRegistration>>> ListAllBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (apiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (Client.SubscriptionId == null)
             {
@@ -859,7 +840,6 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListAllBySubscription", tracingParameters);
             }
@@ -868,9 +848,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Features/subscriptionFeatureRegistrations").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -27,9 +27,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets all the preview features that are available through AFEC for
         /// the subscription.
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -45,7 +42,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<FeatureResult>>> ListAllWithHttpMessagesAsync(string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<FeatureResult>>> ListAllWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all the preview features in a provider namespace that are
         /// available through AFEC for the subscription.
@@ -53,9 +50,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='resourceProviderNamespace'>
         /// The namespace of the resource provider for getting features.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -71,7 +65,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<FeatureResult>>> ListWithHttpMessagesAsync(string resourceProviderNamespace, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<FeatureResult>>> ListWithHttpMessagesAsync(string resourceProviderNamespace, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the preview feature with the specified name.
         /// </summary>
@@ -81,9 +75,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='featureName'>
         /// The name of the feature to get.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -99,7 +90,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FeatureResult>> GetWithHttpMessagesAsync(string resourceProviderNamespace, string featureName, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FeatureResult>> GetWithHttpMessagesAsync(string resourceProviderNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Registers the preview feature for the subscription.
         /// </summary>
@@ -109,9 +100,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='featureName'>
         /// The name of the feature to register.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -127,7 +115,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FeatureResult>> RegisterWithHttpMessagesAsync(string resourceProviderNamespace, string featureName, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FeatureResult>> RegisterWithHttpMessagesAsync(string resourceProviderNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Unregisters the preview feature for the subscription.
         /// </summary>
@@ -137,9 +125,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='featureName'>
         /// The name of the feature to unregister.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -155,7 +140,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FeatureResult>> UnregisterWithHttpMessagesAsync(string resourceProviderNamespace, string featureName, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FeatureResult>> UnregisterWithHttpMessagesAsync(string resourceProviderNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all the preview features that are available through AFEC for
         /// the subscription.
