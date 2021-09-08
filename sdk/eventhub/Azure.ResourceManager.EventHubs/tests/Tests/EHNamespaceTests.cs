@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         [RecordedTest]
         public async Task GetAllNamespaces()
         {
-            //create namespace
+            //create two namespaces
             string namespaceName1 = Recording.GenerateAssetName("namespace1");
             string namespaceName2 = Recording.GenerateAssetName("namespace2");
             _resourceGroup = await CreateResourceGroupAsync();
@@ -91,6 +91,69 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.AreEqual(count, 2);
             VerifyNamespaceProperties(namespace1, true);
             VerifyNamespaceProperties(namespace2, true);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task NamespaceCreateGetUpdateDeleteAuthorizationRules()
+        {
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
+            string namespaceName = Recording.GenerateAssetName("namespace");
+            EHNamespace eHNamespace=(await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
+            AuthorizationRuleNamespaceContainer ruleContainer=eHNamespace.GetAuthorizationRuleNamespaces();
+
+            //create authorization rule
+            string ruleName= Recording.GenerateAssetName("authorizationrule");
+            AuthorizationRuleData parameter = new AuthorizationRuleData()
+            {
+                Rights = { AccessRights.Listen, AccessRights.Send }
+            };
+            AuthorizationRuleNamespace authorizationRule=(await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            Assert.NotNull(authorizationRule);
+            Assert.AreEqual(authorizationRule.Data.Rights.Count , parameter.Rights.Count);
+
+            //get authorization rule
+            authorizationRule = await ruleContainer.GetAsync(ruleName);
+            Assert.AreEqual(authorizationRule.Id.Name, ruleName);
+            Assert.NotNull(authorizationRule);
+            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
+
+            //get all authorization rules
+            List<AuthorizationRuleNamespace> rules=await ruleContainer.GetAllAsync().ToEnumerableAsync();
+
+            //there should be two authorization rules
+            Assert.True(rules.Count > 1);
+            bool isContainAuthorizationRuleName = false;
+            bool isContainDefaultRuleName = false;
+            foreach (AuthorizationRuleNamespace rule in rules)
+            {
+                if (rule.Id.Name == ruleName)
+                {
+                    isContainAuthorizationRuleName = true;
+                }
+                if (rule.Id.Name == DefaultNamespaceAuthorizationRule)
+                {
+                    isContainDefaultRuleName = true;
+                }
+            }
+            Assert.True(isContainDefaultRuleName);
+            Assert.True(isContainAuthorizationRuleName);
+
+            //update authorization rule
+            parameter.Rights.Add(AccessRights.Manage);
+            authorizationRule= (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            Assert.NotNull(authorizationRule);
+            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
+
+            //delete authorization rule
+            await authorizationRule.DeleteAsync();
+
+            //validate if deleted
+            Assert.IsFalse(await namespaceContainer.CheckIfExistsAsync(ruleName));
+            rules = await ruleContainer.GetAllAsync().ToEnumerableAsync();
+            Assert.True(rules.Count == 1);
+            Assert.AreEqual(rules[0].Id.Name, DefaultNamespaceAuthorizationRule);
         }
     }
 }

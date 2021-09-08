@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
     public class EventHubTestBase:ManagementRecordedTestBase<EventHubsManagementTestEnvironment>
     {
         public static Location DefaultLocation => Location.EastUS2;
+        internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription => Client.DefaultSubscription;
         protected ArmClient Client { get; private set; }
         protected EventHubTestBase(bool isAsync) : base(isAsync)
