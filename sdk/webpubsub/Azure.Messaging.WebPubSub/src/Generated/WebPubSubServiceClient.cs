@@ -30,6 +30,14 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   token: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="userId"> User Id. </param>
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
@@ -69,6 +77,14 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   token: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="userId"> User Id. </param>
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
