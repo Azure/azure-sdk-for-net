@@ -28,6 +28,5 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             string accountName = Recording.GenerateAssetName("storage");
             _resourceGroup = await CreateResourceGroupAsync();
         }
-
     }
 }
