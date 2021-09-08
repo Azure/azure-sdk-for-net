@@ -1165,11 +1165,14 @@ namespace Azure.Storage.Blobs.Specialized
         [ForwardsClientCalls]
         public virtual Response<BlobDownloadStreamingResult> DownloadStreaming(
             BlobBaseDownloadOptions options,
-            CancellationToken cancellationToken = default) =>
-            DownloadStreamingInternal(
+            CancellationToken cancellationToken = default)
+        {
+            options.OperationName = $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}";
+            return DownloadStreamingInternal(
                 options,
                 async: false,
                 cancellationToken).EnsureCompleted();
+        }
 
         /// <summary>
         /// The <see cref="DownloadStreamingAsync(BlobBaseDownloadOptions, CancellationToken)"/>
@@ -1207,11 +1210,14 @@ namespace Azure.Storage.Blobs.Specialized
         [ForwardsClientCalls]
         public virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingAsync(
             BlobBaseDownloadOptions options,
-            CancellationToken cancellationToken = default) =>
-            await DownloadStreamingInternal(
+            CancellationToken cancellationToken = default)
+        {
+            options.OperationName = $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}";
+            return await DownloadStreamingInternal(
                 options,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
+        }
 
         private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             BlobBaseDownloadOptions options,
