@@ -32,7 +32,7 @@ namespace Storage.Tests
     {
         // create container
         // delete container
-        //[Fact]
+        [Fact]
         public void BlobContainersCreateDeleteTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -103,7 +103,7 @@ namespace Storage.Tests
 
         // update container
         // get container properties
-        //[Fact]
+        [Fact]
         public void BlobContainersUpdateTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -162,7 +162,7 @@ namespace Storage.Tests
         }
 
         // create/update container with EncryptionScope
-        //[Fact]
+        [Fact]
         public void BlobContainersEncryptionScopeTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -213,7 +213,7 @@ namespace Storage.Tests
         }
 
         // list containers
-        //[Fact]
+        [Fact]
         public void BlobContainersListTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -295,7 +295,7 @@ namespace Storage.Tests
             }
         }
 
-        //[Fact]
+        [Fact]
         public void BlobContainersGetTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -379,7 +379,7 @@ namespace Storage.Tests
         }
 
         // set/clear legal hold.
-        //[Fact]
+        [Fact]
         public void BlobContainersSetLegalHoldTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -425,7 +425,7 @@ namespace Storage.Tests
         }
 
         //// Lease Blob Containers
-        ////[Fact]
+        //[Fact]
         //public void BlobContainersLeaseTest()
         //{
         //    var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -475,7 +475,7 @@ namespace Storage.Tests
         //}
 
         // create and delete immutability policies.
-        //[Fact]
+        [Fact]
         public void BlobContainersCreateDeleteImmutabilityPolicyTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -527,7 +527,7 @@ namespace Storage.Tests
         }
 
         // update and get immutability policies.
-        //[Fact]
+        [Fact]
         public void BlobContainersUpdateImmutabilityPolicyTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -586,7 +586,7 @@ namespace Storage.Tests
         }
 
         // create/update immutability policies with AllowProtectedAppendWrites.
-        //[Fact]
+        [Fact]
         public void ImmutabilityPolicyTest_AllowProtectedAppendWrites()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -649,7 +649,7 @@ namespace Storage.Tests
 
 
         // lock immutability policies.
-        //[Fact]
+        [Fact]
         public void BlobContainersLockImmutabilityPolicyTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -703,7 +703,7 @@ namespace Storage.Tests
         }
 
         // extend immutability policies.
-        //[Fact]
+        [Fact]
         public void BlobContainersExtendImmutabilityPolicyTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -767,7 +767,7 @@ namespace Storage.Tests
         }
 
         // Get/Set Blob Service Properties
-        //[Fact]
+        [Fact]
         public void BlobServiceTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -827,7 +827,7 @@ namespace Storage.Tests
         }
 
         // Get/Set Cors rules in Blob Service Properties
-        //[Fact]
+        [Fact]
         public void BlobServiceCorsTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -931,7 +931,7 @@ namespace Storage.Tests
         }
 
         // List Blob Service 
-        //[Fact]
+        [Fact]
         public void ListBlobServiceTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -968,7 +968,7 @@ namespace Storage.Tests
         }
 
         // Blob Container SoftDelete test
-        //[Fact]
+        [Fact]
         public void BlobContainerSoftDelete()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1054,7 +1054,7 @@ namespace Storage.Tests
         }
 
         // Point In Time Restore test
-        //[Fact]
+        [Fact]
         public void PITRTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1141,7 +1141,7 @@ namespace Storage.Tests
         }
 
         // Object replication test
-        //[Fact]
+        [Fact]
         public void ORSTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1354,7 +1354,7 @@ namespace Storage.Tests
 
 
         // version level worm
-        //[Fact]
+        [Fact]
         public void BlobContainersVLW()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
