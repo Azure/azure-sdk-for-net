@@ -255,8 +255,8 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 > CAUTION: Requests and responses in the Azure Identity library contain sensitive information. Precaution must be taken to protect logs when customizing the output to avoid compromising account security.
 
 ### Thread safety
-We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)).
-This ensures that the recommendation of reusing client instances is always safe, even across threads.
+We guarantee that all credential instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)).
+This ensures that the recommendation of reusing credential instances is always safe, even across threads.
 
 ### Additional concepts
 [Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
