@@ -27,7 +27,7 @@ namespace Storage.Tests
 {
     public class StorageAccountTests
     {
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -63,7 +63,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateWithEncryptionTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -115,7 +115,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateWithAccessTierTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -158,7 +158,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountBeginCreateTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -178,7 +178,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountDeleteTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -205,7 +205,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountGetStandardTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -251,7 +251,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountGetBlobTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -296,7 +296,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountGetPremiumTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -321,7 +321,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountListByResourceGroupTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -349,7 +349,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountListWithEncryptionTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -405,7 +405,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountListBySubscriptionTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -441,7 +441,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountListKeysTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -477,7 +477,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountRegenerateKeyTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -511,7 +511,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountRevokeUserDelegationKeysTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -532,7 +532,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCheckNameTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -569,7 +569,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountUpdateWithCreateTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -689,7 +689,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountUpdateTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -798,7 +798,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountUpdateMultipleTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -836,7 +836,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountLocationUsageTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -859,7 +859,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountGetOperationsTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -873,7 +873,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountListAccountSASTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -916,7 +916,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountListAccountSASWithDefaultProperties()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -954,7 +954,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountListAccountSASWithMissingProperties()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -991,7 +991,7 @@ namespace Storage.Tests
                 throw new Exception("AccountSasToken shouldn't be returned without SharedAccessExpiryTime");
             }
         }
-        [Fact]
+        //[Fact]
         public void StorageAccountListServiceSASTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1031,7 +1031,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountListServiceSASWithDefaultProperties()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1068,7 +1068,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountListServiceSASWithMissingProperties()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1106,7 +1106,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountUpdateEncryptionTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1226,7 +1226,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountUpdateWithHttpsOnlyTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1272,7 +1272,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateWithHttpsOnlyTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1313,7 +1313,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCMKTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1425,7 +1425,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountOperationsTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1483,7 +1483,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountVnetACLTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1573,7 +1573,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageSKUListTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1598,7 +1598,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateWithStorageV2()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1626,7 +1626,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountUpdateKindStorageV2()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1661,7 +1661,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountSetGetDeleteManagementPolicy()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1835,7 +1835,7 @@ namespace Storage.Tests
         }
 
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateGetdfs()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1868,7 +1868,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateWithFileStorage()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1896,7 +1896,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateWithBlockBlobStorage()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1924,7 +1924,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateSetGetFileAadIntegration()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1968,7 +1968,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountFailOver()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2018,7 +2018,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountGetLastSyncTime()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2052,7 +2052,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountLargeFileSharesStateTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2085,7 +2085,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountPrivateEndpointTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2157,7 +2157,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountPrivateLinkTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2188,7 +2188,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateWithTableQueueEcryptionKeyTypeTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2241,7 +2241,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void EcryptionScopeTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2290,7 +2290,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateUpdateWithMinTlsVersionBlobPublicAccess()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2329,7 +2329,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageDeletedAccountsTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2349,7 +2349,7 @@ namespace Storage.Tests
         }
 
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateWithExtendedLocation()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2388,7 +2388,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountBlobInventory()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2553,7 +2553,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountCreateWithEnableNfsV3()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2583,7 +2583,7 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void StorageAccountUpdateWithAllowSharedKeyAccess()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -2632,7 +2632,7 @@ namespace Storage.Tests
         }
 
 
-        [Fact]
+        //[Fact]
         public void StorageAccountSASKeyPolicy()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

@@ -32,7 +32,7 @@ namespace Storage.Tests
     {
         // create share
         // delete share
-        [Fact]
+        //[Fact]
         public void FileSharesCreateDeleteListTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -106,7 +106,7 @@ namespace Storage.Tests
 
         // update share
         // get share properties
-        [Fact]
+        //[Fact]
         public void FileSharesUpdateGetTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -170,7 +170,7 @@ namespace Storage.Tests
 
         // create/list share Snapshot
         // delete share Snapshot
-        [Fact]
+        //[Fact]
         public void FileShareSnapshotCreateDeleteListTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -247,7 +247,7 @@ namespace Storage.Tests
         }
 
         // Get/Set File Service Properties
-        [Fact]
+        //[Fact]
         public void FileServiceTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -307,7 +307,7 @@ namespace Storage.Tests
         }
 
         // Get/Set File Service Cors Properties
-        [Fact]
+        //[Fact]
         public void FileServiceCorsTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -402,7 +402,7 @@ namespace Storage.Tests
         }
 
         // test share soft delete
-        [Fact]
+        //[Fact]
         public void FileSharesSoftDeleteTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -526,7 +526,7 @@ namespace Storage.Tests
 
 
         // File share lease - snapshot
-        [Fact]
+        //[Fact]
         public void FileShareLease()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -663,7 +663,7 @@ namespace Storage.Tests
 
 
         // File share AccessPolicy
-        [Fact]
+        //[Fact]
         public void FileShareAccessPolicy()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

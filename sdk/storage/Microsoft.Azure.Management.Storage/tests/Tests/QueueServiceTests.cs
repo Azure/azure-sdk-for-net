@@ -32,7 +32,7 @@ namespace Storage.Tests
     {
         // create Queue
         // delete Queue
-        [Fact]
+        //[Fact]
         public void QueueCreateDeleteUpdateListTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -110,7 +110,7 @@ namespace Storage.Tests
         }
 
         // Get/Set Queue Service Properties
-        [Fact]
+        //[Fact]
         public void QueueServiceCorsTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

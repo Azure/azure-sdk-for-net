@@ -21,7 +21,7 @@ namespace Storage.Tests
     {
         // create Table
         // delete Table
-        [Fact]
+        //[Fact]
         public void TableCreateDeleteUpdateListTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -88,7 +88,7 @@ namespace Storage.Tests
         }
 
         // Get/Set Table Service Properties
-        [Fact]
+        //[Fact]
         public void TableServiceCorsTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
