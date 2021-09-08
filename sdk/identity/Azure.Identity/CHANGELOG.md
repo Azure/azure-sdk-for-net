@@ -8,8 +8,6 @@
 - Implement `OnBehalfOfCredential` which enables authentication to Azure Active Directory using an On-Behalf-Of flow.
 - Added support to `ManagedIdentityCredential` for Azure hosts using federated token exchange for managed identity.
 
-### Breaking Changes
-
 ### Bugs Fixed
 - Refactored IMDS discovery to remove socket probing and caching of failures to improve `ManagedIdentityCredential` resiliency. [#23028](https://github.com/Azure/azure-sdk-for-net/issues/23028)
 - Updated `UsernamePasswordCredential` to use cached tokens when available [#23324](https://github.com/Azure/azure-sdk-for-net/issues/23324)
