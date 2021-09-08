@@ -1,17 +1,23 @@
 # Release History
 
-## 1.5.0-beta.4 (Unreleased)
+## 1.5.0-beta.4 (2021-09-08)
 
 ### Features Added
 
 - `DefaultAzureCredentialOptions` now has a `InteractiveBrowserClientId` property which allows passing a ClientId value to the InteractiveBrowserCredential` when constructing a `DefaultAzureCredential`.
 - Implement `OnBehalfOfCredential` which enables authentication to Azure Active Directory using an On-Behalf-Of flow.
+- Added support to `ManagedIdentityCredential` for Azure hosts using federated token exchange for managed identity.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Refactored IMDS discovery to remove socket probing and caching of failures to improve `ManagedIdentityCredential` resiliency. [#23028](https://github.com/Azure/azure-sdk-for-net/issues/23028)
+- Updated `UsernamePasswordCredential` to use cached tokens when available [#23324](https://github.com/Azure/azure-sdk-for-net/issues/23324)
 
 ### Other Changes
+
+- Updated credentials using `MsalConfidentialClient` to include MSAL log output in logs
+- Added logging to `ProcessRunner`
 
 ## 1.5.0-beta.3 (2021-08-10)
 
