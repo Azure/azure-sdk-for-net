@@ -51,7 +51,7 @@ namespace Azure.Messaging.WebPubSub
             HttpPipelinePolicy[] perCallPolicies;
             if (options.ReverseProxyEndpoint != null)
             {
-                perCallPolicies = new HttpPipelinePolicy[] { new ApimPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
+                perCallPolicies = new HttpPipelinePolicy[] { new ReverseProxyPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
             }
             else
             {
@@ -90,7 +90,7 @@ namespace Azure.Messaging.WebPubSub
             HttpPipelinePolicy[] perCallPolicies;
             if (options.ReverseProxyEndpoint != null)
             {
-                perCallPolicies = new HttpPipelinePolicy[] { new ApimPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
+                perCallPolicies = new HttpPipelinePolicy[] { new ReverseProxyPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
             }
             else
             {

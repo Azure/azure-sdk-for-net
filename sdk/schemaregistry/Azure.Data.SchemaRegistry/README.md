@@ -89,10 +89,10 @@ The following shows examples of what is available through the `SchemaRegistryCli
 Register a schema to be stored in the Azure Schema Registry. When registering a schema, the `SchemaProperties` will be cached in the `SchemaRegistryClient` instance, so that any subsequent calls to `GetSchemaId` and `GetSchema` corresponding to the same schema can use the cached value rather than going to the service.
 
 ```C# Snippet:SchemaRegistryRegisterSchema
-string schemaName = "employeeSample";
-SerializationType schemaType = SerializationType.Avro;
+string name = "employeeSample";
+SerializationType type = SerializationType.Avro;
 // Example schema's content
-string schemaContent = @"
+string content = @"
 {
    ""type"" : ""record"",
     ""namespace"" : ""TestSchema"",
@@ -103,7 +103,7 @@ string schemaContent = @"
     ]
 }";
 
-Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, schemaName, schemaType, schemaContent);
+Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, content, type);
 ```
 
 ### Retrieve a schema ID
@@ -111,10 +111,10 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, s
 Retrieve a previously registered schema ID from the Azure Schema Registry. When looking up the schema Id, the `SchemaProperties` will be cached in the `SchemaRegistryClient` instance, so that subsequent requests for this schema do not need to go the service.
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaId
-string schemaName = "employeeSample";
-SerializationType schemaType = SerializationType.Avro;
+string name = "employeeSample";
+SerializationType type = SerializationType.Avro;
 // Example schema's content
-string schemaContent = @"
+string content = @"
 {
    ""type"" : ""record"",
     ""namespace"" : ""TestSchema"",
@@ -125,7 +125,7 @@ string schemaContent = @"
     ]
 }";
 
-SchemaProperties schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
+SchemaProperties schemaProperties = client.GetSchemaProperties(groupName, name, content, type);
 string schemaId = schemaProperties.Id;
 ```
 
@@ -135,7 +135,7 @@ Retrieve a previously registered schema's content from the Azure Schema Registry
 
 ```C# Snippet:SchemaRegistryRetrieveSchema
 SchemaProperties schemaProperties = client.GetSchema(schemaId);
-string schemaContent = schemaProperties.Content;
+string content = schemaProperties.Content;
 ```
 
 ## Troubleshooting
