@@ -871,7 +871,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="mediaOperationId">The Id of the media operation to Cancel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> CancelParticipantMediaOperationAsync(string participantId, string mediaOperationId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelParticipantMediaOperationAsync(string participantId, string mediaOperationId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(CancelParticipantMediaOperationAsync)}");
             scope.Start();
@@ -896,7 +896,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="mediaOperationId">The Id of the media operation to Cancel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response CancelParticipantMediaOperation(string participantId, string mediaOperationId = null, CancellationToken cancellationToken = default)
+        public virtual Response CancelParticipantMediaOperation(string participantId, string mediaOperationId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(CancelParticipantMediaOperation)}");
             scope.Start();
@@ -919,7 +919,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="mediaOperationId">The Id of the media operation to Cancel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> CancelMediaOperationAsync(string mediaOperationId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelMediaOperationAsync(string mediaOperationId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(CancelMediaOperationAsync)}");
             scope.Start();
@@ -942,7 +942,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="mediaOperationId">The Id of the media operation to Cancel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response CancelMediaOperation(string mediaOperationId = null, CancellationToken cancellationToken = default)
+        public virtual Response CancelMediaOperation(string mediaOperationId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(CancelMediaOperation)}");
             scope.Start();
