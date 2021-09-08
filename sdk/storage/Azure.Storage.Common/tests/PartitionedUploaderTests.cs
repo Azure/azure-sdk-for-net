@@ -42,7 +42,7 @@ namespace Azure.Storage.Tests
         {
             var mock = new Mock<PartitionedUploader<object, object>.SingleUploadInternal>(MockBehavior.Strict);
             mock.Setup(del => del(It.IsNotNull<Stream>(), s_objectArgs, It.IsAny<IProgress<long>>(), s_hashingOptions, s_operationName, IsAsync, s_cancellation))
-                .Returns<Stream, object, IProgress<long>, string, bool, CancellationToken>((stream, obj, progress, operation, async, cancellation) =>
+                .Returns<Stream, object, IProgress<long>, UploadTransactionalHashingOptions, string, bool, CancellationToken>((stream, obj, progress, s_hashingOptions, operation, async, cancellation) =>
                 {
                     if (!stream.CanSeek)
                     {

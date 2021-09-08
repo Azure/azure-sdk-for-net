@@ -1833,42 +1833,24 @@ namespace Azure.Storage.Files.DataLake
             string leaseId = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Append)}");
-
-            try
-            {
-                scope.Start();
-
-                return AppendInternal(
-                    content,
-                    offset,
-                    new DataLakeFileAppendOptions()
+            => AppendInternal(
+                content,
+                offset,
+                new DataLakeFileAppendOptions()
+                {
+                    TransactionalHashingOptions = contentHash != default
+                    ? new UploadTransactionalHashingOptions()
                     {
-                        TransactionalHashingOptions = contentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = contentHash
-                        }
-                        : default,
-                        LeaseId = leaseId,
-                        ProgressHandler = progressHandler
-                    },
-                    async: false,
-                    cancellationToken)
-                    .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
+                        Algorithm = TransactionalHashAlgorithm.MD5,
+                        PrecalculatedHash = contentHash
+                    }
+                    : default,
+                    LeaseId = leaseId,
+                    ProgressHandler = progressHandler
+                },
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="AppendAsync(Stream, long, byte[], string, IProgress{long}, CancellationToken)"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
@@ -1922,42 +1904,24 @@ namespace Azure.Storage.Files.DataLake
             string leaseId = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Append)}");
-
-            try
-            {
-                scope.Start();
-
-                return await AppendInternal(
-                    content,
-                    offset,
-                    new DataLakeFileAppendOptions()
+            => await AppendInternal(
+                content,
+                offset,
+                new DataLakeFileAppendOptions()
+                {
+                    TransactionalHashingOptions = contentHash != default
+                    ? new UploadTransactionalHashingOptions()
                     {
-                        TransactionalHashingOptions = contentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = contentHash
-                        }
-                        : default,
-                        LeaseId = leaseId,
-                        ProgressHandler = progressHandler
-                    },
-                    async: true,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
+                        Algorithm = TransactionalHashAlgorithm.MD5,
+                        PrecalculatedHash = contentHash
+                    }
+                    : default,
+                    LeaseId = leaseId,
+                    ProgressHandler = progressHandler
+                },
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="AppendInternal"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
