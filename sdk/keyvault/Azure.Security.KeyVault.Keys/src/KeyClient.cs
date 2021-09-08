@@ -1342,6 +1342,17 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="name">The name of the key used to perform cryptographic operations.</param>
         /// <param name="version">Optional version of the key used to perform cryptographic operations.</param>
         /// <returns>A <see cref="CryptographyClient"/> using the same options and pipeline as this <see cref="KeyClient"/>.</returns>
+        /// <remarks>
+        /// <para>
+        /// Given a key <paramref name="name"/> and optional <paramref name="version"/>, a new <see cref="CryptographyClient"/> will be created
+        /// using the same <see cref="VaultUri"/> and options passed to this <see cref="KeyClient"/>, including the <see cref="KeyClientOptions.ServiceVersion"/>,
+        /// <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, and other options.
+        /// </para>
+        /// <para>
+        /// If you want to create a <see cref="CryptographyClient"/> using a different Key Vault or Managed HSM endpoint, with different options, or even with a
+        /// <see cref="JsonWebKey"/> you already have acquired, you can create a <see cref="CryptographyClient"/> directly with any of those alternatives.
+        /// </para>
+        /// </remarks>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         public virtual CryptographyClient GetCryptographyClient(string name, string version = null)
@@ -1360,7 +1371,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="version">Optional version of the key.</param>
         /// <returns>A key <see cref="Uri"/>.</returns>
         internal static Uri CreateKeyUri(Uri vaultUri, string name, string version) => version is null
-            ? new Uri(vaultUri, KeysPath + name)
-            : new Uri(vaultUri, $"{KeysPath}{name}/{version}");
+            ? new(vaultUri, KeysPath + name)
+            : new(vaultUri, $"{KeysPath}{name}/{version}");
     }
 }
