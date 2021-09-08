@@ -26,7 +26,7 @@ namespace Azure.Monitor.Query
         private readonly HttpPipeline _pipeline;
 
         /// <summary>
-        /// //COPY
+        /// Gets a private endpoint connection.
         /// </summary>
         public Uri Endpoint { get; }
 
@@ -57,6 +57,7 @@ namespace Azure.Monitor.Query
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public LogsQueryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
         {
+            Endpoint = endpoint;
         }
 
         /// <summary>
@@ -77,6 +78,7 @@ namespace Azure.Monitor.Query
                 credential,
                 options.AuthenticationScope ?? "https://api.loganalytics.io//.default"));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
+            Endpoint = endpoint;
         }
 
         /// <summary>
