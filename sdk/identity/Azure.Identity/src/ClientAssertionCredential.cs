@@ -29,7 +29,7 @@ namespace Azure.Identity
             TenantId = tenantId;
             ClientId = clientId;
             AllowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
-            Client = options?.MsalClient ?? new MsalConfidentialClient(CredentialPipeline.GetInstance(options), tenantId, clientId, getAssertionCallback, null, null, options?.IsLoggingPIIEnabled ?? false);
+            Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, getAssertionCallback, null, null, options?.IsLoggingPIIEnabled ?? false);
         }
 
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
