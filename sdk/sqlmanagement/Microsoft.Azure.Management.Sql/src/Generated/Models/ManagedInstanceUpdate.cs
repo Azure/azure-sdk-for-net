@@ -38,7 +38,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="identity">Managed instance identity</param>
         /// <param name="provisioningState">Possible values include:
         /// 'Creating', 'Deleting', 'Updating', 'Unknown', 'Succeeded',
-        /// 'Failed'</param>
+        /// 'Failed', 'Accepted', 'Created', 'Deleted', 'Unrecognized',
+        /// 'Running', 'Canceled', 'NotSpecified', 'Registering',
+        /// 'TimedOut'</param>
         /// <param name="managedInstanceCreateMode">Specifies the mode of
         /// database creation.
         ///
@@ -100,15 +102,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// managed server belongs to.</param>
         /// <param name="maintenanceConfigurationId">Specifies maintenance
         /// configuration id to apply to this managed instance.</param>
-        /// <param name="privateEndpointConnections">List of private endpoint
-        /// connections on a managed instance.</param>
+        /// <param name="privateEndpointConnectionsProperty">List of private
+        /// endpoint connections on a managed instance.</param>
         /// <param name="minimalTlsVersion">Minimal TLS version. Allowed
         /// values: 'None', '1.0', '1.1', '1.2'</param>
-        /// <param name="storageAccountType">The storage account type used to
-        /// store backups for this instance. The options are LRS
-        /// (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS
-        /// (GeoRedundantStorage). Possible values include: 'GRS', 'LRS',
-        /// 'ZRS'</param>
+        /// <param name="currentBackupStorageRedundancy">The storage account
+        /// type used to store backups for this instance. The options are Local
+        /// (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo
+        /// (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage).
+        /// Possible values include: 'Geo', 'Local', 'Zone', 'GeoZone'</param>
+        /// <param name="requestedBackupStorageRedundancy">The storage account
+        /// type to be used to store backups for this instance. The options are
+        /// Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo
+        /// (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage).
+        /// Possible values include: 'Geo', 'Local', 'Zone', 'GeoZone'</param>
         /// <param name="zoneRedundant">Whether or not the multi-az is
         /// enabled.</param>
         /// <param name="primaryUserAssignedIdentityId">The resource id of a
@@ -118,7 +125,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="administrators">The Azure Active Directory
         /// administrator of the server.</param>
         /// <param name="tags">Resource tags.</param>
-        public ManagedInstanceUpdate(Sku sku = default(Sku), ResourceIdentity identity = default(ResourceIdentity), string provisioningState = default(string), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), IList<ManagedInstancePecProperty> privateEndpointConnections = default(IList<ManagedInstancePecProperty>), string minimalTlsVersion = default(string), string storageAccountType = default(string), bool? zoneRedundant = default(bool?), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ManagedInstanceExternalAdministrator administrators = default(ManagedInstanceExternalAdministrator), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedInstanceUpdate(Sku sku = default(Sku), ResourceIdentityWithUserAssignedIdentities identity = default(ResourceIdentityWithUserAssignedIdentities), string provisioningState = default(string), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), IList<ManagedInstancePecProperty> privateEndpointConnectionsProperty = default(IList<ManagedInstancePecProperty>), string minimalTlsVersion = default(string), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), bool? zoneRedundant = default(bool?), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ManagedInstanceExternalAdministrator administrators = default(ManagedInstanceExternalAdministrator), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             Identity = identity;
@@ -142,9 +149,10 @@ namespace Microsoft.Azure.Management.Sql.Models
             TimezoneId = timezoneId;
             InstancePoolId = instancePoolId;
             MaintenanceConfigurationId = maintenanceConfigurationId;
-            PrivateEndpointConnections = privateEndpointConnections;
+            PrivateEndpointConnectionsProperty = privateEndpointConnectionsProperty;
             MinimalTlsVersion = minimalTlsVersion;
-            StorageAccountType = storageAccountType;
+            CurrentBackupStorageRedundancy = currentBackupStorageRedundancy;
+            RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
             ZoneRedundant = zoneRedundant;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
             KeyId = keyId;
@@ -168,11 +176,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets or sets managed instance identity
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
-        public ResourceIdentity Identity { get; set; }
+        public ResourceIdentityWithUserAssignedIdentities Identity { get; set; }
 
         /// <summary>
         /// Gets possible values include: 'Creating', 'Deleting', 'Updating',
-        /// 'Unknown', 'Succeeded', 'Failed'
+        /// 'Unknown', 'Succeeded', 'Failed', 'Accepted', 'Created', 'Deleted',
+        /// 'Unrecognized', 'Running', 'Canceled', 'NotSpecified',
+        /// 'Registering', 'TimedOut'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -327,7 +337,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets list of private endpoint connections on a managed instance.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
-        public IList<ManagedInstancePecProperty> PrivateEndpointConnections { get; private set; }
+        public IList<ManagedInstancePecProperty> PrivateEndpointConnectionsProperty { get; private set; }
 
         /// <summary>
         /// Gets or sets minimal TLS version. Allowed values: 'None', '1.0',
@@ -337,13 +347,24 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string MinimalTlsVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage account type used to store backups for
-        /// this instance. The options are LRS (LocallyRedundantStorage), ZRS
-        /// (ZoneRedundantStorage) and GRS (GeoRedundantStorage). Possible
-        /// values include: 'GRS', 'LRS', 'ZRS'
+        /// Gets the storage account type used to store backups for this
+        /// instance. The options are Local (LocallyRedundantStorage), Zone
+        /// (ZoneRedundantStorage), Geo (GeoRedundantStorage) and
+        /// GeoZone(GeoZoneRedundantStorage). Possible values include: 'Geo',
+        /// 'Local', 'Zone', 'GeoZone'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.storageAccountType")]
-        public string StorageAccountType { get; set; }
+        [JsonProperty(PropertyName = "properties.currentBackupStorageRedundancy")]
+        public string CurrentBackupStorageRedundancy { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the storage account type to be used to store backups
+        /// for this instance. The options are Local (LocallyRedundantStorage),
+        /// Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and
+        /// GeoZone(GeoZoneRedundantStorage). Possible values include: 'Geo',
+        /// 'Local', 'Zone', 'GeoZone'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.requestedBackupStorageRedundancy")]
+        public string RequestedBackupStorageRedundancy { get; set; }
 
         /// <summary>
         /// Gets or sets whether or not the multi-az is enabled.
@@ -389,9 +410,9 @@ namespace Microsoft.Azure.Management.Sql.Models
             {
                 Sku.Validate();
             }
-            if (PrivateEndpointConnections != null)
+            if (PrivateEndpointConnectionsProperty != null)
             {
-                foreach (var element in PrivateEndpointConnections)
+                foreach (var element in PrivateEndpointConnectionsProperty)
                 {
                     if (element != null)
                     {
