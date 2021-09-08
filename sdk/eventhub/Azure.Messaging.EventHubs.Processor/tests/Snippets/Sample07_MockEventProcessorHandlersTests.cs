@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -31,137 +32,64 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public async Task ProcessEventHandlerCancellation()
+        public async Task ProcessEventHandlerCheckpoint()
         {
-            #region Snippet:EventHubs_Processor_Sample07_ProcessEventHandlerCancellation
+            #region Snippet:EventHubs_Processor_Sample07_ProcessEventHandlerCheckpoint
 
-            var cancelledToken = new CancellationToken(true);
+            // Application handler checkpoints after processing defined number of events.
 
-            var mockProcessEventArgs = new ProcessEventArgs(
-                It.IsAny<Consumer.PartitionContext>(),
-                It.IsAny<EventData>(),
-                _ => Task.CompletedTask,
-                cancelledToken);
+            const int EventsBeforeCheckpoint = 2;
+            var partitionEventCount = new ConcurrentDictionary<string, int>();
+            bool checkpointUpdated = false;
 
-            await SampleApplication.ProcessorEventHandler(mockProcessEventArgs);
-
-            #endregion
-        }
-
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProcessEventHandlerEnqueuedTimeMock()
-        {
-            #region Snippet:EventHubs_Processor_Sample07_ProcessEventHandlerEnqueuedTimeMock
-
-            var yesterdayEnqueuedTime = DateTime.Now.Date.AddDays(-1);
-
-            var mockEventBody = new BinaryData("This is a sample event body");
-
-            var mockEventData = EventHubsModelFactory.EventData(
-                mockEventBody,
-                It.IsAny<IDictionary<string, object>>(),
-                It.IsAny<IReadOnlyDictionary<string, object>>(),
-                It.IsAny<string>(),
-                It.IsAny<long>(),
-                It.IsAny<long>(),
-                yesterdayEnqueuedTime);
-
-            var mockProcessEventArgs = new ProcessEventArgs(
-                It.IsAny<Consumer.PartitionContext>(),
-                mockEventData,
-                _ => Task.CompletedTask);
-
-            await SampleApplication.ProcessorEventHandler(mockProcessEventArgs);
-
-            #endregion
-        }
-
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProcessEventHandlerCustomPropertiesMock()
-        {
-            #region Snippet:EventHubs_Processor_Sample07_ProcessEventHandlerCustomPropertiesMock
-
-            var customEventHubProperties = new Dictionary<string, object>()
+            async Task processEventHandler(ProcessEventArgs args)
             {
-                { "MyProperty1", "MyValue1" }
-            };
+                try
+                {
+                    checkpointUpdated = false;
 
-            var mockEventBody = new BinaryData("This is a sample event body");
-            var mockEventData = EventHubsModelFactory.EventData(
-                mockEventBody,
-                It.IsAny<IDictionary<string, object>>());
+                    await Application.ProcessEventAsync(args);
 
-            var mockProcessEventArgs = new ProcessEventArgs(
-                It.IsAny<Consumer.PartitionContext>(),
-                mockEventData,
-                _ => Task.CompletedTask);
+                    string partition = args.Partition.PartitionId;
 
-            await SampleApplication.ProcessorEventHandler(mockProcessEventArgs);
+                    int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
+                        key: partition,
+                        addValue: 1,
+                        updateValueFactory: (_, currentCount) => currentCount + 1);
 
-            #endregion
-        }
+                    if (eventsSinceLastCheckpoint >= EventsBeforeCheckpoint)
+                    {
+                        await args.UpdateCheckpointAsync();
+                        partitionEventCount[partition] = 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Application.HandleProcessingException(args, ex);
+                }
+            }
 
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProcessEventHandlerPartitionContextMock()
-        {
-            #region Snippet:EventHubs_Processor_Sample07_ProcessEventHandlerPartitionContextMock
+            // Initialize the args and simulate checkpoint update method.
 
-            var mockPartitionId = "<< Event Hub Partion Id >>";
-            var mockPartitionContext = EventHubsModelFactory.PartitionContext(mockPartitionId);
+            var partitionId = "0";
+            var eventBody = new BinaryData("This is a sample event body");
+            var eventData = EventHubsModelFactory.EventData(eventBody);
+            var partitionContext = EventHubsModelFactory.PartitionContext(partitionId);
+            var eventArgs = new ProcessEventArgs(partitionContext, eventData, _ => { checkpointUpdated = true; return Task.CompletedTask; });
 
-            var mockEventBody = new BinaryData("This is a sample event body");
-            var mockEventData = EventHubsModelFactory.EventData(mockEventBody);
+            for (int i = 1; i <= EventsBeforeCheckpoint; i++)
+            {
+                // Execute the handler and validate that the event handling has been checkpointed.
 
-            var mockProcessEventArgs = new ProcessEventArgs(
-                mockPartitionContext,
-                mockEventData,
-                _ => Task.CompletedTask);
+                await processEventHandler(eventArgs);
 
-            await SampleApplication.ProcessorEventHandler(mockProcessEventArgs);
+                if (i % EventsBeforeCheckpoint == 0)
+                    Assert.IsTrue(checkpointUpdated);
+                else
+                    Assert.IsFalse(checkpointUpdated);
 
-            #endregion
-        }
-
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProcessEventHandlerLastEnqueuedEventPropertiesMock()
-        {
-            #region Snippet:EventHubs_Processor_Sample07_ProcessEventHandlerLastEnqueuedEventPropertiesMock
-
-            var twoMinutesAgo = DateTime.UtcNow.AddMinutes(-2);
-            var mockLastEnqueuedEventProperties = new LastEnqueuedEventProperties(
-                It.IsAny<long>(),
-                It.IsAny<long>(),
-                It.IsAny<DateTimeOffset>(),
-                twoMinutesAgo);
-
-            var mockPartitionId = "<< Event Hub Partion Id >>";
-            var mockPartitionContext = EventHubsModelFactory.PartitionContext(mockPartitionId, mockLastEnqueuedEventProperties);
-
-            var mockEventBody = new BinaryData("This is a sample event body");
-            var mockEventData = EventHubsModelFactory.EventData(mockEventBody);
-
-            var mockProcessEventArgs = new ProcessEventArgs(
-                mockPartitionContext,
-                mockEventData,
-                _ => Task.CompletedTask);
-
-            await SampleApplication.ProcessorEventHandler(mockProcessEventArgs);
+                Assert.That(partitionEventCount[partitionId], Is.EqualTo(i % EventsBeforeCheckpoint));
+            }
 
             #endregion
         }
@@ -171,18 +99,35 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public async Task ProcessErrorHandlerExceptionMock()
+        public async Task ProcessErrorHandlerCancellationTrigger()
         {
-            #region Snippet:EventHubs_Processor_Sample07_ProcessErrorHandlerExceptionMock
+            #region Snippet:EventHubs_Processor_Sample07_ProcessErrorHandlerCancellationTrigger
 
-            var mockException = new Exception("mock exception");
+            using var cancellationSource = new CancellationTokenSource();
 
-            var mockProcessEventArgs = new ProcessErrorEventArgs(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                mockException);
+            // Applicaition handler cancels events processing after detection of the
+            // exact error with exact operation.
 
-            await SampleApplication.ProcessorErrorHandler(mockProcessEventArgs);
+            Task processErrorHandler(ProcessErrorEventArgs args)
+            {
+                if (args.Exception.Message.Equals("Example exception") && args.Operation.Equals("Example operation"))
+                {
+                    cancellationSource.Cancel();
+                }
+
+                return Task.CompletedTask;
+            }
+
+            // Initialize the args with the specific operation name and exception message.
+
+            var exception = new Exception("Example exception");
+            var eventArgs = new ProcessErrorEventArgs("0", "Example operation", exception);
+
+            // Execute the handler and validate that the specific event arguments were detected
+            // and the cancellation has been triggered.
+
+            await processErrorHandler(eventArgs);
+            Assert.IsTrue(cancellationSource.IsCancellationRequested);
 
             #endregion
         }
@@ -192,19 +137,37 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public async Task InitializeEventHandlerEventPositionMock()
+        public async Task InitializeEventHandlerCancellationRequest()
         {
-            #region Snippet:EventHubs_Processor_Sample07_InitializeEventHandlerEventPositionMock
+            #region Snippet:EventHubs_Processor_Sample07_InitializeEventHandlerCancellationRequest
 
-            var fiveMinutesAgo = DateTime.UtcNow.AddMinutes(-5);
+            // Application handler honors cancellation and doesn't set the
+            // default starting postition.
 
-            var mockEventPosition = EventPosition.FromEnqueuedTime(fiveMinutesAgo);
+            Task initializeEventHandler(PartitionInitializingEventArgs args)
+            {
+                if (args.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
 
-            var mockPartitionInitEventArgs = new PartitionInitializingEventArgs (
-                It.IsAny<string>(),
-                mockEventPosition);
+                args.DefaultStartingPosition = EventPosition.Latest;
+                return Task.CompletedTask;
+            }
 
-            await SampleApplication.InitializeEventHandler(mockPartitionInitEventArgs);
+            // Initialize the args with a cancelled token and a starting position
+            // different than what gets set if the handler completes.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            var defaultStartingPosition = EventPosition.Earliest;
+            var eventArgs = new PartitionInitializingEventArgs("0", defaultStartingPosition, cancellationSource.Token);
+
+            // Execute the handler and validate that cancellation was respected.
+
+            await initializeEventHandler(eventArgs);
+            Assert.That(eventArgs.DefaultStartingPosition, Is.EqualTo(defaultStartingPosition));
 
             #endregion
         }
@@ -214,15 +177,38 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public async Task CloseEventHandlerOwnershipLostMock()
+        public async Task CloseEventHandlerOwnershipLostReason()
         {
-            #region Snippet:EventHubs_Processor_Sample07_CloseEventHandlerOwnershipLostMock
+            #region Snippet:EventHubs_Processor_Sample07_CloseEventHandlerOwnershipLostReason
 
-            var mockPartitionCloseEventArgs = new PartitionClosingEventArgs(
-                It.IsAny<string>(),
-                ProcessingStoppedReason.OwnershipLost);
+            // Partition close event handler responsible for the detection and processing
+            // of the lost ownership reason example scenario.
 
-            await SampleApplication.CloseEventHandler(mockPartitionCloseEventArgs);
+            bool ownershipLostDetected = false;
+
+            Task closeEventHandler(PartitionClosingEventArgs args)
+            {
+                if (args.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
+
+                if (args.Reason == ProcessingStoppedReason.OwnershipLost)
+                {
+                    ownershipLostDetected = true;
+                }
+
+                return Task.CompletedTask;
+            }
+
+            // Initialize the args with lost ownership reason.
+
+            var eventArgs = new PartitionClosingEventArgs("0", ProcessingStoppedReason.OwnershipLost);
+
+            // Execute handler then validate that partion's lost ownership has been detected.
+
+            await closeEventHandler(eventArgs);
+            Assert.IsTrue(ownershipLostDetected);
 
             #endregion
         }
@@ -232,39 +218,27 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         ///   examples.
         /// </summary>
         ///
-        private static class SampleApplication
+        private static class Application
         {
-            /// <summary>
-            ///   A simulated method that an application would register as partition initialization event handler.
-            /// </summary>
-            ///
-            /// <param name="initEventArgs">The arguments associated with the partition initialization event.</param>
-            ///
-            public static Task InitializeEventHandler(PartitionInitializingEventArgs initEventArgs) => Task.CompletedTask;
-
             /// <summary>
             ///   A simulated method that an application would register as an event handler.
             /// </summary>
             ///
             /// <param name="eventArgs">The arguments associated with the event.</param>
             ///
-            public static Task ProcessorEventHandler(ProcessEventArgs eventArgs) => Task.CompletedTask;
+            public static Task ProcessEventAsync(ProcessEventArgs eventArgs) => Task.CompletedTask;
 
             /// <summary>
-            ///   A simulated method that an application would register as an error handler.
+            ///   A simulated method for handling an exception that occurs during
+            ///   event processing.
             /// </summary>
             ///
-            /// <param name="errorEventArgs">The arguments associated with the error.</param>
+            /// <param name="eventArgs">The arguments associated with the failed processing.</param>
+            /// <param name="exception">The exception to handle.</param>
             ///
-            public static Task ProcessorErrorHandler(ProcessErrorEventArgs errorEventArgs) => Task.CompletedTask;
-
-            /// <summary>
-            ///   A simulated method that an application would register as partition closing event handler.
-            /// </summary>
-            ///
-            /// <param name="errorEventArgs">The arguments associated with the partition closing event.</param>
-            ///
-            public static Task CloseEventHandler(PartitionClosingEventArgs args) => Task.CompletedTask;
+            public static void HandleProcessingException(ProcessEventArgs eventArgs,
+                                                         Exception exception)
+            { }
         }
     }
 }
