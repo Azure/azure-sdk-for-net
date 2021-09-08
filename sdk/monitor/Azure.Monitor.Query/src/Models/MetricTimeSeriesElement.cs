@@ -7,7 +7,8 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class TimeSeriesElement
+    [CodeGenModel("TimeSeriesElement")]
+    public partial class MetricTimeSeriesElement
     {
         private Dictionary<string,string> _metadata;
         private IReadOnlyList<MetadataValue> Metadatavalues { get; }
