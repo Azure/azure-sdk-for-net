@@ -1,14 +1,23 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2021-09-08)
 
 ### Features Added
+- `Endpoint` is a public property in `LogsQueryClient`
 
 ### Breaking Changes
+- `NamespaceCollection` renamed to `MetricNamespaceCollection`
+- `QueryModelFactory` renamed to `MonitorQueryModelFactory`
+- `TimeSeriesElement` renamed to `MetricTimeSeriesElement`
+- `Data` renamed as `Values` in `MetricTimeSeriesElement`
+- `Top` renamed to `Size` in `MetricsQueryOptions`
+- Updated `GetObject` methods to be internal in `LogsTableRow`
 
 ### Bugs Fixed
+- Updated `GetResult()` in `LogsBatchQueryResult` to return a `LogsBatchQueryResult`
 
 ### Other Changes
+- `ServiceVersion` numbering starts at 1 instead of 0 in `LogsQueryClientOptions` and `MetricsQueryClientOptions`
 
 ## 1.0.0-beta.3 (2021-08-10)
 
