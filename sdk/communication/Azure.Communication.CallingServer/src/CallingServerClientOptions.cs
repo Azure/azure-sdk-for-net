@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.Http;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallingServer
 {
@@ -14,7 +16,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// The latest version of the CallingServer service.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_06_15_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_08_30_Preview;
 
         internal string ApiVersion { get; }
 
@@ -26,6 +28,7 @@ namespace Azure.Communication.CallingServer
             ApiVersion = version switch
             {
                 ServiceVersion.V2021_06_15_Preview => "2021-06-15-preview",
+                ServiceVersion.V2021_08_30_Preview => "2021-08-30-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -39,7 +42,13 @@ namespace Azure.Communication.CallingServer
             /// The Beta of the CallingServer service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-            V2021_06_15_Preview = 1
+            V2021_06_15_Preview = 1,
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+            /// <summary>
+            /// The Beta of the CallingServer service.
+            /// </summary>
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+            V2021_08_30_Preview = 2
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

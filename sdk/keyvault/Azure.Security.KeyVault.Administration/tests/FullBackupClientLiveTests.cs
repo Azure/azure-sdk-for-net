@@ -5,15 +5,14 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Security.KeyVault.Keys;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class FullBackupClientLiveTests : BackupRestoreTestBase
     {
-        public FullBackupClientLiveTests(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public FullBackupClientLiveTests(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         public TimeSpan Timeout => TimeSpan.FromMinutes(5);

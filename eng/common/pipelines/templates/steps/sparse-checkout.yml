@@ -25,8 +25,6 @@ steps:
       script: |
         function SparseCheckout([Array]$paths, [Hashtable]$repository)
         {
-            $paths = $paths -Join ' '
-
             $dir = $repository.WorkingDirectory
             if (!$dir) {
               $dir = "./$($repository.Name)"
@@ -39,12 +37,20 @@ steps:
               Write-Host "Repository $($repository.Name) has already been initialized. Skipping this step."
             } else {
               Write-Host "Repository $($repository.Name) is being initialized."
+
+              Write-Host "git clone --no-checkout --filter=tree:0 git://github.com/$($repository.Name) ."
               git clone --no-checkout --filter=tree:0 git://github.com/$($repository.Name) .
+
+              Write-Host "git sparse-checkout init"
               git sparse-checkout init
-              git sparse-checkout set eng
+
+              Write-Host "git sparse-checkout set '/*' '!/*/' '/eng'"
+              git sparse-checkout set '/*' '!/*/' '/eng'
             }
 
-            $gitsparsecmd = "git sparse-checkout add $paths"
+            # Prevent wildcard expansion in Invoke-Expression (e.g. for checkout path '/*')
+            $quotedPaths = $paths | ForEach-Object { "'$_'" }
+            $gitsparsecmd = "git sparse-checkout add $quotedPaths"
             Write-Host $gitsparsecmd
             Invoke-Expression -Command $gitsparsecmd
 

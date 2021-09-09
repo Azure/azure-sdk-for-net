@@ -55,6 +55,41 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a list of OAuthToken documents. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       authProviderId: string,
+        ///       isValid: boolean,
+        ///       eTag: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format)
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="authProviderIds"> Name of AuthProvider. </param>
         /// <param name="farmerIds"> List of farmers. </param>
         /// <param name="isValid"> If the token object is valid. </param>
@@ -64,7 +99,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -74,11 +108,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.List");
             scope.Start();
             try
@@ -107,6 +138,41 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a list of OAuthToken documents. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       authProviderId: string,
+        ///       isValid: boolean,
+        ///       eTag: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format)
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="authProviderIds"> Name of AuthProvider. </param>
         /// <param name="farmerIds"> List of farmers. </param>
         /// <param name="isValid"> If the token object is valid. </param>
@@ -116,7 +182,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -126,11 +191,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.List");
             scope.Start();
             try
@@ -168,7 +230,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -226,38 +287,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Returns Connection link needed in the OAuth flow. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term> ID of the farmer. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>oAuthProviderId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term> ID of the OAuthProvider. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userRedirectLink</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term> Link to redirect the user to, at the end of the oauth flow. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userRedirectState</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> State to provide back when redirecting the user, at the end of the oauth flow. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   farmerId: string (required),
+        ///   oAuthProviderId: string (required),
+        ///   userRedirectLink: string (required),
+        ///   userRedirectState: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -266,11 +319,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetOAuthConnectionLink");
             scope.Start();
             try
@@ -301,38 +351,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Returns Connection link needed in the OAuth flow. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term> ID of the farmer. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>oAuthProviderId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term> ID of the OAuthProvider. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userRedirectLink</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term> Link to redirect the user to, at the end of the oauth flow. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userRedirectState</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> State to provide back when redirecting the user, at the end of the oauth flow. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   farmerId: string (required),
+        ///   oAuthProviderId: string (required),
+        ///   userRedirectLink: string (required),
+        ///   userRedirectState: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -341,11 +383,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetOAuthConnectionLinkRequest(content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetOAuthConnectionLink");
             scope.Start();
             try
@@ -393,6 +432,43 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get cascade delete job details for OAuth tokens for specified job ID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -400,11 +476,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -433,6 +506,43 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get cascade delete job details for OAuth tokens for specified job ID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -440,11 +550,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -491,20 +598,54 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for OAuth tokens. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="oauthProviderId"> ID of the OAuthProvider. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateCascadeDeleteJobAsync(string jobId, string farmerId, string oauthProviderId, RequestOptions options = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(string jobId, string farmerId, string oauthProviderId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.CreateCascadeDeleteJob");
             scope.Start();
             try
@@ -515,14 +656,14 @@ namespace Azure.Verticals.AgriFood.Farming
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
                         default:
                             throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
                 }
             }
             catch (Exception e)
@@ -533,20 +674,54 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for OAuth tokens. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="oauthProviderId"> ID of the OAuthProvider. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateCascadeDeleteJob(string jobId, string farmerId, string oauthProviderId, RequestOptions options = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(string jobId, string farmerId, string oauthProviderId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthTokensClient.CreateCascadeDeleteJob");
             scope.Start();
             try
@@ -557,14 +732,14 @@ namespace Azure.Verticals.AgriFood.Farming
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
                         default:
                             throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
                 }
             }
             catch (Exception e)

@@ -44,6 +44,7 @@ namespace Azure.Identity
         private readonly string _tenantId;
 
         private const int ERROR_FILE_NOT_FOUND = 2;
+        private readonly bool _logPII;
 
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePowerShellCredential"/>.
@@ -62,6 +63,7 @@ namespace Azure.Identity
         internal AzurePowerShellCredential(AzurePowerShellCredentialOptions options, CredentialPipeline pipeline, IProcessService processService)
         {
             UseLegacyPowerShell = false;
+            _logPII = options?.IsLoggingPIIEnabled ?? false;
             _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             _tenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
@@ -130,6 +132,7 @@ namespace Azure.Identity
             using var processRunner = new ProcessRunner(
                 _processService.Create(processStartInfo),
                 TimeSpan.FromMilliseconds(PowerShellProcessTimeoutMs),
+                _logPII,
                 cancellationToken);
 
             string output;
@@ -188,16 +191,20 @@ namespace Azure.Identity
                 UseShellExecute = false,
                 ErrorDialog = false,
                 CreateNoWindow = true,
-                WorkingDirectory = DefaultWorkingDir
+                WorkingDirectory = DefaultWorkingDir,
+                Environment =
+                {
+                    ["POWERSHELL_UPDATECHECK"] = "Off",
+                },
             };
 
         private void GetFileNameAndArguments(string resource, string tenantId, out string fileName, out string argument)
         {
-            string powershellExe = "pwsh -NonInteractive -EncodedCommand";
+            string powershellExe = "pwsh -NoProfile -NonInteractive -EncodedCommand";
 
             if (UseLegacyPowerShell)
             {
-                powershellExe = "powershell -NonInteractive -EncodedCommand";
+                powershellExe = "powershell -NoProfile -NonInteractive -EncodedCommand";
             }
 
             var tenantIdArg = tenantId == null ? string.Empty : $" -TenantId {tenantId}";
@@ -253,7 +260,7 @@ return $x.Objects.FirstChild.OuterXml
                         break;
 
                     case "ExpiresOn":
-                        expiresOn = DateTimeOffset.Parse(e.Value, CultureInfo.InvariantCulture).ToUniversalTime();
+                        expiresOn = DateTimeOffset.Parse(e.Value, CultureInfo.CurrentCulture).ToUniversalTime();
                         break;
                 }
 

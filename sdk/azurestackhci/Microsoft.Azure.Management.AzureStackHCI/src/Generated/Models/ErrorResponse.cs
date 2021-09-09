@@ -14,8 +14,13 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
     using System.Linq;
 
     /// <summary>
-    /// The resource management error response.
+    /// Error response
     /// </summary>
+    /// <remarks>
+    /// Common error response for all Azure Resource Manager APIs to return
+    /// error details for failed operations. (This also follows the OData error
+    /// response format.).
+    /// </remarks>
     public partial class ErrorResponse
     {
         /// <summary>
@@ -30,7 +35,7 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
         /// <param name="error">The error object.</param>
-        public ErrorResponse(ErrorResponseError error = default(ErrorResponseError))
+        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
         {
             Error = error;
             CustomInit();
@@ -45,7 +50,7 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// Gets or sets the error object.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ErrorResponseError Error { get; set; }
+        public ErrorDetail Error { get; set; }
 
     }
 }

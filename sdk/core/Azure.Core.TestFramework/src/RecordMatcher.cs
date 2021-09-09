@@ -25,6 +25,11 @@ namespace Azure.Core.TestFramework
         public RecordMatcher(bool compareBodies = true)
         {
             _compareBodies = compareBodies;
+
+            if (!compareBodies)
+            {
+                IgnoredHeaders.Add("Content-Length");
+            }
         }
 
         /// <summary>

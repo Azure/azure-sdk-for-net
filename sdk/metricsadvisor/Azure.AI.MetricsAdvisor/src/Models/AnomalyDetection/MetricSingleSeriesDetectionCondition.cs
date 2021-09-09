@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="MetricSingleSeriesDetectionCondition"/> class.
         /// </summary>
-        /// <param name="seriesKey">The key that uniquely identifies the time series to which these conditions apply within a metric. Every dimension contained in the associated <see cref="DataFeed"/> must be assigned a value.</param>
+        /// <param name="seriesKey">The key that uniquely identifies the time series to which these conditions apply within a metric. All possible dimensions must be assigned a value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="seriesKey"/> is <c>null</c>.</exception>
         public MetricSingleSeriesDetectionCondition(DimensionKey seriesKey)
         {
@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             SeriesKey = seriesKey;
         }
 
-        internal MetricSingleSeriesDetectionCondition(DetectionConditionsOperator? crossConditionsOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, SeriesIdentity series)
+        internal MetricSingleSeriesDetectionCondition(DetectionConditionOperator? crossConditionsOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, SeriesIdentity series)
             : base(crossConditionsOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition)
         {
             SeriesKey = new DimensionKey(series.Dimension);
@@ -34,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The key that uniquely identifies the time series to which these conditions apply within a metric.
-        /// Every dimension contained in the associated <see cref="DataFeed"/> must be assigned a value.
+        /// All possible dimensions must be assigned a value.
         /// </summary>
         public DimensionKey SeriesKey { get; set; }
 

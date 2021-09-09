@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// subnet. Must have the delegation Microsoft.NetApp/volumes</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="fileSystemId">FileSystem ID</param>
@@ -77,11 +79,38 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// values are: 'Microsoft.NetApp'</param>
         /// <param name="ldapEnabled">Specifies whether LDAP is enabled or not
         /// for a given NFS volume.</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?))
+        /// <param name="coolAccess">Specifies whether Cool Access(tiering) is
+        /// enabled for the volume.</param>
+        /// <param name="coolnessPeriod">Specifies the number of days after
+        /// which data that is not accessed by clients will be tiered.</param>
+        /// <param name="unixPermissions">UNIX permissions for NFS volume
+        /// accepted in octal 4 digit format. First digit selects the set user
+        /// ID(4), set group ID (2) and sticky (1) attributes. Second digit
+        /// selects permission for the owner of the file: read (4), write (2)
+        /// and execute (1). Third selects permissions for other users in the
+        /// same group. the fourth for other users not in the group. 0755 -
+        /// gives read/write/execute permissions to owner and read/execute to
+        /// group and other users.</param>
+        /// <param name="cloneProgress">When a volume is being restored from
+        /// another volume's snapshot, will show the percentage completion of
+        /// this cloning process. When this value is empty/null there is no
+        /// cloning process currently happening on this volume. This value will
+        /// update every 5 minutes during cloning.</param>
+        /// <param name="avsDataStore">avsDataStore</param>
+        /// <param name="isDefaultQuotaEnabled">Specifies if default quota is
+        /// enabled for the volume.</param>
+        /// <param name="defaultUserQuotaInKiBs">Default user quota for volume
+        /// in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4
+        /// KiBs applies .</param>
+        /// <param name="defaultGroupQuotaInKiBs">Default group quota for
+        /// volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value
+        /// of 4 KiBs applies.</param>
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?))
         {
             Location = location;
             Id = id;
             Name = name;
+            Etag = etag;
             Type = type;
             Tags = tags;
             FileSystemId = fileSystemId;
@@ -107,6 +136,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ThroughputMibps = throughputMibps;
             EncryptionKeySource = encryptionKeySource;
             LdapEnabled = ldapEnabled;
+            CoolAccess = coolAccess;
+            CoolnessPeriod = coolnessPeriod;
+            UnixPermissions = unixPermissions;
+            CloneProgress = cloneProgress;
+            AvsDataStore = avsDataStore;
+            IsDefaultQuotaEnabled = isDefaultQuotaEnabled;
+            DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs;
+            DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs;
             CustomInit();
         }
 
@@ -132,6 +169,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets resource type
@@ -167,8 +211,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Gets or sets serviceLevel
         /// </summary>
         /// <remarks>
-        /// The service level of the file system. Possible values include:
-        /// 'Standard', 'Premium', 'Ultra'
+        /// Possible values include: 'Standard', 'Premium', 'Ultra',
+        /// 'StandardZRS'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.serviceLevel")]
         public string ServiceLevel { get; set; }
@@ -333,6 +377,73 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public bool? LdapEnabled { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies whether Cool Access(tiering) is enabled for
+        /// the volume.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.coolAccess")]
+        public bool? CoolAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the number of days after which data that is
+        /// not accessed by clients will be tiered.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.coolnessPeriod")]
+        public int? CoolnessPeriod { get; set; }
+
+        /// <summary>
+        /// Gets or sets UNIX permissions for NFS volume accepted in octal 4
+        /// digit format. First digit selects the set user ID(4), set group ID
+        /// (2) and sticky (1) attributes. Second digit selects permission for
+        /// the owner of the file: read (4), write (2) and execute (1). Third
+        /// selects permissions for other users in the same group. the fourth
+        /// for other users not in the group. 0755 - gives read/write/execute
+        /// permissions to owner and read/execute to group and other users.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.unixPermissions")]
+        public string UnixPermissions { get; set; }
+
+        /// <summary>
+        /// Gets when a volume is being restored from another volume's
+        /// snapshot, will show the percentage completion of this cloning
+        /// process. When this value is empty/null there is no cloning process
+        /// currently happening on this volume. This value will update every 5
+        /// minutes during cloning.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cloneProgress")]
+        public int? CloneProgress { get; private set; }
+
+        /// <summary>
+        /// Gets or sets avsDataStore
+        /// </summary>
+        /// <remarks>
+        /// Specifies whether the volume is enabled for Azure VMware Solution
+        /// (AVS) datastore purpose. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.avsDataStore")]
+        public string AvsDataStore { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies if default quota is enabled for the volume.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isDefaultQuotaEnabled")]
+        public bool? IsDefaultQuotaEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets default user quota for volume in KiBs. If
+        /// isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultUserQuotaInKiBs")]
+        public long? DefaultUserQuotaInKiBs { get; set; }
+
+        /// <summary>
+        /// Gets or sets default group quota for volume in KiBs. If
+        /// isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultGroupQuotaInKiBs")]
+        public long? DefaultGroupQuotaInKiBs { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -443,6 +554,28 @@ namespace Microsoft.Azure.Management.NetApp.Models
                 if (ThroughputMibps < 0)
                 {
                     throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 0);
+                }
+            }
+            if (CoolnessPeriod != null)
+            {
+                if (CoolnessPeriod > 63)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "CoolnessPeriod", 63);
+                }
+                if (CoolnessPeriod < 7)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "CoolnessPeriod", 7);
+                }
+            }
+            if (UnixPermissions != null)
+            {
+                if (UnixPermissions.Length > 4)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "UnixPermissions", 4);
+                }
+                if (UnixPermissions.Length < 4)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "UnixPermissions", 4);
                 }
             }
         }

@@ -55,6 +55,65 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of application data resources under a particular farm. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       applicationProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           isCarrier: boolean,
+        ///           avgMaterial: {
+        ///             unit: string,
+        ///             value: number
+        ///           },
+        ///           totalMaterial: Measure
+        ///         }
+        ///       ],
+        ///       avgMaterial: Measure,
+        ///       totalMaterial: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
         /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
@@ -75,7 +134,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -85,7 +143,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -95,11 +152,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.ListByFarmerId");
             scope.Start();
             try
@@ -128,6 +182,65 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of application data resources under a particular farm. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       applicationProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           isCarrier: boolean,
+        ///           avgMaterial: {
+        ///             unit: string,
+        ///             value: number
+        ///           },
+        ///           totalMaterial: Measure
+        ///         }
+        ///       ],
+        ///       avgMaterial: Measure,
+        ///       totalMaterial: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
         /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
@@ -148,7 +261,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -158,7 +270,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -168,11 +279,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.ListByFarmerId");
             scope.Start();
             try
@@ -221,7 +329,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -231,7 +338,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -353,6 +459,65 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of application data resources across all farmers. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       applicationProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           isCarrier: boolean,
+        ///           avgMaterial: {
+        ///             unit: string,
+        ///             value: number
+        ///           },
+        ///           totalMaterial: Measure
+        ///         }
+        ///       ],
+        ///       avgMaterial: Measure,
+        ///       totalMaterial: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
         /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
         /// <param name="minTotalMaterial"> Minimum total amount of material applied during the application (inclusive). </param>
@@ -372,7 +537,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -382,7 +546,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -392,11 +555,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.List");
             scope.Start();
             try
@@ -425,6 +585,65 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of application data resources across all farmers. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       applicationProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           isCarrier: boolean,
+        ///           avgMaterial: {
+        ///             unit: string,
+        ///             value: number
+        ///           },
+        ///           totalMaterial: Measure
+        ///         }
+        ///       ],
+        ///       avgMaterial: Measure,
+        ///       totalMaterial: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
         /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
         /// <param name="minTotalMaterial"> Minimum total amount of material applied during the application (inclusive). </param>
@@ -444,7 +663,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -454,7 +672,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -464,11 +681,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.List");
             scope.Start();
             try
@@ -516,7 +730,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -526,7 +739,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -646,6 +858,59 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get a specified application data resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   applicationProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       isCarrier: boolean,
+        ///       avgMaterial: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       totalMaterial: Measure
+        ///     }
+        ///   ],
+        ///   avgMaterial: Measure,
+        ///   totalMaterial: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="applicationDataId"> ID of the application data resource. </param>
         /// <param name="options"> The request options. </param>
@@ -654,11 +919,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, applicationDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(farmerId, applicationDataId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.Get");
             scope.Start();
             try
@@ -687,6 +949,59 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get a specified application data resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   applicationProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       isCarrier: boolean,
+        ///       avgMaterial: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       totalMaterial: Measure
+        ///     }
+        ///   ],
+        ///   avgMaterial: Measure,
+        ///   totalMaterial: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="applicationDataId"> ID of the application data resource. </param>
         /// <param name="options"> The request options. </param>
@@ -695,11 +1010,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, applicationDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(farmerId, applicationDataId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.Get");
             scope.Start();
             try
@@ -751,200 +1063,91 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates an application data resource under a particular farmer. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>applicationProductDetails</term>
-        ///     <term>ApplicationProductDetail[]</term>
-        ///     <term></term>
-        ///     <term> Application product details. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>avgMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>totalMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>area</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Source of the operation data. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>
-        /// Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// <code>{
+        ///   applicationProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       isCarrier: boolean,
+        ///       avgMaterial: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       totalMaterial: Measure
+        ///     }
+        ///   ],
+        ///   avgMaterial: Measure,
+        ///   totalMaterial: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
         /// 
-        /// Note: this will be specified by the source provider itself.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationStartDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationEndDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attachmentsLink</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Link for attachments. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>associatedBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Optional boundary ID of the field for which operation was applied. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Optional boundary ID of the actual area for which operation was applied inside the specified field. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Farmer ID which belongs to the operation data. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Unique resource ID. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Status of the resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Name to identify resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   applicationProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       isCarrier: boolean,
+        ///       avgMaterial: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       totalMaterial: Measure
+        ///     }
+        ///   ],
+        ///   avgMaterial: Measure,
+        ///   totalMaterial: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
         /// 
-        /// Each pair must not have a key greater than 50 characters
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
         /// 
-        /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Measure</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>unit</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Data unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> Data value. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ApplicationProductDetail</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>productName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Name of the product applied. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isCarrier</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> A flag indicating whether product is a carrier for a tank mix. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>avgMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>totalMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        /// </list>
         /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="applicationDataId"> ID of the application data resource. </param>
@@ -955,11 +1158,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, applicationDataId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, applicationDataId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.CreateOrUpdate");
             scope.Start();
             try
@@ -991,200 +1191,91 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates an application data resource under a particular farmer. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>applicationProductDetails</term>
-        ///     <term>ApplicationProductDetail[]</term>
-        ///     <term></term>
-        ///     <term> Application product details. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>avgMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>totalMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>area</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Source of the operation data. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>
-        /// Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// <code>{
+        ///   applicationProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       isCarrier: boolean,
+        ///       avgMaterial: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       totalMaterial: Measure
+        ///     }
+        ///   ],
+        ///   avgMaterial: Measure,
+        ///   totalMaterial: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
         /// 
-        /// Note: this will be specified by the source provider itself.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationStartDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationEndDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attachmentsLink</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Link for attachments. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>associatedBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Optional boundary ID of the field for which operation was applied. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Optional boundary ID of the actual area for which operation was applied inside the specified field. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Farmer ID which belongs to the operation data. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Unique resource ID. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Status of the resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Name to identify resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   applicationProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       isCarrier: boolean,
+        ///       avgMaterial: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       totalMaterial: Measure
+        ///     }
+        ///   ],
+        ///   avgMaterial: Measure,
+        ///   totalMaterial: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
         /// 
-        /// Each pair must not have a key greater than 50 characters
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
         /// 
-        /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Measure</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>unit</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Data unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> Data value. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ApplicationProductDetail</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>productName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Name of the product applied. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isCarrier</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> A flag indicating whether product is a carrier for a tank mix. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>avgMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>totalMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        /// </list>
         /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="applicationDataId"> ID of the application data resource. </param>
@@ -1195,11 +1286,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, applicationDataId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, applicationDataId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.CreateOrUpdate");
             scope.Start();
             try
@@ -1253,6 +1341,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified application data resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="applicationDataId"> ID of the application data. </param>
         /// <param name="options"> The request options. </param>
@@ -1261,11 +1367,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, applicationDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(farmerId, applicationDataId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.Delete");
             scope.Start();
             try
@@ -1294,6 +1397,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified application data resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="applicationDataId"> ID of the application data. </param>
         /// <param name="options"> The request options. </param>
@@ -1302,11 +1423,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, applicationDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(farmerId, applicationDataId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.Delete");
             scope.Start();
             try

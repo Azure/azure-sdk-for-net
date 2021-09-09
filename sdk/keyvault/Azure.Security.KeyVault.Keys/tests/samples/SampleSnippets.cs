@@ -30,12 +30,12 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
+            string vaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CreateKeyClient
             // Create a new key client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new KeyClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            var client = new KeyClient(vaultUri: new Uri(vaultUrl), credential: new DefaultAzureCredential());
 
             // Create a new key using the key client.
             KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);

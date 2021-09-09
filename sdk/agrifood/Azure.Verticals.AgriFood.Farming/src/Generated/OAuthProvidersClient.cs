@@ -55,11 +55,50 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of oauthProvider resources. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       appId: string,
+        ///       appSecret: string,
+        ///       apiKey: string,
+        ///       isProductionApp: boolean,
+        ///       id: string,
+        ///       eTag: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -69,7 +108,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -79,11 +117,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.List");
             scope.Start();
             try
@@ -112,11 +147,50 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of oauthProvider resources. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       appId: string,
+        ///       appSecret: string,
+        ///       apiKey: string,
+        ///       isProductionApp: boolean,
+        ///       id: string,
+        ///       eTag: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -126,7 +200,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -136,11 +209,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.List");
             scope.Start();
             try
@@ -173,7 +243,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -183,7 +252,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -243,6 +311,40 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get a specified oauthProvider resource. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   appId: string,
+        ///   appSecret: string,
+        ///   apiKey: string,
+        ///   isProductionApp: boolean,
+        ///   id: string,
+        ///   eTag: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="oauthProviderId"> ID of the oauthProvider resource. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -250,11 +352,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.Get");
             scope.Start();
             try
@@ -283,6 +382,40 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get a specified oauthProvider resource. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   appId: string,
+        ///   appSecret: string,
+        ///   apiKey: string,
+        ///   isProductionApp: boolean,
+        ///   id: string,
+        ///   eTag: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="oauthProviderId"> ID of the oauthProvider resource. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -290,11 +423,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.Get");
             scope.Start();
             try
@@ -343,100 +473,53 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates an oauthProvider resource. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>appId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> OAuth App ID for given OAuth Provider. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>appSecret</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>
-        /// OAuth App secret for given Provider.
+        /// <code>{
+        ///   appId: string,
+        ///   appSecret: string,
+        ///   apiKey: string,
+        ///   isProductionApp: boolean,
+        ///   id: string,
+        ///   eTag: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
         /// 
-        /// Note: Won&apos;t be sent in response.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>apiKey</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>
-        /// OAuth Api key for given Provider.
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   appId: string,
+        ///   appSecret: string,
+        ///   apiKey: string,
+        ///   isProductionApp: boolean,
+        ///   id: string,
+        ///   eTag: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
         /// 
-        /// Note: currently Applicable to Climate provider. Won&apos;t be sent in response.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isProductionApp</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>
-        /// An optional flag to determine if the App is ready to be used for Production scenarios in the provider side or not. (Default value: false)
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
         /// 
-        /// Note: Currently applicable for JohnDeere.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Unique OAuth provider ID. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Name to identify resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
-        /// Each pair must not have a key greater than 50 characters
-        /// 
-        /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
-        ///   </item>
-        /// </list>
         /// </remarks>
         /// <param name="oauthProviderId"> ID of oauthProvider resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -446,11 +529,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(oauthProviderId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(oauthProviderId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.CreateOrUpdate");
             scope.Start();
             try
@@ -482,100 +562,53 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates an oauthProvider resource. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>appId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> OAuth App ID for given OAuth Provider. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>appSecret</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>
-        /// OAuth App secret for given Provider.
+        /// <code>{
+        ///   appId: string,
+        ///   appSecret: string,
+        ///   apiKey: string,
+        ///   isProductionApp: boolean,
+        ///   id: string,
+        ///   eTag: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
         /// 
-        /// Note: Won&apos;t be sent in response.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>apiKey</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>
-        /// OAuth Api key for given Provider.
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   appId: string,
+        ///   appSecret: string,
+        ///   apiKey: string,
+        ///   isProductionApp: boolean,
+        ///   id: string,
+        ///   eTag: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
         /// 
-        /// Note: currently Applicable to Climate provider. Won&apos;t be sent in response.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isProductionApp</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>
-        /// An optional flag to determine if the App is ready to be used for Production scenarios in the provider side or not. (Default value: false)
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
         /// 
-        /// Note: Currently applicable for JohnDeere.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Unique OAuth provider ID. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Name to identify resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
-        /// Each pair must not have a key greater than 50 characters
-        /// 
-        /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
-        ///   </item>
-        /// </list>
         /// </remarks>
         /// <param name="oauthProviderId"> ID of oauthProvider resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -585,11 +618,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(oauthProviderId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(oauthProviderId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.CreateOrUpdate");
             scope.Start();
             try
@@ -640,6 +670,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes an specified oauthProvider resource. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="oauthProviderId"> ID of oauthProvider. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -647,11 +695,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.Delete");
             scope.Start();
             try
@@ -680,6 +725,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes an specified oauthProvider resource. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="oauthProviderId"> ID of oauthProvider. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -687,11 +750,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(oauthProviderId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(oauthProviderId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("OAuthProvidersClient.Delete");
             scope.Start();
             try

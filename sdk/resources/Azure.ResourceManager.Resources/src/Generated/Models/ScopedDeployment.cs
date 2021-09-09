@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment operation parameters. </summary>
-    public partial class ScopedDeployment
+    internal partial class ScopedDeployment
     {
         /// <summary> Initializes a new instance of ScopedDeployment. </summary>
         /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="properties"> The deployment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public ScopedDeployment(string location, DeploymentProperties properties)
+        internal ScopedDeployment(string location, DeploymentProperties properties)
         {
             if (location == null)
             {
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The deployment properties. </summary>
         public DeploymentProperties Properties { get; }
         /// <summary> Deployment tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

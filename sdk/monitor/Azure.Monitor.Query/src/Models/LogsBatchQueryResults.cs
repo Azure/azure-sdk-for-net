@@ -27,11 +27,11 @@ namespace Azure.Monitor.Query.Models
         /// string countQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -42,7 +42,7 @@ namespace Azure.Monitor.Query.Models
         /// <returns>The <see cref="LogsBatchQueryResults"/> with the query results.</returns>
         /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
         /// <exception cref="RequestFailedException">When the query <paramref name="queryId"/> failed.</exception>
-        public LogsQueryResult GetResult(string queryId)
+        public LogsBatchQueryResult GetResult(string queryId)
         {
             BatchQueryResponse result = Responses.SingleOrDefault(r => r.Id == queryId);
 
@@ -70,7 +70,7 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="RequestFailedException">When the query <paramref name="queryId"/> failed.</exception>
         public IReadOnlyList<T> GetResult<T>(string queryId)
         {
-            return RowBinder.Shared.BindResults<T>(GetResult(queryId).Tables);
+            return RowBinder.Shared.BindResults<T>(GetResult(queryId).AllTables);
         }
     }
 }

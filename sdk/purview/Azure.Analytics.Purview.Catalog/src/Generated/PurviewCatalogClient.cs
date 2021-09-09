@@ -56,98 +56,46 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Gets data using search. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>keywords</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The keywords applied to all searchable fields. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>offset</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The offset. The default value is 0. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>limit</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The limit of the number of the search result. default value is 50; maximum value is 1000. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>filter</term>
-        ///     <term>AnyObject</term>
-        ///     <term></term>
-        ///     <term> The filter for the search. See examples for the usage of supported filters. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>facets</term>
-        ///     <term>SearchFacetItem[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>taxonomySetting</term>
-        ///     <term>SearchRequestTaxonomySetting</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>SearchRequestTaxonomySetting</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>assetTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>facet</term>
-        ///     <term>SearchFacetItem</term>
-        ///     <term></term>
-        ///     <term> The content of a search facet result item. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>SearchFacetItem</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>count</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The count of the facet item. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>facet</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the facet item. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sort</term>
-        ///     <term>AnyObject</term>
-        ///     <term></term>
-        ///     <term> Any object. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   keywords: string,
+        ///   offset: number,
+        ///   limit: number,
+        ///   filter: AnyObject,
+        ///   facets: [
+        ///     {
+        ///       count: number,
+        ///       facet: string,
+        ///       sort: AnyObject
+        ///     }
+        ///   ],
+        ///   taxonomySetting: {
+        ///     assetTypes: [string],
+        ///     facet: SearchFacetItem
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   @search.count: number,
+        ///   @search.facets: {
+        ///     assetType: [
+        ///       {
+        ///         count: number,
+        ///         value: string
+        ///       }
+        ///     ],
+        ///     classification: [SearchFacetItemValue],
+        ///     classificationCategory: [SearchFacetItemValue],
+        ///     contactId: [SearchFacetItemValue],
+        ///     fileExtension: [SearchFacetItemValue],
+        ///     label: [SearchFacetItemValue],
+        ///     term: [SearchFacetItemValue]
+        ///   },
+        ///   value: [SearchResultValue]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -156,11 +104,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSearchRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateSearchRequest(content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
@@ -191,98 +136,46 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Gets data using search. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>keywords</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The keywords applied to all searchable fields. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>offset</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The offset. The default value is 0. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>limit</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The limit of the number of the search result. default value is 50; maximum value is 1000. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>filter</term>
-        ///     <term>AnyObject</term>
-        ///     <term></term>
-        ///     <term> The filter for the search. See examples for the usage of supported filters. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>facets</term>
-        ///     <term>SearchFacetItem[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>taxonomySetting</term>
-        ///     <term>SearchRequestTaxonomySetting</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>SearchRequestTaxonomySetting</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>assetTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>facet</term>
-        ///     <term>SearchFacetItem</term>
-        ///     <term></term>
-        ///     <term> The content of a search facet result item. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>SearchFacetItem</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>count</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The count of the facet item. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>facet</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the facet item. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sort</term>
-        ///     <term>AnyObject</term>
-        ///     <term></term>
-        ///     <term> Any object. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   keywords: string,
+        ///   offset: number,
+        ///   limit: number,
+        ///   filter: AnyObject,
+        ///   facets: [
+        ///     {
+        ///       count: number,
+        ///       facet: string,
+        ///       sort: AnyObject
+        ///     }
+        ///   ],
+        ///   taxonomySetting: {
+        ///     assetTypes: [string],
+        ///     facet: SearchFacetItem
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   @search.count: number,
+        ///   @search.facets: {
+        ///     assetType: [
+        ///       {
+        ///         count: number,
+        ///         value: string
+        ///       }
+        ///     ],
+        ///     classification: [SearchFacetItemValue],
+        ///     classificationCategory: [SearchFacetItemValue],
+        ///     contactId: [SearchFacetItemValue],
+        ///     fileExtension: [SearchFacetItemValue],
+        ///     label: [SearchFacetItemValue],
+        ///     term: [SearchFacetItemValue]
+        ///   },
+        ///   value: [SearchResultValue]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -291,11 +184,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSearchRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateSearchRequest(content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
@@ -346,32 +236,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get search suggestions by query criteria. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>keywords</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>limit</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>filter</term>
-        ///     <term>AnyObject</term>
-        ///     <term></term>
-        ///     <term> The filter for the search. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   keywords: string,
+        ///   limit: number,
+        ///   filter: AnyObject
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [SuggestResultValue]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -380,11 +257,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSuggestRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateSuggestRequest(content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
@@ -415,32 +289,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get search suggestions by query criteria. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>keywords</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>limit</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>filter</term>
-        ///     <term>AnyObject</term>
-        ///     <term></term>
-        ///     <term> The filter for the search. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   keywords: string,
+        ///   limit: number,
+        ///   filter: AnyObject
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [SuggestResultValue]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -449,11 +310,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSuggestRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateSuggestRequest(content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
@@ -504,32 +362,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get auto complete options. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>keywords</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>limit</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>filter</term>
-        ///     <term>AnyObject</term>
-        ///     <term></term>
-        ///     <term> The filter for the autocomplete request. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   keywords: string,
+        ///   limit: number,
+        ///   filter: AnyObject
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [AutoCompleteResultValue]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -538,11 +383,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateAutoCompleteRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateAutoCompleteRequest(content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
@@ -573,32 +415,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get auto complete options. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>keywords</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>limit</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>filter</term>
-        ///     <term>AnyObject</term>
-        ///     <term></term>
-        ///     <term> The filter for the autocomplete request. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   keywords: string,
+        ///   limit: number,
+        ///   filter: AnyObject
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [AutoCompleteResultValue]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -607,11 +436,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateAutoCompleteRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateAutoCompleteRequest(content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
@@ -660,6 +486,35 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get lineage info of the entity specified by GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   baseEntityGuid: string,
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   lineageDepth: number,
+        ///   lineageWidth: number,
+        ///   includeParent: boolean,
+        ///   childrenCount: number,
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   parentRelations: [
+        ///     {
+        ///       childEntityId: string,
+        ///       relationshipId: string,
+        ///       parentEntityId: string
+        ///     }
+        ///   ],
+        ///   relations: [
+        ///     {
+        ///       fromEntityId: string,
+        ///       relationshipId: string,
+        ///       toEntityId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
         /// <param name="depth"> The number of hops for lineage. </param>
@@ -672,11 +527,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
             scope.Start();
             try
@@ -705,6 +557,35 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get lineage info of the entity specified by GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   baseEntityGuid: string,
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   lineageDepth: number,
+        ///   lineageWidth: number,
+        ///   includeParent: boolean,
+        ///   childrenCount: number,
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   parentRelations: [
+        ///     {
+        ///       childEntityId: string,
+        ///       relationshipId: string,
+        ///       parentEntityId: string
+        ///     }
+        ///   ],
+        ///   relations: [
+        ///     {
+        ///       fromEntityId: string,
+        ///       relationshipId: string,
+        ///       toEntityId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
         /// <param name="depth"> The number of hops for lineage. </param>
@@ -717,11 +598,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
             scope.Start();
             try
@@ -790,6 +668,35 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   baseEntityGuid: string,
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   lineageDepth: number,
+        ///   lineageWidth: number,
+        ///   includeParent: boolean,
+        ///   childrenCount: number,
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   parentRelations: [
+        ///     {
+        ///       childEntityId: string,
+        ///       relationshipId: string,
+        ///       parentEntityId: string
+        ///     }
+        ///   ],
+        ///   relations: [
+        ///     {
+        ///       fromEntityId: string,
+        ///       relationshipId: string,
+        ///       toEntityId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
@@ -801,11 +708,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
             scope.Start();
             try
@@ -834,6 +738,35 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   baseEntityGuid: string,
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   lineageDepth: number,
+        ///   lineageWidth: number,
+        ///   includeParent: boolean,
+        ///   childrenCount: number,
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   parentRelations: [
+        ///     {
+        ///       childEntityId: string,
+        ///       relationshipId: string,
+        ///       parentEntityId: string
+        ///     }
+        ///   ],
+        ///   relations: [
+        ///     {
+        ///       fromEntityId: string,
+        ///       relationshipId: string,
+        ///       toEntityId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
@@ -845,11 +778,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
             scope.Start();
             try

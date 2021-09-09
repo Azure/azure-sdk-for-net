@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             string secretName = Recording.GenerateId();
 
             // TODO: Update this value whenever you re-record tests. Both the sync and async JSON recordings need to use the same value.
-            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1613782963));
+            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1626221282));
 
             KeyVaultSecret setResult = null;
 
@@ -98,7 +98,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 Assert.AreEqual(secretName, setResult.Name);
                 Assert.AreEqual("CrudWithExtendedPropsValue1", setResult.Value);
                 Assert.AreEqual(VaultUri, setResult.Properties.VaultUri);
-                Assert.AreEqual("Recoverable+Purgeable", setResult.Properties.RecoveryLevel);
+                Assert.IsNotNull(setResult.Properties.RecoveryLevel); // Value changes based on how the Key Vault is configured.
                 Assert.That(setResult.Properties.CreatedOn, createdUpdatedConstraint);
                 Assert.That(setResult.Properties.UpdatedOn, createdUpdatedConstraint);
 

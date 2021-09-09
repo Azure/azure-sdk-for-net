@@ -55,6 +55,46 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of attachment resources under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       resourceId: string,
+        ///       resourceType: string,
+        ///       originalFileName: string,
+        ///       id: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       eTag: string
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
         /// <param name="resourceTypes"> Resource Types of the resource. </param>
@@ -62,7 +102,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -72,7 +111,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -82,11 +120,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.ListByFarmerId");
             scope.Start();
             try
@@ -115,6 +150,46 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of attachment resources under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       resourceId: string,
+        ///       resourceType: string,
+        ///       originalFileName: string,
+        ///       id: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       eTag: string
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
         /// <param name="resourceTypes"> Resource Types of the resource. </param>
@@ -122,7 +197,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -132,7 +206,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -142,11 +215,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.ListByFarmerId");
             scope.Start();
             try
@@ -182,7 +252,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -192,7 +261,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -262,6 +330,40 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   originalFileName: string,
+        ///   id: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   eTag: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="attachmentId"> ID of the attachment. </param>
         /// <param name="options"> The request options. </param>
@@ -270,11 +372,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, attachmentId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(farmerId, attachmentId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Get");
             scope.Start();
             try
@@ -303,6 +402,40 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   originalFileName: string,
+        ///   id: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   eTag: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="attachmentId"> ID of the attachment. </param>
         /// <param name="options"> The request options. </param>
@@ -311,11 +444,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, attachmentId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(farmerId, attachmentId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Get");
             scope.Start();
             try
@@ -365,6 +495,40 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   originalFileName: string,
+        ///   id: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   eTag: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="attachmentId"> ID of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -374,11 +538,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, attachmentId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, attachmentId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.CreateOrUpdate");
             scope.Start();
             try
@@ -408,6 +569,40 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   originalFileName: string,
+        ///   id: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   eTag: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="attachmentId"> ID of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -417,11 +612,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, attachmentId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, attachmentId, content, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.CreateOrUpdate");
             scope.Start();
             try
@@ -475,6 +667,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="attachmentId"> ID of the attachment. </param>
         /// <param name="options"> The request options. </param>
@@ -483,11 +693,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, attachmentId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(farmerId, attachmentId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Delete");
             scope.Start();
             try
@@ -516,6 +723,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="attachmentId"> ID of the attachment. </param>
         /// <param name="options"> The request options. </param>
@@ -524,11 +749,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, attachmentId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(farmerId, attachmentId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Delete");
             scope.Start();
             try
@@ -578,6 +800,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
         /// <param name="options"> The request options. </param>
@@ -586,11 +826,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDownloadRequest(farmerId, attachmentId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDownloadRequest(farmerId, attachmentId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Download");
             scope.Start();
             try
@@ -619,6 +856,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
         /// <param name="options"> The request options. </param>
@@ -627,11 +882,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDownloadRequest(farmerId, attachmentId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDownloadRequest(farmerId, attachmentId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Download");
             scope.Start();
             try

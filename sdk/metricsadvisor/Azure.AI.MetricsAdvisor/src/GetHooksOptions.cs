@@ -10,7 +10,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
     public class GetHooksOptions
     {
         /// <summary>
-        /// The name of the hook to filter on.
+        /// Filters the result by <see cref="NotificationHook.Name"/>. Only hooks containing the filter as a
+        /// substring of their names will be returned. Case insensitive.
         /// </summary>
         public string HookNameFilter { get; set; }
 

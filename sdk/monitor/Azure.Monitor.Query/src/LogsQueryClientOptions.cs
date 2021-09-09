@@ -41,7 +41,7 @@ namespace Azure.Monitor.Query
             /// <summary>
             /// The V1 version of the service
             /// </summary>
-            V1
+            V1 = 1,
         }
 
         /// <summary>

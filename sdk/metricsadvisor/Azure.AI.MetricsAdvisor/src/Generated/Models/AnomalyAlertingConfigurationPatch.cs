@@ -27,8 +27,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> anomaly alerting configuration description. </summary>
         public string Description { get; set; }
         /// <summary> cross metrics operator. </summary>
-        public DetectionConditionOperator? CrossMetricsOperator { get; set; }
-        /// <summary> dimensions used to split alert. </summary>
-        public IList<string> SplitAlertByDimensions { get; }
+        public MetricAlertConfigurationsOperator? CrossMetricsOperator { get; set; }
     }
 }

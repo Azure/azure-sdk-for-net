@@ -6,9 +6,9 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
-    public class FirewallPolicyTests : NetworkTestsManagementClientBase
+    public class FirewallPolicyTests : NetworkServiceClientTestBase
     {
         public FirewallPolicyTests(bool isAsync) : base(isAsync)
         {
@@ -21,12 +21,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 Initialize();
             }
-        }
-
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
         }
 
         [Test]

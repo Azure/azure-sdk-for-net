@@ -30,6 +30,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   ledgerId: string,
+        ///   ledgerTlsCertificate: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -37,11 +56,8 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();
             try
@@ -70,6 +86,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   ledgerId: string,
+        ///   ledgerTlsCertificate: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -77,11 +112,8 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();
             try

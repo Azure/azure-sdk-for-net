@@ -49,17 +49,23 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// service endpoint policy resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="serviceAlias">The alias indicating if the policy
+        /// belongs to a service</param>
+        /// <param name="contextualServiceEndpointPolicies">A collection of
+        /// contextual service endpoint policy.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="kind">Kind of service endpoint policy. This is
         /// metadata used for the Azure portal experience.</param>
-        public ServiceEndpointPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<ServiceEndpointPolicyDefinition> serviceEndpointPolicyDefinitions = default(IList<ServiceEndpointPolicyDefinition>), IList<Subnet> subnets = default(IList<Subnet>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string), string kind = default(string))
+        public ServiceEndpointPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<ServiceEndpointPolicyDefinition> serviceEndpointPolicyDefinitions = default(IList<ServiceEndpointPolicyDefinition>), IList<Subnet> subnets = default(IList<Subnet>), string resourceGuid = default(string), string provisioningState = default(string), string serviceAlias = default(string), IList<string> contextualServiceEndpointPolicies = default(IList<string>), string etag = default(string), string kind = default(string))
             : base(id, name, type, location, tags)
         {
             ServiceEndpointPolicyDefinitions = serviceEndpointPolicyDefinitions;
             Subnets = subnets;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            ServiceAlias = serviceAlias;
+            ContextualServiceEndpointPolicies = contextualServiceEndpointPolicies;
             Etag = etag;
             Kind = kind;
             CustomInit();
@@ -97,6 +103,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the alias indicating if the policy belongs to a
+        /// service
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.serviceAlias")]
+        public string ServiceAlias { get; set; }
+
+        /// <summary>
+        /// Gets or sets a collection of contextual service endpoint policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.contextualServiceEndpointPolicies")]
+        public IList<string> ContextualServiceEndpointPolicies { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

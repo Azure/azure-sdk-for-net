@@ -43,7 +43,7 @@
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<Gallery> GetAsync(this IGalleriesOperations operations, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<Gallery> GetAsync(this IGalleriesOperations operations, string resourceGroupName, string galleryName, CancellationToken cancellationToken)
         {
             return await GetAsync(operations, resourceGroupName, galleryName, default(string), cancellationToken);
         }

@@ -218,6 +218,40 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string AmazonRdsForOracleTable = @"
+{
+    name: ""AmazonRdsForOracleTable"",
+    properties:
+    {
+        type: ""AmazonRdsForOracleTable"",
+        description: ""Example of AmazonRdsForOracle with parameter, description, and expression"",
+        parameters: {
+            StartTime: {
+                type: ""String"",
+                defaultValue:  ""2017-01-31T00:00:00Z""
+            }
+        },
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: {
+                value: ""@parameters('StartTime')"",
+                type: ""Expression""
+            },
+            table: {
+                value: ""@parameters('StartTime')"",
+                type: ""Expression""
+            }
+        }
+    }
+}
+";
+
+        [JsonSample]
         public const string ODataResource = @"
 {
     name: ""ODataResourceDataset"",
