@@ -44,7 +44,6 @@ namespace Azure.Core.TestFramework
         private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         private Exception _bootstrappingException;
         private readonly Type _type;
-        private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         protected TestEnvironment()
@@ -74,28 +73,9 @@ namespace Azure.Core.TestFramework
 
             _prefix = _serviceName.ToUpperInvariant() + "_";
             _type = GetType();
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions.Default);
 
             ParseEnvironmentFile();
-
-            string tenantId = GetOptionalVariable("TENANT_ID");
-            string clientId = GetOptionalVariable("CLIENT_ID");
-            string clientSecret = GetOptionalVariable("CLIENT_SECRET");
-            string authorityHost = GetOptionalVariable("AZURE_AUTHORITY_HOST");
-
-            // configure pipeline if credential vars are available
-            if (tenantId != null && clientId != null && clientSecret != null && authorityHost != null)
-            {
-                _credential = new ClientSecretCredential(
-                    tenantId,
-                    clientId,
-                    clientSecret,
-                    new ClientSecretCredentialOptions()
-                    {
-                        AuthorityHost = new Uri(authorityHost)
-                    });
-                _pipeline = HttpPipelineBuilder.Build(ClientOptions.Default, new BearerTokenAuthenticationPolicy(_credential, "https://management.azure.com/.default"));
-                _clientDiagnostics = new ClientDiagnostics(ClientOptions.Default);
-            }
         }
 
         private void ParseEnvironmentFile()
@@ -295,12 +275,12 @@ namespace Azure.Core.TestFramework
 
         private async Task ExtendResourceGroupExpirationAsync()
         {
-            // determine whether it is even possible to talk to the management endpoint
-            if (Mode is not RecordedTestMode.Live or RecordedTestMode.Record || _pipeline == null)
+            if (Mode is not RecordedTestMode.Live or RecordedTestMode.Record)
             {
                 return;
             }
 
+            // determine whether it is even possible to talk to the management endpoint
             string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
             if (resourceGroup == null)
             {
@@ -313,14 +293,35 @@ namespace Azure.Core.TestFramework
                 return;
             }
 
+            string tenantId = GetOptionalVariable("TENANT_ID");
+            string clientId = GetOptionalVariable("CLIENT_ID");
+            string clientSecret = GetOptionalVariable("CLIENT_SECRET");
+            string authorityHost = GetOptionalVariable("AZURE_AUTHORITY_HOST");
+
+            if (tenantId == null || clientId == null || clientSecret == null || authorityHost == null)
+            {
+                return;
+            }
+
+            // intentionally not using the Credential property as we don't want to throw if the env vars are not available, and we want to allow this to vary per environment.
+            var credential = new ClientSecretCredential(
+                    tenantId,
+                    clientId,
+                    clientSecret,
+                    new ClientSecretCredentialOptions()
+                    {
+                        AuthorityHost = new Uri(authorityHost)
+                    });
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(ClientOptions.Default, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com/.default"));
+
             // create the GET request for the resource group information
-            Request request = _pipeline.CreateRequest();
+            Request request = pipeline.CreateRequest();
             Uri uri = new Uri($"{ResourceManagerUrl}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
             request.Uri.Reset(uri);
             request.Method = RequestMethod.Get;
 
             // send the GET request
-            Response response = await _pipeline.SendRequestAsync(request, CancellationToken.None);
+            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             // resource group not found - nothing we can do here
             if (response.Status == 404)
@@ -368,7 +369,7 @@ namespace Azure.Core.TestFramework
                     writer.Flush();
 
                     // create the PATCH request
-                    request = _pipeline.CreateRequest();
+                    request = pipeline.CreateRequest();
                     request.Uri.Reset(uri);
                     request.Method = RequestMethod.Patch;
                     request.Headers.SetValue("Content-Type", "application/json");
@@ -376,7 +377,7 @@ namespace Azure.Core.TestFramework
                     request.Content = RequestContent.Create(stream);
 
                     // send the PATCH request
-                    response = await _pipeline.SendRequestAsync(request, CancellationToken.None);
+                    response = await pipeline.SendRequestAsync(request, CancellationToken.None);
                     if (response.Status != 200)
                     {
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
