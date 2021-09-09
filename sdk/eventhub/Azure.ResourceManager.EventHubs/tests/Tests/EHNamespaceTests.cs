@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         }
         [Test]
         [RecordedTest]
-        public async Task NamespaceCreateGetUpdateDeleteAuthorizationRules()
+        public async Task NamespaceCreateGetUpdateDeleteAuthorizationRule()
         {
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
@@ -155,5 +155,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.True(rules.Count == 1);
             Assert.AreEqual(rules[0].Id.Name, DefaultNamespaceAuthorizationRule);
         }
+        [Test]
+        [RecordedTest]
+        public async Task NamespaceAuthorizationRuleRegw
     }
 }
