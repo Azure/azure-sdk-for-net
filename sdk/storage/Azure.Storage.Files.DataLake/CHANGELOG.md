@@ -1,14 +1,9 @@
 # Release History
 
 ## 12.9.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2020-12-06.
+- Added support for File System level Encryption Scopes.
+- Added support for Encryption Scope SAS.
 
 ## 12.8.0 (2021-09-08)
 - Includes all features from 12.8.0-beta.1 and 12.8.0-beta.2.
