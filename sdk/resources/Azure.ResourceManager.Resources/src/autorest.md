@@ -117,6 +117,4 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c52d1e5eb3aae274b1fb7ebe1b16cabe233879e5/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c52d1e5eb3aae274b1fb7ebe1b16cabe233879e5/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/SubscriptionFeatureRegistration.json
 ```
