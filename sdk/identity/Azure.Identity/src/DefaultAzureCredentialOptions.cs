@@ -52,6 +52,11 @@ namespace Azure.Identity
         public string SharedTokenCacheUsername { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.Username);
 
         /// <summary>
+        /// Specifies the client id of the selected credential
+        /// </summary>
+        public string InteractiveBrowserCredentialClientId { get; set; }
+
+        /// <summary>
         /// Specifies the client id of the azure ManagedIdentity in the case of user assigned identity.
         /// </summary>
         public string ManagedIdentityClientId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.ClientId);
