@@ -58,7 +58,7 @@ namespace Azure.Messaging.WebPubSub
                 perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
             }
 
-            Pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
@@ -97,7 +97,7 @@ namespace Azure.Messaging.WebPubSub
                 perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
             }
 
-            Pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, WebPubSubServiceClientOptions.CredentialScopeName) },
