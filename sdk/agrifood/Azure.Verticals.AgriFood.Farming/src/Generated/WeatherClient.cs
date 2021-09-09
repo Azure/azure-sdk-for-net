@@ -54,6 +54,70 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of weather data. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       boundaryId: string,
+        ///       extensionId: string,
+        ///       location: {
+        ///         latitude: number,
+        ///         longitude: number
+        ///       },
+        ///       dateTime: string (ISO 8601 Format),
+        ///       unitSystemCode: string,
+        ///       extensionVersion: string,
+        ///       weatherDataType: string,
+        ///       granularity: string,
+        ///       cloudCover: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       dewPoint: Measure,
+        ///       growingDegreeDay: Measure,
+        ///       precipitation: Measure,
+        ///       pressure: Measure,
+        ///       relativeHumidity: Measure,
+        ///       soilMoisture: Measure,
+        ///       soilTemperature: Measure,
+        ///       temperature: Measure,
+        ///       visibility: Measure,
+        ///       wetBulbTemperature: Measure,
+        ///       windChill: Measure,
+        ///       windDirection: Measure,
+        ///       windGust: Measure,
+        ///       windSpeed: Measure,
+        ///       id: string,
+        ///       eTag: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> Farmer ID. </param>
         /// <param name="boundaryId"> Boundary ID. </param>
         /// <param name="extensionId"> ID of the weather extension. </param>
@@ -102,6 +166,70 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of weather data. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       boundaryId: string,
+        ///       extensionId: string,
+        ///       location: {
+        ///         latitude: number,
+        ///         longitude: number
+        ///       },
+        ///       dateTime: string (ISO 8601 Format),
+        ///       unitSystemCode: string,
+        ///       extensionVersion: string,
+        ///       weatherDataType: string,
+        ///       granularity: string,
+        ///       cloudCover: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       dewPoint: Measure,
+        ///       growingDegreeDay: Measure,
+        ///       precipitation: Measure,
+        ///       pressure: Measure,
+        ///       relativeHumidity: Measure,
+        ///       soilMoisture: Measure,
+        ///       soilTemperature: Measure,
+        ///       temperature: Measure,
+        ///       visibility: Measure,
+        ///       wetBulbTemperature: Measure,
+        ///       windChill: Measure,
+        ///       windDirection: Measure,
+        ///       windGust: Measure,
+        ///       windSpeed: Measure,
+        ///       id: string,
+        ///       eTag: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> Farmer ID. </param>
         /// <param name="boundaryId"> Boundary ID. </param>
         /// <param name="extensionId"> ID of the weather extension. </param>
@@ -199,6 +327,47 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get weather ingestion job. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   boundaryId: string,
+        ///   farmerId: string,
+        ///   extensionId: string,
+        ///   extensionApiName: string,
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;,
+        ///   extensionDataProviderAppId: string,
+        ///   extensionDataProviderApiKey: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -236,6 +405,47 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get weather ingestion job. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   boundaryId: string,
+        ///   farmerId: string,
+        ///   extensionId: string,
+        ///   extensionApiName: string,
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;,
+        ///   extensionDataProviderAppId: string,
+        ///   extensionDataProviderApiKey: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -293,126 +503,67 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data ingestion job. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>boundaryId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>extensionId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>extensionApiName</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Extension api name to which request is to be made.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>extensionApiInput</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term>Yes</term>
-        ///     <term>Extension api input dictionary which would be used to feed request query/body/parameter information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>extensionDataProviderAppId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>App id of the weather data provider.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>extensionDataProviderApiKey</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Api key of the weather data provider.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Unique job id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>durationInSeconds</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Duration of the job in seconds.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status message to capture more details of the job.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastActionDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name to identify resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Textual description of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   boundaryId: string (required),
+        ///   farmerId: string (required),
+        ///   extensionId: string (required),
+        ///   extensionApiName: string (required),
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt; (required),
+        ///   extensionDataProviderAppId: string,
+        ///   extensionDataProviderApiKey: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   boundaryId: string,
+        ///   farmerId: string,
+        ///   extensionId: string,
+        ///   extensionApiName: string,
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;,
+        ///   extensionDataProviderAppId: string,
+        ///   extensionDataProviderApiKey: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="jobId"> Job id supplied by user. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -454,126 +605,67 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data ingestion job. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>boundaryId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>extensionId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>extensionApiName</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Extension api name to which request is to be made.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>extensionApiInput</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term>Yes</term>
-        ///     <term>Extension api input dictionary which would be used to feed request query/body/parameter information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>extensionDataProviderAppId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>App id of the weather data provider.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>extensionDataProviderApiKey</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Api key of the weather data provider.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Unique job id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>durationInSeconds</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Duration of the job in seconds.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status message to capture more details of the job.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastActionDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name to identify resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Textual description of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   boundaryId: string (required),
+        ///   farmerId: string (required),
+        ///   extensionId: string (required),
+        ///   extensionApiName: string (required),
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt; (required),
+        ///   extensionDataProviderAppId: string,
+        ///   extensionDataProviderApiKey: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   boundaryId: string,
+        ///   farmerId: string,
+        ///   extensionId: string,
+        ///   extensionApiName: string,
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;,
+        ///   extensionDataProviderAppId: string,
+        ///   extensionDataProviderApiKey: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="jobId"> Job id supplied by user. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -634,6 +726,47 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get weather data delete job. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   extensionId: string,
+        ///   farmerId: string,
+        ///   boundaryId: string,
+        ///   weatherDataType: string,
+        ///   granularity: string,
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -671,6 +804,47 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get weather data delete job. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   extensionId: string,
+        ///   farmerId: string,
+        ///   boundaryId: string,
+        ///   weatherDataType: string,
+        ///   granularity: string,
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -728,126 +902,67 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data delete job. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>extensionId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>boundaryId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>weatherDataType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>granularity</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Unique job id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>durationInSeconds</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Duration of the job in seconds.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status message to capture more details of the job.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastActionDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name to identify resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Textual description of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   extensionId: string (required),
+        ///   farmerId: string (required),
+        ///   boundaryId: string (required),
+        ///   weatherDataType: string,
+        ///   granularity: string,
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   extensionId: string,
+        ///   farmerId: string,
+        ///   boundaryId: string,
+        ///   weatherDataType: string,
+        ///   granularity: string,
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -889,126 +1004,67 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data delete job. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>extensionId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>boundaryId</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>weatherDataType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>granularity</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Unique job id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>durationInSeconds</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Duration of the job in seconds.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status message to capture more details of the job.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastActionDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name to identify resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Textual description of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   extensionId: string (required),
+        ///   farmerId: string (required),
+        ///   boundaryId: string (required),
+        ///   weatherDataType: string,
+        ///   granularity: string,
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   extensionId: string,
+        ///   farmerId: string,
+        ///   boundaryId: string,
+        ///   weatherDataType: string,
+        ///   granularity: string,
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="content"> The content to send as the body of the request. </param>

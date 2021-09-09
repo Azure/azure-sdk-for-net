@@ -35,7 +35,7 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// Serialization type for the schema being stored.
         /// </summary>
-        internal SerializationType Type { get; }
+        public SerializationType Type { get; }
 
         /// <summary>
         /// Version of the schema.

@@ -13,25 +13,26 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class ManagedServiceIdentityUserAssignedIdentitiesValue
+    /// <summary>
+    /// User Assigned identity.
+    /// </summary>
+    public partial class UserAssignedIdentity
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ManagedServiceIdentityUserAssignedIdentitiesValue class.
+        /// Initializes a new instance of the UserAssignedIdentity class.
         /// </summary>
-        public ManagedServiceIdentityUserAssignedIdentitiesValue()
+        public UserAssignedIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ManagedServiceIdentityUserAssignedIdentitiesValue class.
+        /// Initializes a new instance of the UserAssignedIdentity class.
         /// </summary>
         /// <param name="principalId">Principal Id of user assigned
         /// identity</param>
         /// <param name="clientId">Client Id of user assigned identity</param>
-        public ManagedServiceIdentityUserAssignedIdentitiesValue(string principalId = default(string), string clientId = default(string))
+        public UserAssignedIdentity(string principalId = default(string), string clientId = default(string))
         {
             PrincipalId = principalId;
             ClientId = clientId;

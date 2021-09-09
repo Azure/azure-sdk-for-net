@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 //using Sku = Azure.ResourceManager.Storage.Models.Sku;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class FlowLogTests : NetworkServiceClientTestBase
     {

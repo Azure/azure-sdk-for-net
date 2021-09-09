@@ -55,6 +55,66 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of planting data resources under a particular farm. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       avgPlantingRate: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       totalMaterial: Measure,
+        ///       avgMaterial: Measure,
+        ///       plantingProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           area: Measure,
+        ///           totalMaterial: Measure,
+        ///           avgMaterial: Measure
+        ///         }
+        ///       ],
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
@@ -125,6 +185,66 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of planting data resources under a particular farm. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       avgPlantingRate: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       totalMaterial: Measure,
+        ///       avgMaterial: Measure,
+        ///       plantingProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           area: Measure,
+        ///           totalMaterial: Measure,
+        ///           avgMaterial: Measure
+        ///         }
+        ///       ],
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
@@ -355,6 +475,66 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of planting data resources across all farmers. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       avgPlantingRate: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       totalMaterial: Measure,
+        ///       avgMaterial: Measure,
+        ///       plantingProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           area: Measure,
+        ///           totalMaterial: Measure,
+        ///           avgMaterial: Measure
+        ///         }
+        ///       ],
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
         /// <param name="minTotalMaterial"> Minimum TotalMaterial value(inclusive). </param>
@@ -424,6 +604,66 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of planting data resources across all farmers. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       avgPlantingRate: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       totalMaterial: Measure,
+        ///       avgMaterial: Measure,
+        ///       plantingProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           area: Measure,
+        ///           totalMaterial: Measure,
+        ///           avgMaterial: Measure
+        ///         }
+        ///       ],
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
         /// <param name="minTotalMaterial"> Minimum TotalMaterial value(inclusive). </param>
@@ -650,6 +890,60 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get a specified planting data resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   avgPlantingRate: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   totalMaterial: Measure,
+        ///   avgMaterial: Measure,
+        ///   plantingProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       area: Measure,
+        ///       totalMaterial: Measure,
+        ///       avgMaterial: Measure
+        ///     }
+        ///   ],
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
         /// <param name="options"> The request options. </param>
@@ -688,6 +982,60 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get a specified planting data resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   avgPlantingRate: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   totalMaterial: Measure,
+        ///   avgMaterial: Measure,
+        ///   plantingProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       area: Measure,
+        ///       totalMaterial: Measure,
+        ///       avgMaterial: Measure
+        ///     }
+        ///   ],
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
         /// <param name="options"> The request options. </param>
@@ -749,198 +1097,93 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates an planting data resource under a particular farmer. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>avgPlantingRate</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>totalMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>avgMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>plantingProductDetails</term>
-        ///     <term>PlantingProductDetail[]</term>
-        ///     <term></term>
-        ///     <term>Planting product details.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>area</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Source of the operation data.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationStartDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationEndDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attachmentsLink</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Link for attachments.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>associatedBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Optional boundary ID of the field for which operation was applied.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Optional boundary ID of the actual area for which operation was applied inside the specified field.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Farmer ID which belongs to the operation data.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Unique resource ID.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ETag value to implement optimistic concurrency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name to identify resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Textual description of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Measure</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>unit</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Data unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Data value.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>PlantingProductDetail</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>productName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name of the product.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>area</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>totalMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>avgMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   avgPlantingRate: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   totalMaterial: Measure,
+        ///   avgMaterial: Measure,
+        ///   plantingProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       area: Measure,
+        ///       totalMaterial: Measure,
+        ///       avgMaterial: Measure
+        ///     }
+        ///   ],
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   avgPlantingRate: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   totalMaterial: Measure,
+        ///   avgMaterial: Measure,
+        ///   plantingProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       area: Measure,
+        ///       totalMaterial: Measure,
+        ///       avgMaterial: Measure
+        ///     }
+        ///   ],
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
@@ -984,198 +1227,93 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates an planting data resource under a particular farmer. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>avgPlantingRate</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>totalMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>avgMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>plantingProductDetails</term>
-        ///     <term>PlantingProductDetail[]</term>
-        ///     <term></term>
-        ///     <term>Planting product details.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>area</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Source of the operation data.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationStartDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationEndDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attachmentsLink</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Link for attachments.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>associatedBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Optional boundary ID of the field for which operation was applied.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Optional boundary ID of the actual area for which operation was applied inside the specified field.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Farmer ID which belongs to the operation data.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Unique resource ID.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ETag value to implement optimistic concurrency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name to identify resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Textual description of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Measure</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>unit</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Data unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Data value.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>PlantingProductDetail</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>productName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name of the product.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>area</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>totalMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>avgMaterial</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term>Schema for storing measurement reading and unit.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   avgPlantingRate: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   totalMaterial: Measure,
+        ///   avgMaterial: Measure,
+        ///   plantingProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       area: Measure,
+        ///       totalMaterial: Measure,
+        ///       avgMaterial: Measure
+        ///     }
+        ///   ],
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   avgPlantingRate: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   totalMaterial: Measure,
+        ///   avgMaterial: Measure,
+        ///   plantingProductDetails: [
+        ///     {
+        ///       productName: string,
+        ///       area: Measure,
+        ///       totalMaterial: Measure,
+        ///       avgMaterial: Measure
+        ///     }
+        ///   ],
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
@@ -1241,6 +1379,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified planting data resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="plantingDataId"> ID of the planting data. </param>
         /// <param name="options"> The request options. </param>
@@ -1279,6 +1435,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified planting data resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="plantingDataId"> ID of the planting data. </param>
         /// <param name="options"> The request options. </param>
