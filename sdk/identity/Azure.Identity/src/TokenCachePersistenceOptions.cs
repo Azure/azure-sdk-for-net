@@ -38,16 +38,16 @@ namespace Azure.Identity
     ///     // Load the previously serialized AuthenticationRecord from disk and deserialize it.
     ///     using var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, FileAccess.Read);
     ///     authRecord = await AuthenticationRecord.DeserializeAsync(authRecordStream);
-    /// }
     ///
-    /// // Construct a new client with our TokenCachePersistenceOptions with the addition of the AuthenticationRecord property.
-    /// // This tells the credential to use the same token cache in addition to which account to try and fetch from cache when GetToken is called.
-    /// credential = new InteractiveBrowserCredential(
-    ///     new InteractiveBrowserCredentialOptions
-    ///     {
-    ///         TokenCachePersistenceOptions = new TokenCachePersistenceOptions { Name = TOKEN_CACHE_NAME },
-    ///         AuthenticationRecord = authRecord
-    ///     });
+    ///     // Construct a new client with our TokenCachePersistenceOptions with the addition of the AuthenticationRecord property.
+    ///     // This tells the credential to use the same token cache in addition to which account to try and fetch from cache when GetToken is called.
+    ///     credential = new InteractiveBrowserCredential(
+    ///         new InteractiveBrowserCredentialOptions
+    ///         {
+    ///             TokenCachePersistenceOptions = new TokenCachePersistenceOptions { Name = TOKEN_CACHE_NAME },
+    ///             AuthenticationRecord = authRecord
+    ///         });
+    /// }
     ///
     /// // Construct our client with the credential which is connected to the token cache
     /// // with the capability of silent authentication for the account specified in the AuthenticationRecord.

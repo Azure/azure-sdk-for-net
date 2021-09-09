@@ -40,10 +40,7 @@ In many cases applications require tight control over user interaction. In these
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_DisableAutomaticAuthentication
 var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialOptions
-    {
-        DisableAutomaticAuthentication = true
-    });
+    new InteractiveBrowserCredentialOptions { DisableAutomaticAuthentication = true });
 
 await credential.AuthenticateAsync();
 
@@ -87,10 +84,7 @@ To configure a credential, such as the `InteractiveBrowserCredential`, to persis
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache
 var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialOptions
-    {
-        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
-    });
+    new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = new TokenCachePersistenceOptions() });
 ```
 
 ### Persisting the AuthenticationRecord
@@ -130,8 +124,7 @@ using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, Fi
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialOptions
     {
-        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
-        AuthenticationRecord = authRecord
+        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(), AuthenticationRecord = authRecord
     });
 ```
 
