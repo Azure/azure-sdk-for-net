@@ -1,0 +1,14 @@
+{
+  "version": "2.0",
+  "extensions": {
+    "http": {
+      "routePrefix": "simplechat"
+    }
+  },
+  "logging": {
+    "fileLoggingMode": "always",
+    "logLevel": {
+      "default": "Trace"
+    }
+  }
+}

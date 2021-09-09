@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AzureFunctionsVersion>v3</AzureFunctionsVersion>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="$(MicrosoftNETSdkFunctionsV3)" />
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="$(MicrosoftAzureFunctionsExtensionsV3)" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" Version="$(MicrosoftAzureWebJobsHostStorage)" />
+  </ItemGroup>
+  
+  <ItemGroup>
+       <ProjectReference Include="..\..\..\..\src\SignalRServiceExtension\Microsoft.Azure.WebJobs.Extensions.SignalRService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="local.settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+</Project>

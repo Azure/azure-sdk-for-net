@@ -1,0 +1,31 @@
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "signalREndpoints",
+      "direction": "in",
+      "name": "endpoints",
+      "hubName": "%hub%"
+    },
+    {
+      "type": "signalR",
+      "direction": "out",
+      "name": "signalRMessages",
+      "hubName": "%hub%"
+    }
+  ]
+}

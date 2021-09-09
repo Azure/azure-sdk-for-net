@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.314
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bidirectional-chat", "bidirectional-chat.csproj", "{F036C2AB-05C2-4E80-BBD6-5545074ABDAD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.SignalRService", "..\..\..\src\SignalRServiceExtension\Microsoft.Azure.WebJobs.Extensions.SignalRService.csproj", "{9394D198-3788-44FA-AD68-A558A89B3A2E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.SignalR.Management", "..\..\..\..\azure-signalr\src\Microsoft.Azure.SignalR.Management\Microsoft.Azure.SignalR.Management.csproj", "{6F542BE2-DF9B-4671-84A9-4B73020A1684}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F036C2AB-05C2-4E80-BBD6-5545074ABDAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F036C2AB-05C2-4E80-BBD6-5545074ABDAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F036C2AB-05C2-4E80-BBD6-5545074ABDAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F036C2AB-05C2-4E80-BBD6-5545074ABDAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9394D198-3788-44FA-AD68-A558A89B3A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9394D198-3788-44FA-AD68-A558A89B3A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9394D198-3788-44FA-AD68-A558A89B3A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9394D198-3788-44FA-AD68-A558A89B3A2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F542BE2-DF9B-4671-84A9-4B73020A1684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F542BE2-DF9B-4671-84A9-4B73020A1684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F542BE2-DF9B-4671-84A9-4B73020A1684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F542BE2-DF9B-4671-84A9-4B73020A1684}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {67A36E97-9575-4349-A3D2-A4B8E8972A45}
+	EndGlobalSection
+EndGlobal

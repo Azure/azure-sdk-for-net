@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.microsoft.azure.functions</groupId>
+    <artifactId>azure-functions-java-library-signalr</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Microsoft Azure Functions Java SignalR Types</name>
+    <description>This package contains all Java interfaces and annotations to interact with Microsoft Azure functions runtime for SignalR Service.</description>
+    <url>https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-signalr-service</url>
+    <organization>
+        <name>Microsoft Azure</name>
+        <url>https://azure.microsoft.com</url>
+    </organization>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-compiler.version>3.8.0</maven-compiler.version>
+        <maven-source.version>3.0.1</maven-source.version>
+        <maven-javadoc.version>3.0.1</maven-javadoc.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <azure.functions.java.library.version>1.3.0</azure.functions.java.library.version>
+    </properties>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:https://github.com/Azure/azure-functions-signalrservice-extension</connection>
+        <developerConnection>scm:git:git@github.com:Azure/azure-functions-signalrservice-extension</developerConnection>
+        <url>https://github.com/Azure/azure-functions-signalrservice-extension</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+      <snapshotRepository>
+        <id>ossrh</id>
+        <name>Sonatype Snapshots</name>
+        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        <uniqueVersion>true</uniqueVersion>
+        <layout>default</layout>
+      </snapshotRepository>
+    </distributionManagement>
+
+    <developers>
+        <developer>
+            <id>anthonychu</id>
+            <name>Anthony Chu</name>
+            <email>Anthony.Chu@microsoft.com</email>
+        </developer>
+        <developer>
+            <id>JialinXin</id>
+            <name>Jialin Xin</name>
+            <email>jixin@microsoft.com</email>
+        </developer>
+    </developers>
+
+    <repositories>
+        <repository>
+            <id>maven.snapshots</id>
+            <name>Maven Central Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.microsoft.azure.functions</groupId>
+            <artifactId>azure-functions-java-library</artifactId>
+            <version>${azure.functions.java.library.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

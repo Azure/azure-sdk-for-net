@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.SignalR.Management" Version="$(MicrosoftAzureSignalRManagement)" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdkPackageVersion)" />
+    <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
+    <PackageReference Include="xunit" Version="$(XunitPackageVersion)" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="$(XunitRunnerVisualstudioPackageVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Azure" Version="$(MicrosoftExtensionsAzureVersion)"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SignalRServiceExtension\Microsoft.Azure.WebJobs.Extensions.SignalRService.csproj" />
+    <ProjectReference Include="..\Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests.Common\Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests.Common.csproj" />
+  </ItemGroup>
+</Project>
