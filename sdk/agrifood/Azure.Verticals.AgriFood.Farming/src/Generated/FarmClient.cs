@@ -17,7 +17,8 @@ namespace Azure.Verticals.AgriFood.Farming
     public partial class FarmClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -48,7 +49,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
@@ -120,7 +121,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmClient.CreateDataIngestionJob");
             scope.Start();
@@ -216,7 +217,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmClient.CreateDataIngestionJob");
             scope.Start();
@@ -245,13 +246,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateDataIngestionJob"/> and <see cref="CreateDataIngestionJobAsync"/> operations. </summary>
-        /// <param name="jobId"> Job ID supplied by user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateDataIngestionJobRequest(string jobId, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateDataIngestionJobRequest(string jobId, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -312,7 +309,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmClient.GetDataIngestionJobDetails");
             scope.Start();
@@ -387,7 +384,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("FarmClient.GetDataIngestionJobDetails");
             scope.Start();
@@ -416,12 +413,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="GetDataIngestionJobDetails"/> and <see cref="GetDataIngestionJobDetailsAsync"/> operations. </summary>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetDataIngestionJobDetailsRequest(string jobId, RequestOptions options = null)
+        private HttpMessage CreateGetDataIngestionJobDetailsRequest(string jobId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

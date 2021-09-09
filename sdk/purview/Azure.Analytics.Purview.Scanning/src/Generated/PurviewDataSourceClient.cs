@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Scanning
     public partial class PurviewDataSourceClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -54,7 +55,7 @@ namespace Azure.Analytics.Purview.Scanning
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             this.dataSourceName = dataSourceName;
             apiVersion = options.Version;
@@ -202,7 +203,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.CreateOrUpdate");
             scope.Start();
@@ -374,7 +375,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.CreateOrUpdate");
             scope.Start();
@@ -404,12 +405,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -508,7 +506,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetPropertiesRequest(options);
+            using HttpMessage message = CreateGetPropertiesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetProperties");
             scope.Start();
@@ -621,7 +619,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetPropertiesRequest(options);
+            using HttpMessage message = CreateGetPropertiesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetProperties");
             scope.Start();
@@ -650,11 +648,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetProperties"/> and <see cref="GetPropertiesAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetPropertiesRequest(RequestOptions options = null)
+        private HttpMessage CreateGetPropertiesRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -751,7 +747,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(options);
+            using HttpMessage message = CreateDeleteRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.Delete");
             scope.Start();
@@ -866,7 +862,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(options);
+            using HttpMessage message = CreateDeleteRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.Delete");
             scope.Start();
@@ -897,11 +893,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(RequestOptions options = null)
+        private HttpMessage CreateDeleteRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1004,7 +998,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetChildrenRequest(options);
+            using HttpMessage message = CreateGetChildrenRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetChildren");
             scope.Start();
@@ -1123,7 +1117,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetChildrenRequest(options);
+            using HttpMessage message = CreateGetChildrenRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetChildren");
             scope.Start();
@@ -1152,11 +1146,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetChildren"/> and <see cref="GetChildrenAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetChildrenRequest(RequestOptions options = null)
+        private HttpMessage CreateGetChildrenRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1253,7 +1245,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetScansRequest(options);
+            using HttpMessage message = CreateGetScansRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetScans");
             scope.Start();
@@ -1365,7 +1357,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetScansRequest(options);
+            using HttpMessage message = CreateGetScansRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetScans");
             scope.Start();
@@ -1394,11 +1386,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetScans"/> and <see cref="GetScansAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetScansRequest(RequestOptions options = null)
+        private HttpMessage CreateGetScansRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Catalog
     public partial class PurviewCatalogClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -48,7 +49,7 @@ namespace Azure.Analytics.Purview.Catalog
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
@@ -104,7 +105,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateSearchRequest(content, options);
+            using HttpMessage message = CreateSearchRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
@@ -184,7 +185,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateSearchRequest(content, options);
+            using HttpMessage message = CreateSearchRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
@@ -213,12 +214,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="Search"/> and <see cref="SearchAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSearchRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateSearchRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -257,7 +255,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateSuggestRequest(content, options);
+            using HttpMessage message = CreateSuggestRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
@@ -310,7 +308,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateSuggestRequest(content, options);
+            using HttpMessage message = CreateSuggestRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
@@ -339,12 +337,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="Suggest"/> and <see cref="SuggestAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSuggestRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateSuggestRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -383,7 +378,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateAutoCompleteRequest(content, options);
+            using HttpMessage message = CreateAutoCompleteRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
@@ -436,7 +431,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateAutoCompleteRequest(content, options);
+            using HttpMessage message = CreateAutoCompleteRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
@@ -465,12 +460,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="AutoComplete"/> and <see cref="AutoCompleteAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateAutoCompleteRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateAutoCompleteRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -527,7 +519,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
+            using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
             scope.Start();
@@ -598,7 +590,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
+            using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
             scope.Start();
@@ -627,17 +619,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetLineageGraph"/> and <see cref="GetLineageGraphAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
-        /// <param name="depth"> The number of hops for lineage. </param>
-        /// <param name="width"> The number of max expanding width in lineage. </param>
-        /// <param name="includeParent"> True to include the parent chain in the response. </param>
-        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions options = null)
+        private HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -708,7 +692,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
+            using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
             scope.Start();
@@ -778,7 +762,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
+            using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
             scope.Start();
@@ -807,16 +791,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="NextPageLineage"/> and <see cref="NextPageLineageAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
-        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions options = null)
+        private HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

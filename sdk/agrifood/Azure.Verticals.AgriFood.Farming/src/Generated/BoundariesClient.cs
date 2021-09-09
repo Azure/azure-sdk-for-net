@@ -18,7 +18,8 @@ namespace Azure.Verticals.AgriFood.Farming
     public partial class BoundariesClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -49,7 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
@@ -128,7 +129,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.ListByFarmerId");
             scope.Start();
@@ -231,7 +232,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.ListByFarmerId");
             scope.Start();
@@ -260,33 +261,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="ListByFarmerId"/> and <see cref="ListByFarmerIdAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="isPrimary"> Is the boundary primary. </param>
-        /// <param name="parentType"> Type of the parent it belongs to. </param>
-        /// <param name="parentIds"> Parent Ids of the resource. </param>
-        /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
-        /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListByFarmerIdRequest(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateListByFarmerIdRequest(string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -437,7 +414,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateSearchByFarmerIdRequest(farmerId, content, options);
+            using HttpMessage message = CreateSearchByFarmerIdRequest(farmerId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.SearchByFarmerId");
             scope.Start();
@@ -543,7 +520,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateSearchByFarmerIdRequest(farmerId, content, options);
+            using HttpMessage message = CreateSearchByFarmerIdRequest(farmerId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.SearchByFarmerId");
             scope.Start();
@@ -572,13 +549,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="SearchByFarmerId"/> and <see cref="SearchByFarmerIdAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSearchByFarmerIdRequest(string farmerId, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateSearchByFarmerIdRequest(string farmerId, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -667,7 +640,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            using HttpMessage message = CreateListRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.List");
             scope.Start();
@@ -769,7 +742,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            using HttpMessage message = CreateListRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.List");
             scope.Start();
@@ -798,32 +771,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="List"/> and <see cref="ListAsync"/> operations. </summary>
-        /// <param name="isPrimary"> Is the boundary primary. </param>
-        /// <param name="parentType"> Type of the parent it belongs to. </param>
-        /// <param name="parentIds"> Parent Ids of the resource. </param>
-        /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
-        /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListRequest(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateListRequest(bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -971,7 +921,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateSearchRequest(content, options);
+            using HttpMessage message = CreateSearchRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Search");
             scope.Start();
@@ -1076,7 +1026,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateSearchRequest(content, options);
+            using HttpMessage message = CreateSearchRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Search");
             scope.Start();
@@ -1105,12 +1055,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="Search"/> and <see cref="SearchAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSearchRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateSearchRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1169,7 +1116,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -1243,7 +1190,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -1272,12 +1219,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="GetCascadeDeleteJobDetails"/> and <see cref="GetCascadeDeleteJobDetailsAsync"/> operations. </summary>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestOptions options = null)
+        private HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1337,7 +1281,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId, options);
+            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateCascadeDeleteJob");
             scope.Start();
@@ -1413,7 +1357,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId, options);
+            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateCascadeDeleteJob");
             scope.Start();
@@ -1442,14 +1386,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateCascadeDeleteJob"/> and <see cref="CreateCascadeDeleteJobAsync"/> operations. </summary>
-        /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="boundaryId"> ID of the boundary to be deleted. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string boundaryId, RequestOptions options = null)
+        private HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string boundaryId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1512,7 +1451,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRequest(farmerId, boundaryId, options);
+            using HttpMessage message = CreateGetRequest(farmerId, boundaryId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Get");
             scope.Start();
@@ -1589,7 +1528,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRequest(farmerId, boundaryId, options);
+            using HttpMessage message = CreateGetRequest(farmerId, boundaryId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Get");
             scope.Start();
@@ -1618,13 +1557,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="boundaryId"> ID of the boundary. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRequest(string farmerId, string boundaryId, RequestOptions options = null)
+        private HttpMessage CreateGetRequest(string farmerId, string boundaryId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1709,7 +1644,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content, options);
+            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateOrUpdate");
             scope.Start();
@@ -1809,7 +1744,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content, options);
+            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateOrUpdate");
             scope.Start();
@@ -1839,14 +1774,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the farmer resource. </param>
-        /// <param name="boundaryId"> ID of the boundary resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string boundaryId, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string boundaryId, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -1890,7 +1820,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(farmerId, boundaryId, options);
+            using HttpMessage message = CreateDeleteRequest(farmerId, boundaryId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Delete");
             scope.Start();
@@ -1946,7 +1876,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(farmerId, boundaryId, options);
+            using HttpMessage message = CreateDeleteRequest(farmerId, boundaryId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Delete");
             scope.Start();
@@ -1975,13 +1905,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="boundaryId"> ID of the boundary. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(string farmerId, string boundaryId, RequestOptions options = null)
+        private HttpMessage CreateDeleteRequest(string farmerId, string boundaryId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -2033,7 +1959,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId, options);
+            using HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetOverlap");
             scope.Start();
@@ -2099,7 +2025,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId, options);
+            using HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetOverlap");
             scope.Start();
@@ -2128,15 +2054,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="GetOverlap"/> and <see cref="GetOverlapAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="boundaryId"> ID of the boundary. </param>
-        /// <param name="otherFarmerId"> FarmerId of the other field. </param>
-        /// <param name="otherBoundaryId"> ID of the other boundary. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetOverlapRequest(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId, RequestOptions options = null)
+        private HttpMessage CreateGetOverlapRequest(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

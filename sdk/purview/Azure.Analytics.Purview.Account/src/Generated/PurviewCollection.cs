@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Account
     public partial class PurviewCollection
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -78,7 +79,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCollectionRequest(options);
+            using HttpMessage message = CreateGetCollectionRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
             scope.Start();
@@ -155,7 +156,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCollectionRequest(options);
+            using HttpMessage message = CreateGetCollectionRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
             scope.Start();
@@ -184,11 +185,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetCollection"/> and <see cref="GetCollectionAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetCollectionRequest(RequestOptions options = null)
+        private HttpMessage CreateGetCollectionRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -271,7 +270,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();
@@ -370,7 +369,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();
@@ -399,12 +398,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateCollection"/> and <see cref="CreateOrUpdateCollectionAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateCollectionRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateCollectionRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -446,7 +442,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteCollectionRequest(options);
+            using HttpMessage message = CreateDeleteCollectionRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
             scope.Start();
@@ -502,7 +498,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteCollectionRequest(options);
+            using HttpMessage message = CreateDeleteCollectionRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
             scope.Start();
@@ -531,11 +527,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteCollection"/> and <see cref="DeleteCollectionAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteCollectionRequest(RequestOptions options = null)
+        private HttpMessage CreateDeleteCollectionRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -589,7 +583,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateListChildCollectionNamesRequest(skipToken, options);
+            using HttpMessage message = CreateListChildCollectionNamesRequest(skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.ListChildCollectionNames");
             scope.Start();
@@ -659,7 +653,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateListChildCollectionNamesRequest(skipToken, options);
+            using HttpMessage message = CreateListChildCollectionNamesRequest(skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.ListChildCollectionNames");
             scope.Start();
@@ -688,12 +682,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="ListChildCollectionNames"/> and <see cref="ListChildCollectionNamesAsync"/> operations. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListChildCollectionNamesRequest(string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateListChildCollectionNamesRequest(string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -745,7 +736,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCollectionPathRequest(options);
+            using HttpMessage message = CreateGetCollectionPathRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
             scope.Start();
@@ -808,7 +799,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCollectionPathRequest(options);
+            using HttpMessage message = CreateGetCollectionPathRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
             scope.Start();
@@ -837,11 +828,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetCollectionPath"/> and <see cref="GetCollectionPathAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetCollectionPathRequest(RequestOptions options = null)
+        private HttpMessage CreateGetCollectionPathRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
