@@ -32,131 +32,53 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create a new relationship between entities. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>end1</term>
-        ///     <term>AtlasObjectId</term>
-        ///     <term></term>
-        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>end2</term>
-        ///     <term>AtlasObjectId</term>
-        ///     <term></term>
-        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>homeId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The home ID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>label</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The label of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>provenanceType</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   end1: {
+        ///     guid: string,
+        ///     typeName: string,
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
+        ///   },
+        ///   end2: AtlasObjectId,
+        ///   guid: string,
+        ///   homeId: string,
+        ///   label: string,
+        ///   provenanceType: number,
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   end1: {
+        ///     guid: string,
+        ///     typeName: string,
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
+        ///   },
+        ///   end2: AtlasObjectId,
+        ///   guid: string,
+        ///   homeId: string,
+        ///   label: string,
+        ///   provenanceType: number,
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -197,131 +119,53 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create a new relationship between entities. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>end1</term>
-        ///     <term>AtlasObjectId</term>
-        ///     <term></term>
-        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>end2</term>
-        ///     <term>AtlasObjectId</term>
-        ///     <term></term>
-        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>homeId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The home ID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>label</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The label of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>provenanceType</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   end1: {
+        ///     guid: string,
+        ///     typeName: string,
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
+        ///   },
+        ///   end2: AtlasObjectId,
+        ///   guid: string,
+        ///   homeId: string,
+        ///   label: string,
+        ///   provenanceType: number,
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   end1: {
+        ///     guid: string,
+        ///     typeName: string,
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
+        ///   },
+        ///   end2: AtlasObjectId,
+        ///   guid: string,
+        ///   homeId: string,
+        ///   label: string,
+        ///   provenanceType: number,
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -381,131 +225,53 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update an existing relationship between entities. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>end1</term>
-        ///     <term>AtlasObjectId</term>
-        ///     <term></term>
-        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>end2</term>
-        ///     <term>AtlasObjectId</term>
-        ///     <term></term>
-        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>homeId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The home ID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>label</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The label of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>provenanceType</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   end1: {
+        ///     guid: string,
+        ///     typeName: string,
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
+        ///   },
+        ///   end2: AtlasObjectId,
+        ///   guid: string,
+        ///   homeId: string,
+        ///   label: string,
+        ///   provenanceType: number,
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   end1: {
+        ///     guid: string,
+        ///     typeName: string,
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
+        ///   },
+        ///   end2: AtlasObjectId,
+        ///   guid: string,
+        ///   homeId: string,
+        ///   label: string,
+        ///   provenanceType: number,
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -546,131 +312,53 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update an existing relationship between entities. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>end1</term>
-        ///     <term>AtlasObjectId</term>
-        ///     <term></term>
-        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>end2</term>
-        ///     <term>AtlasObjectId</term>
-        ///     <term></term>
-        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>homeId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The home ID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>label</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The label of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>provenanceType</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   end1: {
+        ///     guid: string,
+        ///     typeName: string,
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
+        ///   },
+        ///   end2: AtlasObjectId,
+        ///   guid: string,
+        ///   homeId: string,
+        ///   label: string,
+        ///   provenanceType: number,
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   end1: {
+        ///     guid: string,
+        ///     typeName: string,
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
+        ///   },
+        ///   end2: AtlasObjectId,
+        ///   guid: string,
+        ///   homeId: string,
+        ///   label: string,
+        ///   provenanceType: number,
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -728,6 +416,35 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get relationship information between entities by its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;,
+        ///   relationship: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     createTime: number,
+        ///     createdBy: string,
+        ///     end1: {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
+        ///     },
+        ///     end2: AtlasObjectId,
+        ///     guid: string,
+        ///     homeId: string,
+        ///     label: string,
+        ///     provenanceType: number,
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     updateTime: number,
+        ///     updatedBy: string,
+        ///     version: number
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="options"> The request options. </param>
@@ -766,6 +483,35 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get relationship information between entities by its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;,
+        ///   relationship: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     createTime: number,
+        ///     createdBy: string,
+        ///     end1: {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
+        ///     },
+        ///     end2: AtlasObjectId,
+        ///     guid: string,
+        ///     homeId: string,
+        ///     label: string,
+        ///     provenanceType: number,
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     updateTime: number,
+        ///     updatedBy: string,
+        ///     version: number
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="options"> The request options. </param>

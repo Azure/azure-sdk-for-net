@@ -30,6 +30,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   ledgerId: string,
+        ///   ledgerTlsCertificate: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -67,6 +86,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   ledgerId: string,
+        ///   ledgerTlsCertificate: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002

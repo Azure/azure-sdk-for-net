@@ -63,296 +63,137 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or Updates a data source. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>kind</term>
-        ///     <term>&quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scans</term>
-        ///     <term>Scan[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Scan</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>kind</term>
-        ///     <term>&quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanResults</term>
-        ///     <term>ScanResult[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResult</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>parentId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resourceId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assetsDiscovered</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assetsClassified</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>diagnostics</term>
-        ///     <term>ScanResultDiagnostics</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>queuedTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>pipelineStartTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanRulesetVersion</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanRulesetType</term>
-        ///     <term>&quot;Custom&quot; | &quot;System&quot;</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanLevelType</term>
-        ///     <term>&quot;Full&quot; | &quot;Incremental&quot;</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>errorMessage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>error</term>
-        ///     <term>ScanResultError</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>runType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dataSourceType</term>
-        ///     <term>&quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResultDiagnostics</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>notifications</term>
-        ///     <term>Notification[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>exceptionCountMap</term>
-        ///     <term>Dictionary&lt;string, number&gt;</term>
-        ///     <term></term>
-        ///     <term>Dictionary of &lt;integer&gt;</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResultError</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>target</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>details</term>
-        ///     <term>ErrorModel[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Notification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ErrorModel</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>target</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>details</term>
-        ///     <term>ErrorModel[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot; (required),
+        ///   scans: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot; (required),
+        ///       scanResults: [
+        ///         {
+        ///           parentId: string,
+        ///           id: string,
+        ///           resourceId: string,
+        ///           status: string,
+        ///           assetsDiscovered: number,
+        ///           assetsClassified: number,
+        ///           diagnostics: {
+        ///             notifications: [
+        ///               {
+        ///                 message: string,
+        ///                 code: number
+        ///               }
+        ///             ],
+        ///             exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///           },
+        ///           startTime: string (ISO 8601 Format),
+        ///           queuedTime: string (ISO 8601 Format),
+        ///           pipelineStartTime: string (ISO 8601 Format),
+        ///           endTime: string (ISO 8601 Format),
+        ///           scanRulesetVersion: number,
+        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///           errorMessage: string,
+        ///           error: {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [
+        ///               {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [ErrorModel]
+        ///               }
+        ///             ]
+        ///           },
+        ///           runType: string,
+        ///           dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///         }
+        ///       ]
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;,
+        ///   scans: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///       scanResults: [
+        ///         {
+        ///           parentId: string,
+        ///           id: string,
+        ///           resourceId: string,
+        ///           status: string,
+        ///           assetsDiscovered: number,
+        ///           assetsClassified: number,
+        ///           diagnostics: {
+        ///             notifications: [
+        ///               {
+        ///                 message: string,
+        ///                 code: number
+        ///               }
+        ///             ],
+        ///             exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///           },
+        ///           startTime: string (ISO 8601 Format),
+        ///           queuedTime: string (ISO 8601 Format),
+        ///           pipelineStartTime: string (ISO 8601 Format),
+        ///           endTime: string (ISO 8601 Format),
+        ///           scanRulesetVersion: number,
+        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///           errorMessage: string,
+        ///           error: {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [
+        ///               {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [ErrorModel]
+        ///               }
+        ///             ]
+        ///           },
+        ///           runType: string,
+        ///           dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///         }
+        ///       ]
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -394,296 +235,137 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or Updates a data source. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>kind</term>
-        ///     <term>&quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scans</term>
-        ///     <term>Scan[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Scan</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>kind</term>
-        ///     <term>&quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanResults</term>
-        ///     <term>ScanResult[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResult</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>parentId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resourceId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assetsDiscovered</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assetsClassified</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>diagnostics</term>
-        ///     <term>ScanResultDiagnostics</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>queuedTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>pipelineStartTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanRulesetVersion</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanRulesetType</term>
-        ///     <term>&quot;Custom&quot; | &quot;System&quot;</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanLevelType</term>
-        ///     <term>&quot;Full&quot; | &quot;Incremental&quot;</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>errorMessage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>error</term>
-        ///     <term>ScanResultError</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>runType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dataSourceType</term>
-        ///     <term>&quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResultDiagnostics</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>notifications</term>
-        ///     <term>Notification[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>exceptionCountMap</term>
-        ///     <term>Dictionary&lt;string, number&gt;</term>
-        ///     <term></term>
-        ///     <term>Dictionary of &lt;integer&gt;</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResultError</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>target</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>details</term>
-        ///     <term>ErrorModel[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Notification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ErrorModel</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>target</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>details</term>
-        ///     <term>ErrorModel[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot; (required),
+        ///   scans: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot; (required),
+        ///       scanResults: [
+        ///         {
+        ///           parentId: string,
+        ///           id: string,
+        ///           resourceId: string,
+        ///           status: string,
+        ///           assetsDiscovered: number,
+        ///           assetsClassified: number,
+        ///           diagnostics: {
+        ///             notifications: [
+        ///               {
+        ///                 message: string,
+        ///                 code: number
+        ///               }
+        ///             ],
+        ///             exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///           },
+        ///           startTime: string (ISO 8601 Format),
+        ///           queuedTime: string (ISO 8601 Format),
+        ///           pipelineStartTime: string (ISO 8601 Format),
+        ///           endTime: string (ISO 8601 Format),
+        ///           scanRulesetVersion: number,
+        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///           errorMessage: string,
+        ///           error: {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [
+        ///               {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [ErrorModel]
+        ///               }
+        ///             ]
+        ///           },
+        ///           runType: string,
+        ///           dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///         }
+        ///       ]
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;,
+        ///   scans: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///       scanResults: [
+        ///         {
+        ///           parentId: string,
+        ///           id: string,
+        ///           resourceId: string,
+        ///           status: string,
+        ///           assetsDiscovered: number,
+        ///           assetsClassified: number,
+        ///           diagnostics: {
+        ///             notifications: [
+        ///               {
+        ///                 message: string,
+        ///                 code: number
+        ///               }
+        ///             ],
+        ///             exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///           },
+        ///           startTime: string (ISO 8601 Format),
+        ///           queuedTime: string (ISO 8601 Format),
+        ///           pipelineStartTime: string (ISO 8601 Format),
+        ///           endTime: string (ISO 8601 Format),
+        ///           scanRulesetVersion: number,
+        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///           errorMessage: string,
+        ///           error: {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [
+        ///               {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [ErrorModel]
+        ///               }
+        ///             ]
+        ///           },
+        ///           runType: string,
+        ///           dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///         }
+        ///       ]
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -743,6 +425,83 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a data source. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;,
+        ///   scans: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///       scanResults: [
+        ///         {
+        ///           parentId: string,
+        ///           id: string,
+        ///           resourceId: string,
+        ///           status: string,
+        ///           assetsDiscovered: number,
+        ///           assetsClassified: number,
+        ///           diagnostics: {
+        ///             notifications: [
+        ///               {
+        ///                 message: string,
+        ///                 code: number
+        ///               }
+        ///             ],
+        ///             exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///           },
+        ///           startTime: string (ISO 8601 Format),
+        ///           queuedTime: string (ISO 8601 Format),
+        ///           pipelineStartTime: string (ISO 8601 Format),
+        ///           endTime: string (ISO 8601 Format),
+        ///           scanRulesetVersion: number,
+        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///           errorMessage: string,
+        ///           error: {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [
+        ///               {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [ErrorModel]
+        ///               }
+        ///             ]
+        ///           },
+        ///           runType: string,
+        ///           dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///         }
+        ///       ]
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetPropertiesAsync(RequestOptions options = null)
@@ -779,6 +538,83 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a data source. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;,
+        ///   scans: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///       scanResults: [
+        ///         {
+        ///           parentId: string,
+        ///           id: string,
+        ///           resourceId: string,
+        ///           status: string,
+        ///           assetsDiscovered: number,
+        ///           assetsClassified: number,
+        ///           diagnostics: {
+        ///             notifications: [
+        ///               {
+        ///                 message: string,
+        ///                 code: number
+        ///               }
+        ///             ],
+        ///             exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///           },
+        ///           startTime: string (ISO 8601 Format),
+        ///           queuedTime: string (ISO 8601 Format),
+        ///           pipelineStartTime: string (ISO 8601 Format),
+        ///           endTime: string (ISO 8601 Format),
+        ///           scanRulesetVersion: number,
+        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///           errorMessage: string,
+        ///           error: {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [
+        ///               {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [ErrorModel]
+        ///               }
+        ///             ]
+        ///           },
+        ///           runType: string,
+        ///           dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///         }
+        ///       ]
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetProperties(RequestOptions options = null)
@@ -832,6 +668,83 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes a data source. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;,
+        ///   scans: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///       scanResults: [
+        ///         {
+        ///           parentId: string,
+        ///           id: string,
+        ///           resourceId: string,
+        ///           status: string,
+        ///           assetsDiscovered: number,
+        ///           assetsClassified: number,
+        ///           diagnostics: {
+        ///             notifications: [
+        ///               {
+        ///                 message: string,
+        ///                 code: number
+        ///               }
+        ///             ],
+        ///             exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///           },
+        ///           startTime: string (ISO 8601 Format),
+        ///           queuedTime: string (ISO 8601 Format),
+        ///           pipelineStartTime: string (ISO 8601 Format),
+        ///           endTime: string (ISO 8601 Format),
+        ///           scanRulesetVersion: number,
+        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///           errorMessage: string,
+        ///           error: {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [
+        ///               {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [ErrorModel]
+        ///               }
+        ///             ]
+        ///           },
+        ///           runType: string,
+        ///           dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///         }
+        ///       ]
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(RequestOptions options = null)
@@ -870,6 +783,83 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes a data source. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;,
+        ///   scans: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///       scanResults: [
+        ///         {
+        ///           parentId: string,
+        ///           id: string,
+        ///           resourceId: string,
+        ///           status: string,
+        ///           assetsDiscovered: number,
+        ///           assetsClassified: number,
+        ///           diagnostics: {
+        ///             notifications: [
+        ///               {
+        ///                 message: string,
+        ///                 code: number
+        ///               }
+        ///             ],
+        ///             exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///           },
+        ///           startTime: string (ISO 8601 Format),
+        ///           queuedTime: string (ISO 8601 Format),
+        ///           pipelineStartTime: string (ISO 8601 Format),
+        ///           endTime: string (ISO 8601 Format),
+        ///           scanRulesetVersion: number,
+        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///           errorMessage: string,
+        ///           error: {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [
+        ///               {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [ErrorModel]
+        ///               }
+        ///             ]
+        ///           },
+        ///           runType: string,
+        ///           dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///         }
+        ///       ]
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response Delete(RequestOptions options = null)
@@ -925,6 +915,89 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Lists the children of the collection. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;,
+        ///       scans: [
+        ///         {
+        ///           id: string,
+        ///           name: string,
+        ///           kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///           scanResults: [
+        ///             {
+        ///               parentId: string,
+        ///               id: string,
+        ///               resourceId: string,
+        ///               status: string,
+        ///               assetsDiscovered: number,
+        ///               assetsClassified: number,
+        ///               diagnostics: {
+        ///                 notifications: [
+        ///                   {
+        ///                     message: string,
+        ///                     code: number
+        ///                   }
+        ///                 ],
+        ///                 exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///               },
+        ///               startTime: string (ISO 8601 Format),
+        ///               queuedTime: string (ISO 8601 Format),
+        ///               pipelineStartTime: string (ISO 8601 Format),
+        ///               endTime: string (ISO 8601 Format),
+        ///               scanRulesetVersion: number,
+        ///               scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///               scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///               errorMessage: string,
+        ///               error: {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [
+        ///                   {
+        ///                     code: string,
+        ///                     message: string,
+        ///                     target: string,
+        ///                     details: [ErrorModel]
+        ///                   }
+        ///                 ]
+        ///               },
+        ///               runType: string,
+        ///               dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///             }
+        ///           ]
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   nextLink: string,
+        ///   count: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetChildrenAsync(RequestOptions options = null)
@@ -961,6 +1034,89 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Lists the children of the collection. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;,
+        ///       scans: [
+        ///         {
+        ///           id: string,
+        ///           name: string,
+        ///           kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///           scanResults: [
+        ///             {
+        ///               parentId: string,
+        ///               id: string,
+        ///               resourceId: string,
+        ///               status: string,
+        ///               assetsDiscovered: number,
+        ///               assetsClassified: number,
+        ///               diagnostics: {
+        ///                 notifications: [
+        ///                   {
+        ///                     message: string,
+        ///                     code: number
+        ///                   }
+        ///                 ],
+        ///                 exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///               },
+        ///               startTime: string (ISO 8601 Format),
+        ///               queuedTime: string (ISO 8601 Format),
+        ///               pipelineStartTime: string (ISO 8601 Format),
+        ///               endTime: string (ISO 8601 Format),
+        ///               scanRulesetVersion: number,
+        ///               scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///               scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///               errorMessage: string,
+        ///               error: {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [
+        ///                   {
+        ///                     code: string,
+        ///                     message: string,
+        ///                     target: string,
+        ///                     details: [ErrorModel]
+        ///                   }
+        ///                 ]
+        ///               },
+        ///               runType: string,
+        ///               dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///             }
+        ///           ]
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   nextLink: string,
+        ///   count: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetChildren(RequestOptions options = null)
@@ -1015,6 +1171,82 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List scans in data source. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///       scanResults: [
+        ///         {
+        ///           parentId: string,
+        ///           id: string,
+        ///           resourceId: string,
+        ///           status: string,
+        ///           assetsDiscovered: number,
+        ///           assetsClassified: number,
+        ///           diagnostics: {
+        ///             notifications: [
+        ///               {
+        ///                 message: string,
+        ///                 code: number
+        ///               }
+        ///             ],
+        ///             exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///           },
+        ///           startTime: string (ISO 8601 Format),
+        ///           queuedTime: string (ISO 8601 Format),
+        ///           pipelineStartTime: string (ISO 8601 Format),
+        ///           endTime: string (ISO 8601 Format),
+        ///           scanRulesetVersion: number,
+        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///           errorMessage: string,
+        ///           error: {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [
+        ///               {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [ErrorModel]
+        ///               }
+        ///             ]
+        ///           },
+        ///           runType: string,
+        ///           dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   nextLink: string,
+        ///   count: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetScansAsync(RequestOptions options = null)
@@ -1051,6 +1283,82 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> List scans in data source. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       id: string,
+        ///       name: string,
+        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///       scanResults: [
+        ///         {
+        ///           parentId: string,
+        ///           id: string,
+        ///           resourceId: string,
+        ///           status: string,
+        ///           assetsDiscovered: number,
+        ///           assetsClassified: number,
+        ///           diagnostics: {
+        ///             notifications: [
+        ///               {
+        ///                 message: string,
+        ///                 code: number
+        ///               }
+        ///             ],
+        ///             exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///           },
+        ///           startTime: string (ISO 8601 Format),
+        ///           queuedTime: string (ISO 8601 Format),
+        ///           pipelineStartTime: string (ISO 8601 Format),
+        ///           endTime: string (ISO 8601 Format),
+        ///           scanRulesetVersion: number,
+        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///           errorMessage: string,
+        ///           error: {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [
+        ///               {
+        ///                 code: string,
+        ///                 message: string,
+        ///                 target: string,
+        ///                 details: [ErrorModel]
+        ///               }
+        ///             ]
+        ///           },
+        ///           runType: string,
+        ///           dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   nextLink: string,
+        ///   count: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetScans(RequestOptions options = null)

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class TimeSeriesElement
+    public partial class MetricTimeSeriesElement
     {
-        internal static TimeSeriesElement DeserializeTimeSeriesElement(JsonElement element)
+        internal static MetricTimeSeriesElement DeserializeMetricTimeSeriesElement(JsonElement element)
         {
             Optional<IReadOnlyList<MetadataValue>> metadatavalues = default;
             Optional<IReadOnlyList<MetricValue>> data = default;
@@ -50,7 +50,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new TimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data));
+            return new MetricTimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data));
         }
     }
 }

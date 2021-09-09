@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Network.Tests
         private ResourceGroup _resourceGroup;
         private Subnet _subnet;
         private PublicIPAddress _publicIPAddress;
+        private string _bastionName;
 
         private ResourceIdentifier _resourceGroupIdentifier;
         private ResourceIdentifier _subnetIdentifier;
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
             ipData.Sku.Name = PublicIPAddressSkuName.Standard;
             var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("ip-"), ipData);
             _publicIPAddressIdentifier = ipLro.Value.Id;
+            _bastionName = SessionRecording.GenerateAssetName("bastion-");
             StopSessionRecording();
         }
 
@@ -66,9 +68,9 @@ namespace Azure.ResourceManager.Network.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            List<BastionHost> bastionList = await _resourceGroup.GetBastionHosts().GetAllAsync().ToEnumerableAsync();
-            foreach (var bastion in bastionList)
+            if (_resourceGroup.GetBastionHosts().CheckIfExists(_bastionName))
             {
+                BastionHost bastion = await _resourceGroup.GetBastionHosts().GetAsync(_bastionName);
                 await bastion.DeleteAsync();
             }
         }
@@ -92,10 +94,9 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            string bastionName = SessionRecording.GenerateAssetName("bastion-");
-            BastionHost bastionHost = await CreateBastionHost(bastionName);
+            BastionHost bastionHost = await CreateBastionHost(_bastionName);
             Assert.IsNotNull(bastionHost.Data);
-            Assert.AreEqual(bastionName, bastionHost.Data.Name);
+            Assert.AreEqual(_bastionName, bastionHost.Data.Name);
             Assert.AreEqual(Location.WestUS2.ToString(), bastionHost.Data.Location);
             Assert.AreEqual(0, bastionHost.Data.Tags.Count);
         }
@@ -104,11 +105,10 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task Get()
         {
-            string bastionName = SessionRecording.GenerateAssetName("bastion-");
-            BastionHost bastionHost = await CreateBastionHost(bastionName);
-            var bastion = await _resourceGroup.GetBastionHosts().GetAsync(bastionName);
+            BastionHost bastionHost = await CreateBastionHost(_bastionName);
+            var bastion = await _resourceGroup.GetBastionHosts().GetAsync(_bastionName);
             Assert.IsNotNull(bastion.Value.Data);
-            Assert.AreEqual(bastionName, bastion.Value.Data.Name);
+            Assert.AreEqual(_bastionName, bastion.Value.Data.Name);
             Assert.AreEqual(Location.WestUS2.ToString(), bastion.Value.Data.Location);
             Assert.AreEqual(0, bastion.Value.Data.Tags.Count);
         }
@@ -117,29 +117,26 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            string bastionName = SessionRecording.GenerateAssetName("bastion-");
-            BastionHost bastionHost = await CreateBastionHost(bastionName);
+            BastionHost bastionHost = await CreateBastionHost(_bastionName);
             List<BastionHost> BastionList = await _resourceGroup.GetBastionHosts().GetAllAsync().ToEnumerableAsync();
             Has.One.EqualTo(BastionList);
-            Assert.AreEqual(bastionName, BastionList[0].Data.Name);
+            Assert.AreEqual(_bastionName, BastionList[0].Data.Name);
         }
 
         [Test]
         [RecordedTest]
         public async Task CheckIfExists()
         {
-            string bastionName = SessionRecording.GenerateAssetName("bastion-");
-            BastionHost bastionHost = await CreateBastionHost(bastionName);
-            Assert.IsTrue(_resourceGroup.GetBastionHosts().CheckIfExists(bastionName));
-            Assert.IsFalse(_resourceGroup.GetBastionHosts().CheckIfExists(bastionName + "1"));
+            BastionHost bastionHost = await CreateBastionHost(_bastionName);
+            Assert.IsTrue(_resourceGroup.GetBastionHosts().CheckIfExists(_bastionName));
+            Assert.IsFalse(_resourceGroup.GetBastionHosts().CheckIfExists(_bastionName + "1"));
         }
 
         [Test]
         [RecordedTest]
         public async Task Delete()
         {
-            string bastionName = SessionRecording.GenerateAssetName("bastion-");
-            BastionHost bastionHost = await CreateBastionHost(bastionName);
+            BastionHost bastionHost = await CreateBastionHost(_bastionName);
             await bastionHost.DeleteAsync();
             List<BastionHost> bastionList = await _resourceGroup.GetBastionHosts().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(bastionList);

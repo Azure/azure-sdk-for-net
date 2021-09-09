@@ -42,7 +42,7 @@ namespace Azure.Monitor.Query.Models
         /// <returns>The <see cref="LogsBatchQueryResults"/> with the query results.</returns>
         /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
         /// <exception cref="RequestFailedException">When the query <paramref name="queryId"/> failed.</exception>
-        public LogsQueryResult GetResult(string queryId)
+        public LogsBatchQueryResult GetResult(string queryId)
         {
             BatchQueryResponse result = Responses.SingleOrDefault(r => r.Id == queryId);
 

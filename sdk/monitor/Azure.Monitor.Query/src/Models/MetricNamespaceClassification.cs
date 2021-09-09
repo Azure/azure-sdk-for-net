@@ -7,10 +7,11 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Kind of namespace. </summary>
-    public readonly partial struct NamespaceClassification : IEquatable<NamespaceClassification>
+    [CodeGenModel("NamespaceClassification")]
+    public readonly partial struct MetricNamespaceClassification : IEquatable<MetricNamespaceClassification>
     {
         /// <summary> Qos. </summary>
         [CodeGenMember("Qos")]
-        public static NamespaceClassification QualityOfService { get; } = new NamespaceClassification("QualityOfService");
+        public static MetricNamespaceClassification QualityOfService { get; } = new MetricNamespaceClassification("QualityOfService");
     }
 }
