@@ -54,6 +54,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   digest: string,
+        ///   script: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetConstitutionAsync(RequestOptions options = null)
@@ -90,6 +109,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   digest: string,
+        ///   script: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetConstitution(RequestOptions options = null)
@@ -142,6 +180,29 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   members: [
+        ///     {
+        ///       certificate: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetConsortiumMembersAsync(RequestOptions options = null)
@@ -178,6 +239,29 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   members: [
+        ///     {
+        ///       certificate: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetConsortiumMembers(RequestOptions options = null)
@@ -230,6 +314,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   currentNodeId: string,
+        ///   enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetEnclaveQuotesAsync(RequestOptions options = null)
@@ -266,6 +369,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   currentNodeId: string,
+        ///   enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetEnclaveQuotes(RequestOptions options = null)
@@ -318,6 +440,32 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. Only entries in the specified (or default) sub-ledger will be returned. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   @nextLink: string,
+        ///   entries: [
+        ///     {
+        ///       contents: string,
+        ///       subLedgerId: string,
+        ///       transactionId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
@@ -357,6 +505,32 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. Only entries in the specified (or default) sub-ledger will be returned. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   @nextLink: string,
+        ///   entries: [
+        ///     {
+        ///       contents: string,
+        ///       subLedgerId: string,
+        ///       transactionId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
@@ -429,32 +603,29 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>contents</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Contents of the ledger entry.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subLedgerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Identifier for sub-ledgers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>transactionId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   contents: string (required),
+        ///   subLedgerId: string,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   subLedgerId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
@@ -496,32 +667,29 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>contents</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Contents of the ledger entry.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subLedgerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Identifier for sub-ledgers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>transactionId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   contents: string (required),
+        ///   subLedgerId: string,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   subLedgerId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
@@ -585,6 +753,29 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   entry: {
+        ///     contents: string,
+        ///     subLedgerId: string,
+        ///     transactionId: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="options"> The request options. </param>
@@ -623,6 +814,29 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   entry: {
+        ///     contents: string,
+        ///     subLedgerId: string,
+        ///     transactionId: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="options"> The request options. </param>
@@ -684,6 +898,37 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   receipt: {
+        ///     leaf: string,
+        ///     nodeId: string,
+        ///     proof: [
+        ///       {
+        ///         left: string,
+        ///         right: string
+        ///       }
+        ///     ],
+        ///     root: string,
+        ///     signature: string
+        ///   },
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -721,6 +966,37 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   receipt: {
+        ///     leaf: string,
+        ///     nodeId: string,
+        ///     proof: [
+        ///       {
+        ///         left: string,
+        ///         right: string
+        ///       }
+        ///     ],
+        ///     root: string,
+        ///     signature: string
+        ///   },
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -777,6 +1053,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets the status of an entry identified by a transaction id. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Committed&quot; | &quot;Pending&quot;,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -814,6 +1109,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets the status of an entry identified by a transaction id. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Committed&quot; | &quot;Pending&quot;,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -870,6 +1184,26 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   contents: string,
+        ///   subLedgerId: string,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -907,6 +1241,26 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   contents: string,
+        ///   subLedgerId: string,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -965,6 +1319,18 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Deletes a user from the Confidential Ledger. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1002,6 +1368,18 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Deletes a user from the Confidential Ledger. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1057,6 +1435,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets a user. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;,
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1094,6 +1491,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets a user. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;,
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1151,26 +1567,29 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A JSON merge patch is applied for existing users. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>assignedRole</term>
-        ///     <term>&quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term>Represents an assignable role.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot; (required),
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;,
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -1212,26 +1631,29 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A JSON merge patch is applied for existing users. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>assignedRole</term>
-        ///     <term>&quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term>Represents an assignable role.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot; (required),
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;,
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="content"> The content to send as the body of the request. </param>

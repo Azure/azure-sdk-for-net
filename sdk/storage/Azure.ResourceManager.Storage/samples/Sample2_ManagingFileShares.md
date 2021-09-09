@@ -61,9 +61,9 @@ Now that we have the file service, we can manage the file shares inside this sto
 
 ```C# Snippet:Managing_FileShares_CreateFileShare
 FileShareContainer fileShareContainer = fileService.GetFileShares();
-string blobContainerName = "myFileShare";
+string fileShareName = "myFileShare";
 FileShareData fileShareData = new FileShareData();
-FileShareCreateOperation fileShareCreateOperation = await fileShareContainer.CreateOrUpdateAsync(blobContainerName, fileShareData);
+FileShareCreateOperation fileShareCreateOperation = await fileShareContainer.CreateOrUpdateAsync(fileShareName, fileShareData);
 FileShare fileShare =await fileShareCreateOperation.WaitForCompletionAsync();
 ```
 

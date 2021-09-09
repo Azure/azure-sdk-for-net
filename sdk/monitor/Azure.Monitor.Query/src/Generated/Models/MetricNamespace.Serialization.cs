@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Models
             Optional<string> id = default;
             Optional<string> type = default;
             Optional<string> name = default;
-            Optional<NamespaceClassification> classification = default;
+            Optional<MetricNamespaceClassification> classification = default;
             Optional<MetricNamespaceName> properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Monitor.Query.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    classification = new NamespaceClassification(property.Value.GetString());
+                    classification = new MetricNamespaceClassification(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

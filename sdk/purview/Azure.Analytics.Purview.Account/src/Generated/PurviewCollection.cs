@@ -31,6 +31,47 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get a collection. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
+        ///   description: string,
+        ///   friendlyName: string,
+        ///   name: string,
+        ///   parentCollection: {
+        ///     referenceName: string,
+        ///     type: string
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetCollectionAsync(RequestOptions options = null)
@@ -67,6 +108,47 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get a collection. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
+        ///   description: string,
+        ///   friendlyName: string,
+        ///   name: string,
+        ///   parentCollection: {
+        ///     referenceName: string,
+        ///     type: string
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetCollection(RequestOptions options = null)
@@ -122,116 +204,65 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Creates or updates a collection entity. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>collectionProvisioningState</term>
-        ///     <term>&quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;</term>
-        ///     <term></term>
-        ///     <term>Gets the state of the provisioning.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Gets or sets the description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>friendlyName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Gets or sets the friendly name of the collection.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Gets the name.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCollection</term>
-        ///     <term>CollectionReference</term>
-        ///     <term></term>
-        ///     <term>Gets or sets the parent collection reference.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>systemData</term>
-        ///     <term>CollectionSystemData</term>
-        ///     <term></term>
-        ///     <term>Gets the system data that contains information about who and when created and updated the resource.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>CollectionReference</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>referenceName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Gets or sets the reference name.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Gets the reference type property.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>CollectionSystemData</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>createdAt</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>The timestamp of resource creation (UTC).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The identity that created the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdByType</term>
-        ///     <term>&quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;</term>
-        ///     <term></term>
-        ///     <term>The type of identity that created the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedAt</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>The timestamp of the last modification the resource (UTC).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The identity that last modified the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedByType</term>
-        ///     <term>&quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;</term>
-        ///     <term></term>
-        ///     <term>The type of identity that last modified the resource.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
+        ///   description: string,
+        ///   friendlyName: string,
+        ///   name: string,
+        ///   parentCollection: {
+        ///     referenceName: string,
+        ///     type: string
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
+        ///   description: string,
+        ///   friendlyName: string,
+        ///   name: string,
+        ///   parentCollection: {
+        ///     referenceName: string,
+        ///     type: string
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -272,116 +303,65 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Creates or updates a collection entity. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>collectionProvisioningState</term>
-        ///     <term>&quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;</term>
-        ///     <term></term>
-        ///     <term>Gets the state of the provisioning.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Gets or sets the description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>friendlyName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Gets or sets the friendly name of the collection.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Gets the name.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCollection</term>
-        ///     <term>CollectionReference</term>
-        ///     <term></term>
-        ///     <term>Gets or sets the parent collection reference.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>systemData</term>
-        ///     <term>CollectionSystemData</term>
-        ///     <term></term>
-        ///     <term>Gets the system data that contains information about who and when created and updated the resource.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>CollectionReference</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>referenceName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Gets or sets the reference name.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Gets the reference type property.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>CollectionSystemData</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>createdAt</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>The timestamp of resource creation (UTC).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The identity that created the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdByType</term>
-        ///     <term>&quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;</term>
-        ///     <term></term>
-        ///     <term>The type of identity that created the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedAt</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>The timestamp of the last modification the resource (UTC).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The identity that last modified the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedByType</term>
-        ///     <term>&quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;</term>
-        ///     <term></term>
-        ///     <term>The type of identity that last modified the resource.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
+        ///   description: string,
+        ///   friendlyName: string,
+        ///   name: string,
+        ///   parentCollection: {
+        ///     referenceName: string,
+        ///     type: string
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
+        ///   description: string,
+        ///   friendlyName: string,
+        ///   name: string,
+        ///   parentCollection: {
+        ///     referenceName: string,
+        ///     type: string
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -440,6 +420,26 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Deletes a Collection entity. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteCollectionAsync(RequestOptions options = null)
@@ -476,6 +476,26 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Deletes a Collection entity. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response DeleteCollection(RequestOptions options = null)
@@ -529,6 +549,39 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Lists the child collections names in the collection. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   nextLink: string,
+        ///   value: [
+        ///     {
+        ///       friendlyName: string,
+        ///       name: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -566,6 +619,39 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Lists the child collections names in the collection. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   nextLink: string,
+        ///   value: [
+        ///     {
+        ///       friendlyName: string,
+        ///       name: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -626,6 +712,33 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   parentFriendlyNameChain: [string],
+        ///   parentNameChain: [string]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetCollectionPathAsync(RequestOptions options = null)
@@ -662,6 +775,33 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   parentFriendlyNameChain: [string],
+        ///   parentNameChain: [string]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetCollectionPath(RequestOptions options = null)

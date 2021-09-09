@@ -127,5 +127,12 @@ namespace Azure.Monitor.Query.Tests
             await client.QueryAsync("", "", DateTimeRange.All);
             Assert.AreEqual(new[] { expectedScope }, scopes);
         }
+
+        [Test]
+        public void PublicEndpoint()
+        {
+            var client = new LogsQueryClient(new Uri("https://api.loganalytics.io"), new MockCredential(), new LogsQueryClientOptions());
+            Assert.AreEqual(new Uri("https://api.loganalytics.io"), client.Endpoint);
+        }
     }
 }

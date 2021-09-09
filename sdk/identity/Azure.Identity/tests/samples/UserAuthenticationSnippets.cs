@@ -22,7 +22,7 @@ namespace Azure.Identity.Samples
         {
             #region Snippet:Identity_ClientSideUserAuthentication_SimpleInteractiveBrowser
             var client = new SecretClient(
-                new Uri("https://myvault.azure.vaults.net/"),
+                new Uri("https://myvault.vault.azure.net/"),
                 new InteractiveBrowserCredential()
             );
             #endregion
@@ -51,7 +51,7 @@ namespace Azure.Identity.Samples
 
             await credential.AuthenticateAsync();
 
-            var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), credential);
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
             #endregion
 
             #region Snippet:Identity_ClientSideUserAuthentication_DisableAutomaticAuthentication_ExHandling
@@ -154,7 +154,7 @@ namespace Azure.Identity.Samples
                     });
             }
 
-            var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), credential);
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
         }
     }
 }
