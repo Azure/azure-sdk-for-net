@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         protected EventHubTestBase(bool isAsync) : base(isAsync)
         {
         }
-        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, RecordedTestMode.Record)
         {
         }
         [SetUp]

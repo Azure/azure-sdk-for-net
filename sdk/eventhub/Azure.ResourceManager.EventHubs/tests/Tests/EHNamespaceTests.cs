@@ -20,6 +20,21 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         public EHNamespaceTests(bool isAsync) : base(isAsync)
         {
         }
+        [TearDown]
+        public async Task ClearNamespaces()
+        {
+            //remove all namespaces under current resource group
+            if (_resourceGroup != null)
+            {
+                EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
+                List<EHNamespace> namespaceList = await namespaceContainer.GetAllAsync().ToEnumerableAsync();
+                foreach (EHNamespace eHNamespace in namespaceList)
+                {
+                    await eHNamespace.DeleteAsync();
+                }
+                _resourceGroup = null;
+            }
+        }
         [Test]
         [RecordedTest]
         public async Task CreateDeleteNamespace()
@@ -157,6 +172,60 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         }
         [Test]
         [RecordedTest]
-        public async Task NamespaceAuthorizationRuleRegw
+        public async Task CreateNamespaceWithKafkaEnabled()
+        {
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
+            string namespaceName = Recording.GenerateAssetName("namespace");
+            EHNamespaceData parameter = new EHNamespaceData(DefaultLocation)
+            {
+            KafkaEnabled=true
+            };
+            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
+            VerifyNamespaceProperties(eHNamespace, false);
+            Assert.IsTrue(eHNamespace.Data.KafkaEnabled);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task NamespaceAuthorizationRuleRegenerateKey()
+        {
+            Sanitizer.AddJsonPathSanitizer("$.keys.[*].value");
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
+            string namespaceName = Recording.GenerateAssetName("namespace");
+            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
+            AuthorizationRuleNamespaceContainer ruleContainer = eHNamespace.GetAuthorizationRuleNamespaces();
+
+            //create authorization rule
+            string ruleName = Recording.GenerateAssetName("authorizationrule");
+            AuthorizationRuleData parameter = new AuthorizationRuleData()
+            {
+                Rights = { AccessRights.Listen, AccessRights.Send }
+            };
+            AuthorizationRuleNamespace authorizationRule = (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            Assert.NotNull(authorizationRule);
+            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
+
+            AccessKeys keys1=await authorizationRule.GetKeysAsync();
+            Assert.NotNull(keys1);
+            Assert.NotNull(keys1.PrimaryConnectionString);
+            Assert.NotNull(keys1.SecondaryConnectionString);
+
+            AccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyParameters(KeyType.PrimaryKey));
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreNotEqual(keys1.PrimaryKey, keys2.PrimaryKey);
+                Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
+            }
+
+            AccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyParameters(KeyType.SecondaryKey));
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
+                Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
+            }
+        }
     }
 }
