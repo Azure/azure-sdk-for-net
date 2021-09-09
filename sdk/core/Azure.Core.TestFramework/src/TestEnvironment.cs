@@ -323,59 +323,64 @@ namespace Azure.Core.TestFramework
             // send the GET request
             Response response = await _pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            if (response.Status != 200 && response.Status != 404)
+            // resource group not found - nothing we can do here
+            if (response.Status == 404)
+            {
+                return;
+            }
+
+            // unexpected response => throw an exception
+            if (response.Status != 200)
             {
                 throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
             }
 
-            if (response.Status == 200)
+            // parse the response
+            JsonElement json = JsonDocument.Parse(response.Content).RootElement;
+            if (json.TryGetProperty("tags", out JsonElement tags) && tags.TryGetProperty("DeleteAfter", out JsonElement deleteAfter))
             {
-                JsonElement json = JsonDocument.Parse(response.Content).RootElement;
-                if (json.TryGetProperty("tags", out JsonElement tags) && tags.TryGetProperty("DeleteAfter", out JsonElement deleteAfter))
+                DateTimeOffset deleteDto = DateTimeOffset.Parse(deleteAfter.GetString());
+                if (deleteDto.Subtract(DateTimeOffset.Now) < TimeSpan.FromDays(5))
                 {
-                    DateTimeOffset deleteDto = DateTimeOffset.Parse(deleteAfter.GetString());
-                    if (deleteDto.Subtract(DateTimeOffset.Now) < TimeSpan.FromDays(5))
+                    // construct the JSON to send for PATCH request
+                    using var stream = new MemoryStream();
+                    var writer = new Utf8JsonWriter(stream);
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartObject();
+
+                    // even though this is a PATCH operation, we still need to include all other tags
+                    // otherwise they will be deleted.
+                    foreach (JsonProperty property in tags.EnumerateObject())
                     {
-                        // construct the JSON to send for PATCH request
-                        using var stream = new MemoryStream();
-                        var writer = new Utf8JsonWriter(stream);
-                        writer.WriteStartObject();
-                        writer.WritePropertyName("tags");
-                        writer.WriteStartObject();
-
-                        // even though this is a PATCH operation, we still need to include all other tags
-                        // otherwise they will be deleted.
-                        foreach (JsonProperty property in tags.EnumerateObject())
+                        if (property.NameEquals("DeleteAfter"))
                         {
-                            if (property.NameEquals("DeleteAfter"))
-                            {
-                                DateTimeOffset newTime = deleteDto.AddDays(5);
-                                writer.WriteString("DeleteAfter", newTime);
-                            }
-                            else
-                            {
-                                property.WriteTo(writer);
-                            }
+                            DateTimeOffset newTime = deleteDto.AddDays(5);
+                            writer.WriteString("DeleteAfter", newTime);
                         }
-
-                        writer.WriteEndObject();
-                        writer.WriteEndObject();
-                        writer.Flush();
-
-                        // create the PATCH request
-                        request = _pipeline.CreateRequest();
-                        request.Uri.Reset(uri);
-                        request.Method = RequestMethod.Patch;
-                        request.Headers.SetValue("Content-Type", "application/json");
-                        stream.Position = 0;
-                        request.Content = RequestContent.Create(stream);
-
-                        // send the PATCH request
-                        response = await _pipeline.SendRequestAsync(request, CancellationToken.None);
-                        if (response.Status != 200)
+                        else
                         {
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                            property.WriteTo(writer);
                         }
+                    }
+
+                    writer.WriteEndObject();
+                    writer.WriteEndObject();
+                    writer.Flush();
+
+                    // create the PATCH request
+                    request = _pipeline.CreateRequest();
+                    request.Uri.Reset(uri);
+                    request.Method = RequestMethod.Patch;
+                    request.Headers.SetValue("Content-Type", "application/json");
+                    stream.Position = 0;
+                    request.Content = RequestContent.Create(stream);
+
+                    // send the PATCH request
+                    response = await _pipeline.SendRequestAsync(request, CancellationToken.None);
+                    if (response.Status != 200)
+                    {
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
                     }
                 }
             }
