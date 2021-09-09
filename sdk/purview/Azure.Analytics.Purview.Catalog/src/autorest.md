@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 title: PurviewCatalog
-input-file: https://github.com/Azure/azure-rest-api-specs/blob/0bfd6032ae89b4d8d7c55ac23309cb6e30b6c1e0/specification/purview/data-plane/Azure.Analytics.Purview.Catalog/preview/2021-05-01-preview/purviewcatalog.json
+input-file: https://github.com/Azure/azure-rest-api-specs/blob/7ba7687ff36e476b476a6e6662a851b70478c61a/specification/purview/data-plane/Azure.Analytics.Purview.Catalog/preview/2021-05-01-preview/purviewcatalog.json
 namespace: Azure.Analytics.Purview.Catalog
 low-level-client: true
 security: AADToken
