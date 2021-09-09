@@ -37,13 +37,13 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot pass due to backend limitations for service principals.")]
         public async Task TestSparkBatchJob()
         {
             SparkBatchClient client = CreateClient();
 
             // Submit the Spark job
             SparkBatchJobOptions createParams = SparkTestUtilities.CreateSparkJobRequestParameters(Recording, TestEnvironment);
+            createParams.CreationCompletionType = SparkBatchOperationCompletionType.JobExecution;
             SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
             SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
 

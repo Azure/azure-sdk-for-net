@@ -21,9 +21,7 @@ namespace Azure.Analytics.Synapse.Spark
         public override string Id { get { throw null; } }
         public override Azure.Analytics.Synapse.Spark.Models.SparkBatchJob Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
-        public Azure.Response UpdateStatus(bool shouldWaitForJobExectuion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(bool shouldWaitForJobExectuion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -162,11 +160,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkBatchJobOptions
     {
         public SparkBatchJobOptions(string name, string file) { }
+        public SparkBatchJobOptions(string name, string file, Azure.Analytics.Synapse.Spark.Models.SparkBatchOperationCompletionType creationCompletionType) { }
         public System.Collections.Generic.IList<string> Archives { get { throw null; } }
         public System.Collections.Generic.IList<string> Arguments { get { throw null; } }
         public string ArtifactId { get { throw null; } set { } }
         public string ClassName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Configuration { get { throw null; } }
+        public Azure.Analytics.Synapse.Spark.Models.SparkBatchOperationCompletionType CreationCompletionType { get { throw null; } set { } }
         public int? DriverCores { get { throw null; } set { } }
         public string DriverMemory { get { throw null; } set { } }
         public int? ExecutorCores { get { throw null; } set { } }
@@ -211,6 +211,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public System.DateTimeOffset? StartingAt { get { throw null; } }
         public System.DateTimeOffset? SuccessAt { get { throw null; } }
         public System.DateTimeOffset? TerminatedAt { get { throw null; } }
+    }
+    public enum SparkBatchOperationCompletionType
+    {
+        JobSubmission = 0,
+        JobExecution = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SparkErrorSource : System.IEquatable<Azure.Analytics.Synapse.Spark.Models.SparkErrorSource>
