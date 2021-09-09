@@ -14,8 +14,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
+using Azure.Core.Pipeline;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -46,6 +45,8 @@ namespace Azure.Core.TestFramework
         private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         private Exception _bootstrappingException;
         private readonly Type _type;
+        private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         protected TestEnvironment()
         {
@@ -76,6 +77,26 @@ namespace Azure.Core.TestFramework
             _type = GetType();
 
             ParseEnvironmentFile();
+
+            string tenantId = GetOptionalVariable("TENANT_ID");
+            string clientId = GetOptionalVariable("CLIENT_ID");
+            string clientSecret = GetOptionalVariable("CLIENT_SECRET");
+            string authorityHost = GetOptionalVariable("AZURE_AUTHORITY_HOST");
+
+            // configure pipeline if credential vars are available
+            if (tenantId != null && clientId != null && clientSecret != null && authorityHost != null)
+            {
+                _credential = new ClientSecretCredential(
+                    tenantId,
+                    clientId,
+                    clientSecret,
+                    new ClientSecretCredentialOptions()
+                    {
+                        AuthorityHost = new Uri(authorityHost)
+                    });
+                _pipeline = HttpPipelineBuilder.Build(ClientOptions.Default, new BearerTokenAuthenticationPolicy(_credential, "https://management.azure.com/.default"));
+                _clientDiagnostics = new ClientDiagnostics(ClientOptions.Default);
+            }
         }
 
         private void ParseEnvironmentFile()
@@ -232,62 +253,132 @@ namespace Azure.Core.TestFramework
         /// <returns>A task.</returns>
         public async ValueTask WaitForEnvironmentAsync()
         {
-            if (GlobalIsRunningInCI && Mode == RecordedTestMode.Live)
+            Task task;
+            lock (s_environmentStateCache)
             {
-                Task task;
-                lock (s_environmentStateCache)
+                if (!s_environmentStateCache.TryGetValue(_type, out task))
                 {
-                    if (!s_environmentStateCache.TryGetValue(_type, out task))
-                    {
-                        task = WaitForEnvironmentInternalAsync();
-                        s_environmentStateCache[_type] = task;
-                    }
-                }
-                await task;
-            }
-
-            if (!GlobalIsRunningInCI &&
-                Mode is RecordedTestMode.Live or RecordedTestMode.Record &&
-                !s_initializedEnvironmentTypes.Contains(_type))
-            {
-                s_initializedEnvironmentTypes.Add(_type);
-
-                string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
-                if (resourceGroup == null)
-                {
-                    return;
-                }
-
-                ArmClient armClient = new ArmClient(Credential);
-                ResourceGroup rg = await armClient.DefaultSubscription.GetResourceGroups().GetAsync(resourceGroup);
-
-                if (rg.HasData && rg.Data.Tags.TryGetValue("DeleteAfter", out string deleteTime))
-                {
-                    DateTimeOffset deleteDto = DateTimeOffset.Parse(deleteTime);
-                    // if the delete after tag is less than 5 days in the future, extend it an additional 5 days
-                    if (deleteDto.Subtract(DateTimeOffset.Now) < TimeSpan.FromDays(5))
-                    {
-                        await rg.AddTagAsync("DeleteAfter", deleteDto.Add(TimeSpan.FromDays(5)).ToString());
-                    }
+                    task = WaitForEnvironmentInternalAsync();
+                    s_environmentStateCache[_type] = task;
                 }
             }
+            await task;
         }
 
         private async Task WaitForEnvironmentInternalAsync()
         {
-            int numberOfTries = 60;
-            TimeSpan delay = TimeSpan.FromSeconds(10);
-            for (int i = 0; i < numberOfTries; i++)
+            if (GlobalIsRunningInCI)
             {
-                var isReady = await IsEnvironmentReadyAsync();
-                if (isReady)
+                if (Mode == RecordedTestMode.Live)
                 {
-                    return;
+                    int numberOfTries = 60;
+                    TimeSpan delay = TimeSpan.FromSeconds(10);
+                    for (int i = 0; i < numberOfTries; i++)
+                    {
+                        var isReady = await IsEnvironmentReadyAsync();
+                        if (isReady)
+                        {
+                            return;
+                        }
+
+                        await Task.Delay(delay);
+                    }
+
+                    throw new InvalidOperationException(
+                        "The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
                 }
-                await Task.Delay(delay);
+            }
+            else
+            {
+                await ExtendResourceGroupExpirationAsync();
+            }
+        }
+
+        private async Task ExtendResourceGroupExpirationAsync()
+        {
+            // determine whether it is even possible to talk to the management endpoint
+            if (Mode is not RecordedTestMode.Live or RecordedTestMode.Record || _pipeline == null)
+            {
+                return;
             }
 
-            throw new InvalidOperationException("The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
+            string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
+            if (resourceGroup == null)
+            {
+                return;
+            }
+
+            string subscription = GetOptionalVariable("SUBSCRIPTION_ID");
+            if (subscription == null)
+            {
+                return;
+            }
+
+            // create the GET request for the resource group information
+            Request request = _pipeline.CreateRequest();
+            Uri uri = new Uri($"{ResourceManagerUrl}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
+            request.Uri.Reset(uri);
+            request.Method = RequestMethod.Get;
+
+            // send the GET request
+            Response response = await _pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            if (response.Status != 200 && response.Status != 404)
+            {
+                throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            }
+
+            if (response.Status == 200)
+            {
+                JsonElement json = JsonDocument.Parse(response.Content).RootElement;
+                if (json.TryGetProperty("tags", out JsonElement tags) && tags.TryGetProperty("DeleteAfter", out JsonElement deleteAfter))
+                {
+                    DateTimeOffset deleteDto = DateTimeOffset.Parse(deleteAfter.GetString());
+                    if (deleteDto.Subtract(DateTimeOffset.Now) < TimeSpan.FromDays(5))
+                    {
+                        // construct the JSON to send for PATCH request
+                        using var stream = new MemoryStream();
+                        var writer = new Utf8JsonWriter(stream);
+                        writer.WriteStartObject();
+                        writer.WritePropertyName("tags");
+                        writer.WriteStartObject();
+
+                        // even though this is a PATCH operation, we still need to include all other tags
+                        // otherwise they will be deleted.
+                        foreach (JsonProperty property in tags.EnumerateObject())
+                        {
+                            if (property.NameEquals("DeleteAfter"))
+                            {
+                                DateTimeOffset newTime = deleteDto.AddDays(5);
+                                writer.WriteString("DeleteAfter", newTime);
+                            }
+                            else
+                            {
+                                property.WriteTo(writer);
+                            }
+                        }
+
+                        writer.WriteEndObject();
+                        writer.WriteEndObject();
+                        writer.Flush();
+
+                        // create the PATCH request
+                        request = _pipeline.CreateRequest();
+                        request.Uri.Reset(uri);
+                        request.Method = RequestMethod.Patch;
+                        request.Headers.SetValue("Content-Type", "application/json");
+                        stream.Position = 0;
+                        request.Content = RequestContent.Create(stream);
+
+                        // send the PATCH request
+                        response = await _pipeline.SendRequestAsync(request, CancellationToken.None);
+                        if (response.Status != 200)
+                        {
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
