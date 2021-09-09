@@ -313,6 +313,22 @@ try {
     # Determine the Azure context that the script is running in.
     $context = Get-AzContext;
 
+    # Make sure the provisioner OID is set so we can pass it through to the deployment.
+    $provisionerApplicationOid = if (!$ProvisionerApplicationId) {
+        if ($context.Account.Type -eq 'User') {
+            $user = Get-AzADUser -UserPrincipalName $context.Account.Id
+            $user.Id
+        } elseif ($context.Account.Type -eq 'ServicePrincipal') {
+            $sp = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
+            $sp.Id
+        } else {
+            Write-Warning "Getting the OID for provisioner type '$($context.Account.Type)' is not supported and will not be passed to deployments (seldom required)."
+        }
+    } else {
+        $sp = Get-AzADServicePrincipal -ApplicationId $ProvisionerApplicationId
+        $sp.Id
+    }
+
     # If the ServiceDirectory is an absolute path use the last directory name
     # (e.g. D:\foo\bar\ -> bar)
     $serviceName = if (Split-Path -IsAbsolute $ServiceDirectory) {
@@ -463,6 +479,7 @@ try {
         baseName = $BaseName
         testApplicationId = $TestApplicationId
         testApplicationOid = "$TestApplicationOid"
+        provisionerApplicationOid = "$provisionerApplicationOid"
     }
 
     if ($TenantId) {
