@@ -118,7 +118,15 @@ namespace Azure.Communication.CallingServer.Tests
         {
             var callConnection = CreateMockCallConnection(202, PlayAudioResponsePayload);
 
-            var result = await callConnection.PlayAudioAsync(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext).ConfigureAwait(false);
+            var result = await callConnection.PlayAudioAsync(
+                new PlayAudioOptions()
+                {
+                    AudioFileUri = sampleAudioFileUri,
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                }).ConfigureAwait(false);
             VerifyPlayAudioResult(result);
         }
 
@@ -127,7 +135,15 @@ namespace Azure.Communication.CallingServer.Tests
         {
             var callConnection = CreateMockCallConnection(202, PlayAudioResponsePayload);
 
-            var result = callConnection.PlayAudio(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
+            var result = callConnection.PlayAudio(
+                new PlayAudioOptions()
+                {
+                    AudioFileUri = sampleAudioFileUri,
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                });
             VerifyPlayAudioResult(result);
         }
 
@@ -136,7 +152,16 @@ namespace Azure.Communication.CallingServer.Tests
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.PlayAudioAsync(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.PlayAudioAsync(
+                new PlayAudioOptions()
+                {
+                    AudioFileUri = sampleAudioFileUri,
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                }).ConfigureAwait(false));
+
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -146,7 +171,15 @@ namespace Azure.Communication.CallingServer.Tests
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.PlayAudio(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.PlayAudio(
+                new PlayAudioOptions()
+                {
+                    AudioFileUri = sampleAudioFileUri,
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                }));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }

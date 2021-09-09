@@ -217,12 +217,14 @@ namespace Azure.Communication.CallingServer.Tests
             Console.WriteLine("Performing PlayAudio operation");
 
             var response = await serverCall.PlayAudioAsync(
-                audioFileUri: new Uri(TestEnvironment.AudioFileUrl),
-                loop: false,
-                audioFileId: "ebb1d98d-fd86-4204-800c-f7bdfc2e515c",
-                callbackUri: new Uri(TestEnvironment.AppCallbackUrl),
-                operationContext: "de346f03-7f8d-41ab-a232-cc5e14990769"
-                ).ConfigureAwait(false);
+                new PlayAudioOptions()
+                {
+                    AudioFileUri = new Uri(TestEnvironment.AudioFileUrl),
+                    Loop = false,
+                    AudioFileId = "ebb1d98d-fd86-4204-800c-f7bdfc2e515c",
+                    CallbackUri = new Uri(TestEnvironment.AppCallbackUrl),
+                    OperationContext = "de346f03-7f8d-41ab-a232-cc5e14990769"
+                }).ConfigureAwait(false);
 
             Assert.AreEqual(response.Value.Status, OperationStatus.Running);
         }

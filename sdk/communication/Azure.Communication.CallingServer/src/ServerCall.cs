@@ -41,14 +41,10 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Play audio in the call. </summary>
-        /// <param name="audioFileUri">The uri of the audio file. </param>
-        /// <param name="loop">The flag to indicate if audio file need to be played in a loop or not.</param>
-        /// <param name="audioFileId">The id for the media in the AudioFileUri, using which we cache the media resource. </param>
-        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
-        /// <param name="operationContext">The operation context. </param>
+        /// <param name="options"> Options for playing audio. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<PlayAudioResult>> PlayAudioAsync(Uri audioFileUri, bool loop, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayAudioResult>> PlayAudioAsync(PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudio)}");
             scope.Start();
@@ -56,11 +52,11 @@ namespace Azure.Communication.CallingServer
             {
                 return await RestClient.PlayAudioAsync(
                     serverCallId: ServerCallId,
-                    audioFileUri: audioFileUri?.AbsoluteUri,
-                    loop: loop,
-                    audioFileId: audioFileId,
-                    callbackUri: callbackUri?.AbsoluteUri,
-                    operationContext: operationContext,
+                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
+                    loop: options.Loop,
+                    audioFileId: options.AudioFileId,
+                    callbackUri: options.CallbackUri?.AbsoluteUri,
+                    operationContext: options.OperationContext,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -72,14 +68,10 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Play audio in the call. </summary>
-        /// <param name="audioFileUri"> The uri of the audio file. </param>
-        /// <param name="loop">The flag to indicate if audio file need to be played in a loop or not.</param>
-        /// <param name="audioFileId">The id for the media in the AudioFileUri, using which we cache the media resource. </param>
-        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
-        /// <param name="operationContext">The operation context. </param>
+        /// <param name="options"> Options for playing audio. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<PlayAudioResult> PlayAudio(Uri audioFileUri, bool loop, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResult> PlayAudio(PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudio)}");
             scope.Start();
@@ -87,11 +79,11 @@ namespace Azure.Communication.CallingServer
             {
                 return RestClient.PlayAudio(
                     serverCallId: ServerCallId,
-                    audioFileUri: audioFileUri?.AbsoluteUri,
-                    loop: loop,
-                    audioFileId: audioFileId,
-                    callbackUri: callbackUri?.AbsoluteUri,
-                    operationContext: operationContext,
+                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
+                    loop: options.Loop,
+                    audioFileId: options.AudioFileId,
+                    callbackUri: options.CallbackUri?.AbsoluteUri,
+                    operationContext: options.OperationContext,
                     cancellationToken: cancellationToken
                     );
             }
@@ -803,14 +795,10 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Play audio to a participant. </summary>
         /// <param name="participantId">The participant id.</param>
-        /// <param name="audioFileUri"> The uri of the audio file. </param>
-        /// <param name="loop">The flag to indicate if audio file need to be played in a loop or not.</param>
-        /// <param name="audioFileId">The id for the media in the AudioFileUri, using which we cache the media resource. </param>
-        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
-        /// <param name="operationContext">The operation context. </param>
+        /// <param name="options"> Options for playing audio. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<PlayAudioResult>> PlayAudioToParticipantAsync(string participantId, Uri audioFileUri, bool loop, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayAudioResult>> PlayAudioToParticipantAsync(string participantId, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudioToParticipantAsync)}");
             scope.Start();
@@ -819,11 +807,11 @@ namespace Azure.Communication.CallingServer
                 return await RestClient.ParticipantPlayAudioAsync(
                     serverCallId: ServerCallId,
                     participantId: participantId,
-                    loop: loop,
-                    audioFileUri: audioFileUri.AbsoluteUri,
-                    audioFileId: audioFileId,
-                    callbackUri: callbackUri.AbsoluteUri,
-                    operationContext: operationContext,
+                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
+                    loop: options.Loop,
+                    audioFileId: options.AudioFileId,
+                    callbackUri: options.CallbackUri?.AbsoluteUri,
+                    operationContext: options.OperationContext,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -836,14 +824,10 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Play audio to a participant. </summary>
         /// <param name="participantId">The participant id.</param>
-        /// <param name="audioFileUri"> The uri of the audio file. </param>
-        /// <param name="loop">The flag to indicate if audio file need to be played in a loop or not.</param>
-        /// <param name="audioFileId">The id for the media in the AudioFileUri, using which we cache the media resource. </param>
-        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
-        /// <param name="operationContext">The operation context. </param>
+        /// <param name="options"> Options for playing audio. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<PlayAudioResult> PlayAudioToParticipant(string participantId, Uri audioFileUri, bool loop, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResult> PlayAudioToParticipant(string participantId, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudioToParticipant)}");
             scope.Start();
@@ -852,11 +836,11 @@ namespace Azure.Communication.CallingServer
                 return RestClient.ParticipantPlayAudio(
                     serverCallId: ServerCallId,
                     participantId: participantId,
-                    loop: loop,
-                    audioFileUri: audioFileUri.AbsoluteUri,
-                    audioFileId: audioFileId,
-                    callbackUri: callbackUri.AbsoluteUri,
-                    operationContext: operationContext,
+                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
+                    loop: options.Loop,
+                    audioFileId: options.AudioFileId,
+                    callbackUri: options.CallbackUri?.AbsoluteUri,
+                    operationContext: options.OperationContext,
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
