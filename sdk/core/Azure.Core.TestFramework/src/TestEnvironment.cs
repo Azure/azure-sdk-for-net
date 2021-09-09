@@ -40,7 +40,6 @@ namespace Azure.Core.TestFramework
         private readonly string _serviceSdkDirectory;
 
         private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = new();
-        private static readonly HashSet<Type> s_initializedEnvironmentTypes = new();
         private static readonly object s_syncLock = new();
         private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         private Exception _bootstrappingException;
