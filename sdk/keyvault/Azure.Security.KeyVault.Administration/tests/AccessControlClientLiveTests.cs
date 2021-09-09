@@ -186,10 +186,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
             KeyVaultRoleDefinition definitionToAssign = definitions.First(d => d.RoleName.Contains(RoleName));
 
             string keyName = Recording.GenerateId();
-            await KeyClient.CreateOctKeyAsync(new(keyName));
+            KeyVaultKey key = await KeyClient.CreateOctKeyAsync(new(keyName));
 
             Guid roleAssignmentName = Recording.Random.NewGuid();
-            KeyVaultRoleAssignment result = await Client.CreateRoleAssignmentAsync(new KeyVaultRoleScope($"/keys/{keyName}"), definitionToAssign.Id, TestEnvironment.ClientObjectId, roleAssignmentName).ConfigureAwait(false);
+            KeyVaultRoleAssignment result = await Client.CreateRoleAssignmentAsync(new KeyVaultRoleScope(key.Id), definitionToAssign.Id, TestEnvironment.ClientObjectId, roleAssignmentName).ConfigureAwait(false);
 
             RegisterForCleanup(result);
 
