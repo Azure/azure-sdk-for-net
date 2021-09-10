@@ -7,7 +7,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class CheckDnsAvailabilityTests : NetworkServiceClientTestBase
     {

@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Samples
         [Test]
         public async Task ConnStringAuth()
         {
-            string tableName = "OfficeSupplies";
+            string tableName = "OfficeSuppliesConnStringAuth";
             string connectionString =
                 $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={PrimaryStorageAccountKey};EndpointSuffix={StorageEndpointSuffix ?? DefaultStorageSuffix}";
 
@@ -40,7 +40,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string accountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies";
+            string tableName = "OfficeSuppliesSharedKeyAuth";
 
             #region Snippet:TablesAuthSharedKey
 
@@ -62,7 +62,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string accountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies";
+            string tableName = "OfficeSuppliesSasAuth";
 
             #region Snippet:TablesAuthSas
 
@@ -95,7 +95,7 @@ namespace Azure.Data.Tables.Samples
         public async Task TokenCredentialAuth()
         {
             string storageUri = StorageUri;
-            string tableName = "OfficeSupplies";
+            string tableName = "OfficeSuppliesTokenAuth";
 
             #region Snippet:TablesAuthTokenCredential
 

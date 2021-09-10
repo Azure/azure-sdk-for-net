@@ -190,7 +190,7 @@ namespace Azure.Monitor.Query.Models
         /// </summary>
         /// <param name="index">The column index.</param>
         /// <returns>The <see cref="object"/> value of the column.</returns>
-        public object GetObject(int index)
+        internal object GetObject(int index)
         {
             if (IsNull(index))
             {
@@ -255,7 +255,7 @@ namespace Azure.Monitor.Query.Models
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>The <see cref="object"/> value of the column.</returns>
-        public object GetObject(string name) => GetObject(_columnMap[name]);
+        internal object GetObject(string name) => GetObject(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column at the specified index as <see cref="object"/>.

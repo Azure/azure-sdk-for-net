@@ -125,7 +125,7 @@ namespace Azure.Monitor.Query.Tests
                 return false;
             }
 
-            foreach (var data in timeSeries.Data)
+            foreach (var data in timeSeries.Values)
             {
                 if (data.Count == null)
                 {
