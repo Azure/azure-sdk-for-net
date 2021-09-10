@@ -17,7 +17,8 @@ namespace Azure.Verticals.AgriFood.Farming
     public partial class ImageProcessingClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -48,7 +49,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
@@ -102,7 +103,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.CreateRasterizeJob");
             scope.Start();
@@ -180,7 +181,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.CreateRasterizeJob");
             scope.Start();
@@ -209,13 +210,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateRasterizeJob"/> and <see cref="CreateRasterizeJobAsync"/> operations. </summary>
-        /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateRasterizeJobRequest(string jobId, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateRasterizeJobRequest(string jobId, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -259,7 +256,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRasterizeJobRequest(jobId, options);
+            using HttpMessage message = CreateGetRasterizeJobRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");
             scope.Start();
@@ -317,7 +314,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRasterizeJobRequest(jobId, options);
+            using HttpMessage message = CreateGetRasterizeJobRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");
             scope.Start();
@@ -346,12 +343,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="GetRasterizeJob"/> and <see cref="GetRasterizeJobAsync"/> operations. </summary>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRasterizeJobRequest(string jobId, RequestOptions options = null)
+        private HttpMessage CreateGetRasterizeJobRequest(string jobId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
