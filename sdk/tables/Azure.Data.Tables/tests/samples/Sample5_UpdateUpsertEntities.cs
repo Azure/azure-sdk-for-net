@@ -8,7 +8,6 @@ using Azure.Data.Tables.Tests;
 
 namespace Azure.Data.Tables.Samples
 {
-    [LiveOnly]
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
