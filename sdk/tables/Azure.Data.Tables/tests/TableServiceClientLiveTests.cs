@@ -216,7 +216,7 @@ namespace Azure.Data.Tables.Tests
 
                 // Get the table list.
                 var remainingItems = createdTables.Count;
-                await foreach (var page in service.QueryAsync( /*maxPerPage: pageCount*/).AsPages(pageSizeHint: pageCount))
+                await foreach (var page in service.QueryAsync( /*maxPerPage: pageCount*/ ).AsPages(pageSizeHint: pageCount))
                 {
                     Assert.That(page.Values, Is.Not.Empty);
                     if (pageCount.HasValue)
