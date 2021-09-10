@@ -135,31 +135,7 @@ namespace DataBoxEdge.Tests
             return resourceList;
         }
 
-        #region KeyVaultHelpers
-        /// <summary>
-        /// Set Secret to keyVault
-        /// </summary>
-        /// <param name="keyvaultName">Name of the keyVault</param>
-        /// <param name="secretName">Name of the Secret</param>
-        /// <param name="secretValue">Value of the Secret</param>
-        /// <returns></returns>
-        public static void SetSecretToKeyVault(string keyvaultName, string secretName, string secretValue)
-        {
-            var keyVaultClient = GetKeyVaultClient(keyvaultName);
-            keyVaultClient.SetSecret(secretName, secretValue);
-        }
-
-        /// <summary>
-        /// Fetch Secret from KeyVault
-        /// </summary>
-        /// <param name="keyVaultName">Name of the KeyVault</param>
-        /// <param name="secretName">Name of the Secret to be deleted from KeyVault</param>
-        /// <returns></returns>
-        public static Azure.Response  GetSecretFromKeyVault(string keyVaultName, string secretName)
-        {
-           return GetKeyVaultClient(keyVaultName).GetSecret(secretName).GetRawResponse();
-        }
-
+        
         /// <summary>
         /// Delete Secret from KeyVault
         /// </summary>
@@ -188,7 +164,5 @@ namespace DataBoxEdge.Tests
 
             return new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
         }
-
-        #endregion
     }
 }

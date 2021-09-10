@@ -50,6 +50,9 @@
         /// </summary>
         public const string SubscriptionId = "706c087b-4c6c-46bf-8adf-766ae266d5bf";
 
-
+        /// <summary>
+        /// ProviderNameSpace
+        /// </summary>
+        public const string ProviderNameSpace = "Microsoft.DataBoxEdge";
     }
 }

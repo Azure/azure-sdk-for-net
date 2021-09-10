@@ -1,8 +1,11 @@
 namespace DataBoxEdge.Tests
 {
+    using Azure.Identity;
+    using Azure.Security.KeyVault.Secrets;
     using Microsoft.Azure.Management.DataBoxEdge;
     using Microsoft.Azure.Management.DataBoxEdge.Models;
     using RestSharp;
+    using System;
     using System.Linq;
     using Xunit;
     using Xunit.Abstractions;
@@ -38,34 +41,39 @@ namespace DataBoxEdge.Tests
         [Fact]
         public void Test_DeviceRegistrationOperation()
         {
-            // Step 1. Create Edge Resource Object
+            // Step 1. Create MSI Enabled Edge Resource
             DataBoxEdgeDevice device = new DataBoxEdgeDevice();
             device.PopulateEdgeDeviceProperties();
-
-            // Step 2. Enabel System Assigned MSI and Create Resource
             device.Identity = new ResourceIdentity(type: "SystemAssigned");
-            device.CreateOrUpdate(TestConstants.EdgeResourceName, Client, TestConstants.DefaultResourceGroupName);
+            var name = TestConstants.EdgeResourceName;
+            device.CreateOrUpdate(name, Client, TestConstants.DefaultResourceGroupName);
+            
+            // Step 2. GenerateCIK
+            var generatedCIK = Client.Devices.GenerateCIK();
 
-            // Step 3. GenerateCIK
-            var cik = Client.Devices.GenerateCIK();
-            TestUtilities.SetSecretToKeyVault(TestConstants.EdgeDeviceKeyVault, CIKName, cik);
+            // Step 3: Create KeyVault
+            // Please follow KeyVault documentation to create keyvualt:
+            // https://docs.microsoft.com/en-us/azure/key-vault/keys/quick-create-template?tabs=CLI
+            var keyVaultUri = "https://test-sdk-keyvault-123.vault.azure.net";
+            var keyVaultClient = new SecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
 
-            var secret = TestUtilities.GetSecretFromKeyVault(TestConstants.EdgeDeviceKeyVault, CIKName);
+            // Step 4: Save the CIK in KeyVault
+            keyVaultClient.SetSecret(CIKName, generatedCIK);
 
+            // Ste 5: Update KeyVault ClientSecretStoreId and ClientSecretStoreUrl from keyVault properties page
+            string ClientSecretStoreId = "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.KeyVault/vaults/test-sdk-keyvault-123";
+            string ClientSecretStoreUrl = "https://test-sdk-keyvault-123.vault.azure.net";
+            string ChannelIntegrityKeyName = CIKName;
+            string ChannelIntergrityKeyVersion = keyVaultClient.GetSecret(CIKName).Value.Id.Segments[3];
+            var patch = new DataBoxEdgeDeviceExtendedInfoPatch(ClientSecretStoreId, ClientSecretStoreUrl, ChannelIntegrityKeyName, ChannelIntergrityKeyVersion);
+            var updatedExtendedInfo = Client.Devices.UpdateExtendedInformation(name, patch, TestConstants.DefaultResourceGroupName);
+
+            // Step 6: GenerateActivationKey
+            var activationKey = Client.Devices.GenerateActivationKey(TestConstants.DefaultResourceGroupName, name,
+            TestConstants.DefaultResourceLocation, generatedCIK);
+
+            // Delete the CIK on the KeyVault (Note: Required step only for the test case)
             TestUtilities.DeleteSecretFromKeyVault(TestConstants.EdgeDeviceKeyVault, CIKName);
-
-            // Step 4: GenerateActivationKey
-            var activationKey = Client.Devices.GenerateActivationKey(TestConstants.DefaultResourceGroupName, TestConstants.EdgeResourceName,
-            TestConstants.DefaultResourceLocation, TestConstants.SubscriptionId, cik);
-        }
-
-        private void GenerateAndSaveCIKIn()
-        {
-            // GenerateAndSaveCIK()
-            // CreateKeyvault()
-            // SetKeyVault()
-            // SaveSecretToKeyVault()
-            // DeleteSecret()
         }
 
         /// <summary>
