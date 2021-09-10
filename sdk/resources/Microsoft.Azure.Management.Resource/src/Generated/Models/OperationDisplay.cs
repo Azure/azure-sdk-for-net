@@ -29,16 +29,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
-        /// <param name="provider">Service provider: Microsoft.Features</param>
+        /// <param name="provider">Service provider:
+        /// Microsoft.Resources</param>
         /// <param name="resource">Resource on which the operation is
         /// performed: Profile, endpoint, etc.</param>
         /// <param name="operation">Operation type: Read, write, delete,
         /// etc.</param>
-        public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string))
+        /// <param name="description">Description of the operation.</param>
+        public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
             Resource = resource;
             Operation = operation;
+            Description = description;
             CustomInit();
         }
 
@@ -48,7 +51,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets service provider: Microsoft.Features
+        /// Gets or sets service provider: Microsoft.Resources
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }
@@ -65,6 +68,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
+
+        /// <summary>
+        /// Gets or sets description of the operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
 
     }
 }
