@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -16,20 +17,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of JobBaseResourceArmPaginatedResult. </summary>
         internal JobBaseResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<JobBaseResource>();
+            Value = new ChangeTrackingList<JobBaseResourceData>();
         }
 
         /// <summary> Initializes a new instance of JobBaseResourceArmPaginatedResult. </summary>
+        /// <param name="nextLink"> The link to the next page of JobBase objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type JobBase. </param>
-        /// <param name="nextLink"> . </param>
-        internal JobBaseResourceArmPaginatedResult(IReadOnlyList<JobBaseResource> value, string nextLink)
+        internal JobBaseResourceArmPaginatedResult(string nextLink, IReadOnlyList<JobBaseResourceData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
-        /// <summary> An array of objects of type JobBase. </summary>
-        public IReadOnlyList<JobBaseResource> Value { get; }
+        /// <summary> The link to the next page of JobBase objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
+        /// <summary> An array of objects of type JobBase. </summary>
+        public IReadOnlyList<JobBaseResourceData> Value { get; }
     }
 }

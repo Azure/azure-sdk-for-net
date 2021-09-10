@@ -5,49 +5,67 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Details of an ModelDto. </summary>
+    /// <summary> Model asset version details. </summary>
     public partial class ModelVersion
     {
         /// <summary> Initializes a new instance of ModelVersion. </summary>
-        public ModelVersion()
+        /// <param name="modelUri"> The URI path to the model contents. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelUri"/> is null. </exception>
+        public ModelVersion(string modelUri)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            if (modelUri == null)
+            {
+                throw new ArgumentNullException(nameof(modelUri));
+            }
+
+            Flavors = new ChangeTrackingDictionary<string, FlavorData>();
+            ModelUri = modelUri;
             Properties = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ModelVersion. </summary>
-        /// <param name="stage"> Model asset stage. </param>
-        /// <param name="datastoreId"> The asset datastoreId. </param>
-        /// <param name="assetPath"> Details of an AssetUri. </param>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="flavors"> Mapping of model flavors to their properties. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="jobName"> Name of the training job which produced this model. </param>
+        /// <param name="modelFormat"> The storage format for this entity. Used for NCD. </param>
+        /// <param name="modelUri"> The URI path to the model contents. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        internal ModelVersion(string stage, string datastoreId, AssetPath assetPath, string description, IDictionary<string, string> tags, IDictionary<string, string> properties)
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        internal ModelVersion(string description, IDictionary<string, FlavorData> flavors, bool? isAnonymous, string jobName, ModelFormat? modelFormat, string modelUri, IDictionary<string, string> properties, IDictionary<string, string> tags)
         {
-            Stage = stage;
-            DatastoreId = datastoreId;
-            AssetPath = assetPath;
             Description = description;
-            Tags = tags;
+            Flavors = flavors;
+            IsAnonymous = isAnonymous;
+            JobName = jobName;
+            ModelFormat = modelFormat;
+            ModelUri = modelUri;
             Properties = properties;
+            Tags = tags;
         }
 
-        /// <summary> Model asset stage. </summary>
-        public string Stage { get; set; }
-        /// <summary> The asset datastoreId. </summary>
-        public string DatastoreId { get; set; }
-        /// <summary> Details of an AssetUri. </summary>
-        public AssetPath AssetPath { get; set; }
         /// <summary> The asset description text. </summary>
         public string Description { get; set; }
-        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Mapping of model flavors to their properties. </summary>
+        public IDictionary<string, FlavorData> Flavors { get; set; }
+        /// <summary> If the name version are system generated (anonymous registration). </summary>
+        public bool? IsAnonymous { get; set; }
+        /// <summary> Name of the training job which produced this model. </summary>
+        public string JobName { get; set; }
+        /// <summary> The storage format for this entity. Used for NCD. </summary>
+        public ModelFormat? ModelFormat { get; set; }
+        /// <summary> The URI path to the model contents. </summary>
+        public string ModelUri { get; set; }
         /// <summary> The asset property dictionary. </summary>
-        public IDictionary<string, string> Properties { get; }
+        public IDictionary<string, string> Properties { get; set; }
+        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
+        public IDictionary<string, string> Tags { get; set; }
     }
 }

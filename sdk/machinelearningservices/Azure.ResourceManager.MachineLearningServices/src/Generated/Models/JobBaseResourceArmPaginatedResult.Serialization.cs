@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -15,10 +16,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static JobBaseResourceArmPaginatedResult DeserializeJobBaseResourceArmPaginatedResult(JsonElement element)
         {
-            Optional<IReadOnlyList<JobBaseResource>> value = default;
             Optional<string> nextLink = default;
+            Optional<IReadOnlyList<JobBaseResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -26,21 +32,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobBaseResource> array = new List<JobBaseResource>();
+                    List<JobBaseResourceData> array = new List<JobBaseResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobBaseResource.DeserializeJobBaseResource(item));
+                        array.Add(JobBaseResourceData.DeserializeJobBaseResourceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new JobBaseResourceArmPaginatedResult(Optional.ToList(value), nextLink.Value);
+            return new JobBaseResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

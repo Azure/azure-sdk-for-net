@@ -16,107 +16,159 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatastoreId))
+            if (Optional.IsDefined(CodeUri))
             {
-                writer.WritePropertyName("datastoreId");
-                writer.WriteStringValue(DatastoreId);
-            }
-            if (Optional.IsDefined(AssetPath))
-            {
-                writer.WritePropertyName("assetPath");
-                writer.WriteObjectValue(AssetPath);
+                if (CodeUri != null)
+                {
+                    writer.WritePropertyName("codeUri");
+                    writer.WriteStringValue(CodeUri);
+                }
+                else
+                {
+                    writer.WriteNull("codeUri");
+                }
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
+                if (Description != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("description");
+                    writer.WriteStringValue(Description);
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("description");
+                }
+            }
+            if (Optional.IsDefined(IsAnonymous))
+            {
+                writer.WritePropertyName("isAnonymous");
+                writer.WriteBooleanValue(IsAnonymous.Value);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties");
-                writer.WriteStartObject();
-                foreach (var item in Properties)
+                if (Properties != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("properties");
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("properties");
+                }
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags != null)
+                {
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("tags");
+                }
             }
             writer.WriteEndObject();
         }
 
         internal static CodeVersion DeserializeCodeVersion(JsonElement element)
         {
-            Optional<string> datastoreId = default;
-            Optional<AssetPath> assetPath = default;
+            Optional<string> codeUri = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Optional<bool> isAnonymous = default;
             Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("datastoreId"))
-                {
-                    datastoreId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("assetPath"))
+                if (property.NameEquals("codeUri"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        codeUri = null;
                         continue;
                     }
-                    assetPath = AssetPath.DeserializeAssetPath(property.Value);
+                    codeUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("isAnonymous"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
+                    isAnonymous = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
                     }
                     properties = dictionary;
                     continue;
                 }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        tags = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
             }
-            return new CodeVersion(datastoreId.Value, assetPath.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new CodeVersion(codeUri.Value, description.Value, Optional.ToNullable(isAnonymous), Optional.ToDictionary(properties), Optional.ToDictionary(tags));
         }
     }
 }

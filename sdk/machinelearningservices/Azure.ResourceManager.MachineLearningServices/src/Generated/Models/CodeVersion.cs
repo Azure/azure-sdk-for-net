@@ -10,40 +10,40 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Details of an RegisteredCode. </summary>
+    /// <summary> Code asset version details. </summary>
     public partial class CodeVersion
     {
         /// <summary> Initializes a new instance of CodeVersion. </summary>
         public CodeVersion()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of CodeVersion. </summary>
-        /// <param name="datastoreId"> The asset datastoreId. </param>
-        /// <param name="assetPath"> Details of an AssetUri. </param>
+        /// <param name="codeUri"> Uri where code is located. </param>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        internal CodeVersion(string datastoreId, AssetPath assetPath, string description, IDictionary<string, string> tags, IDictionary<string, string> properties)
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        internal CodeVersion(string codeUri, string description, bool? isAnonymous, IDictionary<string, string> properties, IDictionary<string, string> tags)
         {
-            DatastoreId = datastoreId;
-            AssetPath = assetPath;
+            CodeUri = codeUri;
             Description = description;
-            Tags = tags;
+            IsAnonymous = isAnonymous;
             Properties = properties;
+            Tags = tags;
         }
 
-        /// <summary> The asset datastoreId. </summary>
-        public string DatastoreId { get; set; }
-        /// <summary> Details of an AssetUri. </summary>
-        public AssetPath AssetPath { get; set; }
+        /// <summary> Uri where code is located. </summary>
+        public string CodeUri { get; set; }
         /// <summary> The asset description text. </summary>
         public string Description { get; set; }
-        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> If the name version are system generated (anonymous registration). </summary>
+        public bool? IsAnonymous { get; set; }
         /// <summary> The asset property dictionary. </summary>
-        public IDictionary<string, string> Properties { get; }
+        public IDictionary<string, string> Properties { get; set; }
+        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
+        public IDictionary<string, string> Tags { get; set; }
     }
 }

@@ -20,12 +20,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="sshPort"> Port open for ssh connections. </param>
         /// <param name="address"> Public IP address of the virtual machine. </param>
         /// <param name="administratorAccount"> Admin credentials for virtual machine. </param>
-        internal VirtualMachineProperties(string virtualMachineSize, int? sshPort, string address, VirtualMachineSshCredentials administratorAccount)
+        /// <param name="isNotebookInstanceCompute"> Indicates whether this compute will be used for running notebooks. </param>
+        internal VirtualMachineProperties(string virtualMachineSize, int? sshPort, string address, VirtualMachineSshCredentials administratorAccount, bool? isNotebookInstanceCompute)
         {
             VirtualMachineSize = virtualMachineSize;
             SshPort = sshPort;
             Address = address;
             AdministratorAccount = administratorAccount;
+            IsNotebookInstanceCompute = isNotebookInstanceCompute;
         }
 
         /// <summary> Virtual Machine size. </summary>
@@ -36,5 +38,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Address { get; set; }
         /// <summary> Admin credentials for virtual machine. </summary>
         public VirtualMachineSshCredentials AdministratorAccount { get; set; }
+        /// <summary> Indicates whether this compute will be used for running notebooks. </summary>
+        public bool? IsNotebookInstanceCompute { get; set; }
     }
 }

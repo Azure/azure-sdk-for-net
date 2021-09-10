@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of Password. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="value"> . </param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
         internal Password(string name, string value)
         {
             Name = name;

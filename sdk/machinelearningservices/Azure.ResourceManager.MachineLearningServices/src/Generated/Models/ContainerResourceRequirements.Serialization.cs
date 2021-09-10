@@ -15,79 +15,61 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cpu))
+            if (Optional.IsDefined(ContainerResourceLimits))
             {
-                writer.WritePropertyName("cpu");
-                writer.WriteNumberValue(Cpu.Value);
+                if (ContainerResourceLimits != null)
+                {
+                    writer.WritePropertyName("containerResourceLimits");
+                    writer.WriteObjectValue(ContainerResourceLimits);
+                }
+                else
+                {
+                    writer.WriteNull("containerResourceLimits");
+                }
             }
-            if (Optional.IsDefined(MemoryInGB))
+            if (Optional.IsDefined(ContainerResourceRequests))
             {
-                writer.WritePropertyName("memoryInGB");
-                writer.WriteNumberValue(MemoryInGB.Value);
-            }
-            if (Optional.IsDefined(Gpu))
-            {
-                writer.WritePropertyName("gpu");
-                writer.WriteNumberValue(Gpu.Value);
-            }
-            if (Optional.IsDefined(Fpga))
-            {
-                writer.WritePropertyName("fpga");
-                writer.WriteNumberValue(Fpga.Value);
+                if (ContainerResourceRequests != null)
+                {
+                    writer.WritePropertyName("containerResourceRequests");
+                    writer.WriteObjectValue(ContainerResourceRequests);
+                }
+                else
+                {
+                    writer.WriteNull("containerResourceRequests");
+                }
             }
             writer.WriteEndObject();
         }
 
         internal static ContainerResourceRequirements DeserializeContainerResourceRequirements(JsonElement element)
         {
-            Optional<double> cpu = default;
-            Optional<double> memoryInGB = default;
-            Optional<int> gpu = default;
-            Optional<int> fpga = default;
+            Optional<ContainerResourceSettings> containerResourceLimits = default;
+            Optional<ContainerResourceSettings> containerResourceRequests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cpu"))
+                if (property.NameEquals("containerResourceLimits"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        containerResourceLimits = null;
                         continue;
                     }
-                    cpu = property.Value.GetDouble();
+                    containerResourceLimits = ContainerResourceSettings.DeserializeContainerResourceSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("memoryInGB"))
+                if (property.NameEquals("containerResourceRequests"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        containerResourceRequests = null;
                         continue;
                     }
-                    memoryInGB = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("gpu"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    gpu = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("fpga"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    fpga = property.Value.GetInt32();
+                    containerResourceRequests = ContainerResourceSettings.DeserializeContainerResourceSettings(property.Value);
                     continue;
                 }
             }
-            return new ContainerResourceRequirements(Optional.ToNullable(cpu), Optional.ToNullable(memoryInGB), Optional.ToNullable(gpu), Optional.ToNullable(fpga));
+            return new ContainerResourceRequirements(containerResourceLimits.Value, containerResourceRequests.Value);
         }
     }
 }

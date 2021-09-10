@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -14,19 +15,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static ResourceQuota DeserializeResourceQuota(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> amlWorkspaceLocation = default;
             Optional<string> type = default;
             Optional<ResourceName> name = default;
             Optional<long> limit = default;
             Optional<QuotaUnit> unit = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("amlWorkspaceLocation"))
                 {
                     amlWorkspaceLocation = property.Value.GetString();
@@ -67,8 +63,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     unit = new QuotaUnit(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ResourceQuota(id.Value, amlWorkspaceLocation.Value, type.Value, name.Value, Optional.ToNullable(limit), Optional.ToNullable(unit));
+            return new ResourceQuota(id, amlWorkspaceLocation.Value, type.Value, name.Value, Optional.ToNullable(limit), Optional.ToNullable(unit));
         }
     }
 }

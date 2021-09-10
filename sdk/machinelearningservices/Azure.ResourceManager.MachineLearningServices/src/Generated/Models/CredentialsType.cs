@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Credential type used to authentication with storage. </summary>
+    /// <summary> Enum to determine the datastore credentials type. </summary>
     public readonly partial struct CredentialsType : IEquatable<CredentialsType>
     {
         private readonly string _value;
@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         private const string NoneValue = "None";
         private const string SasValue = "Sas";
         private const string ServicePrincipalValue = "ServicePrincipal";
-        private const string SqlAdminValue = "SqlAdmin";
 
         /// <summary> AccountKey. </summary>
         public static CredentialsType AccountKey { get; } = new CredentialsType(AccountKeyValue);
@@ -39,8 +38,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static CredentialsType Sas { get; } = new CredentialsType(SasValue);
         /// <summary> ServicePrincipal. </summary>
         public static CredentialsType ServicePrincipal { get; } = new CredentialsType(ServicePrincipalValue);
-        /// <summary> SqlAdmin. </summary>
-        public static CredentialsType SqlAdmin { get; } = new CredentialsType(SqlAdminValue);
         /// <summary> Determines if two <see cref="CredentialsType"/> values are the same. </summary>
         public static bool operator ==(CredentialsType left, CredentialsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CredentialsType"/> values are not the same. </summary>

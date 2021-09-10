@@ -15,103 +15,34 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(AccountKey))
-            {
-                writer.WritePropertyName("accountKey");
-                writer.WriteObjectValue(AccountKey);
-            }
-            if (Optional.IsDefined(Certificate))
-            {
-                writer.WritePropertyName("certificate");
-                writer.WriteObjectValue(Certificate);
-            }
-            if (Optional.IsDefined(Sas))
-            {
-                writer.WritePropertyName("sas");
-                writer.WriteObjectValue(Sas);
-            }
-            if (Optional.IsDefined(ServicePrincipal))
-            {
-                writer.WritePropertyName("servicePrincipal");
-                writer.WriteObjectValue(ServicePrincipal);
-            }
-            if (Optional.IsDefined(SqlAdmin))
-            {
-                writer.WritePropertyName("sqlAdmin");
-                writer.WriteObjectValue(SqlAdmin);
-            }
+            writer.WritePropertyName("credentialsType");
+            writer.WriteStringValue(CredentialsType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DatastoreCredentials DeserializeDatastoreCredentials(JsonElement element)
         {
-            CredentialsType type = default;
-            Optional<AccountKeySection> accountKey = default;
-            Optional<CertificateSection> certificate = default;
-            Optional<SasSection> sas = default;
-            Optional<ServicePrincipalSection> servicePrincipal = default;
-            Optional<SqlAdminSection> sqlAdmin = default;
+            if (element.TryGetProperty("credentialsType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AccountKey": return AccountKeyDatastoreCredentials.DeserializeAccountKeyDatastoreCredentials(element);
+                    case "Certificate": return CertificateDatastoreCredentials.DeserializeCertificateDatastoreCredentials(element);
+                    case "None": return NoneDatastoreCredentials.DeserializeNoneDatastoreCredentials(element);
+                    case "Sas": return SasDatastoreCredentials.DeserializeSasDatastoreCredentials(element);
+                    case "ServicePrincipal": return ServicePrincipalDatastoreCredentials.DeserializeServicePrincipalDatastoreCredentials(element);
+                }
+            }
+            CredentialsType credentialsType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("credentialsType"))
                 {
-                    type = new CredentialsType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("accountKey"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    accountKey = AccountKeySection.DeserializeAccountKeySection(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("certificate"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    certificate = CertificateSection.DeserializeCertificateSection(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("sas"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sas = SasSection.DeserializeSasSection(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("servicePrincipal"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    servicePrincipal = ServicePrincipalSection.DeserializeServicePrincipalSection(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("sqlAdmin"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sqlAdmin = SqlAdminSection.DeserializeSqlAdminSection(property.Value);
+                    credentialsType = new CredentialsType(property.Value.GetString());
                     continue;
                 }
             }
-            return new DatastoreCredentials(type, accountKey.Value, certificate.Value, sas.Value, servicePrincipal.Value, sqlAdmin.Value);
+            return new DatastoreCredentials(credentialsType);
         }
     }
 }

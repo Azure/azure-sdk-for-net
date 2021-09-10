@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -16,20 +17,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of ModelVersionResourceArmPaginatedResult. </summary>
         internal ModelVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<ModelVersionResource>();
+            Value = new ChangeTrackingList<ModelVersionResourceData>();
         }
 
         /// <summary> Initializes a new instance of ModelVersionResourceArmPaginatedResult. </summary>
+        /// <param name="nextLink"> The link to the next page of ModelVersion objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type ModelVersion. </param>
-        /// <param name="nextLink"> . </param>
-        internal ModelVersionResourceArmPaginatedResult(IReadOnlyList<ModelVersionResource> value, string nextLink)
+        internal ModelVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<ModelVersionResourceData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
-        /// <summary> An array of objects of type ModelVersion. </summary>
-        public IReadOnlyList<ModelVersionResource> Value { get; }
+        /// <summary> The link to the next page of ModelVersion objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
+        /// <summary> An array of objects of type ModelVersion. </summary>
+        public IReadOnlyList<ModelVersionResourceData> Value { get; }
     }
 }

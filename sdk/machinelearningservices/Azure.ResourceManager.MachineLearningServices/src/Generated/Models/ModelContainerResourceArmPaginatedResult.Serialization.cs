@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -15,10 +16,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static ModelContainerResourceArmPaginatedResult DeserializeModelContainerResourceArmPaginatedResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ModelContainerResource>> value = default;
             Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ModelContainerResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -26,21 +32,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ModelContainerResource> array = new List<ModelContainerResource>();
+                    List<ModelContainerResourceData> array = new List<ModelContainerResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelContainerResource.DeserializeModelContainerResource(item));
+                        array.Add(ModelContainerResourceData.DeserializeModelContainerResourceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ModelContainerResourceArmPaginatedResult(Optional.ToList(value), nextLink.Value);
+            return new ModelContainerResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

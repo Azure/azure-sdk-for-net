@@ -15,27 +15,54 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description");
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description");
+                }
+            }
+            writer.WritePropertyName("jobOutputType");
+            writer.WriteStringValue(JobOutputType.ToString());
             writer.WriteEndObject();
         }
 
         internal static JobOutput DeserializeJobOutput(JsonElement element)
         {
-            Optional<string> datastoreId = default;
-            Optional<string> path = default;
+            if (element.TryGetProperty("jobOutputType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Dataset": return JobOutputDataset.DeserializeJobOutputDataset(element);
+                    case "Uri": return JobOutputUri.DeserializeJobOutputUri(element);
+                }
+            }
+            Optional<string> description = default;
+            JobOutputType jobOutputType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("datastoreId"))
+                if (property.NameEquals("description"))
                 {
-                    datastoreId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("jobOutputType"))
                 {
-                    path = property.Value.GetString();
+                    jobOutputType = new JobOutputType(property.Value.GetString());
                     continue;
                 }
             }
-            return new JobOutput(datastoreId.Value, path.Value);
+            return new JobOutput(description.Value, jobOutputType);
         }
     }
 }

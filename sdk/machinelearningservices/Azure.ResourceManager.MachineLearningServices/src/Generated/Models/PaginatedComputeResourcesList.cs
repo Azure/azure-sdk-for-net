@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of PaginatedComputeResourcesList. </summary>
         internal PaginatedComputeResourcesList()
         {
-            Value = new ChangeTrackingList<ComputeResource>();
+            Value = new ChangeTrackingList<ComputeResourceData>();
         }
 
         /// <summary> Initializes a new instance of PaginatedComputeResourcesList. </summary>
         /// <param name="value"> An array of Machine Learning compute objects wrapped in ARM resource envelope. </param>
         /// <param name="nextLink"> A continuation link (absolute URI) to the next page of results in the list. </param>
-        internal PaginatedComputeResourcesList(IReadOnlyList<ComputeResource> value, string nextLink)
+        internal PaginatedComputeResourcesList(IReadOnlyList<ComputeResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> An array of Machine Learning compute objects wrapped in ARM resource envelope. </summary>
-        public IReadOnlyList<ComputeResource> Value { get; }
+        public IReadOnlyList<ComputeResourceData> Value { get; }
         /// <summary> A continuation link (absolute URI) to the next page of results in the list. </summary>
         public string NextLink { get; }
     }

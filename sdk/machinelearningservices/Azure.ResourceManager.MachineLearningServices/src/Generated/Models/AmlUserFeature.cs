@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Features enabled for a workspace. </summary>
-    public partial class AmlUserFeature
+    public partial class AmlUserFeature : SubResource
     {
         /// <summary> Initializes a new instance of AmlUserFeature. </summary>
         internal AmlUserFeature()
@@ -16,18 +18,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AmlUserFeature. </summary>
-        /// <param name="id"> Specifies the feature ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="displayName"> Specifies the feature name. </param>
         /// <param name="description"> Describes the feature for user experience. </param>
-        internal AmlUserFeature(string id, string displayName, string description)
+        internal AmlUserFeature(string id, string displayName, string description) : base(id)
         {
-            Id = id;
             DisplayName = displayName;
             Description = description;
         }
 
-        /// <summary> Specifies the feature ID. </summary>
-        public string Id { get; }
         /// <summary> Specifies the feature name. </summary>
         public string DisplayName { get; }
         /// <summary> Describes the feature for user experience. </summary>

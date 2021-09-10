@@ -11,12 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class AmlComputeNodesInformation
+    internal partial class AmlComputeNodesInformation
     {
         internal static AmlComputeNodesInformation DeserializeAmlComputeNodesInformation(JsonElement element)
         {
             Optional<IReadOnlyList<AmlComputeNodeInformation>> nodes = default;
-            ComputeType computeType = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,18 +34,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     nodes = array;
                     continue;
                 }
-                if (property.NameEquals("computeType"))
-                {
-                    computeType = new ComputeType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("nextLink"))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new AmlComputeNodesInformation(computeType, nextLink.Value, Optional.ToList(nodes));
+            return new AmlComputeNodesInformation(Optional.ToList(nodes), nextLink.Value);
         }
     }
 }

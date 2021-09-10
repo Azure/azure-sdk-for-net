@@ -16,86 +16,435 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Optional.IsDefined(EarlyTermination))
             {
-                writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToString());
+                if (EarlyTermination != null)
+                {
+                    writer.WritePropertyName("earlyTermination");
+                    writer.WriteObjectValue(EarlyTermination);
+                }
+                else
+                {
+                    writer.WriteNull("earlyTermination");
+                }
             }
-            writer.WritePropertyName("parameterSamplingConfiguration");
-            writer.WriteObjectValue(ParameterSamplingConfiguration);
-            if (Optional.IsDefined(TerminationConfiguration))
+            if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("terminationConfiguration");
-                writer.WriteObjectValue(TerminationConfiguration);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity");
+                    writer.WriteObjectValue(Identity);
+                }
+                else
+                {
+                    writer.WriteNull("identity");
+                }
             }
-            writer.WritePropertyName("evaluationConfiguration");
-            writer.WriteObjectValue(EvaluationConfiguration);
-            if (Optional.IsDefined(TrialComponent))
+            if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("trialComponent");
-                writer.WriteObjectValue(TrialComponent);
+                if (Inputs != null)
+                {
+                    writer.WritePropertyName("inputs");
+                    writer.WriteStartObject();
+                    foreach (var item in Inputs)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("inputs");
+                }
+            }
+            if (Optional.IsDefined(Limits))
+            {
+                if (Limits != null)
+                {
+                    writer.WritePropertyName("limits");
+                    writer.WriteObjectValue(Limits);
+                }
+                else
+                {
+                    writer.WriteNull("limits");
+                }
+            }
+            writer.WritePropertyName("objective");
+            writer.WriteObjectValue(Objective);
+            if (Optional.IsCollectionDefined(Outputs))
+            {
+                if (Outputs != null)
+                {
+                    writer.WritePropertyName("outputs");
+                    writer.WriteStartObject();
+                    foreach (var item in Outputs)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("outputs");
+                }
+            }
+            writer.WritePropertyName("samplingAlgorithm");
+            writer.WriteStringValue(SamplingAlgorithm.ToString());
+            writer.WritePropertyName("searchSpace");
+            writer.WriteStartObject();
+            foreach (var item in SearchSpace)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+            if (Optional.IsDefined(Trial))
+            {
+                if (Trial != null)
+                {
+                    writer.WritePropertyName("trial");
+                    writer.WriteObjectValue(Trial);
+                }
+                else
+                {
+                    writer.WriteNull("trial");
+                }
+            }
+            if (Optional.IsDefined(ComputeId))
+            {
+                if (ComputeId != null)
+                {
+                    writer.WritePropertyName("computeId");
+                    writer.WriteStringValue(ComputeId);
+                }
+                else
+                {
+                    writer.WriteNull("computeId");
+                }
+            }
+            if (Optional.IsDefined(Description))
+            {
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description");
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description");
+                }
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                if (DisplayName != null)
+                {
+                    writer.WritePropertyName("displayName");
+                    writer.WriteStringValue(DisplayName);
+                }
+                else
+                {
+                    writer.WriteNull("displayName");
+                }
             }
             if (Optional.IsDefined(ExperimentName))
             {
-                writer.WritePropertyName("experimentName");
-                writer.WriteStringValue(ExperimentName);
-            }
-            writer.WritePropertyName("computeBinding");
-            writer.WriteObjectValue(ComputeBinding);
-            if (Optional.IsDefined(Output))
-            {
-                writer.WritePropertyName("output");
-                writer.WriteObjectValue(Output);
+                if (ExperimentName != null)
+                {
+                    writer.WritePropertyName("experimentName");
+                    writer.WriteStringValue(ExperimentName);
+                }
+                else
+                {
+                    writer.WriteNull("experimentName");
+                }
             }
             writer.WritePropertyName("jobType");
             writer.WriteStringValue(JobType.ToString());
-            if (Optional.IsDefined(Description))
+            if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
+                if (Properties != null)
+                {
+                    writer.WritePropertyName("properties");
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("properties");
+                }
+            }
+            if (Optional.IsCollectionDefined(Services))
+            {
+                if (Services != null)
+                {
+                    writer.WritePropertyName("services");
+                    writer.WriteStartObject();
+                    foreach (var item in Services)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("services");
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
+                if (Tags != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                writer.WritePropertyName("properties");
-                writer.WriteStartObject();
-                foreach (var item in Properties)
+                else
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteNull("tags");
                 }
-                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }
 
         internal static SweepJob DeserializeSweepJob(JsonElement element)
         {
-            Optional<JobStatus> status = default;
-            ParameterSamplingConfiguration parameterSamplingConfiguration = default;
-            Optional<TerminationConfiguration> terminationConfiguration = default;
-            EvaluationConfiguration evaluationConfiguration = default;
-            Optional<TrialComponent> trialComponent = default;
-            Optional<string> experimentName = default;
-            ComputeBinding computeBinding = default;
-            Optional<JobOutput> output = default;
-            JobType jobType = default;
-            Optional<JobBaseInteractionEndpoints> interactionEndpoints = default;
+            Optional<EarlyTerminationPolicy> earlyTermination = default;
+            Optional<IdentityConfiguration> identity = default;
+            Optional<IDictionary<string, JobInput>> inputs = default;
+            Optional<SweepJobLimits> limits = default;
+            Objective objective = default;
+            Optional<IDictionary<string, JobOutput>> outputs = default;
+            SamplingAlgorithm samplingAlgorithm = default;
+            IDictionary<string, object> searchSpace = default;
+            Optional<TrialComponent> trial = default;
+            Optional<string> computeId = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> displayName = default;
+            Optional<string> experimentName = default;
+            JobType jobType = default;
+            Optional<string> parentJobName = default;
             Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, JobService>> services = default;
+            Optional<JobStatus> status = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("earlyTermination"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        earlyTermination = null;
+                        continue;
+                    }
+                    earlyTermination = EarlyTerminationPolicy.DeserializeEarlyTerminationPolicy(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        identity = null;
+                        continue;
+                    }
+                    identity = IdentityConfiguration.DeserializeIdentityConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("inputs"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        inputs = null;
+                        continue;
+                    }
+                    Dictionary<string, JobInput> dictionary = new Dictionary<string, JobInput>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, JobInput.DeserializeJobInput(property0.Value));
+                        }
+                    }
+                    inputs = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("limits"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        limits = null;
+                        continue;
+                    }
+                    limits = SweepJobLimits.DeserializeSweepJobLimits(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("objective"))
+                {
+                    objective = Objective.DeserializeObjective(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("outputs"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        outputs = null;
+                        continue;
+                    }
+                    Dictionary<string, JobOutput> dictionary = new Dictionary<string, JobOutput>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, JobOutput.DeserializeJobOutput(property0.Value));
+                        }
+                    }
+                    outputs = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("samplingAlgorithm"))
+                {
+                    samplingAlgorithm = new SamplingAlgorithm(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("searchSpace"))
+                {
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                    }
+                    searchSpace = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("trial"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        trial = null;
+                        continue;
+                    }
+                    trial = TrialComponent.DeserializeTrialComponent(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("computeId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        computeId = null;
+                        continue;
+                    }
+                    computeId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("displayName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        displayName = null;
+                        continue;
+                    }
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("experimentName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        experimentName = null;
+                        continue;
+                    }
+                    experimentName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("jobType"))
+                {
+                    jobType = new JobType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("parentJobName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        parentJobName = null;
+                        continue;
+                    }
+                    parentJobName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        properties = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("services"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        services = null;
+                        continue;
+                    }
+                    Dictionary<string, JobService> dictionary = new Dictionary<string, JobService>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, JobService.DeserializeJobService(property0.Value));
+                        }
+                    }
+                    services = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -106,108 +455,30 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     status = new JobStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("parameterSamplingConfiguration"))
-                {
-                    parameterSamplingConfiguration = ParameterSamplingConfiguration.DeserializeParameterSamplingConfiguration(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("terminationConfiguration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    terminationConfiguration = TerminationConfiguration.DeserializeTerminationConfiguration(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("evaluationConfiguration"))
-                {
-                    evaluationConfiguration = EvaluationConfiguration.DeserializeEvaluationConfiguration(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("trialComponent"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    trialComponent = TrialComponent.DeserializeTrialComponent(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("experimentName"))
-                {
-                    experimentName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("computeBinding"))
-                {
-                    computeBinding = ComputeBinding.DeserializeComputeBinding(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("output"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    output = JobOutput.DeserializeJobOutput(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("jobType"))
-                {
-                    jobType = new JobType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("interactionEndpoints"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    interactionEndpoints = JobBaseInteractionEndpoints.DeserializeJobBaseInteractionEndpoints(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
-                    continue;
-                }
             }
-            return new SweepJob(jobType, interactionEndpoints.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties), experimentName.Value, computeBinding, output.Value, Optional.ToNullable(status), parameterSamplingConfiguration, terminationConfiguration.Value, evaluationConfiguration, trialComponent.Value);
+            return new SweepJob(computeId.Value, description.Value, displayName.Value, experimentName.Value, jobType, parentJobName.Value, Optional.ToDictionary(properties), Optional.ToDictionary(services), Optional.ToNullable(status), Optional.ToDictionary(tags), earlyTermination.Value, identity.Value, Optional.ToDictionary(inputs), limits.Value, objective, Optional.ToDictionary(outputs), samplingAlgorithm, searchSpace, trial.Value);
         }
     }
 }

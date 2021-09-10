@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Specifies the type of distribution framework. </summary>
+    /// <summary> Enum to determine the job distribution type. </summary>
     public readonly partial struct DistributionType : IEquatable<DistributionType>
     {
         private readonly string _value;

@@ -8,6 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -60,28 +62,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static PrivateLinkResource DeserializePrivateLinkResource(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
             Optional<Identity> identity = default;
             Optional<string> location = default;
-            Optional<string> type = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<Sku> sku = default;
+            Optional<SystemData> systemData = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("identity"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -95,11 +88,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -125,6 +113,31 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     sku = Sku.DeserializeSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -175,7 +188,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new PrivateLinkResource(id.Value, name.Value, identity.Value, location.Value, type.Value, Optional.ToDictionary(tags), sku.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new PrivateLinkResource(id, name, type, identity.Value, location.Value, Optional.ToDictionary(tags), sku.Value, systemData, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

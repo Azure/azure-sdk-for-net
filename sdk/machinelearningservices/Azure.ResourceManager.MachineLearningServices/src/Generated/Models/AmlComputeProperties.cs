@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -17,7 +18,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
         public AmlComputeProperties()
         {
-            Errors = new ChangeTrackingList<MachineLearningServiceError>();
+            Errors = new ChangeTrackingList<ErrorResponse>();
+            PropertyBag = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
@@ -37,7 +39,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="targetNodeCount"> The target number of compute nodes for the compute. If the allocationState is resizing, this property denotes the target node count for the ongoing resize operation. If the allocationState is steady, this property denotes the target node count for the previous resize operation. </param>
         /// <param name="nodeStateCounts"> Counts of various node states on the compute. </param>
         /// <param name="enableNodePublicIp"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
-        internal AmlComputeProperties(OsType? osType, string vmSize, VmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionTime, IReadOnlyList<MachineLearningServiceError> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIp)
+        /// <param name="propertyBag"> A property bag containing additional properties. </param>
+        internal AmlComputeProperties(OsType? osType, string vmSize, VmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionTime, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIp, IDictionary<string, object> propertyBag)
         {
             OsType = osType;
             VmSize = vmSize;
@@ -55,6 +58,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             TargetNodeCount = targetNodeCount;
             NodeStateCounts = nodeStateCounts;
             EnableNodePublicIp = enableNodePublicIp;
+            PropertyBag = propertyBag;
         }
 
         /// <summary> Compute OS Type. </summary>
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The time at which the compute entered its current allocation state. </summary>
         public DateTimeOffset? AllocationStateTransitionTime { get; }
         /// <summary> Collection of errors encountered by various compute nodes during node setup. </summary>
-        public IReadOnlyList<MachineLearningServiceError> Errors { get; }
+        public IReadOnlyList<ErrorResponse> Errors { get; }
         /// <summary> The number of compute nodes currently assigned to the compute. </summary>
         public int? CurrentNodeCount { get; }
         /// <summary> The target number of compute nodes for the compute. If the allocationState is resizing, this property denotes the target node count for the ongoing resize operation. If the allocationState is steady, this property denotes the target node count for the previous resize operation. </summary>
@@ -89,5 +93,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public NodeStateCounts NodeStateCounts { get; }
         /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
         public bool? EnableNodePublicIp { get; set; }
+        /// <summary> A property bag containing additional properties. </summary>
+        public IDictionary<string, object> PropertyBag { get; }
     }
 }

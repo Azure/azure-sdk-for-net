@@ -11,68 +11,95 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Code Job definition. </summary>
-    public partial class CommandJob : ComputeJobBase
+    /// <summary> Command job definition. </summary>
+    public partial class CommandJob : JobBase
     {
         /// <summary> Initializes a new instance of CommandJob. </summary>
-        /// <param name="computeBinding"> Compute binding definition. </param>
-        /// <param name="codeConfiguration"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="computeBinding"/> or <paramref name="codeConfiguration"/> is null. </exception>
-        public CommandJob(ComputeBinding computeBinding, CodeConfiguration codeConfiguration) : base(computeBinding)
+        /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="command"/> is null. </exception>
+        public CommandJob(string command)
         {
-            if (computeBinding == null)
+            if (command == null)
             {
-                throw new ArgumentNullException(nameof(computeBinding));
-            }
-            if (codeConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(codeConfiguration));
+                throw new ArgumentNullException(nameof(command));
             }
 
-            CodeConfiguration = codeConfiguration;
-            DataBindings = new ChangeTrackingDictionary<string, DataBinding>();
+            Command = command;
+            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
+            Inputs = new ChangeTrackingDictionary<string, JobInput>();
+            Outputs = new ChangeTrackingDictionary<string, JobOutput>();
+            Parameters = new ChangeTrackingDictionary<string, object>();
             JobType = JobType.Command;
         }
 
         /// <summary> Initializes a new instance of CommandJob. </summary>
-        /// <param name="jobType"> Specifies the type of job. </param>
-        /// <param name="interactionEndpoints">
-        /// Dictonary of endpoint URIs, keyed by enumerated job endpoints.
-        /// 
-        /// For local jobs, a job endpoint will have a value of FileStreamObject.
-        /// </param>
+        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="displayName"> Display name of job. </param>
         /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
-        /// <param name="computeBinding"> Compute binding definition. </param>
-        /// <param name="output"> . </param>
+        /// <param name="jobType"> Specifies the type of job. </param>
+        /// <param name="parentJobName"> TODO - Parent job name. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="services">
+        /// List of JobEndpoints.
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// </param>
         /// <param name="status"> Status of the job. </param>
-        /// <param name="maxRunDurationSeconds"> The max run duration in seconds, after which the job will be cancelled. </param>
-        /// <param name="codeConfiguration"> . </param>
-        /// <param name="environmentId"> Environment specification of the job. </param>
-        /// <param name="dataBindings"> Mapping of data bindings used in the job. </param>
-        /// <param name="distributionConfiguration"> . </param>
-        internal CommandJob(JobType jobType, JobBaseInteractionEndpoints interactionEndpoints, string description, IDictionary<string, string> tags, IDictionary<string, string> properties, string experimentName, ComputeBinding computeBinding, JobOutput output, JobStatus? status, long? maxRunDurationSeconds, CodeConfiguration codeConfiguration, string environmentId, IDictionary<string, DataBinding> dataBindings, DistributionConfiguration distributionConfiguration) : base(jobType, interactionEndpoints, description, tags, properties, experimentName, computeBinding, output)
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="codeId"> ARM resource ID of the code asset. </param>
+        /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <param name="distribution"> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </param>
+        /// <param name="environmentId"> The ARM resource ID of the Environment specification for the job. </param>
+        /// <param name="environmentVariables"> Environment variables included in the job. </param>
+        /// <param name="identity">
+        /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, or null.
+        /// Defaults to AmlToken if null.
+        /// </param>
+        /// <param name="inputs"> Mapping of input data bindings used in the job. </param>
+        /// <param name="limits"> Command Job limit. </param>
+        /// <param name="outputs"> Mapping of output data bindings used in the job. </param>
+        /// <param name="parameters"> Input parameters. </param>
+        /// <param name="resources"> Compute Resource configuration for the job. </param>
+        internal CommandJob(string computeId, string description, string displayName, string experimentName, JobType jobType, string parentJobName, IDictionary<string, string> properties, IDictionary<string, JobService> services, JobStatus? status, IDictionary<string, string> tags, string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, IdentityConfiguration identity, IDictionary<string, JobInput> inputs, CommandJobLimits limits, IDictionary<string, JobOutput> outputs, IReadOnlyDictionary<string, object> parameters, ResourceConfiguration resources) : base(computeId, description, displayName, experimentName, jobType, parentJobName, properties, services, status, tags)
         {
-            Status = status;
-            MaxRunDurationSeconds = maxRunDurationSeconds;
-            CodeConfiguration = codeConfiguration;
+            CodeId = codeId;
+            Command = command;
+            Distribution = distribution;
             EnvironmentId = environmentId;
-            DataBindings = dataBindings;
-            DistributionConfiguration = distributionConfiguration;
+            EnvironmentVariables = environmentVariables;
+            Identity = identity;
+            Inputs = inputs;
+            Limits = limits;
+            Outputs = outputs;
+            Parameters = parameters;
+            Resources = resources;
             JobType = jobType;
         }
 
-        /// <summary> Status of the job. </summary>
-        public JobStatus? Status { get; set; }
-        /// <summary> The max run duration in seconds, after which the job will be cancelled. </summary>
-        public long? MaxRunDurationSeconds { get; set; }
-        public CodeConfiguration CodeConfiguration { get; set; }
-        /// <summary> Environment specification of the job. </summary>
+        /// <summary> ARM resource ID of the code asset. </summary>
+        public string CodeId { get; set; }
+        /// <summary> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
+        public string Command { get; set; }
+        /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
+        public DistributionConfiguration Distribution { get; set; }
+        /// <summary> The ARM resource ID of the Environment specification for the job. </summary>
         public string EnvironmentId { get; set; }
-        /// <summary> Mapping of data bindings used in the job. </summary>
-        public IDictionary<string, DataBinding> DataBindings { get; }
-        public DistributionConfiguration DistributionConfiguration { get; set; }
+        /// <summary> Environment variables included in the job. </summary>
+        public IDictionary<string, string> EnvironmentVariables { get; set; }
+        /// <summary>
+        /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, or null.
+        /// Defaults to AmlToken if null.
+        /// </summary>
+        public IdentityConfiguration Identity { get; set; }
+        /// <summary> Mapping of input data bindings used in the job. </summary>
+        public IDictionary<string, JobInput> Inputs { get; set; }
+        /// <summary> Command Job limit. </summary>
+        public CommandJobLimits Limits { get; set; }
+        /// <summary> Mapping of output data bindings used in the job. </summary>
+        public IDictionary<string, JobOutput> Outputs { get; set; }
+        /// <summary> Input parameters. </summary>
+        public IReadOnlyDictionary<string, object> Parameters { get; }
+        /// <summary> Compute Resource configuration for the job. </summary>
+        public ResourceConfiguration Resources { get; set; }
     }
 }

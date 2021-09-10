@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The JobOutput. </summary>
+    /// <summary> Job output definition container information on where to find job output/logs. </summary>
     public partial class JobOutput
     {
         /// <summary> Initializes a new instance of JobOutput. </summary>
@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of JobOutput. </summary>
-        /// <param name="datastoreId"> ARM ID of the datastore where the job logs and artifacts are stored, or null for the default container (&quot;azureml&quot;) in the workspace&apos;s storage account. </param>
-        /// <param name="path"> Path within the datastore to the job logs and artifacts. </param>
-        internal JobOutput(string datastoreId, string path)
+        /// <param name="description"> Description for the output. </param>
+        /// <param name="jobOutputType"> Specifies the type of job. </param>
+        internal JobOutput(string description, JobOutputType jobOutputType)
         {
-            DatastoreId = datastoreId;
-            Path = path;
+            Description = description;
+            JobOutputType = jobOutputType;
         }
 
-        /// <summary> ARM ID of the datastore where the job logs and artifacts are stored, or null for the default container (&quot;azureml&quot;) in the workspace&apos;s storage account. </summary>
-        public string DatastoreId { get; }
-        /// <summary> Path within the datastore to the job logs and artifacts. </summary>
-        public string Path { get; }
+        /// <summary> Description for the output. </summary>
+        public string Description { get; set; }
+        /// <summary> Specifies the type of job. </summary>
+        internal JobOutputType JobOutputType { get; set; }
     }
 }

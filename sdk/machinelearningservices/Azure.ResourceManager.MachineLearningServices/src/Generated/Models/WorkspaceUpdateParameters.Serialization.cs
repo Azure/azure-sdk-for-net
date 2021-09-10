@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
@@ -42,6 +47,26 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             {
                 writer.WritePropertyName("friendlyName");
                 writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(ImageBuildCompute))
+            {
+                writer.WritePropertyName("imageBuildCompute");
+                writer.WriteStringValue(ImageBuildCompute);
+            }
+            if (Optional.IsDefined(ServiceManagedResourcesSettings))
+            {
+                writer.WritePropertyName("serviceManagedResourcesSettings");
+                writer.WriteObjectValue(ServiceManagedResourcesSettings);
+            }
+            if (Optional.IsDefined(PrimaryUserAssignedIdentity))
+            {
+                writer.WritePropertyName("primaryUserAssignedIdentity");
+                writer.WriteStringValue(PrimaryUserAssignedIdentity);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

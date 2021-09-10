@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Status of the job. </summary>
+    /// <summary> The status of a job. </summary>
     public readonly partial struct JobStatus : IEquatable<JobStatus>
     {
         private readonly string _value;
@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         private const string CanceledValue = "Canceled";
         private const string NotRespondingValue = "NotResponding";
         private const string PausedValue = "Paused";
+        private const string UnknownValue = "Unknown";
 
         /// <summary> NotStarted. </summary>
         public static JobStatus NotStarted { get; } = new JobStatus(NotStartedValue);
@@ -62,6 +63,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static JobStatus NotResponding { get; } = new JobStatus(NotRespondingValue);
         /// <summary> Paused. </summary>
         public static JobStatus Paused { get; } = new JobStatus(PausedValue);
+        /// <summary> Unknown. </summary>
+        public static JobStatus Unknown { get; } = new JobStatus(UnknownValue);
         /// <summary> Determines if two <see cref="JobStatus"/> values are the same. </summary>
         public static bool operator ==(JobStatus left, JobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobStatus"/> values are not the same. </summary>

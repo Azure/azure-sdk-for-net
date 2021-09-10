@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<bool> lowPriorityCapable = default;
             Optional<bool> premiumIO = default;
             Optional<EstimatedVMPrices> estimatedVMPrices = default;
+            Optional<IReadOnlyList<string>> supportedComputeTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -116,8 +118,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     estimatedVMPrices = EstimatedVMPrices.DeserializeEstimatedVMPrices(property.Value);
                     continue;
                 }
+                if (property.NameEquals("supportedComputeTypes"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    supportedComputeTypes = array;
+                    continue;
+                }
             }
-            return new VirtualMachineSize(name.Value, family.Value, Optional.ToNullable(vCPUs), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVMPrices.Value);
+            return new VirtualMachineSize(name.Value, family.Value, Optional.ToNullable(vCPUs), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVMPrices.Value, Optional.ToList(supportedComputeTypes));
         }
     }
 }

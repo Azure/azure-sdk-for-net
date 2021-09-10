@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static PaginatedComputeResourcesList DeserializePaginatedComputeResourcesList(JsonElement element)
         {
-            Optional<IReadOnlyList<ComputeResource>> value = default;
+            Optional<IReadOnlyList<ComputeResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ComputeResource> array = new List<ComputeResource>();
+                    List<ComputeResourceData> array = new List<ComputeResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeResource.DeserializeComputeResource(item));
+                        array.Add(ComputeResourceData.DeserializeComputeResourceData(item));
                     }
                     value = array;
                     continue;

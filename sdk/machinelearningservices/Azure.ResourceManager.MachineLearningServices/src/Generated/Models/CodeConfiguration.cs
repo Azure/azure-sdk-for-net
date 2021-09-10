@@ -9,34 +9,34 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The CodeConfiguration. </summary>
+    /// <summary> Configuration for a scoring code asset. </summary>
     public partial class CodeConfiguration
     {
         /// <summary> Initializes a new instance of CodeConfiguration. </summary>
-        /// <param name="command"> The command to execute on startup of the job. eg. [&quot;python&quot;, &quot;train.py&quot;]. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="command"/> is null. </exception>
-        public CodeConfiguration(string command)
+        /// <param name="scoringScript"> The script to execute on startup. eg. &quot;score.py&quot;. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scoringScript"/> is null. </exception>
+        public CodeConfiguration(string scoringScript)
         {
-            if (command == null)
+            if (scoringScript == null)
             {
-                throw new ArgumentNullException(nameof(command));
+                throw new ArgumentNullException(nameof(scoringScript));
             }
 
-            Command = command;
+            ScoringScript = scoringScript;
         }
 
         /// <summary> Initializes a new instance of CodeConfiguration. </summary>
-        /// <param name="codeArtifactId"> The ID of the code asset. </param>
-        /// <param name="command"> The command to execute on startup of the job. eg. [&quot;python&quot;, &quot;train.py&quot;]. </param>
-        internal CodeConfiguration(string codeArtifactId, string command)
+        /// <param name="codeId"> ARM resource ID of the code asset. </param>
+        /// <param name="scoringScript"> The script to execute on startup. eg. &quot;score.py&quot;. </param>
+        internal CodeConfiguration(string codeId, string scoringScript)
         {
-            CodeArtifactId = codeArtifactId;
-            Command = command;
+            CodeId = codeId;
+            ScoringScript = scoringScript;
         }
 
-        /// <summary> The ID of the code asset. </summary>
-        public string CodeArtifactId { get; set; }
-        /// <summary> The command to execute on startup of the job. eg. [&quot;python&quot;, &quot;train.py&quot;]. </summary>
-        public string Command { get; set; }
+        /// <summary> ARM resource ID of the code asset. </summary>
+        public string CodeId { get; set; }
+        /// <summary> The script to execute on startup. eg. &quot;score.py&quot;. </summary>
+        public string ScoringScript { get; set; }
     }
 }

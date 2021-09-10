@@ -23,9 +23,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
         public Sku Sku { get; set; }
+        /// <summary> The identity of the resource. </summary>
+        public Identity Identity { get; set; }
         /// <summary> The description of this workspace. </summary>
         public string Description { get; set; }
         /// <summary> The friendly name for this workspace. </summary>
         public string FriendlyName { get; set; }
+        /// <summary> The compute name for image build. </summary>
+        public string ImageBuildCompute { get; set; }
+        /// <summary> The service managed resource settings. </summary>
+        public ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
+        /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
+        public string PrimaryUserAssignedIdentity { get; set; }
+        /// <summary> Whether requests from Public Network are allowed. </summary>
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

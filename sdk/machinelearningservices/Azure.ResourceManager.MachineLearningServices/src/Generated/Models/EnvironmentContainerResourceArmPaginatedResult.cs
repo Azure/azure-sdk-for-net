@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -16,20 +17,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of EnvironmentContainerResourceArmPaginatedResult. </summary>
         internal EnvironmentContainerResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<EnvironmentContainerResource>();
+            Value = new ChangeTrackingList<EnvironmentContainerResourceData>();
         }
 
         /// <summary> Initializes a new instance of EnvironmentContainerResourceArmPaginatedResult. </summary>
+        /// <param name="nextLink"> The link to the next page of EnvironmentContainer objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type EnvironmentContainer. </param>
-        /// <param name="nextLink"> . </param>
-        internal EnvironmentContainerResourceArmPaginatedResult(IReadOnlyList<EnvironmentContainerResource> value, string nextLink)
+        internal EnvironmentContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<EnvironmentContainerResourceData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
-        /// <summary> An array of objects of type EnvironmentContainer. </summary>
-        public IReadOnlyList<EnvironmentContainerResource> Value { get; }
+        /// <summary> The link to the next page of EnvironmentContainer objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
+        /// <summary> An array of objects of type EnvironmentContainer. </summary>
+        public IReadOnlyList<EnvironmentContainerResourceData> Value { get; }
     }
 }

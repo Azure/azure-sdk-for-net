@@ -16,31 +16,34 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of ModelContainer. </summary>
         public ModelContainer()
         {
-            LatestVersions = new ChangeTrackingList<ModelVersionResource>();
-            Tags = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ModelContainer. </summary>
-        /// <param name="latestVersions"> Latest model versions for each stage. </param>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="description"> The model container description text. </param>
+        /// <param name="latestVersion"> The latest version inside this container. </param>
+        /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        internal ModelContainer(IList<ModelVersionResource> latestVersions, string description, IDictionary<string, string> tags, IDictionary<string, string> properties)
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        internal ModelContainer(string description, string latestVersion, string nextVersion, IDictionary<string, string> properties, IDictionary<string, string> tags)
         {
-            LatestVersions = latestVersions;
             Description = description;
-            Tags = tags;
+            LatestVersion = latestVersion;
+            NextVersion = nextVersion;
             Properties = properties;
+            Tags = tags;
         }
 
-        /// <summary> Latest model versions for each stage. </summary>
-        public IList<ModelVersionResource> LatestVersions { get; }
-        /// <summary> The asset description text. </summary>
+        /// <summary> The model container description text. </summary>
         public string Description { get; set; }
-        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> The latest version inside this container. </summary>
+        public string LatestVersion { get; }
+        /// <summary> The next auto incremental version. </summary>
+        public string NextVersion { get; }
         /// <summary> The asset property dictionary. </summary>
-        public IDictionary<string, string> Properties { get; }
+        public IDictionary<string, string> Properties { get; set; }
+        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
+        public IDictionary<string, string> Tags { get; set; }
     }
 }

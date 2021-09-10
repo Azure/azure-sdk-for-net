@@ -20,12 +20,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="cert"> Cert data. </param>
         /// <param name="key"> Key data. </param>
         /// <param name="cname"> CNAME of the cert. </param>
-        internal SslConfiguration(SslConfigurationStatus? status, string cert, string key, string cname)
+        /// <param name="leafDomainLabel"> Leaf domain label of public endpoint. </param>
+        /// <param name="overwriteExistingDomain"> Indicates whether to overwrite existing domain label. </param>
+        internal SslConfiguration(SslConfigurationStatus? status, string cert, string key, string cname, string leafDomainLabel, bool? overwriteExistingDomain)
         {
             Status = status;
             Cert = cert;
             Key = key;
             Cname = cname;
+            LeafDomainLabel = leafDomainLabel;
+            OverwriteExistingDomain = overwriteExistingDomain;
         }
 
         /// <summary> Enable or disable ssl for scoring. </summary>
@@ -36,5 +40,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Key { get; set; }
         /// <summary> CNAME of the cert. </summary>
         public string Cname { get; set; }
+        /// <summary> Leaf domain label of public endpoint. </summary>
+        public string LeafDomainLabel { get; set; }
+        /// <summary> Indicates whether to overwrite existing domain label. </summary>
+        public bool? OverwriteExistingDomain { get; set; }
     }
 }

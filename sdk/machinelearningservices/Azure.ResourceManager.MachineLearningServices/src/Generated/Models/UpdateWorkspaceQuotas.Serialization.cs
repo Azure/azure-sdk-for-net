@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -14,18 +15,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static UpdateWorkspaceQuotas DeserializeUpdateWorkspaceQuotas(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> type = default;
             Optional<long> limit = default;
             Optional<QuotaUnit> unit = default;
             Optional<Status> status = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
@@ -61,8 +57,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     status = new Status(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new UpdateWorkspaceQuotas(id.Value, type.Value, Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToNullable(status));
+            return new UpdateWorkspaceQuotas(id, type.Value, Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToNullable(status));
         }
     }
 }

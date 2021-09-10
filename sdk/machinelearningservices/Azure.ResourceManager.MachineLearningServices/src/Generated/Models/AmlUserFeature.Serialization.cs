@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -14,16 +15,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static AmlUserFeature DeserializeAmlUserFeature(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("displayName"))
                 {
                     displayName = property.Value.GetString();
@@ -34,8 +30,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AmlUserFeature(id.Value, displayName.Value, description.Value);
+            return new AmlUserFeature(id, displayName.Value, description.Value);
         }
     }
 }

@@ -15,34 +15,46 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CodeArtifactId))
+            if (Optional.IsDefined(CodeId))
             {
-                writer.WritePropertyName("codeArtifactId");
-                writer.WriteStringValue(CodeArtifactId);
+                if (CodeId != null)
+                {
+                    writer.WritePropertyName("codeId");
+                    writer.WriteStringValue(CodeId);
+                }
+                else
+                {
+                    writer.WriteNull("codeId");
+                }
             }
-            writer.WritePropertyName("command");
-            writer.WriteStringValue(Command);
+            writer.WritePropertyName("scoringScript");
+            writer.WriteStringValue(ScoringScript);
             writer.WriteEndObject();
         }
 
         internal static CodeConfiguration DeserializeCodeConfiguration(JsonElement element)
         {
-            Optional<string> codeArtifactId = default;
-            string command = default;
+            Optional<string> codeId = default;
+            string scoringScript = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("codeArtifactId"))
+                if (property.NameEquals("codeId"))
                 {
-                    codeArtifactId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        codeId = null;
+                        continue;
+                    }
+                    codeId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("command"))
+                if (property.NameEquals("scoringScript"))
                 {
-                    command = property.Value.GetString();
+                    scoringScript = property.Value.GetString();
                     continue;
                 }
             }
-            return new CodeConfiguration(codeArtifactId.Value, command);
+            return new CodeConfiguration(codeId.Value, scoringScript);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of NotebookPreparationError. </summary>
-        /// <param name="errorMessage"> . </param>
-        /// <param name="statusCode"> . </param>
+        /// <param name="errorMessage"></param>
+        /// <param name="statusCode"></param>
         internal NotebookPreparationError(string errorMessage, int? statusCode)
         {
             ErrorMessage = errorMessage;

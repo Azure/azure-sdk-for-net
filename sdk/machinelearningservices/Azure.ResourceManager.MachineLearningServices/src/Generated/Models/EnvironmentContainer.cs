@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The EnvironmentContainer. </summary>
+    /// <summary> Container for environment specification versions. </summary>
     public partial class EnvironmentContainer
     {
         /// <summary> Initializes a new instance of EnvironmentContainer. </summary>
@@ -21,20 +21,29 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of EnvironmentContainer. </summary>
-        /// <param name="properties"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="description"> . </param>
-        internal EnvironmentContainer(IDictionary<string, string> properties, IDictionary<string, string> tags, string description)
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="latestVersion"> The latest version inside this container. </param>
+        /// <param name="nextVersion"> The next auto incremental version. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        internal EnvironmentContainer(string description, string latestVersion, string nextVersion, IDictionary<string, string> properties, IDictionary<string, string> tags)
         {
+            Description = description;
+            LatestVersion = latestVersion;
+            NextVersion = nextVersion;
             Properties = properties;
             Tags = tags;
-            Description = description;
         }
 
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IDictionary<string, string> Properties { get; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> The asset description text. </summary>
         public string Description { get; set; }
+        /// <summary> The latest version inside this container. </summary>
+        public string LatestVersion { get; }
+        /// <summary> The next auto incremental version. </summary>
+        public string NextVersion { get; }
+        /// <summary> The asset property dictionary. </summary>
+        public IDictionary<string, string> Properties { get; set; }
+        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
+        public IDictionary<string, string> Tags { get; set; }
     }
 }

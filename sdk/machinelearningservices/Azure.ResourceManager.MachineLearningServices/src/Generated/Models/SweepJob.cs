@@ -7,71 +7,97 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The SweepJob. </summary>
-    public partial class SweepJob : ComputeJobBase
+    /// <summary> Sweep job definition. </summary>
+    public partial class SweepJob : JobBase
     {
         /// <summary> Initializes a new instance of SweepJob. </summary>
-        /// <param name="computeBinding"> Compute binding definition. </param>
-        /// <param name="parameterSamplingConfiguration"> class for all hyperparameter sampling algorithms. </param>
-        /// <param name="evaluationConfiguration"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="computeBinding"/>, <paramref name="parameterSamplingConfiguration"/>, or <paramref name="evaluationConfiguration"/> is null. </exception>
-        public SweepJob(ComputeBinding computeBinding, ParameterSamplingConfiguration parameterSamplingConfiguration, EvaluationConfiguration evaluationConfiguration) : base(computeBinding)
+        /// <param name="objective"> Optimization objective. </param>
+        /// <param name="samplingAlgorithm"> Type of the hyperparameter sampling algorithms. </param>
+        /// <param name="searchSpace"> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objective"/> or <paramref name="searchSpace"/> is null. </exception>
+        public SweepJob(Objective objective, SamplingAlgorithm samplingAlgorithm, IDictionary<string, object> searchSpace)
         {
-            if (computeBinding == null)
+            if (objective == null)
             {
-                throw new ArgumentNullException(nameof(computeBinding));
+                throw new ArgumentNullException(nameof(objective));
             }
-            if (parameterSamplingConfiguration == null)
+            if (searchSpace == null)
             {
-                throw new ArgumentNullException(nameof(parameterSamplingConfiguration));
-            }
-            if (evaluationConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(evaluationConfiguration));
+                throw new ArgumentNullException(nameof(searchSpace));
             }
 
-            ParameterSamplingConfiguration = parameterSamplingConfiguration;
-            EvaluationConfiguration = evaluationConfiguration;
+            Inputs = new ChangeTrackingDictionary<string, JobInput>();
+            Objective = objective;
+            Outputs = new ChangeTrackingDictionary<string, JobOutput>();
+            SamplingAlgorithm = samplingAlgorithm;
+            SearchSpace = searchSpace;
             JobType = JobType.Sweep;
         }
 
         /// <summary> Initializes a new instance of SweepJob. </summary>
-        /// <param name="jobType"> Specifies the type of job. </param>
-        /// <param name="interactionEndpoints">
-        /// Dictonary of endpoint URIs, keyed by enumerated job endpoints.
-        /// 
-        /// For local jobs, a job endpoint will have a value of FileStreamObject.
-        /// </param>
+        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="displayName"> Display name of job. </param>
         /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
-        /// <param name="computeBinding"> Compute binding definition. </param>
-        /// <param name="output"> . </param>
-        /// <param name="status"> The status of a job. </param>
-        /// <param name="parameterSamplingConfiguration"> class for all hyperparameter sampling algorithms. </param>
-        /// <param name="terminationConfiguration"> . </param>
-        /// <param name="evaluationConfiguration"> . </param>
-        /// <param name="trialComponent"> . </param>
-        internal SweepJob(JobType jobType, JobBaseInteractionEndpoints interactionEndpoints, string description, IDictionary<string, string> tags, IDictionary<string, string> properties, string experimentName, ComputeBinding computeBinding, JobOutput output, JobStatus? status, ParameterSamplingConfiguration parameterSamplingConfiguration, TerminationConfiguration terminationConfiguration, EvaluationConfiguration evaluationConfiguration, TrialComponent trialComponent) : base(jobType, interactionEndpoints, description, tags, properties, experimentName, computeBinding, output)
+        /// <param name="jobType"> Specifies the type of job. </param>
+        /// <param name="parentJobName"> TODO - Parent job name. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="services">
+        /// List of JobEndpoints.
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="earlyTermination"> Early termination policies enable canceling poor-performing runs before they complete. </param>
+        /// <param name="identity">
+        /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity or null.
+        /// Defaults to AmlToken if null.
+        /// </param>
+        /// <param name="inputs"> Mapping of input data bindings used in the job. </param>
+        /// <param name="limits"> Sweep Job limit. </param>
+        /// <param name="objective"> Optimization objective. </param>
+        /// <param name="outputs"> Mapping of output data bindings used in the job. </param>
+        /// <param name="samplingAlgorithm"> Type of the hyperparameter sampling algorithms. </param>
+        /// <param name="searchSpace"> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
+        /// <param name="trial"> Trial component definition. </param>
+        internal SweepJob(string computeId, string description, string displayName, string experimentName, JobType jobType, string parentJobName, IDictionary<string, string> properties, IDictionary<string, JobService> services, JobStatus? status, IDictionary<string, string> tags, EarlyTerminationPolicy earlyTermination, IdentityConfiguration identity, IDictionary<string, JobInput> inputs, SweepJobLimits limits, Objective objective, IDictionary<string, JobOutput> outputs, SamplingAlgorithm samplingAlgorithm, IDictionary<string, object> searchSpace, TrialComponent trial) : base(computeId, description, displayName, experimentName, jobType, parentJobName, properties, services, status, tags)
         {
-            Status = status;
-            ParameterSamplingConfiguration = parameterSamplingConfiguration;
-            TerminationConfiguration = terminationConfiguration;
-            EvaluationConfiguration = evaluationConfiguration;
-            TrialComponent = trialComponent;
+            EarlyTermination = earlyTermination;
+            Identity = identity;
+            Inputs = inputs;
+            Limits = limits;
+            Objective = objective;
+            Outputs = outputs;
+            SamplingAlgorithm = samplingAlgorithm;
+            SearchSpace = searchSpace;
+            Trial = trial;
             JobType = jobType;
         }
 
-        /// <summary> The status of a job. </summary>
-        public JobStatus? Status { get; set; }
-        /// <summary> class for all hyperparameter sampling algorithms. </summary>
-        public ParameterSamplingConfiguration ParameterSamplingConfiguration { get; set; }
-        public TerminationConfiguration TerminationConfiguration { get; set; }
-        public EvaluationConfiguration EvaluationConfiguration { get; set; }
-        public TrialComponent TrialComponent { get; set; }
+        /// <summary> Early termination policies enable canceling poor-performing runs before they complete. </summary>
+        public EarlyTerminationPolicy EarlyTermination { get; set; }
+        /// <summary>
+        /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity or null.
+        /// Defaults to AmlToken if null.
+        /// </summary>
+        public IdentityConfiguration Identity { get; set; }
+        /// <summary> Mapping of input data bindings used in the job. </summary>
+        public IDictionary<string, JobInput> Inputs { get; set; }
+        /// <summary> Sweep Job limit. </summary>
+        public SweepJobLimits Limits { get; set; }
+        /// <summary> Optimization objective. </summary>
+        public Objective Objective { get; set; }
+        /// <summary> Mapping of output data bindings used in the job. </summary>
+        public IDictionary<string, JobOutput> Outputs { get; set; }
+        /// <summary> Type of the hyperparameter sampling algorithms. </summary>
+        public SamplingAlgorithm SamplingAlgorithm { get; set; }
+        /// <summary> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </summary>
+        public IDictionary<string, object> SearchSpace { get; }
+        /// <summary> Trial component definition. </summary>
+        public TrialComponent Trial { get; set; }
     }
 }

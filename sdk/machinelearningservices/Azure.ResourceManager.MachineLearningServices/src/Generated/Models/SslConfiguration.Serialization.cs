@@ -35,6 +35,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("cname");
                 writer.WriteStringValue(Cname);
             }
+            if (Optional.IsDefined(LeafDomainLabel))
+            {
+                writer.WritePropertyName("leafDomainLabel");
+                writer.WriteStringValue(LeafDomainLabel);
+            }
+            if (Optional.IsDefined(OverwriteExistingDomain))
+            {
+                writer.WritePropertyName("overwriteExistingDomain");
+                writer.WriteBooleanValue(OverwriteExistingDomain.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -44,6 +54,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> cert = default;
             Optional<string> key = default;
             Optional<string> cname = default;
+            Optional<string> leafDomainLabel = default;
+            Optional<bool> overwriteExistingDomain = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -71,8 +83,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     cname = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("leafDomainLabel"))
+                {
+                    leafDomainLabel = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("overwriteExistingDomain"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    overwriteExistingDomain = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new SslConfiguration(Optional.ToNullable(status), cert.Value, key.Value, cname.Value);
+            return new SslConfiguration(Optional.ToNullable(status), cert.Value, key.Value, cname.Value, leafDomainLabel.Value, Optional.ToNullable(overwriteExistingDomain));
         }
     }
 }

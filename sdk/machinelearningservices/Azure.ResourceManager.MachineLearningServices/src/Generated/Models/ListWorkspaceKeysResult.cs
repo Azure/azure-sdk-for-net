@@ -16,21 +16,24 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ListWorkspaceKeysResult. </summary>
-        /// <param name="userStorageKey"> . </param>
-        /// <param name="userStorageResourceId"> . </param>
-        /// <param name="appInsightsInstrumentationKey"> . </param>
-        /// <param name="containerRegistryCredentials"> . </param>
-        internal ListWorkspaceKeysResult(string userStorageKey, string userStorageResourceId, string appInsightsInstrumentationKey, RegistryListCredentialsResult containerRegistryCredentials)
+        /// <param name="userStorageKey"></param>
+        /// <param name="userStorageResourceId"></param>
+        /// <param name="appInsightsInstrumentationKey"></param>
+        /// <param name="containerRegistryCredentials"></param>
+        /// <param name="notebookAccessKeys"></param>
+        internal ListWorkspaceKeysResult(string userStorageKey, string userStorageResourceId, string appInsightsInstrumentationKey, RegistryListCredentialsResult containerRegistryCredentials, ListNotebookKeysResult notebookAccessKeys)
         {
             UserStorageKey = userStorageKey;
             UserStorageResourceId = userStorageResourceId;
             AppInsightsInstrumentationKey = appInsightsInstrumentationKey;
             ContainerRegistryCredentials = containerRegistryCredentials;
+            NotebookAccessKeys = notebookAccessKeys;
         }
 
         public string UserStorageKey { get; }
         public string UserStorageResourceId { get; }
         public string AppInsightsInstrumentationKey { get; }
         public RegistryListCredentialsResult ContainerRegistryCredentials { get; }
+        public ListNotebookKeysResult NotebookAccessKeys { get; }
     }
 }

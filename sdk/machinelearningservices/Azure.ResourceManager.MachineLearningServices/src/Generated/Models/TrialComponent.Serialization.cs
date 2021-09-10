@@ -16,85 +16,156 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CodeConfiguration))
+            if (Optional.IsDefined(CodeId))
             {
-                writer.WritePropertyName("codeConfiguration");
-                writer.WriteObjectValue(CodeConfiguration);
+                if (CodeId != null)
+                {
+                    writer.WritePropertyName("codeId");
+                    writer.WriteStringValue(CodeId);
+                }
+                else
+                {
+                    writer.WriteNull("codeId");
+                }
+            }
+            writer.WritePropertyName("command");
+            writer.WriteStringValue(Command);
+            if (Optional.IsDefined(Distribution))
+            {
+                if (Distribution != null)
+                {
+                    writer.WritePropertyName("distribution");
+                    writer.WriteObjectValue(Distribution);
+                }
+                else
+                {
+                    writer.WriteNull("distribution");
+                }
             }
             if (Optional.IsDefined(EnvironmentId))
             {
-                writer.WritePropertyName("environmentId");
-                writer.WriteStringValue(EnvironmentId);
-            }
-            if (Optional.IsCollectionDefined(DataBindings))
-            {
-                writer.WritePropertyName("dataBindings");
-                writer.WriteStartObject();
-                foreach (var item in DataBindings)
+                if (EnvironmentId != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WritePropertyName("environmentId");
+                    writer.WriteStringValue(EnvironmentId);
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("environmentId");
+                }
             }
-            if (Optional.IsDefined(DistributionConfiguration))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
-                writer.WritePropertyName("distributionConfiguration");
-                writer.WriteObjectValue(DistributionConfiguration);
+                if (EnvironmentVariables != null)
+                {
+                    writer.WritePropertyName("environmentVariables");
+                    writer.WriteStartObject();
+                    foreach (var item in EnvironmentVariables)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("environmentVariables");
+                }
+            }
+            if (Optional.IsDefined(Resources))
+            {
+                if (Resources != null)
+                {
+                    writer.WritePropertyName("resources");
+                    writer.WriteObjectValue(Resources);
+                }
+                else
+                {
+                    writer.WriteNull("resources");
+                }
             }
             writer.WriteEndObject();
         }
 
         internal static TrialComponent DeserializeTrialComponent(JsonElement element)
         {
-            Optional<CodeConfiguration> codeConfiguration = default;
+            Optional<string> codeId = default;
+            string command = default;
+            Optional<DistributionConfiguration> distribution = default;
             Optional<string> environmentId = default;
-            Optional<IDictionary<string, DataBinding>> dataBindings = default;
-            Optional<DistributionConfiguration> distributionConfiguration = default;
+            Optional<IDictionary<string, string>> environmentVariables = default;
+            Optional<ResourceConfiguration> resources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("codeConfiguration"))
+                if (property.NameEquals("codeId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        codeId = null;
                         continue;
                     }
-                    codeConfiguration = CodeConfiguration.DeserializeCodeConfiguration(property.Value);
+                    codeId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("command"))
+                {
+                    command = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("distribution"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        distribution = null;
+                        continue;
+                    }
+                    distribution = DistributionConfiguration.DeserializeDistributionConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        environmentId = null;
+                        continue;
+                    }
                     environmentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataBindings"))
+                if (property.NameEquals("environmentVariables"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        environmentVariables = null;
                         continue;
                     }
-                    Dictionary<string, DataBinding> dictionary = new Dictionary<string, DataBinding>();
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataBinding.DeserializeDataBinding(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
                     }
-                    dataBindings = dictionary;
+                    environmentVariables = dictionary;
                     continue;
                 }
-                if (property.NameEquals("distributionConfiguration"))
+                if (property.NameEquals("resources"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        resources = null;
                         continue;
                     }
-                    distributionConfiguration = DistributionConfiguration.DeserializeDistributionConfiguration(property.Value);
+                    resources = ResourceConfiguration.DeserializeResourceConfiguration(property.Value);
                     continue;
                 }
             }
-            return new TrialComponent(codeConfiguration.Value, environmentId.Value, Optional.ToDictionary(dataBindings), distributionConfiguration.Value);
+            return new TrialComponent(codeId.Value, command, distribution.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), resources.Value);
         }
     }
 }

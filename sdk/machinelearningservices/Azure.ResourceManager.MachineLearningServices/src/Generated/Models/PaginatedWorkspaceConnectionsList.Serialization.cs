@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static PaginatedWorkspaceConnectionsList DeserializePaginatedWorkspaceConnectionsList(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkspaceConnection>> value = default;
+            Optional<IReadOnlyList<WorkspaceConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkspaceConnection> array = new List<WorkspaceConnection>();
+                    List<WorkspaceConnectionData> array = new List<WorkspaceConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkspaceConnection.DeserializeWorkspaceConnection(item));
+                        array.Add(WorkspaceConnectionData.DeserializeWorkspaceConnectionData(item));
                     }
                     value = array;
                     continue;

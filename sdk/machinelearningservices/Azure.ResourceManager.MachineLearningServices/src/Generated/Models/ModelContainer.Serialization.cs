@@ -16,106 +16,142 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LatestVersions))
-            {
-                writer.WritePropertyName("latestVersions");
-                writer.WriteStartArray();
-                foreach (var item in LatestVersions)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
+                if (Description != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("description");
+                    writer.WriteStringValue(Description);
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("description");
+                }
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties");
-                writer.WriteStartObject();
-                foreach (var item in Properties)
+                if (Properties != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("properties");
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("properties");
+                }
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags != null)
+                {
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("tags");
+                }
             }
             writer.WriteEndObject();
         }
 
         internal static ModelContainer DeserializeModelContainer(JsonElement element)
         {
-            Optional<IList<ModelVersionResource>> latestVersions = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> latestVersion = default;
+            Optional<string> nextVersion = default;
             Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("latestVersions"))
+                if (property.NameEquals("description"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        description = null;
                         continue;
                     }
-                    List<ModelVersionResource> array = new List<ModelVersionResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ModelVersionResource.DeserializeModelVersionResource(item));
-                    }
-                    latestVersions = array;
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("latestVersion"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        latestVersion = null;
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    latestVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("nextVersion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        nextVersion = null;
+                        continue;
                     }
-                    tags = dictionary;
+                    nextVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
                     }
                     properties = dictionary;
                     continue;
                 }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        tags = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
             }
-            return new ModelContainer(Optional.ToList(latestVersions), description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new ModelContainer(description.Value, latestVersion.Value, nextVersion.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags));
         }
     }
 }

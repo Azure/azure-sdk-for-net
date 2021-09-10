@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -39,6 +40,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("resourceId");
                 writer.WriteStringValue(ResourceId);
             }
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                writer.WritePropertyName("disableLocalAuth");
+                writer.WriteBooleanValue(DisableLocalAuth.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -52,8 +58,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> modifiedOn = default;
             Optional<string> resourceId = default;
-            Optional<IReadOnlyList<MachineLearningServiceError>> provisioningErrors = default;
+            Optional<IReadOnlyList<ErrorResponse>> provisioningErrors = default;
             Optional<bool> isAttachedCompute = default;
+            Optional<bool> disableLocalAuth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -120,13 +127,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        provisioningErrors = null;
                         continue;
                     }
-                    List<MachineLearningServiceError> array = new List<MachineLearningServiceError>();
+                    List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningServiceError.DeserializeMachineLearningServiceError(item));
+                        array.Add(JsonSerializer.Deserialize<ErrorResponse>(item.ToString()));
                     }
                     provisioningErrors = array;
                     continue;
@@ -141,8 +148,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     isAttachedCompute = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("disableLocalAuth"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    disableLocalAuth = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new VirtualMachine(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), properties.Value);
+            return new VirtualMachine(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), properties.Value);
         }
     }
 }

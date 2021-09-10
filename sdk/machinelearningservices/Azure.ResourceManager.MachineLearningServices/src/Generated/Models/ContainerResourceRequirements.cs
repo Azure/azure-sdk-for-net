@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The resource requirements for the container (cpu and memory). </summary>
+    /// <summary> Resource requirements for each container instance within an online deployment. </summary>
     public partial class ContainerResourceRequirements
     {
         /// <summary> Initializes a new instance of ContainerResourceRequirements. </summary>
@@ -16,25 +16,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ContainerResourceRequirements. </summary>
-        /// <param name="cpu"> The number of CPU cores on the container. </param>
-        /// <param name="memoryInGB"> The amount of memory on the container in GB. </param>
-        /// <param name="gpu"> The number of GPU cores in the container. </param>
-        /// <param name="fpga"> The number of FPGA PCIE devices exposed to the container. Must be multiple of 2. </param>
-        internal ContainerResourceRequirements(double? cpu, double? memoryInGB, int? gpu, int? fpga)
+        /// <param name="containerResourceLimits"> Container resource limit info:. </param>
+        /// <param name="containerResourceRequests"> Container resource request info:. </param>
+        internal ContainerResourceRequirements(ContainerResourceSettings containerResourceLimits, ContainerResourceSettings containerResourceRequests)
         {
-            Cpu = cpu;
-            MemoryInGB = memoryInGB;
-            Gpu = gpu;
-            Fpga = fpga;
+            ContainerResourceLimits = containerResourceLimits;
+            ContainerResourceRequests = containerResourceRequests;
         }
 
-        /// <summary> The number of CPU cores on the container. </summary>
-        public double? Cpu { get; set; }
-        /// <summary> The amount of memory on the container in GB. </summary>
-        public double? MemoryInGB { get; set; }
-        /// <summary> The number of GPU cores in the container. </summary>
-        public int? Gpu { get; set; }
-        /// <summary> The number of FPGA PCIE devices exposed to the container. Must be multiple of 2. </summary>
-        public int? Fpga { get; set; }
+        /// <summary> Container resource limit info:. </summary>
+        public ContainerResourceSettings ContainerResourceLimits { get; set; }
+        /// <summary> Container resource request info:. </summary>
+        public ContainerResourceSettings ContainerResourceRequests { get; set; }
     }
 }

@@ -16,54 +16,114 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description");
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description");
+                }
+            }
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties");
-                writer.WriteStartObject();
-                foreach (var item in Properties)
+                if (Properties != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("properties");
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("properties");
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
+                if (Tags != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
+                else
+                {
+                    writer.WriteNull("tags");
+                }
             }
             writer.WriteEndObject();
         }
 
         internal static CodeContainer DeserializeCodeContainer(JsonElement element)
         {
+            Optional<string> description = default;
+            Optional<string> latestVersion = default;
+            Optional<string> nextVersion = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("description"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("latestVersion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        latestVersion = null;
+                        continue;
+                    }
+                    latestVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("nextVersion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        nextVersion = null;
+                        continue;
+                    }
+                    nextVersion = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
                     }
                     properties = dictionary;
                     continue;
@@ -72,24 +132,26 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
             }
-            return new CodeContainer(Optional.ToDictionary(properties), Optional.ToDictionary(tags), description.Value);
+            return new CodeContainer(description.Value, latestVersion.Value, nextVersion.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags));
         }
     }
 }

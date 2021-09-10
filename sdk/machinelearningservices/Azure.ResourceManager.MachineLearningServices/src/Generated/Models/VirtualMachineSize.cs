@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Describes the properties of a VM size. </summary>
@@ -13,6 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of VirtualMachineSize. </summary>
         internal VirtualMachineSize()
         {
+            SupportedComputeTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineSize. </summary>
@@ -26,7 +30,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="lowPriorityCapable"> Specifies if the virtual machine size supports low priority VMs. </param>
         /// <param name="premiumIO"> Specifies if the virtual machine size supports premium IO. </param>
         /// <param name="estimatedVMPrices"> The estimated price information for using a VM. </param>
-        internal VirtualMachineSize(string name, string family, int? vCPUs, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? premiumIO, EstimatedVMPrices estimatedVMPrices)
+        /// <param name="supportedComputeTypes"> Specifies the compute types supported by the virtual machine size. </param>
+        internal VirtualMachineSize(string name, string family, int? vCPUs, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? premiumIO, EstimatedVMPrices estimatedVMPrices, IReadOnlyList<string> supportedComputeTypes)
         {
             Name = name;
             Family = family;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             LowPriorityCapable = lowPriorityCapable;
             PremiumIO = premiumIO;
             EstimatedVMPrices = estimatedVMPrices;
+            SupportedComputeTypes = supportedComputeTypes;
         }
 
         /// <summary> The name of the virtual machine size. </summary>
@@ -60,5 +66,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public bool? PremiumIO { get; }
         /// <summary> The estimated price information for using a VM. </summary>
         public EstimatedVMPrices EstimatedVMPrices { get; }
+        /// <summary> Specifies the compute types supported by the virtual machine size. </summary>
+        public IReadOnlyList<string> SupportedComputeTypes { get; }
     }
 }

@@ -7,17 +7,10 @@
     </Description>
     <PackageId>Azure.ResourceManager.MachineLearningServices</PackageId>
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
 
-    <PropertyGroup>
+  <PropertyGroup>
     <!-- Link to preapproved, registered namespaces: https://azure.github.io/azure-sdk/registered_namespaces.html  -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
-  </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The HDInsightProperties. </summary>
+    /// <summary> HDInsight compute properties. </summary>
     public partial class HDInsightProperties
     {
         /// <summary> Initializes a new instance of HDInsightProperties. </summary>

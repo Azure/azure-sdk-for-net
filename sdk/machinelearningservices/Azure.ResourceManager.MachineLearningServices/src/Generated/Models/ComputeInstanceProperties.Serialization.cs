@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -46,6 +47,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("personalComputeInstanceSettings");
                 writer.WriteObjectValue(PersonalComputeInstanceSettings);
             }
+            if (Optional.IsDefined(SetupScripts))
+            {
+                writer.WritePropertyName("setupScripts");
+                writer.WriteObjectValue(SetupScripts);
+            }
             writer.WriteEndObject();
         }
 
@@ -58,10 +64,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<ComputeInstanceConnectivityEndpoints> connectivityEndpoints = default;
             Optional<IReadOnlyList<ComputeInstanceApplication>> applications = default;
             Optional<ComputeInstanceCreatedBy> createdBy = default;
-            Optional<IReadOnlyList<MachineLearningServiceError>> errors = default;
+            Optional<IReadOnlyList<ErrorResponse>> errors = default;
             Optional<ComputeInstanceState> state = default;
             Optional<ComputeInstanceAuthorizationType> computeInstanceAuthorizationType = default;
             Optional<PersonalComputeInstanceSettings> personalComputeInstanceSettings = default;
+            Optional<SetupScripts> setupScripts = default;
             Optional<ComputeInstanceLastOperation> lastOperation = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -142,10 +149,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MachineLearningServiceError> array = new List<MachineLearningServiceError>();
+                    List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningServiceError.DeserializeMachineLearningServiceError(item));
+                        array.Add(JsonSerializer.Deserialize<ErrorResponse>(item.ToString()));
                     }
                     errors = array;
                     continue;
@@ -180,6 +187,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     personalComputeInstanceSettings = PersonalComputeInstanceSettings.DeserializePersonalComputeInstanceSettings(property.Value);
                     continue;
                 }
+                if (property.NameEquals("setupScripts"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    setupScripts = SetupScripts.DeserializeSetupScripts(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("lastOperation"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -191,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new ComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, lastOperation.Value);
+            return new ComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of NotebookResourceInfo. </summary>
-        /// <param name="fqdn"> . </param>
+        /// <param name="fqdn"></param>
         /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
         /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>
         internal NotebookResourceInfo(string fqdn, string resourceId, NotebookPreparationError notebookPreparationError)
