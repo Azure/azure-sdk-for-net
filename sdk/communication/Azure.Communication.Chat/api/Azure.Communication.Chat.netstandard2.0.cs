@@ -23,8 +23,7 @@ namespace Azure.Communication.Chat
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
-            V2021_04_05_preview6 = 2,
-            V2021_09_07 = 3,
+            V2021_09_07 = 2,
         }
     }
     public partial class ChatError

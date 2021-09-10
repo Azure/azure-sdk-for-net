@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.1.0 (Unreleased)
-
+Updated `Azure.Communication.Chat` version.
 
 ## 1.1.0-beta.1 (2021-07-22)
 ### Added

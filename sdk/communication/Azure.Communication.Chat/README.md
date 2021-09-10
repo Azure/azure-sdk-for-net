@@ -11,7 +11,7 @@ This package contains a C# SDK for Azure Communication Services for chat.
 Install the Azure Communication Chat client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Chat --version 1.1.0
+dotnet add package Azure.Communication.Chat 
 ``` 
 
 ### Prerequisites
