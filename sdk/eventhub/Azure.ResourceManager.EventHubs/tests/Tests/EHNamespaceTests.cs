@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 _resourceGroup = null;
             }
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateDeleteNamespace()
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.IsNull(eHNamespace);
             Assert.IsFalse(await namespaceContainer.CheckIfExistsAsync(namespaceName));
         }
+
         [Test]
         [RecordedTest]
         public async Task UpdateNamespace()
@@ -81,6 +83,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.AreEqual("value1", eHNamespace.Data.Tags["key1"]);
             Assert.AreEqual("value2", eHNamespace.Data.Tags["key2"]);
         }
+
         [Test]
         [RecordedTest]
         public async Task GetAllNamespaces()
@@ -107,6 +110,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             VerifyNamespaceProperties(namespace1, true);
             VerifyNamespaceProperties(namespace2, true);
         }
+
         [Test]
         [RecordedTest]
         public async Task NamespaceCreateGetUpdateDeleteAuthorizationRule()
@@ -165,11 +169,12 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             await authorizationRule.DeleteAsync();
 
             //validate if deleted
-            Assert.IsFalse(await namespaceContainer.CheckIfExistsAsync(ruleName));
+            Assert.IsFalse(await ruleContainer.CheckIfExistsAsync(ruleName));
             rules = await ruleContainer.GetAllAsync().ToEnumerableAsync();
             Assert.True(rules.Count == 1);
             Assert.AreEqual(rules[0].Id.Name, DefaultNamespaceAuthorizationRule);
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateNamespaceWithKafkaEnabled()
@@ -186,6 +191,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             VerifyNamespaceProperties(eHNamespace, false);
             Assert.IsTrue(eHNamespace.Data.KafkaEnabled);
         }
+
         [Test]
         [RecordedTest]
         public async Task NamespaceAuthorizationRuleRegenerateKey()
