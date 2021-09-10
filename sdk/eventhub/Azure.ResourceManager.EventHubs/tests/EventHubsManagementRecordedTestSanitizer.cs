@@ -11,13 +11,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
         public EventHubsManagementRecordedTestSanitizer() : base()
         {
             // Lazy sanitize fields in the request and response bodies
-            AddJsonPathSanitizer("$..UpdatePrimaryKey");
-            AddJsonPathSanitizer("$..CreatePrimaryKey");
-        }
-
-        public override void Sanitize(RecordSession session)
-        {
-            base.Sanitize(session);
+            AddJsonPathSanitizer("$..aliasPrimaryConnectionString");
+            AddJsonPathSanitizer("$..aliasSecondaryConnectionString");
+            AddJsonPathSanitizer("$..keyName");
         }
     }
 }
