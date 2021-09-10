@@ -57,7 +57,7 @@ ENV AZURE_AZURITE_LOCATION=/usr/lib
 
 RUN git clone --branch chaos-prototype --single-branch --no-tags https://github.com/kasobol-msft/azure-sdk-for-net.git \
     && cd azure-sdk-for-net \
-    && git checkout 82acbe9 \
+    && git checkout a3089a8 \
     && cd ..
 
 RUN dotnet build /azure-sdk-for-net/eng/service.proj \

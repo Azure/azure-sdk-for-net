@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
     - name: kasobol-net-chaos
-      image: stresstestregistry.azurecr.io/kasobol/net-chaos:17
+      image: stresstestregistry.azurecr.io/kasobol/net-chaos:19
       command: ["bash", "run.sh"]
       {{- include "stress-test-addons.container-env" . | nindent 6 }}
 {{- end -}}

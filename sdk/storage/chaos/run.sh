@@ -8,7 +8,7 @@ export AZURE_LIVE_TEST_SERVICE_VERSIONS=V2019_07_07
 
 export $(grep 'APPINSIGHTS_INSTRUMENTATIONKEY' $ENV_FILE | xargs)
 
-count=20
+count=220
 for i in $(seq $count); do
     UUID=$(cat /proc/sys/kernel/random/uuid)
     export AZURE_STORAGE_TEST_RUN_ID=$UUID

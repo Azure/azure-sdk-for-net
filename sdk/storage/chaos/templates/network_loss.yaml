@@ -22,3 +22,22 @@ spec:
     value: ''
   externalTargets:
     - kasobolchaosprim.blob.core.windows.net
+    - kasobolchaosdtlk.blob.core.windows.net
+    - kasobolchaospfile.blob.core.windows.net
+    - kasobolchaossec.blob.core.windows.net
+    - kasobolchaossftdl.blob.core.windows.net
+    - kasobolchaosprim.file.core.windows.net
+    - kasobolchaosdtlk.file.core.windows.net
+    - kasobolchaospfile.file.core.windows.net
+    - kasobolchaossec.file.core.windows.net
+    - kasobolchaossftdl.file.core.windows.net
+    - kasobolchaosprim.queue.core.windows.net
+    - kasobolchaosdtlk.queue.core.windows.net
+    - kasobolchaospfile.queue.core.windows.net
+    - kasobolchaossec.queue.core.windows.net
+    - kasobolchaossftdl.queue.core.windows.net
+    - kasobolchaosprim.dfs.core.windows.net
+    - kasobolchaosdtlk.dfs.core.windows.net
+    - kasobolchaospfile.dfs.core.windows.net
+    - kasobolchaossec.dfs.core.windows.net
+    - kasobolchaossftdl.dfs.core.windows.net
