@@ -751,17 +751,17 @@ Once you are logged in (or were previously), the selected SubscriptionId
 will be used for subsequent operations that are specific to a subscription.
 
 .PARAMETER ProvisionerApplicationId
-Optional Application ID of the Azure Active Directory service princilal to use for
-privisioning the test resources. If not, specified New-TestResources.ps1 uses the
+Optional Application ID of the Azure Active Directory service principal to use for
+provisioning the test resources. If not, specified New-TestResources.ps1 uses the
 context of the caller to provision.
 
-If specified, the pProvisioner Application principal would benefit from the following
+If specified, the Provisioner Application principal would benefit from the following
 permissions to the Microsoft Graph API:
 
   - 'Application.Read.All' in order to query AAD to obtain the 'TestApplicaitonOid'
 
   - 'Application.ReadWrite.OwnedBy' in order to create the Test Application principal
-     or grant an existing principal ownership of the resource group assocaited with
+     or grant an existing principal ownership of the resource group associated with
      the test resources.
 
 If the provisioner does not have these permissions, it can still be used with
