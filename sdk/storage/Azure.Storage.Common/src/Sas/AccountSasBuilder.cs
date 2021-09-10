@@ -200,11 +200,16 @@ namespace Azure.Storage.Sas
 
             Version = SasQueryParametersInternals.DefaultSasVersionInternal;
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = string.Join("\n",
+            string stringToSign;
+
+            // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
+            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06")
+            {
+                stringToSign = string.Join("\n",
                 sharedKeyCredential.AccountName,
                 Permissions,
                 Services.ToPermissionsString(),
@@ -216,9 +221,24 @@ namespace Azure.Storage.Sas
                 Version,
                 EncryptionScope,
                 string.Empty);  // That's right, the account SAS requires a terminating extra newline
+            }
+            else
+            {
+                stringToSign = string.Join("\n",
+                sharedKeyCredential.AccountName,
+                Permissions,
+                Services.ToPermissionsString(),
+                ResourceTypes.ToPermissionsString(),
+                startTime,
+                expiryTime,
+                IPRange.ToString(),
+                Protocol.ToProtocolString(),
+                Version,
+                string.Empty);  // That's right, the account SAS requires a terminating extra newline
+            }
 
-            var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
-            var p = SasQueryParametersInternals.Create(
+            string signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
+            SasQueryParameters p = SasQueryParametersInternals.Create(
                 Version,
                 Services,
                 ResourceTypes,
