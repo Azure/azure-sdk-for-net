@@ -108,7 +108,7 @@ if (vault != null)
 
 if (await vaultContainer.CheckIfExistsAsync("bar"))
 {
-    Console.WriteLine("KeyBault 'bar' exists.");
+    Console.WriteLine("KeyVault 'bar' exists.");
 }
 ```
 

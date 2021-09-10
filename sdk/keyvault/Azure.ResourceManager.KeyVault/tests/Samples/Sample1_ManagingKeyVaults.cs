@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
 
             if (await vaultContainer.CheckIfExistsAsync("bar"))
             {
-                Console.WriteLine("KeyBault 'bar' exists.");
+                Console.WriteLine("KeyVault 'bar' exists.");
             }
             #endregion
         }
