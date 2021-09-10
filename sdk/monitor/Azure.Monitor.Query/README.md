@@ -33,7 +33,45 @@ To interact with the Azure Monitor service, create an instance of a [TokenCreden
 ## Key concepts
 
 - `LogsQueryClient` - Client that provides methods to query logs from Azure Monitor Logs.
+Here is a heirarchy of the LogsQueryResult response:
+
+```
+LogsQueryResult
+|---Statistics
+|---Visualization
+|---Error
+|---AllTables (list of `LogsTable` objects)
+    |---Name
+    |---InternalRows
+    |---Columns (list of `LogsTableColumn` objects)
+        |---Name
+        |---Type
+```
+
 - `MetricsQueryClient` - Client that provides methods to query metrics from Azure Monitor Metrics.
+
+Here is a heirarchy of the MetricsQueryResult response:
+
+```
+MetricsQueryResult
+|---Cost
+|---Interval
+|---Namespace
+|---ResourceRegion
+|---Metrics (list of `MetricResult` objects)
+    |---Id
+    |---Type
+    |---LocalizedName
+    |---Name
+    |---DisplayDescription
+    |---ErrorCode
+    |---ErrorMessage
+    |---Error
+    |---Unit
+    |---TimeSeries (list of `MetricTimeSeriesElement` objects)
+        |---Metadatavalues
+        |---Values
+```
 
 ### Thread safety
 
@@ -352,18 +390,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fmonitor%2FAzure.Monitor.Query%2FREADME.png)
-
-Here is a heirarchy of the response:
-
-```
-LogsQueryResult
-|---statistics
-|---visualization
-|---error
-|---tables (list of `LogsTable` objects)
-    |---name
-    |---rows
-    |---columns (list of `LogsTableColumn` objects)
-        |---name
-        |---type
-```
