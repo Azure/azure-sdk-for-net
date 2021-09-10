@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -12,6 +13,14 @@ namespace Azure.Messaging.WebPubSub
     /// Azure Web PubSub Service Client.
     /// </summary>
     [CodeGenSuppress("WebPubSubServiceClient", typeof(string), typeof(Uri), typeof(WebPubSubServiceClientOptions))]
+    [CodeGenSuppress("SendToAll", typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToAllAsync", typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToConnection", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToConnectionAsync", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToGroup", typeof(string), typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToGroupAsync", typeof(string),  typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToUser", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToUserAsync", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
     public partial class WebPubSubServiceClient
     {
         private AzureKeyCredential _credential;
@@ -58,7 +67,7 @@ namespace Azure.Messaging.WebPubSub
                 perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
             }
 
-            Pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
@@ -97,7 +106,7 @@ namespace Azure.Messaging.WebPubSub
                 perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
             }
 
-            Pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, WebPubSubServiceClientOptions.CredentialScopeName) },

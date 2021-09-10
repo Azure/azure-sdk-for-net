@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Catalog
     public partial class PurviewTypes
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -115,7 +116,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
@@ -230,7 +231,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
@@ -259,12 +260,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetClassificationDefByGuid"/> and <see cref="GetClassificationDefByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetClassificationDefByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetClassificationDefByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -363,7 +361,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetClassificationDefByNameRequest(name, options);
+            using HttpMessage message = CreateGetClassificationDefByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
@@ -478,7 +476,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetClassificationDefByNameRequest(name, options);
+            using HttpMessage message = CreateGetClassificationDefByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
@@ -507,12 +505,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetClassificationDefByName"/> and <see cref="GetClassificationDefByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the classification. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetClassificationDefByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetClassificationDefByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -629,7 +624,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
@@ -762,7 +757,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
@@ -791,12 +786,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEntityDefinitionByGuid"/> and <see cref="GetEntityDefinitionByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -913,7 +905,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, options);
+            using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
@@ -1046,7 +1038,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, options);
+            using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
@@ -1075,12 +1067,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEntityDefinitionByName"/> and <see cref="GetEntityDefinitionByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetEntityDefinitionByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetEntityDefinitionByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1162,7 +1151,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEnumDefByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetEnumDefByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
@@ -1260,7 +1249,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEnumDefByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetEnumDefByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
@@ -1289,12 +1278,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEnumDefByGuid"/> and <see cref="GetEnumDefByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetEnumDefByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetEnumDefByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1376,7 +1362,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEnumDefByNameRequest(name, options);
+            using HttpMessage message = CreateGetEnumDefByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
@@ -1474,7 +1460,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEnumDefByNameRequest(name, options);
+            using HttpMessage message = CreateGetEnumDefByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
@@ -1503,12 +1489,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEnumDefByName"/> and <see cref="GetEnumDefByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the enum. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetEnumDefByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetEnumDefByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1615,7 +1598,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
@@ -1738,7 +1721,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
@@ -1767,12 +1750,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetRelationshipDefByGuid"/> and <see cref="GetRelationshipDefByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRelationshipDefByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetRelationshipDefByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1879,7 +1859,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelationshipDefByNameRequest(name, options);
+            using HttpMessage message = CreateGetRelationshipDefByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
@@ -2002,7 +1982,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelationshipDefByNameRequest(name, options);
+            using HttpMessage message = CreateGetRelationshipDefByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
@@ -2031,12 +2011,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetRelationshipDefByName"/> and <see cref="GetRelationshipDefByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the relationship. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRelationshipDefByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetRelationshipDefByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2132,7 +2109,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetStructDefByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetStructDefByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
@@ -2244,7 +2221,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetStructDefByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetStructDefByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
@@ -2273,12 +2250,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetStructDefByGuid"/> and <see cref="GetStructDefByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetStructDefByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetStructDefByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2374,7 +2348,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetStructDefByNameRequest(name, options);
+            using HttpMessage message = CreateGetStructDefByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
@@ -2486,7 +2460,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetStructDefByNameRequest(name, options);
+            using HttpMessage message = CreateGetStructDefByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
@@ -2515,12 +2489,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetStructDefByName"/> and <see cref="GetStructDefByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the struct. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetStructDefByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetStructDefByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2657,7 +2628,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
@@ -2810,7 +2781,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
@@ -2839,12 +2810,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTypeDefinitionByGuid"/> and <see cref="GetTypeDefinitionByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2981,7 +2949,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, options);
+            using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
@@ -3134,7 +3102,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, options);
+            using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
@@ -3163,12 +3131,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTypeDefinitionByName"/> and <see cref="GetTypeDefinitionByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTypeDefinitionByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetTypeDefinitionByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3189,7 +3154,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteTypeByNameRequest(name, options);
+            using HttpMessage message = CreateDeleteTypeByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
@@ -3226,7 +3191,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteTypeByNameRequest(name, options);
+            using HttpMessage message = CreateDeleteTypeByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
@@ -3255,12 +3220,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteTypeByName"/> and <see cref="DeleteTypeByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteTypeByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateDeleteTypeByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -3500,7 +3462,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, options);
+            using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
@@ -3757,7 +3719,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, options);
+            using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
@@ -3786,16 +3748,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetAllTypeDefinitions"/> and <see cref="GetAllTypeDefinitionsAsync"/> operations. </summary>
-        /// <param name="includeTermTemplate">
-        /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template
-        /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
+        private HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate, string type)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -4256,7 +4211,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateTypeDefinitionsRequest(content, options);
+            using HttpMessage message = CreateCreateTypeDefinitionsRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
@@ -4726,7 +4681,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateTypeDefinitionsRequest(content, options);
+            using HttpMessage message = CreateCreateTypeDefinitionsRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
@@ -4755,12 +4710,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateTypeDefinitions"/> and <see cref="CreateTypeDefinitionsAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -5212,7 +5164,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content, options);
+            using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
@@ -5679,7 +5631,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content, options);
+            using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
@@ -5708,12 +5660,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateAtlasTypeDefinitions"/> and <see cref="UpdateAtlasTypeDefinitionsAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -5951,7 +5900,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content, options);
+            using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
@@ -6204,7 +6153,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content, options);
+            using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
@@ -6233,12 +6182,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteTypeDefinitions"/> and <see cref="DeleteTypeDefinitionsAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -6273,7 +6219,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, options);
+            using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
@@ -6324,7 +6270,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, options);
+            using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
@@ -6353,16 +6299,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTypeDefinitionHeaders"/> and <see cref="GetTypeDefinitionHeadersAsync"/> operations. </summary>
-        /// <param name="includeTermTemplate">
-        /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template
-        /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
+        private HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate, string type)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6465,7 +6404,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
@@ -6577,7 +6516,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, options);
+            using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
@@ -6606,12 +6545,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTermTemplateDefByGuid"/> and <see cref="GetTermTemplateDefByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTermTemplateDefByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetTermTemplateDefByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6708,7 +6644,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, options);
+            using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
@@ -6820,7 +6756,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, options);
+            using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
@@ -6849,12 +6785,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTermTemplateDefByName"/> and <see cref="GetTermTemplateDefByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the term template. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTermTemplateDefByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetTermTemplateDefByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
