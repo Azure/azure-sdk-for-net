@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Spark
                     throw _requestFailedException;
                 }
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                return _value;
+                return _response.Value;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         _response = _client.RestClient.GetSparkBatchJob(_value.Id, true, cancellationToken);
                     }
-                    _completed = IsJobComplete(_response.Value.Result.ToString(), _response.Value.State, _completionType);
+                    _completed = IsJobComplete(_response.Value.Result ?? SparkBatchJobResultType.Uncertain, _response.Value.State, _completionType);
                 }
                 catch (RequestFailedException e)
                 {
@@ -136,14 +136,11 @@ namespace Azure.Analytics.Synapse.Spark
             return GetRawResponse();
         }
 
-        private static bool IsJobComplete(string jobState, string livyState, SparkBatchOperationCompletionType creationCompletionType)
+        private static bool IsJobComplete(SparkBatchJobResultType jobState, string livyState, SparkBatchOperationCompletionType creationCompletionType)
         {
-            switch (jobState)
+            if (jobState == SparkBatchJobResultType.Succeeded || jobState == SparkBatchJobResultType.Failed || jobState == SparkBatchJobResultType.Cancelled)
             {
-                case "succeeded":
-                case "failed":
-                case "cancelled":
-                    return true;
+                return true;
             }
 
             if (creationCompletionType == SparkBatchOperationCompletionType.JobSubmission)
@@ -152,17 +149,6 @@ namespace Azure.Analytics.Synapse.Spark
                 {
                     case "starting":
                     case "running":
-                    case "error":
-                    case "dead":
-                    case "success":
-                    case "killed":
-                        return true;
-                }
-            }
-            else
-            {
-                switch (livyState)
-                {
                     case "error":
                     case "dead":
                     case "success":

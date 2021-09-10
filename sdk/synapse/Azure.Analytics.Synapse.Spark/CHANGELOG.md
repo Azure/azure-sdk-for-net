@@ -3,11 +3,11 @@
 ## 1.0.0-preview.8 (Unreleased)
 
 ### Features Added
+- Enhance Long Running Operation (LRO) logic for `SparkBatchClient` to support both scenarios of job submission and job execution.
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Enhance Long Running Operation (LRO) logic for `SparkBatchClient` to support both scenarios of job submission and job execution.
 
 ### Other Changes
 

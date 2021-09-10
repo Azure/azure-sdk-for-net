@@ -43,11 +43,37 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
             // Submit the Spark job
             SparkBatchJobOptions createParams = SparkTestUtilities.CreateSparkJobRequestParameters(Recording, TestEnvironment);
+            SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
+            SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
+
+            // Verify the Spark batch job submission completes successfully
+            Assert.True("starting".Equals(jobCreateResponse.State, StringComparison.OrdinalIgnoreCase) || "running".Equals(jobCreateResponse.State, StringComparison.OrdinalIgnoreCase),
+                string.Format(
+                    "Job: {0} did not return success. Current job state: {1}. Error (if any): {2}",
+                    jobCreateResponse.Id,
+                    jobCreateResponse.Result,
+                    string.Join(", ", jobCreateResponse.Errors ?? new List<SparkServiceError>())
+                )
+            );
+
+            // Get the list of Spark batch jobs and check that the submitted job exists
+            List<SparkBatchJob> listJobResponse = await SparkTestUtilities.ListSparkBatchJobsAsync(client);
+            Assert.NotNull(listJobResponse);
+            Assert.IsTrue(listJobResponse.Any(job => job.Id == jobCreateResponse.Id));
+        }
+
+        [RecordedTest]
+        public async Task TestSparkBatchJobExecution()
+        {
+            SparkBatchClient client = CreateClient();
+
+            // Submit the Spark job
+            SparkBatchJobOptions createParams = SparkTestUtilities.CreateSparkJobRequestParameters(Recording, TestEnvironment);
             createParams.CreationCompletionType = SparkBatchOperationCompletionType.JobExecution;
             SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
             SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
 
-            // Verify the Spark batch job completes successfully
+            // Verify the Spark batch job exuecution completes successfully
             Assert.True("success".Equals(jobCreateResponse.State, StringComparison.OrdinalIgnoreCase) && jobCreateResponse.Result == SparkBatchJobResultType.Succeeded,
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
