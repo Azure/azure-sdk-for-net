@@ -18,7 +18,8 @@ namespace Azure.Analytics.Purview.Catalog
     public partial class PurviewEntities
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -154,7 +155,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
@@ -307,7 +308,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
@@ -336,12 +337,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -428,7 +426,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, options);
+            using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
@@ -530,7 +528,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, options);
+            using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
@@ -559,15 +557,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetByGuids"/> and <see cref="GetByGuidsAsync"/> operations. </summary>
-        /// <param name="guids"> An array of GUIDs of entities to create. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetByGuidsRequest(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions options = null)
+        private HttpMessage CreateGetByGuidsRequest(IEnumerable<string> guids, bool? minExtInfo, bool? ignoreRelationships, IEnumerable<string> excludeRelationshipTypes)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -718,7 +710,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
@@ -873,7 +865,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
@@ -902,12 +894,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateEntities"/> and <see cref="CreateOrUpdateEntitiesAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateEntitiesRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateEntitiesRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -983,7 +972,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteByGuidsRequest(guids, options);
+            using HttpMessage message = CreateDeleteByGuidsRequest(guids);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
@@ -1074,7 +1063,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteByGuidsRequest(guids, options);
+            using HttpMessage message = CreateDeleteByGuidsRequest(guids);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
@@ -1103,12 +1092,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteByGuids"/> and <see cref="DeleteByGuidsAsync"/> operations. </summary>
-        /// <param name="guids"> An array of GUIDs of entities to delete. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteByGuidsRequest(IEnumerable<string> guids, RequestOptions options = null)
+        private HttpMessage CreateDeleteByGuidsRequest(IEnumerable<string> guids)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1154,7 +1140,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateAddClassificationRequest(content, options);
+            using HttpMessage message = CreateAddClassificationRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
@@ -1216,7 +1202,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateAddClassificationRequest(content, options);
+            using HttpMessage message = CreateAddClassificationRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
@@ -1245,12 +1231,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="AddClassification"/> and <see cref="AddClassificationAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateAddClassificationRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateAddClassificationRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1333,7 +1316,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, options);
+            using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
@@ -1432,7 +1415,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, options);
+            using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
@@ -1461,14 +1444,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetByGuid"/> and <see cref="GetByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetByGuidRequest(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions options = null)
+        private HttpMessage CreateGetByGuidRequest(string guid, bool? minExtInfo, bool? ignoreRelationships)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1558,7 +1536,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content, options);
+            using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
@@ -1656,7 +1634,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content, options);
+            using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
@@ -1685,14 +1663,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="PartialUpdateEntityAttributeByGuid"/> and <see cref="PartialUpdateEntityAttributeByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="name"> The name of the attribute. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreatePartialUpdateEntityAttributeByGuidRequest(string guid, string name, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreatePartialUpdateEntityAttributeByGuidRequest(string guid, string name, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1770,7 +1743,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteByGuidRequest(guid, options);
+            using HttpMessage message = CreateDeleteByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
@@ -1861,7 +1834,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteByGuidRequest(guid, options);
+            using HttpMessage message = CreateDeleteByGuidRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
@@ -1890,12 +1863,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteByGuid"/> and <see cref="DeleteByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateDeleteByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1939,7 +1909,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, options);
+            using HttpMessage message = CreateGetClassificationRequest(guid, classificationName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
@@ -1999,7 +1969,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, options);
+            using HttpMessage message = CreateGetClassificationRequest(guid, classificationName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
@@ -2028,13 +1998,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetClassification"/> and <see cref="GetClassificationAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetClassificationRequest(string guid, string classificationName, RequestOptions options = null)
+        private HttpMessage CreateGetClassificationRequest(string guid, string classificationName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2058,7 +2024,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, options);
+            using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
@@ -2096,7 +2062,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, options);
+            using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
@@ -2125,13 +2091,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteClassification"/> and <see cref="DeleteClassificationAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteClassificationRequest(string guid, string classificationName, RequestOptions options = null)
+        private HttpMessage CreateDeleteClassificationRequest(string guid, string classificationName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -2166,7 +2128,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetClassificationsRequest(guid, options);
+            using HttpMessage message = CreateGetClassificationsRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
@@ -2216,7 +2178,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetClassificationsRequest(guid, options);
+            using HttpMessage message = CreateGetClassificationsRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
@@ -2245,12 +2207,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetClassifications"/> and <see cref="GetClassificationsAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetClassificationsRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetClassificationsRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2295,7 +2254,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateAddClassificationsRequest(guid, content, options);
+            using HttpMessage message = CreateAddClassificationsRequest(guid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
@@ -2355,7 +2314,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateAddClassificationsRequest(guid, content, options);
+            using HttpMessage message = CreateAddClassificationsRequest(guid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
@@ -2384,13 +2343,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="AddClassifications"/> and <see cref="AddClassificationsAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateAddClassificationsRequest(string guid, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateAddClassificationsRequest(string guid, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -2436,7 +2391,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, options);
+            using HttpMessage message = CreateUpdateClassificationsRequest(guid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
@@ -2496,7 +2451,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, options);
+            using HttpMessage message = CreateUpdateClassificationsRequest(guid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
@@ -2525,13 +2480,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateClassifications"/> and <see cref="UpdateClassificationsAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUpdateClassificationsRequest(string guid, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateUpdateClassificationsRequest(string guid, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -2624,7 +2575,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, options);
+            using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
@@ -2731,7 +2682,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, options);
+            using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
@@ -2760,15 +2711,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetByUniqueAttributes"/> and <see cref="GetByUniqueAttributesAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetByUniqueAttributesRequest(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions options = null)
+        private HttpMessage CreateGetByUniqueAttributesRequest(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2924,7 +2869,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName, options);
+            using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
@@ -3084,7 +3029,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName, options);
+            using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
@@ -3113,14 +3058,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="PartialUpdateEntityByUniqueAttributes"/> and <see cref="PartialUpdateEntityByUniqueAttributesAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreatePartialUpdateEntityByUniqueAttributesRequest(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
+        private HttpMessage CreatePartialUpdateEntityByUniqueAttributesRequest(string typeName, RequestContent content, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -3209,7 +3149,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, options);
+            using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
@@ -3308,7 +3248,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, options);
+            using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
@@ -3337,13 +3277,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteByUniqueAttribute"/> and <see cref="DeleteByUniqueAttributeAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteByUniqueAttributeRequest(string typeName, string attrQualifiedName = null, RequestOptions options = null)
+        private HttpMessage CreateDeleteByUniqueAttributeRequest(string typeName, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -3370,7 +3306,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, options);
+            using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
@@ -3409,7 +3345,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, options);
+            using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
@@ -3438,14 +3374,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteClassificationByUniqueAttribute"/> and <see cref="DeleteClassificationByUniqueAttributeAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteClassificationByUniqueAttributeRequest(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
+        private HttpMessage CreateDeleteClassificationByUniqueAttributeRequest(string typeName, string classificationName, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -3495,7 +3426,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
+            using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
@@ -3556,7 +3487,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
+            using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
@@ -3585,14 +3516,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="AddClassificationsByUniqueAttribute"/> and <see cref="AddClassificationsByUniqueAttributeAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateAddClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
+        private HttpMessage CreateAddClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3643,7 +3569,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
+            using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
@@ -3704,7 +3630,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
+            using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
@@ -3733,14 +3659,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateClassificationsByUniqueAttribute"/> and <see cref="UpdateClassificationsByUniqueAttributeAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUpdateClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
+        private HttpMessage CreateUpdateClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -3775,7 +3696,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateSetClassificationsRequest(content, options);
+            using HttpMessage message = CreateSetClassificationsRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
@@ -3820,7 +3741,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateSetClassificationsRequest(content, options);
+            using HttpMessage message = CreateSetClassificationsRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
@@ -3849,12 +3770,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="SetClassifications"/> and <see cref="SetClassificationsAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSetClassificationsRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateSetClassificationsRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3953,7 +3871,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, options);
+            using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
@@ -4067,7 +3985,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, options);
+            using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
@@ -4096,15 +4014,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEntitiesByUniqueAttributes"/> and <see cref="GetEntitiesByUniqueAttributesAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetEntitiesByUniqueAttributesRequest(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions options = null)
+        private HttpMessage CreateGetEntitiesByUniqueAttributesRequest(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -4185,7 +4097,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetHeaderRequest(guid, options);
+            using HttpMessage message = CreateGetHeaderRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
@@ -4270,7 +4182,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetHeaderRequest(guid, options);
+            using HttpMessage message = CreateGetHeaderRequest(guid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
@@ -4299,12 +4211,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetHeader"/> and <see cref="GetHeaderAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetHeaderRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetHeaderRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

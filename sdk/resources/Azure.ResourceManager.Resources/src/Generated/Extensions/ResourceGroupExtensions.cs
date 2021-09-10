@@ -59,5 +59,15 @@ namespace Azure.ResourceManager.Resources
             return new DeploymentScriptContainer(resourceGroup);
         }
         #endregion
+
+        #region TemplateSpec
+        /// <summary> Gets an object representing a TemplateSpecContainer along with the instance operations that can be performed on it. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="TemplateSpecContainer" /> object. </returns>
+        public static TemplateSpecContainer GetTemplateSpecs(this ResourceGroup resourceGroup)
+        {
+            return new TemplateSpecContainer(resourceGroup);
+        }
+        #endregion
     }
 }
