@@ -4,6 +4,7 @@
 # Version : Version to add or replace in change log
 # Unreleased: Default is true. If it is set to false, then today's date will be set in verion title. If it is True then title will show "Unreleased"
 # ReplaceLatestEntryTitle: Replaces the latest changelog entry title.
+# SanitizeEntry: Removes all empty section in the entry that is updated
 
 param (
   [Parameter(Mandatory = $true)]
@@ -13,7 +14,8 @@ param (
   [Boolean]$Unreleased = $true,
   [Boolean]$ReplaceLatestEntryTitle = $false,
   [String]$ChangelogPath,
-  [String]$ReleaseDate
+  [String]$ReleaseDate,
+  [Boolean]$SanitizeEntry = $false
 )
 Set-StrictMode -Version 3
 
@@ -106,8 +108,12 @@ if ($LatestsSorted[0] -ne $Version) {
 
 if ($ReplaceLatestEntryTitle)
 {
-    $sanitizedChangelogEntry =  Remove-EmptySections -ChangeLogEntry $ChangeLogEntries[$LatestVersion]
-    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -Content $sanitizedChangelogEntry.ReleaseContent
+    $entryToBeUpdated = $ChangeLogEntries[$LatestVersion]
+    if ($SanitizeEntry)
+    {
+        $entryToBeUpdated = Remove-EmptySections -ChangeLogEntry $entryToBeUpdated
+    }
+    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -Content $entryToBeUpdated
     LogDebug "Resetting latest entry title to [$($newChangeLogEntry.ReleaseTitle)]"
     $ChangeLogEntries.Remove($LatestVersion)
     if ($newChangeLogEntry) {
@@ -123,6 +129,10 @@ elseif ($ChangeLogEntries.Contains($Version))
     LogDebug "Updating ReleaseStatus for Version [$Version] to [$($ReleaseStatus)]"
     $ChangeLogEntries[$Version].ReleaseStatus = $ReleaseStatus
     $ChangeLogEntries[$Version].ReleaseTitle = "## $Version $ReleaseStatus"
+    if ($SanitizeEntry)
+    {
+        $ChangeLogEntries[$Version] = Remove-EmptySections -ChangeLogEntry $ChangeLogEntries[$Version]
+    }
 }
 else
 {
