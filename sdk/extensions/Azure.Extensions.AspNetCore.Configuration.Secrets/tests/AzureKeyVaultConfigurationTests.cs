@@ -33,6 +33,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 page => page.Select(secret => secret.Properties).ToArray()).ToArray();
 
             mock.Setup(m => m.GetPropertiesOfSecretsAsync(default)).Returns(new MockAsyncPageable(pagesOfProperties));
+            mock.Setup(m => m.GetPropertiesOfSecretVersionsAsync(It.IsAny<string>(), default)).Returns(new MockAsyncPageable(pagesOfProperties));
 
             foreach (var page in pages)
             {
@@ -538,6 +539,28 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         }
 
         [Test]
+        public void CanCustomizeSecretLoading()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client,
+                new[]
+                {
+                    CreateSecret("Secret1", "{\"innerKey1\": \"innerValue1\", \"innerKey2\": \"innerValue2\"}", updated: new DateTimeOffset(new DateTime(2038, 1, 19), TimeSpan.Zero)),
+                }
+            );
+
+            // Act
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new SingleJsonSecretKeyVaultSecretManager("Secret1") }))
+            {
+                provider.Load();
+
+                // Assert
+                Assert.AreEqual("innerValue1", provider.Get("innerKey1"));
+                Assert.AreEqual("innerValue2", provider.Get("innerKey2"));
+            }
+        }
+
+        [Test]
         public async Task LoadsSecretsInParallel()
         {
             var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -698,6 +721,21 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 }
 
                 return data;
+            }
+        }
+
+        private class SingleJsonSecretKeyVaultSecretManager : JsonKeyVaultSecretManager
+        {
+            private readonly string _name;
+
+            public SingleJsonSecretKeyVaultSecretManager(string name)
+            {
+                _name = name;
+            }
+
+            public override AsyncPageable<SecretProperties> GetPropertiesOfSecretsAsync(SecretClient client, CancellationToken cancellationToken = default)
+            {
+                return client.GetPropertiesOfSecretVersionsAsync(_name, cancellationToken);
             }
         }
     }
