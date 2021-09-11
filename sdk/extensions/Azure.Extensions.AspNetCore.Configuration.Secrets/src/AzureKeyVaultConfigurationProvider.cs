@@ -78,7 +78,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
 
         private async Task LoadAsync()
         {
-            var secretPages = _client.GetPropertiesOfSecretsAsync();
+            var secretPages = _manager.GetPropertiesOfSecretsAsync(_client);
 
             using var secretLoader = new ParallelSecretLoader(_client);
             var newLoadedSecrets = new Dictionary<string, KeyVaultSecret>();

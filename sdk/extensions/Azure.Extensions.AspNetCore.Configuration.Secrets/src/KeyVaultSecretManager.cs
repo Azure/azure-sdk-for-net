@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+
 using Azure.Core;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
@@ -72,6 +74,18 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         public virtual bool Load(SecretProperties secret)
         {
             return true;
+        }
+
+        /// <summary>
+        /// Gets a list of the properties of the secrets in the specified vault. You can use this
+        /// method to define which secrets should be loaded.
+        /// </summary>
+        /// <param name="client">The <see cref="SecretClient"/> to use for retrieving values.</param>
+        /// <param name="cancellationToken">A System.Threading.CancellationToken controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual AsyncPageable<SecretProperties> GetPropertiesOfSecretsAsync(SecretClient client, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return client.GetPropertiesOfSecretsAsync(cancellationToken);
         }
     }
 }
