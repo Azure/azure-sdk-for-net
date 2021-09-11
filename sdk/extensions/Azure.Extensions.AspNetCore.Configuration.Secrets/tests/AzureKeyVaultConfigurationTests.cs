@@ -733,7 +733,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 _name = name;
             }
 
-            public override AsyncPageable<SecretProperties> GetPropertiesOfSecretsAsync(SecretClient client, CancellationToken cancellationToken = default)
+            public override AsyncPageable<SecretProperties> LoadSecretPropertiesAsync(SecretClient client, CancellationToken cancellationToken = default)
             {
                 return client.GetPropertiesOfSecretVersionsAsync(_name, cancellationToken);
             }
