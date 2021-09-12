@@ -144,6 +144,13 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
+                if (message.LockedUntil <= DateTimeOffset.UtcNow)
+                {
+                    ServiceBusEventSource.Log.ProcessorMessageLockTokenExpired(Processor.Identifier, message.SequenceNumber, message.LockedUntil);
+                    await Receiver.AbandonMessageAsync(message.LockTokenGuid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return;
+                }
+
                 if (!Receiver.IsSessionReceiver &&
                     Receiver.ReceiveMode == ServiceBusReceiveMode.PeekLock &&
                     AutoRenewLock)

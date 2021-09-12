@@ -189,6 +189,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ProcessorStoppingReceiveCanceledEvent = 110;
         internal const int ProcessorStoppingAcceptSessionCanceledEvent = 111;
 
+        internal const int ProcessorMessageLockTokenExpiredEvent = 112;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -869,6 +871,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ProcessorMessageHandlerExceptionEvent, identifier, sequenceNumber, exception, lockToken);
+            }
+        }
+
+        [Event(ProcessorMessageLockTokenExpiredEvent, Level = EventLevel.Warning, Message = "{0}: Message lock token expired before calling user handler: Message: SequenceNumber: {1} Locked Until: {2}.")]
+        public virtual void ProcessorMessageLockTokenExpired(string identifier, long sequenceNumber, DateTimeOffset lockedUntil)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorMessageLockTokenExpiredEvent, identifier, sequenceNumber, lockedUntil);
             }
         }
 
