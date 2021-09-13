@@ -270,7 +270,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
+        // Change min service version to 2020-10-02
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
         public async Task CreateAsync_EncryptionScopeOptions()
         {
             // Arrange
@@ -471,7 +473,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
+        // Change min service version to 2020-10-02
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
         public async Task CreateIfNotExists_EncryptionScopeOptions()
         {
             // Arrange
@@ -772,7 +776,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
+        // Change min service version to 2020-10-02
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
         public async Task GetPathsAsync_EncryptionScopeOptions()
         {
             // Arrange
