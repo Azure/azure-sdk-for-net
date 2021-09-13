@@ -8,8 +8,13 @@ export AZURE_LIVE_TEST_SERVICE_VERSIONS=V2019_07_07
 
 export $(grep 'APPINSIGHTS_INSTRUMENTATIONKEY' $ENV_FILE | xargs)
 
-count=220
+count=$1
+
+echo "Number of test runs $count"
+
 for i in $(seq $count); do
+    echo "Starting run number $i"
+
     UUID=$(cat /proc/sys/kernel/random/uuid)
     export AZURE_STORAGE_TEST_RUN_ID=$UUID
 
@@ -33,6 +38,8 @@ for i in $(seq $count); do
         /p:Configuration=Debug \
         /p:CollectCoverage=false \
         /p:UseProjectReferenceToAzureClients=false
+
+    echo "Finished run number $i"
 done
 
 sleep 1h
