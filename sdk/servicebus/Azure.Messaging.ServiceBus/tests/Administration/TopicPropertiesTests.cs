@@ -34,6 +34,29 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
+        public void CanCreateTopicRuntimePropertiesFromFactory()
+        {
+            var today = DateTimeOffset.Now;
+            var yesterday = today.Subtract(TimeSpan.FromDays(1));
+            var twoDaysAgo = today.Subtract(TimeSpan.FromDays(2));
+            var properties = ServiceBusModelFactory.TopicRuntimeProperties(
+                "topicName",
+                10,
+                1000,
+                5,
+                twoDaysAgo,
+                yesterday,
+                today);
+            Assert.AreEqual("topicName", properties.Name);
+            Assert.AreEqual(10, properties.ScheduledMessageCount);
+            Assert.AreEqual(1000, properties.SizeInBytes);
+            Assert.AreEqual(5, properties.SubscriptionCount);
+            Assert.AreEqual(twoDaysAgo, properties.CreatedAt);
+            Assert.AreEqual(yesterday, properties.UpdatedAt);
+            Assert.AreEqual(today, properties.AccessedAt);
+        }
+
+        [Test]
         public void CanCreateTopicPropertiesFromOptions()
         {
             var options = new CreateTopicOptions("topic")

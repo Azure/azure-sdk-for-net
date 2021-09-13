@@ -20,9 +20,9 @@ $ErrorActionPreference = 'Stop'
 . $PSScriptRoot/find-all-stress-packages.ps1
 $FailedCommands = New-Object Collections.Generic.List[hashtable]
 
-if (!(Get-Module powershell-yaml)) {
-    Install-Module -Name powershell-yaml -RequiredVersion 0.4.1 -Force -Scope CurrentUser
-}
+. (Join-Path $PSScriptRoot "../Helpers" PSModule-Helpers.ps1)
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+Install-ModuleIfNotInstalled "az" "6.4.0" | Import-Module
 
 # Powershell does not (at time of writing) treat exit codes from external binaries
 # as cause for stopping execution, so do this via a wrapper function.
@@ -51,7 +51,10 @@ function Login([string]$subscription, [string]$clusterGroup, [boolean]$pushImage
         RunOrExitOnFailure az login --allow-no-subscriptions
     }
 
-    $clusterName = (az aks list -g $clusterGroup -o json| ConvertFrom-Json).name
+    # Discover cluster name, only one cluster per group is expected
+    Write-Host "Listing AKS cluster in $subscription/$clusterGroup"
+    $cluster = RunOrExitOnFailure az aks list -g $clusterGroup --subscription $subscription -o json
+    $clusterName = ($cluster | ConvertFrom-Json).name
 
     RunOrExitOnFailure az aks get-credentials `
         -n "$clusterName" `
@@ -60,8 +63,9 @@ function Login([string]$subscription, [string]$clusterGroup, [boolean]$pushImage
         --overwrite-existing
 
     if ($pushImages) {
-        $registry = (az acr list -g $clusterGroup -o json | ConvertFrom-Json).name
-        RunOrExitOnFailure az acr login -n $registry
+        $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
+        $registryName = ($registry | ConvertFrom-Json).name
+        RunOrExitOnFailure az acr login -n $registryName
     }
 }
 
@@ -110,11 +114,8 @@ function DeployStressPackage(
     [string]$repository,
     [boolean]$pushImages
 ) {
-    $registry = (az acr list -g $clusterGroup -o json | ConvertFrom-Json).name
-    if (!$registry) {
-        Write-Host "Could not find container registry in resource group $clusterGroup"
-        exit 1
-    }
+    $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
+    $registryName = ($registry | ConvertFrom-Json).name
 
     Run helm dependency update $pkg.Directory
     if ($LASTEXITCODE) { return }
@@ -133,7 +134,7 @@ function DeployStressPackage(
             if (!$imageName) {
                 $imageName = $dockerFile.Directory.Name
             }
-            $imageTag = "${registry}.azurecr.io/$($repository.ToLower())/$($imageName):$deployId"
+            $imageTag = "${registryName}.azurecr.io/$($repository.ToLower())/$($imageName):$deployId"
             Write-Host "Building and pushing stress test docker image '$imageTag'"
             Run docker build -t $imageTag -f $dockerFile.FullName $dockerFile.DirectoryName
             if ($LASTEXITCODE) { return }
@@ -154,7 +155,7 @@ function DeployStressPackage(
     Run helm upgrade $pkg.ReleaseName $pkg.Directory `
         -n $pkg.Namespace `
         --install `
-        --set repository=$registry.azurecr.io/$repository `
+        --set repository=$registryName.azurecr.io/$repository `
         --set tag=$deployId `
         --set stress-test-addons.env=$environment
     if ($LASTEXITCODE) {
@@ -176,4 +177,7 @@ function DeployStressPackage(
     Run kubectl label secret -n $pkg.Namespace --overwrite $helmReleaseConfig deployId=$deployId
 }
 
-DeployStressTests @PSBoundParameters
+# Don't call functions when the script is being dot sourced
+if ($MyInvocation.InvocationName -ne ".") {
+    DeployStressTests @PSBoundParameters
+}

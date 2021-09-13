@@ -10,6 +10,24 @@
 
 ### Other Changes
 
+## 5.6.1 (2021-09-08)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Andrey Shihov _([GitHub](https://github.com/andreyshihov))_
+
+### Bugs Fixed
+
+- Fixed an issue with refreshing authorization where redundant requests were made to acquire AAD tokens that were due to expire.  Refreshes will now coordinate to ensure a single AAD token acquisition.
+
+- Fixed an issue with authorization refresh where attempts may have been made to authorize a faulted link.  Links that fail to open are no longer be considered valid for authorization.
+
+### Other Changes
+
+- Documentation has been enhanced to provide additional context for client library types, notably detailing non-obvious validations applied to parameters and options members.
+
 ## 5.6.0 (2021-08-10)
 
 ### Bugs Fixed

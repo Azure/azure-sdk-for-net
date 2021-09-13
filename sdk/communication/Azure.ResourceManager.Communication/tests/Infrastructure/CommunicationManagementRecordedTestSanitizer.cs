@@ -15,11 +15,6 @@ namespace Azure.ResourceManager.Communication.Tests
             // Lazy sanitize fields in the request and response bodies
             AddJsonPathSanitizer("$..token");
             AddJsonPathSanitizer("$..identity");
-            AddJsonPathSanitizer("$..primaryKey");
-            AddJsonPathSanitizer("$..secondaryKey");
-            AddJsonPathSanitizer("$..primaryConnectionString");
-            AddJsonPathSanitizer("$..secondaryConnectionString");
-            AddJsonPathSanitizer("$..connectionString");
         }
 
         /// <summary>Fetch the value to replace with the Subscription ID. This value is not in the same format, but could easierly be change to be.</summary>

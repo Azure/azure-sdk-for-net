@@ -1,6 +1,6 @@
 # Release History
 
-## 7.3.0-beta.2 (Unreleased)
+## 7.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 7.3.0 (2021-09-07)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- John Call _([GitHub](https://github.com/johnthcall))_
+
+### Bugs Fixed
+
+- Fixed an issue with refreshing authorization where redundant requests were made to acquire AAD tokens that were due to expire.  Refreshes will now coordinate to ensure a single AAD token acquisition.
+
+- Fixed an issue with authorization refresh where attempts may have been made to authorize a faulted link.  Links that fail to open are no longer be considered valid for authorization.
+
+### Other Changes
+
+- Serialization of messages read from Service Bus has been tweaked for greater efficiency.  _(A community contribution, courtesy of [johnthcall](https://github.com/johnthcall))_
 
 ## 7.3.0-beta.1 (2021-08-10)
 

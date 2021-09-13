@@ -74,7 +74,7 @@ Response<LogsQueryResult> response = await client.QueryAsync(
     "AzureActivity | top 10 by TimeGenerated",
     new DateTimeRange(TimeSpan.FromDays(1)));
 
-LogsQueryResultTable table = response.Value.Table;
+LogsTable table = response.Value.Table;
 
 foreach (var row in table.Rows)
 {
@@ -178,7 +178,7 @@ Response<LogsQueryResult> response = await client.QueryAsync(
     "AzureActivity | top 10 by TimeGenerated",
     new DateTimeRange(TimeSpan.FromDays(1)));
 
-LogsQueryResultTable table = response.Value.Table;
+LogsTable table = response.Value.Table;
 
 foreach (var column in table.Columns)
 {
@@ -278,7 +278,7 @@ foreach (var metric in results.Value.Metrics)
     {
         Console.WriteLine("Dimensions: " + string.Join(",", element.Metadata));
 
-        foreach (var metricValue in element.Data)
+        foreach (var metricValue in element.Values)
         {
             Console.WriteLine(metricValue);
         }

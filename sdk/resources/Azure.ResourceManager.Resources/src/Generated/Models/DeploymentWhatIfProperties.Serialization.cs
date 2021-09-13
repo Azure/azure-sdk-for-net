@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("whatIfSettings");
                 writer.WriteObjectValue(WhatIfSettings);
             }
-            if (Optional.IsDefined(TemplateJson))
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template");
-                TemplateJson.WriteTo(writer);
+                writer.WriteObjectValue(Template);
             }
             if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink");
                 writer.WriteObjectValue(TemplateLink);
             }
-            if (Optional.IsDefined(ParametersJson))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
-                ParametersJson.WriteTo(writer);
+                writer.WriteObjectValue(Parameters);
             }
             if (Optional.IsDefined(ParametersLink))
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteObjectValue(ParametersLink);
             }
             writer.WritePropertyName("mode");
-            writer.WriteStringValue(Mode.ToSerialString());
+            writer.WriteStringValue(Mode.ToString());
             if (Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting");
@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("onErrorDeployment");
                 writer.WriteObjectValue(OnErrorDeployment);
+            }
+            if (Optional.IsDefined(ExpressionEvaluationOptions))
+            {
+                writer.WritePropertyName("expressionEvaluationOptions");
+                writer.WriteObjectValue(ExpressionEvaluationOptions);
             }
             writer.WriteEndObject();
         }

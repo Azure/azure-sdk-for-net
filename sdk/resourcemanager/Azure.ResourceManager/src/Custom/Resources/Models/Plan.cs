@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Models
 {
     /// <summary>
     /// Representation of a publisher plan for marketplace RPs.

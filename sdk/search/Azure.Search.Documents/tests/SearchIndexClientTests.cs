@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30, SearchClientOptions.ServiceVersion.V2021_04_30_Preview)]
     public class SearchIndexClientTests : SearchTestBase
     {
         public SearchIndexClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -444,6 +445,31 @@ namespace Azure.Search.Documents.Tests
             IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
 
             Assert.AreEqual(new[] { "The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog." }, tokens.Select(t => t.Token));
+        }
+
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2021_04_30_Preview)]
+        public async Task AnalyzeTextWithNormalizer()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+
+            AnalyzeTextOptions request = new("I dARe YoU tO reAd It IN A nORmAl vOiCE.", LexicalNormalizerName.Lowercase);
+
+            Response<IReadOnlyList<AnalyzedTokenInfo>> result = await client.AnalyzeTextAsync(resources.IndexName, request);
+            IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
+
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual("i dare you to read it in a normal voice.", tokens[0].Token);
+
+            request = new("Item ① in my ⑽ point rant is that 75⁰F is uncomfortably warm.", LexicalNormalizerName.AsciiFolding);
+
+            result = await client.AnalyzeTextAsync(resources.IndexName, request);
+            tokens = result.Value;
+
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual("Item 1 in my (10) point rant is that 750F is uncomfortably warm.", tokens[0].Token);
         }
 
         [Test]

@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/virtualMachines/imageVM/instanceView?api-version=2021-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL1JHZm9yU0RLdGVzdFJlc291cmNlcy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVzL2ltYWdlVk0vaW5zdGFuY2VWaWV3P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/virtualMachines/imageVM/instanceView?api-version=2021-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL1JHZm9yU0RLdGVzdFJlc291cmNlcy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVzL2ltYWdlVk0vaW5zdGFuY2VWaWV3P2FwaS12ZXJzaW9uPTIwMjEtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "17e91984-b941-48ee-b661-81c6132a90ae"
+          "c3eddbba-627d-40dd-ba7d-9e3c138e1b33"
         ],
         "Accept-Language": [
           "en-US"
@@ -27,13 +27,13 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/LowCostGet3Min;3998,Microsoft.Compute/LowCostGet30Min;31993"
+          "Microsoft.Compute/LowCostGet3Min;3995,Microsoft.Compute/LowCostGet30Min;31988"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "6821849e-989e-4889-8dde-6eba1e7abdaf"
+          "0acd3a03-591f-426d-b9e5-d70681d1b6bd"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -43,19 +43,19 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "57a9d548-ce82-4a1c-919e-66edaf6fb7ae"
+          "61ebd9ac-8437-4cdc-8715-5f93bb1e396a"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20210618T222252Z:57a9d548-ce82-4a1c-919e-66edaf6fb7ae"
+          "EASTUS2:20210629T191704Z:61ebd9ac-8437-4cdc-8715-5f93bb1e396a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 18 Jun 2021 22:22:52 GMT"
+          "Tue, 29 Jun 2021 19:17:03 GMT"
         ],
         "Content-Length": [
-          "2344"
+          "1841"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -64,7 +64,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"vmAgent\": {\r\n    \"vmAgentVersion\": \"Unknown\",\r\n    \"statuses\": [\r\n      {\r\n        \"code\": \"ProvisioningState/Unavailable\",\r\n        \"level\": \"Warning\",\r\n        \"displayStatus\": \"Not Ready\",\r\n        \"message\": \"VM Agent is unresponsive.\",\r\n        \"time\": \"2021-06-18T22:22:52+00:00\"\r\n      }\r\n    ]\r\n  },\r\n  \"patchStatus\": {\r\n    \"hotpatchStatus\": {\r\n      \"hotpatchEnablementStatus\": \"Disabled\",\r\n      \"hotpatchReadinessStatus\": \"EnablementRequired\",\r\n      \"lastRefreshedTime\": \"2021-03-24T16:05:19.0174555+00:00\",\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"Success\",\r\n        \"message\": \"0 error/s reported\"\r\n      }\r\n    },\r\n    \"availablePatchSummary\": {\r\n      \"assessmentActivityId\": \"dc781b28-4bf7-4563-85f0-8d4015cde5c4\",\r\n      \"status\": \"Succeeded\",\r\n      \"startTime\": \"2021-03-24T16:04:45.2816268+00:00\",\r\n      \"lastModifiedTime\": \"2021-03-24T16:05:19.0174555+00:00\",\r\n      \"criticalAndSecurityPatchCount\": 3,\r\n      \"otherPatchCount\": 5,\r\n      \"rebootPending\": false,\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"Success\",\r\n        \"message\": \"0 error/s reported\"\r\n      }\r\n    }\r\n  },\r\n  \"disks\": [\r\n    {\r\n      \"name\": \"imageVM_OsDisk_1_1193bfcbb54745ae8343a2e08b157601\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2021-03-24T15:28:24.6095119+00:00\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"imageDisk\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2021-03-24T15:28:24.6095119+00:00\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"bootDiagnostics\": {},\r\n  \"extensions\": [\r\n    {\r\n      \"name\": \"Microsoft.Azure.Geneva.GenevaMonitoring\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Azure.Security.AntimalwareSignature.AntimalwareConfiguration\"\r\n    }\r\n  ],\r\n  \"hyperVGeneration\": \"V1\",\r\n  \"statuses\": [\r\n    {\r\n      \"code\": \"ProvisioningState/succeeded\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Provisioning succeeded\",\r\n      \"time\": \"2021-06-18T17:29:43.7900453+00:00\"\r\n    },\r\n    {\r\n      \"code\": \"PowerState/running\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"VM running\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"patchStatus\": {\r\n    \"hotpatchStatus\": {\r\n      \"hotpatchEnablementStatus\": \"Disabled\",\r\n      \"hotpatchReadinessStatus\": \"EnablementRequired\",\r\n      \"lastRefreshedTime\": \"2021-03-24T16:05:19.0174555+00:00\",\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"Success\",\r\n        \"message\": \"0 error/s reported\"\r\n      }\r\n    },\r\n    \"availablePatchSummary\": {\r\n      \"assessmentActivityId\": \"dc781b28-4bf7-4563-85f0-8d4015cde5c4\",\r\n      \"status\": \"Succeeded\",\r\n      \"startTime\": \"2021-03-24T16:04:45.2816268+00:00\",\r\n      \"lastModifiedTime\": \"2021-03-24T16:05:19.0174555+00:00\",\r\n      \"criticalAndSecurityPatchCount\": 3,\r\n      \"otherPatchCount\": 5,\r\n      \"rebootPending\": false,\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"Success\",\r\n        \"message\": \"0 error/s reported\"\r\n      }\r\n    }\r\n  },\r\n  \"disks\": [\r\n    {\r\n      \"name\": \"imageVM_OsDisk_1_1193bfcbb54745ae8343a2e08b157601\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2021-06-21T20:26:03.1843662+00:00\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"imageDisk\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2021-06-21T20:26:03.1843662+00:00\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"bootDiagnostics\": {},\r\n  \"hyperVGeneration\": \"V1\",\r\n  \"statuses\": [\r\n    {\r\n      \"code\": \"ProvisioningState/succeeded\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Provisioning succeeded\",\r\n      \"time\": \"2021-06-21T20:26:03.2000171+00:00\"\r\n    },\r\n    {\r\n      \"code\": \"PowerState/deallocated\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"VM deallocated\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

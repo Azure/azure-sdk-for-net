@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyCertificateAuthority. </summary>
-        /// <param name="name"> Name of the CA certificate. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </param>
-        internal FirewallPolicyCertificateAuthority(string name, string keyVaultSecretId)
+        /// <param name="name"> Name of the CA certificate. </param>
+        internal FirewallPolicyCertificateAuthority(string keyVaultSecretId, string name)
         {
-            Name = name;
             KeyVaultSecretId = keyVaultSecretId;
+            Name = name;
         }
 
-        /// <summary> Name of the CA certificate. </summary>
-        public string Name { get; set; }
         /// <summary> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </summary>
         public string KeyVaultSecretId { get; set; }
+        /// <summary> Name of the CA certificate. </summary>
+        public string Name { get; set; }
     }
 }

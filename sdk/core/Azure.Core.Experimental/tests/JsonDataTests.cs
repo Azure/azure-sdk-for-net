@@ -301,6 +301,14 @@ namespace Azure.Core.Tests
             validate(roundTrip);
         }
 
+        [Test]
+        public void GetOfTWithStringWorks()
+        {
+            JsonData d = new JsonData();
+            d.Set("property", "Hello");
+            Assert.AreEqual("Hello", d.Get<string>("property"));
+        }
+
         private T JsonAsType<T>(string json)
         {
             dynamic jsonData = JsonData.FromString(json);

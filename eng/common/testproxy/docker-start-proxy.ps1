@@ -25,7 +25,7 @@ catch {
     Write-Error "Please check your docker invocation and try running the script again."
 }
 
-$SELECTED_IMAGE_TAG = "1037115"
+$SELECTED_IMAGE_TAG = "1084681"
 $CONTAINER_NAME = "ambitious_azsdk_test_proxy"
 $LINUX_IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/testproxy-lin:${SELECTED_IMAGE_TAG}"
 $WINDOWS_IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/testproxy-win:${SELECTED_IMAGE_TAG}"
@@ -42,7 +42,7 @@ $SelectedImage = $LINUX_IMAGE_SOURCE
 $Initial = ""
 
 # most of the time, running this script on a windows machine will work just fine, as docker defaults to linux containers
-# however, in CI, windows images default to _windows_ containers. We cannot swap them. We can tell if we're in a CI build by 
+# however, in CI, windows images default to _windows_ containers. We cannot swap them. We can tell if we're in a CI build by
 # checking for the environment variable TF_BUILD.
 if ($IsWindows -and $env:TF_BUILD){
     $SelectedImage = $WINDOWS_IMAGE_SOURCE

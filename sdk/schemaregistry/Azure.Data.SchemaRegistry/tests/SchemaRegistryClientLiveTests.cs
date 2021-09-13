@@ -33,22 +33,22 @@ namespace Azure.Data.SchemaRegistry.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var schemaType = SerializationType.Avro;
 
-            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, SchemaContent);
+            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, schemaType);
             AssertSchemaProperties(registerProperties);
 
             // this should be a cached lookup
-            var schemaProperties = await client.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
+            var schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, schemaType);
             AssertSchemaProperties(schemaProperties);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
 
             // this should be an uncached lookup
             var client2 = CreateClient();
-            schemaProperties = await client2.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
+            schemaProperties = await client2.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, schemaType);
             AssertSchemaProperties(schemaProperties);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
 
             // this should be a cached lookup
-            schemaProperties = await client2.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
+            schemaProperties = await client2.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, schemaType);
             AssertSchemaProperties(schemaProperties);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
         }
@@ -61,22 +61,22 @@ namespace Azure.Data.SchemaRegistry.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var schemaType = SerializationType.Avro;
 
-            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, SchemaContent);
+            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, schemaType);
             AssertSchemaProperties(registerProperties);
 
             // this should be a cached lookup
-            var schemaProperties = await client.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
+            var schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, schemaType);
             AssertSchemaProperties(schemaProperties);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
 
             // this should be an uncached lookup
             var client2 = CreateClient();
-            schemaProperties = await client2.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
+            schemaProperties = await client2.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, schemaType);
             AssertSchemaProperties(schemaProperties);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
 
             // this should be a cached lookup
-            schemaProperties = await client2.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
+            schemaProperties = await client2.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, schemaType);
             AssertSchemaProperties(schemaProperties);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
         }
@@ -89,7 +89,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var schemaType = SerializationType.Avro;
 
-            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, SchemaContent);
+            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, schemaType);
             AssertSchemaProperties(registerProperties);
 
             // this should be a cached lookup
