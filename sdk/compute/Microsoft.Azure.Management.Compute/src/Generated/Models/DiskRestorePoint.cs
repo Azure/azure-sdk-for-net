@@ -63,7 +63,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Enabled', 'Disabled'</param>
         /// <param name="diskAccessId">ARM id of the DiskAccess resource for
         /// using private endpoints on disks.</param>
-        /// <param name="completionPercent">Percent complete of a clone
+        /// <param name="completionPercent">Percentage complete for the
+        /// background copy when a resource is created via the CopyStart
         /// operation.</param>
         public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?), string networkAccessPolicy = default(string), string publicNetworkAccess = default(string), string diskAccessId = default(string), double? completionPercent = default(double?))
             : base(id, name, type)
@@ -176,7 +177,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string DiskAccessId { get; set; }
 
         /// <summary>
-        /// Gets or sets percent complete of a clone operation.
+        /// Gets or sets percentage complete for the background copy when a
+        /// resource is created via the CopyStart operation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.completionPercent")]
         public double? CompletionPercent { get; set; }

@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='snapshotName'>
         /// The name of the snapshot that is being created. The name can't be changed
         /// after the snapshot is created. Supported characters for the name are a-z,
-        /// A-Z, 0-9, underscore and hyphen. The max name length is 80 characters.
+        /// A-Z, 0-9, _ and -. The max name length is 80 characters.
         /// </param>
         /// <param name='snapshot'>
         /// Snapshot object supplied in the body of the Put disk operation.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='snapshotName'>
         /// The name of the snapshot that is being created. The name can't be changed
         /// after the snapshot is created. Supported characters for the name are a-z,
-        /// A-Z, 0-9, underscore and hyphen. The max name length is 80 characters.
+        /// A-Z, 0-9, _ and -. The max name length is 80 characters.
         /// </param>
         /// <param name='snapshot'>
         /// Snapshot object supplied in the body of the Patch snapshot operation.
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='snapshotName'>
         /// The name of the snapshot that is being created. The name can't be changed
         /// after the snapshot is created. Supported characters for the name are a-z,
-        /// A-Z, 0-9, underscore and hyphen. The max name length is 80 characters.
+        /// A-Z, 0-9, _ and -. The max name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='snapshotName'>
         /// The name of the snapshot that is being created. The name can't be changed
         /// after the snapshot is created. Supported characters for the name are a-z,
-        /// A-Z, 0-9, underscore and hyphen. The max name length is 80 characters.
+        /// A-Z, 0-9, _ and -. The max name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -694,7 +694,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='snapshotName'>
         /// The name of the snapshot that is being created. The name can't be changed
         /// after the snapshot is created. Supported characters for the name are a-z,
-        /// A-Z, 0-9, underscore and hyphen. The max name length is 80 characters.
+        /// A-Z, 0-9, _ and -. The max name length is 80 characters.
         /// </param>
         /// <param name='grantAccessData'>
         /// Access data object supplied in the body of the get snapshot access
@@ -722,7 +722,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='snapshotName'>
         /// The name of the snapshot that is being created. The name can't be changed
         /// after the snapshot is created. Supported characters for the name are a-z,
-        /// A-Z, 0-9, underscore and hyphen. The max name length is 80 characters.
+        /// A-Z, 0-9, _ and -. The max name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -746,7 +746,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='snapshotName'>
         /// The name of the snapshot that is being created. The name can't be changed
         /// after the snapshot is created. Supported characters for the name are a-z,
-        /// A-Z, 0-9, underscore and hyphen. The max name length is 80 characters.
+        /// A-Z, 0-9, _ and -. The max name length is 80 characters.
         /// </param>
         /// <param name='snapshot'>
         /// Snapshot object supplied in the body of the Put disk operation.
@@ -978,7 +978,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='snapshotName'>
         /// The name of the snapshot that is being created. The name can't be changed
         /// after the snapshot is created. Supported characters for the name are a-z,
-        /// A-Z, 0-9, underscore and hyphen. The max name length is 80 characters.
+        /// A-Z, 0-9, _ and -. The max name length is 80 characters.
         /// </param>
         /// <param name='snapshot'>
         /// Snapshot object supplied in the body of the Patch snapshot operation.
@@ -1206,7 +1206,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='snapshotName'>
         /// The name of the snapshot that is being created. The name can't be changed
         /// after the snapshot is created. Supported characters for the name are a-z,
-        /// A-Z, 0-9, underscore and hyphen. The max name length is 80 characters.
+        /// A-Z, 0-9, _ and -. The max name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1381,7 +1381,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='snapshotName'>
         /// The name of the snapshot that is being created. The name can't be changed
         /// after the snapshot is created. Supported characters for the name are a-z,
-        /// A-Z, 0-9, underscore and hyphen. The max name length is 80 characters.
+        /// A-Z, 0-9, _ and -. The max name length is 80 characters.
         /// </param>
         /// <param name='grantAccessData'>
         /// Access data object supplied in the body of the get snapshot access
@@ -1596,7 +1596,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='snapshotName'>
         /// The name of the snapshot that is being created. The name can't be changed
         /// after the snapshot is created. Supported characters for the name are a-z,
-        /// A-Z, 0-9, underscore and hyphen. The max name length is 80 characters.
+        /// A-Z, 0-9, _ and -. The max name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

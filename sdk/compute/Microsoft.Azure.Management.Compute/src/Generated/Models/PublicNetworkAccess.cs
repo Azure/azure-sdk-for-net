@@ -17,12 +17,17 @@ namespace Microsoft.Azure.Management.Compute.Models
     public static class PublicNetworkAccess
     {
         /// <summary>
-        /// Export on disk will depend on the networkAccessPolicy.
+        /// You can generate a SAS URI to access the underlying data of the
+        /// disk publicly on the internet when NetworkAccessPolicy is set to
+        /// AllowAll. You can access the data via the SAS URI only from your
+        /// trusted Azure VNET when NetworkAccessPolicy is set to AllowPrivate.
         /// </summary>
         public const string Enabled = "Enabled";
         /// <summary>
-        /// The disk cannot be exported unless it is associated with a
-        /// diskAccess.
+        /// You cannot access the underlying data of the disk publicly on the
+        /// internet even when NetworkAccessPolicy is set to AllowAll. You can
+        /// access the data via the SAS URI only from your trusted Azure VNET
+        /// when NetworkAccessPolicy is set to AllowPrivate.
         /// </summary>
         public const string Disabled = "Disabled";
     }

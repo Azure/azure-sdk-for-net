@@ -68,8 +68,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="diskSizeBytes">The size of the disk in bytes. This
         /// field is read only.</param>
         /// <param name="diskState">The state of the snapshot. Possible values
-        /// include: 'Unattached', 'Attached', 'Reserved', 'ActiveSAS',
-        /// 'ReadyToUpload', 'ActiveUpload'</param>
+        /// include: 'Unattached', 'Attached', 'Reserved', 'Frozen',
+        /// 'ActiveSAS', 'ActiveSASFrozen', 'ReadyToUpload',
+        /// 'ActiveUpload'</param>
         /// <param name="uniqueId">Unique Guid identifying the
         /// resource.</param>
         /// <param name="encryptionSettingsCollection">Encryption settings
@@ -91,7 +92,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// supports hibernation.</param>
         /// <param name="publicNetworkAccess">Possible values include:
         /// 'Enabled', 'Disabled'</param>
-        /// <param name="completionPercent">Percent complete of a clone
+        /// <param name="completionPercent">Percentage complete for the
+        /// background copy when a resource is created via the CopyStart
         /// operation.</param>
         public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string diskState = default(string), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), bool? supportsHibernation = default(bool?), string publicNetworkAccess = default(string), double? completionPercent = default(double?))
             : base(location, id, name, type, tags)
@@ -204,8 +206,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the state of the snapshot. Possible values include:
-        /// 'Unattached', 'Attached', 'Reserved', 'ActiveSAS', 'ReadyToUpload',
-        /// 'ActiveUpload'
+        /// 'Unattached', 'Attached', 'Reserved', 'Frozen', 'ActiveSAS',
+        /// 'ActiveSASFrozen', 'ReadyToUpload', 'ActiveUpload'
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskState")]
         public string DiskState { get; set; }
@@ -272,7 +274,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string PublicNetworkAccess { get; set; }
 
         /// <summary>
-        /// Gets or sets percent complete of a clone operation.
+        /// Gets or sets percentage complete for the background copy when a
+        /// resource is created via the CopyStart operation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.completionPercent")]
         public double? CompletionPercent { get; set; }

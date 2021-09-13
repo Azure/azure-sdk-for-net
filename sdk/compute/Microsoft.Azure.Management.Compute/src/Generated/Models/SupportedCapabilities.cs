@@ -30,9 +30,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the SupportedCapabilities class.
         /// </summary>
-        /// <param name="acceleratedNetwork">Accelerated Networking flag
-        /// persisted on the disk resource which can be toggled to true or
-        /// false and used by VM.</param>
+        /// <param name="acceleratedNetwork">True if the image from which the
+        /// OS disk is created supports accelerated networking.</param>
         public SupportedCapabilities(bool? acceleratedNetwork = default(bool?))
         {
             AcceleratedNetwork = acceleratedNetwork;
@@ -45,8 +44,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets accelerated Networking flag persisted on the disk
-        /// resource which can be toggled to true or false and used by VM.
+        /// Gets or sets true if the image from which the OS disk is created
+        /// supports accelerated networking.
         /// </summary>
         [JsonProperty(PropertyName = "acceleratedNetwork")]
         public bool? AcceleratedNetwork { get; set; }

@@ -63,8 +63,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2019-Datacenter, publisher: MicrosoftWindowsServer, product:
         /// WindowsServer}</param>
         /// <param name="supportedCapabilities">List of supported capabilities
-        /// (like accelerated networking) for the image from which the OS disk
-        /// was created.</param>
+        /// for the image from which the OS disk was created.</param>
         /// <param name="diskSizeGB">If creationData.createOption is Empty,
         /// this field is mandatory and it indicates the size of the disk to
         /// create. If this field is present for updates or creation with other
@@ -95,8 +94,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// ReadOnly. MBps means millions of bytes per second - MB here uses
         /// the ISO notation, of powers of 10.</param>
         /// <param name="diskState">The state of the disk. Possible values
-        /// include: 'Unattached', 'Attached', 'Reserved', 'ActiveSAS',
-        /// 'ReadyToUpload', 'ActiveUpload'</param>
+        /// include: 'Unattached', 'Attached', 'Reserved', 'Frozen',
+        /// 'ActiveSAS', 'ActiveSASFrozen', 'ReadyToUpload',
+        /// 'ActiveUpload'</param>
         /// <param name="encryption">Encryption property can be used to encrypt
         /// data at rest with customer managed keys or platform managed
         /// keys.</param>
@@ -123,7 +123,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// supports hibernation.</param>
         /// <param name="securityProfile">Contains the security related
         /// information for the resource.</param>
-        /// <param name="completionPercent">Percent complete of a clone
+        /// <param name="completionPercent">Percentage complete for the
+        /// background copy when a resource is created via the CopyStart
         /// operation.</param>
         /// <param name="publicNetworkAccess">Possible values include:
         /// 'Enabled', 'Disabled'</param>
@@ -233,8 +234,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public PurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
-        /// Gets or sets list of supported capabilities (like accelerated
-        /// networking) for the image from which the OS disk was created.
+        /// Gets or sets list of supported capabilities for the image from
+        /// which the OS disk was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportedCapabilities")]
         public SupportedCapabilities SupportedCapabilities { get; set; }
@@ -317,8 +318,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the state of the disk. Possible values include:
-        /// 'Unattached', 'Attached', 'Reserved', 'ActiveSAS', 'ReadyToUpload',
-        /// 'ActiveUpload'
+        /// 'Unattached', 'Attached', 'Reserved', 'Frozen', 'ActiveSAS',
+        /// 'ActiveSASFrozen', 'ReadyToUpload', 'ActiveUpload'
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskState")]
         public string DiskState { get; set; }
@@ -397,7 +398,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public DiskSecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets percent complete of a clone operation.
+        /// Gets or sets percentage complete for the background copy when a
+        /// resource is created via the CopyStart operation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.completionPercent")]
         public double? CompletionPercent { get; set; }

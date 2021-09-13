@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='diskAccess'>
             /// disk access object supplied in the body of the Put disk access operation.
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='diskAccess'>
             /// disk access object supplied in the body of the Put disk access operation.
@@ -87,8 +87,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='tags'>
             /// Resource tags
@@ -110,8 +110,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='tags'>
             /// Resource tags
@@ -139,8 +139,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             public static DiskAccess Get(this IDiskAccessesOperations operations, string resourceGroupName, string diskAccessName)
             {
@@ -159,8 +159,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -185,8 +185,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             public static void Delete(this IDiskAccessesOperations operations, string resourceGroupName, string diskAccessName)
             {
@@ -205,8 +205,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -290,8 +290,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             public static PrivateLinkResourceListResult GetPrivateLinkResources(this IDiskAccessesOperations operations, string resourceGroupName, string diskAccessName)
             {
@@ -310,8 +310,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -337,8 +337,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -365,8 +365,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -399,8 +399,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -423,8 +423,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -452,8 +452,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -475,8 +475,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -502,8 +502,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             public static IPage<PrivateEndpointConnection> ListPrivateEndpointConnections(this IDiskAccessesOperations operations, string resourceGroupName, string diskAccessName)
             {
@@ -523,8 +523,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -549,8 +549,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='diskAccess'>
             /// disk access object supplied in the body of the Put disk access operation.
@@ -572,8 +572,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='diskAccess'>
             /// disk access object supplied in the body of the Put disk access operation.
@@ -601,8 +601,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='tags'>
             /// Resource tags
@@ -624,8 +624,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='tags'>
             /// Resource tags
@@ -653,8 +653,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             public static void BeginDelete(this IDiskAccessesOperations operations, string resourceGroupName, string diskAccessName)
             {
@@ -673,8 +673,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -697,8 +697,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -725,8 +725,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -758,8 +758,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.
@@ -781,8 +781,8 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='diskAccessName'>
             /// The name of the disk access resource that is being created. The name can't
             /// be changed after the disk encryption set is created. Supported characters
-            /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-            /// length is 80 characters.
+            /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+            /// characters.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection.

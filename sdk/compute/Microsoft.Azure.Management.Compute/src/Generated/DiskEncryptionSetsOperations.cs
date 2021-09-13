@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name can't
         /// be changed after the disk encryption set is created. Supported characters
-        /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-        /// length is 80 characters.
+        /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+        /// characters.
         /// </param>
         /// <param name='diskEncryptionSet'>
         /// disk encryption set object supplied in the body of the Put disk encryption
@@ -88,8 +88,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name can't
         /// be changed after the disk encryption set is created. Supported characters
-        /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-        /// length is 80 characters.
+        /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+        /// characters.
         /// </param>
         /// <param name='diskEncryptionSet'>
         /// disk encryption set object supplied in the body of the Patch disk
@@ -117,8 +117,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name can't
         /// be changed after the disk encryption set is created. Supported characters
-        /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-        /// length is 80 characters.
+        /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+        /// characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -314,8 +314,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name can't
         /// be changed after the disk encryption set is created. Supported characters
-        /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-        /// length is 80 characters.
+        /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+        /// characters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -700,8 +700,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name can't
         /// be changed after the disk encryption set is created. Supported characters
-        /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-        /// length is 80 characters.
+        /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+        /// characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -897,8 +897,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name can't
         /// be changed after the disk encryption set is created. Supported characters
-        /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-        /// length is 80 characters.
+        /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+        /// characters.
         /// </param>
         /// <param name='diskEncryptionSet'>
         /// disk encryption set object supplied in the body of the Put disk encryption
@@ -1131,8 +1131,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name can't
         /// be changed after the disk encryption set is created. Supported characters
-        /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-        /// length is 80 characters.
+        /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+        /// characters.
         /// </param>
         /// <param name='diskEncryptionSet'>
         /// disk encryption set object supplied in the body of the Patch disk
@@ -1361,8 +1361,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name can't
         /// be changed after the disk encryption set is created. Supported characters
-        /// for the name are a-z, A-Z, 0-9, underscore and hyphen. The maximum name
-        /// length is 80 characters.
+        /// for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80
+        /// characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
