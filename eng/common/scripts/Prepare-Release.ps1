@@ -184,6 +184,7 @@ else
   exit 1
 }
 
+Sanitize-ChangeLogEntry -ChangeLogLocation $packageProperties.ChangeLogPath -VersionString $newVersion
 $changelogIsValid = Confirm-ChangeLogEntry -ChangeLogLocation $packageProperties.ChangeLogPath -VersionString $newVersion -ForRelease $true
 
 if (!$changelogIsValid)
