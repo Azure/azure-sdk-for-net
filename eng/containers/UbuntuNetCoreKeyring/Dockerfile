@@ -22,3 +22,5 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsof
     && pwsh --version \
     && apt-get install -y dotnet-runtime-2.1 \
     && dotnet --list-runtimes
+
+RUN pwsh -c Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
