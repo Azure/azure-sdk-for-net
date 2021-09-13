@@ -16,8 +16,14 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the operations that can be performed over a specific DataContainerResource. </summary>
-    public partial class DataContainerResourceOperations : ResourceOperations
+    public partial class DataContainerResourceOperations : ArmResource
     {
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static ResourceType ResourceType => throw new NotImplementedException();
+
+        /// <summary> Gets the valid resource type for the operations. </summary>
+        protected override ResourceType ValidResourceType => ResourceType;
+        
         /// <summary> Get container. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         internal virtual Task<Response<DataContainerResource>> GetAsync(CancellationToken cancellationToken = default)
