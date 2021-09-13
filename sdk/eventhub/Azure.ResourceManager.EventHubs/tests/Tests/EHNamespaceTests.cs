@@ -98,6 +98,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             int count = 0;
             EHNamespace namespace1 = null;
             EHNamespace namespace2 = null;
+
+            //validate
             await foreach (EHNamespace eHNamespace in namespaceContainer.GetAllAsync())
             {
                 count++;
