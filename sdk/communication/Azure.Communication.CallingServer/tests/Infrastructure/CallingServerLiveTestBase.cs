@@ -199,7 +199,6 @@ namespace Azure.Communication.CallingServer.Tests
         {
             var playAudioOptions = new PlayAudioOptions()
             {
-                AudioFileUri = new Uri(TestEnvironment.AudioFileUrl),
                 OperationContext = "de346f03-7f8d-41ab-a232-cc5e14990769",
                 Loop = false,
                 AudioFileId = "ebb1d98d-fd86-4204-800c-f7bdfc2e515c"
@@ -207,7 +206,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             Console.WriteLine("Performing PlayAudio operation");
 
-            var response = await callConnection.PlayAudioAsync(playAudioOptions).ConfigureAwait(false);
+            var response = await callConnection.PlayAudioAsync(new Uri(TestEnvironment.AudioFileUrl), playAudioOptions).ConfigureAwait(false);
 
             Assert.AreEqual(response.Value.Status, OperationStatus.Running);
         }
@@ -217,9 +216,9 @@ namespace Azure.Communication.CallingServer.Tests
             Console.WriteLine("Performing PlayAudio operation");
 
             var response = await serverCall.PlayAudioAsync(
+                new Uri(TestEnvironment.AudioFileUrl),
                 new PlayAudioOptions()
                 {
-                    AudioFileUri = new Uri(TestEnvironment.AudioFileUrl),
                     Loop = false,
                     AudioFileId = "ebb1d98d-fd86-4204-800c-f7bdfc2e515c",
                     CallbackUri = new Uri(TestEnvironment.AppCallbackUrl),

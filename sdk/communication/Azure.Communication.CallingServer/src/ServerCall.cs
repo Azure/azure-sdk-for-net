@@ -41,22 +41,25 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Play audio in the call. </summary>
+        /// <param name="audioFileUri">The media resource uri of the play audio request. Currently only Wave file (.wav) format audio prompts are supported. The audio content in the wave file must be mono (single-channel), 16-bit samples with a 16,000 (16KHz) sampling rate.</param>
         /// <param name="options"> Options for playing audio. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<PlayAudioResult>> PlayAudioAsync(PlayAudioOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayAudioResult>> PlayAudioAsync(Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
                 return await RestClient.PlayAudioAsync(
                     serverCallId: ServerCallId,
-                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
-                    loop: options.Loop,
-                    audioFileId: options.AudioFileId,
-                    callbackUri: options.CallbackUri?.AbsoluteUri,
-                    operationContext: options.OperationContext,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    loop: options?.Loop ?? false,
+                    audioFileId: options?.AudioFileId ?? Guid.NewGuid().ToString(),
+                    callbackUri: options?.CallbackUri?.AbsoluteUri,
+                    operationContext: options?.OperationContext ?? Guid.NewGuid().ToString(),
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -68,22 +71,25 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Play audio in the call. </summary>
+        /// <param name="audioFileUri">The media resource uri of the play audio request. Currently only Wave file (.wav) format audio prompts are supported. The audio content in the wave file must be mono (single-channel), 16-bit samples with a 16,000 (16KHz) sampling rate.</param>
         /// <param name="options"> Options for playing audio. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<PlayAudioResult> PlayAudio(PlayAudioOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResult> PlayAudio(Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
                 return RestClient.PlayAudio(
                     serverCallId: ServerCallId,
-                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
-                    loop: options.Loop,
-                    audioFileId: options.AudioFileId,
-                    callbackUri: options.CallbackUri?.AbsoluteUri,
-                    operationContext: options.OperationContext,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    loop: options?.Loop ?? false,
+                    audioFileId: options?.AudioFileId ?? Guid.NewGuid().ToString(),
+                    callbackUri: options?.CallbackUri?.AbsoluteUri,
+                    operationContext: options?.OperationContext ?? Guid.NewGuid().ToString(),
                     cancellationToken: cancellationToken
                     );
             }
@@ -795,23 +801,27 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Play audio to a participant. </summary>
         /// <param name="participantId">The participant id.</param>
+        /// <param name="audioFileUri">The media resource uri of the play audio request. Currently only Wave file (.wav) format audio prompts are supported. The audio content in the wave file must be mono (single-channel), 16-bit samples with a 16,000 (16KHz) sampling rate.</param>
         /// <param name="options"> Options for playing audio. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<PlayAudioResult>> PlayAudioToParticipantAsync(string participantId, PlayAudioOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayAudioResult>> PlayAudioToParticipantAsync(string participantId, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudioToParticipantAsync)}");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(participantId, nameof(participantId));
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
                 return await RestClient.ParticipantPlayAudioAsync(
                     serverCallId: ServerCallId,
                     participantId: participantId,
-                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
-                    loop: options.Loop,
-                    audioFileId: options.AudioFileId,
-                    callbackUri: options.CallbackUri?.AbsoluteUri,
-                    operationContext: options.OperationContext,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    loop: options?.Loop ?? false,
+                    audioFileId: options?.AudioFileId ?? Guid.NewGuid().ToString(),
+                    callbackUri: options?.CallbackUri?.AbsoluteUri,
+                    operationContext: options?.OperationContext ?? Guid.NewGuid().ToString(),
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -824,23 +834,27 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Play audio to a participant. </summary>
         /// <param name="participantId">The participant id.</param>
+        /// <param name="audioFileUri">The media resource uri of the play audio request. Currently only Wave file (.wav) format audio prompts are supported. The audio content in the wave file must be mono (single-channel), 16-bit samples with a 16,000 (16KHz) sampling rate.</param>
         /// <param name="options"> Options for playing audio. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<PlayAudioResult> PlayAudioToParticipant(string participantId, PlayAudioOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResult> PlayAudioToParticipant(string participantId, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudioToParticipant)}");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(participantId, nameof(participantId));
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
                 return RestClient.ParticipantPlayAudio(
                     serverCallId: ServerCallId,
                     participantId: participantId,
-                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
-                    loop: options.Loop,
-                    audioFileId: options.AudioFileId,
-                    callbackUri: options.CallbackUri?.AbsoluteUri,
-                    operationContext: options.OperationContext,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    loop: options?.Loop ?? false,
+                    audioFileId: options?.AudioFileId ?? Guid.NewGuid().ToString(),
+                    callbackUri: options?.CallbackUri?.AbsoluteUri,
+                    operationContext: options?.OperationContext ?? Guid.NewGuid().ToString(),
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
