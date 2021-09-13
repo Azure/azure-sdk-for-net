@@ -136,10 +136,18 @@ function Confirm-ChangeLogEntry {
     [String]$ChangeLogLocation,
     [Parameter(Mandatory = $true)]
     [String]$VersionString,
-    [boolean]$ForRelease = $false
+    [boolean]$ForRelease = $false,
+    [Switch]$SantizeEntry
   )
 
-  $changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation $ChangeLogLocation -VersionString $VersionString
+  $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $ChangeLogLocation
+  $changeLogEntry = $changeLogEntries[$VersionString]
+
+  if ($SantizeEntry)
+  {
+    Remove-EmptySections -ChangeLogEntry $changeLogEntry
+    Set-ChangeLogContent -ChangeLogLocation $ChangeLogLocation -ChangeLogEntries $changeLogEntries
+  }
 
   if (!$changeLogEntry) {
     LogError "ChangeLog[${ChangeLogLocation}] does not have an entry for version ${VersionString}."
@@ -318,7 +326,7 @@ function Remove-EmptySections {
     $parsedSections = $ChangeLogEntry.Sections
     $sanitizedReleaseContent = New-Object System.Collections.ArrayList(,$releaseContent)
   
-    foreach ($key in @($parsedSections.Key)) 
+    foreach ($key in @($parsedSections.Keys)) 
     {
       if ([System.String]::IsNullOrWhiteSpace($parsedSections[$key]))
       {
@@ -340,5 +348,4 @@ function Remove-EmptySections {
     }
     $ChangeLogEntry.ReleaseContent = $sanitizedReleaseContent.ToArray()
   }
-  return $changeLogEntry
 }
