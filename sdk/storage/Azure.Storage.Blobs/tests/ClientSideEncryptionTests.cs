@@ -876,6 +876,7 @@ namespace Azure.Storage.Blobs.Test
 
         [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
         [TestCase(TransactionalHashAlgorithm.MD5)]
+        [LiveOnly]
         public async Task DownloadWorksWithTransactionalHashing(TransactionalHashAlgorithm algorithm)
         {
             var data = GetRandomBuffer(Constants.KB);
