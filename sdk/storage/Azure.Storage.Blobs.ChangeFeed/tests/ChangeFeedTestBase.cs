@@ -49,9 +49,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = 20,
+                    MaxRetries = 10,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10),
+                    NetworkTimeout = TimeSpan.FromSeconds(30),
                 },
             };
             if (Mode != RecordedTestMode.Live)

@@ -41,9 +41,10 @@ namespace Azure.Storage.Queues.Tests
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = 20,
+                    MaxRetries = 10,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10),
+                    NetworkTimeout = TimeSpan.FromSeconds(30),
                 },
         };
             if (Mode != RecordedTestMode.Live)
@@ -129,7 +130,9 @@ namespace Azure.Storage.Queues.Tests
         {
             QueueClientOptions options = GetOptions();
             options.GeoRedundantSecondaryUri = new Uri(config.QueueServiceSecondaryEndpoint);
-            options.Retry.MaxRetries = 20;
+            options.Retry.MaxRetries = 10;
+            options.Retry.MaxDelay = TimeSpan.FromSeconds(10);
+            options.Retry.NetworkTimeout = TimeSpan.FromSeconds(30);
             testExceptionPolicy = new TestExceptionPolicy(numberOfReadFailuresToSimulate, options.GeoRedundantSecondaryUri, simulate404, enabledRequestMethods);
             options.AddPolicy(testExceptionPolicy, HttpPipelinePosition.PerRetry);
             return options;
