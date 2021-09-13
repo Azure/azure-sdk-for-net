@@ -1416,6 +1416,15 @@ namespace Microsoft.Azure.ServiceBus
                 this.WriteEvent(121, clientId);
             }
         }
+
+        [Event(122, Level = EventLevel.Error, Message = "Error occurred: {0}")]
+        public void Error(string errorMsg)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(122, errorMsg);
+            }
+        }
     }
 
     internal static class TraceHelper

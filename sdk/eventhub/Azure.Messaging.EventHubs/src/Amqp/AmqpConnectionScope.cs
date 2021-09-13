@@ -614,11 +614,11 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch
             {
-                // Aborting the session will perform any necessary cleanup of
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
 
                 StopTrackingLinkAsActive(link);
-                session?.Abort();
+                session?.SafeClose();
                 throw;
             }
         }
@@ -737,11 +737,11 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch
             {
-                // Aborting the session will perform any necessary cleanup of
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
 
                 StopTrackingLinkAsActive(link, refreshTimer);
-                session?.Abort();
+                session?.SafeClose();
                 throw;
             }
         }
@@ -849,11 +849,11 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch
             {
-                // Aborting the session will perform any necessary cleanup of
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
 
                 StopTrackingLinkAsActive(link, refreshTimer);
-                session?.Abort();
+                session?.SafeClose();
                 throw;
             }
         }

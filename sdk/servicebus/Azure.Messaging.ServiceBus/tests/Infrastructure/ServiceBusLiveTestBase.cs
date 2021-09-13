@@ -9,13 +9,11 @@ using NUnit.Framework;
 namespace Azure.Messaging.ServiceBus.Tests
 {
     [LiveOnly(true)]
-    public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
+    public abstract class ServiceBusLiveTestBase : LiveTestBase<ServiceBusTestEnvironment>
     {
         private const int DefaultTryTimeout = 10;
 
         protected TimeSpan ShortLockDuration = TimeSpan.FromSeconds(10);
-
-        public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
 
         protected ServiceBusClient CreateNoRetryClient(int tryTimeout = DefaultTryTimeout)
         {
