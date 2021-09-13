@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        internal PrivateEndpointConnectionCreateOrUpdateOperation(ResourceOperations operationsBase, Response<PrivateEndpointConnectionData> response)
+        internal PrivateEndpointConnectionCreateOrUpdateOperation(ArmResource operationsBase, Response<PrivateEndpointConnectionData> response)
         {
             _operation = new OperationOrResponseInternals<PrivateEndpointConnection>(Response.FromValue(new PrivateEndpointConnection(operationsBase, response.Value), response.GetRawResponse()));
         }

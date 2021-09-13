@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         private readonly OperationInternals<OnlineEndpointTrackedResource> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of OnlineEndpointUpdateOperation for mocking. </summary>
         protected OnlineEndpointUpdateOperation()
         {
         }
 
-        internal OnlineEndpointUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal OnlineEndpointUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<OnlineEndpointTrackedResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "OnlineEndpointUpdateOperation");
             _operationBase = operationsBase;

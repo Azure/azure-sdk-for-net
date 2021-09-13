@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         private readonly OperationInternals<LabelingJobResource> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of LabelingJobCreateOrUpdateOperation for mocking. </summary>
         protected LabelingJobCreateOrUpdateOperation()
         {
         }
 
-        internal LabelingJobCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal LabelingJobCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<LabelingJobResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LabelingJobCreateOrUpdateOperation");
             _operationBase = operationsBase;

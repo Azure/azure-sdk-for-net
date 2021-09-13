@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        internal DataContainerCreateOrUpdateOperation(ResourceOperations operationsBase, Response<DataContainerResourceData> response)
+        internal DataContainerCreateOrUpdateOperation(ArmResource operationsBase, Response<DataContainerResourceData> response)
         {
             _operation = new OperationOrResponseInternals<DataContainerResource>(Response.FromValue(new DataContainerResource(operationsBase, response.Value), response.GetRawResponse()));
         }

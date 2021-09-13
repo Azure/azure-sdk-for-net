@@ -16,13 +16,15 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of DatastorePropertiesResource and their operations over a Workspace. </summary>
-    public partial class DatastorePropertiesResourceContainer : ResourceContainer
+    public partial class DatastorePropertiesResourceContainer : ArmContainer
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly DatastoresRestOperations _restClient;
+
         /// <summary> Initializes a new instance of the <see cref="DatastorePropertiesResourceContainer"/> class for mocking. </summary>
         protected DatastorePropertiesResourceContainer()
         {
@@ -30,18 +32,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of DatastorePropertiesResourceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DatastorePropertiesResourceContainer(ResourceOperations parent) : base(parent)
+        internal DatastorePropertiesResourceContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new DatastoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary> Represents the REST operations. </summary>
-        private DatastoresRestOperations _restClient => new DatastoresRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => WorkspaceOperations.ResourceType;
+        protected override ResourceType ValidResourceType => Workspace.ResourceType;
 
         // Container level operations.
 
@@ -49,9 +47,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="name"> Datastore name. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public virtual Response<DatastorePropertiesResource> CreateOrUpdate(string name, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        public virtual DatastoreCreateOrUpdateOperation CreateOrUpdate(string name, DatastoreProperties properties, bool? skipValidation = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -63,73 +62,14 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(name, properties, skipValidation, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update datastore. </summary>
-        /// <param name="name"> Datastore name. </param>
-        /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="skipValidation"> Flag to skip validation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<Response<DatastorePropertiesResource>> CreateOrUpdateAsync(string name, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(name, properties, skipValidation, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update datastore. </summary>
-        /// <param name="name"> Datastore name. </param>
-        /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="skipValidation"> Flag to skip validation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public virtual DatastoreCreateOrUpdateOperation StartCreateOrUpdate(string name, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, name, properties, skipValidation, cancellationToken);
-                return new DatastoreCreateOrUpdateOperation(Parent, response);
+                var operation = new DatastoreCreateOrUpdateOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -142,9 +82,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="name"> Datastore name. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<DatastoreCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        public async virtual Task<DatastoreCreateOrUpdateOperation> CreateOrUpdateAsync(string name, DatastoreProperties properties, bool? skipValidation = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -155,12 +96,15 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, properties, skipValidation, cancellationToken).ConfigureAwait(false);
-                return new DatastoreCreateOrUpdateOperation(Parent, response);
+                var operation = new DatastoreCreateOrUpdateOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -331,7 +275,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="orderByAsc"> Order by property in ascending order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatastorePropertiesResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<DatastorePropertiesResource> GetAll(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DatastorePropertiesResource> GetAll(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
         {
             Page<DatastorePropertiesResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -376,7 +320,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="orderByAsc"> Order by property in ascending order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatastorePropertiesResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<DatastorePropertiesResource> GetAllAsync(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatastorePropertiesResource> GetAllAsync(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DatastorePropertiesResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -409,52 +353,6 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="DatastorePropertiesResource" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(DatastorePropertiesResourceOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="DatastorePropertiesResource" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(DatastorePropertiesResourceOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         // Builders.

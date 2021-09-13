@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             Optional<Identity> identity = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<Sku> sku = default;
+            Optional<Models.Sku> sku = default;
             Optional<SystemData> systemData = default;
             Optional<Compute> properties = default;
             ResourceIdentifier id = default;
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     continue;
                 }
             }
-            return new ComputeResourceData(id, name, type, identity.Value, location.Value, Optional.ToDictionary(tags), sku.Value, systemData.Value, properties.Value);
+            return new ComputeResourceData(id, name, type, identity.Value, location.Value, Optional.ToDictionary(tags), sku.Value, systemData, properties.Value);
         }
     }
 }

@@ -8,12 +8,12 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class PrivateLinkResource : Resources.Models.Resource
+    public partial class PrivateLinkResource : Resource
     {
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
         public PrivateLinkResource()

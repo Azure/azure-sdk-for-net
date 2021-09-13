@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        internal BatchDeploymentUpdateOperation(ResourceOperations operationsBase, Response<BatchDeploymentTrackedResourceData> response)
+        internal BatchDeploymentUpdateOperation(ArmResource operationsBase, Response<BatchDeploymentTrackedResourceData> response)
         {
             _operation = new OperationOrResponseInternals<BatchDeploymentTrackedResource>(Response.FromValue(new BatchDeploymentTrackedResource(operationsBase, response.Value), response.GetRawResponse()));
         }

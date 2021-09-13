@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        internal DataVersionCreateOrUpdateOperation(ResourceOperations operationsBase, Response<DataVersionResourceData> response)
+        internal DataVersionCreateOrUpdateOperation(ArmResource operationsBase, Response<DataVersionResourceData> response)
         {
             _operation = new OperationOrResponseInternals<DataVersionResource>(Response.FromValue(new DataVersionResource(operationsBase, response.Value), response.GetRawResponse()));
         }

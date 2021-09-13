@@ -15,13 +15,15 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of OnlineEndpointTrackedResource and their operations over a Workspace. </summary>
-    public partial class OnlineEndpointTrackedResourceContainer : ResourceContainer
+    public partial class OnlineEndpointTrackedResourceContainer : ArmContainer
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly OnlineEndpointsRestOperations _restClient;
+
         /// <summary> Initializes a new instance of the <see cref="OnlineEndpointTrackedResourceContainer"/> class for mocking. </summary>
         protected OnlineEndpointTrackedResourceContainer()
         {
@@ -29,27 +31,24 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of OnlineEndpointTrackedResourceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal OnlineEndpointTrackedResourceContainer(ResourceOperations parent) : base(parent)
+        internal OnlineEndpointTrackedResourceContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary> Represents the REST operations. </summary>
-        private OnlineEndpointsRestOperations _restClient => new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => WorkspaceOperations.ResourceType;
+        protected override ResourceType ValidResourceType => Workspace.ResourceType;
 
         // Container level operations.
 
         /// <summary> Create or update Online Endpoint (asynchronous). </summary>
         /// <param name="endpointName"> Online Endpoint name. </param>
         /// <param name="body"> Online Endpoint entity to apply during operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public virtual Response<OnlineEndpointTrackedResource> CreateOrUpdate(string endpointName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        public virtual OnlineEndpointCreateOrUpdateOperation CreateOrUpdate(string endpointName, OnlineEndpointTrackedResourceData body, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (endpointName == null)
             {
@@ -61,71 +60,14 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
 
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(endpointName, body, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update Online Endpoint (asynchronous). </summary>
-        /// <param name="endpointName"> Online Endpoint name. </param>
-        /// <param name="body"> Online Endpoint entity to apply during operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public async virtual Task<Response<OnlineEndpointTrackedResource>> CreateOrUpdateAsync(string endpointName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
-        {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(endpointName, body, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update Online Endpoint (asynchronous). </summary>
-        /// <param name="endpointName"> Online Endpoint name. </param>
-        /// <param name="body"> Online Endpoint entity to apply during operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public virtual OnlineEndpointCreateOrUpdateOperation StartCreateOrUpdate(string endpointName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
-        {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken);
-                return new OnlineEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, endpointName, body).Request, response);
+                var operation = new OnlineEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, endpointName, body).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -137,9 +79,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Create or update Online Endpoint (asynchronous). </summary>
         /// <param name="endpointName"> Online Endpoint name. </param>
         /// <param name="body"> Online Endpoint entity to apply during operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public async virtual Task<OnlineEndpointCreateOrUpdateOperation> StartCreateOrUpdateAsync(string endpointName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        public async virtual Task<OnlineEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(string endpointName, OnlineEndpointTrackedResourceData body, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (endpointName == null)
             {
@@ -150,12 +93,15 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken).ConfigureAwait(false);
-                return new OnlineEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, endpointName, body).Request, response);
+                var operation = new OnlineEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, endpointName, body).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -326,7 +272,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="orderBy"> The option to order the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OnlineEndpointTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<OnlineEndpointTrackedResource> GetAll(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<OnlineEndpointTrackedResource> GetAll(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
         {
             Page<OnlineEndpointTrackedResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -371,7 +317,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="orderBy"> The option to order the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OnlineEndpointTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<OnlineEndpointTrackedResource> GetAllAsync(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OnlineEndpointTrackedResource> GetAllAsync(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<OnlineEndpointTrackedResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -404,52 +350,6 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="OnlineEndpointTrackedResource" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(OnlineEndpointTrackedResourceOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="OnlineEndpointTrackedResource" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(OnlineEndpointTrackedResourceOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         // Builders.

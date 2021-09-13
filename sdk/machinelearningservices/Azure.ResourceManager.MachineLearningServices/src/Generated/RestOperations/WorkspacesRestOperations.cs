@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
@@ -23,21 +24,24 @@ namespace Azure.ResourceManager.MachineLearningServices
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
+        private readonly string _userAgent;
 
         /// <summary> Initializes a new instance of WorkspacesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public WorkspacesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-03-01-preview")
+        public WorkspacesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-03-01-preview")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
         internal HttpMessage CreateGetRequest(string resourceGroupName, string workspaceName)
@@ -56,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -147,6 +152,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -234,6 +240,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -315,6 +322,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -392,7 +400,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetByResourceGroupRequest(string resourceGroupName, string skip)
+        internal HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName, string skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -411,6 +419,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -419,14 +428,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<WorkspaceListResult>> GetByResourceGroupAsync(string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> GetAllByResourceGroupAsync(string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupRequest(resourceGroupName, skip);
+            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -447,14 +456,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<WorkspaceListResult> GetByResourceGroup(string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> GetAllByResourceGroup(string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupRequest(resourceGroupName, skip);
+            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -487,6 +496,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -571,6 +581,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -630,7 +641,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetBySubscriptionRequest(string skip)
+        internal HttpMessage CreateGetAllBySubscriptionRequest(string skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -647,15 +658,16 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
         /// <summary> Lists all the available machine learning workspaces under the specified subscription. </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<WorkspaceListResult>> GetBySubscriptionAsync(string skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> GetAllBySubscriptionAsync(string skip = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest(skip);
+            using var message = CreateGetAllBySubscriptionRequest(skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -674,9 +686,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all the available machine learning workspaces under the specified subscription. </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<WorkspaceListResult> GetBySubscription(string skip = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> GetAllBySubscription(string skip = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest(skip);
+            using var message = CreateGetAllBySubscriptionRequest(skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -709,6 +721,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -793,6 +806,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -867,6 +881,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -949,6 +964,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -1014,7 +1030,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string skip)
+        internal HttpMessage CreateGetAllByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1024,6 +1040,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -1033,7 +1050,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<WorkspaceListResult>> GetByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> GetAllByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1044,7 +1061,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, skip);
+            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1066,7 +1083,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<WorkspaceListResult> GetByResourceGroupNextPage(string nextLink, string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> GetAllByResourceGroupNextPage(string nextLink, string resourceGroupName, string skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1077,7 +1094,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, skip);
+            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1093,7 +1110,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetBySubscriptionNextPageRequest(string nextLink, string skip)
+        internal HttpMessage CreateGetAllBySubscriptionNextPageRequest(string nextLink, string skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1103,6 +1120,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -1111,14 +1129,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<WorkspaceListResult>> GetBySubscriptionNextPageAsync(string nextLink, string skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> GetAllBySubscriptionNextPageAsync(string nextLink, string skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetBySubscriptionNextPageRequest(nextLink, skip);
+            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1139,14 +1157,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<WorkspaceListResult> GetBySubscriptionNextPage(string nextLink, string skip = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> GetAllBySubscriptionNextPage(string nextLink, string skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetBySubscriptionNextPageRequest(nextLink, skip);
+            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -7,12 +7,12 @@
 
 using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningServices.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the WorkspaceConnection data model. </summary>
-    public partial class WorkspaceConnectionData : Resources.Models.Resource
+    public partial class WorkspaceConnectionData : Resource
     {
         /// <summary> Initializes a new instance of WorkspaceConnectionData. </summary>
         public WorkspaceConnectionData()

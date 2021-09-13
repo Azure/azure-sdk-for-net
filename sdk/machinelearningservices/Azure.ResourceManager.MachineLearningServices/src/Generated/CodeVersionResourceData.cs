@@ -8,12 +8,12 @@
 using System;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningServices.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the CodeVersionResource data model. </summary>
-    public partial class CodeVersionResourceData : Resources.Models.Resource
+    public partial class CodeVersionResourceData : Resource
     {
         /// <summary> Initializes a new instance of CodeVersionResourceData. </summary>
         /// <param name="properties"> Additional attributes of the entity. </param>

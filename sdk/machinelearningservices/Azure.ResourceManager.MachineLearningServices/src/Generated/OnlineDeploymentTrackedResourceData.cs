@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the OnlineDeploymentTrackedResource data model. </summary>
-    public partial class OnlineDeploymentTrackedResourceData : Resources.Models.TrackedResource
+    public partial class OnlineDeploymentTrackedResourceData : TrackedResource
     {
         /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceData. </summary>
         /// <param name="location"> The location. </param>
@@ -34,13 +35,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="identity"> Service identity associated with a resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="systemData"> System data associated with resource provider. </param>
-        internal OnlineDeploymentTrackedResourceData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, Models.ResourceIdentity identity, string kind, OnlineDeployment properties, SystemData systemData) : base(id, name, type, location, tags)
+        internal OnlineDeploymentTrackedResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.ResourceIdentity identity, string kind, OnlineDeployment properties, SystemData systemData) : base(id, name, type, tags, location)
         {
             Identity = identity;
             Kind = kind;

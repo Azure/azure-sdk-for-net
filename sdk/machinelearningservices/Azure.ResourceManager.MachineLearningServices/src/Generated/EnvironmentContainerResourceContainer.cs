@@ -15,13 +15,15 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of EnvironmentContainerResource and their operations over a Workspace. </summary>
-    public partial class EnvironmentContainerResourceContainer : ResourceContainer
+    public partial class EnvironmentContainerResourceContainer : ArmContainer
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly EnvironmentContainersRestOperations _restClient;
+
         /// <summary> Initializes a new instance of the <see cref="EnvironmentContainerResourceContainer"/> class for mocking. </summary>
         protected EnvironmentContainerResourceContainer()
         {
@@ -29,27 +31,24 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of EnvironmentContainerResourceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal EnvironmentContainerResourceContainer(ResourceOperations parent) : base(parent)
+        internal EnvironmentContainerResourceContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new EnvironmentContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary> Represents the REST operations. </summary>
-        private EnvironmentContainersRestOperations _restClient => new EnvironmentContainersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => WorkspaceOperations.ResourceType;
+        protected override ResourceType ValidResourceType => Workspace.ResourceType;
 
         // Container level operations.
 
         /// <summary> Create or update container. </summary>
         /// <param name="name"> Container name. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public virtual Response<EnvironmentContainerResource> CreateOrUpdate(string name, EnvironmentContainer properties, CancellationToken cancellationToken = default)
+        public virtual EnvironmentContainerCreateOrUpdateOperation CreateOrUpdate(string name, EnvironmentContainer properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -61,71 +60,14 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
 
             using var scope = _clientDiagnostics.CreateScope("EnvironmentContainerResourceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(name, properties, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update container. </summary>
-        /// <param name="name"> Container name. </param>
-        /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<Response<EnvironmentContainerResource>> CreateOrUpdateAsync(string name, EnvironmentContainer properties, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EnvironmentContainerResourceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(name, properties, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update container. </summary>
-        /// <param name="name"> Container name. </param>
-        /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public virtual EnvironmentContainerCreateOrUpdateOperation StartCreateOrUpdate(string name, EnvironmentContainer properties, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EnvironmentContainerResourceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, name, properties, cancellationToken);
-                return new EnvironmentContainerCreateOrUpdateOperation(Parent, response);
+                var operation = new EnvironmentContainerCreateOrUpdateOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -137,9 +79,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Create or update container. </summary>
         /// <param name="name"> Container name. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<EnvironmentContainerCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, EnvironmentContainer properties, CancellationToken cancellationToken = default)
+        public async virtual Task<EnvironmentContainerCreateOrUpdateOperation> CreateOrUpdateAsync(string name, EnvironmentContainer properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -150,12 +93,15 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EnvironmentContainerResourceContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("EnvironmentContainerResourceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, properties, cancellationToken).ConfigureAwait(false);
-                return new EnvironmentContainerCreateOrUpdateOperation(Parent, response);
+                var operation = new EnvironmentContainerCreateOrUpdateOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -320,7 +266,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EnvironmentContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<EnvironmentContainerResource> GetAll(string skip = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EnvironmentContainerResource> GetAll(string skip = null, CancellationToken cancellationToken = default)
         {
             Page<EnvironmentContainerResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -359,7 +305,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EnvironmentContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<EnvironmentContainerResource> GetAllAsync(string skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EnvironmentContainerResource> GetAllAsync(string skip = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<EnvironmentContainerResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -392,52 +338,6 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="EnvironmentContainerResource" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EnvironmentContainerResourceContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(EnvironmentContainerResourceOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="EnvironmentContainerResource" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EnvironmentContainerResourceContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(EnvironmentContainerResourceOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         // Builders.

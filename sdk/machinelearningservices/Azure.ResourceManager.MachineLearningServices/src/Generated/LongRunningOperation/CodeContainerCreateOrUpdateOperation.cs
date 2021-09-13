@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        internal CodeContainerCreateOrUpdateOperation(ResourceOperations operationsBase, Response<CodeContainerResourceData> response)
+        internal CodeContainerCreateOrUpdateOperation(ArmResource operationsBase, Response<CodeContainerResourceData> response)
         {
             _operation = new OperationOrResponseInternals<CodeContainerResource>(Response.FromValue(new CodeContainerResource(operationsBase, response.Value), response.GetRawResponse()));
         }

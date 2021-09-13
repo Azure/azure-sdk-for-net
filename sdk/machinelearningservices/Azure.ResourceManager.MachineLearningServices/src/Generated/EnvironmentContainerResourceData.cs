@@ -8,12 +8,12 @@
 using System;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningServices.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the EnvironmentContainerResource data model. </summary>
-    public partial class EnvironmentContainerResourceData : Resources.Models.Resource
+    public partial class EnvironmentContainerResourceData : Resource
     {
         /// <summary> Initializes a new instance of EnvironmentContainerResourceData. </summary>
         /// <param name="properties"> Additional attributes of the entity. </param>

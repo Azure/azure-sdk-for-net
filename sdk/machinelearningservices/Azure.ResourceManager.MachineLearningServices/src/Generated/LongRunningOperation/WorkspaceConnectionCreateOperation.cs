@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        internal WorkspaceConnectionCreateOperation(ResourceOperations operationsBase, Response<WorkspaceConnectionData> response)
+        internal WorkspaceConnectionCreateOperation(ArmResource operationsBase, Response<WorkspaceConnectionData> response)
         {
             _operation = new OperationOrResponseInternals<WorkspaceConnection>(Response.FromValue(new WorkspaceConnection(operationsBase, response.Value), response.GetRawResponse()));
         }

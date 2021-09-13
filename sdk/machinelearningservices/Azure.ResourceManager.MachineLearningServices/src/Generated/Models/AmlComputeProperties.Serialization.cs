@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
+                        array.Add(JsonSerializer.Deserialize<ErrorResponse>(item.ToString()));
                     }
                     errors = array;
                     continue;

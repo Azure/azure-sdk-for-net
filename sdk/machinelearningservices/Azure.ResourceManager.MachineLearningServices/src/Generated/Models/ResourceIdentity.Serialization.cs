@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> principalId = default;
             Optional<string> tenantId = default;
             Optional<ResourceIdentityAssignment> type = default;
-            Optional<IDictionary<string, UserAssignedIdentityMeta>> userAssignedIdentities = default;
+            Optional<IDictionary<string, Resources.Models.UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
@@ -70,10 +71,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, UserAssignedIdentityMeta> dictionary = new Dictionary<string, UserAssignedIdentityMeta>();
+                    Dictionary<string, Resources.Models.UserAssignedIdentity> dictionary = new Dictionary<string, Resources.Models.UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, UserAssignedIdentityMeta.DeserializeUserAssignedIdentityMeta(property0.Value));
+                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<Resources.Models.UserAssignedIdentity>(property0.Value.ToString()));
                     }
                     userAssignedIdentities = dictionary;
                     continue;

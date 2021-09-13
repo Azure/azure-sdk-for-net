@@ -15,13 +15,15 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of BatchEndpointTrackedResource and their operations over a Workspace. </summary>
-    public partial class BatchEndpointTrackedResourceContainer : ResourceContainer
+    public partial class BatchEndpointTrackedResourceContainer : ArmContainer
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly BatchEndpointsRestOperations _restClient;
+
         /// <summary> Initializes a new instance of the <see cref="BatchEndpointTrackedResourceContainer"/> class for mocking. </summary>
         protected BatchEndpointTrackedResourceContainer()
         {
@@ -29,27 +31,24 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of BatchEndpointTrackedResourceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal BatchEndpointTrackedResourceContainer(ResourceOperations parent) : base(parent)
+        internal BatchEndpointTrackedResourceContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new BatchEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary> Represents the REST operations. </summary>
-        private BatchEndpointsRestOperations _restClient => new BatchEndpointsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => WorkspaceOperations.ResourceType;
+        protected override ResourceType ValidResourceType => Workspace.ResourceType;
 
         // Container level operations.
 
         /// <summary> Creates a batch inference endpoint. </summary>
         /// <param name="endpointName"> Name for the Batch inference endpoint. </param>
         /// <param name="body"> Batch inference endpoint definition object. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public virtual Response<BatchEndpointTrackedResource> CreateOrUpdate(string endpointName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        public virtual BatchEndpointCreateOrUpdateOperation CreateOrUpdate(string endpointName, BatchEndpointTrackedResourceData body, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (endpointName == null)
             {
@@ -61,71 +60,14 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
 
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(endpointName, body, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a batch inference endpoint. </summary>
-        /// <param name="endpointName"> Name for the Batch inference endpoint. </param>
-        /// <param name="body"> Batch inference endpoint definition object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public async virtual Task<Response<BatchEndpointTrackedResource>> CreateOrUpdateAsync(string endpointName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
-        {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(endpointName, body, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a batch inference endpoint. </summary>
-        /// <param name="endpointName"> Name for the Batch inference endpoint. </param>
-        /// <param name="body"> Batch inference endpoint definition object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public virtual BatchEndpointCreateOrUpdateOperation StartCreateOrUpdate(string endpointName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
-        {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken);
-                return new BatchEndpointCreateOrUpdateOperation(Parent, response);
+                var operation = new BatchEndpointCreateOrUpdateOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -137,9 +79,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Creates a batch inference endpoint. </summary>
         /// <param name="endpointName"> Name for the Batch inference endpoint. </param>
         /// <param name="body"> Batch inference endpoint definition object. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public async virtual Task<BatchEndpointCreateOrUpdateOperation> StartCreateOrUpdateAsync(string endpointName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        public async virtual Task<BatchEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(string endpointName, BatchEndpointTrackedResourceData body, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (endpointName == null)
             {
@@ -150,12 +93,15 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken).ConfigureAwait(false);
-                return new BatchEndpointCreateOrUpdateOperation(Parent, response);
+                var operation = new BatchEndpointCreateOrUpdateOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -321,7 +267,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BatchEndpointTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<BatchEndpointTrackedResource> GetAll(int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchEndpointTrackedResource> GetAll(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             Page<BatchEndpointTrackedResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -361,7 +307,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BatchEndpointTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<BatchEndpointTrackedResource> GetAllAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchEndpointTrackedResource> GetAllAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<BatchEndpointTrackedResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -394,52 +340,6 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="BatchEndpointTrackedResource" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(BatchEndpointTrackedResourceOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="BatchEndpointTrackedResource" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(BatchEndpointTrackedResourceOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         // Builders.

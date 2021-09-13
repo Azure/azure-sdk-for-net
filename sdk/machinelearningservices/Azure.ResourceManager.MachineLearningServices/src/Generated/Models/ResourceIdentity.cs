@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of ResourceIdentity. </summary>
         public ResourceIdentity()
         {
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentityMeta>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, Resources.Models.UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of ResourceIdentity. </summary>
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="tenantId"> AAD Tenant where this identity lives. </param>
         /// <param name="type"> Defines values for a ResourceIdentity&apos;s type. </param>
         /// <param name="userAssignedIdentities"> Dictionary of the user assigned identities, key is ARM resource ID of the UAI. </param>
-        internal ResourceIdentity(string principalId, string tenantId, ResourceIdentityAssignment? type, IDictionary<string, UserAssignedIdentityMeta> userAssignedIdentities)
+        internal ResourceIdentity(string principalId, string tenantId, ResourceIdentityAssignment? type, IDictionary<string, Resources.Models.UserAssignedIdentity> userAssignedIdentities)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -39,6 +40,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Defines values for a ResourceIdentity&apos;s type. </summary>
         public ResourceIdentityAssignment? Type { get; set; }
         /// <summary> Dictionary of the user assigned identities, key is ARM resource ID of the UAI. </summary>
-        public IDictionary<string, UserAssignedIdentityMeta> UserAssignedIdentities { get; }
+        public IDictionary<string, Resources.Models.UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

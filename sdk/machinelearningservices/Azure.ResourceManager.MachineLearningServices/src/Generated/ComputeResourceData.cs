@@ -9,12 +9,12 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningServices.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the ComputeResource data model. </summary>
-    public partial class ComputeResourceData : Resources.Models.Resource
+    public partial class ComputeResourceData : Resource
     {
         /// <summary> Initializes a new instance of ComputeResourceData. </summary>
         public ComputeResourceData()

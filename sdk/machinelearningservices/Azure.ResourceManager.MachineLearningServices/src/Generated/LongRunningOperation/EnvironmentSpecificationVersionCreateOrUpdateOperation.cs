@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        internal EnvironmentSpecificationVersionCreateOrUpdateOperation(ResourceOperations operationsBase, Response<EnvironmentSpecificationVersionResourceData> response)
+        internal EnvironmentSpecificationVersionCreateOrUpdateOperation(ArmResource operationsBase, Response<EnvironmentSpecificationVersionResourceData> response)
         {
             _operation = new OperationOrResponseInternals<EnvironmentSpecificationVersionResource>(Response.FromValue(new EnvironmentSpecificationVersionResource(operationsBase, response.Value), response.GetRawResponse()));
         }

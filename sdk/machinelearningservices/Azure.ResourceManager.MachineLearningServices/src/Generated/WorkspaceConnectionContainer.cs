@@ -15,13 +15,15 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of WorkspaceConnection and their operations over a Workspace. </summary>
-    public partial class WorkspaceConnectionContainer : ResourceContainer
+    public partial class WorkspaceConnectionContainer : ArmContainer
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly WorkspaceConnectionsRestOperations _restClient;
+
         /// <summary> Initializes a new instance of the <see cref="WorkspaceConnectionContainer"/> class for mocking. </summary>
         protected WorkspaceConnectionContainer()
         {
@@ -29,27 +31,24 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of WorkspaceConnectionContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal WorkspaceConnectionContainer(ResourceOperations parent) : base(parent)
+        internal WorkspaceConnectionContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new WorkspaceConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary> Represents the REST operations. </summary>
-        private WorkspaceConnectionsRestOperations _restClient => new WorkspaceConnectionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => WorkspaceOperations.ResourceType;
+        protected override ResourceType ValidResourceType => Workspace.ResourceType;
 
         // Container level operations.
 
         /// <summary> Add a new workspace connection. </summary>
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="parameters"> The object for creating or updating a new workspace connection. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<WorkspaceConnection> CreateOrUpdate(string connectionName, WorkspaceConnectionData parameters, CancellationToken cancellationToken = default)
+        public virtual WorkspaceConnectionCreateOperation CreateOrUpdate(string connectionName, WorkspaceConnectionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
@@ -61,71 +60,14 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
 
             using var scope = _clientDiagnostics.CreateScope("WorkspaceConnectionContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(connectionName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a new workspace connection. </summary>
-        /// <param name="connectionName"> Friendly name of the workspace connection. </param>
-        /// <param name="parameters"> The object for creating or updating a new workspace connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<WorkspaceConnection>> CreateOrUpdateAsync(string connectionName, WorkspaceConnectionData parameters, CancellationToken cancellationToken = default)
-        {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceConnectionContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(connectionName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a new workspace connection. </summary>
-        /// <param name="connectionName"> Friendly name of the workspace connection. </param>
-        /// <param name="parameters"> The object for creating or updating a new workspace connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WorkspaceConnectionCreateOperation StartCreateOrUpdate(string connectionName, WorkspaceConnectionData parameters, CancellationToken cancellationToken = default)
-        {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceConnectionContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.Create(Id.ResourceGroupName, Id.Name, connectionName, parameters, cancellationToken);
-                return new WorkspaceConnectionCreateOperation(Parent, response);
+                var operation = new WorkspaceConnectionCreateOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -137,9 +79,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Add a new workspace connection. </summary>
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="parameters"> The object for creating or updating a new workspace connection. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WorkspaceConnectionCreateOperation> StartCreateOrUpdateAsync(string connectionName, WorkspaceConnectionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<WorkspaceConnectionCreateOperation> CreateOrUpdateAsync(string connectionName, WorkspaceConnectionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
@@ -150,12 +93,15 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceConnectionContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceConnectionContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateAsync(Id.ResourceGroupName, Id.Name, connectionName, parameters, cancellationToken).ConfigureAwait(false);
-                return new WorkspaceConnectionCreateOperation(Parent, response);
+                var operation = new WorkspaceConnectionCreateOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -321,7 +267,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="category"> Category of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WorkspaceConnection" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<WorkspaceConnection> GetAll(string target = null, string category = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<WorkspaceConnection> GetAll(string target = null, string category = null, CancellationToken cancellationToken = default)
         {
             Page<WorkspaceConnection> FirstPageFunc(int? pageSizeHint)
             {
@@ -346,7 +292,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="category"> Category of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WorkspaceConnection" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<WorkspaceConnection> GetAllAsync(string target = null, string category = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WorkspaceConnection> GetAllAsync(string target = null, string category = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<WorkspaceConnection>> FirstPageFunc(int? pageSizeHint)
             {
@@ -364,52 +310,6 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Filters the list of <see cref="WorkspaceConnection" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceConnectionContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(WorkspaceConnectionOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="WorkspaceConnection" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceConnectionContainer.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(WorkspaceConnectionOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         // Builders.

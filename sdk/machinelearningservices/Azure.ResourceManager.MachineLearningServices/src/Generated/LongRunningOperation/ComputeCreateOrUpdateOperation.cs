@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         private readonly OperationInternals<ComputeResource> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of ComputeCreateOrUpdateOperation for mocking. </summary>
         protected ComputeCreateOrUpdateOperation()
         {
         }
 
-        internal ComputeCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ComputeCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ComputeResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ComputeCreateOrUpdateOperation");
             _operationBase = operationsBase;
