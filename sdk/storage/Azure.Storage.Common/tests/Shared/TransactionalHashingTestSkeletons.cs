@@ -384,7 +384,7 @@ namespace Azure.Storage.Test.Shared
 
             var hashPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseHashAssertion(algorithm));
             var clientOptions = getOptions();
-            //clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
             var client = await getObjectClientAsync(parentClient, clientOptions);
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
