@@ -1,4 +1,3 @@
-
 <#
 .SYNOPSIS
 Uses cspell (from NPM) to check spelling of recently changed files
@@ -67,6 +66,9 @@ Param (
     [Parameter()]
     [switch] $Test
 )
+
+Set-StrictMode -Version 3.0
+
 function TestSpellChecker() {
     Test-Exit0WhenAllFilesExcluded
     ResetTest
@@ -182,7 +184,7 @@ function Test-Exit0WhenSpellingErrorsAndNoExitWithError() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
+        -TargetBranch HEAD~1
 
     # Assert
     if ($LASTEXITCODE -ne 0) {
@@ -248,7 +250,6 @@ if ($Test) {
     Write-Host "Test complete"
     exit 0
 }
-
 
 $ErrorActionPreference = "Continue"
 . $PSScriptRoot/common.ps1
