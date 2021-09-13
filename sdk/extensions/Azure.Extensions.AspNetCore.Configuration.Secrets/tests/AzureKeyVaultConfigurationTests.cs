@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -733,9 +734,10 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 _name = name;
             }
 
-            public override AsyncPageable<SecretProperties> LoadSecretPropertiesAsync(SecretClient client, CancellationToken cancellationToken = default)
+            public override async IAsyncEnumerable<SecretProperties> LoadSecretPropertiesAsync(SecretClient client, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                return client.GetPropertiesOfSecretVersionsAsync(_name, cancellationToken);
+                KeyVaultSecret secret = await client.GetSecretAsync(_name, cancellationToken: cancellationToken);
+                yield return secret.Properties;
             }
         }
     }

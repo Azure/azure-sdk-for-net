@@ -19,7 +19,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         public virtual System.Collections.Generic.Dictionary<string, string> GetData(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Secrets.KeyVaultSecret> secrets) { throw null; }
         public virtual string GetKey(Azure.Security.KeyVault.Secrets.KeyVaultSecret secret) { throw null; }
         public virtual bool Load(Azure.Security.KeyVault.Secrets.SecretProperties secret) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Secrets.SecretProperties> LoadSecretPropertiesAsync(Azure.Security.KeyVault.Secrets.SecretClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Security.KeyVault.Secrets.SecretProperties> LoadSecretPropertiesAsync(Azure.Security.KeyVault.Secrets.SecretClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Configuration
