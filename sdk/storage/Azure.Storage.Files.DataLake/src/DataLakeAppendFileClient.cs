@@ -813,28 +813,88 @@ namespace Azure.Storage.Files.DataLake
                 {
                     scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
-                    ResponseWithHeaders<PathConcurrentAppendHeaders> response;
+                    ResponseWithHeaders<PathConcurrentAppendHeaders> response = null;
 
-                    if (async)
+                    long contentLength = content?.Length - content?.Position ?? 0;
+                    if (contentLength > 0 && contentHash == null)
                     {
-                        response = await PathRestClient.ConcurrentAppendAsync(
-                            body: content,
-                            appendMode: createIfNotExists ? AppendMode.AutoCreate : null,
-                            timeout: null,
-                            contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: contentHash,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+                        // Try using client side compression
+                        using (AutoBuffer contentBuffer = new AutoBuffer(contentLength))
+                        {
+                            using (AutoBuffer compressedBuffer = new AutoBuffer(contentLength * 0.8))
+                            {
+                                CompressedMemoryStream compressedStream = null;
+                                if (async)
+                                {
+                                    compressedStream = await PathRestClient.GetCompressedMemoryStream(
+                                        content,
+                                        contentBuffer,
+                                        compressedBuffer,
+                                        async: true,
+                                        cancellationToken).ConfigureAwait(false);
+                                }
+                                else
+                                {
+                                    compressedStream = PathRestClient.GetCompressedMemoryStream(
+                                        content,
+                                        contentBuffer,
+                                        compressedBuffer,
+                                        async: false,
+                                        cancellationToken).EnsureCompleted();
+                                }
+
+                                if (compressedStream != null)
+                                {
+                                    if (async)
+                                    {
+                                        response = await PathRestClient.CompressedConcurrentAppendAsync(
+                                            body: compressedStream,
+                                            appendMode: createIfNotExists ? AppendMode.AutoCreate : null,
+                                            timeout: null,
+                                            contentLength: compressedStream.Length,
+                                            transactionalContentHash: null,
+                                            cancellationToken: cancellationToken)
+                                            .ConfigureAwait(false);
+                                    }
+                                    else
+                                    {
+                                        response = PathRestClient.CompressedConcurrentAppend(
+                                            body: compressedStream,
+                                            appendMode: createIfNotExists ? AppendMode.AutoCreate : null,
+                                            timeout: null,
+                                            contentLength: compressedStream.Length,
+                                            transactionalContentHash: null,
+                                            cancellationToken: cancellationToken);
+                                    }
+                                }
+                            }
+                        }
                     }
-                    else
+
+                    if (response == null)
                     {
-                        response = PathRestClient.ConcurrentAppend(
-                            body: content,
-                            appendMode: createIfNotExists ? AppendMode.AutoCreate : null,
-                            timeout: null,
-                            contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: contentHash,
-                            cancellationToken: cancellationToken);
+                        // Regular uncompressed append
+                        if (async)
+                        {
+                            response = await PathRestClient.ConcurrentAppendAsync(
+                                body: content,
+                                appendMode: createIfNotExists ? AppendMode.AutoCreate : null,
+                                timeout: null,
+                                contentLength: contentLength,
+                                transactionalContentHash: contentHash,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = PathRestClient.ConcurrentAppend(
+                                body: content,
+                                appendMode: createIfNotExists ? AppendMode.AutoCreate : null,
+                                timeout: null,
+                                contentLength: contentLength,
+                                transactionalContentHash: contentHash,
+                                cancellationToken: cancellationToken);
+                        }
                     }
 
                     return Response.FromValue(
