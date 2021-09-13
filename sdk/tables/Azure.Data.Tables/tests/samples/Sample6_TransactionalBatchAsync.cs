@@ -20,7 +20,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSuppliesBatch";
+            string tableName = "OfficeSuppliesBatch" + _random.Next();
             string partitionKey = "BatchInsertSample";
 
             var serviceClient = new TableServiceClient(
