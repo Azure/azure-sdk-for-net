@@ -14,7 +14,6 @@ using SkuTier= Azure.ResourceManager.Storage.Models.SkuTier;
 
 namespace Azure.ResourceManager.Storage.Tests.Helpers
 {
-    [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/23897")]
     [ClientTestFixture]
     public class StorageTestBase:ManagementRecordedTestBase<StorageManagementTestEnvironment>
     {
@@ -54,7 +53,8 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         [TearDown]
         public async Task waitForDeletion()
         {
-            await Task.Delay(5000);
+            if (Mode != RecordedTestMode.Playback)
+                await Task.Delay(5000);
         }
 
         public async Task<ResourceGroup> CreateResourceGroupAsync()
