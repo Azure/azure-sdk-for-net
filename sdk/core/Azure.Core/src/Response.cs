@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure
 {
@@ -110,6 +112,51 @@ namespace Azure
         /// </summary>
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
+
+        internal bool? IsError { get; set; }
+
+        internal ResponseClassifier? ResponseClassifier { get; set; }
+
+        internal void EvaluateError(HttpMessage message)
+        {
+            if (!IsError.HasValue)
+            {
+                IsError = message.ResponseClassifier.IsErrorResponse(message);
+                ResponseClassifier = message.ResponseClassifier;
+            }
+        }
+
+        /// <summary>
+        /// If the response is an error response, throw a RequestFailedException.
+        /// </summary>
+        public void ThrowIfError()
+        {
+            if (!IsError.HasValue)
+            {
+                throw new InvalidOperationException("IsError value should have been cached by the pipeline.");
+            }
+
+            if (IsError.Value)
+            {
+                throw ResponseClassifier!.CreateRequestFailedException(this);
+            }
+        }
+
+        /// <summary>
+        /// If the response is an error response, throw a RequestFailedException.
+        /// </summary>
+        public async Task ThrowIfErrorAsync()
+        {
+            if (!IsError.HasValue)
+            {
+                throw new InvalidOperationException("IsError value should have been cached by the pipeline.");
+            }
+
+            if (IsError.Value)
+            {
+                throw await ResponseClassifier!.CreateRequestFailedExceptionAsync(this).ConfigureAwait(false);
+            }
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="Response{T}"/> with the provided value and HTTP response.
