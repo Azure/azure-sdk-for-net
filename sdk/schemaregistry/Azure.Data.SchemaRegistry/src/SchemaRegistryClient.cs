@@ -21,7 +21,7 @@ namespace Azure.Data.SchemaRegistry
         internal SchemaRestClient RestClient { get; }
         private const string CredentialScope = "https://eventhubs.azure.net/.default";
 
-        private readonly ConcurrentDictionary<string, SchemaProperties> _schemaIdToPropertiesMap = new();
+        private readonly ConcurrentDictionary<string, SchemaRegistrySchema> _schemaIdToSchemaMap = new();
         private readonly ConcurrentDictionary<(string, string, string, SerializationType), SchemaProperties> _contentToPropertiesMap = new();
 
         /// <summary>
@@ -122,8 +122,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.Register(groupName, name, serializationType, content, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(content, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
-                _schemaIdToPropertiesMap[properties.Id] = properties;
+                var properties = new SchemaProperties(response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
                 _contentToPropertiesMap[(groupName, name, content, serializationType)] = properties;
 
                 return Response.FromValue(properties, response);
@@ -184,9 +183,9 @@ namespace Azure.Data.SchemaRegistry
         {
             if (_contentToPropertiesMap.TryGetValue(
                 (groupName, name, content, serializationType),
-                out SchemaProperties schema))
+                out SchemaProperties schemaProperties))
             {
-                return schema;
+                return schemaProperties;
             }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaIdScopeName);
@@ -203,8 +202,9 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.QueryIdByContent(groupName, name, serializationType, content, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(content, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
-                _schemaIdToPropertiesMap[properties.Id] = properties;
+                var properties = new SchemaProperties(response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
+                var schema = new SchemaRegistrySchema(properties, content);
+                _schemaIdToSchemaMap[properties.Id] = schema;
                 _contentToPropertiesMap[(groupName, name, content, serializationType)] = properties;
 
                 return properties;
@@ -223,7 +223,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async ValueTask<SchemaProperties> GetSchemaAsync(string schemaId, CancellationToken cancellationToken = default) =>
+        public virtual async ValueTask<SchemaRegistrySchema> GetSchemaAsync(string schemaId, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
             await GetSchemaInternalAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
 
@@ -234,13 +234,13 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual SchemaProperties GetSchema(string schemaId, CancellationToken cancellationToken = default) =>
+        public virtual SchemaRegistrySchema GetSchema(string schemaId, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
             GetSchemaInternalAsync(schemaId, false, cancellationToken).EnsureCompleted();
 
-        private async ValueTask<SchemaProperties> GetSchemaInternalAsync(string schemaId, bool async, CancellationToken cancellationToken)
+        private async ValueTask<SchemaRegistrySchema> GetSchemaInternalAsync(string schemaId, bool async, CancellationToken cancellationToken)
         {
-            if (_schemaIdToPropertiesMap.TryGetValue(schemaId, out SchemaProperties schema))
+            if (_schemaIdToSchemaMap.TryGetValue(schemaId, out SchemaRegistrySchema schema))
             {
                 return schema;
             }
@@ -259,10 +259,10 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetById(schemaId, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(response.Value, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
-                _schemaIdToPropertiesMap[schemaId] = properties;
+                var properties = new SchemaProperties(response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
+                _schemaIdToSchemaMap[schemaId] = new SchemaRegistrySchema(properties, response.Value);
 
-                return properties;
+                return _schemaIdToSchemaMap[schemaId];
             }
             catch (Exception e)
             {

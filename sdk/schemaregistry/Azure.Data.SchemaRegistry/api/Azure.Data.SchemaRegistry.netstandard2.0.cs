@@ -3,7 +3,6 @@ namespace Azure.Data.SchemaRegistry
     public partial class SchemaProperties
     {
         internal SchemaProperties() { }
-        public string Content { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Data.SchemaRegistry.SerializationType Type { get { throw null; } }
     }
@@ -12,8 +11,8 @@ namespace Azure.Data.SchemaRegistry
         protected SchemaRegistryClient() { }
         public SchemaRegistryClient(string endpoint, Azure.Core.TokenCredential credential) { }
         public SchemaRegistryClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Data.SchemaRegistry.SchemaRegistryClientOptions options) { }
-        public virtual Azure.Data.SchemaRegistry.SchemaProperties GetSchema(string schemaId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Data.SchemaRegistry.SchemaProperties> GetSchemaAsync(string schemaId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Data.SchemaRegistry.SchemaRegistrySchema GetSchema(string schemaId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Azure.Data.SchemaRegistry.SchemaRegistrySchema> GetSchemaAsync(string schemaId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Data.SchemaRegistry.SchemaProperties GetSchemaProperties(string groupName, string name, string content, Azure.Data.SchemaRegistry.SerializationType serializationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Data.SchemaRegistry.SchemaProperties> GetSchemaPropertiesAsync(string groupName, string name, string content, Azure.Data.SchemaRegistry.SerializationType serializationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties> RegisterSchema(string groupName, string name, string content, Azure.Data.SchemaRegistry.SerializationType serializationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -27,6 +26,12 @@ namespace Azure.Data.SchemaRegistry
             V2017_04 = 1,
             V2020_09_01_preview = 2,
         }
+    }
+    public partial class SchemaRegistrySchema
+    {
+        internal SchemaRegistrySchema() { }
+        public string Content { get { throw null; } }
+        public Azure.Data.SchemaRegistry.SchemaProperties Properties { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SerializationType : System.IEquatable<Azure.Data.SchemaRegistry.SerializationType>
