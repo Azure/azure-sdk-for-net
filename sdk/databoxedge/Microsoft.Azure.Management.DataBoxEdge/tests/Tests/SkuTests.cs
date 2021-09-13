@@ -19,16 +19,5 @@ namespace DataBoxEdge.Tests
         public SkuTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
         #endregion Constructor
-
-        #region Test Methods
-        /// <summary>
-        /// Tests sku API
-        /// </summary>
-        [Fact]
-        public void Test_ListSku()
-        {
-            var skus = Client.Skus.List("location eq '" + TestConstants.DefaultResourceLocation +"'");
-        }
-        #endregion Test Methods
     }
 }
