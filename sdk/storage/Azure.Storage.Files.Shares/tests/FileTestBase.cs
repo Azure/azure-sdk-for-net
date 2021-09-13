@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = Constants.MaxReliabilityRetries,
+                    MaxRetries = 20,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 },

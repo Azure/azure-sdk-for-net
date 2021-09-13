@@ -43,7 +43,7 @@ namespace Azure.Storage.Test
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                    MaxRetries = 20,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback? 0.01 : 1),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 }
@@ -60,7 +60,7 @@ namespace Azure.Storage.Test
         {
             BlobClientOptions options = GetBlobOptions();
             options.GeoRedundantSecondaryUri = new Uri(config.BlobServiceSecondaryEndpoint);
-            options.Retry.MaxRetries = 4;
+            options.Retry.MaxRetries = 20;
             options.AddPolicy(new TestExceptionPolicy(numberOfReadFailuresToSimulate, options.GeoRedundantSecondaryUri, simulate404), HttpPipelinePosition.PerRetry);
 
             return InstrumentClient(
