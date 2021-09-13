@@ -251,7 +251,7 @@ if ($Test) {
 
 
 $ErrorActionPreference = "Continue"
-. $PSScriptRoot/logging.ps1
+. $PSScriptRoot/common.ps1
 
 if ((Get-Command git | Measure-Object).Count -eq 0) {
     LogError "Could not locate git. Install git https://git-scm.com/downloads"
