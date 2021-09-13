@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         public async Task CreateStorageAccountAndGetQueueContainer()
         {
             _resourceGroup = await CreateResourceGroupAsync();
-            string accountName = Recording.GenerateAssetName("storage");
+            string accountName =await CreateValidAccountNameAsync("storage");
             StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
             _storageAccount = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             _queueServiceContainer = _storageAccount.GetQueueServices();

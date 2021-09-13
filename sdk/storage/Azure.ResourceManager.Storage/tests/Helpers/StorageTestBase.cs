@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
             Client = GetArmClient();
         }
+        [TearDown]
+        public async Task waitForDeletion()
+        {
+            await Task.Delay(5000);
+        }
 
         public async Task<ResourceGroup> CreateResourceGroupAsync()
         {
@@ -65,6 +70,19 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                     }
                 });
             return operation.Value;
+        }
+        public async Task<string> CreateValidAccountNameAsync(string prefix)
+        {
+            string accountName = "";
+            for (int i = 0; i < 10; i++)
+            {
+                accountName = Recording.GenerateAssetName(prefix);
+                StorageAccountCheckNameAvailabilityParameters parameter = new StorageAccountCheckNameAvailabilityParameters(accountName);
+                CheckNameAvailabilityResult result =await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
+                if (result.NameAvailable==true)
+                    return accountName;
+            }
+            return accountName;
         }
 
         public static void VerifyAccountProperties(StorageAccount account,bool useDefaults)
