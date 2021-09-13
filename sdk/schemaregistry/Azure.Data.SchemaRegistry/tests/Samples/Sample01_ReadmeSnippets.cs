@@ -14,6 +14,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         private SchemaRegistryClient client;
 #pragma warning restore IDE1006 // Naming Styles
         private SchemaProperties _schemaProperties;
+        private string _content;
 
         [OneTimeSetUp]
         public void CreateSchemaRegistryClient()
@@ -56,6 +57,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
             Assert.NotNull(schemaProperties);
             _schemaProperties = schemaProperties.Value;
+            _content = content;
         }
 
         [Test]
@@ -93,11 +95,11 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             var schemaId = _schemaProperties.Id;
 
             #region Snippet:SchemaRegistryRetrieveSchema
-            SchemaProperties schemaProperties = client.GetSchema(schemaId);
-            string content = schemaProperties.Content;
+            SchemaRegistrySchema schema = client.GetSchema(schemaId);
+            string content = schema.Content;
             #endregion
 
-            Assert.AreEqual(Regex.Replace(_schemaProperties.Content, @"\s+", string.Empty), content);
+            Assert.AreEqual(Regex.Replace(_content, @"\s+", string.Empty), content);
         }
     }
 }
