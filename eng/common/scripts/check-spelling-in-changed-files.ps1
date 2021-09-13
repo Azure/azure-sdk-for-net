@@ -4,7 +4,7 @@
 Uses cspell (from NPM) to check spelling of recently changed files
 
 .DESCRIPTION
-This script checks files that have changed relative to a base branch (default 
+This script checks files that have changed relative to a base branch (default
 branch) for spelling errors. Dictionaries and spelling configurations reside
 in a configurable `cspell.json` location.
 
@@ -67,102 +67,6 @@ Param (
     [Parameter()]
     [switch] $Test
 )
-
-function CheckSpellingInChangedFilesImpl() {
-    $ErrorActionPreference = "Continue"
-    . $PSScriptRoot/logging.ps1
-
-    if ((Get-Command git | Measure-Object).Count -eq 0) {
-        LogError "Could not locate git. Install git https://git-scm.com/downloads"
-        exit 1
-    }
-
-    if ((Get-Command npx | Measure-Object).Count -eq 0) {
-        LogError "Could not locate npx. Install NodeJS (includes npx and npx) https://nodejs.org/en/download/"
-        exit 1
-    }
-
-    if (!(Test-Path $CspellConfigPath)) {
-        LogError "Could not locate config file $CspellConfigPath"
-        exit 1
-    }
-
-    # Lists names of files that were in some way changed between the
-    # current $SourceBranch and $TargetBranch. Excludes files that were deleted to
-    # prevent errors in Resolve-Path
-    Write-Host "git diff --diff-filter=d --name-only $TargetBranch $SourceBranch"
-    $changedFiles = git diff --diff-filter=d --name-only $TargetBranch $SourceBranch `
-        | Resolve-Path
-
-    $changedFilesCount = ($changedFiles | Measure-Object).Count
-    Write-Host "Git Detected $changedFilesCount changed file(s). Files checked by cspell may exclude files according to cspell.json"
-
-    if ($changedFilesCount -eq 0) {
-        Write-Host "No changes detected"
-        exit 0
-    }
-
-    $changedFilePaths = @()
-    foreach ($file in $changedFiles) {
-        $changedFilePaths += $file.Path
-    }
-
-    # The "files" list must always contain a file which exists, is not empty, and is
-    # not excluded in ignorePaths. In this case it will be a file with the contents
-    # "1" (no spelling errors will be detected)
-    $notExcludedFile = (New-TemporaryFile).ToString()
-    "1" >> $notExcludedFile
-    $changedFilePaths += $notExcludedFile
-
-    $cspellConfigContent = Get-Content $CspellConfigPath -Raw
-    $cspellConfig = ConvertFrom-Json $cspellConfigContent
-
-    # If the config has no "files" property this adds it. If the config has a
-    # "files" property this sets the value, overwriting the existing value. In this
-    # case, spell checking is only intended to check files from $changedFiles so
-    # preexisting entries in "files" will be overwritten.
-    Add-Member `
-        -MemberType NoteProperty `
-        -InputObject $cspellConfig `
-        -Name "files" `
-        -Value $changedFilePaths `
-        -Force
-
-    # Set the temporary config file with the mutated configuration. The temporary
-    # location is used to configure the command and the original file remains
-    # unchanged.
-    Write-Host "Setting config in: $CspellConfigPath"
-    Set-Content `
-        -Path $CspellConfigPath `
-        -Value (ConvertTo-Json $cspellConfig -Depth 100)
-
-    # Use the mutated configuration file when calling cspell
-    Write-Host "npx cspell lint --config $CspellConfigPath --no-must-find-files "
-    $spellingErrors = npx cspell lint --config $CspellConfigPath --no-must-find-files
-
-    Write-Host "cspell run complete, restoring original configuration."
-    Set-Content -Path $CspellConfigPath -Value $cspellConfigContent -NoNewLine
-
-    if ($spellingErrors) {
-        $errorLoggingFunction = Get-Item 'Function:LogWarning'
-        if ($ExitWithError) {
-            $errorLoggingFunction = Get-Item 'Function:LogError'
-        }
-
-        foreach ($spellingError in $spellingErrors) {
-            &$errorLoggingFunction $spellingError
-        }
-        &$errorLoggingFunction "Spelling errors detected. To correct false positives or learn about spell checking see: https://aka.ms/azsdk/engsys/spellcheck"
-
-        if ($ExitWithError) {
-            exit 1
-        }
-    } else {
-        Write-Host "No spelling errors detected. Removing temporary file."
-        Remove-Item -Path $notExcludedFile -Force | Out-Null
-    }
-}
-
 function TestSpellChecker() {
     Test-Exit0WhenAllFilesExcluded
     ResetTest
@@ -286,7 +190,6 @@ function Test-Exit0WhenSpellingErrorsAndNoExitWithError() {
     }
 }
 
-
 function SetupTest($workingDirectory) {
     Write-Host "Create test temp dir: $workingDirectory"
     New-Item -ItemType Directory -Force -Path $workingDirectory | Out-Null
@@ -336,14 +239,108 @@ function TeardownTest($workingDirectory) {
     Remove-Item -Path $workingDirectory -Recurse -Force | Out-Null
 }
 
-if (!$Test) {
-    CheckSpellingInChangedFilesImpl
-} else {
+if ($Test) {
     $workingDirectory = Join-Path ([System.IO.Path]::GetTempPath()) ([System.IO.Path]::GetRandomFileName())
 
     SetupTest $workingDirectory
     TestSpellChecker
     TeardownTest $workingDirectory
+    Write-Host "Test complete"
+    exit 0
+}
+
+
+$ErrorActionPreference = "Continue"
+. $PSScriptRoot/logging.ps1
+
+if ((Get-Command git | Measure-Object).Count -eq 0) {
+    LogError "Could not locate git. Install git https://git-scm.com/downloads"
+    exit 1
+}
+
+if ((Get-Command npx | Measure-Object).Count -eq 0) {
+    LogError "Could not locate npx. Install NodeJS (includes npx and npx) https://nodejs.org/en/download/"
+    exit 1
+}
+
+if (!(Test-Path $CspellConfigPath)) {
+    LogError "Could not locate config file $CspellConfigPath"
+    exit 1
+}
+
+# Lists names of files that were in some way changed between the
+# current $SourceBranch and $TargetBranch. Excludes files that were deleted to
+# prevent errors in Resolve-Path
+Write-Host "git diff --diff-filter=d --name-only $TargetBranch $SourceBranch"
+$changedFiles = git diff --diff-filter=d --name-only $TargetBranch $SourceBranch `
+    | Resolve-Path
+
+$changedFilesCount = ($changedFiles | Measure-Object).Count
+Write-Host "Git Detected $changedFilesCount changed file(s). Files checked by cspell may exclude files according to cspell.json"
+
+if ($changedFilesCount -eq 0) {
+    Write-Host "No changes detected"
+    exit 0
+}
+
+$changedFilePaths = @()
+foreach ($file in $changedFiles) {
+    $changedFilePaths += $file.Path
+}
+
+# The "files" list must always contain a file which exists, is not empty, and is
+# not excluded in ignorePaths. In this case it will be a file with the contents
+# "1" (no spelling errors will be detected)
+$notExcludedFile = (New-TemporaryFile).ToString()
+"1" >> $notExcludedFile
+$changedFilePaths += $notExcludedFile
+
+$cspellConfigContent = Get-Content $CspellConfigPath -Raw
+$cspellConfig = ConvertFrom-Json $cspellConfigContent
+
+# If the config has no "files" property this adds it. If the config has a
+# "files" property this sets the value, overwriting the existing value. In this
+# case, spell checking is only intended to check files from $changedFiles so
+# preexisting entries in "files" will be overwritten.
+Add-Member `
+    -MemberType NoteProperty `
+    -InputObject $cspellConfig `
+    -Name "files" `
+    -Value $changedFilePaths `
+    -Force
+
+# Set the temporary config file with the mutated configuration. The temporary
+# location is used to configure the command and the original file remains
+# unchanged.
+Write-Host "Setting config in: $CspellConfigPath"
+Set-Content `
+    -Path $CspellConfigPath `
+    -Value (ConvertTo-Json $cspellConfig -Depth 100)
+
+# Use the mutated configuration file when calling cspell
+Write-Host "npx cspell lint --config $CspellConfigPath --no-must-find-files "
+$spellingErrors = npx cspell lint --config $CspellConfigPath --no-must-find-files
+
+Write-Host "cspell run complete, restoring original configuration."
+Set-Content -Path $CspellConfigPath -Value $cspellConfigContent -NoNewLine
+
+if ($spellingErrors) {
+    $errorLoggingFunction = Get-Item 'Function:LogWarning'
+    if ($ExitWithError) {
+        $errorLoggingFunction = Get-Item 'Function:LogError'
+    }
+
+    foreach ($spellingError in $spellingErrors) {
+        &$errorLoggingFunction $spellingError
+    }
+    &$errorLoggingFunction "Spelling errors detected. To correct false positives or learn about spell checking see: https://aka.ms/azsdk/engsys/spellcheck"
+
+    if ($ExitWithError) {
+        exit 1
+    }
+} else {
+    Write-Host "No spelling errors detected. Removing temporary file."
+    Remove-Item -Path $notExcludedFile -Force | Out-Null
 }
 
 exit 0
