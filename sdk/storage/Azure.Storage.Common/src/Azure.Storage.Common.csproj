@@ -4,9 +4,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
-    <Version>12.9.0-beta.3</Version>
+    <Version>12.10.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.8.0</ApiCompatVersion>
+    <ApiCompatVersion>12.9.0</ApiCompatVersion>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <Description>
@@ -19,12 +19,7 @@
     <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <!-- TODO https://github.com/Azure/azure-sdk-for-net/issues/21875 - uncomment when Azure.Core ships 
     <PackageReference Include="Azure.Core" />
-    end TODO -->
-    <!-- TODOhttps://github.com/Azure/azure-sdk-for-net/issues/21875 - revert when Azure.Core ships -->
-      <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-    <!--  end TODO-->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />

@@ -11,7 +11,7 @@ You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:HelloCreateKeyVaultAccessControlClient
-KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
 ```
 
 ## Listing All Role Definitions

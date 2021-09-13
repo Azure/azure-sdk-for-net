@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> keyName = default;
             Optional<string> value = default;
             Optional<KeyPermission> permissions = default;
+            Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"))
@@ -39,8 +41,18 @@ namespace Azure.ResourceManager.Storage.Models
                     permissions = property.Value.GetString().ToKeyPermission();
                     continue;
                 }
+                if (property.NameEquals("creationTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    creationTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new StorageAccountKey(keyName.Value, value.Value, Optional.ToNullable(permissions));
+            return new StorageAccountKey(keyName.Value, value.Value, Optional.ToNullable(permissions), Optional.ToNullable(creationTime));
         }
     }
 }

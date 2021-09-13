@@ -18,7 +18,8 @@ namespace Azure.Verticals.AgriFood.Farming
     public partial class BoundariesClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -49,12 +50,57 @@ namespace Azure.Verticals.AgriFood.Farming
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
 
         /// <summary> Returns a paginated list of boundary resources under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       parentId: string,
+        ///       geometry: {
+        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///       },
+        ///       isPrimary: boolean,
+        ///       acreage: number,
+        ///       parentType: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="isPrimary"> Is the boundary primary. </param>
         /// <param name="parentType"> Type of the parent it belongs to. </param>
@@ -83,11 +129,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.ListByFarmerId");
             scope.Start();
             try
@@ -116,6 +159,51 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of boundary resources under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       parentId: string,
+        ///       geometry: {
+        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///       },
+        ///       isPrimary: boolean,
+        ///       acreage: number,
+        ///       parentType: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="isPrimary"> Is the boundary primary. </param>
         /// <param name="parentType"> Type of the parent it belongs to. </param>
@@ -144,11 +232,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.ListByFarmerId");
             scope.Start();
             try
@@ -176,33 +261,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="ListByFarmerId"/> and <see cref="ListByFarmerIdAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="isPrimary"> Is the boundary primary. </param>
-        /// <param name="parentType"> Type of the parent it belongs to. </param>
-        /// <param name="parentIds"> Parent Ids of the resource. </param>
-        /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
-        /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListByFarmerIdRequest(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateListByFarmerIdRequest(string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -279,127 +340,71 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Search for boundaries by fields and intersecting geometry. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>ids</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Ids of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>names</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Names of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propertyFilters</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>statuses</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Statuses of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minCreatedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Minimum creation date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxCreatedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Maximum creation date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minLastModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Minimum last modified date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxLastModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Maximum last modified date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>$maxPageSize</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>$skipToken</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Skip token for getting next set of results.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isPrimary</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Is the boundary primary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Type of the parent it belongs to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentIds</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Parent Ids of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minAcreage</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Minimum acreage of the boundary (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxAcreage</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Maximum acreage of the boundary (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>intersectsWithGeometry</term>
-        ///     <term>GeoJsonObject</term>
-        ///     <term></term>
-        ///     <term>GeoJSON abstract class.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>GeoJsonObject</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>&quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term>GeoJSON object type.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   ids: [string],
+        ///   names: [string],
+        ///   propertyFilters: [string],
+        ///   statuses: [string],
+        ///   minCreatedDateTime: string (ISO 8601 Format),
+        ///   maxCreatedDateTime: string (ISO 8601 Format),
+        ///   minLastModifiedDateTime: string (ISO 8601 Format),
+        ///   maxLastModifiedDateTime: string (ISO 8601 Format),
+        ///   $maxPageSize: number,
+        ///   $skipToken: string,
+        ///   isPrimary: boolean,
+        ///   parentType: string,
+        ///   parentIds: [string],
+        ///   minAcreage: number,
+        ///   maxAcreage: number,
+        ///   intersectsWithGeometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       parentId: string,
+        ///       geometry: {
+        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///       },
+        ///       isPrimary: boolean,
+        ///       acreage: number,
+        ///       parentType: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -409,11 +414,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSearchByFarmerIdRequest(farmerId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateSearchByFarmerIdRequest(farmerId, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.SearchByFarmerId");
             scope.Start();
             try
@@ -444,127 +446,71 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Search for boundaries by fields and intersecting geometry. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>ids</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Ids of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>names</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Names of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propertyFilters</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>statuses</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Statuses of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minCreatedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Minimum creation date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxCreatedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Maximum creation date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minLastModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Minimum last modified date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxLastModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Maximum last modified date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>$maxPageSize</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>$skipToken</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Skip token for getting next set of results.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isPrimary</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Is the boundary primary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Type of the parent it belongs to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentIds</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Parent Ids of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minAcreage</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Minimum acreage of the boundary (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxAcreage</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Maximum acreage of the boundary (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>intersectsWithGeometry</term>
-        ///     <term>GeoJsonObject</term>
-        ///     <term></term>
-        ///     <term>GeoJSON abstract class.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>GeoJsonObject</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>&quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term>GeoJSON object type.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   ids: [string],
+        ///   names: [string],
+        ///   propertyFilters: [string],
+        ///   statuses: [string],
+        ///   minCreatedDateTime: string (ISO 8601 Format),
+        ///   maxCreatedDateTime: string (ISO 8601 Format),
+        ///   minLastModifiedDateTime: string (ISO 8601 Format),
+        ///   maxLastModifiedDateTime: string (ISO 8601 Format),
+        ///   $maxPageSize: number,
+        ///   $skipToken: string,
+        ///   isPrimary: boolean,
+        ///   parentType: string,
+        ///   parentIds: [string],
+        ///   minAcreage: number,
+        ///   maxAcreage: number,
+        ///   intersectsWithGeometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       parentId: string,
+        ///       geometry: {
+        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///       },
+        ///       isPrimary: boolean,
+        ///       acreage: number,
+        ///       parentType: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -574,11 +520,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSearchByFarmerIdRequest(farmerId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateSearchByFarmerIdRequest(farmerId, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.SearchByFarmerId");
             scope.Start();
             try
@@ -606,13 +549,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="SearchByFarmerId"/> and <see cref="SearchByFarmerIdAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSearchByFarmerIdRequest(string farmerId, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateSearchByFarmerIdRequest(string farmerId, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -629,6 +568,51 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of boundary resources across all farmers. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       parentId: string,
+        ///       geometry: {
+        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///       },
+        ///       isPrimary: boolean,
+        ///       acreage: number,
+        ///       parentType: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="isPrimary"> Is the boundary primary. </param>
         /// <param name="parentType"> Type of the parent it belongs to. </param>
         /// <param name="parentIds"> Parent Ids of the resource. </param>
@@ -656,11 +640,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.List");
             scope.Start();
             try
@@ -689,6 +670,51 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of boundary resources across all farmers. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       parentId: string,
+        ///       geometry: {
+        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///       },
+        ///       isPrimary: boolean,
+        ///       acreage: number,
+        ///       parentType: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="isPrimary"> Is the boundary primary. </param>
         /// <param name="parentType"> Type of the parent it belongs to. </param>
         /// <param name="parentIds"> Parent Ids of the resource. </param>
@@ -716,11 +742,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.List");
             scope.Start();
             try
@@ -748,32 +771,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="List"/> and <see cref="ListAsync"/> operations. </summary>
-        /// <param name="isPrimary"> Is the boundary primary. </param>
-        /// <param name="parentType"> Type of the parent it belongs to. </param>
-        /// <param name="parentIds"> Parent Ids of the resource. </param>
-        /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
-        /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListRequest(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateListRequest(bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -848,127 +848,71 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Search for boundaries across all farmers by fields and intersecting geometry. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>ids</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Ids of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>names</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Names of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propertyFilters</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>statuses</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Statuses of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minCreatedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Minimum creation date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxCreatedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Maximum creation date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minLastModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Minimum last modified date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxLastModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Maximum last modified date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>$maxPageSize</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>$skipToken</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Skip token for getting next set of results.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isPrimary</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Is the boundary primary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Type of the parent it belongs to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentIds</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Parent Ids of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minAcreage</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Minimum acreage of the boundary (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxAcreage</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Maximum acreage of the boundary (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>intersectsWithGeometry</term>
-        ///     <term>GeoJsonObject</term>
-        ///     <term></term>
-        ///     <term>GeoJSON abstract class.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>GeoJsonObject</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>&quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term>GeoJSON object type.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   ids: [string],
+        ///   names: [string],
+        ///   propertyFilters: [string],
+        ///   statuses: [string],
+        ///   minCreatedDateTime: string (ISO 8601 Format),
+        ///   maxCreatedDateTime: string (ISO 8601 Format),
+        ///   minLastModifiedDateTime: string (ISO 8601 Format),
+        ///   maxLastModifiedDateTime: string (ISO 8601 Format),
+        ///   $maxPageSize: number,
+        ///   $skipToken: string,
+        ///   isPrimary: boolean,
+        ///   parentType: string,
+        ///   parentIds: [string],
+        ///   minAcreage: number,
+        ///   maxAcreage: number,
+        ///   intersectsWithGeometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       parentId: string,
+        ///       geometry: {
+        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///       },
+        ///       isPrimary: boolean,
+        ///       acreage: number,
+        ///       parentType: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -977,11 +921,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSearchRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateSearchRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Search");
             scope.Start();
             try
@@ -1012,127 +953,71 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Search for boundaries across all farmers by fields and intersecting geometry. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>ids</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Ids of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>names</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Names of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propertyFilters</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>statuses</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Statuses of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minCreatedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Minimum creation date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxCreatedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Maximum creation date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minLastModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Minimum last modified date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxLastModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Maximum last modified date of resource (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>$maxPageSize</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>$skipToken</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Skip token for getting next set of results.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isPrimary</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Is the boundary primary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Type of the parent it belongs to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentIds</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Parent Ids of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minAcreage</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Minimum acreage of the boundary (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxAcreage</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Maximum acreage of the boundary (inclusive).</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>intersectsWithGeometry</term>
-        ///     <term>GeoJsonObject</term>
-        ///     <term></term>
-        ///     <term>GeoJSON abstract class.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>GeoJsonObject</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>&quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term>GeoJSON object type.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   ids: [string],
+        ///   names: [string],
+        ///   propertyFilters: [string],
+        ///   statuses: [string],
+        ///   minCreatedDateTime: string (ISO 8601 Format),
+        ///   maxCreatedDateTime: string (ISO 8601 Format),
+        ///   minLastModifiedDateTime: string (ISO 8601 Format),
+        ///   maxLastModifiedDateTime: string (ISO 8601 Format),
+        ///   $maxPageSize: number,
+        ///   $skipToken: string,
+        ///   isPrimary: boolean,
+        ///   parentType: string,
+        ///   parentIds: [string],
+        ///   minAcreage: number,
+        ///   maxAcreage: number,
+        ///   intersectsWithGeometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       parentId: string,
+        ///       geometry: {
+        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///       },
+        ///       isPrimary: boolean,
+        ///       acreage: number,
+        ///       parentType: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -1141,11 +1026,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSearchRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateSearchRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Search");
             scope.Start();
             try
@@ -1173,12 +1055,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="Search"/> and <see cref="SearchAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSearchRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateSearchRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1193,6 +1072,43 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get cascade delete job for specified boundary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1200,11 +1116,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -1233,6 +1146,43 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get cascade delete job for specified boundary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1240,11 +1190,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -1272,12 +1219,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="GetCascadeDeleteJobDetails"/> and <see cref="GetCascadeDeleteJobDetailsAsync"/> operations. </summary>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestOptions options = null)
+        private HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1291,6 +1235,43 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for specified boundary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="boundaryId"> ID of the boundary to be deleted. </param>
@@ -1300,11 +1281,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateCascadeDeleteJob");
             scope.Start();
             try
@@ -1333,6 +1311,43 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for specified boundary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="boundaryId"> ID of the boundary to be deleted. </param>
@@ -1342,11 +1357,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateCascadeDeleteJob");
             scope.Start();
             try
@@ -1374,14 +1386,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateCascadeDeleteJob"/> and <see cref="CreateCascadeDeleteJobAsync"/> operations. </summary>
-        /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="boundaryId"> ID of the boundary to be deleted. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string boundaryId, RequestOptions options = null)
+        private HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string boundaryId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1397,6 +1404,45 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified boundary resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   parentId: string,
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///   },
+        ///   isPrimary: boolean,
+        ///   acreage: number,
+        ///   parentType: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="options"> The request options. </param>
@@ -1405,11 +1451,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, boundaryId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(farmerId, boundaryId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Get");
             scope.Start();
             try
@@ -1438,6 +1481,45 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified boundary resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   parentId: string,
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///   },
+        ///   isPrimary: boolean,
+        ///   acreage: number,
+        ///   parentType: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="options"> The request options. </param>
@@ -1446,11 +1528,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, boundaryId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(farmerId, boundaryId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Get");
             scope.Start();
             try
@@ -1478,13 +1557,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="boundaryId"> ID of the boundary. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRequest(string farmerId, string boundaryId, RequestOptions options = null)
+        private HttpMessage CreateGetRequest(string farmerId, string boundaryId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1502,116 +1577,63 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates a boundary resource. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Farmer ID.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ID of the parent(field or seasonalField) it belongs to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>geometry</term>
-        ///     <term>GeoJsonObject</term>
-        ///     <term></term>
-        ///     <term>GeoJSON abstract class.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isPrimary</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Is the boundary primary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>acreage</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Boundary area in acres.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Type of the parent it belongs to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Unique resource ID.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ETag value to implement optimistic concurrency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name to identify resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Textual description of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>GeoJsonObject</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>&quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term>GeoJSON object type.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   farmerId: string,
+        ///   parentId: string,
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
+        ///   },
+        ///   isPrimary: boolean,
+        ///   acreage: number,
+        ///   parentType: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   parentId: string,
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///   },
+        ///   isPrimary: boolean,
+        ///   acreage: number,
+        ///   parentType: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="farmerId"> ID of the farmer resource. </param>
         /// <param name="boundaryId"> ID of the boundary resource. </param>
@@ -1622,11 +1644,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateOrUpdate");
             scope.Start();
             try
@@ -1658,116 +1677,63 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates a boundary resource. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Farmer ID.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ID of the parent(field or seasonalField) it belongs to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>geometry</term>
-        ///     <term>GeoJsonObject</term>
-        ///     <term></term>
-        ///     <term>GeoJSON abstract class.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isPrimary</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Is the boundary primary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>acreage</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Boundary area in acres.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Type of the parent it belongs to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Unique resource ID.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ETag value to implement optimistic concurrency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name to identify resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Textual description of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>GeoJsonObject</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>&quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term>GeoJSON object type.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   farmerId: string,
+        ///   parentId: string,
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
+        ///   },
+        ///   isPrimary: boolean,
+        ///   acreage: number,
+        ///   parentType: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   parentId: string,
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
+        ///   },
+        ///   isPrimary: boolean,
+        ///   acreage: number,
+        ///   parentType: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="farmerId"> ID of the farmer resource. </param>
         /// <param name="boundaryId"> ID of the boundary resource. </param>
@@ -1778,11 +1744,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, boundaryId, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateOrUpdate");
             scope.Start();
             try
@@ -1811,14 +1774,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the farmer resource. </param>
-        /// <param name="boundaryId"> ID of the boundary resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string boundaryId, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string boundaryId, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -1836,6 +1794,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified boundary resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="options"> The request options. </param>
@@ -1844,11 +1820,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, boundaryId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(farmerId, boundaryId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Delete");
             scope.Start();
             try
@@ -1877,6 +1850,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified boundary resource under a particular farmer. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="options"> The request options. </param>
@@ -1885,11 +1876,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, boundaryId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(farmerId, boundaryId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Delete");
             scope.Start();
             try
@@ -1917,13 +1905,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="boundaryId"> ID of the boundary. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(string farmerId, string boundaryId, RequestOptions options = null)
+        private HttpMessage CreateDeleteRequest(string farmerId, string boundaryId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1939,6 +1923,32 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns overlapping acreage between two boundary Ids. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   boundaryAcreage: number,
+        ///   otherBoundaryAcreage: number,
+        ///   intersectingAcreage: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="otherFarmerId"> FarmerId of the other field. </param>
@@ -1949,11 +1959,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetOverlap");
             scope.Start();
             try
@@ -1982,6 +1989,32 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns overlapping acreage between two boundary Ids. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   boundaryAcreage: number,
+        ///   otherBoundaryAcreage: number,
+        ///   intersectingAcreage: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="otherFarmerId"> FarmerId of the other field. </param>
@@ -1992,11 +2025,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetOverlapRequest(farmerId, boundaryId, otherFarmerId, otherBoundaryId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetOverlap");
             scope.Start();
             try
@@ -2024,15 +2054,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="GetOverlap"/> and <see cref="GetOverlapAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="boundaryId"> ID of the boundary. </param>
-        /// <param name="otherFarmerId"> FarmerId of the other field. </param>
-        /// <param name="otherBoundaryId"> ID of the other boundary. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetOverlapRequest(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId, RequestOptions options = null)
+        private HttpMessage CreateGetOverlapRequest(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

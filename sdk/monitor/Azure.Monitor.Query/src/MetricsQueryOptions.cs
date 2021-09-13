@@ -33,7 +33,8 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets or sets the maximum number of records to retrieve. Valid only when <see cref="Filter"/> is specified. Defaults to <c>null</c>.
         /// </summary>
-        public int? Top { get; set; }
+        [CodeGenMember("Top")]
+        public int? Size { get; set; }
 
         /// <summary>
         /// Gets or sets the filter that is used to refine the set of metric data returned.

@@ -75,7 +75,8 @@ namespace Azure.Identity.Tests
             string expBrowserTenantId = Guid.NewGuid().ToString();
             string expVsTenantId = Guid.NewGuid().ToString();
             string expCodeTenantId = Guid.NewGuid().ToString();
-            string actClientId = null;
+            string actClientId_ManagedIdentity = null;
+            string actClientId_InteractiveBrowser = null;
             string actUsername = null;
             string actCacheTenantId = null;
             string actBrowserTenantId = null;
@@ -84,15 +85,16 @@ namespace Azure.Identity.Tests
 
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
-            credFactory.OnCreateManagedIdentityCredential = (clientId, _) => actClientId = clientId;
+            credFactory.OnCreateManagedIdentityCredential = (clientId, _) => actClientId_ManagedIdentity = clientId;
             credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, _) => { actCacheTenantId = tenantId; actUsername = username; };
-            credFactory.OnCreateInteractiveBrowserCredential = (tenantId, _) => { actBrowserTenantId = tenantId; };
+            credFactory.OnCreateInteractiveBrowserCredential = (tenantId, clientId,  _) => { actBrowserTenantId = tenantId; actClientId_InteractiveBrowser = clientId; };
             credFactory.OnCreateVisualStudioCredential = (tenantId, _) => { actVsTenantId = tenantId; };
             credFactory.OnCreateVisualStudioCodeCredential = (tenantId, _) => { actCodeTenantId = tenantId; };
             credFactory.OnCreateAzurePowerShellCredential = _ => {};
 
             var options = new DefaultAzureCredentialOptions
             {
+                InteractiveBrowserCredentialClientId = expClientId,
                 ManagedIdentityClientId = expClientId,
                 SharedTokenCacheUsername = expUsername,
                 ExcludeSharedTokenCacheCredential = false,
@@ -105,7 +107,8 @@ namespace Azure.Identity.Tests
 
             new DefaultAzureCredential(credFactory, options);
 
-            Assert.AreEqual(expClientId, actClientId);
+            Assert.AreEqual(expClientId, actClientId_ManagedIdentity);
+            Assert.AreEqual(expClientId, actClientId_InteractiveBrowser);
             Assert.AreEqual(expUsername, actUsername);
             Assert.AreEqual(expCacheTenantId, actCacheTenantId);
             Assert.AreEqual(expBrowserTenantId, actBrowserTenantId);
@@ -148,7 +151,7 @@ namespace Azure.Identity.Tests
                     Assert.AreEqual(expUsername, username);
                 };
 
-                credFactory.OnCreateInteractiveBrowserCredential = (tenantId, _) =>
+                credFactory.OnCreateInteractiveBrowserCredential = (tenantId, clientId, _) =>
                 {
                     onCreateInteractiveCalled = true;
                     Assert.AreEqual(expTenantId, tenantId);
@@ -221,7 +224,7 @@ namespace Azure.Identity.Tests
                     Assert.IsNull(username);
                 };
 
-                credFactory.OnCreateInteractiveBrowserCredential = (tenantId, _) =>
+                credFactory.OnCreateInteractiveBrowserCredential = (tenantId, _, _) =>
                 {
                     onCreateInteractiveCalled = true;
                     Assert.IsNull(tenantId);
@@ -282,7 +285,7 @@ namespace Azure.Identity.Tests
 
             credFactory.OnCreateEnvironmentCredential = _ => environmentCredentialIncluded = true;
             credFactory.OnCreateAzureCliCredential = _ => cliCredentialIncluded = true;
-            credFactory.OnCreateInteractiveBrowserCredential = (tenantId, _) => interactiveBrowserCredentialIncluded = true;
+            credFactory.OnCreateInteractiveBrowserCredential = (tenantId, _, _) => interactiveBrowserCredentialIncluded = true;
             credFactory.OnCreateVisualStudioCredential = (tenantId, _) => visualStudioCredentialIncluded = true;
             credFactory.OnCreateVisualStudioCodeCredential = (tenantId, _) => visualStudioCodeCredentialIncluded = true;
             credFactory.OnCreateAzurePowerShellCredential = _ => powerShellCredentialsIncluded = true;
@@ -349,7 +352,7 @@ namespace Azure.Identity.Tests
 
             credFactory.OnCreateEnvironmentCredential = c =>
                 SetupMockForException(c);
-            credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>
+            credFactory.OnCreateInteractiveBrowserCredential = (_, _, c) =>
                 SetupMockForException(c);
             credFactory.OnCreateManagedIdentityCredential = (_, c) =>
                 SetupMockForException(c);
@@ -450,7 +453,7 @@ namespace Azure.Identity.Tests
             credFactory.OnCreateAzurePowerShellCredential = c =>
                 SetupMockForException(c);
 
-            credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>
+            credFactory.OnCreateInteractiveBrowserCredential = (_, _, c) =>
             {
                 c.Setup(m => m.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
                     .Throws(new MockClientException("InteractiveBrowserCredential unhandled exception"));
@@ -573,7 +576,7 @@ namespace Azure.Identity.Tests
                 SetupMockForException(c);
             credFactory.OnCreateAzureCliCredential = c =>
                 SetupMockForException(c);
-            credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>
+            credFactory.OnCreateInteractiveBrowserCredential = (_, _, c) =>
                 SetupMockForException(c);
             credFactory.OnCreateVisualStudioCredential = (_, c) =>
                 SetupMockForException(c);

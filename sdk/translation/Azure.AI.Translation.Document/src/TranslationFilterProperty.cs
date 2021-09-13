@@ -10,7 +10,7 @@ namespace Azure.AI.Translation.Document
     public enum TranslationFilterProperty
     {
         /// <summary>
-        /// Sorting property corresponding to <see cref="TranslationStatus.CreatedOn"/>.
+        /// Sorting property corresponding to <see cref="TranslationStatusResult.CreatedOn"/>.
         /// </summary>
         CreatedOn = 0,
     }

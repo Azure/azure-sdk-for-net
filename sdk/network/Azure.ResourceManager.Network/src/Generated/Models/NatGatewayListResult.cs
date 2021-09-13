@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NatGatewayListResult. </summary>
         internal NatGatewayListResult()
         {
-            Value = new ChangeTrackingList<NatGateway>();
+            Value = new ChangeTrackingList<NatGatewayData>();
         }
 
         /// <summary> Initializes a new instance of NatGatewayListResult. </summary>
         /// <param name="value"> A list of Nat Gateways that exists in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal NatGatewayListResult(IReadOnlyList<NatGateway> value, string nextLink)
+        internal NatGatewayListResult(IReadOnlyList<NatGatewayData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of Nat Gateways that exists in a resource group. </summary>
-        public IReadOnlyList<NatGateway> Value { get; }
+        public IReadOnlyList<NatGatewayData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

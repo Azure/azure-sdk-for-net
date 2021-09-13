@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if false
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class VmssPublicIpAddressTests : NetworkTestsManagementClientBase
     {
@@ -28,12 +29,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
-
         private static string GetNameById(string Id, string resourceType)
         {
             string name = Id.Substring(Id.IndexOf(resourceType + '/') + resourceType.Length + 1);
@@ -47,44 +42,44 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         [Test]
         public async Task VmssPublicIpAddressApiTest()
         {
-            //string resourceGroupName = Recording.GenerateAssetName("azsmnet");
+            string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
-            //string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Compute/virtualMachineScaleSets");
-            //string deploymentName = Recording.GenerateAssetName("vmss");
-            //await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            string location = TestEnvironment.Location;
+            string deploymentName = Recording.GenerateAssetName("vmss");
+            var resourceGroup = CreateResourceGroup(resourceGroupName, location);
 
-            //await CreateVmss(ResourceManagementClient, resourceGroupName, deploymentName);
+            await CreateVmss(ResourceManagementClient, resourceGroupName, deploymentName);
 
-            //string virtualMachineScaleSetName = "vmssip";
-            //AsyncPageable<PublicIPAddress> vmssListAllPageResultAP = NetworkManagementClient.PublicIPAddresses.ListVirtualMachineScaleSetPublicIPAddressesAsync(resourceGroupName, virtualMachineScaleSetName);
-            //List<PublicIPAddress> vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
-            //List<PublicIPAddress> vmssListAllResult = vmssListAllPageResult.ToList();
-            //PublicIPAddress firstResult = vmssListAllResult.First();
+            string virtualMachineScaleSetName = "vmssip";
+            AsyncPageable<PublicIPAddress> vmssListAllPageResultAP = NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddressesAsync(resourceGroupName, virtualMachineScaleSetName);
+            List<PublicIPAddress> vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
+            List<PublicIPAddress> vmssListAllResult = vmssListAllPageResult.ToList();
+            PublicIPAddress firstResult = vmssListAllResult.First();
 
-            //Assert.NotNull(vmssListAllResult);
-            //Assert.AreEqual("Succeeded", firstResult.ProvisioningState.ToString());
-            //Assert.NotNull(firstResult.ResourceGuid);
+            Assert.NotNull(vmssListAllResult);
+            Assert.AreEqual("Succeeded", firstResult.ProvisioningState.ToString());
+            Assert.NotNull(firstResult.ResourceGuid);
 
-            //string idItem = firstResult.Id;
-            //string vmIndex = GetNameById(idItem, "virtualMachines");
-            //string nicName = GetNameById(idItem, "networkInterfaces");
-            //string ipConfigName = GetNameById(idItem, "ipConfigurations");
-            //string ipName = GetNameById(idItem, "publicIPAddresses");
+            string idItem = firstResult.Id;
+            string vmIndex = GetNameById(idItem, "virtualMachines");
+            string nicName = GetNameById(idItem, "networkInterfaces");
+            string ipConfigName = GetNameById(idItem, "ipConfigurations");
+            string ipName = GetNameById(idItem, "publicIPAddresses");
 
-            //AsyncPageable<PublicIPAddress> vmssListPageResultAP = NetworkManagementClient.PublicIPAddresses.ListVirtualMachineScaleSetVMPublicIPAddressesAsync(
-            //    resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName, ipConfigName);
-            //List<PublicIPAddress> vmssListPageResult = await vmssListPageResultAP.ToEnumerableAsync();
-            //List<PublicIPAddress> vmssListResult = vmssListPageResult.ToList();
+            AsyncPageable<PublicIPAddress> vmssListPageResultAP = NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetVMPublicIPAddressesAsync(
+                resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName, ipConfigName);
+            List<PublicIPAddress> vmssListPageResult = await vmssListPageResultAP.ToEnumerableAsync();
+            List<PublicIPAddress> vmssListResult = vmssListPageResult.ToList();
 
-            //Has.One.EqualTo(vmssListResult);
+            Has.One.EqualTo(vmssListResult);
 
-            //Response<PublicIPAddress> vmssGetResult = await NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddressAsync(
-            //    resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName, ipConfigName, ipName);
+            Response<PublicIPAddress> vmssGetResult = await NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddressAsync(
+                resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName, ipConfigName, ipName);
 
-            //Assert.NotNull(vmssGetResult);
-            //Assert.AreEqual("Succeeded", vmssGetResult.Value.ProvisioningState.ToString());
-            //Assert.NotNull(vmssGetResult.Value.ResourceGuid);
-            await Task.Delay(1);
+            Assert.NotNull(vmssGetResult);
+            Assert.AreEqual("Succeeded", vmssGetResult.Value.ProvisioningState.ToString());
+            Assert.NotNull(vmssGetResult.Value.ResourceGuid);
         }
     }
 }
+#endif

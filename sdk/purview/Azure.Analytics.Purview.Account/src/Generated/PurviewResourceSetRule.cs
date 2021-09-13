@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Account
     public partial class PurviewResourceSetRule
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -30,17 +31,129 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get a resource set config service model. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   advancedResourceSet: {
+        ///     modifiedAt: string (ISO 8601 Format),
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
+        ///   },
+        ///   name: string,
+        ///   pathPatternConfig: {
+        ///     acceptedPatterns: [
+        ///       {
+        ///         createdBy: string,
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         path: string
+        ///       }
+        ///     ],
+        ///     complexReplacers: [
+        ///       {
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         typeName: string
+        ///       }
+        ///     ],
+        ///     createdBy: string,
+        ///     enableDefaultPatterns: boolean,
+        ///     lastUpdatedTimestamp: number,
+        ///     modifiedBy: string,
+        ///     normalizationRules: [
+        ///       {
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         dynamicReplacement: boolean,
+        ///         entityTypes: [string],
+        ///         lastUpdatedTimestamp: number,
+        ///         name: string,
+        ///         regex: {
+        ///           maxDigits: number,
+        ///           maxLetters: number,
+        ///           minDashes: number,
+        ///           minDigits: number,
+        ///           minDigitsOrLetters: number,
+        ///           minDots: number,
+        ///           minHex: number,
+        ///           minLetters: number,
+        ///           minUnderscores: number,
+        ///           options: number,
+        ///           regexStr: string
+        ///         },
+        ///         replaceWith: string,
+        ///         version: number
+        ///       }
+        ///     ],
+        ///     regexReplacers: [
+        ///       {
+        ///         condition: string,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         doNotReplaceRegex: FastRegex,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         regex: FastRegex,
+        ///         replaceWith: string
+        ///       }
+        ///     ],
+        ///     rejectedPatterns: [Filter],
+        ///     scopedRules: [
+        ///       {
+        ///         bindingUrl: string,
+        ///         rules: [
+        ///           {
+        ///             displayName: string,
+        ///             isResourceSet: boolean,
+        ///             lastUpdatedTimestamp: number,
+        ///             name: string,
+        ///             qualifiedName: string
+        ///           }
+        ///         ],
+        ///         storeType: string
+        ///       }
+        ///     ],
+        ///     version: number
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetResourceSetRuleAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetResourceSetRuleRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetResourceSetRuleRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
             try
@@ -69,17 +182,129 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get a resource set config service model. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   advancedResourceSet: {
+        ///     modifiedAt: string (ISO 8601 Format),
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
+        ///   },
+        ///   name: string,
+        ///   pathPatternConfig: {
+        ///     acceptedPatterns: [
+        ///       {
+        ///         createdBy: string,
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         path: string
+        ///       }
+        ///     ],
+        ///     complexReplacers: [
+        ///       {
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         typeName: string
+        ///       }
+        ///     ],
+        ///     createdBy: string,
+        ///     enableDefaultPatterns: boolean,
+        ///     lastUpdatedTimestamp: number,
+        ///     modifiedBy: string,
+        ///     normalizationRules: [
+        ///       {
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         dynamicReplacement: boolean,
+        ///         entityTypes: [string],
+        ///         lastUpdatedTimestamp: number,
+        ///         name: string,
+        ///         regex: {
+        ///           maxDigits: number,
+        ///           maxLetters: number,
+        ///           minDashes: number,
+        ///           minDigits: number,
+        ///           minDigitsOrLetters: number,
+        ///           minDots: number,
+        ///           minHex: number,
+        ///           minLetters: number,
+        ///           minUnderscores: number,
+        ///           options: number,
+        ///           regexStr: string
+        ///         },
+        ///         replaceWith: string,
+        ///         version: number
+        ///       }
+        ///     ],
+        ///     regexReplacers: [
+        ///       {
+        ///         condition: string,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         doNotReplaceRegex: FastRegex,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         regex: FastRegex,
+        ///         replaceWith: string
+        ///       }
+        ///     ],
+        ///     rejectedPatterns: [Filter],
+        ///     scopedRules: [
+        ///       {
+        ///         bindingUrl: string,
+        ///         rules: [
+        ///           {
+        ///             displayName: string,
+        ///             isResourceSet: boolean,
+        ///             lastUpdatedTimestamp: number,
+        ///             name: string,
+        ///             qualifiedName: string
+        ///           }
+        ///         ],
+        ///         storeType: string
+        ///       }
+        ///     ],
+        ///     version: number
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetResourceSetRule(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetResourceSetRuleRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetResourceSetRuleRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
             try
@@ -107,11 +332,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetResourceSetRule"/> and <see cref="GetResourceSetRuleAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetResourceSetRuleRequest(RequestOptions options = null)
+        private HttpMessage CreateGetResourceSetRuleRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -126,509 +349,213 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Creates or updates an resource set config. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>advancedResourceSet</term>
-        ///     <term>AdvancedResourceSet</term>
-        ///     <term></term>
-        ///     <term>Gets or sets the advanced resource set property of the account.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the rule</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>pathPatternConfig</term>
-        ///     <term>PathPatternExtractorConfig</term>
-        ///     <term></term>
-        ///     <term>The configuration rules for path pattern extraction.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AdvancedResourceSet</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>modifiedAt</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date at which ResourceSetProcessing property of the account is updated.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resourceSetProcessing</term>
-        ///     <term>&quot;Default&quot; | &quot;Advanced&quot;</term>
-        ///     <term></term>
-        ///     <term>The advanced resource property of the account.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>PathPatternExtractorConfig</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>acceptedPatterns</term>
-        ///     <term>Filter[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>complexReplacers</term>
-        ///     <term>ComplexReplacerConfig[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>enableDefaultPatterns</term>
-        ///     <term>boolean</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>normalizationRules</term>
-        ///     <term>NormalizationRule[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>regexReplacers</term>
-        ///     <term>RegexReplacer[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>rejectedPatterns</term>
-        ///     <term>Filter[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scopedRules</term>
-        ///     <term>ScopedRule[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Filter</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>filterType</term>
-        ///     <term>&quot;Pattern&quot; | &quot;Regex&quot;</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>path</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ComplexReplacerConfig</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>disabled</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>disableRecursiveReplacerApplication</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>NormalizationRule</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>disabled</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dynamicReplacement</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>regex</term>
-        ///     <term>FastRegex</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replaceWith</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>RegexReplacer</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>condition</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>disabled</term>
-        ///     <term>boolean</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>disableRecursiveReplacerApplication</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>doNotReplaceRegex</term>
-        ///     <term>FastRegex</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>regex</term>
-        ///     <term>FastRegex</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replaceWith</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScopedRule</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>bindingUrl</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>rules</term>
-        ///     <term>Rule[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>storeType</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>FastRegex</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>maxDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxLetters</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minDashes</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minDigitsOrLetters</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minDots</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minHex</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minLetters</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minUnderscores</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>regexStr</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Rule</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isResourceSet</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   advancedResourceSet: {
+        ///     modifiedAt: string (ISO 8601 Format),
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
+        ///   },
+        ///   name: string,
+        ///   pathPatternConfig: {
+        ///     acceptedPatterns: [
+        ///       {
+        ///         createdBy: string,
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string (required),
+        ///         path: string (required)
+        ///       }
+        ///     ],
+        ///     complexReplacers: [
+        ///       {
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         typeName: string
+        ///       }
+        ///     ],
+        ///     createdBy: string (required),
+        ///     enableDefaultPatterns: boolean (required),
+        ///     lastUpdatedTimestamp: number,
+        ///     modifiedBy: string,
+        ///     normalizationRules: [
+        ///       {
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         dynamicReplacement: boolean,
+        ///         entityTypes: [string],
+        ///         lastUpdatedTimestamp: number,
+        ///         name: string,
+        ///         regex: {
+        ///           maxDigits: number,
+        ///           maxLetters: number,
+        ///           minDashes: number,
+        ///           minDigits: number,
+        ///           minDigitsOrLetters: number,
+        ///           minDots: number,
+        ///           minHex: number,
+        ///           minLetters: number,
+        ///           minUnderscores: number,
+        ///           options: number,
+        ///           regexStr: string
+        ///         },
+        ///         replaceWith: string,
+        ///         version: number
+        ///       }
+        ///     ],
+        ///     regexReplacers: [
+        ///       {
+        ///         condition: string,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean (required),
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         doNotReplaceRegex: FastRegex,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string (required),
+        ///         regex: FastRegex,
+        ///         replaceWith: string
+        ///       }
+        ///     ],
+        ///     rejectedPatterns: [Filter],
+        ///     scopedRules: [
+        ///       {
+        ///         bindingUrl: string (required),
+        ///         rules: [
+        ///           {
+        ///             displayName: string,
+        ///             isResourceSet: boolean,
+        ///             lastUpdatedTimestamp: number,
+        ///             name: string,
+        ///             qualifiedName: string (required)
+        ///           }
+        ///         ],
+        ///         storeType: string (required)
+        ///       }
+        ///     ],
+        ///     version: number
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   advancedResourceSet: {
+        ///     modifiedAt: string (ISO 8601 Format),
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
+        ///   },
+        ///   name: string,
+        ///   pathPatternConfig: {
+        ///     acceptedPatterns: [
+        ///       {
+        ///         createdBy: string,
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         path: string
+        ///       }
+        ///     ],
+        ///     complexReplacers: [
+        ///       {
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         typeName: string
+        ///       }
+        ///     ],
+        ///     createdBy: string,
+        ///     enableDefaultPatterns: boolean,
+        ///     lastUpdatedTimestamp: number,
+        ///     modifiedBy: string,
+        ///     normalizationRules: [
+        ///       {
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         dynamicReplacement: boolean,
+        ///         entityTypes: [string],
+        ///         lastUpdatedTimestamp: number,
+        ///         name: string,
+        ///         regex: {
+        ///           maxDigits: number,
+        ///           maxLetters: number,
+        ///           minDashes: number,
+        ///           minDigits: number,
+        ///           minDigitsOrLetters: number,
+        ///           minDots: number,
+        ///           minHex: number,
+        ///           minLetters: number,
+        ///           minUnderscores: number,
+        ///           options: number,
+        ///           regexStr: string
+        ///         },
+        ///         replaceWith: string,
+        ///         version: number
+        ///       }
+        ///     ],
+        ///     regexReplacers: [
+        ///       {
+        ///         condition: string,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         doNotReplaceRegex: FastRegex,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         regex: FastRegex,
+        ///         replaceWith: string
+        ///       }
+        ///     ],
+        ///     rejectedPatterns: [Filter],
+        ///     scopedRules: [
+        ///       {
+        ///         bindingUrl: string,
+        ///         rules: [
+        ///           {
+        ///             displayName: string,
+        ///             isResourceSet: boolean,
+        ///             lastUpdatedTimestamp: number,
+        ///             name: string,
+        ///             qualifiedName: string
+        ///           }
+        ///         ],
+        ///         storeType: string
+        ///       }
+        ///     ],
+        ///     version: number
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -637,11 +564,8 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
@@ -672,509 +596,213 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Creates or updates an resource set config. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>advancedResourceSet</term>
-        ///     <term>AdvancedResourceSet</term>
-        ///     <term></term>
-        ///     <term>Gets or sets the advanced resource set property of the account.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the rule</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>pathPatternConfig</term>
-        ///     <term>PathPatternExtractorConfig</term>
-        ///     <term></term>
-        ///     <term>The configuration rules for path pattern extraction.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AdvancedResourceSet</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>modifiedAt</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date at which ResourceSetProcessing property of the account is updated.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resourceSetProcessing</term>
-        ///     <term>&quot;Default&quot; | &quot;Advanced&quot;</term>
-        ///     <term></term>
-        ///     <term>The advanced resource property of the account.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>PathPatternExtractorConfig</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>acceptedPatterns</term>
-        ///     <term>Filter[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>complexReplacers</term>
-        ///     <term>ComplexReplacerConfig[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>enableDefaultPatterns</term>
-        ///     <term>boolean</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>normalizationRules</term>
-        ///     <term>NormalizationRule[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>regexReplacers</term>
-        ///     <term>RegexReplacer[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>rejectedPatterns</term>
-        ///     <term>Filter[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scopedRules</term>
-        ///     <term>ScopedRule[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Filter</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>filterType</term>
-        ///     <term>&quot;Pattern&quot; | &quot;Regex&quot;</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>path</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ComplexReplacerConfig</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>disabled</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>disableRecursiveReplacerApplication</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>NormalizationRule</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>disabled</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dynamicReplacement</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>regex</term>
-        ///     <term>FastRegex</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replaceWith</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>RegexReplacer</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>condition</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>disabled</term>
-        ///     <term>boolean</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>disableRecursiveReplacerApplication</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>doNotReplaceRegex</term>
-        ///     <term>FastRegex</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>regex</term>
-        ///     <term>FastRegex</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replaceWith</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScopedRule</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>bindingUrl</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>rules</term>
-        ///     <term>Rule[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>storeType</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>FastRegex</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>maxDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maxLetters</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minDashes</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minDigitsOrLetters</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minDots</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minHex</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minLetters</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minUnderscores</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>regexStr</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Rule</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isResourceSet</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastUpdatedTimestamp</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term></term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   advancedResourceSet: {
+        ///     modifiedAt: string (ISO 8601 Format),
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
+        ///   },
+        ///   name: string,
+        ///   pathPatternConfig: {
+        ///     acceptedPatterns: [
+        ///       {
+        ///         createdBy: string,
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string (required),
+        ///         path: string (required)
+        ///       }
+        ///     ],
+        ///     complexReplacers: [
+        ///       {
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         typeName: string
+        ///       }
+        ///     ],
+        ///     createdBy: string (required),
+        ///     enableDefaultPatterns: boolean (required),
+        ///     lastUpdatedTimestamp: number,
+        ///     modifiedBy: string,
+        ///     normalizationRules: [
+        ///       {
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         dynamicReplacement: boolean,
+        ///         entityTypes: [string],
+        ///         lastUpdatedTimestamp: number,
+        ///         name: string,
+        ///         regex: {
+        ///           maxDigits: number,
+        ///           maxLetters: number,
+        ///           minDashes: number,
+        ///           minDigits: number,
+        ///           minDigitsOrLetters: number,
+        ///           minDots: number,
+        ///           minHex: number,
+        ///           minLetters: number,
+        ///           minUnderscores: number,
+        ///           options: number,
+        ///           regexStr: string
+        ///         },
+        ///         replaceWith: string,
+        ///         version: number
+        ///       }
+        ///     ],
+        ///     regexReplacers: [
+        ///       {
+        ///         condition: string,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean (required),
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         doNotReplaceRegex: FastRegex,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string (required),
+        ///         regex: FastRegex,
+        ///         replaceWith: string
+        ///       }
+        ///     ],
+        ///     rejectedPatterns: [Filter],
+        ///     scopedRules: [
+        ///       {
+        ///         bindingUrl: string (required),
+        ///         rules: [
+        ///           {
+        ///             displayName: string,
+        ///             isResourceSet: boolean,
+        ///             lastUpdatedTimestamp: number,
+        ///             name: string,
+        ///             qualifiedName: string (required)
+        ///           }
+        ///         ],
+        ///         storeType: string (required)
+        ///       }
+        ///     ],
+        ///     version: number
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   advancedResourceSet: {
+        ///     modifiedAt: string (ISO 8601 Format),
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
+        ///   },
+        ///   name: string,
+        ///   pathPatternConfig: {
+        ///     acceptedPatterns: [
+        ///       {
+        ///         createdBy: string,
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         path: string
+        ///       }
+        ///     ],
+        ///     complexReplacers: [
+        ///       {
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         typeName: string
+        ///       }
+        ///     ],
+        ///     createdBy: string,
+        ///     enableDefaultPatterns: boolean,
+        ///     lastUpdatedTimestamp: number,
+        ///     modifiedBy: string,
+        ///     normalizationRules: [
+        ///       {
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         dynamicReplacement: boolean,
+        ///         entityTypes: [string],
+        ///         lastUpdatedTimestamp: number,
+        ///         name: string,
+        ///         regex: {
+        ///           maxDigits: number,
+        ///           maxLetters: number,
+        ///           minDashes: number,
+        ///           minDigits: number,
+        ///           minDigitsOrLetters: number,
+        ///           minDots: number,
+        ///           minHex: number,
+        ///           minLetters: number,
+        ///           minUnderscores: number,
+        ///           options: number,
+        ///           regexStr: string
+        ///         },
+        ///         replaceWith: string,
+        ///         version: number
+        ///       }
+        ///     ],
+        ///     regexReplacers: [
+        ///       {
+        ///         condition: string,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         disabled: boolean,
+        ///         disableRecursiveReplacerApplication: boolean,
+        ///         doNotReplaceRegex: FastRegex,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         name: string,
+        ///         regex: FastRegex,
+        ///         replaceWith: string
+        ///       }
+        ///     ],
+        ///     rejectedPatterns: [Filter],
+        ///     scopedRules: [
+        ///       {
+        ///         bindingUrl: string,
+        ///         rules: [
+        ///           {
+        ///             displayName: string,
+        ///             isResourceSet: boolean,
+        ///             lastUpdatedTimestamp: number,
+        ///             name: string,
+        ///             qualifiedName: string
+        ///           }
+        ///         ],
+        ///         storeType: string
+        ///       }
+        ///     ],
+        ///     version: number
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -1183,11 +811,8 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
@@ -1215,12 +840,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateResourceSetRule"/> and <see cref="CreateOrUpdateResourceSetRuleAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateResourceSetRuleRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateResourceSetRuleRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1235,17 +857,34 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteResourceSetRuleAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteResourceSetRuleRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteResourceSetRuleRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();
             try
@@ -1275,17 +914,34 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response DeleteResourceSetRule(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteResourceSetRuleRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteResourceSetRuleRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();
             try
@@ -1314,11 +970,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteResourceSetRule"/> and <see cref="DeleteResourceSetRuleAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteResourceSetRuleRequest(RequestOptions options = null)
+        private HttpMessage CreateDeleteResourceSetRuleRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();

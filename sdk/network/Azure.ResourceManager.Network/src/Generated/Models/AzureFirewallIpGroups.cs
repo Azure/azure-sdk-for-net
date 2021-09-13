@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IpGroups associated with azure firewall. </summary>
-    public partial class AzureFirewallIpGroups
+    public partial class AzureFirewallIpGroups : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of AzureFirewallIpGroups. </summary>
         internal AzureFirewallIpGroups()
@@ -16,16 +18,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of AzureFirewallIpGroups. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="changeNumber"> The iteration number. </param>
-        internal AzureFirewallIpGroups(string id, string changeNumber)
+        internal AzureFirewallIpGroups(string id, string changeNumber) : base(id)
         {
-            Id = id;
             ChangeNumber = changeNumber;
         }
 
-        /// <summary> Resource ID. </summary>
-        public string Id { get; }
         /// <summary> The iteration number. </summary>
         public string ChangeNumber { get; }
     }

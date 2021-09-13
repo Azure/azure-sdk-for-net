@@ -113,6 +113,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   in a deadlock scenario if those calls are awaited.
         /// </summary>
         ///
+        /// <remarks>
+        ///   It is not necessary to explicitly unregister this handler; it will be automatically unregistered when
+        ///   <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> is invoked.
+        /// </remarks>
+        ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
@@ -169,6 +174,9 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   set a generous number of retries and try timeout interval in the <see cref="EventHubProducerClientOptions.RetryOptions"/>.
         ///   Doing so will allow the <see cref="EventHubBufferedProducerClient" /> a higher chance to recover from transient failures.  This is
         ///   especially important when ensuring the order of events is needed.
+        ///
+        ///   It is not necessary to explicitly unregister this handler; it will be automatically unregistered when
+        ///   <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> is invoked.
         /// </remarks>
         ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
@@ -634,6 +642,10 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
+        /// <remarks>
+        ///   This method will automatically unregister the <see cref="SendEventBatchSucceededAsync"/> and <see cref="SendEventBatchFailedAsync"/> handlers.
+        /// </remarks>
+        ///
         public virtual Task CloseAsync(bool flush = true,
                                        CancellationToken cancellationToken = default)
         {
@@ -646,8 +658,9 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <remarks>
-        ///   Calling this method will also call <see cref="FlushAsync(CancellationToken)"/>, which will attempt to publish any events that are still pending,
-        ///   and finish any active sending.
+        ///   Calling this method will also invoke <see cref="FlushAsync(CancellationToken)"/>, which will attempt to publish any events that are still pending,
+        ///   and finish any active sending.  It will also automatically unregister the <see cref="SendEventBatchSucceededAsync"/> and <see cref="SendEventBatchFailedAsync"/>
+        ///   handlers.
         ///
         ///   This method is identical to <see cref="CloseAsync(bool, CancellationToken)"/> and either can be used to send pending events and clean up resources.
         /// </remarks>

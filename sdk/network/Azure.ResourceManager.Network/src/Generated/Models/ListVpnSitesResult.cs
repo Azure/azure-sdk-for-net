@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListVpnSitesResult. </summary>
         internal ListVpnSitesResult()
         {
-            Value = new ChangeTrackingList<VpnSite>();
+            Value = new ChangeTrackingList<VpnSiteData>();
         }
 
         /// <summary> Initializes a new instance of ListVpnSitesResult. </summary>
         /// <param name="value"> List of VpnSites. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListVpnSitesResult(IReadOnlyList<VpnSite> value, string nextLink)
+        internal ListVpnSitesResult(IReadOnlyList<VpnSiteData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of VpnSites. </summary>
-        public IReadOnlyList<VpnSite> Value { get; }
+        public IReadOnlyList<VpnSiteData> Value { get; }
         /// <summary> URL to get the next set of operation list results if there are any. </summary>
         public string NextLink { get; }
     }

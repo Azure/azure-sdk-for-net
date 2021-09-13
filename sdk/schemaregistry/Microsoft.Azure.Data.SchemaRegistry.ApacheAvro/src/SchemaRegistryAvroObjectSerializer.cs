@@ -71,16 +71,16 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         private string GetSchemaId(Schema schema, CancellationToken cancellationToken)
         {
             var schemaProperties = _options.AutoRegisterSchemas
-                ? _client.RegisterSchema(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString(), cancellationToken)
-                : _client.GetSchemaId(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString(), cancellationToken);
+                ? _client.RegisterSchema(_groupName, schema.Fullname, schema.ToString(), SerializationType.Avro, cancellationToken)
+                : _client.GetSchemaProperties(_groupName, schema.Fullname, schema.ToString(), SerializationType.Avro, cancellationToken);
             return schemaProperties.Id;
         }
 
         private async Task<string> GetSchemaIdAsync(Schema schema, CancellationToken cancellationToken)
         {
             var schemaProperties = _options.AutoRegisterSchemas
-                    ? (await _client.RegisterSchemaAsync(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString(), cancellationToken).ConfigureAwait(false)).Value
-                    : await _client.GetSchemaIdAsync(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString(), cancellationToken).ConfigureAwait(false);
+                    ? (await _client.RegisterSchemaAsync(_groupName, schema.Fullname, schema.ToString(), SerializationType.Avro, cancellationToken).ConfigureAwait(false)).Value
+                    : await _client.GetSchemaPropertiesAsync(_groupName, schema.Fullname, schema.ToString(), SerializationType.Avro, cancellationToken).ConfigureAwait(false);
             return schemaProperties.Id;
         }
 

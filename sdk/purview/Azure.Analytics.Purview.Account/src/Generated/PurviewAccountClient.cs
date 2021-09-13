@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Account
     public partial class PurviewAccountClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -48,23 +49,107 @@ namespace Azure.Analytics.Purview.Account
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
 
         /// <summary> Get an account. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   identity: {
+        ///     principalId: string,
+        ///     tenantId: string,
+        ///     type: &quot;SystemAssigned&quot;
+        ///   },
+        ///   location: string,
+        ///   name: string,
+        ///   properties: {
+        ///     cloudConnectors: {
+        ///       awsExternalId: string
+        ///     },
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByObjectId: string,
+        ///     endpoints: {
+        ///       catalog: string,
+        ///       guardian: string,
+        ///       scan: string
+        ///     },
+        ///     friendlyName: string,
+        ///     managedResourceGroupName: string,
+        ///     managedResources: {
+        ///       eventHubNamespace: string,
+        ///       resourceGroup: string,
+        ///       storageAccount: string
+        ///     },
+        ///     privateEndpointConnections: [
+        ///       {
+        ///         id: string,
+        ///         name: string,
+        ///         properties: {
+        ///           privateEndpoint: {
+        ///             id: string
+        ///           },
+        ///           privateLinkServiceConnectionState: {
+        ///             actionsRequired: string,
+        ///             description: string,
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
+        ///           },
+        ///           provisioningState: string
+        ///         },
+        ///         type: string
+        ///       }
+        ///     ],
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
+        ///   },
+        ///   sku: {
+        ///     capacity: number,
+        ///     name: &quot;Standard&quot;
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   },
+        ///   tags: Dictionary&lt;string, string&gt;,
+        ///   type: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetAccountPropertiesAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetAccountPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetAccountPropertiesRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
@@ -93,17 +178,101 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get an account. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   identity: {
+        ///     principalId: string,
+        ///     tenantId: string,
+        ///     type: &quot;SystemAssigned&quot;
+        ///   },
+        ///   location: string,
+        ///   name: string,
+        ///   properties: {
+        ///     cloudConnectors: {
+        ///       awsExternalId: string
+        ///     },
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByObjectId: string,
+        ///     endpoints: {
+        ///       catalog: string,
+        ///       guardian: string,
+        ///       scan: string
+        ///     },
+        ///     friendlyName: string,
+        ///     managedResourceGroupName: string,
+        ///     managedResources: {
+        ///       eventHubNamespace: string,
+        ///       resourceGroup: string,
+        ///       storageAccount: string
+        ///     },
+        ///     privateEndpointConnections: [
+        ///       {
+        ///         id: string,
+        ///         name: string,
+        ///         properties: {
+        ///           privateEndpoint: {
+        ///             id: string
+        ///           },
+        ///           privateLinkServiceConnectionState: {
+        ///             actionsRequired: string,
+        ///             description: string,
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
+        ///           },
+        ///           provisioningState: string
+        ///         },
+        ///         type: string
+        ///       }
+        ///     ],
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
+        ///   },
+        ///   sku: {
+        ///     capacity: number,
+        ///     name: &quot;Standard&quot;
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   },
+        ///   tags: Dictionary&lt;string, string&gt;,
+        ///   type: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetAccountProperties(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetAccountPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetAccountPropertiesRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
@@ -131,11 +300,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetAccountProperties"/> and <see cref="GetAccountPropertiesAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetAccountPropertiesRequest(RequestOptions options = null)
+        private HttpMessage CreateGetAccountPropertiesRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -150,20 +317,96 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Updates an account. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>friendlyName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The friendly name for the azure resource.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   friendlyName: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   identity: {
+        ///     principalId: string,
+        ///     tenantId: string,
+        ///     type: &quot;SystemAssigned&quot;
+        ///   },
+        ///   location: string,
+        ///   name: string,
+        ///   properties: {
+        ///     cloudConnectors: {
+        ///       awsExternalId: string
+        ///     },
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByObjectId: string,
+        ///     endpoints: {
+        ///       catalog: string,
+        ///       guardian: string,
+        ///       scan: string
+        ///     },
+        ///     friendlyName: string,
+        ///     managedResourceGroupName: string,
+        ///     managedResources: {
+        ///       eventHubNamespace: string,
+        ///       resourceGroup: string,
+        ///       storageAccount: string
+        ///     },
+        ///     privateEndpointConnections: [
+        ///       {
+        ///         id: string,
+        ///         name: string,
+        ///         properties: {
+        ///           privateEndpoint: {
+        ///             id: string
+        ///           },
+        ///           privateLinkServiceConnectionState: {
+        ///             actionsRequired: string,
+        ///             description: string,
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
+        ///           },
+        ///           provisioningState: string
+        ///         },
+        ///         type: string
+        ///       }
+        ///     ],
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
+        ///   },
+        ///   sku: {
+        ///     capacity: number,
+        ///     name: &quot;Standard&quot;
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   },
+        ///   tags: Dictionary&lt;string, string&gt;,
+        ///   type: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -172,11 +415,8 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateAccountPropertiesRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateUpdateAccountPropertiesRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
@@ -207,20 +447,96 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Updates an account. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>friendlyName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The friendly name for the azure resource.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   friendlyName: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   identity: {
+        ///     principalId: string,
+        ///     tenantId: string,
+        ///     type: &quot;SystemAssigned&quot;
+        ///   },
+        ///   location: string,
+        ///   name: string,
+        ///   properties: {
+        ///     cloudConnectors: {
+        ///       awsExternalId: string
+        ///     },
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByObjectId: string,
+        ///     endpoints: {
+        ///       catalog: string,
+        ///       guardian: string,
+        ///       scan: string
+        ///     },
+        ///     friendlyName: string,
+        ///     managedResourceGroupName: string,
+        ///     managedResources: {
+        ///       eventHubNamespace: string,
+        ///       resourceGroup: string,
+        ///       storageAccount: string
+        ///     },
+        ///     privateEndpointConnections: [
+        ///       {
+        ///         id: string,
+        ///         name: string,
+        ///         properties: {
+        ///           privateEndpoint: {
+        ///             id: string
+        ///           },
+        ///           privateLinkServiceConnectionState: {
+        ///             actionsRequired: string,
+        ///             description: string,
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
+        ///           },
+        ///           provisioningState: string
+        ///         },
+        ///         type: string
+        ///       }
+        ///     ],
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
+        ///   },
+        ///   sku: {
+        ///     capacity: number,
+        ///     name: &quot;Standard&quot;
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   },
+        ///   tags: Dictionary&lt;string, string&gt;,
+        ///   type: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -229,11 +545,8 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateAccountPropertiesRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateUpdateAccountPropertiesRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
@@ -261,12 +574,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateAccountProperties"/> and <see cref="UpdateAccountPropertiesAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -281,17 +591,41 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> List the authorization keys associated with this account. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   atlasKafkaPrimaryEndpoint: string,
+        ///   atlasKafkaSecondaryEndpoint: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetAccessKeysAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetAccessKeysRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetAccessKeysRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
@@ -320,17 +654,41 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> List the authorization keys associated with this account. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   atlasKafkaPrimaryEndpoint: string,
+        ///   atlasKafkaSecondaryEndpoint: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetAccessKeys(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetAccessKeysRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetAccessKeysRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
@@ -358,11 +716,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetAccessKeys"/> and <see cref="GetAccessKeysAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetAccessKeysRequest(RequestOptions options = null)
+        private HttpMessage CreateGetAccessKeysRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -377,20 +733,36 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Regenerate the authorization keys associated with this data catalog. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>keyType</term>
-        ///     <term>&quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;</term>
-        ///     <term></term>
-        ///     <term>The access key type.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   atlasKafkaPrimaryEndpoint: string,
+        ///   atlasKafkaSecondaryEndpoint: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -399,11 +771,8 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRegenerateAccessKeyRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateRegenerateAccessKeyRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
@@ -434,20 +803,36 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Regenerate the authorization keys associated with this data catalog. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>keyType</term>
-        ///     <term>&quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;</term>
-        ///     <term></term>
-        ///     <term>The access key type.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   atlasKafkaPrimaryEndpoint: string,
+        ///   atlasKafkaSecondaryEndpoint: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -456,11 +841,8 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRegenerateAccessKeyRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateRegenerateAccessKeyRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
@@ -488,12 +870,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="RegenerateAccessKey"/> and <see cref="RegenerateAccessKeyAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -508,6 +887,53 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> List the collections in the account. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   nextLink: string,
+        ///   value: [
+        ///     {
+        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
+        ///       description: string,
+        ///       friendlyName: string,
+        ///       name: string,
+        ///       parentCollection: {
+        ///         referenceName: string,
+        ///         type: string
+        ///       },
+        ///       systemData: {
+        ///         createdAt: string (ISO 8601 Format),
+        ///         createdBy: string,
+        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///         lastModifiedAt: string (ISO 8601 Format),
+        ///         lastModifiedBy: string,
+        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -515,11 +941,8 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCollectionsRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetCollectionsRequest(skipToken);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
             scope.Start();
             try
@@ -548,6 +971,53 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> List the collections in the account. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   nextLink: string,
+        ///   value: [
+        ///     {
+        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
+        ///       description: string,
+        ///       friendlyName: string,
+        ///       name: string,
+        ///       parentCollection: {
+        ///         referenceName: string,
+        ///         type: string
+        ///       },
+        ///       systemData: {
+        ///         createdAt: string (ISO 8601 Format),
+        ///         createdBy: string,
+        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///         lastModifiedAt: string (ISO 8601 Format),
+        ///         lastModifiedBy: string,
+        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -555,11 +1025,8 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCollectionsRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetCollectionsRequest(skipToken);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
             scope.Start();
             try
@@ -587,12 +1054,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetCollections"/> and <see cref="GetCollectionsAsync"/> operations. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetCollectionsRequest(string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateGetCollectionsRequest(string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -609,6 +1073,127 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get a resource set config service model. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   nextLink: string,
+        ///   value: [
+        ///     {
+        ///       advancedResourceSet: {
+        ///         modifiedAt: string (ISO 8601 Format),
+        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
+        ///       },
+        ///       name: string,
+        ///       pathPatternConfig: {
+        ///         acceptedPatterns: [
+        ///           {
+        ///             createdBy: string,
+        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             path: string
+        ///           }
+        ///         ],
+        ///         complexReplacers: [
+        ///           {
+        ///             createdBy: string,
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             disableRecursiveReplacerApplication: boolean,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             typeName: string
+        ///           }
+        ///         ],
+        ///         createdBy: string,
+        ///         enableDefaultPatterns: boolean,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         normalizationRules: [
+        ///           {
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             dynamicReplacement: boolean,
+        ///             entityTypes: [string],
+        ///             lastUpdatedTimestamp: number,
+        ///             name: string,
+        ///             regex: {
+        ///               maxDigits: number,
+        ///               maxLetters: number,
+        ///               minDashes: number,
+        ///               minDigits: number,
+        ///               minDigitsOrLetters: number,
+        ///               minDots: number,
+        ///               minHex: number,
+        ///               minLetters: number,
+        ///               minUnderscores: number,
+        ///               options: number,
+        ///               regexStr: string
+        ///             },
+        ///             replaceWith: string,
+        ///             version: number
+        ///           }
+        ///         ],
+        ///         regexReplacers: [
+        ///           {
+        ///             condition: string,
+        ///             createdBy: string,
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             disableRecursiveReplacerApplication: boolean,
+        ///             doNotReplaceRegex: FastRegex,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             regex: FastRegex,
+        ///             replaceWith: string
+        ///           }
+        ///         ],
+        ///         rejectedPatterns: [Filter],
+        ///         scopedRules: [
+        ///           {
+        ///             bindingUrl: string,
+        ///             rules: [
+        ///               {
+        ///                 displayName: string,
+        ///                 isResourceSet: boolean,
+        ///                 lastUpdatedTimestamp: number,
+        ///                 name: string,
+        ///                 qualifiedName: string
+        ///               }
+        ///             ],
+        ///             storeType: string
+        ///           }
+        ///         ],
+        ///         version: number
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -616,11 +1201,8 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetResourceSetRulesRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetResourceSetRulesRequest(skipToken);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
             scope.Start();
             try
@@ -649,6 +1231,127 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get a resource set config service model. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   nextLink: string,
+        ///   value: [
+        ///     {
+        ///       advancedResourceSet: {
+        ///         modifiedAt: string (ISO 8601 Format),
+        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
+        ///       },
+        ///       name: string,
+        ///       pathPatternConfig: {
+        ///         acceptedPatterns: [
+        ///           {
+        ///             createdBy: string,
+        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             path: string
+        ///           }
+        ///         ],
+        ///         complexReplacers: [
+        ///           {
+        ///             createdBy: string,
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             disableRecursiveReplacerApplication: boolean,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             typeName: string
+        ///           }
+        ///         ],
+        ///         createdBy: string,
+        ///         enableDefaultPatterns: boolean,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         normalizationRules: [
+        ///           {
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             dynamicReplacement: boolean,
+        ///             entityTypes: [string],
+        ///             lastUpdatedTimestamp: number,
+        ///             name: string,
+        ///             regex: {
+        ///               maxDigits: number,
+        ///               maxLetters: number,
+        ///               minDashes: number,
+        ///               minDigits: number,
+        ///               minDigitsOrLetters: number,
+        ///               minDots: number,
+        ///               minHex: number,
+        ///               minLetters: number,
+        ///               minUnderscores: number,
+        ///               options: number,
+        ///               regexStr: string
+        ///             },
+        ///             replaceWith: string,
+        ///             version: number
+        ///           }
+        ///         ],
+        ///         regexReplacers: [
+        ///           {
+        ///             condition: string,
+        ///             createdBy: string,
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             disableRecursiveReplacerApplication: boolean,
+        ///             doNotReplaceRegex: FastRegex,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             regex: FastRegex,
+        ///             replaceWith: string
+        ///           }
+        ///         ],
+        ///         rejectedPatterns: [Filter],
+        ///         scopedRules: [
+        ///           {
+        ///             bindingUrl: string,
+        ///             rules: [
+        ///               {
+        ///                 displayName: string,
+        ///                 isResourceSet: boolean,
+        ///                 lastUpdatedTimestamp: number,
+        ///                 name: string,
+        ///                 qualifiedName: string
+        ///               }
+        ///             ],
+        ///             storeType: string
+        ///           }
+        ///         ],
+        ///         version: number
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -656,11 +1359,8 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetResourceSetRulesRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetResourceSetRulesRequest(skipToken);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
             scope.Start();
             try
@@ -688,12 +1388,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetResourceSetRules"/> and <see cref="GetResourceSetRulesAsync"/> operations. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetResourceSetRulesRequest(string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateGetResourceSetRulesRequest(string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

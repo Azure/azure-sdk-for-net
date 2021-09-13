@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of PublicIPAddressSku. </summary>
         /// <param name="name"> Name of a public IP address SKU. </param>
-        internal PublicIPAddressSku(PublicIPAddressSkuName? name)
+        /// <param name="tier"> Tier of a public IP address SKU. </param>
+        internal PublicIPAddressSku(PublicIPAddressSkuName? name, PublicIPAddressSkuTier? tier)
         {
             Name = name;
+            Tier = tier;
         }
 
         /// <summary> Name of a public IP address SKU. </summary>
         public PublicIPAddressSkuName? Name { get; set; }
+        /// <summary> Tier of a public IP address SKU. </summary>
+        public PublicIPAddressSkuTier? Tier { get; set; }
     }
 }
