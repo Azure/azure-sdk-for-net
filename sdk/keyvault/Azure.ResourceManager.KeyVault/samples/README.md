@@ -11,4 +11,4 @@ description: Samples for the Azure.ResourceManager.KeyVault client library
 
 # Azure.ResourceManager.KeyVault Samples
 
-- [Managing Key Vaults](Sample1_ManagingKeyVaults.md)
+- Remove the link, add it back in next PR
