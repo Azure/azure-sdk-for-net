@@ -6,8 +6,15 @@ metadata:
     testName: kasobol-net-chaos
     chaos: "true"
 spec:
+  nodeSelector:
+    sku: 'storage'
   containers:
     - name: kasobol-net-chaos
+      resources:
+        requests:
+          memory: "10Gi"
+        limits:
+          memory: "15Gi"
       image: stresstestregistry.azurecr.io/kasobol/net-chaos:19
       command: ["bash", "run.sh"]
       {{- include "stress-test-addons.container-env" . | nindent 6 }}
