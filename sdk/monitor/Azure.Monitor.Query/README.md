@@ -28,7 +28,7 @@ Install the Azure Monitor Query client library for .NET with [NuGet][package]:
 dotnet add package Azure.Monitor.Query
 ```
 
-### Create the client
+### Authenticate the client
 
 An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class. Pass it to the constructor of your `LogsQueryClient` or `MetricsQueryClient` class.
 
@@ -37,6 +37,16 @@ An authenticated client is required to query Logs or Metrics. To authenticate, c
 For examples of Logs and Metrics queries, see the [Examples](#examples) section.
 
 ## Key concepts
+
+### Logs query rate limits and throttling
+
+Each Azure Active Directory user is able to make up to 200 requests per 30 seconds, with no cap on the total calls per day. If requests are made at a rate higher than this, these requests will receive HTTP status code 429 (Too Many Requests) along with the `Retry-After: <delta-seconds>` header. The header indicates the number of seconds until requests to this app are likely to be accepted.
+
+In addition to call rate limits and daily quota caps, there are limits on queries themselves. Queries cannot:
+
+- Return more than 500,000 rows.
+- Return more than 64,000,000 bytes (~61 MiB total data).
+- Run longer than 10 minutes by default. See this for details.
 
 ### Metrics data structure
 
