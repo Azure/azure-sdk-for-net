@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Azure.Core.Pipeline;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -43,6 +44,7 @@ namespace Azure.Core.TestFramework
         private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         private Exception _bootstrappingException;
         private readonly Type _type;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         protected TestEnvironment()
         {
@@ -71,6 +73,7 @@ namespace Azure.Core.TestFramework
 
             _prefix = _serviceName.ToUpperInvariant() + "_";
             _type = GetType();
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions.Default);
 
             ParseEnvironmentFile();
         }
@@ -229,36 +232,158 @@ namespace Azure.Core.TestFramework
         /// <returns>A task.</returns>
         public async ValueTask WaitForEnvironmentAsync()
         {
-            if (GlobalIsRunningInCI && Mode == RecordedTestMode.Live)
+            Task task;
+            lock (s_environmentStateCache)
             {
-                Task task;
-                lock (s_environmentStateCache)
+                if (!s_environmentStateCache.TryGetValue(_type, out task))
                 {
-                    if (!s_environmentStateCache.TryGetValue(_type, out task))
-                    {
-                        task = WaitForEnvironmentInternalAsync();
-                        s_environmentStateCache[_type] = task;
-                    }
+                    task = WaitForEnvironmentInternalAsync();
+                    s_environmentStateCache[_type] = task;
                 }
-                await task;
             }
+            await task;
         }
 
         private async Task WaitForEnvironmentInternalAsync()
         {
-            int numberOfTries = 60;
-            TimeSpan delay = TimeSpan.FromSeconds(10);
-            for (int i = 0; i < numberOfTries; i++)
+            if (GlobalIsRunningInCI)
             {
-                var isReady = await IsEnvironmentReadyAsync();
-                if (isReady)
+                if (Mode == RecordedTestMode.Live)
                 {
-                    return;
+                    int numberOfTries = 60;
+                    TimeSpan delay = TimeSpan.FromSeconds(10);
+                    for (int i = 0; i < numberOfTries; i++)
+                    {
+                        var isReady = await IsEnvironmentReadyAsync();
+                        if (isReady)
+                        {
+                            return;
+                        }
+
+                        await Task.Delay(delay);
+                    }
+
+                    throw new InvalidOperationException(
+                        "The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
                 }
-                await Task.Delay(delay);
+            }
+            else
+            {
+                await ExtendResourceGroupExpirationAsync();
+            }
+        }
+
+        private async Task ExtendResourceGroupExpirationAsync()
+        {
+            if (Mode is not RecordedTestMode.Live or RecordedTestMode.Record)
+            {
+                return;
             }
 
-            throw new InvalidOperationException("The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
+            // determine whether it is even possible to talk to the management endpoint
+            string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
+            if (resourceGroup == null)
+            {
+                return;
+            }
+
+            string subscription = GetOptionalVariable("SUBSCRIPTION_ID");
+            if (subscription == null)
+            {
+                return;
+            }
+
+            string tenantId = GetOptionalVariable("TENANT_ID");
+            string clientId = GetOptionalVariable("CLIENT_ID");
+            string clientSecret = GetOptionalVariable("CLIENT_SECRET");
+            string authorityHost = GetOptionalVariable("AZURE_AUTHORITY_HOST");
+
+            if (tenantId == null || clientId == null || clientSecret == null || authorityHost == null)
+            {
+                return;
+            }
+
+            // intentionally not using the Credential property as we don't want to throw if the env vars are not available, and we want to allow this to vary per environment.
+            var credential = new ClientSecretCredential(
+                    tenantId,
+                    clientId,
+                    clientSecret,
+                    new ClientSecretCredentialOptions()
+                    {
+                        AuthorityHost = new Uri(authorityHost)
+                    });
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(ClientOptions.Default, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com/.default"));
+
+            // create the GET request for the resource group information
+            Request request = pipeline.CreateRequest();
+            Uri uri = new Uri($"{ResourceManagerUrl}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
+            request.Uri.Reset(uri);
+            request.Method = RequestMethod.Get;
+
+            // send the GET request
+            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            // resource group not found - nothing we can do here
+            if (response.Status == 404)
+            {
+                return;
+            }
+
+            // unexpected response => throw an exception
+            if (response.Status != 200)
+            {
+                throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            }
+
+            // parse the response
+            JsonElement json = JsonDocument.Parse(response.Content).RootElement;
+            if (json.TryGetProperty("tags", out JsonElement tags) && tags.TryGetProperty("DeleteAfter", out JsonElement deleteAfter))
+            {
+                DateTimeOffset deleteDto = DateTimeOffset.Parse(deleteAfter.GetString());
+                if (deleteDto.Subtract(DateTimeOffset.Now) < TimeSpan.FromDays(5))
+                {
+                    // construct the JSON to send for PATCH request
+                    using var stream = new MemoryStream();
+                    var writer = new Utf8JsonWriter(stream);
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartObject();
+
+                    // even though this is a PATCH operation, we still need to include all other tags
+                    // otherwise they will be deleted.
+                    foreach (JsonProperty property in tags.EnumerateObject())
+                    {
+                        if (property.NameEquals("DeleteAfter"))
+                        {
+                            DateTimeOffset newTime = deleteDto.AddDays(5);
+                            writer.WriteString("DeleteAfter", newTime);
+                        }
+                        else
+                        {
+                            property.WriteTo(writer);
+                        }
+                    }
+
+                    writer.WriteEndObject();
+                    writer.WriteEndObject();
+                    writer.Flush();
+
+                    // create the PATCH request
+                    request = pipeline.CreateRequest();
+                    request.Uri.Reset(uri);
+                    request.Method = RequestMethod.Patch;
+                    request.Headers.SetValue("Content-Type", "application/json");
+                    stream.Position = 0;
+                    request.Content = RequestContent.Create(stream);
+
+                    // send the PATCH request
+                    response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+                    if (response.Status != 200)
+                    {
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -281,7 +406,7 @@ namespace Azure.Core.TestFramework
 
             string value = GetOptionalVariable(name);
 
-            if (!Mode.HasValue)
+            if (Mode is null or RecordedTestMode.Live)
             {
                 return value;
             }

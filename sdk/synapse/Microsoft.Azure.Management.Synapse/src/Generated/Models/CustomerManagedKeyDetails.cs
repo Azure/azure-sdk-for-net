@@ -32,10 +32,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="status">The customer managed key status on the
         /// workspace</param>
         /// <param name="key">The key object of the workspace</param>
-        public CustomerManagedKeyDetails(string status = default(string), WorkspaceKeyDetails key = default(WorkspaceKeyDetails))
+        /// <param name="kekIdentity">Key encryption key</param>
+        public CustomerManagedKeyDetails(string status = default(string), WorkspaceKeyDetails key = default(WorkspaceKeyDetails), KekIdentityProperties kekIdentity = default(KekIdentityProperties))
         {
             Status = status;
             Key = key;
+            KekIdentity = kekIdentity;
             CustomInit();
         }
 
@@ -55,6 +57,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "key")]
         public WorkspaceKeyDetails Key { get; set; }
+
+        /// <summary>
+        /// Gets or sets key encryption key
+        /// </summary>
+        [JsonProperty(PropertyName = "kekIdentity")]
+        public KekIdentityProperties KekIdentity { get; set; }
 
     }
 }

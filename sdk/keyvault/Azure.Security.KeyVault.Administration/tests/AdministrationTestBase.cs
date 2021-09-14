@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await Task.Delay(delay ?? KeyVaultTestEnvironment.DefaultPollingInterval);
+                await Task.Delay(delay ?? PollingInterval);
             }
             else if (playbackDelay != null)
             {
@@ -192,7 +192,16 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await KeyClient.GetDeletedKeyAsync(name), delay: PollingInterval);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await KeyClient.GetDeletedKeyAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for key '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
     }

@@ -20,19 +20,17 @@ namespace Azure.Identity.Tests.Mock
             _vscAdapter = vscAdapter;
         }
 
-        public Func<ManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
-
         public override TokenCredential CreateEnvironmentCredential()
             => new EnvironmentCredential(Pipeline);
 
         public override TokenCredential CreateManagedIdentityCredential(string clientId)
-            => new ManagedIdentityCredential(CreateManagedIdentityClient(clientId));
+            => new ManagedIdentityCredential(new ManagedIdentityClient(Pipeline, clientId));
 
         public override TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
-            => new SharedTokenCacheCredential(tenantId, username, default, Pipeline);
+            => new SharedTokenCacheCredential(tenantId, username, null, Pipeline);
 
-        public override TokenCredential CreateInteractiveBrowserCredential(string tenantId)
-            => new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions(), Pipeline);
+        public override TokenCredential CreateInteractiveBrowserCredential(string tenantId, string clientId)
+            => new InteractiveBrowserCredential(tenantId, clientId ?? Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions(), Pipeline);
 
         public override TokenCredential CreateAzureCliCredential()
             => new AzureCliCredential(Pipeline, _processService);
@@ -42,11 +40,6 @@ namespace Azure.Identity.Tests.Mock
 
         public override TokenCredential CreateVisualStudioCodeCredential(string tenantId)
             => new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = tenantId }, Pipeline, default, _fileSystem, _vscAdapter);
-
-        private ManagedIdentityClient CreateManagedIdentityClient(string clientId)
-            => ManagedIdentitySourceFactory != default
-                ? new MockManagedIdentityClient(Pipeline, clientId) { ManagedIdentitySourceFactory = ManagedIdentitySourceFactory }
-                : new ManagedIdentityClient(Pipeline, clientId);
 
         public override TokenCredential CreateAzurePowerShellCredential()
             => new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), Pipeline, _processService);

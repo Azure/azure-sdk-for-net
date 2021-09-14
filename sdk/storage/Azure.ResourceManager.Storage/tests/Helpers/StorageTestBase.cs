@@ -14,6 +14,7 @@ using SkuTier= Azure.ResourceManager.Storage.Models.SkuTier;
 
 namespace Azure.ResourceManager.Storage.Tests.Helpers
 {
+    [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/23897")]
     [ClientTestFixture]
     public class StorageTestBase:ManagementRecordedTestBase<StorageManagementTestEnvironment>
     {

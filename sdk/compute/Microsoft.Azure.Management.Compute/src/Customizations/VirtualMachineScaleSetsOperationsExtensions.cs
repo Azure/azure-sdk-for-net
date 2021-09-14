@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSet> GetAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSet> GetAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken)
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -47,15 +47,6 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
-            /// </param>
-            /// <param name='expand'>
-            /// The expand expression to apply on the operation. 'UserData' retrieves the
-            /// UserData property of the VM scale set that was provided by the user during
-            /// the VM scale set Create/Update operation. Possible values include:
-            /// 'userData'
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
             /// </param>
             public static async Task<VirtualMachineScaleSet> GetAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName)
             {
