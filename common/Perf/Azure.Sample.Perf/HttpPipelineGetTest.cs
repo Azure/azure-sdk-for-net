@@ -31,7 +31,7 @@ namespace Azure.Sample.Perf
             await response.ContentStream.CopyToAsync(Stream.Null);
         }
 
-        // TODO: Can Request be reused?
+        // Request object should not be re-used across distinct requests
         private Request CreateRequest()
         {
             var request = _httpPipeline.CreateRequest();
