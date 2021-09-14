@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Microsoft.Azure.Management.DataBoxEdge
 {
-    public static class ActivationKeyHelper
+    internal static class ActivationKeyHelper
     {
         #region GenerateActivationKey
 

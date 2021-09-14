@@ -51,6 +51,7 @@ namespace DataBoxEdge.Tests
             // Step 2. GenerateCIK
             var generatedCIK = Client.Devices.GenerateCIK();
 
+            /*
             // Step 3: Create KeyVault
             // Please follow KeyVault documentation to create keyvualt:
             // https://docs.microsoft.com/en-us/azure/key-vault/keys/quick-create-template?tabs=CLI
@@ -73,7 +74,7 @@ namespace DataBoxEdge.Tests
             TestConstants.DefaultResourceLocation, generatedCIK);
 
             // Delete the CIK on the KeyVault (Note: Required step only for the test case)
-            TestUtilities.DeleteSecretFromKeyVault(TestConstants.EdgeDeviceKeyVault, CIKName);
+            TestUtilities.DeleteSecretFromKeyVault(TestConstants.EdgeDeviceKeyVault, CIKName);*/
         }
 
         /// <summary>

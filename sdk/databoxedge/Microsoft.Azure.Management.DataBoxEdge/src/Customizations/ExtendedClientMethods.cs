@@ -120,12 +120,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         }
 
         /// <summary>
-        /// Use this method to generate the activation key for any device to register it with the ASE resource
+        /// Use this method to generate the activation key for a device to register it with the ASE resource
         /// </summary>
-        /// <param name="resourceGroupName">Name of the Resourcegroup</param>
+        /// <param name="resourceGroupName">Name of the resource group</param>
         /// <param name="resourceName">Name of the resource</param>
         /// <param name="resourceLocation">Location of the resource</param>
-        /// <param name="subscriptionId">Subscription Id of the resource</param>
+
         /// <returns></returns>
         public static string GenerateActivationKey(this IDevicesOperations operations, 
             string resourceGroupName, 
