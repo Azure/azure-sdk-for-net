@@ -319,6 +319,7 @@ namespace Azure.Monitor.Query
                     _ => LogsBatchQueryResultStatus.Success
                 };
                 body.Id = innerResponse.Id;
+                batchResponses.Add(body);
             }
 
             return Response.FromValue(
