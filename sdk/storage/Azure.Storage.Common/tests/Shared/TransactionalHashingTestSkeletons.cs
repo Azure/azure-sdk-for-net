@@ -151,8 +151,14 @@ namespace Azure.Storage.Test.Shared
             Func<TClient, Stream, UploadTransactionalHashingOptions, Task> uploadPartitionAsync) where TClientOptions : ClientOptions
         {
             var data = TestHelper.GetRandomBuffer(2 * Constants.KB, random);
+            var hashSizeBytes = algorithm switch
+            {
+                TransactionalHashAlgorithm.MD5 => 16,
+                TransactionalHashAlgorithm.StorageCrc64 => 8,
+                _ => throw new ArgumentException("Cannot determine hash size for provided algorithm type")
+            };
             // hash needs to be wrong so we detect difference from auto-SDK correct calculation
-            var precalculatedHash = TestHelper.GetRandomBuffer(16, random);
+            var precalculatedHash = TestHelper.GetRandomBuffer(hashSizeBytes, random);
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm,
@@ -267,7 +273,8 @@ namespace Azure.Storage.Test.Shared
             Func<TClientOptions> getOptions,
             TParentClient parentClient,
             Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
-            Func<TClient, Stream, UploadTransactionalHashingOptions, StorageTransferOptions, Task> parallelUploadAsync) where TClientOptions : ClientOptions
+            Func<TClient, Stream, UploadTransactionalHashingOptions, StorageTransferOptions, Task> parallelUploadAsync,
+            Func<Request, bool> isHashExpected = default) where TClientOptions : ClientOptions
         {
             var data = TestHelper.GetRandomBuffer(Constants.KB, random);
             var hashingOptions = new UploadTransactionalHashingOptions
@@ -276,7 +283,7 @@ namespace Azure.Storage.Test.Shared
             };
             StorageTransferOptions transferOptions = default;
 
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm));
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm, isHashExpected));
             var clientOptions = getOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
@@ -295,7 +302,8 @@ namespace Azure.Storage.Test.Shared
             Func<TClientOptions> getOptions,
             TParentClient parentClient,
             Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
-            Func<TClient, Stream, UploadTransactionalHashingOptions, StorageTransferOptions, Task> parallelUploadAsync) where TClientOptions : ClientOptions
+            Func<TClient, Stream, UploadTransactionalHashingOptions, StorageTransferOptions, Task> parallelUploadAsync,
+            Func<Request, bool> isHashExpected = default) where TClientOptions : ClientOptions
         {
             var data = TestHelper.GetRandomBuffer(Constants.KB, random);
             // hash needs to be wrong so we detect difference from auto-SDK correct calculation
@@ -312,7 +320,7 @@ namespace Azure.Storage.Test.Shared
                 MaximumTransferSize = long.MaxValue
             };
 
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm, expectedHash: precalculatedHash));
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm, isHashExpected, precalculatedHash));
             var clientOptions = getOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
