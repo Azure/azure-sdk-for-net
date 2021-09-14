@@ -18,52 +18,52 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A Class representing a SharedGalleryImage along with the instance operations that can be performed on it. </summary>
-    public partial class SharedGalleryImage : ArmResource
+    /// <summary> A Class representing a CloudServiceRole along with the instance operations that can be performed on it. </summary>
+    public partial class CloudServiceRole : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SharedGalleryImagesRestOperations _restClient;
-        private readonly SharedGalleryImageData _data;
+        private readonly CloudServiceRolesRestOperations _restClient;
+        private readonly CloudServiceRoleData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SharedGalleryImage"/> class for mocking. </summary>
-        protected SharedGalleryImage()
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceRole"/> class for mocking. </summary>
+        protected CloudServiceRole()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SharedGalleryImage"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "CloudServiceRole"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SharedGalleryImage(ArmResource options, SharedGalleryImageData resource)
+        internal CloudServiceRole(ArmResource options, CloudServiceRoleData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SharedGalleryImagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restClient = new CloudServiceRolesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SharedGalleryImage"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceRole"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SharedGalleryImage(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal CloudServiceRole(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SharedGalleryImagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restClient = new CloudServiceRolesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SharedGalleryImage"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceRole"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SharedGalleryImage(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal CloudServiceRole(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SharedGalleryImagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restClient = new CloudServiceRolesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/sharedGalleries/images";
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/cloudServices/roles";
 
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SharedGalleryImageData Data
+        public virtual CloudServiceRoleData Data
         {
             get
             {
@@ -83,18 +83,18 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Get a shared gallery image by subscription id or tenant id. </summary>
+        /// <summary> Gets a role from a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SharedGalleryImage>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CloudServiceRole>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImage.Get");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceRole.Get");
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SharedGalleryImage(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Get a shared gallery image by subscription id or tenant id. </summary>
+        /// <summary> Gets a role from a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SharedGalleryImage> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CloudServiceRole> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImage.Get");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceRole.Get");
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SharedGalleryImage(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRole(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,13 +137,6 @@ namespace Azure.ResourceManager.Compute
         public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// <summary> Gets a list of SharedGalleryImageVersions in the SharedGalleryImage. </summary>
-        /// <returns> An object representing collection of SharedGalleryImageVersions and their operations over a SharedGalleryImage. </returns>
-        public SharedGalleryImageVersionContainer GetSharedGalleryImageVersions()
-        {
-            return new SharedGalleryImageVersionContainer(this);
         }
     }
 }

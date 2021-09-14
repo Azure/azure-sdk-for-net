@@ -67,6 +67,17 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
+        #region VirtualMachineExtensionImage
+        /// <summary> Gets an object representing a VirtualMachineExtensionImage along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineExtensionImage" /> object. </returns>
+        public static VirtualMachineExtensionImage GetVirtualMachineExtensionImage(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineExtensionImage(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region VirtualMachineExtensionVirtualMachine
         /// <summary> Gets an object representing a VirtualMachineExtensionVirtualMachine along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -75,6 +86,17 @@ namespace Azure.ResourceManager.Compute
         public static VirtualMachineExtensionVirtualMachine GetVirtualMachineExtensionVirtualMachine(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineExtensionVirtualMachine(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region VirtualMachineImage
+        /// <summary> Gets an object representing a VirtualMachineImage along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineImage" /> object. </returns>
+        public static VirtualMachineImage GetVirtualMachineImage(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineImage(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -320,36 +342,25 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region SharedGallery
-        /// <summary> Gets an object representing a SharedGallery along with the instance operations that can be performed on it but with no data. </summary>
+        #region CloudServiceRoleInstance
+        /// <summary> Gets an object representing a CloudServiceRoleInstance along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedGallery" /> object. </returns>
-        public static SharedGallery GetSharedGallery(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudServiceRoleInstance" /> object. </returns>
+        public static CloudServiceRoleInstance GetCloudServiceRoleInstance(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedGallery(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CloudServiceRoleInstance(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region SharedGalleryImage
-        /// <summary> Gets an object representing a SharedGalleryImage along with the instance operations that can be performed on it but with no data. </summary>
+        #region CloudServiceRole
+        /// <summary> Gets an object representing a CloudServiceRole along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedGalleryImage" /> object. </returns>
-        public static SharedGalleryImage GetSharedGalleryImage(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudServiceRole" /> object. </returns>
+        public static CloudServiceRole GetCloudServiceRole(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedGalleryImage(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region SharedGalleryImageVersion
-        /// <summary> Gets an object representing a SharedGalleryImageVersion along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedGalleryImageVersion" /> object. </returns>
-        public static SharedGalleryImageVersion GetSharedGalleryImageVersion(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedGalleryImageVersion(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CloudServiceRole(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -372,6 +383,17 @@ namespace Azure.ResourceManager.Compute
         public static UpdateDomain GetUpdateDomain(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new UpdateDomain(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region OSVersion
+        /// <summary> Gets an object representing a OSVersion along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OSVersion" /> object. </returns>
+        public static OSVersion GetOSVersion(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OSVersion(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
     }

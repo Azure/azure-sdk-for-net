@@ -9,13 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharedGalleryImageData
+    public partial class SharedGalleryImage
     {
-        internal static SharedGalleryImageData DeserializeSharedGalleryImageData(JsonElement element)
+        internal static SharedGalleryImage DeserializeSharedGalleryImage(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> location = default;
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryImageData(name.Value, location.Value, uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value);
+            return new SharedGalleryImage(name.Value, location.Value, uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value);
         }
     }
 }

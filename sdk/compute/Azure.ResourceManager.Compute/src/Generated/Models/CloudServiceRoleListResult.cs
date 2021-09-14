@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceRoleListResult. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CloudServiceRoleListResult(IEnumerable<CloudServiceRole> value)
+        internal CloudServiceRoleListResult(IEnumerable<CloudServiceRoleData> value)
         {
             if (value == null)
             {
@@ -30,13 +31,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceRoleListResult. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal CloudServiceRoleListResult(IReadOnlyList<CloudServiceRole> value, string nextLink)
+        internal CloudServiceRoleListResult(IReadOnlyList<CloudServiceRoleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        public IReadOnlyList<CloudServiceRole> Value { get; }
+        public IReadOnlyList<CloudServiceRoleData> Value { get; }
         public string NextLink { get; }
     }
 }

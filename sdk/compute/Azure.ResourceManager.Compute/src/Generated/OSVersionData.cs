@@ -6,25 +6,26 @@
 #nullable disable
 
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    /// <summary> Describes a cloud service OS version. </summary>
-    public partial class OSVersion : Resource
+    /// <summary> A class representing the OSVersion data model. </summary>
+    public partial class OSVersionData : Resource
     {
-        /// <summary> Initializes a new instance of OSVersion. </summary>
-        internal OSVersion()
+        /// <summary> Initializes a new instance of OSVersionData. </summary>
+        internal OSVersionData()
         {
         }
 
-        /// <summary> Initializes a new instance of OSVersion. </summary>
+        /// <summary> Initializes a new instance of OSVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="properties"> OS version properties. </param>
-        internal OSVersion(ResourceIdentifier id, string name, ResourceType type, string location, OSVersionProperties properties) : base(id, name, type)
+        internal OSVersionData(ResourceIdentifier id, string name, ResourceType type, string location, OSVersionProperties properties) : base(id, name, type)
         {
             Location = location;
             Properties = properties;

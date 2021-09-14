@@ -6,25 +6,26 @@
 #nullable disable
 
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    /// <summary> Describes a cloud service OS family. </summary>
-    public partial class OSFamily : Resource
+    /// <summary> A class representing the OSFamily data model. </summary>
+    public partial class OSFamilyData : Resource
     {
-        /// <summary> Initializes a new instance of OSFamily. </summary>
-        internal OSFamily()
+        /// <summary> Initializes a new instance of OSFamilyData. </summary>
+        internal OSFamilyData()
         {
         }
 
-        /// <summary> Initializes a new instance of OSFamily. </summary>
+        /// <summary> Initializes a new instance of OSFamilyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="properties"> OS family properties. </param>
-        internal OSFamily(ResourceIdentifier id, string name, ResourceType type, string location, OSFamilyProperties properties) : base(id, name, type)
+        internal OSFamilyData(ResourceIdentifier id, string name, ResourceType type, string location, OSFamilyProperties properties) : base(id, name, type)
         {
             Location = location;
             Properties = properties;

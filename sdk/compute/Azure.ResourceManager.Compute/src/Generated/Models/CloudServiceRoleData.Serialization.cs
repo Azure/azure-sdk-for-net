@@ -8,15 +8,17 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    public partial class OSVersion
+    public partial class CloudServiceRoleData
     {
-        internal static OSVersion DeserializeOSVersion(JsonElement element)
+        internal static CloudServiceRoleData DeserializeCloudServiceRoleData(JsonElement element)
         {
             Optional<string> location = default;
-            Optional<OSVersionProperties> properties = default;
+            Optional<CloudServiceRoleSku> sku = default;
+            Optional<CloudServiceRoleProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -27,6 +29,16 @@ namespace Azure.ResourceManager.Compute.Models
                     location = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sku"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sku = CloudServiceRoleSku.DeserializeCloudServiceRoleSku(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -34,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = OSVersionProperties.DeserializeOSVersionProperties(property.Value);
+                    properties = CloudServiceRoleProperties.DeserializeCloudServiceRoleProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -53,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new OSVersion(id, name, type, location.Value, properties.Value);
+            return new CloudServiceRoleData(id, name, type, location.Value, sku.Value, properties.Value);
         }
     }
 }

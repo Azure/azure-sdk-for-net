@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public async Task<Response<RoleInstance>> GetAsync(string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleInstanceData>> GetAsync(string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -186,11 +186,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        RoleInstance value = default;
+                        RoleInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleInstance.DeserializeRoleInstance(document.RootElement);
+                        value = RoleInstanceData.DeserializeRoleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((RoleInstanceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -203,7 +205,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public Response<RoleInstance> Get(string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public Response<RoleInstanceData> Get(string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -224,11 +226,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        RoleInstance value = default;
+                        RoleInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleInstance.DeserializeRoleInstance(document.RootElement);
+                        value = RoleInstanceData.DeserializeRoleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((RoleInstanceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

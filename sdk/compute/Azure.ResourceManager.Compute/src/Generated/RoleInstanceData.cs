@@ -8,20 +8,21 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    /// <summary> The RoleInstance. </summary>
-    public partial class RoleInstance : Resource
+    /// <summary> A class representing the RoleInstance data model. </summary>
+    public partial class RoleInstanceData : Resource
     {
-        /// <summary> Initializes a new instance of RoleInstance. </summary>
-        internal RoleInstance()
+        /// <summary> Initializes a new instance of RoleInstanceData. </summary>
+        internal RoleInstanceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of RoleInstance. </summary>
+        /// <summary> Initializes a new instance of RoleInstanceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"></param>
         /// <param name="properties"></param>
-        internal RoleInstance(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceProperties properties) : base(id, name, type)
+        internal RoleInstanceData(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceProperties properties) : base(id, name, type)
         {
             Location = location;
             Tags = tags;

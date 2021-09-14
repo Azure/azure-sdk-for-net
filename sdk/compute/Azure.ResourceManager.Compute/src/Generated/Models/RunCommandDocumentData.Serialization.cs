@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    public partial class RunCommandDocument
+    public partial class RunCommandDocumentData
     {
-        internal static RunCommandDocument DeserializeRunCommandDocument(JsonElement element)
+        internal static RunCommandDocumentData DeserializeRunCommandDocumentData(JsonElement element)
         {
             IReadOnlyList<string> script = default;
             Optional<IReadOnlyList<RunCommandParameterDefinition>> parameters = default;
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RunCommandDocument(id, schema, osType, label, description, script, Optional.ToList(parameters));
+            return new RunCommandDocumentData(id, schema, osType, label, description, script, Optional.ToList(parameters));
         }
     }
 }

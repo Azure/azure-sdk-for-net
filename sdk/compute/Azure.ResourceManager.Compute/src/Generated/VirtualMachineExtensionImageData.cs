@@ -10,18 +10,18 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    /// <summary> Describes a Virtual Machine Extension Image. </summary>
-    public partial class VirtualMachineExtensionImage : TrackedResource
+    /// <summary> A class representing the VirtualMachineExtensionImage data model. </summary>
+    public partial class VirtualMachineExtensionImageData : TrackedResource
     {
-        /// <summary> Initializes a new instance of VirtualMachineExtensionImage. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineExtensionImageData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineExtensionImage(Location location) : base(location)
+        public VirtualMachineExtensionImageData(Location location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineExtensionImage. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineExtensionImageData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="handlerSchema"> The schema defined by publisher, where extension consumers should provide settings in a matching schema. </param>
         /// <param name="vmScaleSetEnabled"> Whether the extension can be used on xRP VMScaleSets. By default existing extensions are usable on scalesets, but there might be cases where a publisher wants to explicitly indicate the extension is only enabled for CRP VMs but not VMSS. </param>
         /// <param name="supportsMultipleExtensions"> Whether the handler can support multiple extensions. </param>
-        internal VirtualMachineExtensionImage(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string operatingSystem, string computeRole, string handlerSchema, bool? vmScaleSetEnabled, bool? supportsMultipleExtensions) : base(id, name, type, tags, location)
+        internal VirtualMachineExtensionImageData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string operatingSystem, string computeRole, string handlerSchema, bool? vmScaleSetEnabled, bool? supportsMultipleExtensions) : base(id, name, type, tags, location)
         {
             OperatingSystem = operatingSystem;
             ComputeRole = computeRole;

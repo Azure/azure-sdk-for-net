@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    public partial class RoleInstance
+    public partial class RoleInstanceData
     {
-        internal static RoleInstance DeserializeRoleInstance(JsonElement element)
+        internal static RoleInstanceData DeserializeRoleInstanceData(JsonElement element)
         {
             Optional<string> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RoleInstance(id, name, type, location.Value, Optional.ToDictionary(tags), sku.Value, properties.Value);
+            return new RoleInstanceData(id, name, type, location.Value, Optional.ToDictionary(tags), sku.Value, properties.Value);
         }
     }
 }

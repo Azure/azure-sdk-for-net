@@ -16,11 +16,14 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
+# csharpgen:
+#   attach: true
 operation-group-to-resource-type:
   CloudServiceRoles: Microsoft.Compute/cloudServices/roles
+  CloudServiceRoleInstances: Microsoft.Compute/cloudServices/roleInstances
   CloudServiceOperatingSystems: Microsoft.Compute/locations/cloudServiceOsFamilies
-  VirtualMachineExtensionImages: Microsoft.Compute/locations/publishers/vmextension
-  VirtualMachineImages: Microsoft.Compute/locations/publishers/vmimage
+  VirtualMachineExtensionImages: Microsoft.Compute/locations/publishers/artifacttypes/types/versions
+  VirtualMachineImages: Microsoft.Compute/locations/publishers/artifacttypes/offers/skus/versions
   Usage: Microsoft.Compute/locations/usages
   VirtualMachineSizes: Microsoft.Compute/locations/vmSizes
   VirtualMachineImagesEdgeZone: Microsoft.Compute/locations/edgeZones/publishers/artifacttypes/offers/skus/versions
@@ -34,20 +37,23 @@ operation-group-to-resource-type:
   SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries/images
   SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images/versions
 operation-group-to-resource:
-  CloudServiceRoleInstances: NonResource
-  CloudServiceRoles: NonResource
-  CloudServiceOperatingSystems: NonResource
-  VirtualMachineImages: NonResource
-  VirtualMachineExtensionImages: NonResource
-  VirtualMachineImagesEdgeZone: NonResource
+  CloudServiceRoleInstances: CloudServiceRoleInstance
+  CloudServiceRoles: CloudServiceRole
+  CloudServiceOperatingSystems: OSVersion
+  VirtualMachineImages: VirtualMachineImage
+  VirtualMachineExtensionImages: VirtualMachineExtensionImage
+  VirtualMachineImagesEdgeZone: NonResource # this is a resource with the same model as VirtualMachineImage, but we cannot handle that case, therefore temporarily we mark this as a non-resource to let the sdk properly generate
   VirtualMachineScaleSetRollingUpgrades: VirtualMachineScaleSetRollingUpgrade
   LogAnalytics: NonResource
   Locations: NonResource
   DiskRestorePoint: DiskRestorePoint
   GallerySharingProfile: NonResource
-  SharedGalleries: SharedGallery
-  SharedGalleryImages: SharedGalleryImage
-  SharedGalleryImageVersions: SharedGalleryImageVersion
+#   SharedGalleries: SharedGallery
+#   SharedGalleryImages: SharedGalleryImage
+#   SharedGalleryImageVersions: SharedGalleryImageVersion
+  SharedGalleries: NonResource
+  SharedGalleryImages: NonResource
+  SharedGalleryImageVersions: NonResource
 operation-group-to-parent:
   Usage: subscriptions
   LogAnalytics: subscriptions
@@ -67,9 +73,14 @@ operation-group-to-parent:
   ResourceSkus: subscriptions
   DiskRestorePoint: Microsoft.Compute/restorePointCollections/restorePoints
   SharedGalleries: subscriptions
-  SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries
-  SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images
+  SharedGalleryImages: subscriptions
+  SharedGalleryImageVersions: subscriptions
+#   SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries
+#   SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images
 operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
+# this corresponds to a resource with the same model as VirtualMachineImage, but we cannot handle that case, therefore temporarily we mark this as a non-resource to let the sdk properly generate
+request-path-is-non-resource:
+- /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}
 directive:
   ## first we need to unify all the paths by changing `virtualmachines` to `virtualMachines` so that every path could have consistent casing
   - from: swagger-document

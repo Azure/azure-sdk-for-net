@@ -8,17 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    /// <summary> Describes a Virtual Machine Image. </summary>
-    public partial class VirtualMachineImage : VirtualMachineImageResource
+    /// <summary> A class representing the VirtualMachineImage data model. </summary>
+    public partial class VirtualMachineImageData : VirtualMachineImageResource
     {
-        /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineImageData. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
-        public VirtualMachineImage(string name, string location) : base(name, location)
+        public VirtualMachineImageData(string name, string location) : base(name, location)
         {
             if (name == null)
             {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             Features = new ChangeTrackingList<VirtualMachineImageFeature>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineImageData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hyperVGeneration"> Specifies the HyperVGeneration Type. </param>
         /// <param name="disallowed"> Specifies disallowed configuration for the VirtualMachine created from the image. </param>
         /// <param name="features"></param>
-        internal VirtualMachineImage(string id, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features) : base(id, name, location, tags, extendedLocation)
+        internal VirtualMachineImageData(string id, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features) : base(id, name, location, tags, extendedLocation)
         {
             Plan = plan;
             OsDiskImage = osDiskImage;

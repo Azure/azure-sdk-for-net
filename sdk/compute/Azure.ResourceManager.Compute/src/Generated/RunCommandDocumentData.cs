@@ -9,20 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    /// <summary> Describes the properties of a Run Command. </summary>
-    public partial class RunCommandDocument : RunCommandDocumentBase
+    /// <summary> A class representing the RunCommandDocument data model. </summary>
+    public partial class RunCommandDocumentData : RunCommandDocumentBase
     {
-        /// <summary> Initializes a new instance of RunCommandDocument. </summary>
+        /// <summary> Initializes a new instance of RunCommandDocumentData. </summary>
         /// <param name="schema"> The VM run command schema. </param>
         /// <param name="osType"> The Operating System type. </param>
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
         /// <param name="script"> The script to be executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="label"/>, <paramref name="description"/>, or <paramref name="script"/> is null. </exception>
-        internal RunCommandDocument(string schema, OperatingSystemTypes osType, string label, string description, IEnumerable<string> script) : base(schema, osType, label, description)
+        internal RunCommandDocumentData(string schema, OperatingSystemTypes osType, string label, string description, IEnumerable<string> script) : base(schema, osType, label, description)
         {
             if (schema == null)
             {
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
             Parameters = new ChangeTrackingList<RunCommandParameterDefinition>();
         }
 
-        /// <summary> Initializes a new instance of RunCommandDocument. </summary>
+        /// <summary> Initializes a new instance of RunCommandDocumentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="schema"> The VM run command schema. </param>
         /// <param name="osType"> The Operating System type. </param>
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="description"> The VM run command description. </param>
         /// <param name="script"> The script to be executed. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
-        internal RunCommandDocument(string id, string schema, OperatingSystemTypes osType, string label, string description, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(id, schema, osType, label, description)
+        internal RunCommandDocumentData(string id, string schema, OperatingSystemTypes osType, string label, string description, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(id, schema, osType, label, description)
         {
             Script = script;
             Parameters = parameters;

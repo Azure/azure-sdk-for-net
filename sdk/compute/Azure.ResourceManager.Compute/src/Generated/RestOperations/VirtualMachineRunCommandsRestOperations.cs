@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="commandId"/> is null. </exception>
-        public async Task<Response<RunCommandDocument>> GetAsync(string location, string commandId, CancellationToken cancellationToken = default)
+        public async Task<Response<RunCommandDocumentData>> GetAsync(string location, string commandId, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -156,11 +156,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        RunCommandDocument value = default;
+                        RunCommandDocumentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RunCommandDocument.DeserializeRunCommandDocument(document.RootElement);
+                        value = RunCommandDocumentData.DeserializeRunCommandDocumentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((RunCommandDocumentData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -171,7 +173,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="commandId"/> is null. </exception>
-        public Response<RunCommandDocument> Get(string location, string commandId, CancellationToken cancellationToken = default)
+        public Response<RunCommandDocumentData> Get(string location, string commandId, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -188,11 +190,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        RunCommandDocument value = default;
+                        RunCommandDocumentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RunCommandDocument.DeserializeRunCommandDocument(document.RootElement);
+                        value = RunCommandDocumentData.DeserializeRunCommandDocumentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((RunCommandDocumentData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -549,8 +553,6 @@ namespace Azure.ResourceManager.Compute
                         value = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((VirtualMachineRunCommandData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -589,8 +591,6 @@ namespace Azure.ResourceManager.Compute
                         value = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((VirtualMachineRunCommandData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

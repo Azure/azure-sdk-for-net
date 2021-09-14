@@ -6,26 +6,27 @@
 #nullable disable
 
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    /// <summary> Describes a role of the cloud service. </summary>
-    public partial class CloudServiceRole : Resource
+    /// <summary> A class representing the CloudServiceRole data model. </summary>
+    public partial class CloudServiceRoleData : Resource
     {
-        /// <summary> Initializes a new instance of CloudServiceRole. </summary>
-        internal CloudServiceRole()
+        /// <summary> Initializes a new instance of CloudServiceRoleData. </summary>
+        internal CloudServiceRoleData()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRole. </summary>
+        /// <summary> Initializes a new instance of CloudServiceRoleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Describes the cloud service role sku. </param>
         /// <param name="properties"></param>
-        internal CloudServiceRole(ResourceIdentifier id, string name, ResourceType type, string location, CloudServiceRoleSku sku, CloudServiceRoleProperties properties) : base(id, name, type)
+        internal CloudServiceRoleData(ResourceIdentifier id, string name, ResourceType type, string location, CloudServiceRoleSku sku, CloudServiceRoleProperties properties) : base(id, name, type)
         {
             Location = location;
             Sku = sku;
