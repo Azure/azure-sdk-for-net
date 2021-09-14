@@ -28,7 +28,7 @@ namespace Azure.Identity
     /// </summary>
     public class EnvironmentCredential : TokenCredential
     {
-        private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured.";
+        private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/environmentcredential/troubleshoot";
         private readonly CredentialPipeline _pipeline;
         private readonly TokenCredentialOptions _options;
 
