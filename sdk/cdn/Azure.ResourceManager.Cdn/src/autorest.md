@@ -14,4 +14,8 @@ skip-csproj: true
 output-folder: Generated/
 modelerfour:
   lenient-model-deduplication: true
+directive:
+  - from: swagger-document
+    where: $.definitions.DeliveryRuleAction
+    transform: $["x-ms-client-name"] = "DeliveryRuleOperation"
 ```
