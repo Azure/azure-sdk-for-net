@@ -188,7 +188,7 @@ $changelogIsValid = Confirm-ChangeLogEntry -ChangeLogLocation $packageProperties
 
 if (!$changelogIsValid)
 {
-  Write-Host "The changelog [$($packageProperties.ChangeLogPath)] is not valid for release. Please make sure it is valid before queuing release build." -ForegroundColor Red
+  Write-Warning "The changelog [$($packageProperties.ChangeLogPath)] is not valid for release. Please make sure it is valid before queuing release build."
 }
 
 git diff -s --exit-code $packageProperties.DirectoryPath
