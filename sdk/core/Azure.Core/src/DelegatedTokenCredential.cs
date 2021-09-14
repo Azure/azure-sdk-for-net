@@ -11,7 +11,7 @@ namespace Azure.Core
     /// <summary>
     /// A factory for creating a delegated <see cref="TokenCredential"/> capable of providing an OAuth token.
     /// </summary>
-    public static class DelegatedTokenCredentialFactory
+    public static class DelegatedTokenCredential
     {
         /// <summary>
         /// Creates a static <see cref="TokenCredential"/> that accepts delegates which will produce an <see cref="AccessToken"/>.

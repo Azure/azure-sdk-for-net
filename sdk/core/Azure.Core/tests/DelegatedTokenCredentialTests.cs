@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class StaticTokenCredentialTests
+    public class DelegatedTokenCredentialTests
     {
         private static string[] scopes = { "https://default.mock.auth.scope/.default" };
         private static CancellationToken ctx = new CancellationTokenSource(TimeSpan.FromMinutes(5)).Token;
@@ -35,9 +35,8 @@ namespace Azure.Core.Tests
                 await Task.Yield();
                 return staticToken;
             };
-            yield return new object[] { TokenCredential.Create(getTokenAsync) };
-            yield return new object[] { TokenCredential.Create(getToken) };
-            yield return new object[] { TokenCredential.Create(getToken, getTokenAsync) };
+            yield return new object[] { DelegatedTokenCredential.Create(getToken) };
+            yield return new object[] { DelegatedTokenCredential.Create(getToken, getTokenAsync) };
         }
 
         [TestCaseSource(nameof(Credentials))]
