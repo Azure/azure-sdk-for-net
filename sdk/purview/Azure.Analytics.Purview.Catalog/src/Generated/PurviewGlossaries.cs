@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Catalog
     public partial class PurviewGlossaries
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -30,6 +31,61 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all glossaries registered with Atlas. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
@@ -39,7 +95,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
@@ -69,6 +125,61 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all glossaries registered with Atlas. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
@@ -78,7 +189,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
@@ -107,14 +218,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetGlossaries"/> and <see cref="GetGlossariesAsync"/> operations. </summary>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetGlossariesRequest(int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        private HttpMessage CreateGetGlossariesRequest(int? limit, int? offset, string sort)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -141,266 +247,111 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create a glossary. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>categories</term>
-        ///     <term>AtlasRelatedCategoryHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of categories.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>language</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The language of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>terms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>usage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The usage of the glossary.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the category header.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the parent category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -409,7 +360,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
@@ -441,266 +392,111 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create a glossary. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>categories</term>
-        ///     <term>AtlasRelatedCategoryHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of categories.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>language</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The language of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>terms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>usage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The usage of the glossary.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the category header.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the parent category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -709,7 +505,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
@@ -738,12 +534,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateGlossary"/> and <see cref="CreateGlossaryAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateGlossaryRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateGlossaryRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -759,294 +552,120 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create glossary category in bulk. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasGlossaryCategory</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>childrenCategories</term>
-        ///     <term>AtlasRelatedCategoryHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of children categories.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategory</term>
-        ///     <term>AtlasRelatedCategoryHeader</term>
-        ///     <term></term>
-        ///     <term>The header of the related category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>terms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the category header.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the parent category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -1055,7 +674,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
@@ -1086,294 +705,120 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create glossary category in bulk. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasGlossaryCategory</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>childrenCategories</term>
-        ///     <term>AtlasRelatedCategoryHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of children categories.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategory</term>
-        ///     <term>AtlasRelatedCategoryHeader</term>
-        ///     <term></term>
-        ///     <term>The header of the related category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>terms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the category header.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the parent category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -1382,7 +827,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
@@ -1411,12 +856,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateGlossaryCategories"/> and <see cref="CreateGlossaryCategoriesAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateGlossaryCategoriesRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateGlossaryCategoriesRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1433,293 +875,119 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create a glossary category. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>childrenCategories</term>
-        ///     <term>AtlasRelatedCategoryHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of children categories.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategory</term>
-        ///     <term>AtlasRelatedCategoryHeader</term>
-        ///     <term></term>
-        ///     <term>The header of the related category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>terms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the category header.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the parent category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -1728,7 +996,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryCategoryRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryCategoryRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
@@ -1760,293 +1028,119 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create a glossary category. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>childrenCategories</term>
-        ///     <term>AtlasRelatedCategoryHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of children categories.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategory</term>
-        ///     <term>AtlasRelatedCategoryHeader</term>
-        ///     <term></term>
-        ///     <term>The header of the related category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>terms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the category header.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the parent category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -2055,7 +1149,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryCategoryRequest(content, options);
+            using HttpMessage message = CreateCreateGlossaryCategoryRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
@@ -2084,12 +1178,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateGlossaryCategory"/> and <see cref="CreateGlossaryCategoryAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateGlossaryCategoryRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateGlossaryCategoryRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -2104,6 +1195,65 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get specific glossary category by its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -2111,7 +1261,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid, options);
+            using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
@@ -2141,6 +1291,65 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get specific glossary category by its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -2148,7 +1357,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid, options);
+            using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
@@ -2177,12 +1386,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetGlossaryCategory"/> and <see cref="GetGlossaryCategoryAsync"/> operations. </summary>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetGlossaryCategoryRequest(string categoryGuid, RequestOptions options = null)
+        private HttpMessage CreateGetGlossaryCategoryRequest(string categoryGuid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2198,293 +1404,119 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>childrenCategories</term>
-        ///     <term>AtlasRelatedCategoryHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of children categories.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategory</term>
-        ///     <term>AtlasRelatedCategoryHeader</term>
-        ///     <term></term>
-        ///     <term>The header of the related category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>terms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the category header.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the parent category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2494,7 +1526,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
@@ -2526,293 +1558,119 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>childrenCategories</term>
-        ///     <term>AtlasRelatedCategoryHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of children categories.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategory</term>
-        ///     <term>AtlasRelatedCategoryHeader</term>
-        ///     <term></term>
-        ///     <term>The header of the related category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>terms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the category header.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the parent category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2822,7 +1680,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
@@ -2851,13 +1709,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateGlossaryCategory"/> and <see cref="UpdateGlossaryCategoryAsync"/> operations. </summary>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -2880,7 +1734,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
@@ -2917,7 +1771,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
@@ -2946,12 +1800,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteGlossaryCategory"/> and <see cref="DeleteGlossaryCategoryAsync"/> operations. </summary>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteGlossaryCategoryRequest(string categoryGuid, RequestOptions options = null)
+        private HttpMessage CreateDeleteGlossaryCategoryRequest(string categoryGuid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -2964,6 +1815,65 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the glossary category partially. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -2972,7 +1882,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
@@ -3002,6 +1912,65 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the glossary category partially. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -3010,7 +1979,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
@@ -3039,13 +2008,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="PartialUpdateGlossaryCategory"/> and <see cref="PartialUpdateGlossaryCategoryAsync"/> operations. </summary>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreatePartialUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreatePartialUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -3062,6 +2027,18 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   categoryGuid: string,
+        ///   description: string,
+        ///   displayText: string,
+        ///   parentCategoryGuid: string,
+        ///   relationGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -3072,7 +2049,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
@@ -3102,6 +2079,18 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   categoryGuid: string,
+        ///   description: string,
+        ///   displayText: string,
+        ///   parentCategoryGuid: string,
+        ///   relationGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -3112,7 +2101,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
@@ -3141,15 +2130,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetRelatedCategories"/> and <see cref="GetRelatedCategoriesAsync"/> operations. </summary>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRelatedCategoriesRequest(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        private HttpMessage CreateGetRelatedCategoriesRequest(string categoryGuid, int? limit, int? offset, string sort)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3176,6 +2159,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all terms associated with the specific category. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   description: string,
+        ///   displayText: string,
+        ///   expression: string,
+        ///   relationGuid: string,
+        ///   source: string,
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///   steward: string,
+        ///   termGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -3186,7 +2184,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
@@ -3216,6 +2214,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all terms associated with the specific category. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   description: string,
+        ///   displayText: string,
+        ///   expression: string,
+        ///   relationGuid: string,
+        ///   source: string,
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///   steward: string,
+        ///   termGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -3226,7 +2239,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
@@ -3255,15 +2268,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetCategoryTerms"/> and <see cref="GetCategoryTermsAsync"/> operations. </summary>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetCategoryTermsRequest(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        private HttpMessage CreateGetCategoryTermsRequest(string categoryGuid, int? limit, int? offset, string sort)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3292,570 +2299,209 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create a glossary term. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>abbreviation</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The abbreviation of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>templateName</term>
-        ///     <term>AnyObject[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>antonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as antonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the AtlasGlossaryTerm</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resources</term>
-        ///     <term>ResourceLink[]</term>
-        ///     <term></term>
-        ///     <term>An array of resource link for term</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term>The dictionary of contacts for terms. Key could be Expert or Steward.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;</term>
-        ///     <term></term>
-        ///     <term>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
-        /// The key of the first layer map is term template name.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assignedEntities</term>
-        ///     <term>AtlasRelatedObjectId[]</term>
-        ///     <term></term>
-        ///     <term>An array of related object IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>categories</term>
-        ///     <term>AtlasTermCategorizationHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of term categorization headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifies</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>examples</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of examples.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isA</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers indicating the is-a relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of preferred related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredToTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are preferred to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacedBy</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are replaced by.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacementTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for replacement.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>seeAlso</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for see also.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>synonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as synonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translatedTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of translated related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translationTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for translation.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>usage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The usage of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValues</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValuesFor</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values for other records.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ResourceLink</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Display name for url.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>url</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>web url. http or https</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermCategorizationHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Azure Active Directory object Id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>additional information to describe this contact.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -3865,7 +2511,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy, options);
+            using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
@@ -3897,570 +2543,209 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create a glossary term. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>abbreviation</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The abbreviation of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>templateName</term>
-        ///     <term>AnyObject[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>antonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as antonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the AtlasGlossaryTerm</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resources</term>
-        ///     <term>ResourceLink[]</term>
-        ///     <term></term>
-        ///     <term>An array of resource link for term</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term>The dictionary of contacts for terms. Key could be Expert or Steward.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;</term>
-        ///     <term></term>
-        ///     <term>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
-        /// The key of the first layer map is term template name.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assignedEntities</term>
-        ///     <term>AtlasRelatedObjectId[]</term>
-        ///     <term></term>
-        ///     <term>An array of related object IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>categories</term>
-        ///     <term>AtlasTermCategorizationHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of term categorization headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifies</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>examples</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of examples.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isA</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers indicating the is-a relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of preferred related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredToTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are preferred to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacedBy</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are replaced by.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacementTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for replacement.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>seeAlso</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for see also.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>synonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as synonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translatedTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of translated related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translationTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for translation.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>usage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The usage of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValues</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValuesFor</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values for other records.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ResourceLink</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Display name for url.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>url</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>web url. http or https</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermCategorizationHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Azure Active Directory object Id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>additional information to describe this contact.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -4470,7 +2755,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy, options);
+            using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
@@ -4499,13 +2784,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateGlossaryTerm"/> and <see cref="CreateGlossaryTermAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateGlossaryTermRequest(RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+        private HttpMessage CreateCreateGlossaryTermRequest(RequestContent content, bool? includeTermHierarchy)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -4524,6 +2805,110 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get a specific glossary term by its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
@@ -4532,7 +2917,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
@@ -4562,6 +2947,110 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get a specific glossary term by its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
@@ -4570,7 +3059,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
@@ -4599,13 +3088,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetGlossaryTerm"/> and <see cref="GetGlossaryTermAsync"/> operations. </summary>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetGlossaryTermRequest(string termGuid, bool? includeTermHierarchy = null, RequestOptions options = null)
+        private HttpMessage CreateGetGlossaryTermRequest(string termGuid, bool? includeTermHierarchy)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -4625,570 +3110,209 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>abbreviation</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The abbreviation of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>templateName</term>
-        ///     <term>AnyObject[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>antonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as antonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the AtlasGlossaryTerm</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resources</term>
-        ///     <term>ResourceLink[]</term>
-        ///     <term></term>
-        ///     <term>An array of resource link for term</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term>The dictionary of contacts for terms. Key could be Expert or Steward.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;</term>
-        ///     <term></term>
-        ///     <term>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
-        /// The key of the first layer map is term template name.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assignedEntities</term>
-        ///     <term>AtlasRelatedObjectId[]</term>
-        ///     <term></term>
-        ///     <term>An array of related object IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>categories</term>
-        ///     <term>AtlasTermCategorizationHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of term categorization headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifies</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>examples</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of examples.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isA</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers indicating the is-a relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of preferred related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredToTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are preferred to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacedBy</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are replaced by.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacementTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for replacement.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>seeAlso</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for see also.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>synonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as synonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translatedTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of translated related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translationTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for translation.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>usage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The usage of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValues</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValuesFor</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values for other records.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ResourceLink</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Display name for url.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>url</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>web url. http or https</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermCategorizationHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Azure Active Directory object Id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>additional information to describe this contact.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -5198,7 +3322,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
@@ -5230,570 +3354,209 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>abbreviation</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The abbreviation of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>templateName</term>
-        ///     <term>AnyObject[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>antonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as antonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the AtlasGlossaryTerm</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resources</term>
-        ///     <term>ResourceLink[]</term>
-        ///     <term></term>
-        ///     <term>An array of resource link for term</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term>The dictionary of contacts for terms. Key could be Expert or Steward.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;</term>
-        ///     <term></term>
-        ///     <term>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
-        /// The key of the first layer map is term template name.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assignedEntities</term>
-        ///     <term>AtlasRelatedObjectId[]</term>
-        ///     <term></term>
-        ///     <term>An array of related object IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>categories</term>
-        ///     <term>AtlasTermCategorizationHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of term categorization headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifies</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>examples</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of examples.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isA</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers indicating the is-a relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of preferred related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredToTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are preferred to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacedBy</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are replaced by.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacementTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for replacement.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>seeAlso</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for see also.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>synonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as synonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translatedTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of translated related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translationTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for translation.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>usage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The usage of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValues</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValuesFor</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values for other records.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ResourceLink</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Display name for url.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>url</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>web url. http or https</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermCategorizationHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Azure Active Directory object Id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>additional information to describe this contact.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -5803,7 +3566,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
@@ -5832,13 +3595,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateGlossaryTerm"/> and <see cref="UpdateGlossaryTermAsync"/> operations. </summary>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUpdateGlossaryTermRequest(string termGuid, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateUpdateGlossaryTermRequest(string termGuid, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -5861,7 +3620,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
@@ -5898,7 +3657,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
@@ -5927,12 +3686,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteGlossaryTerm"/> and <see cref="DeleteGlossaryTermAsync"/> operations. </summary>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteGlossaryTermRequest(string termGuid, RequestOptions options = null)
+        private HttpMessage CreateDeleteGlossaryTermRequest(string termGuid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -5945,6 +3701,110 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the glossary term partially. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -5954,7 +3814,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
@@ -5984,6 +3844,110 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the glossary term partially. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -5993,7 +3957,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
@@ -6022,14 +3986,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="PartialUpdateGlossaryTerm"/> and <see cref="PartialUpdateGlossaryTermAsync"/> operations. </summary>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreatePartialUpdateGlossaryTermRequest(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+        private HttpMessage CreatePartialUpdateGlossaryTermRequest(string termGuid, RequestContent content, bool? includeTermHierarchy)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6051,571 +4010,210 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create glossary terms in bulk. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasGlossaryTerm</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>abbreviation</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The abbreviation of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>templateName</term>
-        ///     <term>AnyObject[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>antonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as antonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the AtlasGlossaryTerm</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resources</term>
-        ///     <term>ResourceLink[]</term>
-        ///     <term></term>
-        ///     <term>An array of resource link for term</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term>The dictionary of contacts for terms. Key could be Expert or Steward.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;</term>
-        ///     <term></term>
-        ///     <term>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
-        /// The key of the first layer map is term template name.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assignedEntities</term>
-        ///     <term>AtlasRelatedObjectId[]</term>
-        ///     <term></term>
-        ///     <term>An array of related object IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>categories</term>
-        ///     <term>AtlasTermCategorizationHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of term categorization headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifies</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>examples</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of examples.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isA</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers indicating the is-a relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of preferred related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredToTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are preferred to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacedBy</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are replaced by.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacementTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for replacement.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>seeAlso</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for see also.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>synonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as synonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translatedTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of translated related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translationTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for translation.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>usage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The usage of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValues</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValuesFor</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values for other records.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ResourceLink</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Display name for url.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>url</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>web url. http or https</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermCategorizationHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Azure Active Directory object Id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>additional information to describe this contact.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -6625,7 +4223,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, options);
+            using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
@@ -6656,571 +4254,210 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create glossary terms in bulk. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasGlossaryTerm</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>abbreviation</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The abbreviation of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>templateName</term>
-        ///     <term>AnyObject[]</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>anchor</term>
-        ///     <term>AtlasGlossaryHeader</term>
-        ///     <term></term>
-        ///     <term>The glossary header with basic information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>antonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as antonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the AtlasGlossaryTerm</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resources</term>
-        ///     <term>ResourceLink[]</term>
-        ///     <term></term>
-        ///     <term>An array of resource link for term</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term>The dictionary of contacts for terms. Key could be Expert or Steward.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;</term>
-        ///     <term></term>
-        ///     <term>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
-        /// The key of the first layer map is term template name.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assignedEntities</term>
-        ///     <term>AtlasRelatedObjectId[]</term>
-        ///     <term></term>
-        ///     <term>An array of related object IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>categories</term>
-        ///     <term>AtlasTermCategorizationHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of term categorization headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifies</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>examples</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of examples.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isA</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers indicating the is-a relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of preferred related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>preferredToTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are preferred to.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacedBy</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers that are replaced by.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>replacementTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for replacement.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>seeAlso</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for see also.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>synonyms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as synonyms.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translatedTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of translated related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>translationTerms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers for translation.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>usage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The usage of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValues</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validValuesFor</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers as valid values for other records.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasGlossaryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>glossaryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ResourceLink</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Display name for url.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>url</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>web url. http or https</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermCategorizationHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Azure Active Directory object Id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>additional information to describe this contact.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -7230,7 +4467,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, options);
+            using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
@@ -7259,13 +4496,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateGlossaryTerms"/> and <see cref="CreateGlossaryTermsAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateGlossaryTermsRequest(RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+        private HttpMessage CreateCreateGlossaryTermsRequest(RequestContent content, bool? includeTermHierarchy)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -7284,6 +4517,26 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all related objects assigned with the specified term. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guid: string,
+        ///   typeName: string,
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   displayText: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   relationshipType: string,
+        ///   relationshipAttributes: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string
+        ///   },
+        ///   relationshipGuid: string,
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -7294,7 +4547,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
@@ -7324,6 +4577,26 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all related objects assigned with the specified term. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guid: string,
+        ///   typeName: string,
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   displayText: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   relationshipType: string,
+        ///   relationshipAttributes: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string
+        ///   },
+        ///   relationshipGuid: string,
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -7334,7 +4607,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
@@ -7363,15 +4636,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEntitiesAssignedWithTerm"/> and <see cref="GetEntitiesAssignedWithTermAsync"/> operations. </summary>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetEntitiesAssignedWithTermRequest(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        private HttpMessage CreateGetEntitiesAssignedWithTermRequest(string termGuid, int? limit, int? offset, string sort)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7399,96 +4666,24 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Assign the given term to the provided list of related objects. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   guid: string,
+        ///   typeName: string,
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   displayText: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   relationshipType: string,
+        ///   relationshipAttributes: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string
+        ///   },
+        ///   relationshipGuid: string,
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -7498,7 +4693,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
@@ -7529,96 +4724,24 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Assign the given term to the provided list of related objects. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   guid: string,
+        ///   typeName: string,
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   displayText: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   relationshipType: string,
+        ///   relationshipAttributes: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string
+        ///   },
+        ///   relationshipGuid: string,
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -7628,7 +4751,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
@@ -7657,13 +4780,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="AssignTermToEntities"/> and <see cref="AssignTermToEntitiesAsync"/> operations. </summary>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateAssignTermToEntitiesRequest(string termGuid, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateAssignTermToEntitiesRequest(string termGuid, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -7680,96 +4799,24 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   guid: string,
+        ///   typeName: string,
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   displayText: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   relationshipType: string,
+        ///   relationshipAttributes: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string
+        ///   },
+        ///   relationshipGuid: string,
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -7779,7 +4826,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
@@ -7810,96 +4857,24 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   guid: string,
+        ///   typeName: string,
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   displayText: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   relationshipType: string,
+        ///   relationshipAttributes: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string
+        ///   },
+        ///   relationshipGuid: string,
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -7909,7 +4884,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
@@ -7938,13 +4913,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="RemoveTermAssignmentFromEntities"/> and <see cref="RemoveTermAssignmentFromEntitiesAsync"/> operations. </summary>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateRemoveTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateRemoveTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -7961,96 +4932,24 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   guid: string,
+        ///   typeName: string,
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   displayText: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   relationshipType: string,
+        ///   relationshipAttributes: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string
+        ///   },
+        ///   relationshipGuid: string,
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -8060,7 +4959,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
@@ -8091,96 +4990,24 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasRelatedObjectId</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>uniqueAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The unique attributes of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>AtlasStruct</term>
-        ///     <term></term>
-        ///     <term>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of relationship status.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStruct</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   guid: string,
+        ///   typeName: string,
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   displayText: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   relationshipType: string,
+        ///   relationshipAttributes: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string
+        ///   },
+        ///   relationshipGuid: string,
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -8190,7 +5017,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content, options);
+            using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
@@ -8219,13 +5046,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteTermAssignmentFromEntities"/> and <see cref="DeleteTermAssignmentFromEntitiesAsync"/> operations. </summary>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateDeleteTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -8241,6 +5064,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   description: string,
+        ///   displayText: string,
+        ///   expression: string,
+        ///   relationGuid: string,
+        ///   source: string,
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///   steward: string,
+        ///   termGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -8251,7 +5089,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
@@ -8281,6 +5119,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   description: string,
+        ///   displayText: string,
+        ///   expression: string,
+        ///   relationGuid: string,
+        ///   source: string,
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///   steward: string,
+        ///   termGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -8291,7 +5144,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
@@ -8320,15 +5173,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetRelatedTerms"/> and <see cref="GetRelatedTermsAsync"/> operations. </summary>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRelatedTermsRequest(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        private HttpMessage CreateGetRelatedTermsRequest(string termGuid, int? limit, int? offset, string sort)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -8355,6 +5202,61 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get a specific Glossary by its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -8362,7 +5264,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid, options);
+            using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
@@ -8392,6 +5294,61 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get a specific Glossary by its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -8399,7 +5356,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid, options);
+            using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
@@ -8428,12 +5385,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetGlossary"/> and <see cref="GetGlossaryAsync"/> operations. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetGlossaryRequest(string glossaryGuid, RequestOptions options = null)
+        private HttpMessage CreateGetGlossaryRequest(string glossaryGuid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -8449,266 +5403,111 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>categories</term>
-        ///     <term>AtlasRelatedCategoryHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of categories.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>language</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The language of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>terms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>usage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The usage of the glossary.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the category header.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the parent category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -8718,7 +5517,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
@@ -8750,266 +5549,111 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term>An array of classifications.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>longDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The long version description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>qualifiedName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The qualified name of the glossary object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>shortDescription</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The short version of description.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the object.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>categories</term>
-        ///     <term>AtlasRelatedCategoryHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of categories.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>language</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The language of the glossary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>terms</term>
-        ///     <term>AtlasRelatedTermHeader[]</term>
-        ///     <term></term>
-        ///     <term>An array of related term headers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>usage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The usage of the glossary.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The attributes of the struct.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the entity.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if propagations will be removed on entity deletion.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term>An array of time boundaries indicating validity periods.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>indicate the source who create the classification detail</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>more detail on source information</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>categoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the category header.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parentCategoryGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the parent category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelatedTermHeader</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the related term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display text.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The expression of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The source of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term>The status of term relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The steward of the term.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the term.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The end of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The start of the time boundary.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The timezone of the time boundary.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -9019,7 +5663,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content, options);
+            using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
@@ -9048,13 +5692,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateGlossary"/> and <see cref="UpdateGlossaryAsync"/> operations. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUpdateGlossaryRequest(string glossaryGuid, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateUpdateGlossaryRequest(string glossaryGuid, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -9077,7 +5717,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
@@ -9114,7 +5754,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid, options);
+            using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
@@ -9143,12 +5783,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteGlossary"/> and <see cref="DeleteGlossaryAsync"/> operations. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteGlossaryRequest(string glossaryGuid, RequestOptions options = null)
+        private HttpMessage CreateDeleteGlossaryRequest(string glossaryGuid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -9161,6 +5798,65 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the categories belonging to a specific glossary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -9171,7 +5867,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
@@ -9201,6 +5897,65 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the categories belonging to a specific glossary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   childrenCategories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -9211,7 +5966,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
@@ -9240,15 +5995,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetGlossaryCategories"/> and <see cref="GetGlossaryCategoriesAsync"/> operations. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetGlossaryCategoriesRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        private HttpMessage CreateGetGlossaryCategoriesRequest(string glossaryGuid, int? limit, int? offset, string sort)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -9275,6 +6024,18 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the category headers belonging to a specific glossary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   categoryGuid: string,
+        ///   description: string,
+        ///   displayText: string,
+        ///   parentCategoryGuid: string,
+        ///   relationGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -9285,7 +6046,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
@@ -9315,6 +6076,18 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the category headers belonging to a specific glossary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   categoryGuid: string,
+        ///   description: string,
+        ///   displayText: string,
+        ///   parentCategoryGuid: string,
+        ///   relationGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -9325,7 +6098,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
@@ -9354,15 +6127,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetGlossaryCategoriesHeaders"/> and <see cref="GetGlossaryCategoriesHeadersAsync"/> operations. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetGlossaryCategoriesHeadersRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        private HttpMessage CreateGetGlossaryCategoriesHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -9389,6 +6156,63 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get a specific glossary with detailed information. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string,
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;,
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
@@ -9397,7 +6221,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
@@ -9427,6 +6251,63 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get a specific glossary with detailed information. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string,
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;,
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
@@ -9435,7 +6316,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
@@ -9464,13 +6345,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetDetailedGlossary"/> and <see cref="GetDetailedGlossaryAsync"/> operations. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetDetailedGlossaryRequest(string glossaryGuid, bool? includeTermHierarchy = null, RequestOptions options = null)
+        private HttpMessage CreateGetDetailedGlossaryRequest(string glossaryGuid, bool? includeTermHierarchy)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -9489,6 +6366,61 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -9498,7 +6430,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
@@ -9528,6 +6460,61 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -9537,7 +6524,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
@@ -9566,14 +6553,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="PartialUpdateGlossary"/> and <see cref="PartialUpdateGlossaryAsync"/> operations. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreatePartialUpdateGlossaryRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+        private HttpMessage CreatePartialUpdateGlossaryRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -9594,6 +6576,110 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get terms belonging to a specific glossary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -9605,7 +6691,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
@@ -9635,6 +6721,110 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get terms belonging to a specific glossary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -9646,7 +6836,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
@@ -9675,16 +6865,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetGlossaryTerms"/> and <see cref="GetGlossaryTermsAsync"/> operations. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetGlossaryTermsRequest(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        private HttpMessage CreateGetGlossaryTermsRequest(string glossaryGuid, bool? includeTermHierarchy, int? limit, int? offset, string sort)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -9715,6 +6898,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get term headers belonging to a specific glossary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   description: string,
+        ///   displayText: string,
+        ///   expression: string,
+        ///   relationGuid: string,
+        ///   source: string,
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///   steward: string,
+        ///   termGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -9725,7 +6923,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
@@ -9755,6 +6953,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get term headers belonging to a specific glossary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   description: string,
+        ///   displayText: string,
+        ///   expression: string,
+        ///   relationGuid: string,
+        ///   source: string,
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///   steward: string,
+        ///   termGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -9765,7 +6978,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, options);
+            using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
@@ -9794,15 +7007,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetGlossaryTermHeaders"/> and <see cref="GetGlossaryTermHeadersAsync"/> operations. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetGlossaryTermHeadersRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        private HttpMessage CreateGetGlossaryTermHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -9829,6 +7036,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
+        ///   createTime: string,
+        ///   lastUpdateTime: string,
+        ///   errorCode: number,
+        ///   errorMessage: string,
+        ///   importedTerms: string,
+        ///   totalTermsDetected: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -9838,7 +7060,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
@@ -9868,6 +7090,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
+        ///   createTime: string,
+        ///   lastUpdateTime: string,
+        ///   errorCode: number,
+        ///   errorMessage: string,
+        ///   importedTerms: string,
+        ///   totalTermsDetected: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -9877,7 +7114,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
@@ -9906,14 +7143,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="ImportGlossaryTermsViaCsv"/> and <see cref="ImportGlossaryTermsViaCsvAsync"/> operations. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateImportGlossaryTermsViaCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+        private HttpMessage CreateImportGlossaryTermsViaCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -9935,6 +7167,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
+        ///   createTime: string,
+        ///   lastUpdateTime: string,
+        ///   errorCode: number,
+        ///   errorMessage: string,
+        ///   importedTerms: string,
+        ///   totalTermsDetected: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -9944,7 +7191,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();
@@ -9974,6 +7221,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
+        ///   createTime: string,
+        ///   lastUpdateTime: string,
+        ///   errorCode: number,
+        ///   errorMessage: string,
+        ///   importedTerms: string,
+        ///   totalTermsDetected: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -9983,7 +7245,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();
@@ -10012,14 +7274,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="ImportGlossaryTermsViaCsvByGlossaryName"/> and <see cref="ImportGlossaryTermsViaCsvByGlossaryNameAsync"/> operations. </summary>
-        /// <param name="glossaryName"> The name of the glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+        private HttpMessage CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(string glossaryName, RequestContent content, bool? includeTermHierarchy)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -10041,6 +7298,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the status of import csv operation. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
+        ///   createTime: string,
+        ///   lastUpdateTime: string,
+        ///   errorCode: number,
+        ///   errorMessage: string,
+        ///   importedTerms: string,
+        ///   totalTermsDetected: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -10048,7 +7320,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid, options);
+            using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
@@ -10078,6 +7350,21 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the status of import csv operation. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
+        ///   createTime: string,
+        ///   lastUpdateTime: string,
+        ///   errorCode: number,
+        ///   errorMessage: string,
+        ///   importedTerms: string,
+        ///   totalTermsDetected: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -10085,7 +7372,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid, options);
+            using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
@@ -10114,12 +7401,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetImportCsvOperationStatus"/> and <see cref="GetImportCsvOperationStatusAsync"/> operations. </summary>
-        /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetImportCsvOperationStatusRequest(string operationGuid, RequestOptions options = null)
+        private HttpMessage CreateGetImportCsvOperationStatusRequest(string operationGuid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -10143,7 +7427,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
@@ -10182,7 +7466,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy, options);
+            using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
@@ -10211,14 +7495,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="ExportGlossaryTermsAsCsv"/> and <see cref="ExportGlossaryTermsAsCsvAsync"/> operations. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateExportGlossaryTermsAsCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+        private HttpMessage CreateExportGlossaryTermsAsCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -10240,6 +7519,110 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get terms by glossary name. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -10250,7 +7633,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
@@ -10280,6 +7663,110 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get terms by glossary name. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   abbreviation: string,
+        ///   templateName: [AnyObject],
+        ///   anchor: {
+        ///     displayText: string,
+        ///     glossaryGuid: string,
+        ///     relationGuid: string
+        ///   },
+        ///   antonyms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   resources: [
+        ///     {
+        ///       displayName: string,
+        ///       url: string
+        ///     }
+        ///   ],
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   assignedEntities: [
+        ///     {
+        ///       guid: string,
+        ///       typeName: string,
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       displayText: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       relationshipType: string,
+        ///       relationshipAttributes: {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string
+        ///       },
+        ///       relationshipGuid: string,
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ],
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       relationGuid: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///     }
+        ///   ],
+        ///   classifies: [AtlasRelatedTermHeader],
+        ///   examples: [string],
+        ///   isA: [AtlasRelatedTermHeader],
+        ///   preferredTerms: [AtlasRelatedTermHeader],
+        ///   preferredToTerms: [AtlasRelatedTermHeader],
+        ///   replacedBy: [AtlasRelatedTermHeader],
+        ///   replacementTerms: [AtlasRelatedTermHeader],
+        ///   seeAlso: [AtlasRelatedTermHeader],
+        ///   synonyms: [AtlasRelatedTermHeader],
+        ///   translatedTerms: [AtlasRelatedTermHeader],
+        ///   translationTerms: [AtlasRelatedTermHeader],
+        ///   usage: string,
+        ///   validValues: [AtlasRelatedTermHeader],
+        ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -10290,7 +7777,7 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, options);
+            using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
@@ -10319,15 +7806,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTermsByGlossaryName"/> and <see cref="GetTermsByGlossaryNameAsync"/> operations. </summary>
-        /// <param name="glossaryName"> The name of the glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTermsByGlossaryNameRequest(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestOptions options = null)
+        private HttpMessage CreateGetTermsByGlossaryNameRequest(string glossaryName, int? limit, int? offset, bool? includeTermHierarchy)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
