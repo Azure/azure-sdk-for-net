@@ -308,8 +308,21 @@ namespace Azure.Monitor.Query
 
         private static Response<LogsBatchQueryResultCollection> ConvertBatchResponse(LogsBatchQuery batch, Response<BatchResponse> response)
         {
+            List<LogsBatchQueryResult> batchResponses = new List<LogsBatchQueryResult>();
+            foreach (var innerResponse in response.Value.Responses)
+            {
+                var body = innerResponse.Body;
+                body.Status = innerResponse.Status switch
+                {
+                    >= 400 => LogsBatchQueryResultStatus.Failure,
+                    _ when body.Error != null => LogsBatchQueryResultStatus.PartialFailure,
+                    _ => LogsBatchQueryResultStatus.Success
+                };
+                body.Id = innerResponse.Id;
+            }
+
             return Response.FromValue(
-                new LogsBatchQueryResultCollection(response.Value.Responses.Select(r => r.Body).ToArray(), batch),
+                new LogsBatchQueryResultCollection(batchResponses, batch),
                 response.GetRawResponse());
         }
 
