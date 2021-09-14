@@ -65,6 +65,12 @@ namespace Azure.ResourceManager.Network.Tests
             StopSessionRecording();
         }
 
+        [OneTimeTearDown]
+        public async Task GlobalTearDown()
+        {
+            await _resourceGroup.DeleteAsync();
+        }
+
         [SetUp]
         public async Task TestSetUp()
         {
@@ -94,7 +100,7 @@ namespace Azure.ResourceManager.Network.Tests
                 PublicIPAddress = new Models.SubResource() { Id = _publicIPAddressIdentifier },
                 Subnet = new Models.SubResource() { Id = _networkIdentifier.ToString() + "/subnets/AzureFirewallSubnet" },
             });
-            var firewallLro = await _resourceGroup.GetAzureFirewalls().CreateOrUpdateAsync(_firewallName, firewallData);
+            var firewallLro = await (await _resourceGroup.GetAzureFirewalls().CreateOrUpdateAsync(_firewallName, firewallData)).WaitForCompletionAsync();
             return firewallLro.Value;
         }
 

@@ -35,6 +35,12 @@ namespace Azure.ResourceManager.Network.Tests
             StopSessionRecording();
         }
 
+        [OneTimeTearDown]
+        public async Task GlobalTearDown()
+        {
+            await _resourceGroup.DeleteAsync();
+        }
+
         [SetUp]
         public async Task TestSetUp()
         {
