@@ -45,7 +45,9 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// application. Optional; if not specified, defaults to a blank
         /// blueprint and allows the application to be defined from
         /// scratch.</param>
-        public AppPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), AppSkuInfo sku = default(AppSkuInfo), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string))
+        /// <param name="state">The current state of the application. Possible
+        /// values include: 'created', 'suspended'</param>
+        public AppPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), AppSkuInfo sku = default(AppSkuInfo), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string), string state = default(string))
         {
             Tags = tags;
             Sku = sku;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.IotCentral.Models
             DisplayName = displayName;
             Subdomain = subdomain;
             Template = template;
+            State = state;
             CustomInit();
         }
 
@@ -99,6 +102,13 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.template")]
         public string Template { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current state of the application. Possible values
+        /// include: 'created', 'suspended'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.state")]
+        public string State { get; set; }
 
         /// <summary>
         /// Validate the object.
