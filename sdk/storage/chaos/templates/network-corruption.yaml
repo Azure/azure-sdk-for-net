@@ -4,7 +4,8 @@ metadata:
   name: network-corruption-kasobol-test
   namespace: kasobol-test
   labels: null
-  annotations: null
+  annotations:
+    experiment.chaos-mesh.org/pause: 'true'
 spec:
   action: corrupt
   mode: one

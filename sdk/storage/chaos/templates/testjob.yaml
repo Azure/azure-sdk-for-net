@@ -15,7 +15,7 @@ spec:
           memory: "10Gi"
         limits:
           memory: "15Gi"
-      image: stresstestregistry.azurecr.io/kasobol/net-chaos:21
-      command: ["bash", "run.sh", "1"]
+      image: stresstestregistry.azurecr.io/kasobol/net-chaos:24
+      command: ["bash", "run.sh", "1", "30"]
       {{- include "stress-test-addons.container-env" . | nindent 6 }}
 {{- end -}}

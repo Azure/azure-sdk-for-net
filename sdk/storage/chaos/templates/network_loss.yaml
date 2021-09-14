@@ -3,6 +3,8 @@ kind: NetworkChaos
 metadata:
   name: network-loss-kasobol-test
   namespace: kasobol-test
+  annotations:
+    experiment.chaos-mesh.org/pause: 'true'
 spec:
   action: loss
   mode: one

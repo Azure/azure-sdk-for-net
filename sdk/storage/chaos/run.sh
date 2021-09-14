@@ -12,6 +12,15 @@ count=$1
 
 echo "Number of test runs $count"
 
+kubectl annotate networkchaos network-loss-kasobol-test experiment.chaos-mesh.org/pause-
+kubectl annotate networkchaos network-corruption-kasobol-test experiment.chaos-mesh.org/pause-
+
+initial_sleep=$2
+
+echo "Sleeping for $initial_sleep"
+
+sleep $initial_sleep
+
 for i in $(seq $count); do
     echo "Starting run number $i"
 

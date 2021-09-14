@@ -24,7 +24,8 @@ RUN apk add --no-cache \
         wget \
         bash \
         nodejs \
-        npm
+        npm \
+        sudo
 
 # Install .NET SDK
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
@@ -57,7 +58,7 @@ ENV AZURE_AZURITE_LOCATION=/usr/lib
 
 RUN git clone --branch chaos-prototype --single-branch --no-tags https://github.com/kasobol-msft/azure-sdk-for-net.git \
     && cd azure-sdk-for-net \
-    && git checkout 624efe4 \
+    && git checkout cb90b92 \
     && cd ..
 
 RUN dotnet build /azure-sdk-for-net/eng/service.proj \
@@ -75,9 +76,13 @@ RUN dotnet build /azure-sdk-for-net/eng/service.proj \
     /p:CollectCoverage=false \
     /p:UseProjectReferenceToAzureClients=false
 
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+    && chmod +x ./kubectl \
+    && sudo mv ./kubectl /usr/local/bin/kubectl
+
 ADD ./generate-test-config.ps1 /generate-test-config.ps1
 
 ADD ./run.sh /run.sh
 RUN chmod +x /run.sh
 
-CMD bash /run.sh 1
+CMD bash /run.sh 1 1
