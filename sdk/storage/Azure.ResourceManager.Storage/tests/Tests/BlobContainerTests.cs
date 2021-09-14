@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         public async Task createStorageAccountAndGetBlobContainerContainer()
         {
             _resourceGroup = await CreateResourceGroupAsync();
-            string accountName =await CreateValidAccountNameAsync("storage");
+            string accountName =await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
             _storageAccount = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             _blobServiceContainer = _storageAccount.GetBlobServices();
