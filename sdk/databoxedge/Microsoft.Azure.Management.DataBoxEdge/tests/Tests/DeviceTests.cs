@@ -45,7 +45,7 @@ namespace DataBoxEdge.Tests
             DataBoxEdgeDevice device = new DataBoxEdgeDevice();
             device.PopulateEdgeDeviceProperties();
             device.Identity = new ResourceIdentity(type: "SystemAssigned");
-            var name = TestConstants.EdgeResourceName;
+            var name = TestConstants.EdgeResourceName+"ritwik";
             device.CreateOrUpdate(name, Client, TestConstants.DefaultResourceGroupName);
             
             // Step 2. GenerateCIK
@@ -58,18 +58,20 @@ namespace DataBoxEdge.Tests
              * 3. KeyVault must be in the same subscription and resource group as the ASE Resource
              * 4. Set KeyVault Access policies for the MSI, which gets created at step 1 and has the same name as resource
              *    Doc to set the AccessPolicies: https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy?tabs=azure-portal
-             *    Note: Only Get and Set Permissions to be given to the MSI
+             *    Note: Only Get and Set Permissions need to be set
              */
 
             /*
             // Step 3: Create KeyVault
+            // Please follow KeyVault documentation to create keyvualt:
+            // https://docs.microsoft.com/en-us/azure/key-vault/keys/quick-create-template?tabs=CLI
             var keyVaultUri = "https://test-sdk-keyvault-123.vault.azure.net";
             var keyVaultClient = new SecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
 
             // Step 4: Save the CIK in KeyVault
             keyVaultClient.SetSecret(CIKName, generatedCIK);
 
-            // Ste 5: Update KeyVault ClientSecretStoreId and ClientSecretStoreUrl
+            // Step 5: Update KeyVault ClientSecretStoreId and ClientSecretStoreUrl
             string ClientSecretStoreId = "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.KeyVault/vaults/test-sdk-keyvault-123";
             string ClientSecretStoreUrl = "https://test-sdk-keyvault-123.vault.azure.net";
             string ChannelIntegrityKeyName = CIKName;

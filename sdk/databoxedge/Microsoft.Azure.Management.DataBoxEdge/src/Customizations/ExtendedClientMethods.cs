@@ -13,44 +13,6 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         private const int StandardSizeOfCIK = 128;
 
         /// <summary>
-        /// Use this method to encrypt the user secrets (Storage Account Access Key, Volume Container Encryption Key etc.) using activation key
-        /// </summary>
-        /// <param name="deviceName">
-        /// The resource name.
-        /// </param>
-        /// <param name="resourceGroupName">
-        /// The resource group name.
-        /// </param>
-        /// <param name="plainTextSecret">
-        /// The plain text secret.
-        /// </param>
-        /// <returns>
-        /// The <see cref="AsymmetricEncryptedSecret"/>.
-        /// </returns>
-        /// <exception cref="ValidationException">
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// </exception>
-        public static AsymmetricEncryptedSecret GetAsymmetricEncryptedSecretUsingActivationKey(
-            this IDevicesOperations operations,
-                string deviceName,
-            string resourceGroupName,
-
-            string plainTextSecret,
-            string activationKey)
-        {
-            if (string.IsNullOrWhiteSpace(activationKey))
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "activationKey");
-            }
-
-
-
-            string channelIntegrationKey = GetChannelIntegrityKey(activationKey);
-            return operations.GetAsymmetricEncryptedSecret(deviceName, resourceGroupName, plainTextSecret, channelIntegrationKey);
-        }
-
-        /// <summary>
         /// Use this method to encrypt the user secrets (Storage Account Access Key, Volume Container Encryption Key etc.) using CIK
         /// </summary>
         /// <param name="deviceName">
