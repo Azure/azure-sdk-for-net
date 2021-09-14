@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         }
 
         [RecordedTest]
-        public async Task TestSparkBatchJob()
+        public async Task TestSparkBatchJobCompletesWhenJobStarts()
         {
             SparkBatchClient client = CreateClient();
 
@@ -46,12 +46,12 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
             SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
 
-            // Verify the Spark batch job submission completes successfully
+            // Verify the Spark batch job submission starts successfully
             Assert.True("starting".Equals(jobCreateResponse.State, StringComparison.OrdinalIgnoreCase) || "running".Equals(jobCreateResponse.State, StringComparison.OrdinalIgnoreCase),
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Error (if any): {2}",
                     jobCreateResponse.Id,
-                    jobCreateResponse.Result,
+                    jobCreateResponse.State,
                     string.Join(", ", jobCreateResponse.Errors ?? new List<SparkServiceError>())
                 )
             );
@@ -63,13 +63,16 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         }
 
         [RecordedTest]
-        public async Task TestSparkBatchJobExecution()
+        public async Task TestSparkBatchJobCompletesWhenJobComplete()
         {
             SparkBatchClient client = CreateClient();
 
-            // Submit the Spark job
             SparkBatchJobOptions createParams = SparkTestUtilities.CreateSparkJobRequestParameters(Recording, TestEnvironment);
+
+            // Set completion type to wait for completion of job execution.
             createParams.CreationCompletionType = SparkBatchOperationCompletionType.JobExecution;
+
+            // Submit the Spark job
             SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
             SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
 
