@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,8 +21,8 @@ namespace Azure.Data.SchemaRegistry
         internal SchemaRestClient RestClient { get; }
         private const string CredentialScope = "https://eventhubs.azure.net/.default";
 
-        private readonly Dictionary<string, SchemaProperties> _schemaIdToPropertiesMap = new();
-        private readonly Dictionary<(string, string, string, SerializationType), SchemaProperties> _contentToPropertiesMap = new();
+        private readonly ConcurrentDictionary<string, SchemaRegistrySchema> _schemaIdToSchemaMap = new();
+        private readonly ConcurrentDictionary<(string, string, string, SerializationType), SchemaProperties> _contentToPropertiesMap = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryClient"/>.
@@ -65,19 +66,19 @@ namespace Azure.Data.SchemaRegistry
         /// Registers a schema with the SchemaRegistry service.
         /// </summary>
         /// <param name="groupName">The name of the SchemaRegistry group.</param>
-        /// <param name="schemaName">The name of the schema.</param>
+        /// <param name="name">The name of the schema.</param>
+        /// <param name="content">The string representation of the schema's content.</param>
         /// <param name="serializationType">The serialization format of the schema.</param>
-        /// <param name="schemaContent">The string representation of the schema's content.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema.</returns>
         public virtual async Task<Response<SchemaProperties>> RegisterSchemaAsync(
             string groupName,
-            string schemaName,
+            string name,
+            string content,
             SerializationType serializationType,
-            string schemaContent,
             CancellationToken cancellationToken = default) =>
-                await RegisterSchemaInternalAsync(groupName, schemaName, serializationType, schemaContent, true, cancellationToken)
-                    .ConfigureAwait(false);
+            await RegisterSchemaInternalAsync(groupName, name, content, serializationType, true, cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// Registers a schema with the SchemaRegistry service.
@@ -85,25 +86,25 @@ namespace Azure.Data.SchemaRegistry
         /// If the schema did previous exist in the Schema Registry instance, a new version of the schema is added to the instance and assigned a new schema ID.
         /// </summary>
         /// <param name="groupName">The name of the SchemaRegistry group.</param>
-        /// <param name="schemaName">The name of the schema.</param>
+        /// <param name="name">The name of the schema.</param>
+        /// <param name="content">The string representation of the schema's content.</param>
         /// <param name="serializationType">The serialization format of the schema.</param>
-        /// <param name="schemaContent">The string representation of the schema's content.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema.</returns>
         public virtual Response<SchemaProperties> RegisterSchema(
             string groupName,
-            string schemaName,
+            string name,
+            string content,
             SerializationType serializationType,
-            string schemaContent,
             CancellationToken cancellationToken = default) =>
-                RegisterSchemaInternalAsync(groupName, schemaName, serializationType, schemaContent, false, cancellationToken)
+                RegisterSchemaInternalAsync(groupName, name, content, serializationType, false, cancellationToken)
                     .EnsureCompleted();
 
         private async Task<Response<SchemaProperties>> RegisterSchemaInternalAsync(
             string groupName,
-            string schemaName,
+            string name,
+            string content,
             SerializationType serializationType,
-            string schemaContent,
             bool async,
             CancellationToken cancellationToken = default)
         {
@@ -114,16 +115,15 @@ namespace Azure.Data.SchemaRegistry
                 ResponseWithHeaders<SchemaId, SchemaRegisterHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.RegisterAsync(groupName, schemaName, serializationType, schemaContent, cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.RegisterAsync(groupName, name, serializationType, content, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.Register(groupName, schemaName, serializationType, schemaContent, cancellationToken);
+                    response = RestClient.Register(groupName, name, serializationType, content, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
-                _schemaIdToPropertiesMap[properties.Id] = properties;
-                _contentToPropertiesMap[(groupName, schemaName, schemaContent, serializationType)] = properties;
+                var properties = new SchemaProperties(response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
+                _contentToPropertiesMap[(groupName, name, content, serializationType)] = properties;
 
                 return Response.FromValue(properties, response);
             }
@@ -138,54 +138,54 @@ namespace Azure.Data.SchemaRegistry
         /// Gets the schema ID associated with the schema from the SchemaRegistry service.
         /// </summary>
         /// <param name="groupName">The name of the SchemaRegistry group.</param>
-        /// <param name="schemaName">The name of the schema.</param>
+        /// <param name="name">The name of the schema.</param>
+        /// <param name="content">The string representation of the schema's content.</param>
         /// <param name="serializationType">The serialization format of the schema.</param>
-        /// <param name="schemaContent">The string representation of the schema's content.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async ValueTask<SchemaProperties> GetSchemaIdAsync(
+        public virtual async ValueTask<SchemaProperties> GetSchemaPropertiesAsync(
             string groupName,
-            string schemaName,
+            string name,
+            string content,
             SerializationType serializationType,
-            string schemaContent,
             CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
-                await GetSchemaIdInternalAsync(groupName, schemaName, serializationType, schemaContent, true, cancellationToken)
+                await GetSchemaPropertiesInternalAsync(groupName, name, content, serializationType, true, cancellationToken)
                     .ConfigureAwait(false);
 
         /// <summary>
         /// Gets the schema ID associated with the schema from the SchemaRegistry service.
         /// </summary>
         /// <param name="groupName">The name of the SchemaRegistry group.</param>
-        /// <param name="schemaName">The name of the schema.</param>
+        /// <param name="name">The name of the schema.</param>
+        /// <param name="content">The string representation of the schema's content.</param>
         /// <param name="serializationType">The serialization format of the schema.</param>
-        /// <param name="schemaContent">The string representation of the schema's content.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual SchemaProperties GetSchemaId(
+        public virtual SchemaProperties GetSchemaProperties(
             string groupName,
-            string schemaName,
+            string name,
+            string content,
             SerializationType serializationType,
-            string schemaContent,
             CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
-                GetSchemaIdInternalAsync(groupName, schemaName, serializationType, schemaContent, false, cancellationToken).EnsureCompleted();
+                GetSchemaPropertiesInternalAsync(groupName, name, content, serializationType, false, cancellationToken).EnsureCompleted();
 
-        private async ValueTask<SchemaProperties> GetSchemaIdInternalAsync(
+        private async ValueTask<SchemaProperties> GetSchemaPropertiesInternalAsync(
             string groupName,
-            string schemaName,
+            string name,
+            string content,
             SerializationType serializationType,
-            string schemaContent,
             bool async,
             CancellationToken cancellationToken)
         {
             if (_contentToPropertiesMap.TryGetValue(
-                (groupName, schemaName, schemaContent, serializationType),
-                out SchemaProperties schema))
+                (groupName, name, content, serializationType),
+                out SchemaProperties schemaProperties))
             {
-                return schema;
+                return schemaProperties;
             }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaIdScopeName);
@@ -195,16 +195,17 @@ namespace Azure.Data.SchemaRegistry
                 ResponseWithHeaders<SchemaId, SchemaQueryIdByContentHeaders> response;
                 if (async)
                 {
-                    response = await RestClient.QueryIdByContentAsync(groupName, schemaName, serializationType, schemaContent, cancellationToken).ConfigureAwait(false);
+                    response = await RestClient.QueryIdByContentAsync(groupName, name, serializationType, content, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.QueryIdByContent(groupName, schemaName, serializationType, schemaContent, cancellationToken);
+                    response = RestClient.QueryIdByContent(groupName, name, serializationType, content, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
-                _schemaIdToPropertiesMap[properties.Id] = properties;
-                _contentToPropertiesMap[(groupName, schemaName, schemaContent, serializationType)] = properties;
+                var properties = new SchemaProperties(response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
+                var schema = new SchemaRegistrySchema(properties, content);
+                _schemaIdToSchemaMap[properties.Id] = schema;
+                _contentToPropertiesMap[(groupName, name, content, serializationType)] = properties;
 
                 return properties;
             }
@@ -222,7 +223,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async ValueTask<SchemaProperties> GetSchemaAsync(string schemaId, CancellationToken cancellationToken = default) =>
+        public virtual async ValueTask<SchemaRegistrySchema> GetSchemaAsync(string schemaId, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
             await GetSchemaInternalAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
 
@@ -233,13 +234,13 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual SchemaProperties GetSchema(string schemaId, CancellationToken cancellationToken = default) =>
+        public virtual SchemaRegistrySchema GetSchema(string schemaId, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
             GetSchemaInternalAsync(schemaId, false, cancellationToken).EnsureCompleted();
 
-        private async ValueTask<SchemaProperties> GetSchemaInternalAsync(string schemaId, bool async, CancellationToken cancellationToken)
+        private async ValueTask<SchemaRegistrySchema> GetSchemaInternalAsync(string schemaId, bool async, CancellationToken cancellationToken)
         {
-            if (_schemaIdToPropertiesMap.TryGetValue(schemaId, out SchemaProperties schema))
+            if (_schemaIdToSchemaMap.TryGetValue(schemaId, out SchemaRegistrySchema schema))
             {
                 return schema;
             }
@@ -258,10 +259,10 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetById(schemaId, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(response.Value, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
-                _schemaIdToPropertiesMap[schemaId] = properties;
+                var properties = new SchemaProperties(response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
+                _schemaIdToSchemaMap[schemaId] = new SchemaRegistrySchema(properties, response.Value);
 
-                return properties;
+                return _schemaIdToSchemaMap[schemaId];
             }
             catch (Exception e)
             {

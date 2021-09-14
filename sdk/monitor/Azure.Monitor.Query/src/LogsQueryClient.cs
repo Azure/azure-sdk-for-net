@@ -26,6 +26,11 @@ namespace Azure.Monitor.Query
         private readonly HttpPipeline _pipeline;
 
         /// <summary>
+        /// Gets a private endpoint connection.
+        /// </summary>
+        public Uri Endpoint { get; }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
         /// <code snippet="Snippet:CreateLogsClient" language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
@@ -65,6 +70,7 @@ namespace Azure.Monitor.Query
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
+            Endpoint = endpoint;
             options ??= new LogsQueryClientOptions();
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -302,16 +308,16 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Create a Kusto query from an interpolated string. The interpolated values will be quoted and escaped as necessary.
         /// </summary>
-        /// <param name="filter">An interpolated query string.</param>
+        /// <param name="query">An interpolated query string.</param>
         /// <returns>A valid Kusto query.</returns>
-        public static string CreateQuery(FormattableString filter)
+        public static string CreateQuery(FormattableString query)
         {
-            if (filter == null) { return null; }
+            if (query == null) { return null; }
 
-            string[] args = new string[filter.ArgumentCount];
-            for (int i = 0; i < filter.ArgumentCount; i++)
+            string[] args = new string[query.ArgumentCount];
+            for (int i = 0; i < query.ArgumentCount; i++)
             {
-                args[i] = filter.GetArgument(i) switch
+                args[i] = query.GetArgument(i) switch
                 {
                     // Null
                     null => throw new ArgumentException(
@@ -358,7 +364,7 @@ namespace Azure.Monitor.Query
                 };
             }
 
-            return string.Format(CultureInfo.InvariantCulture, filter.Format, args);
+            return string.Format(CultureInfo.InvariantCulture, query.Format, args);
         }
 
         private static string EscapeStringValue(string s)

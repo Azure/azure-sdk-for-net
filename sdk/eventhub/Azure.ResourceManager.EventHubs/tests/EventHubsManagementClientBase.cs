@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
         public NamespacesOperations NamespacesOperations { get; set; }
         public ConsumerGroupsOperations ConsumerGroupsOperations { get; set; }
         public DisasterRecoveryConfigsOperations DisasterRecoveryConfigsOperations { get; set; }
-        public StorageManagementClient StorageManagementClient { get; set; }
 
         protected EventHubsManagementClientBase(bool isAsync)
              : base(isAsync)
@@ -42,8 +41,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             ConsumerGroupsOperations = EventHubsManagementClient.ConsumerGroups;
             DisasterRecoveryConfigsOperations = EventHubsManagementClient.DisasterRecoveryConfigs;
             Operations = EventHubsManagementClient.Operations;
-
-            StorageManagementClient = GetStorageManagementClient();
         }
 
         internal EventHubsManagementClient GetEventHubManagementClient()
@@ -52,14 +49,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new EventHubsManagementClientOptions()));
         }
-
-        internal StorageManagementClient GetStorageManagementClient()
-        {
-            return CreateClient<StorageManagementClient>(this.SubscriptionId,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new StorageManagementClientOptions()));
-        }
-
         internal ArmClient GetArmClient()
         {
             var options = InstrumentClientOptions(new ArmClientOptions());
