@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// A class representing a sub-resource that contains only the read-only ID.
     /// </summary>
     [ReferenceType]
-    public partial class SubResource
+    public abstract partial class SubResource
     {
         /// <summary>
         /// Initializes an empty instance of <see cref="SubResource"/> for mocking.
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="SubResource"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
         [SerializationConstructor]
-        protected internal SubResource(string id)
+        protected SubResource(string id)
         {
             Id = id;
         }

@@ -105,6 +105,16 @@ namespace Microsoft.Azure.Management.WebSites
         IDomainRegistrationProviderOperations DomainRegistrationProvider { get; }
 
         /// <summary>
+        /// Gets the IAppServiceEnvironmentsOperations.
+        /// </summary>
+        IAppServiceEnvironmentsOperations AppServiceEnvironments { get; }
+
+        /// <summary>
+        /// Gets the IAppServicePlansOperations.
+        /// </summary>
+        IAppServicePlansOperations AppServicePlans { get; }
+
+        /// <summary>
         /// Gets the ICertificatesOperations.
         /// </summary>
         ICertificatesOperations Certificates { get; }
@@ -125,6 +135,11 @@ namespace Microsoft.Azure.Management.WebSites
         IGlobalModelOperations GlobalModel { get; }
 
         /// <summary>
+        /// Gets the IKubeEnvironmentsOperations.
+        /// </summary>
+        IKubeEnvironmentsOperations KubeEnvironments { get; }
+
+        /// <summary>
         /// Gets the IProviderOperations.
         /// </summary>
         IProviderOperations Provider { get; }
@@ -135,9 +150,9 @@ namespace Microsoft.Azure.Management.WebSites
         IRecommendationsOperations Recommendations { get; }
 
         /// <summary>
-        /// Gets the IWebAppsOperations.
+        /// Gets the IResourceHealthMetadataOperations.
         /// </summary>
-        IWebAppsOperations WebApps { get; }
+        IResourceHealthMetadataOperations ResourceHealthMetadata { get; }
 
         /// <summary>
         /// Gets the IStaticSitesOperations.
@@ -145,19 +160,9 @@ namespace Microsoft.Azure.Management.WebSites
         IStaticSitesOperations StaticSites { get; }
 
         /// <summary>
-        /// Gets the IAppServiceEnvironmentsOperations.
+        /// Gets the IWebAppsOperations.
         /// </summary>
-        IAppServiceEnvironmentsOperations AppServiceEnvironments { get; }
-
-        /// <summary>
-        /// Gets the IAppServicePlansOperations.
-        /// </summary>
-        IAppServicePlansOperations AppServicePlans { get; }
-
-        /// <summary>
-        /// Gets the IResourceHealthMetadataOperations.
-        /// </summary>
-        IResourceHealthMetadataOperations ResourceHealthMetadata { get; }
+        IWebAppsOperations WebApps { get; }
 
         /// <summary>
         /// Exchange code for GitHub access token for AppService CLI

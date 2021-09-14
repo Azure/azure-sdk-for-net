@@ -34,10 +34,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         /// <param name="id">Format of id
         /// subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.[Service]/{resource}/{resourceName}/privateEndpointConnections/{connectionName}.</param>
-        public PrivateEndpointConnectionVaultProperties(string id = default(string), PrivateEndpointConnection properties = default(PrivateEndpointConnection))
+        /// <param name="name">The name of the private Endpoint
+        /// Connection</param>
+        /// <param name="type">The type, which will be of the format,
+        /// Microsoft.RecoveryServices/vaults/privateEndpointConnections</param>
+        /// <param name="location">The location of the private Endpoint
+        /// connection</param>
+        public PrivateEndpointConnectionVaultProperties(string id = default(string), PrivateEndpointConnection properties = default(PrivateEndpointConnection), string name = default(string), string type = default(string), string location = default(string))
         {
             Id = id;
             Properties = properties;
+            Name = name;
+            Type = type;
+            Location = location;
             CustomInit();
         }
 
@@ -57,6 +66,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public PrivateEndpointConnection Properties { get; set; }
+
+        /// <summary>
+        /// Gets the name of the private Endpoint Connection
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the type, which will be of the format,
+        /// Microsoft.RecoveryServices/vaults/privateEndpointConnections
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets the location of the private Endpoint connection
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; private set; }
 
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
@@ -35,10 +36,8 @@ namespace Azure.ResourceManager.Tests
 
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
-            var data = new GenericResourceData();
-            data.Location = Location.WestUS2;
-            data.Sku = new Sku();
-            data.Sku.Name = "Aligned";
+            var data = new GenericResourceData(Location.WestUS2);
+            data.Sku = new Sku("Aligned");
             var propertyBag = new Dictionary<string, object>();
             propertyBag.Add("platformUpdateDomainCount", 5);
             propertyBag.Add("platformFaultDomainCount", 2);
@@ -51,7 +50,8 @@ namespace Azure.ResourceManager.Tests
             var genericResources = Client.DefaultSubscription.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.CreateOrUpdateAsync(asetId, data);
+            var op = await genericResources.CreateOrUpdateAsync(asetId, data);
+            return op.Value;
         }
 
         protected async Task<ResourceCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Tests
             var genericResources = Client.DefaultSubscription.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.StartCreateOrUpdateAsync(asetId, data);
+            return await genericResources.CreateOrUpdateAsync(asetId, data, false);
         }
 
         protected static void AssertAreEqual(GenericResource aset, GenericResource aset2)

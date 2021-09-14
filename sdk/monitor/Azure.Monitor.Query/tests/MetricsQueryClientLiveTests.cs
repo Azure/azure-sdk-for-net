@@ -57,10 +57,10 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions()
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, duration)
+                    TimeRange = new DateTimeRange(_testData.StartTime, duration)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
             Assert.AreEqual(duration.Minutes, timeSeriesData.Count);
             // Average is queried by default
             Assert.True(timeSeriesData.All(d=> d.Average != null));
@@ -80,7 +80,7 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)),
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)),
                     Aggregations =
                     {
                         MetricAggregationType.Average,
@@ -91,7 +91,7 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             // Average is queried by default
             Assert.True(timeSeriesData.All(d=>
@@ -113,10 +113,10 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -133,10 +133,10 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.Duration)
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.Duration)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -153,10 +153,10 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.Duration, _testData.EndTime)
+                    TimeRange = new DateTimeRange(_testData.Duration, _testData.EndTime)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -175,7 +175,7 @@ namespace Azure.Monitor.Query.Tests
                     MetricNamespace = _testData.MetricNamespace
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
             Assert.Greater(timeSeriesData.Count, 0);
         }
 
@@ -190,11 +190,11 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
-                    Interval = TimeSpan.FromMinutes(5)
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    Granularity = TimeSpan.FromMinutes(5)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
             Assert.AreEqual(_testData.Duration.Minutes / 5, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -211,7 +211,7 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
                     Filter = $"Name eq '{_testData.Name1}'",
                     Aggregations =
                     {
@@ -234,9 +234,9 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
                     Filter = $"Name eq '*'",
-                    Top = 1,
+                    Size = 1,
                     Aggregations =
                     {
                         MetricAggregationType.Count

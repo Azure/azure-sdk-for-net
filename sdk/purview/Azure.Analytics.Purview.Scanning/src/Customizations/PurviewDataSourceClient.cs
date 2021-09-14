@@ -11,7 +11,7 @@ namespace Azure.Analytics.Purview.Scanning
         internal PurviewDataSourceClient(Uri endpoint, string dataSourceName, HttpPipeline pipeline, string apiVersion) {
             this.endpoint = endpoint;
             this.dataSourceName= dataSourceName;
-            this.Pipeline = pipeline;
+            this._pipeline = pipeline;
             this.apiVersion = apiVersion;
         }
 

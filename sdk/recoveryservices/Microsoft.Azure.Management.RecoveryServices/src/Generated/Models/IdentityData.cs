@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -30,16 +32,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <summary>
         /// Initializes a new instance of the IdentityData class.
         /// </summary>
-        /// <param name="type">The identity type. Possible values include:
-        /// 'SystemAssigned', 'None'</param>
+        /// <param name="type">The type of managed identity used. The type
+        /// 'SystemAssigned, UserAssigned' includes both an implicitly created
+        /// identity and a set of user-assigned identities. The type 'None'
+        /// will remove any identities. Possible values include:
+        /// 'SystemAssigned', 'None', 'UserAssigned', 'SystemAssigned,
+        /// UserAssigned'</param>
         /// <param name="principalId">The principal ID of resource
         /// identity.</param>
         /// <param name="tenantId">The tenant ID of resource.</param>
-        public IdentityData(string type, string principalId = default(string), string tenantId = default(string))
+        /// <param name="userAssignedIdentities">The list of user-assigned
+        /// identities associated with the resource. The user-assigned identity
+        /// dictionary keys will be ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
+        public IdentityData(string type, string principalId = default(string), string tenantId = default(string), IDictionary<string, UserIdentity> userAssignedIdentities = default(IDictionary<string, UserIdentity>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -61,11 +72,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         public string TenantId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the identity type. Possible values include:
-        /// 'SystemAssigned', 'None'
+        /// Gets or sets the type of managed identity used. The type
+        /// 'SystemAssigned, UserAssigned' includes both an implicitly created
+        /// identity and a set of user-assigned identities. The type 'None'
+        /// will remove any identities. Possible values include:
+        /// 'SystemAssigned', 'None', 'UserAssigned', 'SystemAssigned,
+        /// UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of user-assigned identities associated with
+        /// the resource. The user-assigned identity dictionary keys will be
+        /// ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserIdentity> UserAssignedIdentities { get; set; }
 
         /// <summary>
         /// Validate the object.

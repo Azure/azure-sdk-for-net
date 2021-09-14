@@ -6,8 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Resources;
 using Azure.Storage.Test;
 
 namespace Azure.Storage.Blobs.Tests.ManagedDisk
@@ -28,7 +30,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         public static ManagedDiskFixture Instance { get; private set; }
 
         private ManagedDiskConfiguration _config;
-        private ComputeManagementClient _computeClient;
+        private ResourceGroup _resourceGroup;
 
         public Snapshot Snapshot1 { get; private set; }
         public Snapshot Snapshot2 { get; private set; }
@@ -43,10 +45,11 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
 
                 TokenCredential tokenCredentials = new Identity.ClientSecretCredential(
                     _config.ActiveDirectoryTenantId, _config.ActiveDirectoryApplicationId, _config.ActiveDirectoryApplicationSecret);
-                _computeClient = new ComputeManagementClient(_config.SubsriptionId, tokenCredentials);
 
-                var disks = await _computeClient.Disks.ListByResourceGroupAsync(_config.ResourceGroupName).ToListAsync();
-                var disk = disks.Where(d => d.Name.Contains(_config.DiskNamePrefix)).First();
+                ArmClient client = new ArmClient(_config.SubsriptionId, tokenCredentials);
+                _resourceGroup = await client.DefaultSubscription.GetResourceGroups().GetAsync(_config.ResourceGroupName);
+                var disks = await _resourceGroup.GetDisks().GetAllAsync().ToListAsync();
+                var disk = disks.Where(d => d.Data.Name.Contains(_config.DiskNamePrefix)).First();
 
                 Snapshot1 = await CreateSnapshot(disk, _config.DiskNamePrefix + Guid.NewGuid().ToString().Replace("-", ""));
 
@@ -76,8 +79,8 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
 
         private async Task<Snapshot> CreateSnapshot(Disk disk, string name)
         {
-            var snapshotCreateOperation = await _computeClient.Snapshots.StartCreateOrUpdateAsync(_config.ResourceGroupName, name,
-                new Snapshot(_config.Location)
+            var snapshotCreateOperation = await _resourceGroup.GetSnapshots().CreateOrUpdateAsync(name,
+                new SnapshotData(_config.Location)
                 {
                     CreationData = new CreationData(DiskCreateOption.Copy)
                     {
@@ -90,13 +93,13 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
 
         private async Task DeleteSnapshot(Snapshot snapshot)
         {
-            var snapshotDeleteOperation = await _computeClient.Snapshots.StartDeleteAsync(_config.ResourceGroupName, snapshot.Name);
-            await snapshotDeleteOperation.WaitForCompletionAsync();
+            var snapshotDeleteOperation = await snapshot.DeleteAsync();
+            await snapshotDeleteOperation.WaitForCompletionResponseAsync();
         }
 
         private async Task<Uri> GrantAccess(Snapshot snapshot)
         {
-            var grantOperation = await _computeClient.Snapshots.StartGrantAccessAsync(_config.ResourceGroupName, snapshot.Name,
+            var grantOperation = await snapshot.GrantAccessAsync(
                 new GrantAccessData(AccessLevel.Read, 3600));
             AccessUri accessUri = await grantOperation.WaitForCompletionAsync();
             return new Uri(accessUri.AccessSAS);
@@ -104,8 +107,8 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
 
         private async Task RevokeAccess(Snapshot snapshot)
         {
-            var revokeOperation = await _computeClient.Snapshots.StartRevokeAccessAsync(_config.ResourceGroupName, snapshot.Name);
-            await revokeOperation.WaitForCompletionAsync();
+            var revokeOperation = await snapshot.RevokeAccessAsync();
+            await revokeOperation.WaitForCompletionResponseAsync();
         }
     }
 }

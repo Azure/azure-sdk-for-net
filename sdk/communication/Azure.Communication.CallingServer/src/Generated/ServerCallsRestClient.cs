@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ServerCallsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-06-15-preview")
+        public ServerCallsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-08-30-preview")
         {
             this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
@@ -198,7 +198,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateStartRecordingRequest(string serverCallId, string recordingStateCallbackUri)
+        internal HttpMessage CreateStartRecordingRequest(string serverCallId, string recordingStateCallbackUri, RecordingContentType? recordingContentType, RecordingChannelType? recordingChannelType, RecordingFormatType? recordingFormatType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -214,7 +214,10 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Content-Type", "application/json");
             var model = new StartCallRecordingRequest()
             {
-                RecordingStateCallbackUri = recordingStateCallbackUri
+                RecordingStateCallbackUri = recordingStateCallbackUri,
+                RecordingContentType = recordingContentType,
+                RecordingChannelType = recordingChannelType,
+                RecordingFormatType = recordingFormatType
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -225,16 +228,19 @@ namespace Azure.Communication.CallingServer
         /// <summary> Start recording of the call. </summary>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
+        /// <param name="recordingContentType"> Optional, audioVideo by default. </param>
+        /// <param name="recordingChannelType"> Optional, mixed by default. </param>
+        /// <param name="recordingFormatType"> Optional, mp4 by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> is null. </exception>
-        public async Task<Response<StartCallRecordingResult>> StartRecordingAsync(string serverCallId, string recordingStateCallbackUri = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StartCallRecordingResult>> StartRecordingAsync(string serverCallId, string recordingStateCallbackUri = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
             {
                 throw new ArgumentNullException(nameof(serverCallId));
             }
 
-            using var message = CreateStartRecordingRequest(serverCallId, recordingStateCallbackUri);
+            using var message = CreateStartRecordingRequest(serverCallId, recordingStateCallbackUri, recordingContentType, recordingChannelType, recordingFormatType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -253,16 +259,19 @@ namespace Azure.Communication.CallingServer
         /// <summary> Start recording of the call. </summary>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
+        /// <param name="recordingContentType"> Optional, audioVideo by default. </param>
+        /// <param name="recordingChannelType"> Optional, mixed by default. </param>
+        /// <param name="recordingFormatType"> Optional, mp4 by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> is null. </exception>
-        public Response<StartCallRecordingResult> StartRecording(string serverCallId, string recordingStateCallbackUri = null, CancellationToken cancellationToken = default)
+        public Response<StartCallRecordingResult> StartRecording(string serverCallId, string recordingStateCallbackUri = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
             {
                 throw new ArgumentNullException(nameof(serverCallId));
             }
 
-            using var message = CreateStartRecordingRequest(serverCallId, recordingStateCallbackUri);
+            using var message = CreateStartRecordingRequest(serverCallId, recordingStateCallbackUri, recordingContentType, recordingChannelType, recordingFormatType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

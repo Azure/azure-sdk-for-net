@@ -61,7 +61,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="httpClient">Customized HTTP client </param>
         public KeyVaultClient(KeyVaultCredential credential, HttpClient httpClient)
             // clone the KeyVaultCredential to ensure the instance is only used by this client since it
-            // will use this client's HttpClient for unauthenticated calls to retrieve the auth challange
+            // will use this client's HttpClient for unauthenticated calls to retrieve the auth challenge
             : this(credential.Clone())
         {
             base.HttpClient = httpClient;

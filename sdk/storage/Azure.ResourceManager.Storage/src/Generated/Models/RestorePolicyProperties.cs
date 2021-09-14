@@ -22,19 +22,23 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of RestorePolicyProperties. </summary>
         /// <param name="enabled"> Blob restore is enabled if set to true. </param>
         /// <param name="days"> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </param>
-        /// <param name="lastEnabledTime"> Returns the date and time the restore policy was last enabled. </param>
-        internal RestorePolicyProperties(bool enabled, int? days, DateTimeOffset? lastEnabledTime)
+        /// <param name="lastEnabledTime"> Deprecated in favor of minRestoreTime property. </param>
+        /// <param name="minRestoreTime"> Returns the minimum date and time that the restore can be started. </param>
+        internal RestorePolicyProperties(bool enabled, int? days, DateTimeOffset? lastEnabledTime, DateTimeOffset? minRestoreTime)
         {
             Enabled = enabled;
             Days = days;
             LastEnabledTime = lastEnabledTime;
+            MinRestoreTime = minRestoreTime;
         }
 
         /// <summary> Blob restore is enabled if set to true. </summary>
         public bool Enabled { get; set; }
         /// <summary> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </summary>
         public int? Days { get; set; }
-        /// <summary> Returns the date and time the restore policy was last enabled. </summary>
+        /// <summary> Deprecated in favor of minRestoreTime property. </summary>
         public DateTimeOffset? LastEnabledTime { get; }
+        /// <summary> Returns the minimum date and time that the restore can be started. </summary>
+        public DateTimeOffset? MinRestoreTime { get; }
     }
 }

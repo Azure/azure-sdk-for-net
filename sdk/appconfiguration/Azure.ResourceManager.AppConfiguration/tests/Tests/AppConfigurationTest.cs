@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.AppConfiguration.Models;
@@ -41,11 +42,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task AppConfigurationListKeyValues()
         {
-            var resourceGroup = Recording.GenerateAssetName(ResourceGroupPrefix);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, AzureLocation, resourceGroup);
+            var resourceGroupName = Recording.GenerateAssetName(ResourceGroupPrefix);
+            ResourceGroup resourceGroup = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdate(resourceGroupName, new Resources.ResourceGroupData(AzureLocation)).WaitForCompletionAsync();
             //create configuration
             var configurationStoreName = Recording.GenerateAssetName("configuration");
-            var configurationCreateResponse = await ConfigurationStoresOperations.StartCreateAsync(resourceGroup, configurationStoreName,
+            var configurationCreateResponse = await ConfigurationStoresOperations.StartCreateAsync(resourceGroupName, configurationStoreName,
                                               new ConfigurationStore("westus",
                                                   new Sku("Standard")
                                                   ));
@@ -53,11 +54,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.IsNotNull(configCreateResult);
             Assert.AreEqual(configCreateResult.ProvisioningState.ToString(), "Succeeded");
             //list configuration
-            var configListResponse = ConfigurationStoresOperations.ListKeysAsync(resourceGroup, configurationStoreName);
+            var configListResponse = ConfigurationStoresOperations.ListKeysAsync(resourceGroupName, configurationStoreName);
             var conListResult = await configListResponse.ToEnumerableAsync();
             Assert.True(conListResult.Count >= 1);
             //# ConfigurationStoresListKeys[post]
-            var configRegenerateResponse = await ConfigurationStoresOperations.RegenerateKeyAsync(resourceGroup, configurationStoreName, new RegenerateKeyParameters() { Id = conListResult.First().Id });
+            var configRegenerateResponse = await ConfigurationStoresOperations.RegenerateKeyAsync(resourceGroupName, configurationStoreName, new RegenerateKeyParameters() { Id = conListResult.First().Id });
             Assert.IsNotNull(configRegenerateResponse.Value);
             //TODO need to use data sdk to create key value
             //create Key-Value
@@ -75,12 +76,12 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             string configurationStoreName = Recording.GenerateAssetName("configuration");
             string privateEndpointConnectionName = Recording.GenerateAssetName("privateendpoint");
             var resourceGroupName = Recording.GenerateAssetName(ResourceGroupPrefix);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, AzureLocation, resourceGroupName);
+            ResourceGroup resourceGroup = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdate(resourceGroupName, new Resources.ResourceGroupData(AzureLocation)).WaitForCompletionAsync();
 
             var configurationCreateResponse = await ConfigurationStoresOperations.StartCreateAsync(resourceGroupName, configurationStoreName, new ConfigurationStore("westus", new Sku("Standard")));
             var configurationCreateResult = await WaitForCompletionAsync(configurationCreateResponse);
             Assert.IsNotNull(configurationCreateResult.Value);
-            VirtualNetwork vnet = new VirtualNetwork()
+            VirtualNetworkData vnet = new VirtualNetworkData()
             {
                 Location = "eastus",
                 AddressSpace = new AddressSpace()
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new Subnet() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
+                Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
             };
-            var putVnetResponseOperation = await WaitForCompletionAsync(await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, VnetName, vnet));
+            var putVnetResponseOperation = await WaitForCompletionAsync(await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(VnetName, vnet));
             Assert.IsNotNull(putVnetResponseOperation.Value);
-            var setPrivateEndpointResponse = await WaitForCompletionAsync(await PrivateEndpointsOperations.StartCreateOrUpdateAsync(resourceGroupName, EndpointName,
-                new ResourceManager.Network.Models.PrivateEndpoint()
+            var setPrivateEndpointResponse = await WaitForCompletionAsync(await resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(EndpointName,
+                new PrivateEndpointData()
                 {
                     Location = "eastus",
                     PrivateLinkServiceConnections = { new PrivateLinkServiceConnection()
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                             RequestMessage = "Please approve my connection",
                         }
                     },
-                    Subnet = new Subnet() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
+                    Subnet = new SubnetData() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 }));
             //get Configuration
             var configurationGetResult = (await ConfigurationStoresOperations.GetAsync(resourceGroupName, configurationStoreName)).Value;

@@ -18,7 +18,8 @@ namespace Azure.Verticals.AgriFood.Farming
     public partial class SeasonsClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -49,12 +50,52 @@ namespace Azure.Verticals.AgriFood.Farming
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
 
         /// <summary> Returns a paginated list of season resources. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       startDateTime: string (ISO 8601 Format),
+        ///       endDateTime: string (ISO 8601 Format),
+        ///       year: number,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="minStartDateTime"> Minimum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxStartDateTime"> Maximum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="minEndDateTime"> Minimum season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
@@ -82,11 +123,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonsClient.List");
             scope.Start();
             try
@@ -115,6 +153,46 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of season resources. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       startDateTime: string (ISO 8601 Format),
+        ///       endDateTime: string (ISO 8601 Format),
+        ///       year: number,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="minStartDateTime"> Minimum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxStartDateTime"> Maximum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="minEndDateTime"> Minimum season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
@@ -142,11 +220,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateListRequest(minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonsClient.List");
             scope.Start();
             try
@@ -174,32 +249,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="List"/> and <see cref="ListAsync"/> operations. </summary>
-        /// <param name="minStartDateTime"> Minimum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="maxStartDateTime"> Maximum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="minEndDateTime"> Minimum season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="maxEndDateTime"> Maximum season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="years"> Years of the resource. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListRequest(DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, IEnumerable<int> years = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateListRequest(DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, IEnumerable<int> years, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -272,6 +324,40 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified season resource. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   year: number,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="seasonId"> ID of the season. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -279,11 +365,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(seasonId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(seasonId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonsClient.Get");
             scope.Start();
             try
@@ -312,6 +395,40 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified season resource. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   year: number,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="seasonId"> ID of the season. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -319,11 +436,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(seasonId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRequest(seasonId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonsClient.Get");
             scope.Start();
             try
@@ -351,12 +465,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
-        /// <param name="seasonId"> ID of the season. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRequest(string seasonId, RequestOptions options = null)
+        private HttpMessage CreateGetRequest(string seasonId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -372,83 +483,53 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates a season resource. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>startDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>year</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Season year.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Unique resource ID.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ETag value to implement optimistic concurrency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name to identify resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Textual description of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   year: number,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   year: number,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="seasonId"> ID of the season resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -458,11 +539,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(seasonId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(seasonId, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonsClient.CreateOrUpdate");
             scope.Start();
             try
@@ -494,83 +572,53 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates a season resource. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>startDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>year</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>Season year.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Unique resource ID.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ETag value to implement optimistic concurrency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Status of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Name to identify resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Textual description of the resource.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   year: number,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   startDateTime: string (ISO 8601 Format),
+        ///   endDateTime: string (ISO 8601 Format),
+        ///   year: number,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="seasonId"> ID of the season resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -580,11 +628,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(seasonId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateOrUpdateRequest(seasonId, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonsClient.CreateOrUpdate");
             scope.Start();
             try
@@ -613,13 +658,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="seasonId"> ID of the season resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(string seasonId, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateRequest(string seasonId, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -635,6 +676,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified season resource. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="seasonId"> ID of the season. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -642,11 +701,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(seasonId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(seasonId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonsClient.Delete");
             scope.Start();
             try
@@ -675,6 +731,24 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified season resource. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="seasonId"> ID of the season. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -682,11 +756,8 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(seasonId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteRequest(seasonId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonsClient.Delete");
             scope.Start();
             try
@@ -714,12 +785,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        /// <param name="seasonId"> ID of the season. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(string seasonId, RequestOptions options = null)
+        private HttpMessage CreateDeleteRequest(string seasonId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();

@@ -24,11 +24,11 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #region Snippet:GetIdentity
 
 #if SNIPPET
-            Uri identityServiceUri = "<the identity service uri>";
+            Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
 #else
-            Uri identityServiceUri = TestEnvironment.ConfidentialLedgerIdentityUrl;
+            Uri identityServiceEndpoint = TestEnvironment.ConfidentialLedgerIdentityUrl;
 #endif
-            var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri);
+            var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceEndpoint);
 
             // Get the ledger's  TLS certificate for our ledger.
 #if SNIPPET

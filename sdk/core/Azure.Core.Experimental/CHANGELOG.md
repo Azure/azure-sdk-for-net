@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.16 (Unreleased)
+## 0.1.0-preview.17 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.1.0-preview.16 (2021-09-07)
+
+### Other Changes
+
+- Update `Azure.Core` version.
 
 ## 0.1.0-preview.15 (2021-08-18)
 

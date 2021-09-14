@@ -18,9 +18,14 @@
         },
         "testApplicationOid": {
             "type": "string",
-            "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
             "metadata": {
                 "description": "The client OID to grant access to test resources."
+            }
+        },
+        "provisionerApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The provisioner OID to grant access to test resources."
             }
         },
         "location": {
@@ -183,9 +188,7 @@
             },
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
-                "initialAdminObjectIds": [
-                    "[parameters('testApplicationOid')]"
-                ],
+                "initialAdminObjectIds": "[union(array(parameters('testApplicationOid')), array(parameters('provisionerApplicationOid')))]",
                 "enablePurgeProtection": false,
                 "enableSoftDelete": true,
                 "softDeleteRetentionInDays": 7,

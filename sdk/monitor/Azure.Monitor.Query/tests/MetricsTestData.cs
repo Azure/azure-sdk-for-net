@@ -110,9 +110,9 @@ namespace Azure.Monitor.Query.Tests
             var metrics = await metricQueryClient.QueryAsync(_testEnvironment.MetricsResource, new[] {MetricName},
                 new MetricsQueryOptions()
                 {
-                    TimeSpan = new DateTimeRange(StartTime, Duration),
+                    TimeRange = new DateTimeRange(StartTime, Duration),
                     MetricNamespace = MetricNamespace,
-                    Interval = TimeSpan.FromMinutes(1),
+                    Granularity = TimeSpan.FromMinutes(1),
                     Aggregations =
                     {
                         MetricAggregationType.Count
@@ -125,7 +125,7 @@ namespace Azure.Monitor.Query.Tests
                 return false;
             }
 
-            foreach (var data in timeSeries.Data)
+            foreach (var data in timeSeries.Values)
             {
                 if (data.Count == null)
                 {
