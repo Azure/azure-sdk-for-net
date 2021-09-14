@@ -60,7 +60,7 @@ namespace DataBoxEdge.Tests
             // Step 4: Save the CIK in KeyVault
             keyVaultClient.SetSecret(CIKName, generatedCIK);
 
-            // Ste 5: Update KeyVault ClientSecretStoreId and ClientSecretStoreUrl from keyVault properties page
+            // Ste 5: Update KeyVault ClientSecretStoreId and ClientSecretStoreUrl
             string ClientSecretStoreId = "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.KeyVault/vaults/test-sdk-keyvault-123";
             string ClientSecretStoreUrl = "https://test-sdk-keyvault-123.vault.azure.net";
             string ChannelIntegrityKeyName = CIKName;
