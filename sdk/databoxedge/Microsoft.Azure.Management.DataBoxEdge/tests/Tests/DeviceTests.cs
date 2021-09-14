@@ -45,16 +45,24 @@ namespace DataBoxEdge.Tests
             DataBoxEdgeDevice device = new DataBoxEdgeDevice();
             device.PopulateEdgeDeviceProperties();
             device.Identity = new ResourceIdentity(type: "SystemAssigned");
-            var name = TestConstants.EdgeResourceName;
+            var name = TestConstants.EdgeResourceName+"ritwik";
             device.CreateOrUpdate(name, Client, TestConstants.DefaultResourceGroupName);
             
             // Step 2. GenerateCIK
             var generatedCIK = Client.Devices.GenerateCIK();
 
             /*
+             * Note:
+             * 1. UnComment following Code from Step:3 to Step 6
+             * 2. Follow the Doc to create the KeyVault: https://docs.microsoft.com/en-us/azure/key-vault/keys/quick-create-template?tabs=CLI
+             * 3. KeyVault must be in the same subscription and resource group as the ASE Resource
+             * 4. Set KeyVault Access policies for the MSI, which gets created at step 1 and has the same name as resource
+             *    Doc to set the AccessPolicies: https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy?tabs=azure-portal
+             *    Note: Only Get and Set Permissions to be given to the MSI
+             */
+
+            /*
             // Step 3: Create KeyVault
-            // Please follow KeyVault documentation to create keyvualt:
-            // https://docs.microsoft.com/en-us/azure/key-vault/keys/quick-create-template?tabs=CLI
             var keyVaultUri = "https://test-sdk-keyvault-123.vault.azure.net";
             var keyVaultClient = new SecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
 
@@ -70,8 +78,7 @@ namespace DataBoxEdge.Tests
             var updatedExtendedInfo = Client.Devices.UpdateExtendedInformation(name, patch, TestConstants.DefaultResourceGroupName);
 
             // Step 6: GenerateActivationKey
-            var activationKey = Client.Devices.GenerateActivationKey(TestConstants.DefaultResourceGroupName, name,
-            TestConstants.DefaultResourceLocation, generatedCIK);
+            var activationKey = Client.Devices.GenerateActivationKey(TestConstants.DefaultResourceGroupName, name, generatedCIK);
 
             // Delete the CIK on the KeyVault (Note: Required step only for the test case)
             TestUtilities.DeleteSecretFromKeyVault(TestConstants.EdgeDeviceKeyVault, CIKName);*/
@@ -83,11 +90,11 @@ namespace DataBoxEdge.Tests
         [Fact]
         public void Test_ManageDeviceOperations()
         {
-
             DataBoxEdgeDevice device = new DataBoxEdgeDevice();
 
             // Populate device properties as a Gateway resource
             device.PopulateGatewayDeviceProperties();
+            device.Identity = new ResourceIdentity(type: "SystemAssigned");
 
             // Create a gateway resource
             device.CreateOrUpdate(TestConstants.GatewayResourceName, Client, TestConstants.DefaultResourceGroupName);

@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "plainTextSecret");
             }
-            
+
             if (string.IsNullOrWhiteSpace(resourceGroupName))
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
                 EncryptionCertThumbprint = encryptionKeyThumbprint,
                 Value = CryptoUtilities.EncryptStringRsaPkcs1v15(plainTextSecret, ChannelEncryptionKey)
             };
-            
+
             return secret;
         }
 
@@ -127,11 +127,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <param name="resourceLocation">Location of the resource</param>
 
         /// <returns></returns>
-        public static string GenerateActivationKey(this IDevicesOperations operations, 
-            string resourceGroupName, 
-            string resourceName, 
-            string resourceLocation, string cik)
+        public static string GenerateActivationKey(this IDevicesOperations operations,
+            string resourceGroupName,
+            string resourceName,
+            string cik)
         {
+            var resourceLocation = operations.Get(resourceName, resourceGroupName).Location;
             var subscriptionId = (operations as DevicesOperations).Client.SubscriptionId;
             var generateCertResponse = ActivationKeyHelper.GenerateVaultCertificate(operations, resourceGroupName, resourceName);
             var certPublicPart = ActivationKeyHelper.ImportCertificate(generateCertResponse.PublicKey);
