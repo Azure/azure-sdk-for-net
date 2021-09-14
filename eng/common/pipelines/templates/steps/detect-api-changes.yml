@@ -1,0 +1,31 @@
+parameters:
+  ArtifactPath: $(Build.ArtifactStagingDirectory)
+  Artifacts: []
+
+steps:
+  - pwsh: |
+      $artifacts = '${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json
+      $artifactList = @()
+      foreach ($artifact in $artifacts) {
+        $artifactList += "$($artifact.name)"
+      }
+      $artifactListValue = $artifactList -join ','
+
+      Write-Host "artifactListValue = $artifactListValue"
+      Write-Host "##vso[task.setvariable variable=artifactList;]$artifactListValue"
+    displayName: Initialize artifacts list variable
+
+  - task: Powershell@2
+    inputs:
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Detect-Api-Changes.ps1
+      arguments: >
+        -ArtifactList '$(artifactList)'
+        -ArtifactPath ${{parameters.ArtifactPath}}
+        -CommitSha '$(Build.SourceVersion)'
+        -BuildId $(Build.BuildId)
+        -PullRequestNumber $(System.PullRequest.PullRequestNumber)
+      pwsh: true
+      workingDirectory: $(Pipeline.Workspace)
+    displayName: Detect API changes
+    condition: and(succeededOrFailed(), eq(variables['Build.Reason'],'PullRequest'), eq(variables['System.TeamProject'], 'public'))
+    
