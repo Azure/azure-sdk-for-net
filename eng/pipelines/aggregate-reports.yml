@@ -7,16 +7,6 @@ resources:
     tags: 
     - scheduled
 
-parameters:
-- name: poliCheckBaselineSource
-  displayName: PoliCheck Baseline Source
-  type: string
-  default: repo
-  values:
-  - repo
-  - empty
-
-
 trigger: none
 
 pr:
@@ -158,63 +148,28 @@ stages:
             displayName: 'Publish Security Analysis Logs'
             condition: succeededOrFailed()
 
-  - stage: GuardianTools
+  - stage: ComplianceTools
     displayName: Guardian Tools
     dependsOn: []
 
     jobs:
-      - job: GuardianTools
+      - job: ComplianceTools
         timeoutInMinutes: 120
         steps:
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
             displayName: 'Run PoliCheck'
             inputs:
               targetType: F
-              targetArgument: '$(Build.SourcesDirectory)/sdk/$(ServiceDirectory)'
+              targetArgument: '$(Build.SourcesDirectory)'
               result: PoliCheck.sarif
               optionsFC: 0
               optionsXS: 1
-          - task: PowerShell@2
-            displayName: 'Setup PostAnalysis Variables'
-            inputs:
-              pwsh: true
-              filePath: 'eng/scripts/SetupPostAnalysisVariables.ps1'
-              arguments: >
-                -PipelineWorkSpace $(Pipeline.Workspace)
-                -SourceDirectory $(Build.SourcesDirectory)
-                -PoliCheckBaseLineSource ${{ parameters.poliCheckBaselineSource }}
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
             displayName: 'Guardian Break (PoliCheck)'
             inputs:
               GdnBreakAllTools: false
               GdnBreakGdnToolPoliCheck: true
               GdnBreakGdnToolPoliCheckSeverity: Warning
-              GdnBreakBaselineFiles: $(PoliCheckBaselineFile)
-              GdnBreakBaselines: $(PoliCheckBaselineFile)
-              GdnBreakSuppressionFiles: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnsuppress'
-              GdnBreakSuppressionSets: policheck
-              GdnBreakOutputBaselineFile: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines'
-              GdnBreakOutputBaseline: policheck
             continueOnError: true
-          - pwsh: |
-              Get-ChildItem -Path "$(Pipeline.Workspace)\.gdn\.r"
-              Get-ChildItem -Path "$(Pipeline.Workspace)\.gdn\r"
-              Get-ChildItem -Path "$(Pipeline.Workspace)\.gdn"
-
-              New-Item -Path "$(Build.ArtifactStagingDirectory)" -Name "CodeAnalysisLogs" -ItemType "directory"
-              New-Item -Path "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs" -Name ".r" -ItemType "directory"
-              New-Item -Path "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs" -Name "r" -ItemType "directory"
-
-              Copy-Item -Path "$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs"
-              Copy-Item -Path "$(Pipeline.Workspace)\.gdn\*.gdn*" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs"
-              Copy-Item -Path "$(Pipeline.Workspace)\.gdn\r\*" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs\r" -recurse
-              Copy-Item -Path "$(Pipeline.Workspace)\.gdn\.r\*" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs\.r" -recurse
-              Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs" 
-            displayName: 'Stage Guardian Tools Output for publishing'
-            condition: succeeded()
-          - task: PublishPipelineArtifact@1
-            condition: succeeded()
-            displayName: "Publish CodeAnalysis Artifacts"
-            inputs:
-              artifactName: "CodeAnalysisLogs"
-              path: "$(Build.ArtifactStagingDirectory)"
+          - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+            displayName: 'Publish Guardian Artifacts'
