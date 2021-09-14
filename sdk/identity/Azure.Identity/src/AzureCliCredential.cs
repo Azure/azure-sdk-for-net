@@ -25,7 +25,8 @@ namespace Azure.Identity
         internal const string AzNotLogIn = "Please run 'az login' to set up account";
         internal const string WinAzureCLIError = "'az' is not recognized";
         internal const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
-        internal const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azclicredential/troubleshoot";
+        internal const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error.";
+        internal const string Troubleshoot = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azclicredential/troubleshoot";
         internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
         internal const string CLIInternalError = "CLIInternalError: The command failed with an unexpected error. Here is the traceback:";
         private const int CliProcessTimeoutMs = 13000;
@@ -158,7 +159,7 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(InteractiveLoginRequired);
                 }
 
-                throw new AuthenticationFailedException($"{AzureCliFailedError} {exception.Message}");
+                throw new AuthenticationFailedException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
             }
 
             return DeserializeOutput(output);
