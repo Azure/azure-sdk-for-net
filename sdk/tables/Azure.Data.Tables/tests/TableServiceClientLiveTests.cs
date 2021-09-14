@@ -228,7 +228,6 @@ namespace Azure.Data.Tables.Tests
                     {
                         Assert.That(page.Values.Count, Is.GreaterThanOrEqualTo(createdTables.Count));
                     }
-                    Assert.That(page.Values.All(r => createdTables.Contains(r.Name)));
                 }
             }
 
