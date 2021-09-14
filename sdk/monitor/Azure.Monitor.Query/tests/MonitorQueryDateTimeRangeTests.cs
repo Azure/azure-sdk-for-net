@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -49,6 +50,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(range, MonitorQueryDateTimeRange.Parse(range).ToIsoString());
         }
 
+        [RunOnlyOnPlatforms(Windows = true, Reason = "Default formatting differs between platforms.")]
         [TestCase("PT23M", "Duration: 00:23:00")]
         [TestCase("PT23M/2021-05-04T03:02:01.0000000Z", "Duration: 00:23:00 End: 5/4/2021 3:02:01 AM +00:00")]
         [TestCase("2021-05-04T03:02:01.0000000Z/PT23M", "Start: 5/4/2021 3:02:01 AM +00:00 Duration: 00:23:00")]
