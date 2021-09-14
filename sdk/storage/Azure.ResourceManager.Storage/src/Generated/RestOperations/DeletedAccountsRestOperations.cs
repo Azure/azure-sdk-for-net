@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
-        public async Task<Response<DeletedAccountData>> GetAsync(string location, string deletedAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedAccount>> GetAsync(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -143,13 +143,11 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        DeletedAccountData value = default;
+                        DeletedAccount value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeletedAccountData.DeserializeDeletedAccountData(document.RootElement);
+                        value = DeletedAccount.DeserializeDeletedAccount(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((DeletedAccountData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -160,7 +158,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
-        public Response<DeletedAccountData> Get(string location, string deletedAccountName, CancellationToken cancellationToken = default)
+        public Response<DeletedAccount> Get(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -177,13 +175,11 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        DeletedAccountData value = default;
+                        DeletedAccount value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeletedAccountData.DeserializeDeletedAccountData(document.RootElement);
+                        value = DeletedAccount.DeserializeDeletedAccount(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((DeletedAccountData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

@@ -587,5 +587,13 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(Kind.StorageV2, account.Data.Kind);
             Assert.False(account.Data.EnableNfsV3);
         }
+        [Test]
+        [RecordedTest]
+        public async Task GetDeletedAccounts()
+        {
+            //get all deleted accounts
+            List<DeletedAccount> deletedAccounts =await DefaultSubscription.GetDeletedAccountsAsync().ToEnumerableAsync();
+            Assert.NotNull(deletedAccounts);
+        }
     }
 }

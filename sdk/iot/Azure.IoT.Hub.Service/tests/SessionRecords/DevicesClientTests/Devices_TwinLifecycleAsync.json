@@ -19,7 +19,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "612",
+        "Content-Length": "542",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 25 Jun 2020 16:48:50 GMT",
         "ETag": "\u0022MzY0MDgxMzg5\u0022",
@@ -40,8 +40,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "1AbDEkc5xz1u0qXO8lKrMII1Ya4IKbH\u002BbKWAsx6djAs=",
-            "secondaryKey": "IPNJTsWLCOpvyrKCpnwdXs6O8dqFFA1GPBnKfq46xQM="
+            "primaryKey": "Sanitized",
+            "secondaryKey": "Sanitized"
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,

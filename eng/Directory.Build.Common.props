@@ -215,8 +215,8 @@
     $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.Cryptography')) or
     $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.Extensions')) or
     $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.WebKey')) or
-    $(MSBuildProjectName.Equals('Microsoft.Azure.OperationalInsights'))">
-
+    $(MSBuildProjectName.Equals('Microsoft.Azure.OperationalInsights')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.Synapse'))">
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 

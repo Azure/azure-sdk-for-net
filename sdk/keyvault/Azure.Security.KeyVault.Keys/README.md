@@ -144,9 +144,9 @@ key = client.GetKey("key-name");
 Once you've created a `KeyVaultKey` in the Azure Key Vault, you can also create the [CryptographyClient][crypto_client_class]:
 
 ```C# Snippet:CreateCryptographyClient
-// Create a new cryptography client using the default credential from Azure.Identity using environment variables previously set,
-// including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new DefaultAzureCredential());
+// Create a new cryptography client using the same Key Vault or Managed HSM endpoint, service version,
+// and options as the KeyClient created earlier.
+var cryptoClient = client.GetCryptographyClient(key.Name, key.Properties.Version);
 ```
 
 ## Key concepts
@@ -294,6 +294,10 @@ foreach (KeyProperties keyProperties in allKeys)
 This example creates a `CryptographyClient` and uses it to encrypt and decrypt with a key in Azure Key Vault.
 
 ```C# Snippet:EncryptDecrypt
+// Create a new cryptography client using the same Key Vault or Managed HSM endpoint, service version,
+// and options as the KeyClient created earlier.
+var cryptoClient = client.GetCryptographyClient(key.Name, key.Properties.Version);
+
 byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
 
 // encrypt the data using the algorithm RSAOAEP
