@@ -331,8 +331,8 @@ namespace Compute.Tests.DiskRPTests
                     // **********
 
                     Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, snapshotName, snapshot);
-                    Validate(snapshot, snapshotOut, incremental);
-                    OperateSnapshot(snapshot, rgName, snapshotName, incremental);
+                    Validate(snapshot, snapshotOut, incremental: incremental);
+                    OperateSnapshot(snapshot, rgName, snapshotName, incremental: incremental);
                 }
                 finally
                 {

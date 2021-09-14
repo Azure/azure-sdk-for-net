@@ -1,11 +1,6 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Disk update resource.
@@ -58,6 +53,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the provisioned performance target of the disk. Bursting is
         /// disabled by default. Does not apply to Ultra disks.</param>
         /// <param name="purchasePlan">Purchase plan information to be added on
+        /// <param name="supportsHibernation">Indicates the OS on a disk
+        /// supports hibernation.</param>
+        /// <param name="publicNetworkAccess">Possible values include:
+        /// 'Enabled', 'Disabled'</param>
         /// the OS disk</param>
         public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), int? maxShares = default(int?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PurchasePlan purchasePlan = default(PurchasePlan))
         {
@@ -116,6 +115,29 @@ namespace Microsoft.Azure.Management.Compute.Models
             PurchasePlan = purchasePlan;
             Tags = tags;
             Sku = sku;
+            CustomInit();
+        }
+
+        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), int? maxShares = default(int?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PurchasePlan purchasePlan = default(PurchasePlan), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), string publicNetworkAccess = default(string))
+        {
+            OsType = osType;
+            DiskSizeGB = diskSizeGB;
+            EncryptionSettingsCollection = encryptionSettingsCollection;
+            DiskIOPSReadWrite = diskIOPSReadWrite;
+            DiskMBpsReadWrite = diskMBpsReadWrite;
+            DiskIOPSReadOnly = diskIOPSReadOnly;
+            DiskMBpsReadOnly = diskMBpsReadOnly;
+            MaxShares = maxShares;
+            Encryption = encryption;
+            NetworkAccessPolicy = networkAccessPolicy;
+            DiskAccessId = diskAccessId;
+            Tier = tier;
+            BurstingEnabled = burstingEnabled;
+            PurchasePlan = purchasePlan;
+            Tags = tags;
+            Sku = sku;
+            SupportedCapabilities = supportedCapabilities;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
     }
