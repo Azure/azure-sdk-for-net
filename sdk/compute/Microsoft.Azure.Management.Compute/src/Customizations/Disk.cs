@@ -104,7 +104,7 @@
         /// operation.</param>
         /// <param name="publicNetworkAccess">Possible values include:
         /// 'Enabled', 'Disabled'</param>
-        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), IList<string> managedByExtended = default(IList<string>), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), DiskSecurityProfile securityProfile = default(DiskSecurityProfile), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), double? completionPercent = default(double?), string publicNetworkAccess = default(string))
+        public Disk(string location, CreationData creationData, string id, string name, string type, IDictionary<string, string> tags, string managedBy, IList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, System.DateTime? timeCreated, OperatingSystemTypes? osType, string hyperVGeneration, PurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, string diskState, Encryption encryption, int? maxShares, IList<ShareInfoElement> shareInfo, string networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, DiskSecurityProfile securityProfile)
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -137,9 +137,6 @@
             PropertyUpdatesInProgress = propertyUpdatesInProgress;
             SupportsHibernation = supportsHibernation;
             SecurityProfile = securityProfile;
-            SupportsHibernation = supportsHibernation;
-            CompletionPercent = completionPercent;
-            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
     }
