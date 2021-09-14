@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
@@ -37,29 +38,80 @@ namespace Azure.Storage.Files.Shares.Tests
         {
         }
 
+        #region Setup Actions
+        private Task<ShareFileClient> MakeFileClient(ShareClient share, ShareClientOptions testClientOptions, bool createFile, int fileSize = 2 * Constants.KB)
+            => MakeFileClient(share, testClientOptions, createFile, GetNewFileName(), fileSize);
+
+        private async Task<ShareFileClient> MakeFileClient(ShareClient fileShare, ShareClientOptions clientOptions, bool createFile, string fileName, int fileSize = 2 * Constants.KB)
+        {
+            fileShare = InstrumentClient(new ShareClient(fileShare.Uri, GetNewSharedKeyCredentials(), clientOptions));
+            var file = InstrumentClient(fileShare.GetRootDirectoryClient().GetFileClient(fileName));
+            if (createFile)
+            {
+                await file.CreateAsync(fileSize);
+            }
+            return file;
+        }
+
+        private async Task StageData(byte[] data, ShareClient fileShare, string fileName, int fileSize = 2 * Constants.KB)
+        {
+            ShareFileClient file = InstrumentClient(fileShare.GetRootDirectoryClient().GetFileClient(fileName));
+            await file.CreateAsync(fileSize);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+        }
+        #endregion
+
+        #region Read
         [Test, Combinatorial]
         public async Task DownloadSuccessfulHashVerification(
             [Values(TransactionalHashAlgorithm.MD5)] TransactionalHashAlgorithm algorithm,
             [ValueSource("DefaultDataHttpRanges")] HttpRange range)
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingShare test = await GetTestShareAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(DefaultDataSize);
-            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
-            await file.CreateAsync(data.Length);
-            using (var stream = new MemoryStream(data))
-            {
-                await file.UploadAsync(stream);
-            }
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+            var fileName = GetNewFileName();
+            await TransactionalHashingTestSkeletons.TestDownloadSuccessfulHashVerificationAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Share,
+                async data => await StageData(data, test.Share, fileName),
+                (fileShare, testClientOptions) => MakeFileClient(fileShare, testClientOptions, createFile: false, fileName),
+                async (file, hashingOptions) =>
+                {
+                    var response = await file.DownloadAsync(new ShareFileDownloadOptions
+                    {
+                        TransactionalHashingOptions = hashingOptions,
+                        Range = range
+                    });
+                    await response.Value.Content.CopyToAsync(Stream.Null);
+                    return response.GetRawResponse();
+                });
+        }
 
-            // Act / Assert
-            Assert.DoesNotThrowAsync(async () => await (await file.DownloadAsync(new ShareFileDownloadOptions
-            {
-                TransactionalHashingOptions = hashingOptions,
-                Range = range
-            })).Value.Content.CopyToAsync(Stream.Null));
+        [Test, Combinatorial]
+        public async Task DownloadHashMismatchThrows(
+            [Values(TransactionalHashAlgorithm.MD5)] TransactionalHashAlgorithm algorithm,
+            [Values(true, false)] bool defers)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+
+            var fileName = GetNewFileName();
+            await TransactionalHashingTestSkeletons.TestDownloadHashMismatchThrowsAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Share,
+                async data => await StageData(data, test.Share, fileName),
+                (fileShare, testClientOptions) => MakeFileClient(fileShare, testClientOptions, createFile: false, fileName),
+                async (file, hashingOptions, range) =>
+                {
+                    var response = await file.DownloadAsync(new ShareFileDownloadOptions
+                    {
+                        TransactionalHashingOptions = hashingOptions,
+                        Range = range
+                    });
+                    await response.Value.Content.CopyToAsync(Stream.Null);
+                    return response.GetRawResponse();
+                },
+                defers);
         }
 
         // hashing, so we buffered the stream to hash then rewind before returning to user
@@ -68,12 +120,12 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase(TransactionalHashAlgorithm.None, false)]
         public async Task ExpectedDownloadStreamTypeReturned(TransactionalHashAlgorithm algorithm, bool isBuffered)
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingShare test = await GetTestShareAsync();
 
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
-            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
-            await file.CreateAsync(data.Length);
+            ShareFileClient file = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+            await file.CreateAsync(Constants.KB);
             using (var stream = new MemoryStream(data))
             {
                 await file.UploadAsync(stream);
@@ -101,33 +153,160 @@ namespace Azure.Storage.Files.Shares.Tests
                 Assert.AreNotEqual(typeof(MemoryStream), response.Value.Content.GetType());
             }
         }
+        #endregion
 
+        #region OpenRead
         [Test, Combinatorial]
         public async Task OpenReadSuccessfulHashVerification(
             [Values(TransactionalHashAlgorithm.MD5)] TransactionalHashAlgorithm algorithm,
             [ValueSource("StorageStreamDefinitions")] (int DataSize, int BufferSize) storageStreamDefinitions)
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingShare test = await GetTestShareAsync();
 
-            // Arrange
-            var data = GetRandomBuffer(storageStreamDefinitions.DataSize);
-            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
-            await file.CreateAsync(data.Length);
-            using (var stream = new MemoryStream(data))
-            {
-                await file.UploadAsync(stream);
-            }
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+            var fileName = GetNewFileName();
+            await TransactionalHashingTestSkeletons.TestOpenReadSuccessfulHashVerificationAsync(
+                Recording.Random, algorithm, storageStreamDefinitions.DataSize, () => GetOptions(), test.Share,
+                async data => await StageData(data, test.Share, fileName),
+                (fileShare, testClientOptions) => MakeFileClient(fileShare, testClientOptions, createFile: false, fileName),
+                async (file, hashingOptions) =>
+                {
+                    return await file.OpenReadAsync(new ShareFileOpenReadOptions(false)
+                    {
+                        TransactionalHashingOptions = hashingOptions,
+                        BufferSize = storageStreamDefinitions.BufferSize
+                    });
+                });
+        }
+        #endregion
 
-            // Act
-            var readStream = await file.OpenReadAsync(new ShareFileOpenReadOptions(false)
+        #region PartitionedUpload
+        private static async Task FileParallelUploadAction(
+            ShareFileClient file,
+            Stream stream,
+            UploadTransactionalHashingOptions hashingOptions,
+            StorageTransferOptions transferOptions)
+            => await file.UploadAsync(new ShareFileUploadOptions(stream)
             {
-                TransactionalHashingOptions = hashingOptions,
-                BufferSize = storageStreamDefinitions.BufferSize
+                TransactionalHashingOptions = hashingOptions
             });
 
-            // Assert
-            Assert.DoesNotThrowAsync(async () => await readStream.CopyToAsync(Stream.Null));
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        public async Task FileUploadSuccessfulHashVerification(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+
+            await TransactionalHashingTestSkeletons.TestParallelUploadSuccessfulHashComputationAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Share,
+                async (fileShare, clientOptions) => await MakeFileClient(fileShare, clientOptions, createFile: true),
+                FileParallelUploadAction);
         }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        public async Task FileUploadUsePrecalculatedOnOneshot(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+
+            await TransactionalHashingTestSkeletons.TestParallelUploadUsePrecalculatedHashOnOneshotAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Share,
+                async (fileShare, clientOptions) => await MakeFileClient(fileShare, clientOptions, createFile: true),
+                FileParallelUploadAction);
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        public async Task FileUploadIgnorePrecalculatedOnSplit(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+
+            int dataSize = 5 * Constants.MB;
+            await TransactionalHashingTestSkeletons.TestParallelUploadIgnorePrecalculatedOnSplitAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Share,
+                async (fileShare, clientOptions) => await MakeFileClient(fileShare, clientOptions, createFile: true, fileSize: dataSize),
+                FileParallelUploadAction,
+                forceDataSize: dataSize);
+        }
+        #endregion
+
+        #region Append
+        private static async Task UploadRangeAction(ShareFileClient file, Stream stream, UploadTransactionalHashingOptions hashingOptions)
+            => await file.UploadRangeAsync(
+                new HttpRange(length: stream.Length),
+                stream,
+                new ShareFileUploadRangeOptions { TransactionalHashingOptions = hashingOptions });
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        public async Task AppendSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+
+            await TransactionalHashingTestSkeletons.TestUploadPartitionSuccessfulHashComputationAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Share,
+                async (fileShare, clientOptions) => await MakeFileClient(fileShare, clientOptions, createFile: true),
+                UploadRangeAction);
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        public async Task AppendUsePrecalculatedHash(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+
+            await TransactionalHashingTestSkeletons.TestUploadPartitionUsePrecalculatedHashAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Share,
+                async (fileShare, clientOptions) => await MakeFileClient(fileShare, clientOptions, createFile: true),
+                UploadRangeAction);
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        public async Task AppendMismatchedHashThrows(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+
+            await TransactionalHashingTestSkeletons.TestUploadPartitionMismatchedHashThrowsAsync(
+                Recording.Random, algorithm, () => GetOptions(), test.Share,
+                async (fileShare, clientOptions) => await MakeFileClient(fileShare, clientOptions, createFile: true),
+                UploadRangeAction);
+        }
+        #endregion
+
+        #region OpenWrite
+        internal async Task<Stream> FileOpenWriteAction(ShareFileClient file, UploadTransactionalHashingOptions hashingOptions, int bufferSize)
+            => await file.OpenWriteAsync(true, 0, new ShareFileOpenWriteOptions
+            {
+                BufferSize = bufferSize,
+                TransactionalHashingOptions = hashingOptions,
+                MaxSize = Constants.MB
+            });
+
+        [Test, Combinatorial]
+        public async Task FileOpenWriteSuccessfulHashComputation(
+            [Values(TransactionalHashAlgorithm.MD5)] TransactionalHashAlgorithm algorithm,
+            [Values(Constants.KB / 2, Constants.KB, Constants.KB * 2, Constants.KB + 5)] int bufferSize)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(2 * Constants.KB);
+
+            // Act / Assert
+            await TransactionalHashingTestSkeletons.TestOpenWriteSuccessfulHashComputationAsync(
+                data, algorithm, () => GetOptions(), test.Share,
+                async (fileShare, clientOptions) => await MakeFileClient(fileShare, clientOptions, createFile: true),
+                async (file, hashingOptions) => await FileOpenWriteAction(file, hashingOptions, bufferSize));
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        public async Task FileOpenWriteMismatchedHashThrows(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Act / Assert
+            await TransactionalHashingTestSkeletons.TestOpenWriteMismatchedHashThrowsAsync(
+                data, algorithm, () => GetOptions(), test.Share,
+                async (fileShare, clientOptions) => await MakeFileClient(fileShare, clientOptions, createFile: true),
+                async (file, hashingOptions) => await FileOpenWriteAction(file, hashingOptions, Constants.KB));
+        }
+        #endregion
     }
 }

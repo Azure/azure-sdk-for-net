@@ -340,10 +340,12 @@ namespace Azure.Storage.Test.Shared
             TParentClient parentClient,
             Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
             Func<TClient, Stream, UploadTransactionalHashingOptions, StorageTransferOptions, Task> parallelUploadAsync,
-            Func<Request, bool> isHashExpected) where TClientOptions : ClientOptions
+            Func<Request, bool> isHashExpected = default,
+            // file share upload can't customize transfer options, so this is an overload to trigger a split
+            int? forceDataSize = default) where TClientOptions : ClientOptions
         {
             const int blockSize = Constants.KB;
-            var data = TestHelper.GetRandomBuffer(2 * blockSize, random);
+            var data = TestHelper.GetRandomBuffer(forceDataSize ?? (2 * blockSize), random);
             var transferOptions = new StorageTransferOptions
             {
                 InitialTransferSize = blockSize,
