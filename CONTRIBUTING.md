@@ -410,66 +410,79 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 
 ## On-boarding New generated code library
 
-1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*` for management libraries or `Azure.*` (e.g.  `sdk/storage/Azure.Management.Storage` or `sdk/storage/Azure.Storage.Blobs`)
+1. Make a copy of `sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*` for management libraries or `Azure.*` (e.g.  `sdk/storage/Azure.Management.Storage` or `sdk/storage/Azure.Storage.Blobs`).
+
+   Alternatively, you can install `sdk/template` as a `dotnet new` template to create or update a service directory:
+
+   ```bash
+   dotnet new --install /sdk/template
+   dotnet new azuresdk --name Azure.MyService --output sdk/myservice --ServiceDirectory myservice --ProjectName Azure.MyService
+   ```
+
+   This will perform most of the renames, namespace fix-ups, etc., for you automatically; though, be sure to check all files - especially the README.md file(s) - for required manual changes.
+   If the template is already installed, this same command will upgrade it.
+
 2. Modify `autorest.md` to point to you Swagger file or central README.md file. E.g.
 
-``` yaml
-input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/blob.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
-```
+   ``` yaml
+   input-file:
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/blob.json
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
+   ```
 
-``` yaml
-require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
-```
+   ``` yaml
+   require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
+   ```
 
 3. Run `dotnet build /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 14).
 4. For management plan libraries add `azure-arm: true` setting to `autorest.md` client constructors and options would be auto-generated. For data-plane libraries follow the next two steps.
-4. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
+5. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
 
-``` C#
-namespace Azure.Management.Storage
-{
-    public class StorageManagementClientOptions: ClientOptions
-    {
-        private const ServiceVersion Latest = ServiceVersion.V2019_06_01;
-        internal static StorageManagementClientOptions Default { get; } = new StorageManagementClientOptions();
+   ``` C#
+   namespace Azure.Management.Storage
+   {
+       public class StorageManagementClientOptions: ClientOptions
+       {
+           private const ServiceVersion Latest = ServiceVersion.V2019_06_01;
+           internal static StorageManagementClientOptions Default { get; } = new StorageManagementClientOptions();
+   
+           public StorageManagementClientOptions(ServiceVersion serviceVersion = Latest)
+           {
+               VersionString = serviceVersion switch
+               {
+                   ServiceVersion.V2019_06_01 => "2019-06-01",
+                   _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
+               };
+           }
+   
+           internal string VersionString { get; }
+   
+           public enum ServiceVersion
+           {
+   #pragma warning disable CA1707
+               V2019_06_01 = 1
+   #pragma warning restore CA1707
+           }
+       }
+   }
+   ```
 
-        public StorageManagementClientOptions(ServiceVersion serviceVersion = Latest)
-        {
-            VersionString = serviceVersion switch
-            {
-                ServiceVersion.V2019_06_01 => "2019-06-01",
-                _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
-            };
-        }
+6. Add public constructors to all the clients using a partial class.
 
-        internal string VersionString { get; }
-
-        public enum ServiceVersion
-        {
-#pragma warning disable CA1707
-            V2019_06_01 = 1
-#pragma warning restore CA1707
-        }
-    }
-}
-```
-5. Add public constructors to all the clients using a partial class.
-``` C#
- public partial class FileSharesClient
-    {
-        public FileSharesClient(string subscriptionId, TokenCredential tokenCredential): this(subscriptionId, tokenCredential, StorageManagementClientOptions.Default)
-        {
-        }
-
-        public FileSharesClient(string subscriptionId, TokenCredential tokenCredential, StorageManagementClientOptions options):
-            this(new ClientDiagnostics(options), ManagementClientPipeline.Build(options, tokenCredential), subscriptionId, apiVersion: options.VersionString)
-        {
-        }
-    }
-```
+   ``` C#
+    public partial class FileSharesClient
+       {
+           public FileSharesClient(string subscriptionId, TokenCredential tokenCredential): this(subscriptionId, tokenCredential, StorageManagementClientOptions.Default)
+           {
+           }
+   
+           public FileSharesClient(string subscriptionId, TokenCredential tokenCredential, StorageManagementClientOptions options):
+               this(new ClientDiagnostics(options), ManagementClientPipeline.Build(options, tokenCredential), subscriptionId, apiVersion: options.VersionString)
+           {
+           }
+       }
+   ```
 
 ### Code Review Process
 
