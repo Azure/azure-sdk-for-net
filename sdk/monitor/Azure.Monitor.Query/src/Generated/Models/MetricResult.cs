@@ -21,7 +21,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="type"/>, <paramref name="localizedName"/>, or <paramref name="timeSeries"/> is null. </exception>
-        internal MetricResult(string id, string type, LocalizableString localizedName, MetricUnit unit, IEnumerable<TimeSeriesElement> timeSeries)
+        internal MetricResult(string id, string type, LocalizableString localizedName, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
         {
             if (id == null)
             {
@@ -56,7 +56,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
-        internal MetricResult(string id, string type, LocalizableString localizedName, string displayDescription, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<TimeSeriesElement> timeSeries)
+        internal MetricResult(string id, string type, LocalizableString localizedName, string displayDescription, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<MetricTimeSeriesElement> timeSeries)
         {
             Id = id;
             Type = type;

@@ -20,15 +20,19 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of AzureFilesIdentityBasedAuthentication. </summary>
         /// <param name="directoryServiceOptions"> Indicates the directory service used. </param>
         /// <param name="activeDirectoryProperties"> Required if choose AD. </param>
-        internal AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions directoryServiceOptions, ActiveDirectoryProperties activeDirectoryProperties)
+        /// <param name="defaultSharePermission"> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </param>
+        internal AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions directoryServiceOptions, ActiveDirectoryProperties activeDirectoryProperties, DefaultSharePermission? defaultSharePermission)
         {
             DirectoryServiceOptions = directoryServiceOptions;
             ActiveDirectoryProperties = activeDirectoryProperties;
+            DefaultSharePermission = defaultSharePermission;
         }
 
         /// <summary> Indicates the directory service used. </summary>
         public DirectoryServiceOptions DirectoryServiceOptions { get; set; }
         /// <summary> Required if choose AD. </summary>
         public ActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
+        /// <summary> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </summary>
+        public DefaultSharePermission? DefaultSharePermission { get; set; }
     }
 }

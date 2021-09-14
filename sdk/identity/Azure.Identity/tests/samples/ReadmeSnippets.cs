@@ -17,7 +17,7 @@ namespace Azure.Identity.Samples
             #region Snippet:AuthenticatingWithDefaultAzureCredential
 
             // Create a secret client using the DefaultAzureCredential
-            var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), new DefaultAzureCredential());
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), new DefaultAzureCredential());
 
             #endregion
         }

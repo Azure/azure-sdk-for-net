@@ -8,6 +8,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs.Tests;
 using Azure.ResourceManager.Storage.Models;
+using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
 namespace Azure.Management.EventHub.Tests
@@ -41,7 +42,7 @@ namespace Azure.Management.EventHub.Tests
         {
             var location = await GetLocation();
             var resourceGroupName = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
-            await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            ResourceGroup resourceGroup=(await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location))).Value;
 
             // Prepare Storage Account
             var accountName = Recording.GenerateAssetName("sdktestaccount");
@@ -53,8 +54,8 @@ namespace Azure.Management.EventHub.Tests
             {
                 AccessTier = AccessTier.Hot
             };
-            await WaitForCompletionAsync(await StorageManagementClient.StorageAccounts.StartCreateAsync(resourceGroupName, accountName, storageAccountCreateParameters));
-
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            await storageAccountContainer.CreateOrUpdateAsync(accountName, storageAccountCreateParameters);
             // Create NameSpace
             var namespaceName = Recording.GenerateAssetName(Helper.NamespacePrefix);
             var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroupName, namespaceName,

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace Azure.Data.Tables.Samples
 {
-    [LiveOnly]
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
@@ -19,7 +18,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies3p2";
+            string tableName = "OfficeSupplies3p2" + _random.Next();
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),

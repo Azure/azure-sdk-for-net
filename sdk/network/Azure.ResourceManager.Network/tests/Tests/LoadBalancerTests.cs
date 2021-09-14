@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class LoadBalancerTests : NetworkServiceClientTestBase
     {
