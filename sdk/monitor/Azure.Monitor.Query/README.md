@@ -24,7 +24,7 @@ The Azure Monitor Query client library is used to execute read-only queries agai
 
 Install the Azure Monitor Query client library for .NET with [NuGet][package]:
 
-```
+```dotnetcli
 dotnet add package Azure.Monitor.Query
 ```
 
