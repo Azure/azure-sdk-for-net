@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public class SampleMoq
     {
         [Test]

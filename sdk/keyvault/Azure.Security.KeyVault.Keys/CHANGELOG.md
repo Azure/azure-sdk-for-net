@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added `KeyClient.GetCryptographyClient` to get a `CryptographyClient` that uses the same options, policies, and pipeline as the `KeyClient` that created it. ([#23786](https://github.com/Azure/azure-sdk-for-net/issues/23786))
 - Added `KeyVaultKeyIdentifier.TryCreate` to parse key URIs without throwing an exception when invalid. ([#23146](https://github.com/Azure/azure-sdk-for-net/issues/23146))
 
 ### Breaking Changes

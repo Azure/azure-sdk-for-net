@@ -3,6 +3,7 @@
 . "${PSScriptRoot}\SemVer.ps1"
 
 $RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+\s+(?<version>$([AzureEngSemanticVersion]::SEMVER_REGEX))(\s+(?<releaseStatus>\(.+\))))"
+$SECTIONS_HEADER_REGEX = "^###\s(?<sectionName>.*)"
 $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
 $RecommendedSectionHeaders = @("Features Added", "Breaking Changes", "Bugs Fixed", "Other Changes")
@@ -56,7 +57,7 @@ function Get-ChangeLogEntriesFromContent {
       }
       else {
         if ($changeLogEntry) {
-          if ($line.Trim() -match "^###\s(?<sectionName>.*)")
+          if ($line.Trim() -match $SECTIONS_HEADER_REGEX)
           {
             $sectionName = $matches["sectionName"].Trim()
             $changeLogEntry.Sections[$sectionName] = @()
@@ -288,4 +289,43 @@ function Set-ChangeLogContent {
   }
 
   Set-Content -Path $ChangeLogLocation -Value $changeLogContent
+}
+
+function Remove-EmptySections {
+  param (
+    [Parameter(Mandatory = $true)]
+    $ChangeLogEntry
+  )
+
+  $releaseContent = $ChangeLogEntry.ReleaseContent
+  $sectionsToRemove = @()
+
+  if ($releaseContent.Count -gt 0)
+  {
+    $parsedSections = $ChangeLogEntry.Sections
+    $sanitizedReleaseContent = New-Object System.Collections.ArrayList(,$releaseContent)
+  
+    foreach ($key in @($parsedSections.Key)) 
+    {
+      if ([System.String]::IsNullOrWhiteSpace($parsedSections[$key]))
+      {
+        for ($i = 0; $i -lt $sanitizedReleaseContent.Count; $i++)
+        {
+          $line = $sanitizedReleaseContent[$i]
+          if ($line -match $SECTIONS_HEADER_REGEX -and $matches["sectionName"].Trim() -eq $key)
+          {
+            $sanitizedReleaseContent.RemoveAt($i)
+            while($i -lt $sanitizedReleaseContent.Count -and [System.String]::IsNullOrWhiteSpace($sanitizedReleaseContent[$i]))
+            {
+              $sanitizedReleaseContent.RemoveAt($i)
+            }
+            $ChangeLogEntry.Sections.Remove($key)
+            break
+          }
+        }
+      }
+    }
+    $ChangeLogEntry.ReleaseContent = $sanitizedReleaseContent.ToArray()
+  }
+  return $changeLogEntry
 }

@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("ignored since response contains keys")]
         public async Task StorageAccountRegenerateKey()
         {
+            Sanitizer.AddJsonPathSanitizer("$.keys.[*].value");
             //create storage account and get keys
             string accountName = Recording.GenerateAssetName("storage");
             _resourceGroup = await CreateResourceGroupAsync();
@@ -214,7 +214,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.NotNull(regenKey2);
 
             //validate the key is different from origin one
-            Assert.AreNotEqual(key2.Value, regenKey2.Value);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreNotEqual(key2.Value, regenKey2.Value);
+            }
         }
         [Test]
         [RecordedTest]
@@ -583,6 +586,14 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.NotNull(account.Data.PrimaryEndpoints.Web);
             Assert.AreEqual(Kind.StorageV2, account.Data.Kind);
             Assert.False(account.Data.EnableNfsV3);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task GetDeletedAccounts()
+        {
+            //get all deleted accounts
+            List<DeletedAccount> deletedAccounts =await DefaultSubscription.GetDeletedAccountsAsync().ToEnumerableAsync();
+            Assert.NotNull(deletedAccounts);
         }
     }
 }

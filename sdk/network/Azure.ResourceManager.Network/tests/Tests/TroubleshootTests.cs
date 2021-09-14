@@ -14,7 +14,7 @@ using NUnit.Framework;
 //using Sku = Azure.ResourceManager.Storage.Models.Sku;
 using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class TroubleshootTests : NetworkServiceClientTestBase
     {

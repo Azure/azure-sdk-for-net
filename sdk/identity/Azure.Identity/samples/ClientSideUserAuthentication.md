@@ -12,7 +12,7 @@ For clients which have a default browser available, the `InteractiveBrowserCrede
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_SimpleInteractiveBrowser
 var client = new SecretClient(
-    new Uri("https://myvault.azure.vaults.net/"),
+    new Uri("https://myvault.vault.azure.net/"),
     new InteractiveBrowserCredential()
 );
 ```
@@ -47,7 +47,7 @@ var credential = new InteractiveBrowserCredential(
 
 await credential.AuthenticateAsync();
 
-var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), credential);
+var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
 In this sample the application is again using the `InteractiveBrowserCredential` to authenticate a `SecretClient`, but with two major differences from our first example. First, in this example the application is explicitly forcing any user interaction to happen before the credential is given to the client by calling `AuthenticateAsync`.

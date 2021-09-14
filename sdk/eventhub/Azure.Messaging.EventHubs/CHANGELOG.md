@@ -2,6 +2,16 @@
 
 ## 5.7.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.6.1 (2021-09-08)
+
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
@@ -20,6 +30,8 @@ Thank you to our developer community members who helped to make the Event Hubs c
 - A sample demonstrating the use of the `AzureEventSourceListener` from `Azure.Core` for common scenarios with the Event Hubs client library has been created.   _(A community contribution, courtesy of [andreyshihov](https://github.com/andreyshihov))_
 
 - Serialization of event data from Event Hubs has been tweaked for greater efficiency.  _(A community contribution, courtesy of [johnthcall](https://github.com/johnthcall))_
+
+- Adjusted the approach used to abandon AMQP sessions when an exception occurs while opening a link to ensure that the transport library does not continue to hold an unnecessary reference.
 
 - Documentation has been enhanced to provide additional context for client library types, notably detailing non-obvious validations applied to parameters and options members.
 

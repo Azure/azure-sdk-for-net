@@ -1,14 +1,14 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2021-09-14)
 
 ### Features Added
 
-### Breaking Changes
+- Added ArmClient extension methods to support [start from the middle scenario](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#managing-existing-resources-by-id).
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed bug when using `GetDeletedAccountsAsync` would cause error.
 
 ## 1.0.0-beta.1 (2021-09-01)
 
@@ -65,9 +65,9 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 string accountName = "myaccount";
-string resourceGropuName = "myResourceGroup";
+string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroup resourceGroup = client.DefaultSubscription.GetResourceGroups().Get(resourceGropuName);
+ResourceGroup resourceGroup = client.DefaultSubscription.GetResourceGroups().Get(resourceGroupName);
 StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
 Sku sku = new Sku(SkuName.PremiumLRS);
 StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, Location.WestUS);

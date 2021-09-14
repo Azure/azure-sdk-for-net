@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> The time series returned when a data query is performed. </summary>
         [CodeGenMember("Timeseries")]
-        public IReadOnlyList<TimeSeriesElement> TimeSeries { get; }
+        public IReadOnlyList<MetricTimeSeriesElement> TimeSeries { get; }
 
         /// <summary>
         /// Gets the error that occurred while querying the metric.
