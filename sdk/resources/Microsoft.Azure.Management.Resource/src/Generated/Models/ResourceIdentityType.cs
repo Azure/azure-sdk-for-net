@@ -21,12 +21,28 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ResourceIdentityType
     {
+        /// <summary>
+        /// Indicates that a system assigned identity is associated with the
+        /// resource.
+        /// </summary>
         [EnumMember(Value = "SystemAssigned")]
         SystemAssigned,
+        /// <summary>
+        /// Indicates that a user assigned identity is associated with the
+        /// resource.
+        /// </summary>
         [EnumMember(Value = "UserAssigned")]
         UserAssigned,
+        /// <summary>
+        /// Indicates that a system and user assigned identity is associated
+        /// with the resource.
+        /// </summary>
         [EnumMember(Value = "SystemAssigned, UserAssigned")]
         SystemAssignedUserAssigned,
+        /// <summary>
+        /// Indicates that no identity is associated with the resource or that
+        /// the existing identity should be removed.
+        /// </summary>
         [EnumMember(Value = "None")]
         None
     }
