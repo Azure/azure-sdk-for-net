@@ -45,7 +45,7 @@ namespace DataBoxEdge.Tests
             DataBoxEdgeDevice device = new DataBoxEdgeDevice();
             device.PopulateEdgeDeviceProperties();
             device.Identity = new ResourceIdentity(type: "SystemAssigned");
-            var name = TestConstants.EdgeResourceName+"ritwik";
+            
             device.CreateOrUpdate(name, Client, TestConstants.DefaultResourceGroupName);
             
             // Step 2. GenerateCIK
