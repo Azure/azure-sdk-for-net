@@ -18,7 +18,7 @@ namespace Azure.Data.Tables.Samples
         public async Task CustomizeSerialization()
         {
             string storageUri = StorageUri;
-            string tableName = "OfficeSupplies";
+            string tableName = "OfficeSupplies" + _random.Next();
 
             #region Snippet:CustomSerialization
 
