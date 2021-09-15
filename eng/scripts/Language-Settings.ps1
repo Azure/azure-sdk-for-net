@@ -11,12 +11,13 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   $allPackageProps = @()
   # $addDevVersion is a global variable set by a parameter in 
   # Save-Package-Properties.ps1
+  $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $msbuildOutput = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
     $EngDir/service.proj `
     /p:ServiceDirectory=$serviceDirectory `
-    /p:AddDevVersion=$addDevVersion
+    /p:AddDevVersion=$shouldAddDevVersion
 
   foreach ($projectOutput in $msbuildOutput)
   {
@@ -260,8 +261,16 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
     $suffix = '-pre'
   }
 
-  # TODO: Validate that this logic works
   $readmeName = $PackageInfo.Name.ToLower()
+
+  # Readme names (which are used in the URL) should not include redundant terms
+  # when viewed in URL form. For example: 
+  # https://docs.microsoft.com/en-us/dotnet/api/overview/azure/storage.blobs-readme
+  # Note how the end of the URL doesn't look like:
+  # ".../azure/azure.storage.blobs-readme" 
+
+  # This logic eliminates a preceeding "azure." in the readme filename.
+  # "azure.storage.blobs" -> "storage.blobs"
   if ($readmeName.StartsWith('azure.')) {
     $readmeName = $readmeName.Substring(6)
   }
@@ -360,7 +369,45 @@ function Get-DocsCiLine ($item) {
   return $line
 }
 
+function EnsureCustomSource($package) { 
+  # $PackageSourceOverride is a global variable provided in 
+  # Update-DocsMsPackages.ps1. Its value can set a "customSource" property.
+  # If it is empty then the property is not overridden.
+  if (!$PackageSourceOverride) { 
+    return $package
+  }
+
+  Write-Host "Checking custom package source for $($package.Name)"
+  $existingVersions = Find-Package `
+    -Name $package.Name `
+    -Source CustomPackageSource `
+    -AllVersions `
+    -AllowPrereleaseVersions
+  
+  # Matches package version against output: 
+  # "Azure.Security.KeyVault.Secrets 4.3.0-alpha.20210915.3"
+  $matchedVersion = $existingVersions.Where({$_.Version -eq $package.Version})
+
+  if (!$matchedVersion) { 
+    return $package
+  }
+
+  $package.Properties['customSource'] = $PackageSourceOverride
+  return $package
+}
+
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
+  # $PackageSourceOverride is a global variable provided in 
+  # Update-DocsMsPackages.ps1.
+  if ($PackageSourceOverride) {
+    Write-Host "Registering custom package source $PackageSourceOverride"
+    Register-PackageSource `
+      -Name CustomPackageSource `
+      -Location $PackageSourceOverride `
+      -ProviderName NuGet
+  }
+  
+
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
     'preview' `
@@ -403,11 +450,19 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
       continue
     }
 
-    Write-Host "Keep tracked package: $($package.Name)"
-    $package.Versions = @($matchingPublishedPackage.VersionGA.Trim())
+    $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
     if ($Mode -eq 'preview') {
-      $package.Versions = @($matchingPublishedPackage.VersionPreview.Trim())
+      $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
     }
+
+    if ($updatedVersion -ne $package.Versions[0]) { 
+      Write-Host "Update tracked package: $($package.Name) to version $($updatedVersions)"
+      $package.Versions[0] = $updatedVersion
+      $package = EnsureCustomSource $package
+    } else { 
+      Write-Host "Keep tracked package: $($package.Name)"
+    }
+
     $outputPackages += $package
   }
 
@@ -435,18 +490,23 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
     $newPackageProperties['isPrerelease'] = 'true'
   }
 
+  
   foreach ($package in $remainingPackages) {
     Write-Host "Add new package from metadata: $($package.Package)"
     $versions = @($package.VersionGA.Trim())
     if ($Mode -eq 'preview') {
       $versions = @($package.VersionPreview.Trim())
     }
-    $outputPackages += [PSCustomObject]@{
+
+    $newPackage = [PSCustomObject]@{
       Id = $package.Package.Replace('.', '').ToLower();
       Name = $package.Package;
       Properties = $newPackageProperties;
       Versions = $versions
-    }
+    } 
+    $newPackage = EnsureCustomSource $newPackage 
+
+    $outputPackages += $newPackage
   }
 
   $outputLines = @() 
