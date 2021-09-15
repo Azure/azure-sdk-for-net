@@ -75,7 +75,7 @@ namespace Azure.Monitor.Query.Tests
             LogsBatchQuery batch = new LogsBatchQuery();
             batch.AddQuery("wid", "query", MonitorQueryDateTimeRange.All);
 
-            LogsBatchQueryResults batchResults = await client.QueryBatchAsync(batch);
+            LogsBatchQueryResultCollection batchResults = await client.QueryBatchAsync(batch);
             Assert.NotNull(batchResults.GetResult("0"));
         }
 

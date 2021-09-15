@@ -212,7 +212,7 @@ string topQueryId = batch.AddQuery(
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
     new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)));
 
-Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
+Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
 var count = response.Value.GetResult<int>(countQueryId).Single();
 var topEntries = response.Value.GetResult<MyLogEntryModel>(topQueryId);

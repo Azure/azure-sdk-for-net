@@ -86,7 +86,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// immutability property of the container. The property is immutable
         /// and can only be set to true at the container creation time.
         /// Existing containers must undergo a migration process.</param>
-        public BlobContainer(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string defaultEncryptionScope = default(string), bool? denyEncryptionScopeOverride = default(bool?), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), string leaseStatus = default(string), string leaseState = default(string), string leaseDuration = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHoldProperties legalHold = default(LegalHoldProperties), bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?), ImmutableStorageWithVersioning immutableStorageWithVersioning = default(ImmutableStorageWithVersioning))
+        /// <param name="enableNfsV3RootSquash">Enable NFSv3 root squash on
+        /// blob container.</param>
+        /// <param name="enableNfsV3AllSquash">Enable NFSv3 all squash on blob
+        /// container.</param>
+        public BlobContainer(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string defaultEncryptionScope = default(string), bool? denyEncryptionScopeOverride = default(bool?), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), string leaseStatus = default(string), string leaseState = default(string), string leaseDuration = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHoldProperties legalHold = default(LegalHoldProperties), bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?), ImmutableStorageWithVersioning immutableStorageWithVersioning = default(ImmutableStorageWithVersioning), bool? enableNfsV3RootSquash = default(bool?), bool? enableNfsV3AllSquash = default(bool?))
             : base(id, name, type, etag)
         {
             Version = version;
@@ -106,6 +110,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             HasLegalHold = hasLegalHold;
             HasImmutabilityPolicy = hasImmutabilityPolicy;
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
+            EnableNfsV3RootSquash = enableNfsV3RootSquash;
+            EnableNfsV3AllSquash = enableNfsV3AllSquash;
             CustomInit();
         }
 
@@ -234,6 +240,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.immutableStorageWithVersioning")]
         public ImmutableStorageWithVersioning ImmutableStorageWithVersioning { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable NFSv3 root squash on blob container.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableNfsV3RootSquash")]
+        public bool? EnableNfsV3RootSquash { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable NFSv3 all squash on blob container.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableNfsV3AllSquash")]
+        public bool? EnableNfsV3AllSquash { get; set; }
 
     }
 }

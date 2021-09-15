@@ -57,5 +57,18 @@ namespace Azure.Monitor.Query.Models
         /// Gets the error that occurred during query processing. The value is <c>null</c> if the query succeeds.
         /// </summary>
         public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText());
+
+        internal Exception CreateExceptionForErrorResponse(int status)
+        {
+            return new RequestFailedException(
+                status,
+                $"The result was returned but contained a partial error. Exceptions for partial errors can be disabled " +
+                $" using {nameof(LogsQueryOptions)}.{nameof(LogsQueryOptions.ThrowOnPartialErrors)}." +
+                $"Partial errors can be inspected using the {nameof(LogsQueryResult)}.{nameof(Error)} property.{Environment.NewLine}" +
+                $"Error:{Environment.NewLine}{Error}",
+                Error.Code,
+                innerException: null
+            );
+        }
     }
 }

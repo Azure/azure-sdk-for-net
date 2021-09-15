@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using Automation.Tests.Helpers;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
@@ -19,12 +20,13 @@ namespace Automation.Tests.TestSupport
 {
     public class AutomationTestBase : TestBase, IDisposable
     {
-        private const string ResourceGroup = "automation-sdk-test-RG";
-        private const string AutomationAccount = "automation-sdk-test-AA";
-        private const string Location = "East US 2";
+        private string ResourceGroup = "automation-sdk-test-RG";
+        private string AutomationAccount = "automation-sdk-test-AA";
+        private const string Location = "West US";
 
-        public AutomationTestBase(MockContext context)
+        public AutomationTestBase(MockContext context, string resourceGroup)
         {
+            ResourceGroup = resourceGroup;
             var handler = new RecordedDelegatingHandler();
             AutomationClient = ResourceGroupHelper.GetAutomationClient(context, handler);
             var resourcesClient = ResourceGroupHelper.GetResourcesClient(context, handler);
@@ -36,7 +38,14 @@ namespace Automation.Tests.TestSupport
                     {
                         Location = Location
                     });
+            }
+            catch (CloudException ex)
+            {
+                if (ex.Response.StatusCode != HttpStatusCode.Conflict) throw;
+            }
 
+            try
+            {
                 AutomationClient.AutomationAccount.CreateOrUpdate(ResourceGroup, AutomationAccount,
                     new AutomationAccountCreateOrUpdateParameters
                     {
@@ -44,6 +53,7 @@ namespace Automation.Tests.TestSupport
                         Location = Location,
                         Sku = new Sku { Name = "Free", Family = "Test", Capacity = 1 }
                     });
+               
             }
             catch (CloudException ex)
             {

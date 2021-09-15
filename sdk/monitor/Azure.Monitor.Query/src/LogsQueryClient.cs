@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -219,7 +220,7 @@ namespace Azure.Monitor.Query
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
         ///     new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)));
         ///
-        /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
+        /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
         /// var count = response.Value.GetResult&lt;int&gt;(countQueryId).Single();
         /// var topEntries = response.Value.GetResult&lt;MyLogEntryModel&gt;(topQueryId);
@@ -233,8 +234,8 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="batch">The batch of queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="LogsBatchQueryResults"/> containing the query identifier that has to be passed into <see cref="LogsBatchQueryResults.GetResult"/> to get the result.</returns>
-        public virtual Response<LogsBatchQueryResults> QueryBatch(LogsBatchQuery batch, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="LogsBatchQueryResultCollection"/> containing the query identifier that has to be passed into <see cref="LogsBatchQueryResultCollection.GetResult"/> to get the result.</returns>
+        public virtual Response<LogsBatchQueryResultCollection> QueryBatch(LogsBatchQuery batch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(batch, nameof(batch));
 
@@ -243,7 +244,7 @@ namespace Azure.Monitor.Query
             try
             {
                 var response = _queryClient.Batch(new BatchRequest(batch.Requests), cancellationToken);
-                return response;
+                return ConvertBatchResponse(batch, response);
             }
             catch (Exception e)
             {
@@ -272,7 +273,7 @@ namespace Azure.Monitor.Query
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
         ///     new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)));
         ///
-        /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
+        /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
         /// var count = response.Value.GetResult&lt;int&gt;(countQueryId).Single();
         /// var topEntries = response.Value.GetResult&lt;MyLogEntryModel&gt;(topQueryId);
@@ -286,8 +287,8 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="batch">The batch of Kusto queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="LogsBatchQueryResults"/> that allows retrieving query results.</returns>
-        public virtual async Task<Response<LogsBatchQueryResults>> QueryBatchAsync(LogsBatchQuery batch, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="LogsBatchQueryResultCollection"/> that allows retrieving query results.</returns>
+        public virtual async Task<Response<LogsBatchQueryResultCollection>> QueryBatchAsync(LogsBatchQuery batch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(batch, nameof(batch));
 
@@ -296,13 +297,34 @@ namespace Azure.Monitor.Query
             try
             {
                 var response = await _queryClient.BatchAsync(new BatchRequest(batch.Requests), cancellationToken).ConfigureAwait(false);
-                return response;
+                return ConvertBatchResponse(batch, response);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static Response<LogsBatchQueryResultCollection> ConvertBatchResponse(LogsBatchQuery batch, Response<BatchResponse> response)
+        {
+            List<LogsBatchQueryResult> batchResponses = new List<LogsBatchQueryResult>();
+            foreach (var innerResponse in response.Value.Responses)
+            {
+                var body = innerResponse.Body;
+                body.Status = innerResponse.Status switch
+                {
+                    >= 400 => LogsBatchQueryResultStatus.Failure,
+                    _ when body.Error != null => LogsBatchQueryResultStatus.PartialFailure,
+                    _ => LogsBatchQueryResultStatus.Success
+                };
+                body.Id = innerResponse.Id;
+                batchResponses.Add(body);
+            }
+
+            return Response.FromValue(
+                new LogsBatchQueryResultCollection(batchResponses, batch),
+                response.GetRawResponse());
         }
 
         /// <summary>
@@ -499,6 +521,11 @@ namespace Azure.Monitor.Query
                         JsonDocument.Parse(message.Response.ContentStream, default);
 
                     LogsQueryResult value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
+                    var responseError = value.Error;
+                    if (responseError != null && options?.ThrowOnPartialErrors != false)
+                    {
+                        throw value.CreateExceptionForErrorResponse(message.Response.Status);
+                    }
                     return Response.FromValue(value, message.Response);
                 }
                 default:

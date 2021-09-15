@@ -39,8 +39,8 @@ namespace Azure.Monitor.Query
         public virtual Azure.Response<Azure.Monitor.Query.Models.LogsQueryResult> Query(string workspaceId, string query, Azure.Core.MonitorQueryDateTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.LogsQueryResult>> QueryAsync(string workspaceId, string query, Azure.Core.MonitorQueryDateTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, Azure.Core.MonitorQueryDateTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Monitor.Query.Models.LogsBatchQueryResults> QueryBatch(Azure.Monitor.Query.LogsBatchQuery batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.LogsBatchQueryResults>> QueryBatchAsync(Azure.Monitor.Query.LogsBatchQuery batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Monitor.Query.Models.LogsBatchQueryResultCollection> QueryBatch(Azure.Monitor.Query.LogsBatchQuery batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.LogsBatchQueryResultCollection>> QueryBatchAsync(Azure.Monitor.Query.LogsBatchQuery batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> Query<T>(string workspaceId, string query, Azure.Core.MonitorQueryDateTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LogsQueryClientOptions : Azure.Core.ClientOptions
@@ -59,6 +59,7 @@ namespace Azure.Monitor.Query
         public bool IncludeStatistics { get { throw null; } set { } }
         public bool IncludeVisualization { get { throw null; } set { } }
         public System.TimeSpan? ServerTimeout { get { throw null; } set { } }
+        public bool ThrowOnPartialErrors { get { throw null; } set { } }
     }
     public partial class MetricsQueryClient
     {
@@ -98,15 +99,20 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsBatchQueryResult : Azure.Monitor.Query.Models.LogsQueryResult
     {
         internal LogsBatchQueryResult() { }
-        public bool HasFailed { get { throw null; } }
         public string Id { get { throw null; } }
+        public Azure.Monitor.Query.Models.LogsBatchQueryResultStatus Status { get { throw null; } }
     }
-    public partial class LogsBatchQueryResults
+    public partial class LogsBatchQueryResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.Monitor.Query.Models.LogsBatchQueryResult>
     {
-        internal LogsBatchQueryResults() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsBatchQueryResult> Results { get { throw null; } }
+        internal LogsBatchQueryResultCollection() : base (default(System.Collections.Generic.IList<Azure.Monitor.Query.Models.LogsBatchQueryResult>)) { }
         public Azure.Monitor.Query.Models.LogsBatchQueryResult GetResult(string queryId) { throw null; }
         public System.Collections.Generic.IReadOnlyList<T> GetResult<T>(string queryId) { throw null; }
+    }
+    public enum LogsBatchQueryResultStatus
+    {
+        Success = 0,
+        PartialFailure = 1,
+        Failure = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LogsColumnType : System.IEquatable<Azure.Monitor.Query.Models.LogsColumnType>
