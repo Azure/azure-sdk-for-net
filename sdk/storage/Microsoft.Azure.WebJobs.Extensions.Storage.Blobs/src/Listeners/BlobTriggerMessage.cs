@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
             set
             {
-                BlobType = (BlobType)Enum.Parse(typeof(BlobType), value.Replace("Blob", ""));
+                BlobType = (BlobType)Enum.Parse(typeof(BlobType), value.Replace("Blob", ""), true);
             }
         }
 
