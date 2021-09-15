@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class MetricsQueryClientLiveTests : RecordedTestBase<MonitorQueryClientTestEnvironment>
+    public class MetricsQueryClientLiveTests : RecordedTestBase<MonitorQueryTestEnvironment>
     {
         private MetricsTestData _testData;
 
