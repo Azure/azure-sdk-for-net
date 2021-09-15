@@ -59,7 +59,11 @@ jobs:
         inputs:
           pwsh: true
           filePath: eng/common/scripts/Update-DocsMsPackages.ps1
-          arguments: -DocRepoLocation $(DocRepoLocation)
+          # Use the dotnet public daily package preview feed as the source for
+          # updated packages.
+          arguments: >
+            -DocRepoLocation $(DocRepoLocation)
+            -PackageSourceOverride 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json'
         displayName: Update Docs Onboarding for Daily branch
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:

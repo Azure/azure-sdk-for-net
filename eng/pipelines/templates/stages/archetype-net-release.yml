@@ -174,7 +174,7 @@ stages:
                           TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                           PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
                           ArtifactName: ${{artifact.name}}
-                          Language: '.net'
+                          Language: 'dotnet'
                           DocRepoDestinationPath: 'api/overview/azure/'
                           CIConfigs: $(CIConfigs)
                           OnboardingBranch: 'onboarding'
@@ -278,6 +278,7 @@ stages:
             publishVstsFeed: $(DevOpsFeedID)
 
     - job: PublishDocsToNightlyBranch
+      dependsOn: PublishPackages
       condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['SetDevVersion'], ''), eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
       pool:
         name: azsdk-pool-mms-ubuntu-2004-general
@@ -301,7 +302,7 @@ stages:
             WorkingDirectory: $(System.DefaultWorkingDirectory)
             TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-            Language: '.NET'
+            Language: 'dotnet'
             DailyDocsBuild: true
             SparseCheckoutPaths:
               - api/overview/azure/

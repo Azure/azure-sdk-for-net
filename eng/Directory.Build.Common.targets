@@ -291,7 +291,7 @@
       <PackageSdkType Condition="'$(IsClientLibrary)' == 'true'">client</PackageSdkType>
       <PackageSdkType Condition="'$(IsMgmtLibrary)' == 'true'">mgmt</PackageSdkType>
 
-      <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).Trim("/").Trim("\\"))</PackageRootDirectory>
+      <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
 
       <!-- TODO: Describe what's going on here and why -->
       <VersionForProperties>$(_VersionInProject)</VersionForProperties>
