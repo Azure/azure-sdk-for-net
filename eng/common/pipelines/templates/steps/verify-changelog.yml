@@ -4,7 +4,7 @@ parameters:
   default: 'not-specified'
 - name: ServiceName
   type: string
-  default: 'not-specified'
+  default: ''
 - name: ServiceDirectory
   type: string
   default: ''
