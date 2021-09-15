@@ -136,7 +136,7 @@ namespace Azure.Monitor.Query.Models
         public Azure.Monitor.Query.Models.LogsColumnType Type { get { throw null; } }
         public override string ToString() { throw null; }
     }
-    public partial class LogsTableRow
+    public partial class LogsTableRow : System.Collections.Generic.IEnumerable<object>, System.Collections.Generic.IReadOnlyCollection<object>, System.Collections.Generic.IReadOnlyList<object>, System.Collections.IEnumerable
     {
         internal LogsTableRow() { }
         public int Count { get { throw null; } }
@@ -162,6 +162,8 @@ namespace Azure.Monitor.Query.Models
         public string GetString(string name) { throw null; }
         public System.TimeSpan? GetTimeSpan(int index) { throw null; }
         public System.TimeSpan? GetTimeSpan(string name) { throw null; }
+        System.Collections.Generic.IEnumerator<object> System.Collections.Generic.IEnumerable<System.Object>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public override string ToString() { throw null; }
     }
     public enum MetricAggregationType

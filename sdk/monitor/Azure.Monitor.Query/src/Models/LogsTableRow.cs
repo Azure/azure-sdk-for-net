@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
@@ -13,7 +14,7 @@ namespace Azure.Monitor.Query.Models
     /// Represents a row in the table of results returned from the logs query.
     /// </summary>
     [CodeGenModel("LogsQueryResultRow")]
-    public class LogsTableRow
+    public class LogsTableRow: IReadOnlyList<object>
     {
         private readonly Dictionary<string, int> _columnMap;
         private readonly IReadOnlyList<LogsTableColumn> _columns;
@@ -35,35 +36,35 @@ namespace Azure.Monitor.Query.Models
         /// Gets the value of the column at the specified index as <see cref="int"/>.
         /// </summary>
         /// <param name="index">The column index.</param>
-        /// <returns>The <see cref="int"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Int32}"/> value of the column.</returns>
         public int? GetInt32(int index) => _row[index].ValueKind == JsonValueKind.Null ? null : _row[index].GetInt32();
 
         /// <summary>
         /// Gets the value of the column at the specified index as <see cref="long"/>.
         /// </summary>
         /// <param name="index">The column index.</param>
-        /// <returns>The <see cref="long"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Int64}"/> value of the column.</returns>
         public long? GetInt64(int index) => _row[index].ValueKind == JsonValueKind.Null ? null : _row[index].GetInt64();
 
         /// <summary>
         /// Gets the value of the column at the specified index as <see cref="bool"/>.
         /// </summary>
         /// <param name="index">The column index.</param>
-        /// <returns>The <see cref="bool"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Boolean}"/> value of the column.</returns>
         public bool? GetBoolean(int index) => _row[index].ValueKind == JsonValueKind.Null ? null : _row[index].GetBoolean();
 
         /// <summary>
         /// Gets the value of the column at the specified index as <see cref="decimal"/>.
         /// </summary>
         /// <param name="index">The column index.</param>
-        /// <returns>The <see cref="decimal"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Decimal}"/> value of the column.</returns>
         public decimal? GetDecimal(int index) => _row[index].ValueKind == JsonValueKind.Null ? null : decimal.Parse(_row[index].GetString(), CultureInfo.InvariantCulture);
 
         /// <summary>
         /// Gets the value of the column at the specified index as <see cref="double"/>.
         /// </summary>
         /// <param name="index">The column index.</param>
-        /// <returns>The <see cref="double"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Double}"/> value of the column.</returns>
         public double? GetDouble(int index) => _row[index].ValueKind == JsonValueKind.Null ? null : _row[index].GetDouble();
 
         /// <summary>
@@ -77,21 +78,21 @@ namespace Azure.Monitor.Query.Models
         /// Gets the value of the column at the specified index as <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <param name="index">The column index.</param>
-        /// <returns>The <see cref="DateTimeOffset"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{DateTimeOffset}"/> value of the column.</returns>
         public DateTimeOffset? GetDateTimeOffset(int index) => _row[index].ValueKind == JsonValueKind.Null ? null : _row[index].GetDateTimeOffset();
 
         /// <summary>
         /// Gets the value of the column at the specified index as <see cref="TimeSpan"/>.
         /// </summary>
         /// <param name="index">The column index.</param>
-        /// <returns>The <see cref="TimeSpan"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{TimeSpan}"/> value of the column.</returns>
         public TimeSpan? GetTimeSpan(int index) => _row[index].ValueKind == JsonValueKind.Null ? null : _row[index].GetTimeSpan("c");
 
         /// <summary>
         /// Gets the value of the column at the specified index as <see cref="Guid"/>.
         /// </summary>
         /// <param name="index">The column index.</param>
-        /// <returns>The <see cref="Guid"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Guid}"/> value of the column.</returns>
         public Guid? GetGuid(int index) => _row[index].ValueKind == JsonValueKind.Null ? null : _row[index].GetGuid();
 
         /// <summary>
@@ -105,35 +106,35 @@ namespace Azure.Monitor.Query.Models
         /// Gets the value of the column with the specified name as <see cref="int"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
-        /// <returns>The <see cref="int"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Int32}"/> value of the column.</returns>
         public int? GetInt32(string name) => GetInt32(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="long"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
-        /// <returns>The <see cref="long"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Int64}"/> value of the column.</returns>
         public long? GetInt64(string name) => GetInt64(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="bool"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
-        /// <returns>The <see cref="bool"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Boolean}"/> value of the column.</returns>
         public bool? GetBoolean(string name) => GetBoolean(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="decimal"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
-        /// <returns>The <see cref="decimal"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Decimal}"/> value of the column.</returns>
         public decimal? GetDecimal(string name) => GetDecimal(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="double"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
-        /// <returns>The <see cref="double"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Double}"/> value of the column.</returns>
         public double? GetDouble(string name) => GetDouble(_columnMap[name]);
 
         /// <summary>
@@ -147,21 +148,21 @@ namespace Azure.Monitor.Query.Models
         /// Gets the value of the column with the specified name as <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
-        /// <returns>The <see cref="DateTimeOffset"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{DateTimeOffset}"/> value of the column.</returns>
         public DateTimeOffset? GetDateTimeOffset(string name) => GetDateTimeOffset(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="TimeSpan"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
-        /// <returns>The <see cref="TimeSpan"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{TimeSpan}"/> value of the column.</returns>
         public TimeSpan? GetTimeSpan(string name) => GetTimeSpan(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="Guid"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
-        /// <returns>The <see cref="Guid"/> value of the column.</returns>
+        /// <returns>The <see cref="Nullable{Guid}"/> value of the column.</returns>
         public Guid? GetGuid(string name) => GetGuid(_columnMap[name]);
 
         /// <summary>
@@ -258,6 +259,21 @@ namespace Azure.Monitor.Query.Models
         public override string ToString()
         {
             return _row.ToString();
+        }
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<object>)this).GetEnumerator();
+        }
+
+        /// <inheritdoc />
+        IEnumerator<object> IEnumerable<object>.GetEnumerator()
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                yield return GetObject(i);
+            }
         }
     }
 }
