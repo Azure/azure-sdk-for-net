@@ -3,27 +3,16 @@ parameters:
   Artifacts: []
 
 steps:
-  - pwsh: |
-      $artifacts = '${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json
-      $artifactList = @()
-      foreach ($artifact in $artifacts) {
-        $artifactList += "$($artifact.name)"
-      }
-      $artifactListValue = $artifactList -join ','
-
-      Write-Host "artifactListValue = $artifactListValue"
-      Write-Host "##vso[task.setvariable variable=artifactList;]$artifactListValue"
-    displayName: Initialize artifacts list variable
-
   - task: Powershell@2
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Detect-Api-Changes.ps1
       arguments: >
-        -ArtifactList '$(artifactList)'
+        -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
         -ArtifactPath ${{parameters.ArtifactPath}}
         -CommitSha '$(Build.SourceVersion)'
         -BuildId $(Build.BuildId)
         -PullRequestNumber $(System.PullRequest.PullRequestNumber)
+        -RepoFullName $(Build.Repository.Name)
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Detect API changes

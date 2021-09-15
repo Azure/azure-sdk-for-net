@@ -9,7 +9,7 @@ Param (
   [Parameter(Mandatory=$True)]
   [string] $CommitSha,
   [Parameter(Mandatory=$True)]
-  [string] $ArtifactList,
+  [array] $ArtifactList,
   [string] $RepoFullName = "",
   [string] $ArtifactName = "packages",
   [string] $APIViewUri = "https://apiview.dev/PullRequest/DetectApiChanges"
@@ -20,7 +20,7 @@ function Submit-Request($filePath)
 {
     $repoName = $RepoFullName
     if (!$repoName) {
-        $repoName = "azure/azure-sdk-for-$Language"
+        $repoName = "azure/azure-sdk-for-$LanguageShort"
     }
     $query = [System.Web.HttpUtility]::ParseQueryString('')
     $query.Add('artifactName', $ArtifactName)
@@ -34,7 +34,7 @@ function Submit-Request($filePath)
     Write-Host "Request URI: $($uri.Uri.OriginalString)"
     try
     {
-        $Response = Invoke-WebRequest -Method 'GET' -Uri $uri.Uri
+        $Response = Invoke-WebRequest -Method 'GET' -Uri $uri.Uri -MaximumRetryCount 3
         $StatusCode = $Response.StatusCode
     }
     catch
@@ -51,7 +51,7 @@ function Should-Process-Package($pkgPath, $packageName)
     $pkg = Split-Path -Leaf $pkgPath
     $configFileDir = Join-Path -Path $ArtifactPath "PackageInfo"
     $pkgPropPath = Join-Path -Path $configFileDir "$packageName.json"
-    if (-Not (Test-Path $pkgPropPath))
+    if (!(Test-Path $pkgPropPath))
     {
         Write-Host " Package property file path $($pkgPropPath) is invalid."
         return $False
@@ -84,8 +84,7 @@ if (!($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiR
     exit 1
 }
 
-$artifacts = $ArtifactList.Split(",")
-foreach ($pkgName in $artifacts)
+foreach ($pkgName in $ArtifactList)
 {
     Write-Host "Processing $pkgName"
     $packages = &$FindArtifactForApiReviewFn $ArtifactPath $pkgName
