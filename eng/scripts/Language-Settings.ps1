@@ -260,14 +260,19 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
     $suffix = '-pre'
   }
 
-  New-Object PSObject -Property @{ 
-    DocsMsReadMeName = $PackageInfo.Name.ToLower() -replace "." , ""
+  # TODO: Validate that this logic works
+  $readmeName = $PackageInfo.Name.ToLower()
+  if ($readmeName.StartsWith('azure.')) {
+    $readmeName = $readmeName.Substring(6)
+  }
+
+  New-Object PSObject -Property @{
+    DocsMsReadMeName = $readmeName
     LatestReadMeLocation = 'api/overview/azure'
     PreviewReadMeLocation = 'api/overview/azure'
     Suffix = $suffix
   }
 }
-
 
 # Details on CSV schema:
 # https://review.docs.microsoft.com/en-us/help/onboard/admin/reference/dotnet/documenting-nuget?branch=master#set-up-the-ci-job
