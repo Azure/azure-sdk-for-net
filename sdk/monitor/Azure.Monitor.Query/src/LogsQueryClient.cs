@@ -20,16 +20,11 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class LogsQueryClient
     {
-        private static readonly Uri _defaultEndpoint = new Uri("https://api.loganalytics.io");
+        private static readonly Uri _defaultEndpoint = new Uri("https://api.monitor.azure.com");
         private static readonly TimeSpan _networkTimeoutOffset = TimeSpan.FromSeconds(15);
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-
-        /// <summary>
-        /// Gets a private endpoint connection.
-        /// </summary>
-        public Uri Endpoint { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
@@ -77,7 +72,7 @@ namespace Azure.Monitor.Query
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(
                 credential,
-                options.AuthenticationScope ?? "https://api.loganalytics.io//.default"));
+                $"{options.Audience ?? LogsQueryClientAudience.AzurePublicCloud}//.default"));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
         }
 
@@ -87,6 +82,11 @@ namespace Azure.Monitor.Query
         protected LogsQueryClient()
         {
         }
+
+        /// <summary>
+        /// Gets the endpoint used for by the client.
+        /// </summary>
+        public Uri Endpoint { get; }
 
         /// <summary>
         /// Executes the logs query. Deserializes the result into a strongly typed model class or a primitive type if the query returns a single column.
@@ -243,8 +243,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                var response = _queryClient.Batch(new BatchRequest(batch.Requests), cancellationToken);
-                return ConvertBatchResponse(batch, response);
+                return ExecuteBatchAsync(batch, async: false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -296,35 +295,13 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                var response = await _queryClient.BatchAsync(new BatchRequest(batch.Requests), cancellationToken).ConfigureAwait(false);
-                return ConvertBatchResponse(batch, response);
+                return await ExecuteBatchAsync(batch, async: true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private static Response<LogsBatchQueryResultCollection> ConvertBatchResponse(LogsBatchQuery batch, Response<BatchResponse> response)
-        {
-            List<LogsBatchQueryResult> batchResponses = new List<LogsBatchQueryResult>();
-            foreach (var innerResponse in response.Value.Responses)
-            {
-                var body = innerResponse.Body;
-                body.Status = innerResponse.Status switch
-                {
-                    >= 400 => LogsQueryResultStatus.Failure,
-                    _ when body.Error != null => LogsQueryResultStatus.PartialFailure,
-                    _ => LogsQueryResultStatus.Success
-                };
-                body.Id = innerResponse.Id;
-                batchResponses.Add(body);
-            }
-
-            return Response.FromValue(
-                new LogsBatchQueryResultCollection(batchResponses, batch),
-                response.GetRawResponse());
         }
 
         /// <summary>
@@ -485,6 +462,79 @@ namespace Azure.Monitor.Query
             prefer = preferBuilder?.ToString();
 
             return queryBody;
+        }
+
+        private async Task<Response<LogsBatchQueryResultCollection>> ExecuteBatchAsync(LogsBatchQuery batch, bool async, CancellationToken cancellationToken = default)
+        {
+            Response<LogsBatchQueryResultCollection> ConvertBatchResponse(BatchResponse response, Response rawResponse)
+            {
+                List<LogsBatchQueryResult> batchResponses = new List<LogsBatchQueryResult>();
+                foreach (var innerResponse in response.Responses)
+                {
+                    var body = innerResponse.Body;
+                    body.Status = innerResponse.Status switch
+                    {
+                        >= 400 => LogsQueryResultStatus.Failure,
+                        _ when body.Error != null => LogsQueryResultStatus.PartialFailure,
+                        _ => LogsQueryResultStatus.Success
+                    };
+                    body.Id = innerResponse.Id;
+                    batchResponses.Add(body);
+                }
+
+                return Response.FromValue(
+                    new LogsBatchQueryResultCollection(batchResponses, batch),
+                    rawResponse);
+            }
+
+            using var message = _queryClient.CreateBatchRequest(new BatchRequest(batch.Requests));
+
+            TimeSpan? timeout = null;
+            foreach (var batchRequest in batch.Requests)
+            {
+                var requestTimeout  = batchRequest?.Options?.ServerTimeout;
+                if (requestTimeout != null &&
+                    (timeout == null || requestTimeout.Value > timeout.Value))
+                {
+                    timeout = requestTimeout;
+                }
+            }
+
+            if (timeout != null)
+            {
+                message.NetworkTimeout = timeout.Value.Add(_networkTimeoutOffset);
+                message.Request.Headers.SetValue("prefer", $"wait={(int) timeout.Value.TotalSeconds}");
+            }
+
+            if (async)
+            {
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                _pipeline.Send(message, cancellationToken);
+            }
+
+            switch (message.Response.Status)
+            {
+                case 200:
+                {
+                    using var document = JsonDocument.Parse(message.Response.ContentStream);
+                    BatchResponse value = BatchResponse.DeserializeBatchResponse(document.RootElement);
+                    return ConvertBatchResponse(value, message.Response);
+                }
+                default:
+                {
+                    if (async)
+                    {
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+            }
         }
 
         private async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options, bool async, CancellationToken cancellationToken = default)
