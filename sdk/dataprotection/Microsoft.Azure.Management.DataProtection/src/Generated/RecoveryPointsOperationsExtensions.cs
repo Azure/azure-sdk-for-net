@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='skipToken'>
             /// skipToken Filter.
             /// </param>
-            public static IPage<AzureBackupRecoveryPointResource> GetList(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, ODataQuery<RecoveryPointsFilters> odataQuery = default(ODataQuery<RecoveryPointsFilters>), string skipToken = default(string))
+            public static IPage<AzureBackupRecoveryPointResource> List(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, ODataQuery<RecoveryPointsFilters> odataQuery = default(ODataQuery<RecoveryPointsFilters>), string skipToken = default(string))
             {
-                return operations.GetListAsync(vaultName, resourceGroupName, backupInstanceName, odataQuery, skipToken).GetAwaiter().GetResult();
+                return operations.ListAsync(vaultName, resourceGroupName, backupInstanceName, odataQuery, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -72,9 +72,59 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<AzureBackupRecoveryPointResource>> GetListAsync(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, ODataQuery<RecoveryPointsFilters> odataQuery = default(ODataQuery<RecoveryPointsFilters>), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AzureBackupRecoveryPointResource>> ListAsync(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, ODataQuery<RecoveryPointsFilters> odataQuery = default(ODataQuery<RecoveryPointsFilters>), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetListWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, odataQuery, skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, odataQuery, skipToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a Recovery Point using recoveryPointId for a Datasource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// The name of the backup instance
+            /// </param>
+            /// <param name='recoveryPointId'>
+            /// </param>
+            public static AzureBackupRecoveryPointResource Get(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, string recoveryPointId)
+            {
+                return operations.GetAsync(vaultName, resourceGroupName, backupInstanceName, recoveryPointId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a Recovery Point using recoveryPointId for a Datasource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='backupInstanceName'>
+            /// The name of the backup instance
+            /// </param>
+            /// <param name='recoveryPointId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AzureBackupRecoveryPointResource> GetAsync(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, string recoveryPointId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, recoveryPointId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -89,9 +139,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<AzureBackupRecoveryPointResource> GetListNext(this IRecoveryPointsOperations operations, string nextPageLink)
+            public static IPage<AzureBackupRecoveryPointResource> ListNext(this IRecoveryPointsOperations operations, string nextPageLink)
             {
-                return operations.GetListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -106,9 +156,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<AzureBackupRecoveryPointResource>> GetListNextAsync(this IRecoveryPointsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AzureBackupRecoveryPointResource>> ListNextAsync(this IRecoveryPointsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <summary>
     /// Class encapsulating restore target parameters
     /// </summary>
-    [Newtonsoft.Json.JsonObject("RestoreTargetInfo")]
     public partial class RestoreTargetInfo : RestoreTargetInfoBase
     {
         /// <summary>
@@ -35,11 +34,14 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="restoreLocation">Target Restore region</param>
         /// <param name="datasourceSetInfo">Information of target DS
         /// Set</param>
-        public RestoreTargetInfo(Datasource datasourceInfo, string restoreLocation = default(string), DatasourceSet datasourceSetInfo = default(DatasourceSet))
+        /// <param name="datasourceAuthCredentials">Credentials to use to
+        /// authenticate with data source provider.</param>
+        public RestoreTargetInfo(Datasource datasourceInfo, string restoreLocation = default(string), DatasourceSet datasourceSetInfo = default(DatasourceSet), AuthCredentials datasourceAuthCredentials = default(AuthCredentials))
             : base(restoreLocation)
         {
             DatasourceInfo = datasourceInfo;
             DatasourceSetInfo = datasourceSetInfo;
+            DatasourceAuthCredentials = datasourceAuthCredentials;
             CustomInit();
         }
 
@@ -59,6 +61,13 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         [JsonProperty(PropertyName = "datasourceSetInfo")]
         public DatasourceSet DatasourceSetInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets credentials to use to authenticate with data source
+        /// provider.
+        /// </summary>
+        [JsonProperty(PropertyName = "datasourceAuthCredentials")]
+        public AuthCredentials DatasourceAuthCredentials { get; set; }
 
         /// <summary>
         /// Validate the object.

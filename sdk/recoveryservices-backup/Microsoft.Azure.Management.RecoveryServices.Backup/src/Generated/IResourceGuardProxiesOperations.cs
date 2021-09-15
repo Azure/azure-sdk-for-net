@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.DataProtection
+namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -19,13 +19,20 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// ResourceGuardProxiesOperations operations.
     /// </summary>
-    public partial interface IOperations
+    public partial interface IResourceGuardProxiesOperations
     {
         /// <summary>
-        /// Returns the list of available operations.
+        /// List the ResourceGuardProxies under vault
         /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -41,9 +48,9 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ClientDiscoveryValueForSingleApi>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ResourceGuardProxyBaseResource>>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns the list of available operations.
+        /// List the ResourceGuardProxies under vault
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -63,6 +70,6 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ClientDiscoveryValueForSingleApi>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ResourceGuardProxyBaseResource>>> GetNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -43,13 +45,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// values include: 'Invalid', 'Enabled', 'Disabled'</param>
         /// <param name="softDeleteFeatureState">Soft Delete feature state.
         /// Possible values include: 'Invalid', 'Enabled', 'Disabled'</param>
-        public BackupResourceVaultConfig(string storageModelType = default(string), string storageType = default(string), string storageTypeState = default(string), string enhancedSecurityState = default(string), string softDeleteFeatureState = default(string))
+        /// <param name="resourceGuardOperationRequests">ResourceGuard
+        /// Operation Requests</param>
+        public BackupResourceVaultConfig(string storageModelType = default(string), string storageType = default(string), string storageTypeState = default(string), string enhancedSecurityState = default(string), string softDeleteFeatureState = default(string), IList<string> resourceGuardOperationRequests = default(IList<string>))
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
             StorageTypeState = storageTypeState;
             EnhancedSecurityState = enhancedSecurityState;
             SoftDeleteFeatureState = softDeleteFeatureState;
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
             CustomInit();
         }
 
@@ -95,6 +100,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "softDeleteFeatureState")]
         public string SoftDeleteFeatureState { get; set; }
+
+        /// <summary>
+        /// Gets or sets resourceGuard Operation Requests
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceGuardOperationRequests")]
+        public IList<string> ResourceGuardOperationRequests { get; set; }
 
     }
 }

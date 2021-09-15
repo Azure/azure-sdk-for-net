@@ -14,22 +14,22 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for ValidateRestore operation.
+    /// Defines headers for Get operation.
     /// </summary>
-    public partial class BackupInstancesValidateRestoreHeaders
+    public partial class BackupVaultOperationResultsGetHeaders
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// BackupInstancesValidateRestoreHeaders class.
+        /// BackupVaultOperationResultsGetHeaders class.
         /// </summary>
-        public BackupInstancesValidateRestoreHeaders()
+        public BackupVaultOperationResultsGetHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// BackupInstancesValidateRestoreHeaders class.
+        /// BackupVaultOperationResultsGetHeaders class.
         /// </summary>
         /// <param name="location">The URL of the resource used to check the
         /// status of the asynchronous operation.</param>
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="retryAfter">Suggested delay to check the status of the
         /// asynchronous operation. The value is an integer that represents the
         /// seconds.</param>
-        public BackupInstancesValidateRestoreHeaders(string location = default(string), string azureAsyncOperation = default(string), int? retryAfter = default(int?))
+        public BackupVaultOperationResultsGetHeaders(string location = default(string), string azureAsyncOperation = default(string), int? retryAfter = default(int?))
         {
             Location = location;
             AzureAsyncOperation = azureAsyncOperation;

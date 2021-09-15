@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.DataProtection
+namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// ResourceGuardProxiesOperations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<DataProtectionClient>, IOperations
+    internal partial class ResourceGuardProxiesOperations : IServiceOperations<RecoveryServicesBackupClient>, IResourceGuardProxiesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the Operations class.
+        /// Initializes a new instance of the ResourceGuardProxiesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(DataProtectionClient client)
+        internal ResourceGuardProxiesOperations(RecoveryServicesBackupClient client)
         {
             if (client == null)
             {
@@ -46,13 +46,20 @@ namespace Microsoft.Azure.Management.DataProtection
         }
 
         /// <summary>
-        /// Gets a reference to the DataProtectionClient
+        /// Gets a reference to the RecoveryServicesBackupClient
         /// </summary>
-        public DataProtectionClient Client { get; private set; }
+        public RecoveryServicesBackupClient Client { get; private set; }
 
         /// <summary>
-        /// Returns the list of available operations.
+        /// List the ResourceGuardProxies under vault
         /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -74,12 +81,21 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ClientDiscoveryValueForSingleApi>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ResourceGuardProxyBaseResource>>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
+            if (vaultName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultName");
             }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            string apiVersion = "2021-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -87,16 +103,22 @@ namespace Microsoft.Azure.Management.DataProtection
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("vaultName", vaultName);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.DataProtection/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies").ToString();
+            _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -153,7 +175,7 @@ namespace Microsoft.Azure.Management.DataProtection
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -191,7 +213,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ClientDiscoveryValueForSingleApi>>();
+            var _result = new AzureOperationResponse<IPage<ResourceGuardProxyBaseResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -204,7 +226,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ClientDiscoveryValueForSingleApi>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ResourceGuardProxyBaseResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -224,7 +246,7 @@ namespace Microsoft.Azure.Management.DataProtection
         }
 
         /// <summary>
-        /// Returns the list of available operations.
+        /// List the ResourceGuardProxies under vault
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -250,7 +272,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ClientDiscoveryValueForSingleApi>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ResourceGuardProxyBaseResource>>> GetNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -265,7 +287,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -326,7 +348,7 @@ namespace Microsoft.Azure.Management.DataProtection
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -364,7 +386,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ClientDiscoveryValueForSingleApi>>();
+            var _result = new AzureOperationResponse<IPage<ResourceGuardProxyBaseResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -377,7 +399,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ClientDiscoveryValueForSingleApi>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ResourceGuardProxyBaseResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
