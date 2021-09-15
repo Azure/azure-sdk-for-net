@@ -10,30 +10,31 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// A resource provider.
+    /// The resource management error additional info.
     /// </summary>
-    public partial class Provider
+    public partial class ErrorAdditionalInfo
     {
         /// <summary>
-        /// Initializes a new instance of the Provider class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        public Provider()
+        public ErrorAdditionalInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Provider class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        /// <param name="providerName">The provider name.</param>
-        public Provider(string providerName)
+        /// <param name="type">The additional info type.</param>
+        /// <param name="info">The additional info.</param>
+        public ErrorAdditionalInfo(string type = default(string), object info = default(object))
         {
-            ProviderName = providerName;
+            Type = type;
+            Info = info;
             CustomInit();
         }
 
@@ -43,23 +44,16 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the provider name.
+        /// Gets the additional info type.
         /// </summary>
-        [JsonProperty(PropertyName = "providerName")]
-        public string ProviderName { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets the additional info.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ProviderName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ProviderName");
-            }
-        }
+        [JsonProperty(PropertyName = "info")]
+        public object Info { get; private set; }
+
     }
 }

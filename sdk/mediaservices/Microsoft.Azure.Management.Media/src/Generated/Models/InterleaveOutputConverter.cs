@@ -15,22 +15,22 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Reflection;
 
     /// <summary>
-    /// Defines values for ManagedIdentityType.
+    /// Defines values for InterleaveOutput.
     /// </summary>
-    public sealed class ManagedIdentityTypeConverter : JsonConverter
+    public sealed class InterleaveOutputConverter : JsonConverter
     {
 
         /// <summary>
-        /// Returns if objectType can be converted to ManagedIdentityType by
-        /// the converter.
+        /// Returns if objectType can be converted to InterleaveOutput by the
+        /// converter.
         /// </summary>
         public override bool CanConvert(System.Type objectType)
         {
-            return typeof(ManagedIdentityType).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            return typeof(InterleaveOutput).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         /// <summary>
-        /// Overrides ReadJson and converts token to ManagedIdentityType.
+        /// Overrides ReadJson and converts token to InterleaveOutput.
         /// </summary>
         public override object ReadJson(JsonReader reader, System.Type objectType, object existingValue, JsonSerializer serializer)
         {
@@ -38,11 +38,11 @@ namespace Microsoft.Azure.Management.Media.Models
             {
                 return null;
             }
-            return (ManagedIdentityType)serializer.Deserialize<string>(reader);
+            return (InterleaveOutput)serializer.Deserialize<string>(reader);
         }
 
         /// <summary>
-        /// Overriding WriteJson for ManagedIdentityType for serialization.
+        /// Overriding WriteJson for InterleaveOutput for serialization.
         /// </summary>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
