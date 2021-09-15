@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations.Tests
         /// <summary>
         /// Gets the deployment name.
         /// </summary>
-        public string DeploymentName => "test";
+        public string DeploymentName => "production";
 
         /// <summary>
         /// Gets the endpoint.

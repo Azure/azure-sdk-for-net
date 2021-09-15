@@ -16,6 +16,7 @@ namespace Azure.AI.Language.Conversations
     public class ConversationAnalysisClient
     {
         internal const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+        private const string DefaultDeploymentName = "production";
 
         private readonly ConversationAnalysisRestClient _analysisRestClient;
 
@@ -87,7 +88,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNull(options, nameof(options));
 
             // BUGBUG: Work around https://github.com/Azure/azure-rest-api-specs/issues/16050
-            deploymentName ??= "prod";
+            deploymentName ??= DefaultDeploymentName;
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
             scope.AddAttribute(nameof(projectName), projectName);
@@ -118,7 +119,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNull(options, nameof(options));
 
             // BUGBUG: Work around https://github.com/Azure/azure-rest-api-specs/issues/16050
-            deploymentName ??= "prod";
+            deploymentName ??= DefaultDeploymentName;
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
             scope.AddAttribute(nameof(projectName), projectName);

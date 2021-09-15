@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
+using Azure.AI.Language.Conversations.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests
@@ -28,6 +30,16 @@ namespace Azure.AI.Language.Conversations.Tests
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new ConversationAnalysisClient(endpoint, null));
             Assert.AreEqual("credential", ex.ParamName);
+        }
+
+        [Test]
+        public void ValidateAnalyzeConversation()
+        {
+            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation(null, null, null), Throws.ArgumentNullException.WithParamName("projectName"));
+            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync(null, null, null), Throws.ArgumentNullException.WithParamName("projectName"));
+
+            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation("test", null, null), Throws.ArgumentNullException.WithParamName("options"));
+            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync("test", null, null), Throws.ArgumentNullException.WithParamName("options"));
         }
     }
 }
