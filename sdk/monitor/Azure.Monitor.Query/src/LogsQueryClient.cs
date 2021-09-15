@@ -96,7 +96,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         ///
         /// Example of querying a primitive:
@@ -104,7 +104,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
-        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
@@ -113,7 +113,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
-        public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, MonitorQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = Query(workspaceId, query, timeRange, options, cancellationToken);
 
@@ -128,7 +128,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         ///
         /// Example of querying a primitive:
@@ -136,7 +136,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
-        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
@@ -145,7 +145,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
-        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, MonitorQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
 
@@ -161,7 +161,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> containing the query results.</returns>
-        public virtual Response<LogsQueryResult> Query(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<LogsQueryResult> Query(string workspaceId, string query, MonitorQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
             scope.Start();
@@ -185,7 +185,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
-        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, MonitorQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
             scope.Start();
@@ -214,11 +214,11 @@ namespace Azure.Monitor.Query
         /// string countQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -267,11 +267,11 @@ namespace Azure.Monitor.Query
         /// string countQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -430,12 +430,12 @@ namespace Azure.Monitor.Query
                 _ => $"\"{s}\""
             };
 
-        internal static QueryBody CreateQueryBody(string query, DateTimeRange timeRange, LogsQueryOptions options, out string prefer)
+        internal static QueryBody CreateQueryBody(string query, MonitorQueryTimeRange timeRange, LogsQueryOptions options, out string prefer)
         {
             var queryBody = new QueryBody(query);
-            if (timeRange != DateTimeRange.All)
+            if (timeRange != MonitorQueryTimeRange.All)
             {
-                queryBody.Timespan = timeRange.ToString();
+                queryBody.Timespan = timeRange.ToIsoString();
             }
 
             if (options != null)
@@ -449,7 +449,7 @@ namespace Azure.Monitor.Query
 
             if (options?.ServerTimeout is TimeSpan timeout)
             {
-                preferBuilder ??= new();
+                preferBuilder = new();
                 preferBuilder.Append("wait=");
                 preferBuilder.Append((int) timeout.TotalSeconds);
             }
@@ -487,7 +487,7 @@ namespace Azure.Monitor.Query
             return queryBody;
         }
 
-        private async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options, bool async, CancellationToken cancellationToken = default)
+        private async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, string query, MonitorQueryTimeRange timeRange, LogsQueryOptions options, bool async, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
             {

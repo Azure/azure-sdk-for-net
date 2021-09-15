@@ -93,7 +93,6 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.NotNull(results.Value.Error.Code);
             Assert.NotNull(results.Value.Error.Message);
-            CollectionAssert.IsNotEmpty(results.Value.Error.Details);
         }
 
         [RecordedTest]
