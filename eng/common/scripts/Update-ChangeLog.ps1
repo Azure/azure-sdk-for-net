@@ -106,7 +106,7 @@ if ($LatestsSorted[0] -ne $Version) {
 
 if ($ReplaceLatestEntryTitle)
 {
-    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -InitialAtxHeader $ChangeLogEntries.InitialAtxHeader -Content $ChangeLogEntries[$LatestVersion]
+    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -InitialAtxHeader $ChangeLogEntries.InitialAtxHeader -Content $ChangeLogEntries[$LatestVersion].ReleaseContent
     LogDebug "Resetting latest entry title to [$($newChangeLogEntry.ReleaseTitle)]"
     $ChangeLogEntries.Remove($LatestVersion)
     if ($newChangeLogEntry) {
