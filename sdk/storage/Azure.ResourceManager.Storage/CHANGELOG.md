@@ -1,10 +1,21 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2021-09-14)
 
+<<<<<<< HEAD
+=======
+### Features Added
+
+- Added ArmClient extension methods to support [start from the middle scenario](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#managing-existing-resources-by-id).
+
+>>>>>>> upstream/main
 ### Bugs Fixed
 - Fixed bug when using `GetDeletedAccountsAsync` would cause error.
 
+<<<<<<< HEAD
+=======
+- Fixed bug when using `GetDeletedAccountsAsync` would cause error.
+>>>>>>> upstream/main
 
 ## 1.0.0-beta.1 (2021-09-01)
 

@@ -3,7 +3,7 @@
 . "${PSScriptRoot}\SemVer.ps1"
 
 $RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+\s+(?<version>$([AzureEngSemanticVersion]::SEMVER_REGEX))(\s+(?<releaseStatus>\(.+\))))"
-$SECTIONS_HEADER_REGEX = "^###\s(?<sectionName>.*)"
+$SECTIONS_HEADER_REGEX = "^###+\s(?<sectionName>.*)"
 $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
 $RecommendedSectionHeaders = @("Features Added", "Breaking Changes", "Bugs Fixed", "Other Changes")
@@ -42,6 +42,16 @@ function Get-ChangeLogEntriesFromContent {
   $changelogEntry = $null
   $sectionName = $null
   $changeLogEntries = [Ordered]@{}
+  $initialAtxHeader= "#"
+
+  if ($changeLogContent[0] -match "(?<HeaderLevel>^#+)\s.*")
+  {
+    $initialAtxHeader = $matches["HeaderLevel"]
+  }
+
+  $changeLogEntries | Add-Member -NotePropertyName "InitialAtxHeader" -NotePropertyValue $initialAtxHeader
+  $releaseTitleAtxHeader = $initialAtxHeader + "#"
+
   try {
     # walk the document, finding where the version specifiers are and creating lists
     foreach ($line in $changeLogContent) {
@@ -49,7 +59,7 @@ function Get-ChangeLogEntriesFromContent {
         $changeLogEntry = [pscustomobject]@{
           ReleaseVersion = $matches["version"]
           ReleaseStatus  =  $matches["releaseStatus"]
-          ReleaseTitle   = "## {0} {1}" -f $matches["version"], $matches["releaseStatus"]
+          ReleaseTitle   = "$releaseTitleAtxHeader {0} {1}" -f $matches["version"], $matches["releaseStatus"]
           ReleaseContent = @()
           Sections = @{}
         }
@@ -210,6 +220,7 @@ function New-ChangeLogEntry {
     [ValidateNotNullOrEmpty()]
     [String]$Version,
     [String]$Status=$CHANGELOG_UNRELEASED_STATUS,
+    [String]$InitialAtxHeader="#",
     [String[]]$Content
   )
 
@@ -239,17 +250,20 @@ function New-ChangeLogEntry {
     $Content = @()
     $Content += ""
 
+    $sectionsAtxHeader = $InitialAtxHeader + "##"
     foreach ($recommendedHeader in $RecommendedSectionHeaders)
     {
-      $Content += "### $recommendedHeader"
+      $Content += "$sectionsAtxHeader $recommendedHeader"
       $Content += ""
     }
   }
 
+  $releaseTitleAtxHeader = $initialAtxHeader + "#"
+
   $newChangeLogEntry = [pscustomobject]@{
     ReleaseVersion = $Version
     ReleaseStatus  = $Status
-    ReleaseTitle   = "## $Version $Status"
+    ReleaseTitle   = "$releaseTitleAtxHeader $Version $Status"
     ReleaseContent = $Content
   }
 
@@ -265,7 +279,7 @@ function Set-ChangeLogContent {
   )
 
   $changeLogContent = @()
-  $changeLogContent += "# Release History"
+  $changeLogContent += "$($ChangeLogEntries.InitialAtxHeader) Release History"
   $changeLogContent += ""
 
   try
@@ -298,7 +312,6 @@ function Remove-EmptySections {
   )
 
   $releaseContent = $ChangeLogEntry.ReleaseContent
-  $sectionsToRemove = @()
 
   if ($releaseContent.Count -gt 0)
   {

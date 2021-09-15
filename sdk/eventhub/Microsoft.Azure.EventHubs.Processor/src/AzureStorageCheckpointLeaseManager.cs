@@ -16,6 +16,7 @@ namespace Microsoft.Azure.EventHubs.Processor
     class AzureStorageCheckpointLeaseManager : ICheckpointManager, ILeaseManager
     {
         static string MetaDataOwnerName = "OWNINGHOST";
+        static TimeSpan MinListBlobsTimeout = TimeSpan.FromSeconds(10);
 
         EventProcessorHost host;
         TimeSpan leaseDuration;
@@ -26,6 +27,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         readonly string leaseContainerName;
         readonly string storageBlobPrefix;
         BlobRequestOptions defaultRequestOptions;
+        BlobRequestOptions listBlobsRequestOptions;
         OperationContext operationContext = null;
         CloudBlobContainer eventHubContainer;
         CloudBlobDirectory consumerGroupDirectory;
@@ -78,6 +80,15 @@ namespace Microsoft.Azure.EventHubs.Processor
                 // Gets or sets the maximum execution time across all potential retries for the request.
                 MaximumExecutionTime = TimeSpan.FromSeconds(this.LeaseRenewInterval.TotalSeconds)
             };
+
+            // Storage suggests to use at least 10 seconds timeout at list-blobs calls.
+            this.listBlobsRequestOptions = new BlobRequestOptions()
+            {
+                ServerTimeout = this.defaultRequestOptions.ServerTimeout,
+                MaximumExecutionTime = this.defaultRequestOptions.MaximumExecutionTime
+            };
+            this.listBlobsRequestOptions.ServerTimeout = this.listBlobsRequestOptions.ServerTimeout < MinListBlobsTimeout ?
+                MinListBlobsTimeout : this.listBlobsRequestOptions.ServerTimeout;
 
 #if FullNetFx
             // Proxy enabled?
@@ -247,7 +258,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                     BlobListingDetails.Metadata,
                     null,
                     continuationToken,
-                    this.defaultRequestOptions,
+                    this.listBlobsRequestOptions,
                     this.operationContext);
 
                 // ListBlobsSegmentedAsync honors neither timeout settings in request options nor cancellation token and thus intermittently hangs.
