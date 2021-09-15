@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class LogsQueryClientSamples: SamplesBase<MonitorQueryClientTestEnvironment>
+    public class LogsQueryClientSamples: SamplesBase<MonitorQueryTestEnvironment>
     {
         [Test]
         public async Task QueryLogsAsTable()

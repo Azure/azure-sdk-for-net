@@ -6,7 +6,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class MonitorQueryClientTestEnvironment : TestEnvironment
+    public class MonitorQueryTestEnvironment : TestEnvironment
     {
         public string WorkspaceId => GetRecordedVariable("WORKSPACE_ID");
         public string SecondaryWorkspaceId => GetRecordedVariable("SECONDARY_WORKSPACE_ID");

@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class LogsQueryClientClientLiveTests : RecordedTestBase<MonitorQueryClientTestEnvironment>
+    public class LogsQueryClientClientLiveTests : RecordedTestBase<MonitorQueryTestEnvironment>
     {
         private LogsTestData _logsTestData;
 

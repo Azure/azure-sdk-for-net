@@ -44,9 +44,9 @@ namespace Azure.Monitor.Query.Tests
         public string TableAName => TableANameSent + "_CL";
         public DateTimeRange DataTimeRange => new DateTimeRange(RetentionWindowStart, TimeSpan.FromDays(7));
 
-        private readonly MonitorQueryClientTestEnvironment _testEnvironment;
+        private readonly MonitorQueryTestEnvironment _testEnvironment;
 
-        public LogsTestData(RecordedTestBase<MonitorQueryClientTestEnvironment> test)
+        public LogsTestData(RecordedTestBase<MonitorQueryTestEnvironment> test)
         {
             _testEnvironment = test.TestEnvironment;
 
