@@ -142,34 +142,34 @@ namespace Azure.Monitor.Query.Models
         public Azure.Monitor.Query.Models.LogsColumnType Type { get { throw null; } }
         public override string ToString() { throw null; }
     }
-    public partial class LogsTableRow
+    public partial class LogsTableRow : System.Collections.Generic.IEnumerable<object>, System.Collections.Generic.IReadOnlyCollection<object>, System.Collections.Generic.IReadOnlyList<object>, System.Collections.IEnumerable
     {
         internal LogsTableRow() { }
         public int Count { get { throw null; } }
         public object this[int index] { get { throw null; } }
         public object this[string name] { get { throw null; } }
-        public bool GetBoolean(int index) { throw null; }
-        public bool GetBoolean(string name) { throw null; }
-        public System.DateTimeOffset GetDateTimeOffset(int index) { throw null; }
-        public System.DateTimeOffset GetDateTimeOffset(string name) { throw null; }
-        public decimal GetDecimal(int index) { throw null; }
-        public decimal GetDecimal(string name) { throw null; }
-        public double GetDouble(int index) { throw null; }
-        public double GetDouble(string name) { throw null; }
+        public bool? GetBoolean(int index) { throw null; }
+        public bool? GetBoolean(string name) { throw null; }
+        public System.DateTimeOffset? GetDateTimeOffset(int index) { throw null; }
+        public System.DateTimeOffset? GetDateTimeOffset(string name) { throw null; }
+        public decimal? GetDecimal(int index) { throw null; }
+        public decimal? GetDecimal(string name) { throw null; }
+        public double? GetDouble(int index) { throw null; }
+        public double? GetDouble(string name) { throw null; }
         public System.BinaryData GetDynamic(int index) { throw null; }
         public System.BinaryData GetDynamic(string name) { throw null; }
-        public System.Guid GetGuid(int index) { throw null; }
-        public System.Guid GetGuid(string name) { throw null; }
-        public int GetInt32(int index) { throw null; }
-        public int GetInt32(string name) { throw null; }
-        public long GetInt64(int index) { throw null; }
-        public long GetInt64(string name) { throw null; }
+        public System.Guid? GetGuid(int index) { throw null; }
+        public System.Guid? GetGuid(string name) { throw null; }
+        public int? GetInt32(int index) { throw null; }
+        public int? GetInt32(string name) { throw null; }
+        public long? GetInt64(int index) { throw null; }
+        public long? GetInt64(string name) { throw null; }
         public string GetString(int index) { throw null; }
         public string GetString(string name) { throw null; }
-        public System.TimeSpan GetTimeSpan(int index) { throw null; }
-        public System.TimeSpan GetTimeSpan(string name) { throw null; }
-        public bool IsNull(int index) { throw null; }
-        public bool IsNull(string name) { throw null; }
+        public System.TimeSpan? GetTimeSpan(int index) { throw null; }
+        public System.TimeSpan? GetTimeSpan(string name) { throw null; }
+        System.Collections.Generic.IEnumerator<object> System.Collections.Generic.IEnumerable<System.Object>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public override string ToString() { throw null; }
     }
     public enum MetricAggregationType

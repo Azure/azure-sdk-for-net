@@ -285,8 +285,8 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual(0.10101m, row.GetDecimal("Decimal"));
             Assert.AreEqual(0.10101m, row.GetDecimal(8));
             Assert.AreEqual(0.10101m, row.GetObject("Decimal"));
-            Assert.True(row.IsNull("NullBool"));
-            Assert.True(row.IsNull(9));
+            Assert.Null(row.GetBoolean("NullBool"));
+            Assert.Null(row.GetBoolean(9));
             Assert.IsNull(row.GetObject("NullBool"));
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetDynamic(10).ToString());
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetDynamic("Dynamic").ToString());
