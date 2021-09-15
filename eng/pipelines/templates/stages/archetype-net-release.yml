@@ -301,8 +301,8 @@ stages:
             WorkingDirectory: $(System.DefaultWorkingDirectory)
             TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-            Language: 'javascript'
+            Language: '.NET'
             DailyDocsBuild: true
             SparseCheckoutPaths:
-              - docs-ref-services/
+              - api/overview/azure/
               - metadata/
