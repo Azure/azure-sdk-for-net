@@ -38,6 +38,11 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary>
+        /// Gets or sets the value indicating whether the query was successful.
+        /// </summary>
+        public LogsQueryResultStatus Status { get; internal set; }
+
+        /// <summary>
         /// Gets the multi-table result of the query.
         /// </summary>
         [CodeGenMember("Tables")]

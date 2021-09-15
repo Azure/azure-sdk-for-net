@@ -56,7 +56,7 @@ namespace Azure.Monitor.Query.Models
                                             $" Please use the return value of {nameof(LogsBatchQuery)}.{nameof(LogsBatchQuery.AddQuery)} as the '{nameof(queryId)}' argument.", nameof(queryId));
             }
 
-            if (result.Status == LogsBatchQueryResultStatus.Failure)
+            if (result.Status == LogsQueryResultStatus.Failure)
             {
                 var message = $"Batch query with id '{queryId}' failed.{Environment.NewLine}{result.Error}";
                 throw new RequestFailedException(result.StatusCode, message, result.Error.Code, null);

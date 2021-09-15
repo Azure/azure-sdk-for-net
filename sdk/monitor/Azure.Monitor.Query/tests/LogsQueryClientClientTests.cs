@@ -73,7 +73,7 @@ namespace Azure.Monitor.Query.Tests
             });
 
             LogsBatchQuery batch = new LogsBatchQuery();
-            batch.AddQuery("wid", "query", MonitorQueryTimeRange.All);
+            batch.AddQuery("wid", "query", QueryTimeRange.All);
 
             LogsBatchQueryResultCollection batchResults = await client.QueryBatchAsync(batch);
             Assert.NotNull(batchResults.GetResult("0"));
@@ -96,7 +96,7 @@ namespace Azure.Monitor.Query.Tests
                 Transport = mockTransport
             });
 
-            await client.QueryAsync("", "", MonitorQueryTimeRange.All);
+            await client.QueryAsync("", "", QueryTimeRange.All);
             StringAssert.StartsWith("https://api.loganalytics.io", uri);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Monitor.Query.Tests
                 AuthenticationScope = scope
             });
 
-            await client.QueryAsync("", "", MonitorQueryTimeRange.All);
+            await client.QueryAsync("", "", QueryTimeRange.All);
             Assert.AreEqual(new[] { expectedScope }, scopes);
         }
 

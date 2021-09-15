@@ -54,6 +54,8 @@ namespace Azure.Monitor.Query.Tests
             var resultTable = results.Value.Table;
             CollectionAssert.IsNotEmpty(resultTable.Columns);
 
+            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
+
             Assert.AreEqual("a", resultTable.Rows[0].GetString(0));
             Assert.AreEqual("a", resultTable.Rows[0].GetString(LogsTestData.StringColumnName));
 
@@ -91,6 +93,7 @@ namespace Azure.Monitor.Query.Tests
                     ThrowOnPartialErrors = false
                 });
 
+            Assert.AreEqual(LogsQueryResultStatus.PartialFailure, results.Value.Status);
             Assert.NotNull(results.Value.Error.Code);
             Assert.NotNull(results.Value.Error.Message);
         }
@@ -219,15 +222,15 @@ namespace Azure.Monitor.Query.Tests
 
             Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
-            Assert.AreEqual(LogsBatchQueryResultStatus.Success, response.Value.Single(r => r.Id == id1).Status);
+            Assert.AreEqual(LogsQueryResultStatus.Success, response.Value.Single(r => r.Id == id1).Status);
 
             var failedResult = response.Value.Single(r => r.Id == id2);
-            Assert.AreEqual(LogsBatchQueryResultStatus.Failure, failedResult.Status);
+            Assert.AreEqual(LogsQueryResultStatus.Failure, failedResult.Status);
             Assert.NotNull(failedResult.Error.Code);
             Assert.NotNull(failedResult.Error.Message);
 
             var partialResult = response.Value.Single(r => r.Id == id3);
-            Assert.AreEqual(LogsBatchQueryResultStatus.PartialFailure, partialResult.Status);
+            Assert.AreEqual(LogsQueryResultStatus.PartialFailure, partialResult.Status);
             CollectionAssert.IsNotEmpty(partialResult.Table.Rows);
             Assert.NotNull(partialResult.Error.Code);
             Assert.NotNull(partialResult.Error.Message);
