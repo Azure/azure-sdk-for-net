@@ -29,11 +29,11 @@ namespace Azure.Monitor.Query
         /// string countQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///

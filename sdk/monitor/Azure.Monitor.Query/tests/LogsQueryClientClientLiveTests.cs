@@ -90,7 +90,7 @@ namespace Azure.Monitor.Query.Tests
                 $"set truncationmaxrecords=1; datatable (s: string) ['a', 'b']",
                 _logsTestData.DataTimeRange, new LogsQueryOptions()
                 {
-                    ThrowOnPartialErrors = false
+                    AllowPartialErrors = true
                 });
 
             Assert.AreEqual(LogsQueryResultStatus.PartialFailure, results.Value.Status);
@@ -627,7 +627,7 @@ namespace Azure.Monitor.Query.Tests
                     await client.QueryAsync(TestEnvironment.WorkspaceId, $"range x from 1 to {cnt} step 1 | count", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
                     {
                         ServerTimeout = TimeSpan.FromSeconds(1),
-                        ThrowOnPartialErrors = false
+                        AllowPartialErrors = false
                     });
                 }
                 catch (AggregateException)

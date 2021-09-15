@@ -96,7 +96,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         ///
         /// Example of querying a primitive:
@@ -104,7 +104,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
@@ -128,7 +128,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         ///
         /// Example of querying a primitive:
@@ -136,7 +136,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
@@ -214,11 +214,11 @@ namespace Azure.Monitor.Query
         /// string countQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -267,11 +267,11 @@ namespace Azure.Monitor.Query
         /// string countQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -525,7 +525,7 @@ namespace Azure.Monitor.Query
                     value.Status = value.Error == null ? LogsQueryResultStatus.Success : LogsQueryResultStatus.PartialFailure;
 
                     var responseError = value.Error;
-                    if (responseError != null && options?.ThrowOnPartialErrors != false)
+                    if (responseError != null && options?.AllowPartialErrors != true)
                     {
                         throw value.CreateExceptionForErrorResponse(message.Response.Status);
                     }

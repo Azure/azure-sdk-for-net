@@ -68,7 +68,7 @@ namespace Azure.Monitor.Query.Models
             return new RequestFailedException(
                 status,
                 $"The result was returned but contained a partial error. Exceptions for partial errors can be disabled " +
-                $" using {nameof(LogsQueryOptions)}.{nameof(LogsQueryOptions.ThrowOnPartialErrors)}." +
+                $" using {nameof(LogsQueryOptions)}.{nameof(LogsQueryOptions.AllowPartialErrors)}." +
                 $"Partial errors can be inspected using the {nameof(LogsQueryResult)}.{nameof(Error)} property.{Environment.NewLine}" +
                 $"Error:{Environment.NewLine}{Error}",
                 Error.Code,
