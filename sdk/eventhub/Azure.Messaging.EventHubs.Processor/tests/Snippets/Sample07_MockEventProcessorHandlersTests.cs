@@ -2,17 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Storage.Blobs;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
@@ -23,8 +17,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     /// </summary>
     ///
     [TestFixture]
-    [Category(TestCategory.Live)]
-    [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public class Sample07_MockEventProcessorHandlersTests
     {
         /// <summary>
@@ -32,102 +24,67 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public async Task ProcessEventHandlerCheckpoint()
+        public void ProcessEventHandlerCheckpoint()
         {
             #region Snippet:EventHubs_Processor_Sample07_ProcessEventHandlerCheckpoint
 
-            // Application handler checkpoints after processing defined number of events.
+            // Example checkpoints store
 
-            const int EventsBeforeCheckpoint = 2;
-            var partitionEventCount = new ConcurrentDictionary<string, int>();
-            bool checkpointUpdated = false;
+            var checkpoints = new List<long>();
 
-            async Task processEventHandler(ProcessEventArgs args)
+            const int EventsBeforeCheckpoint = 5;
+            const int CheckpointsCount = 5;
+
+            // Example handler uses event's SequenceNumber to decide when to checkpoint
+
+            void processEventHandler(ProcessEventArgs args)
             {
                 try
                 {
-                    checkpointUpdated = false;
+                    // Process the event here...
 
-                    await Application.ProcessEventAsync(args);
-
-                    string partition = args.Partition.PartitionId;
-
-                    int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
-                        key: partition,
-                        addValue: 1,
-                        updateValueFactory: (_, currentCount) => currentCount + 1);
-
-                    if (eventsSinceLastCheckpoint >= EventsBeforeCheckpoint)
+                    if (args.Data.SequenceNumber % EventsBeforeCheckpoint == 0)
                     {
-                        await args.UpdateCheckpointAsync();
-                        partitionEventCount[partition] = 0;
+                        checkpoints.Add(args.Data.Offset);
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Application.HandleProcessingException(args, ex);
+                    // Handle the exception...
                 }
             }
 
-            // Initialize the args and simulate checkpoint update method.
+            var partitionContext = EventHubsModelFactory.PartitionContext("0");
 
-            var partitionId = "0";
-            var eventBody = new BinaryData("This is a sample event body");
-            var eventData = EventHubsModelFactory.EventData(eventBody);
-            var partitionContext = EventHubsModelFactory.PartitionContext(partitionId);
-            var eventArgs = new ProcessEventArgs(partitionContext, eventData, _ => { checkpointUpdated = true; return Task.CompletedTask; });
+            // Fire (EventsBeforeCheckpoint * CheckpointsCount) number of the events
 
-            for (int i = 1; i <= EventsBeforeCheckpoint; i++)
+            for (int eventCount = 1; eventCount <= EventsBeforeCheckpoint * CheckpointsCount; eventCount++)
             {
-                // Execute the handler and validate that the event handling has been checkpointed.
+                // EventData method allows to mock ALL those read-only properties
+                // passed over to the event handler in the ProcessEventArgs argument
 
-                await processEventHandler(eventArgs);
+                var eventData = EventHubsModelFactory.EventData(
+                    new BinaryData("This is a sample event body"),
+                    null, // The custom event properties can be mocked,
+                    null, // as well as the Event Hub's system properties,
+                    null, // and the Partition Key.
+                    eventCount, // For this demonstration we mock the partition's Sequence Number,
+                    eventCount + (1000 * eventCount + new Random().Next(50, 500))); // and the Offset
 
-                if (i % EventsBeforeCheckpoint == 0)
-                    Assert.IsTrue(checkpointUpdated);
-                else
-                    Assert.IsFalse(checkpointUpdated);
+                var eventArgs = new ProcessEventArgs(
+                    partitionContext,
+                    eventData,
+                    // Do nothing as we use custom checkpoints store
+                    _ => Task.CompletedTask);
 
-                Assert.That(partitionEventCount[partitionId], Is.EqualTo(i % EventsBeforeCheckpoint));
+                // Execute the handler
+
+                processEventHandler(eventArgs);
             }
 
-            #endregion
-        }
+            // Verify the number of persisted checkpoints
 
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProcessErrorHandlerCancellationTrigger()
-        {
-            #region Snippet:EventHubs_Processor_Sample07_ProcessErrorHandlerCancellationTrigger
-
-            using var cancellationSource = new CancellationTokenSource();
-
-            // Applicaition handler cancels events processing after detection of the
-            // exact error with exact operation.
-
-            Task processErrorHandler(ProcessErrorEventArgs args)
-            {
-                if (args.Exception.Message.Equals("Example exception") && args.Operation.Equals("Example operation"))
-                {
-                    cancellationSource.Cancel();
-                }
-
-                return Task.CompletedTask;
-            }
-
-            // Initialize the args with the specific operation name and exception message.
-
-            var exception = new Exception("Example exception");
-            var eventArgs = new ProcessErrorEventArgs("0", "Example operation", exception);
-
-            // Execute the handler and validate that the specific event arguments were detected
-            // and the cancellation has been triggered.
-
-            await processErrorHandler(eventArgs);
-            Assert.IsTrue(cancellationSource.IsCancellationRequested);
+            Assert.IsTrue(checkpoints.Count == CheckpointsCount);
 
             #endregion
         }
@@ -161,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            var defaultStartingPosition = EventPosition.Earliest;
+            EventPosition defaultStartingPosition = EventPosition.Earliest;
             var eventArgs = new PartitionInitializingEventArgs("0", defaultStartingPosition, cancellationSource.Token);
 
             // Execute the handler and validate that cancellation was respected.
@@ -170,75 +127,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             Assert.That(eventArgs.DefaultStartingPosition, Is.EqualTo(defaultStartingPosition));
 
             #endregion
-        }
-
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CloseEventHandlerOwnershipLostReason()
-        {
-            #region Snippet:EventHubs_Processor_Sample07_CloseEventHandlerOwnershipLostReason
-
-            // Partition close event handler responsible for the detection and processing
-            // of the lost ownership reason example scenario.
-
-            bool ownershipLostDetected = false;
-
-            Task closeEventHandler(PartitionClosingEventArgs args)
-            {
-                if (args.CancellationToken.IsCancellationRequested)
-                {
-                    return Task.CompletedTask;
-                }
-
-                if (args.Reason == ProcessingStoppedReason.OwnershipLost)
-                {
-                    ownershipLostDetected = true;
-                }
-
-                return Task.CompletedTask;
-            }
-
-            // Initialize the args with lost ownership reason.
-
-            var eventArgs = new PartitionClosingEventArgs("0", ProcessingStoppedReason.OwnershipLost);
-
-            // Execute handler then validate that partion's lost ownership has been detected.
-
-            await closeEventHandler(eventArgs);
-            Assert.IsTrue(ownershipLostDetected);
-
-            #endregion
-        }
-
-        /// <summary>
-        ///   Serves as a simulation of the host application for
-        ///   examples.
-        /// </summary>
-        ///
-        private static class Application
-        {
-            /// <summary>
-            ///   A simulated method that an application would register as an event handler.
-            /// </summary>
-            ///
-            /// <param name="eventArgs">The arguments associated with the event.</param>
-            ///
-            public static Task ProcessEventAsync(ProcessEventArgs eventArgs) => Task.CompletedTask;
-
-            /// <summary>
-            ///   A simulated method for handling an exception that occurs during
-            ///   event processing.
-            /// </summary>
-            ///
-            /// <param name="eventArgs">The arguments associated with the failed processing.</param>
-            /// <param name="exception">The exception to handle.</param>
-            ///
-            public static void HandleProcessingException(ProcessEventArgs eventArgs,
-                                                         Exception exception)
-            { }
         }
     }
 }
