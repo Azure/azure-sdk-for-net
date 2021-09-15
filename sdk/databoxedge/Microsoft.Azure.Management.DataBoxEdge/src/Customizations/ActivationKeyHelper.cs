@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <returns>Returns the X509Certificate2 format of public part of the certificate</returns>
         internal static X509Certificate2 ImportCertificate(string rawData)
         {
-            var rawDataByteArray = Encoding.ASCII.GetBytes(rawData);
+            var rawDataByteArray = Encoding.UTF8.GetBytes(rawData);
             var cert = new X509Certificate2(rawDataByteArray);
             return cert;
         }
