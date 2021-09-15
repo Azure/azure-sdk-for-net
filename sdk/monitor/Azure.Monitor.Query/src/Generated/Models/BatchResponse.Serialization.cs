@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class LogsBatchQueryResults
+    internal partial class BatchResponse
     {
-        internal static LogsBatchQueryResults DeserializeLogsBatchQueryResults(JsonElement element)
+        internal static BatchResponse DeserializeBatchResponse(JsonElement element)
         {
             Optional<IReadOnlyList<BatchQueryResponse>> responses = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new LogsBatchQueryResults(Optional.ToList(responses));
+            return new BatchResponse(Optional.ToList(responses));
         }
     }
 }

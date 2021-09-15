@@ -11,19 +11,22 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Response to a batch query. </summary>
-    public partial class LogsBatchQueryResults
+    internal partial class BatchResponse
     {
-        /// <summary> Initializes a new instance of LogsBatchQueryResults. </summary>
-        internal LogsBatchQueryResults()
+        /// <summary> Initializes a new instance of BatchResponse. </summary>
+        internal BatchResponse()
         {
             Responses = new ChangeTrackingList<BatchQueryResponse>();
         }
 
-        /// <summary> Initializes a new instance of LogsBatchQueryResults. </summary>
+        /// <summary> Initializes a new instance of BatchResponse. </summary>
         /// <param name="responses"> An array of responses corresponding to each individual request in a batch. </param>
-        internal LogsBatchQueryResults(IReadOnlyList<BatchQueryResponse> responses)
+        internal BatchResponse(IReadOnlyList<BatchQueryResponse> responses)
         {
             Responses = responses;
         }
+
+        /// <summary> An array of responses corresponding to each individual request in a batch. </summary>
+        public IReadOnlyList<BatchQueryResponse> Responses { get; }
     }
 }
