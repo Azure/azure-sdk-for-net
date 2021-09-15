@@ -84,14 +84,14 @@ if (!($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiR
     exit 1
 }
 
-foreach ($pkgName in $ArtifactList)
+foreach ($artifact in $ArtifactList)
 {
-    Write-Host "Processing $pkgName"
-    $packages = &$FindArtifactForApiReviewFn $ArtifactPath $pkgName
+    Write-Host "Processing $($artifact.name)"
+    $packages = &$FindArtifactForApiReviewFn $ArtifactPath $artifact.name
     if ($packages)
     {
         $pkgPath = $packages.Values[0]
-        if (Should-Process-Package -pkgPath $pkgPath -packageName $pkgName)
+        if (Should-Process-Package -pkgPath $pkgPath -packageName $artifact.name)
         {
             $filePath = $pkgPath.Replace($ArtifactPath , "").Replace("\", "/")
             Submit-Request -filePath $filePath
