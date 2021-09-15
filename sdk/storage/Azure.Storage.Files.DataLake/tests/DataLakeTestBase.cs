@@ -131,8 +131,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default,
-            bool premium = default,
-            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = default)
+            bool premium = default)
         {
             fileSystemName ??= GetNewFileSystemName();
             service ??= GetServiceClient_SharedKey();
@@ -151,16 +150,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             // TODO Remove this handling after the service bug is fixed https://github.com/Azure/azure-sdk-for-net/issues/9399
             try
             {
-                DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
-                {
-                    PublicAccessType = publicAccessType.GetValueOrDefault(),
-                    Metadata = metadata,
-                    EncryptionScopeOptions = encryptionScopeOptions
-                };
-
                 await RetryAsync(
-                    async () => await fileSystem.CreateAsync(
-                        options: options),
+                    async () => await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType.Value),
                     ex => ex.ErrorCode == Blobs.Models.BlobErrorCode.ContainerAlreadyExists,
                     retryDelay: TestConstants.DataLakeRetryDelay,
                     retryAttempts: 1);

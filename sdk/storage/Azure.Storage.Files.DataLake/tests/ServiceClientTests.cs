@@ -214,38 +214,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
-        // Change min service version to 2020-10-02
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
-        public async Task GetFileSystemsAsync_EncryptionScope()
-        {
-            // Arrange
-            DataLakeServiceClient service = GetServiceClient_SharedKey();
-            string fileSystemName = GetNewFileSystemName();
-            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(fileSystemName));
-            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
-            {
-                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
-            };
-            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
-            {
-                EncryptionScopeOptions = encryptionScopeOptions
-            };
-
-            await fileSystemClient.CreateAsync(options: options);
-
-            // Act
-            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
-            FileSystemItem fileSystemItem = fileSystems.Single(r => r.Name == fileSystemName);
-
-            // Assert
-            Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, fileSystemItem.Properties.DefaultEncryptionScope);
-
-            // Cleanup
-            await fileSystemClient.DeleteIfExistsAsync();
-        }
-
-        [RecordedTest]
         public async Task GetFileSystemsAsync_Marker()
         {
             DataLakeServiceClient service = GetServiceClient_SharedKey();
@@ -371,34 +339,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
                 Response<FileSystemProperties> properties = await fileSystem.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
-            }
-            finally
-            {
-                await service.DeleteFileSystemAsync(name);
-            }
-        }
-
-        [RecordedTest]
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
-        // Change min service version to 2020-10-02
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
-        public async Task CreateFileSystemAsync_EncryptionScopeOptions()
-        {
-            var name = GetNewFileSystemName();
-            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
-            {
-                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
-            };
-            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
-            {
-                EncryptionScopeOptions = encryptionScopeOptions
-            };
-            DataLakeServiceClient service = GetServiceClient_SharedKey();
-            try
-            {
-                DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name, options: options)).Value);
-                Response<FileSystemProperties> properties = await fileSystem.GetPropertiesAsync();
-                Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, properties.Value.DefaultEncryptionScope);
             }
             finally
             {
