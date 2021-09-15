@@ -453,8 +453,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
-        // Change min service version to 2020-10-02
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public async Task CreateAsync_EncryptionScopeIdentitySAS()
         {

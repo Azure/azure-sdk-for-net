@@ -41,7 +41,6 @@ namespace Azure.Storage.Blobs.Test
             };
 
         [RecordedTest]
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_ContainerTest()
         {
@@ -71,7 +70,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_ContainerIdentityTest()
         {
@@ -107,7 +105,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_BlobTest()
         {
@@ -137,7 +134,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_BlobIdentityTest()
         {
@@ -173,7 +169,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_SnapshotTest()
         {
@@ -203,7 +198,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_SnapshotIdentityTest()
         {
