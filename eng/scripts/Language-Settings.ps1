@@ -9,7 +9,14 @@ $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=con
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
-  $msbuildOutput = dotnet msbuild /nologo /t:GetPackageInfo $EngDir/service.proj /p:ServiceDirectory=$serviceDirectory
+  # $addDevVersion is a global variable set by a parameter in 
+  # Save-Package-Properties.ps1
+  $msbuildOutput = dotnet msbuild `
+    /nologo `
+    /t:GetPackageInfo `
+    $EngDir/service.proj `
+    /p:ServiceDirectory=$serviceDirectory `
+    /p:AddDevVersion=$addDevVersion
 
   foreach ($projectOutput in $msbuildOutput)
   {
