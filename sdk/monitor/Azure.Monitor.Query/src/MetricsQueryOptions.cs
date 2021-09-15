@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query
         /// Gets or sets the timespan over which the metric will be queried.
         /// </summary>
         [CodeGenMember("TimeSpan")]
-        public MonitorQueryDateTimeRange? TimeRange { get; set; }
+        public MonitorQueryTimeRange? TimeRange { get; set; }
 
         /// <summary>
         /// Gets or sets the interval at which to sample metrics.

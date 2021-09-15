@@ -29,7 +29,7 @@ namespace Azure.Monitor.Query.Tests
             Response<LogsQueryResult> response = await client.QueryAsync(
                 workspaceId,
                 "AzureActivity | top 10 by TimeGenerated",
-                new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)));
+                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
 
             LogsTable table = response.Value.Table;
 
@@ -56,7 +56,7 @@ namespace Azure.Monitor.Query.Tests
             Response<LogsQueryResult> response = await client.QueryAsync(
                 workspaceId,
                 "AzureActivity | top 10 by TimeGenerated",
-                new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)));
+                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
 
             LogsTable table = response.Value.Table;
 
@@ -99,7 +99,7 @@ namespace Azure.Monitor.Query.Tests
             Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(
                 workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
-                new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)));
+                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
             #endregion
 
             foreach (var resourceGroup in response.Value)
@@ -127,7 +127,7 @@ namespace Azure.Monitor.Query.Tests
             Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(
                 workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-                new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)));
+                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
             #endregion
 
             foreach (var logEntryModel in response.Value)
@@ -159,11 +159,11 @@ namespace Azure.Monitor.Query.Tests
             string countQueryId = batch.AddQuery(
                 workspaceId,
                 "AzureActivity | count",
-                new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)));
+                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
             string topQueryId = batch.AddQuery(
                 workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-                new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)));
+                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
 
             Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
@@ -196,7 +196,7 @@ namespace Azure.Monitor.Query.Tests
             Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
                 workspaceId,
                 "AzureActivity | summarize count()",
-                new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)),
+                new MonitorQueryTimeRange(TimeSpan.FromDays(1)),
                 options: new LogsQueryOptions
                 {
                     ServerTimeout = TimeSpan.FromMinutes(10)
@@ -228,7 +228,7 @@ namespace Azure.Monitor.Query.Tests
             Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
                 workspaceId,
                 "AzureActivity | summarize count()",
-                new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)),
+                new MonitorQueryTimeRange(TimeSpan.FromDays(1)),
                 options: new LogsQueryOptions
                 {
                     AdditionalWorkspaces = { additionalWorkspaceId }
@@ -257,7 +257,7 @@ namespace Azure.Monitor.Query.Tests
             try
             {
                 await client.QueryAsync(
-                    workspaceId, "My Not So Valid Query", new MonitorQueryDateTimeRange(TimeSpan.FromDays(1)));
+                    workspaceId, "My Not So Valid Query", new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
             }
             catch (Exception e)
             {

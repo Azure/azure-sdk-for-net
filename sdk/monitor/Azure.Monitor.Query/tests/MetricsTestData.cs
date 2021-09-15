@@ -110,7 +110,7 @@ namespace Azure.Monitor.Query.Tests
             var metrics = await metricQueryClient.QueryAsync(_testEnvironment.MetricsResource, new[] {MetricName},
                 new MetricsQueryOptions()
                 {
-                    TimeRange = new MonitorQueryDateTimeRange(StartTime, Duration),
+                    TimeRange = new MonitorQueryTimeRange(StartTime, Duration),
                     MetricNamespace = MetricNamespace,
                     Granularity = TimeSpan.FromMinutes(1),
                     Aggregations =

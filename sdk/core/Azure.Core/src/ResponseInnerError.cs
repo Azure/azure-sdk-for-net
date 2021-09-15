@@ -34,26 +34,6 @@ namespace Azure
         /// </summary>
         public ResponseInnerError? InnerError { get; }
 
-        /// <summary>
-        /// Attempts to retrieve a service specific property from the error.
-        /// </summary>
-        /// <param name="name">The name of the error.</param>
-        /// <param name="value">The variable to assign the value to.</param>
-        /// <typeparam name="T">The type of the requested property.</typeparam>
-        /// <returns><c>true</c> if the property exists, <c>false</c> otherwise.</returns>
-        public bool TryGetCustomProperty<T>(string name, out T? value)
-        {
-            if (_innerErrorElement.TryGetProperty(name, out JsonElement property))
-            {
-                var json = property.GetRawText();
-                value = JsonSerializer.Deserialize<T>(json);
-                return true;
-            }
-
-            value = default;
-            return false;
-        }
-
         internal class Converter : JsonConverter<ResponseInnerError?>
         {
             public override ResponseInnerError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
