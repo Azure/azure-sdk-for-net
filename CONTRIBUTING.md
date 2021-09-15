@@ -410,14 +410,20 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 
 ## On-boarding New generated code library
 
-1. Make a copy of `sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*` for management libraries or `Azure.*` (e.g.  `sdk/storage/Azure.Management.Storage` or `sdk/storage/Azure.Storage.Blobs`).
-
-   Alternatively, you can install `sdk/template` as a `dotnet new` template to create or update a service directory:
+1. Install templates for both data-plane and management-plan (control-plan) SDKs:
 
    ```bash
-   dotnet new --install /sdk/template
+   # Data-plane SDK
+   dotnet new --install sdk/template
    dotnet new azuresdk --name Azure.MyService --output sdk/myservice --ServiceDirectory myservice --ProjectName Azure.MyService
+
+   # Management-plane SDK
+   dotnet new --install eng/templates/Azure.ResourceManager.Template
+   dotnet new azuremgmt --help
    ```
+
+   There are several options available for management-plane SDKs. You can see all those available with `--help` as shown above, or
+   [read about them](https://github.com/heaths/azure-sdk-for-net/blob/main/eng/templates/README.md) in our documentation.
 
    This will perform most of the renames, namespace fix-ups, etc., for you automatically; though, be sure to check all files - especially the README.md file(s) - for required manual changes.
    If the template is already installed, this same command will upgrade it.
