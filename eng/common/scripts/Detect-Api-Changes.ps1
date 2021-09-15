@@ -10,6 +10,7 @@ Param (
   [string] $CommitSha,
   [Parameter(Mandatory=$True)]
   [string] $ArtifactList,
+  [string] $RepoFullName = "",
   [string] $ArtifactName = "packages",
   [string] $APIViewUri = "https://apiview.dev/PullRequest/DetectApiChanges"
 )
@@ -17,25 +18,35 @@ Param (
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
 function Submit-Request($filePath)
 {
-    $repoName = "azure-sdk-for-$Language"
-    $queryParam = "artifactName=$ArtifactName&buildId=$BuildId&filePath=$filePath&commitSha=$CommitSha&repoName=$repoName&pullRequestNumber=$PullRequestNumber"    
-    $uri= "$($APIViewUri)?$($queryParam)"
-    Write-Host "Request URI: $uri"
+    $repoName = $RepoFullName
+    if (!$repoName) {
+        $repoName = "azure/azure-sdk-for-$Language"
+    }
+    $query = [System.Web.HttpUtility]::ParseQueryString('')
+    $query.Add('artifactName', $ArtifactName)
+    $query.Add('buildId', $BuildId)
+    $query.Add('filePath', $filePath)
+    $query.Add('commitSha', $CommitSha)
+    $query.Add('repoName', $repoName)
+    $query.Add('pullRequestNumber', $PullRequestNumber)
+    $uri = [System.UriBuilder]$APIViewUri
+    $uri.query = $query.toString()
+    Write-Host "Request URI: $($uri.Uri.OriginalString)"
     try
     {
-        $Response = Invoke-WebRequest -Method 'GET' -Uri $uri
+        $Response = Invoke-WebRequest -Method 'GET' -Uri $uri.Uri
         $StatusCode = $Response.StatusCode
     }
     catch
     {
-        Write-Host "Exception details: $($_.Exception.Response)"
+        Write-Host "Error $StatusCode - Exception details: $($_.Exception.Response)"
         $StatusCode = $_.Exception.Response.StatusCode
     }
 
     return $StatusCode
 }
 
-function Shoud-Process-Package($pkgPath, $packageName)
+function Should-Process-Package($pkgPath, $packageName)
 {
     $pkg = Split-Path -Leaf $pkgPath
     $configFileDir = Join-Path -Path $ArtifactPath "PackageInfo"
@@ -59,33 +70,29 @@ function Log-Input-Params()
     Write-Host "BuildId: $($BuildId)"
     Write-Host "Language: $($Language)"
     Write-Host "Commit SHA: $($CommitSha)"
+    Write-Host "Repo Name: $($RepoFullName)"
 }
 
 . (Join-Path $PSScriptRoot common.ps1)
 Log-Input-Params
 
+if (!($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn")))
+{
+    Write-Host "The function for 'FindArtifactForApiReviewFn' was not found.`
+    Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
+    See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
+    exit 1
+}
+
 $artifacts = $ArtifactList.Split(",")
 foreach ($pkgName in $artifacts)
 {
-    Write-Host "Processing $($pkgName)"
-    $packages = @{}
-    if ($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn"))
-    {
-        $packages = &$FindArtifactForApiReviewFn $ArtifactPath $pkgName
-    }
-    else
-    {
-        Write-Host "The function for 'FindArtifactForApiReviewFn' was not found.`
-        Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
-        See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
-        exit(1)
-    }
-
-
+    Write-Host "Processing $pkgName"
+    $packages = &$FindArtifactForApiReviewFn $ArtifactPath $pkgName
     if ($packages)
     {
         $pkgPath = $packages.Values[0]
-        if (Shoud-Process-Package -pkgPath $pkgPath -packageName $pkgName)
+        if (Should-Process-Package -pkgPath $pkgPath -packageName $pkgName)
         {
             $filePath = $pkgPath.Replace($ArtifactPath , "").Replace("\", "/")
             Submit-Request -filePath $filePath
@@ -93,6 +100,6 @@ foreach ($pkgName in $artifacts)
     }
     else
     {
-        Write-Host "No package is found in artifact path to submit review request"
+        Write-Host "No package is found in artifact path to find API changes"
     }
 }
