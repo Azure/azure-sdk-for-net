@@ -25,24 +25,24 @@ jobs:
             - Name: $(DocRepoOwner)/$(DocRepoName)
               WorkingDirectory: $(DocRepoLocation)
 
-      # Call update docs ci script to onboard packages
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Update-DocsMsPackages.ps1
-          arguments: -DocRepoLocation $(DocRepoLocation)
-        displayName: Update Docs Onboarding
+      # # Call update docs ci script to onboard packages
+      # - task: Powershell@2
+      #   inputs:
+      #     pwsh: true
+      #     filePath: eng/common/scripts/Update-DocsMsPackages.ps1
+      #     arguments: -DocRepoLocation $(DocRepoLocation)
+      #   displayName: Update Docs Onboarding
 
-      - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+      # - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 
-      - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
-        parameters:
-          BaseRepoBranch: $(DefaultBranch)
-          BaseRepoOwner: $(DocRepoOwner)
-          CommitMsg: "Update docs CI configuration"
-          TargetRepoName: $(DocRepoName)
-          TargetRepoOwner: $(DocRepoOwner)
-          WorkingDirectory: $(DocRepoLocation)
+      # - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+      #   parameters:
+      #     BaseRepoBranch: $(DefaultBranch)
+      #     BaseRepoOwner: $(DocRepoOwner)
+      #     CommitMsg: "Update docs CI configuration"
+      #     TargetRepoName: $(DocRepoName)
+      #     TargetRepoOwner: $(DocRepoOwner)
+      #     WorkingDirectory: $(DocRepoLocation)
 
       # Prepare daily docs CI
       - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
