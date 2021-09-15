@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for DefaultSharePermission.
+    /// Defines values for AccountImmutabilityPolicyState.
     /// </summary>
-    public static class DefaultSharePermission
+    public static class AccountImmutabilityPolicyState
     {
-        public const string None = "None";
-        public const string StorageFileDataSmbShareReader = "StorageFileDataSmbShareReader";
-        public const string StorageFileDataSmbShareContributor = "StorageFileDataSmbShareContributor";
-        public const string StorageFileDataSmbShareElevatedContributor = "StorageFileDataSmbShareElevatedContributor";
+        public const string Unlocked = "Unlocked";
+        public const string Locked = "Locked";
+        public const string Disabled = "Disabled";
     }
 }

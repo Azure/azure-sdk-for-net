@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for DefaultSharePermission.
+    /// Defines values for PublicNetworkAccess.
     /// </summary>
-    public static class DefaultSharePermission
+    public static class PublicNetworkAccess
     {
-        public const string None = "None";
-        public const string StorageFileDataSmbShareReader = "StorageFileDataSmbShareReader";
-        public const string StorageFileDataSmbShareContributor = "StorageFileDataSmbShareContributor";
-        public const string StorageFileDataSmbShareElevatedContributor = "StorageFileDataSmbShareElevatedContributor";
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }
