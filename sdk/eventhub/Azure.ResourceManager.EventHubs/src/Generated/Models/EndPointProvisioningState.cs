@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="EndPointProvisioningState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndPointProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EndPointProvisioningState(string value)
         {

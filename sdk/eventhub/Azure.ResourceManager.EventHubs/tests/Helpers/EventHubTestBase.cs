@@ -7,8 +7,8 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
+using Azure.ResourceManager.EventHubs.Models;
 using Sku = Azure.ResourceManager.EventHubs.Models.Sku;
 using SkuTier = Azure.ResourceManager.EventHubs.Models.SkuTier;
 
@@ -23,9 +23,11 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         protected ArmClient Client { get; private set; }
         protected EventHubTestBase(bool isAsync) : base(isAsync)
         {
+            Sanitizer = new EventHubRecordedTestSanitizer();
         }
         public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, RecordedTestMode.Record)
         {
+            Sanitizer = new EventHubRecordedTestSanitizer();
         }
         [SetUp]
         public void CreateCommonClient()
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         }
         public async Task<ResourceGroup> CreateResourceGroupAsync()
         {
-            string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
+            string resourceGroupName = Recording.GenerateAssetName("testeventhubRG-");
             ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
@@ -45,6 +47,20 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
                     }
                 });
             return operation.Value;
+        }
+        public async Task<string> CreateValidNamespaceName(string prefix)
+        {
+            string namespaceName = "";
+            for (int i = 0; i < 10; i++)
+            {
+                namespaceName = Recording.GenerateAssetName(prefix);
+                CheckNameAvailabilityResult res = await DefaultSubscription.CheckNamespaceNameAvailabilityAsync(new CheckNameAvailabilityParameter(namespaceName));
+                if (res.NameAvailable==true)
+                {
+                    return namespaceName;
+                }
+            }
+            return namespaceName;
         }
         public static void VerifyNamespaceProperties(EHNamespace eHNamespace, bool useDefaults)
         {

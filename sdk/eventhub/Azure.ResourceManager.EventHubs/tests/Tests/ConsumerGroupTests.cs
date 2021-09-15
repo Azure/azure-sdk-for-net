@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         public async Task CreateNamespaceAndGetEventhubContainer()
         {
             _resourceGroup = await CreateResourceGroupAsync();
-            string namespaceName = Recording.GenerateAssetName("namespace");
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
             EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
             EventhubContainer eventhubContainer = eHNamespace.GetEventhubs();

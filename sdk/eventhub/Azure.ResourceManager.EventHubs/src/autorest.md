@@ -16,11 +16,13 @@ operation-group-to-resource-type:
     Regions: Microsoft.EventHub/sku/regions
     Configuration: Microsoft.EventHub/clusters/quotaConfiguration/default
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules
+    NamespaceName: Microsoft.EventHub/namespacessss
 operation-group-to-resource:
     PrivateLinkResources: NonResource
     Regions: NonResource
     Configuration: ClusterQuotaConfigurationProperties
     DisasterRecoveryConfigAuthorizationRules: AuthorizationRule
+    NamespaceName: NonResource
 operation-group-to-parent:
     Namespaces: resourceGroups
     Configuration: Microsoft.EventHub/clusters
@@ -29,6 +31,7 @@ operation-group-to-parent:
     NamespaceAuthorizationRules: Microsoft.EventHub/namespaces
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs
     EventHubAuthorizationRules: Microsoft.EventHub/namespaces/eventhubs
+    NamespaceName: subscriptions
 operation-group-is-extension: NamespaceAuthorizationRules;DisasterRecoveryConfigAuthorizationRules;EventHubAuthorizationRules
 directive:
     - from: swagger-document
@@ -115,4 +118,7 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}/regenerateKeys'].post.operationId
       transform: return "EventHubAuthorizationRules_RegenerateKeys"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability'].post.operationId
+      transform: return 'NamespaceName_CheckAvailability'
 ```

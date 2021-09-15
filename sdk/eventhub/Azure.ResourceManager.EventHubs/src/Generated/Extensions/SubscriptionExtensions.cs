@@ -232,5 +232,77 @@ namespace Azure.ResourceManager.EventHubs
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
         #endregion
+
+        #region NamespaceName
+        private static NamespaceNameRestOperations GetNamespaceNameRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new NamespaceNameRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+        }
+
+        /// <summary> Check the give Namespace name availability. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckNamespaceNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetNamespaceNameRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNamespaceNameAvailability");
+                scope.Start();
+                try
+                {
+                    var response = await restOperations.CheckAvailabilityAsync(parameters, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        /// <summary> Check the give Namespace name availability. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public static Response<CheckNameAvailabilityResult> CheckNamespaceNameAvailability(this Subscription subscription, CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetNamespaceNameRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNamespaceNameAvailability");
+                scope.Start();
+                try
+                {
+                    var response = restOperations.CheckAvailability(parameters, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
+        }
+
+        #endregion
     }
 }

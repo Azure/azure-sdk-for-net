@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         public async Task CreateDeleteNamespace()
         {
             //create namespace
-            string namespaceName = Recording.GenerateAssetName("namespace");
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             _resourceGroup = await CreateResourceGroupAsync();
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
             EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         public async Task UpdateNamespace()
         {
             //create namespace
-            string namespaceName = Recording.GenerateAssetName("namespace");
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             _resourceGroup = await CreateResourceGroupAsync();
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
             EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         public async Task GetAllNamespaces()
         {
             //create two namespaces
-            string namespaceName1 = Recording.GenerateAssetName("namespace1");
-            string namespaceName2 = Recording.GenerateAssetName("namespace2");
+            string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt1");
+            string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt2");
             _resourceGroup = await CreateResourceGroupAsync();
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
             _ = (await namespaceContainer.CreateOrUpdateAsync(namespaceName1, new EHNamespaceData(DefaultLocation))).Value;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
-            string namespaceName = Recording.GenerateAssetName("namespace");
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EHNamespace eHNamespace=(await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
             AuthorizationRuleNamespaceContainer ruleContainer=eHNamespace.GetAuthorizationRuleNamespaces();
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
-            string namespaceName = Recording.GenerateAssetName("namespace");
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EHNamespaceData parameter = new EHNamespaceData(DefaultLocation)
             {
             KafkaEnabled=true
@@ -198,11 +198,10 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         [RecordedTest]
         public async Task NamespaceAuthorizationRuleRegenerateKey()
         {
-            Sanitizer.AddJsonPathSanitizer("$.keys.[*].value");
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
-            string namespaceName = Recording.GenerateAssetName("namespace");
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
             AuthorizationRuleNamespaceContainer ruleContainer = eHNamespace.GetAuthorizationRuleNamespaces();
 

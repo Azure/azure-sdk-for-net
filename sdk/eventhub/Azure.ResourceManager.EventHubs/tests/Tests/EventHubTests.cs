@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         public async Task CreateNamespaceAndGetEventhubContainer()
         {
             _resourceGroup = await CreateResourceGroupAsync();
-            string namespaceName = Recording.GenerateAssetName("namespace");
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
             EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
             _eventhubContainer = eHNamespace.GetEventhubs();
@@ -217,7 +217,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         [RecordedTest]
         public async Task EventhubAuthorizationRuleRegenerateKey()
         {
-            Sanitizer.AddJsonPathSanitizer("$.keys.[*].value");
             //create eventhub
             string eventhubName = Recording.GenerateAssetName("eventhub");
             Eventhub eventhub = (await _eventhubContainer.CreateOrUpdateAsync(eventhubName, new EventhubData())).Value;
