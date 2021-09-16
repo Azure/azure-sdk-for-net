@@ -280,7 +280,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.ReceiveActivityName,
-                DiagnosticScope.ActivityKind.Consumer);
+                DiagnosticScope.ActivityKind.Client);
 
             scope.Start();
 
@@ -1003,7 +1003,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.ReceiveDeferredActivityName,
-                DiagnosticScope.ActivityKind.Consumer);
+                DiagnosticScope.ActivityKind.Client);
 
             scope.Start();
 
