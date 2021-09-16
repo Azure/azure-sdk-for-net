@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -13,10 +14,34 @@ namespace Azure.Core.Tests
 #if NET5_0
     public partial class ClientDiagnosticsTests
     {
+        [SetUp]
+        public void ResetFeatureSwitch()
+        {
+            ActivityExtensions.ResetFeatureSwitch();
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void StartActivityNoOpsWithoutSwitch()
+        {
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+
+            scope.Start();
+            scope.Dispose();
+
+            Assert.AreEqual(0, activityListener.Activities.Count);
+        }
+
         [Test]
         [NonParallelizable]
         public void StartsActivitySourceActivity()
         {
+            using var _ = SetAppConfigSwitch();
+
             // Bug: there is no way to set activity type to W3C
             // https://github.com/dotnet/runtime/issues/43853
             var oldDefault = Activity.DefaultIdFormat;
@@ -69,6 +94,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetActivitySourceAndDiagnosticSourceActivitiesTogether()
         {
+            using var _ = SetAppConfigSwitch();
+
             using var testListener = new TestDiagnosticListener("Azure.Clients");
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
@@ -111,6 +138,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetActivitySourceAttributesAfterStarting()
         {
+            using var _ = SetAppConfigSwitch();
+
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
@@ -129,6 +158,8 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public void StartActivitySourceActivityIgnoresInvalidLinkParent()
         {
+            using var _ = SetAppConfigSwitch();
+
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
@@ -141,6 +172,13 @@ namespace Azure.Core.Tests
             scope.Dispose();
 
             Assert.AreEqual(0, activityListener.Activities.Single().Links.Count());
+        }
+
+        private static TestAppContextSwitch SetAppConfigSwitch()
+        {
+            var s =  new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
+            ActivityExtensions.ResetFeatureSwitch();
+            return s;
         }
     }
 #endif

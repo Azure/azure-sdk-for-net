@@ -92,10 +92,13 @@ namespace Azure.Core.Tests
             scope.Dispose();
 
             (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
+            var isEnabledCall = testListener.IsEnabledCalls.Dequeue();
 
+            Assert.NotNull(activity);
             Assert.Null(Activity.Current);
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
+            Assert.AreEqual("ActivityName", isEnabledCall.Name);
 
             var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startEvent.Value);
             Activity[] activitiesArray = activities.ToArray();

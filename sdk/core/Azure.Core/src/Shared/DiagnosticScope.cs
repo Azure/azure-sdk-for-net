@@ -265,6 +265,11 @@ namespace Azure.Core.Pipeline
 
                 if (_currentActivity == null)
                 {
+                    if (!_diagnosticSource.IsEnabled(_activityName, _diagnosticSourceArgs))
+                    {
+                        return;
+                    }
+
                     _currentActivity = new DiagnosticActivity(_activityName)
                     {
                         Links = (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>(),
@@ -325,13 +330,19 @@ namespace Azure.Core.Pipeline
         }
     }
 
-    #pragma warning disable SA1507 // File can not contain multiple types
+#pragma warning disable SA1507 // File can not contain multiple types
     /// <summary>
     /// Until we can reference the 5.0 of System.Diagnostics.DiagnosticSource
     /// </summary>
     internal static class ActivityExtensions
     {
-        private static readonly bool SupportsActivitySourceSwitch = AppContextSwitchHelper.GetConfigValue("Azure.Experimental.EnableActivitySource", "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE");
+        static ActivityExtensions()
+        {
+            ResetFeatureSwitch();
+        }
+
+        private static bool SupportsActivitySourceSwitch;
+
         private static readonly Type? ActivitySourceType = Type.GetType("System.Diagnostics.ActivitySource, System.Diagnostics.DiagnosticSource");
         private static readonly Type? ActivityKindType = Type.GetType("System.Diagnostics.ActivityKind, System.Diagnostics.DiagnosticSource");
         private static readonly Type? ActivityTagsCollectionType = Type.GetType("System.Diagnostics.ActivityTagsCollection, System.Diagnostics.DiagnosticSource");
@@ -620,6 +631,13 @@ namespace Azure.Core.Pipeline
             }
 
             return false;
+        }
+
+        public static void ResetFeatureSwitch()
+        {
+            SupportsActivitySourceSwitch = AppContextSwitchHelper.GetConfigValue(
+                "Azure.Experimental.EnableActivitySource",
+                "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE");
         }
     }
 }

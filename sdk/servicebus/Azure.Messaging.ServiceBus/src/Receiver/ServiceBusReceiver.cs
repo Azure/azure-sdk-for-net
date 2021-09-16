@@ -444,7 +444,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.PeekActivityName,
-                DiagnosticScope.ActivityKind.Producer);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             IReadOnlyList<ServiceBusReceivedMessage> messages;
