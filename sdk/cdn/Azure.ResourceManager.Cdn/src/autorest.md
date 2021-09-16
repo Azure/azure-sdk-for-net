@@ -44,6 +44,12 @@ directive:
     where: $.definitions.DeliveryRuleAction
     transform: $["x-ms-client-name"] = "DeliveryRuleOperation"
   - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}'].patch
+    transform: >
+      $['x-ms-long-running-operation-options'] = {
+          "final-state-via": "original-uri"
+      }
+  - from: swagger-document
     where: $.paths['/providers/Microsoft.Cdn/checkNameAvailability'].post.operationId
     transform: return 'NameCheckWithTenant_CheckAvailability'
   - from: swagger-document
@@ -81,8 +87,8 @@ directive:
     transform: return 'Secret_Validate'
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'].put.parameters[3]
-    transform: $['x-ms-client-name'] = 'endpointInput';
+    transform: $['x-ms-client-name'] = 'endpointInput'
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].put.parameters[3]
-    transform: $['x-ms-client-name'] = 'endpointInput';
+    transform: $['x-ms-client-name'] = 'endpointInput'
 ```
