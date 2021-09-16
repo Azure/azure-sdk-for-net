@@ -24,6 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Name { get; set; }
         /// <summary> anomaly detection configuration description. </summary>
         public string Description { get; set; }
+        /// <summary> Gets or sets the whole metric configuration. </summary>
         public WholeMetricConfigurationPatch WholeMetricConfiguration { get; set; }
     }
 }

@@ -22,6 +22,7 @@ namespace Azure.Storage.Files.Shares.Models
             Message = message;
         }
 
+        /// <summary> Gets the message. </summary>
         public string Message { get; }
     }
 }

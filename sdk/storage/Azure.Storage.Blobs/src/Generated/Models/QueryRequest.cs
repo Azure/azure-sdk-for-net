@@ -25,7 +25,9 @@ namespace Azure.Storage.Blobs.Models
             QueryType = "SQL";
             Expression = expression;
         }
+        /// <summary> Gets or sets the input serialization. </summary>
         public QuerySerialization InputSerialization { get; set; }
+        /// <summary> Gets or sets the output serialization. </summary>
         public QuerySerialization OutputSerialization { get; set; }
     }
 }

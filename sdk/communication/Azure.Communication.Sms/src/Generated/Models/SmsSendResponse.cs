@@ -35,6 +35,7 @@ namespace Azure.Communication.Sms.Models
             Value = value;
         }
 
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<SmsSendResult> Value { get; }
     }
 }
