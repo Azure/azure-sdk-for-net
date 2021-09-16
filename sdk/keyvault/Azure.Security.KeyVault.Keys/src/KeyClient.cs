@@ -340,6 +340,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyProperties)}");
             scope.AddAttribute("key", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try
@@ -376,6 +377,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyProperties)}");
             scope.AddAttribute("key", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try
@@ -409,6 +411,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
             scope.AddAttribute("key", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -442,6 +445,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
             scope.AddAttribute("key", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -1263,6 +1267,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
             scope.AddAttribute("key", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             options ??= new();
@@ -1320,6 +1325,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
             scope.AddAttribute("key", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             options ??= new();
