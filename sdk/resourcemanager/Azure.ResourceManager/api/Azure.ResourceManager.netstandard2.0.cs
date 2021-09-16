@@ -1421,9 +1421,9 @@ namespace Azure.ResourceManager.Resources.Models
         Off = 1,
         CurrentPeriodOff = 2,
     }
-    public abstract partial class SubResource
+    public partial class SubResource
     {
-        protected SubResource() { }
+        public SubResource() { }
         protected SubResource(string id) { }
         public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
     }
