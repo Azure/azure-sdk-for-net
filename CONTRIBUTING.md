@@ -58,7 +58,7 @@ Nuget package will be created in root directory under \artifacts\packages\Debug 
 Run e.g. `msbuild eng\mgmt.proj /t:"Runtests" /p:Scope=Compute`
 In the above example _RunTests_ will build and run tests for Compute only or you can use command line CLI:
 
-```bash
+```dotnetcli
 dotnet test Compute\Microsoft.Azure.Management.Compute\tests\Microsoft.Azure.Management.Tests.csproj
 ```
 
@@ -75,7 +75,7 @@ Now you can use the same command on non-windows as above for e.g. on Ubuntu you 
 
 If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
 
-```bash
+```dotnetcli
 dotnet tool restore
 dotnet test /p:CollectCoverage=true
 ```
@@ -410,9 +410,9 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 
 ## On-boarding New generated code library
 
-1. Install templates for both data-plane and management-plan (control-plan) SDKs:
+1. Install templates for both data-plane and management-plane (control-plan) SDKs:
 
-   ```bash
+   ```dotnetcli
    # Data-plane SDK
    dotnet new --install sdk/template
    dotnet new azuresdk --name Azure.MyService --output sdk/myservice --ServiceDirectory myservice --ProjectName Azure.MyService
@@ -466,7 +466,7 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
    
            public enum ServiceVersion
            {
-   #pragma warning disable CA1707
+   #pragma warning disable CA1707 // Identifiers should not contain underscores
                V2019_06_01 = 1
    #pragma warning restore CA1707
            }
