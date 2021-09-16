@@ -32,7 +32,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CanCallLlcGetMethodAsync()
+        public async Task CanGetResponseFromLlcGetMethodAsync()
         {
             var mockResponse = new MockResponse(200);
 
@@ -50,14 +50,35 @@ namespace Azure.Core.Tests
             Assert.AreEqual("beagle", doc.RootElement.GetProperty("species").GetString());
         }
 
-        //[Ignore("This test is not yet implemented.")]
         [Test]
-        public async Task CanCallHlcGetMethodAsync()
+        public async Task CanGetOutputModelOnSuccessCodeAsync()
         {
-            // This currently fails because cast operator is not implemented.
-            // We'll also need to use the TestFramework's mock transport here.
+            var mockResponse = new MockResponse(200);
+
+            Pet petResponse = new Pet("snoopy", "beagle");
+            mockResponse.SetContent(SerializationHelpers.Serialize(petResponse, SerializePet));
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
             Pet pet = await client.GetPetAsync("pet1");
+
+            Assert.AreEqual("snoopy", pet.Name);
+            Assert.AreEqual("beagle", pet.Species);
         }
+
+        [Test]
+        public void CannotGetOutputModelOnFailureCodeAsync()
+        {
+            var mockResponse = new MockResponse(404);
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetPetAsync("pet1"));
+        }
+
+        #region Helpers
 
         private void SerializePet(ref Utf8JsonWriter writer, Pet pet)
         {
@@ -71,5 +92,7 @@ namespace Azure.Core.Tests
 
             writer.WriteEndObject();
         }
+
+        #endregion
     }
 }

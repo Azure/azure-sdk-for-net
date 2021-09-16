@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 
 namespace Azure.Core.Experimental.Tests.Models
 {
@@ -29,6 +30,25 @@ namespace Azure.Core.Experimental.Tests.Models
         public string Species { get; }
 
         // Cast from Response to Pet
-        public static implicit operator Pet(Response r) => throw new NotImplementedException();
+        public static implicit operator Pet(Response response)
+        {
+            // [X] TODO: Add in HLC error semantics
+            // [ ] TODO: Use response.IsError
+            // [ ] TODO: Use throw new ResponseFailedException(response);
+            switch (response.Status)
+            {
+                case 200:
+                    return DeserializePet(JsonDocument.Parse(response.Content.ToMemory()));
+                default:
+                    throw new RequestFailedException("Received a non-success status code.");
+            }
+        }
+
+        private static Pet DeserializePet(JsonDocument document)
+        {
+            return new Pet(
+                document.RootElement.GetProperty("name").GetString(),
+                document.RootElement.GetProperty("species").GetString());
+        }
     }
 }
