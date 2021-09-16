@@ -115,7 +115,7 @@ namespace Azure.Monitor.Query
             try
             {
                 return _metricsRestClient.List(resourceId,
-                    timespan: options?.TimeRange?.ToString(),
+                    timespan: options?.TimeRange?.ToIsoString(),
                     interval: options?.Granularity,
                     filter: options?.Filter,
                     top: options?.Size,
@@ -177,7 +177,7 @@ namespace Azure.Monitor.Query
             try
             {
                 return await _metricsRestClient.ListAsync(resourceId,
-                    timespan: options?.TimeRange?.ToString(),
+                    timespan: options?.TimeRange?.ToIsoString(),
                     interval: options?.Granularity,
                     filter: options?.Filter,
                     top: options?.Size,

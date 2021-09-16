@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Definition of hybrid runbook worker group.
     /// </summary>
-    public partial class HybridRunbookWorkerGroup
+    public partial class HybridRunbookWorkerGroup : IResource
     {
         /// <summary>
         /// Initializes a new instance of the HybridRunbookWorkerGroup class.
@@ -33,19 +35,23 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         /// <param name="id">Gets or sets the id of the resource.</param>
         /// <param name="name">Gets or sets the name of the group.</param>
+        /// <param name="type">The type of the resource.</param>
         /// <param name="hybridRunbookWorkers">Gets or sets the list of hybrid
         /// runbook workers.</param>
         /// <param name="credential">Sets the credential of a worker
         /// group.</param>
         /// <param name="groupType">Type of the HybridWorkerGroup. Possible
         /// values include: 'User', 'System'</param>
-        public HybridRunbookWorkerGroup(string id = default(string), string name = default(string), IList<HybridRunbookWorker> hybridRunbookWorkers = default(IList<HybridRunbookWorker>), RunAsCredentialAssociationProperty credential = default(RunAsCredentialAssociationProperty), string groupType = default(string))
+        /// <param name="systemData">Resource system metadata.</param>
+        public HybridRunbookWorkerGroup(string id = default(string), string name = default(string), string type = default(string), IList<HybridRunbookWorkerLegacy> hybridRunbookWorkers = default(IList<HybridRunbookWorkerLegacy>), RunAsCredentialAssociationProperty credential = default(RunAsCredentialAssociationProperty), string groupType = default(string), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
+            Type = type;
             HybridRunbookWorkers = hybridRunbookWorkers;
             Credential = credential;
             GroupType = groupType;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -67,10 +73,16 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets the type of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
         /// Gets or sets the list of hybrid runbook workers.
         /// </summary>
         [JsonProperty(PropertyName = "hybridRunbookWorkers")]
-        public IList<HybridRunbookWorker> HybridRunbookWorkers { get; set; }
+        public IList<HybridRunbookWorkerLegacy> HybridRunbookWorkers { get; set; }
 
         /// <summary>
         /// Gets or sets sets the credential of a worker group.
@@ -84,6 +96,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "groupType")]
         public string GroupType { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource system metadata.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
     }
 }

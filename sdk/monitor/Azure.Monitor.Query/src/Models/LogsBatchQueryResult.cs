@@ -10,10 +10,12 @@ namespace Azure.Monitor.Query.Models
     [CodeGenModel("batchQueryResults")]
     public partial class LogsBatchQueryResult: LogsQueryResult
     {
+        internal int StatusCode { get; set; }
+
         /// <summary>
         /// Gets or sets the value indicating whether the batch query was successful.
         /// </summary>
-        public bool HasFailed { get; internal set; }
+        public LogsBatchQueryResultStatus Status { get; internal set; }
 
         /// <summary>
         /// Gets or sets the query id.

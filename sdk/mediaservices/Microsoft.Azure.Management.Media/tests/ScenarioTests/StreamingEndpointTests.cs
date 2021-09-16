@@ -33,8 +33,7 @@ namespace Media.Tests.ScenarioTests
                     string location = Helpers.MediaManagementTestUtilities.DefaultLocation;
 
                     // Get StreamingEndpoint, which should not exist
-                    StreamingEndpoint streamingEndpoint = MediaClient.StreamingEndpoints.Get(ResourceGroup, AccountName, endpointName);
-                    Assert.Null(streamingEndpoint);
+                    Assert.Equal(System.Net.HttpStatusCode.NotFound, Assert.Throws<ErrorResponseException>(() => MediaClient.StreamingEndpoints.Get(ResourceGroup, AccountName, endpointName)).Response.StatusCode);
 
                     // Create a new StreamingEndpoint
                     StreamingEndpoint parameters = new StreamingEndpoint(location: location, description: endpointDescription, scaleUnits: 0);
@@ -44,7 +43,7 @@ namespace Media.Tests.ScenarioTests
                     // List the StreamingEndpoints and validate the created endpoint shows up
                     streamingEndpoints = MediaClient.StreamingEndpoints.List(ResourceGroup, AccountName);
                     Assert.Equal(2, streamingEndpoints.Count());
-                    streamingEndpoint = streamingEndpoints.Where(s => s.Name != defaultStreamingEndpointName).Single();
+                    StreamingEndpoint streamingEndpoint = streamingEndpoints.Where(s => s.Name != defaultStreamingEndpointName).Single();
                     ValidateStreamingEndpoint(streamingEndpoint, endpointName, endpointDescription, location, StreamingEndpointResourceState.Running);
 
                     // Get the newly created StreamingEndpoint
@@ -74,8 +73,7 @@ namespace Media.Tests.ScenarioTests
                     Assert.Single(streamingEndpoints);
 
                     // Get StreamingEndpoint, which should not exist
-                    streamingEndpoint = MediaClient.StreamingEndpoints.Get(ResourceGroup, AccountName, endpointName);
-                    Assert.Null(streamingEndpoint);
+                    Assert.Equal(System.Net.HttpStatusCode.NotFound, Assert.Throws<ErrorResponseException>(() => MediaClient.StreamingEndpoints.Get(ResourceGroup, AccountName, endpointName)).Response.StatusCode);
                 }
                 finally
                 {
