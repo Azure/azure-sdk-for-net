@@ -25,7 +25,8 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Adds the specified query to the batch. Results can be retrieved after the query is submitted via the <see cref="LogsQueryClient.QueryBatchAsync"/> call.
-        /// <code snippet="Snippet:BatchQueryAddAndGet" language="csharp">
+        /// <example snippet="Snippet:BatchQueryAddAndGet">
+        /// <code language="csharp">
         /// string countQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
@@ -40,6 +41,7 @@ namespace Azure.Monitor.Query
         /// var count = response.Value.GetResult&lt;int&gt;(countQueryId).Single();
         /// var topEntries = response.Value.GetResult&lt;MyLogEntryModel&gt;(topQueryId);
         /// </code>
+        /// </example>
         /// </summary>
         /// <param name="workspaceId">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
@@ -56,7 +58,7 @@ namespace Azure.Monitor.Query
             };
             if (prefer != null)
             {
-                logQueryRequest.Headers.Add("prefer", prefer);
+                logQueryRequest.Headers.Add(HttpHeader.Names.Prefer, prefer);
             }
             Requests.Add(logQueryRequest);
             return id;

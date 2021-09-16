@@ -78,6 +78,7 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.ThrowsAsync<RequestFailedException>(() => client.QueryBatchAsync(batch));
 
+            // 3 minutes (180 sec) is the max out of all individual queries
             Assert.AreEqual("wait=180", preferHeader);
             // The network timeout is adjusted with 15 sec buffer
             Assert.AreEqual(TimeSpan.FromMinutes(3).Add(TimeSpan.FromSeconds(15)), networkOverride);

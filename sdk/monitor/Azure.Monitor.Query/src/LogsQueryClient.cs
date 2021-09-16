@@ -28,9 +28,11 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
-        /// <code snippet="Snippet:CreateLogsClient" language="csharp">
+        /// <example snippet="Snippet:CreateLogsClient">
+        /// <code language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         /// </code>
+        /// </example>
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public LogsQueryClient(TokenCredential credential) : this(credential, null)
@@ -84,7 +86,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Gets the endpoint used for by the client.
+        /// Gets the endpoint used by the client.
         /// </summary>
         public Uri Endpoint { get; }
 
@@ -92,20 +94,24 @@ namespace Azure.Monitor.Query
         /// Executes the logs query. Deserializes the result into a strongly typed model class or a primitive type if the query returns a single column.
         ///
         /// Example of querying a model:
-        /// <code snippet="Snippet:QueryLogsAsModelCall" language="csharp">
+        /// <example snippet="Snippet:QueryLogsAsModelCall">
+        /// <code language="csharp">
         /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
+        /// </example>
         ///
         /// Example of querying a primitive:
-        /// <code snippet="Snippet:QueryLogsAsPrimitiveCall" language="csharp">
+        /// <example snippet="Snippet:QueryLogsAsPrimitiveCall">
+        /// <code language="csharp">
         /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
+        /// </example>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The Kusto query to execute.</param>
@@ -124,20 +130,24 @@ namespace Azure.Monitor.Query
         /// Executes the logs query. Deserializes the result into a strongly typed model class or a primitive type if the query returns a single column.
         ///
         /// Example of querying a model:
-        /// <code snippet="Snippet:QueryLogsAsModelCall" language="csharp">
+        /// <example snippet="Snippet:QueryLogsAsModelCall">
+        /// <code language="csharp">
         /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
+        /// </example>
         ///
         /// Example of querying a primitive:
-        /// <code snippet="Snippet:QueryLogsAsPrimitiveCall" language="csharp">
+        /// <example snippet="Snippet:QueryLogsAsPrimitiveCall">
+        /// <code language="csharp">
         /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
+        /// </example>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The Kusto query to execute.</param>
@@ -202,7 +212,8 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Submits the batch query. Use the <see cref="LogsBatchQuery"/> to compose a batch query.
-        /// <code snippet="Snippet:BatchQuery" language="csharp">
+        /// <example snippet="Snippet:BatchQuery">
+        /// <code language="csharp">
         /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
         ///
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
@@ -231,6 +242,7 @@ namespace Azure.Monitor.Query
         ///     Console.WriteLine($&quot;{logEntryModel.ResourceGroup} had {logEntryModel.Count} events&quot;);
         /// }
         /// </code>
+        /// </example>
         /// </summary>
         /// <param name="batch">The batch of queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -254,7 +266,8 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Submits the batch query. Use the <see cref="LogsBatchQuery"/> to compose a batch query.
-        /// <code snippet="Snippet:BatchQuery" language="csharp">
+        /// <example snippet="Snippet:BatchQuery">
+        /// <code language="csharp">
         /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
         ///
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
@@ -283,6 +296,7 @@ namespace Azure.Monitor.Query
         ///     Console.WriteLine($&quot;{logEntryModel.ResourceGroup} had {logEntryModel.Count} events&quot;);
         /// }
         /// </code>
+        /// </example>
         /// </summary>
         /// <param name="batch">The batch of Kusto queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -503,7 +517,7 @@ namespace Azure.Monitor.Query
             if (timeout != null)
             {
                 message.NetworkTimeout = timeout.Value.Add(_networkTimeoutOffset);
-                message.Request.Headers.SetValue("prefer", $"wait={(int) timeout.Value.TotalSeconds}");
+                message.Request.Headers.SetValue(HttpHeader.Names.Prefer, $"wait={(int) timeout.Value.TotalSeconds}");
             }
 
             if (async)

@@ -77,7 +77,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Gets the endpoint used for by the client.
+        /// Gets the endpoint used by the client.
         /// </summary>
         public Uri Endpoint { get; }
 

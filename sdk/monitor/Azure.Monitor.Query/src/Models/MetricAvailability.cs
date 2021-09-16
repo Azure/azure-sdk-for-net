@@ -8,7 +8,7 @@ namespace Azure.Monitor.Query.Models
 {
     public partial class MetricAvailability
     {
-        /// <summary> Specifies the aggregation interval for the metric. </summary>
+        /// <summary> Specifies how often a metric value is stored. For example, every second, every 30 seconds, etc. </summary>
         [CodeGenMember("TimeGrain")]
         public TimeSpan? Granularity { get; }
     }

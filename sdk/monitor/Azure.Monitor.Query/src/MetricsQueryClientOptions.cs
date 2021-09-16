@@ -30,7 +30,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Gets or sets the audience to use for authentication with Azure Active Directory. The default scope will be used if the property is null.
+        /// Gets or sets the audience to use for authentication with Azure Active Directory. The Azure Public Cloud audience will be used if the property is null.
         /// </summary>
         public MetricsQueryClientAudience? Audience { get; set; }
 
