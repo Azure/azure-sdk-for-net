@@ -114,6 +114,6 @@ if ($responses)
     Write-Warning "API change detection failed for following packages. Please check above for package level error details."
     foreach($pkg in $responses.keys)
     {
-        Write-Host "$pkg"
+        Write-Host "$pkg failed with $($responses[$pkg]) code"
     }
 }

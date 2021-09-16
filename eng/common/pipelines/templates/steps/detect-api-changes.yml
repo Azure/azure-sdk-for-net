@@ -16,4 +16,4 @@ steps:
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Detect API changes
-    condition: and(succeededOrFailed(), eq(variables['Build.Reason'],'PullRequest'), eq(variables['System.TeamProject'], 'public'))
+    condition: and(succeededOrFailed(), eq(variables['Build.Reason'],'PullRequest'))
