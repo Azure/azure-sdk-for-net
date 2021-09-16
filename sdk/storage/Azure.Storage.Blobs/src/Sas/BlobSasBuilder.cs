@@ -348,7 +348,8 @@ namespace Azure.Storage.Sas
             string stringToSign;
 
             // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
-            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06")
+            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06"
+                || SasQueryParametersInternals.DefaultSasVersionInternal == "2021-02-12")
             {
                 stringToSign = String.Join("\n",
                 Permissions,
@@ -439,7 +440,8 @@ namespace Azure.Storage.Sas
             string stringToSign;
 
             // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
-            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06")
+            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06"
+                || SasQueryParametersInternals.DefaultSasVersionInternal == "2021-02-12")
             {
                 stringToSign = string.Join("\n",
                     Permissions,
