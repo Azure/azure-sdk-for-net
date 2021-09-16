@@ -14,7 +14,7 @@ namespace AzureOrbital.Models
     internal partial class ContactProfileProperties : ContactProfilesProperties
     {
         /// <summary> Initializes a new instance of ContactProfileProperties. </summary>
-        /// <param name="links"></param>
+        /// <param name="links"> Links of the Contact Profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="links"/> is null. </exception>
         internal ContactProfileProperties(IEnumerable<ContactProfileLink> links) : base(links)
         {

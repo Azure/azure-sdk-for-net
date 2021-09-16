@@ -25,7 +25,7 @@ namespace AzureOrbital.Models
 
         internal static Contact DeserializeContact(JsonElement element)
         {
-            Optional<ContactProperties> properties = default;
+            Optional<ContactsProperties> properties = default;
             Optional<string> etag = default;
             Optional<string> id = default;
             Optional<string> type = default;
@@ -39,7 +39,7 @@ namespace AzureOrbital.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = ContactProperties.DeserializeContactProperties(property.Value);
+                    properties = ContactsProperties.DeserializeContactsProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))

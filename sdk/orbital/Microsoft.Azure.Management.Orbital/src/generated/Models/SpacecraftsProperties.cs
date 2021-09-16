@@ -31,7 +31,7 @@ namespace AzureOrbital.Models
         /// <summary> NORAD ID of the spacecraft. </summary>
         public string NoradId { get; }
         /// <summary> Authorization status of spacecraft. </summary>
-        public SpacecraftsPropertiesAuthorizationStatus? AuthorizationStatus { get; }
+        public AuthorizationStatus? AuthorizationStatus { get; }
         /// <summary> Details of the authorization status. </summary>
         public string AuthorizationStatusExtended { get; }
         /// <summary> Title line of Two Line Element (TLE). </summary>
@@ -40,6 +40,7 @@ namespace AzureOrbital.Models
         public string TleLine1 { get; }
         /// <summary> Line 2 of Two Line Element (TLE). </summary>
         public string TleLine2 { get; }
+        /// <summary> Links of the Spacecraft. </summary>
         public IReadOnlyList<SpacecraftLink> Links { get; }
     }
 }

@@ -25,13 +25,15 @@ namespace AzureOrbital.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal Resource(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags)
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        internal Resource(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags, ResourceSystemData systemData)
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
+            SystemData = systemData;
         }
 
         /// <summary> Resource ID. </summary>
@@ -44,5 +46,7 @@ namespace AzureOrbital.Models
         public string Location { get; }
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
+        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
+        public ResourceSystemData SystemData { get; }
     }
 }

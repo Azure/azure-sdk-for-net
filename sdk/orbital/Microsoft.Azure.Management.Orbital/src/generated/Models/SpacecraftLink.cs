@@ -11,7 +11,7 @@ namespace AzureOrbital.Models
     public partial class SpacecraftLink
     {
         /// <summary> Initializes a new instance of SpacecraftLink. </summary>
-        /// <param name="centerFrequencyMHz"> Cemter Frequency in MHz. </param>
+        /// <param name="centerFrequencyMHz"> Center Frequency in MHz. </param>
         /// <param name="bandwidthMHz"> Bandwidth in MHz. </param>
         /// <param name="direction"> Direction (uplink or downlink). </param>
         /// <param name="polarization"> polarization. eg (RHCP, LHCP). </param>
@@ -23,7 +23,7 @@ namespace AzureOrbital.Models
             Polarization = polarization;
         }
 
-        /// <summary> Cemter Frequency in MHz. </summary>
+        /// <summary> Center Frequency in MHz. </summary>
         public float CenterFrequencyMHz { get; set; }
         /// <summary> Bandwidth in MHz. </summary>
         public float BandwidthMHz { get; set; }

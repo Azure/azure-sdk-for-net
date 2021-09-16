@@ -76,8 +76,9 @@ namespace AzureOrbital.Models
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<ResourceSystemData> systemData = default;
             Optional<string> noradId = default;
-            Optional<SpacecraftsPropertiesAuthorizationStatus> authorizationStatus = default;
+            Optional<AuthorizationStatus> authorizationStatus = default;
             Optional<string> authorizationStatusExtended = default;
             Optional<string> titleLine = default;
             Optional<string> tleLine1 = default;
@@ -125,6 +126,16 @@ namespace AzureOrbital.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = ResourceSystemData.DeserializeResourceSystemData(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -146,7 +157,7 @@ namespace AzureOrbital.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authorizationStatus = new SpacecraftsPropertiesAuthorizationStatus(property0.Value.GetString());
+                            authorizationStatus = property0.Value.GetString().ToAuthorizationStatus();
                             continue;
                         }
                         if (property0.NameEquals("authorizationStatusExtended"))
@@ -188,7 +199,7 @@ namespace AzureOrbital.Models
                     continue;
                 }
             }
-            return new Spacecraft(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, noradId.Value, Optional.ToNullable(authorizationStatus), authorizationStatusExtended.Value, titleLine.Value, tleLine1.Value, tleLine2.Value, Optional.ToList(links));
+            return new Spacecraft(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), systemData.Value, etag.Value, noradId.Value, Optional.ToNullable(authorizationStatus), authorizationStatusExtended.Value, titleLine.Value, tleLine1.Value, tleLine2.Value, Optional.ToList(links));
         }
     }
 }

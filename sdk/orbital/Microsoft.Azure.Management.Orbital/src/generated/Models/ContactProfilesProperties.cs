@@ -15,7 +15,7 @@ namespace AzureOrbital.Models
     internal partial class ContactProfilesProperties
     {
         /// <summary> Initializes a new instance of ContactProfilesProperties. </summary>
-        /// <param name="links"></param>
+        /// <param name="links"> Links of the Contact Profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="links"/> is null. </exception>
         internal ContactProfilesProperties(IEnumerable<ContactProfileLink> links)
         {
@@ -32,7 +32,8 @@ namespace AzureOrbital.Models
         /// <summary> Minimum viable elevation for the contact in decimal degrees. </summary>
         public float? MinimumElevationDegrees { get; }
         /// <summary> Auto track configuration. </summary>
-        public ContactProfilesPropertiesAutoTrackingConfiguration? AutoTrackingConfiguration { get; }
+        public AutoTrackingConfiguration? AutoTrackingConfiguration { get; }
+        /// <summary> Links of the Contact Profile. </summary>
         public IReadOnlyList<ContactProfileLink> Links { get; }
     }
 }

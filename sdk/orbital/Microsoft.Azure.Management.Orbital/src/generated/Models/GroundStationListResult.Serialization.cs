@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace AzureOrbital.Models
 {
-    public partial class GroundStationListResult
+    internal partial class GroundStationListResult
     {
         internal static GroundStationListResult DeserializeGroundStationListResult(JsonElement element)
         {

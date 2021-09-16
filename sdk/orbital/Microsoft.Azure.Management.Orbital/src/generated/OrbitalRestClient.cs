@@ -32,7 +32,7 @@ namespace AzureOrbital
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public OrbitalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01-preview")
+        public OrbitalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-04-04-preview")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -95,11 +95,11 @@ namespace AzureOrbital
             }
         }
 
-        internal HttpMessage CreateListGroundStationsRequest()
+        internal HttpMessage CreateListGroundStationsBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -113,9 +113,9 @@ namespace AzureOrbital
 
         /// <summary> Return list of ground stations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GroundStationListResult>> ListGroundStationsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<GroundStationListResult>> ListGroundStationsBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListGroundStationsRequest();
+            using var message = CreateListGroundStationsBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -133,9 +133,9 @@ namespace AzureOrbital
 
         /// <summary> Return list of ground stations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GroundStationListResult> ListGroundStations(CancellationToken cancellationToken = default)
+        public Response<GroundStationListResult> ListGroundStationsBySubscription(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListGroundStationsRequest();
+            using var message = CreateListGroundStationsBySubscriptionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -146,6 +146,457 @@ namespace AzureOrbital
                         value = GroundStationListResult.DeserializeGroundStationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListGroundStationsRequest(string resourceGroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/groundStations", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Return list of ground stations. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<GroundStationListResult>> ListGroundStationsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+
+            using var message = CreateListGroundStationsRequest(resourceGroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GroundStationListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GroundStationListResult.DeserializeGroundStationListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Return list of ground stations. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<GroundStationListResult> ListGroundStations(string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+
+            using var message = CreateListGroundStationsRequest(resourceGroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GroundStationListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GroundStationListResult.DeserializeGroundStationListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetGroundStationRequest(string resourceGroupName, string groundStationName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/groundStations/", false);
+            uri.AppendPath(groundStationName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets the specified ground station in a specified resource group. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="groundStationName"> Ground Station name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="groundStationName"/> is null. </exception>
+        public async Task<Response<GroundStation>> GetGroundStationAsync(string resourceGroupName, string groundStationName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (groundStationName == null)
+            {
+                throw new ArgumentNullException(nameof(groundStationName));
+            }
+
+            using var message = CreateGetGroundStationRequest(resourceGroupName, groundStationName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GroundStation value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GroundStation.DeserializeGroundStation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets the specified ground station in a specified resource group. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="groundStationName"> Ground Station name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="groundStationName"/> is null. </exception>
+        public Response<GroundStation> GetGroundStation(string resourceGroupName, string groundStationName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (groundStationName == null)
+            {
+                throw new ArgumentNullException(nameof(groundStationName));
+            }
+
+            using var message = CreateGetGroundStationRequest(resourceGroupName, groundStationName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GroundStation value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GroundStation.DeserializeGroundStation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateOrUpdateGroundStationRequest(string resourceGroupName, string groundStationName, string location, IDictionary<string, string> tags, string city, IEnumerable<Capability> capabilities, string providerName, float? longitudeDegrees, float? latitudeDegrees, float? altitudeMeters, GroundStationsPropertiesGlobalCommunicationsInfo globalCommunicationsInfo)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/groundStations/", false);
+            uri.AppendPath(groundStationName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            GroundStation groundStation = new GroundStation()
+            {
+                Location = location,
+                City = city,
+                ProviderName = providerName,
+                LongitudeDegrees = longitudeDegrees,
+                LatitudeDegrees = latitudeDegrees,
+                AltitudeMeters = altitudeMeters,
+                GlobalCommunicationsInfo = globalCommunicationsInfo
+            };
+            if (tags != null)
+            {
+                foreach (var value in tags)
+                {
+                    groundStation.Tags.Add(value);
+                }
+            }
+            if (capabilities != null)
+            {
+                foreach (var value in capabilities)
+                {
+                    groundStation.Capabilities.Add(value);
+                }
+            }
+            var model = groundStation;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Creates or updates a ground station resource. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="groundStationName"> Ground Station name. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="city"> city of ground station. </param>
+        /// <param name="capabilities"> ground station capabilities. </param>
+        /// <param name="providerName"> Ground station provider name. </param>
+        /// <param name="longitudeDegrees"> Longitude of the ground station in decimal degrees. </param>
+        /// <param name="latitudeDegrees"> Latitude of the ground station in decimal degrees. </param>
+        /// <param name="altitudeMeters"> Altitude of the ground station. </param>
+        /// <param name="globalCommunicationsInfo"> Describes the partner&apos;s global communications configuration for the site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="groundStationName"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateGroundStationAsync(string resourceGroupName, string groundStationName, string location = null, IDictionary<string, string> tags = null, string city = null, IEnumerable<Capability> capabilities = null, string providerName = null, float? longitudeDegrees = null, float? latitudeDegrees = null, float? altitudeMeters = null, GroundStationsPropertiesGlobalCommunicationsInfo globalCommunicationsInfo = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (groundStationName == null)
+            {
+                throw new ArgumentNullException(nameof(groundStationName));
+            }
+
+            using var message = CreateCreateOrUpdateGroundStationRequest(resourceGroupName, groundStationName, location, tags, city, capabilities, providerName, longitudeDegrees, latitudeDegrees, altitudeMeters, globalCommunicationsInfo);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Creates or updates a ground station resource. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="groundStationName"> Ground Station name. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="city"> city of ground station. </param>
+        /// <param name="capabilities"> ground station capabilities. </param>
+        /// <param name="providerName"> Ground station provider name. </param>
+        /// <param name="longitudeDegrees"> Longitude of the ground station in decimal degrees. </param>
+        /// <param name="latitudeDegrees"> Latitude of the ground station in decimal degrees. </param>
+        /// <param name="altitudeMeters"> Altitude of the ground station. </param>
+        /// <param name="globalCommunicationsInfo"> Describes the partner&apos;s global communications configuration for the site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="groundStationName"/> is null. </exception>
+        public Response CreateOrUpdateGroundStation(string resourceGroupName, string groundStationName, string location = null, IDictionary<string, string> tags = null, string city = null, IEnumerable<Capability> capabilities = null, string providerName = null, float? longitudeDegrees = null, float? latitudeDegrees = null, float? altitudeMeters = null, GroundStationsPropertiesGlobalCommunicationsInfo globalCommunicationsInfo = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (groundStationName == null)
+            {
+                throw new ArgumentNullException(nameof(groundStationName));
+            }
+
+            using var message = CreateCreateOrUpdateGroundStationRequest(resourceGroupName, groundStationName, location, tags, city, capabilities, providerName, longitudeDegrees, latitudeDegrees, altitudeMeters, globalCommunicationsInfo);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateTagsGroundStationRequest(string resourceGroupName, string groundStationName, TagsObject parameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/groundStations/", false);
+            uri.AppendPath(groundStationName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(parameters);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Updates the specified ground station tags. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="groundStationName"> Ground Station name. </param>
+        /// <param name="parameters"> Parameters supplied to update ground station tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="groundStationName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<GroundStation>> UpdateTagsGroundStationAsync(string resourceGroupName, string groundStationName, TagsObject parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (groundStationName == null)
+            {
+                throw new ArgumentNullException(nameof(groundStationName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateUpdateTagsGroundStationRequest(resourceGroupName, groundStationName, parameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GroundStation value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GroundStation.DeserializeGroundStation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Updates the specified ground station tags. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="groundStationName"> Ground Station name. </param>
+        /// <param name="parameters"> Parameters supplied to update ground station tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="groundStationName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<GroundStation> UpdateTagsGroundStation(string resourceGroupName, string groundStationName, TagsObject parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (groundStationName == null)
+            {
+                throw new ArgumentNullException(nameof(groundStationName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateUpdateTagsGroundStationRequest(resourceGroupName, groundStationName, parameters);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GroundStation value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GroundStation.DeserializeGroundStation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteGroundStationRequest(string resourceGroupName, string groundStationName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/groundStations/", false);
+            uri.AppendPath(groundStationName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a specified ground station resource. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="groundStationName"> Ground Station name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="groundStationName"/> is null. </exception>
+        public async Task<Response> DeleteGroundStationAsync(string resourceGroupName, string groundStationName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (groundStationName == null)
+            {
+                throw new ArgumentNullException(nameof(groundStationName));
+            }
+
+            using var message = CreateDeleteGroundStationRequest(resourceGroupName, groundStationName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Deletes a specified ground station resource. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="groundStationName"> Ground Station name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="groundStationName"/> is null. </exception>
+        public Response DeleteGroundStation(string resourceGroupName, string groundStationName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (groundStationName == null)
+            {
+                throw new ArgumentNullException(nameof(groundStationName));
+            }
+
+            using var message = CreateDeleteGroundStationRequest(resourceGroupName, groundStationName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -417,7 +868,7 @@ namespace AzureOrbital
         /// <param name="titleLine"> Title line of Two Line Element (TLE). </param>
         /// <param name="tleLine1"> Line 1 of Two Line Element (TLE). </param>
         /// <param name="tleLine2"> Line 2 of Two Line Element (TLE). </param>
-        /// <param name="links"> The SpacecraftsPropertiesLinks to use. </param>
+        /// <param name="links"> Links of the Spacecraft. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is null. </exception>
         public async Task<Response> CreateOrUpdateSpacecraftAsync(string resourceGroupName, string spacecraftName, string location = null, IDictionary<string, string> tags = null, string noradId = null, string titleLine = null, string tleLine1 = null, string tleLine2 = null, IEnumerable<SpacecraftLink> links = null, CancellationToken cancellationToken = default)
@@ -452,7 +903,7 @@ namespace AzureOrbital
         /// <param name="titleLine"> Title line of Two Line Element (TLE). </param>
         /// <param name="tleLine1"> Line 1 of Two Line Element (TLE). </param>
         /// <param name="tleLine2"> Line 2 of Two Line Element (TLE). </param>
-        /// <param name="links"> The SpacecraftsPropertiesLinks to use. </param>
+        /// <param name="links"> Links of the Spacecraft. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is null. </exception>
         public Response CreateOrUpdateSpacecraft(string resourceGroupName, string spacecraftName, string location = null, IDictionary<string, string> tags = null, string noradId = null, string titleLine = null, string tleLine1 = null, string tleLine2 = null, IEnumerable<SpacecraftLink> links = null, CancellationToken cancellationToken = default)
@@ -1207,7 +1658,7 @@ namespace AzureOrbital
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateContactProfileRequest(string resourceGroupName, string contactProfileName, string location, IDictionary<string, string> tags, string minimumViableContactDuration, float? minimumElevationDegrees, ContactProfilesPropertiesAutoTrackingConfiguration? autoTrackingConfiguration, IEnumerable<ContactProfileLink> links)
+        internal HttpMessage CreateCreateOrUpdateContactProfileRequest(string resourceGroupName, string contactProfileName, string location, IDictionary<string, string> tags, string minimumViableContactDuration, float? minimumElevationDegrees, AutoTrackingConfiguration? autoTrackingConfiguration, IEnumerable<ContactProfileLink> links)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1260,10 +1711,10 @@ namespace AzureOrbital
         /// <param name="minimumViableContactDuration"> Minimum viable contact duration in ISO 8601 format. </param>
         /// <param name="minimumElevationDegrees"> Minimum viable elevation for the contact in decimal degrees. </param>
         /// <param name="autoTrackingConfiguration"> Auto track configuration. </param>
-        /// <param name="links"> The ContactProfilesPropertiesLinks to use. </param>
+        /// <param name="links"> Links of the Contact Profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="contactProfileName"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateContactProfileAsync(string resourceGroupName, string contactProfileName, string location = null, IDictionary<string, string> tags = null, string minimumViableContactDuration = null, float? minimumElevationDegrees = null, ContactProfilesPropertiesAutoTrackingConfiguration? autoTrackingConfiguration = null, IEnumerable<ContactProfileLink> links = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateContactProfileAsync(string resourceGroupName, string contactProfileName, string location = null, IDictionary<string, string> tags = null, string minimumViableContactDuration = null, float? minimumElevationDegrees = null, AutoTrackingConfiguration? autoTrackingConfiguration = null, IEnumerable<ContactProfileLink> links = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1294,10 +1745,10 @@ namespace AzureOrbital
         /// <param name="minimumViableContactDuration"> Minimum viable contact duration in ISO 8601 format. </param>
         /// <param name="minimumElevationDegrees"> Minimum viable elevation for the contact in decimal degrees. </param>
         /// <param name="autoTrackingConfiguration"> Auto track configuration. </param>
-        /// <param name="links"> The ContactProfilesPropertiesLinks to use. </param>
+        /// <param name="links"> Links of the Contact Profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="contactProfileName"/> is null. </exception>
-        public Response CreateOrUpdateContactProfile(string resourceGroupName, string contactProfileName, string location = null, IDictionary<string, string> tags = null, string minimumViableContactDuration = null, float? minimumElevationDegrees = null, ContactProfilesPropertiesAutoTrackingConfiguration? autoTrackingConfiguration = null, IEnumerable<ContactProfileLink> links = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateContactProfile(string resourceGroupName, string contactProfileName, string location = null, IDictionary<string, string> tags = null, string minimumViableContactDuration = null, float? minimumElevationDegrees = null, AutoTrackingConfiguration? autoTrackingConfiguration = null, IEnumerable<ContactProfileLink> links = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1615,6 +2066,150 @@ namespace AzureOrbital
                         ContactProfileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ContactProfileListResult.DeserializeContactProfileListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListGroundStationsBySubscriptionNextPageRequest(string nextLink)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Return list of ground stations. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<Response<GroundStationListResult>> ListGroundStationsBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateListGroundStationsBySubscriptionNextPageRequest(nextLink);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GroundStationListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GroundStationListResult.DeserializeGroundStationListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Return list of ground stations. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public Response<GroundStationListResult> ListGroundStationsBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateListGroundStationsBySubscriptionNextPageRequest(nextLink);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GroundStationListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GroundStationListResult.DeserializeGroundStationListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListGroundStationsNextPageRequest(string nextLink, string resourceGroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Return list of ground stations. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<GroundStationListResult>> ListGroundStationsNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+
+            using var message = CreateListGroundStationsNextPageRequest(nextLink, resourceGroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GroundStationListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GroundStationListResult.DeserializeGroundStationListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Return list of ground stations. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<GroundStationListResult> ListGroundStationsNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+
+            using var message = CreateListGroundStationsNextPageRequest(nextLink, resourceGroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GroundStationListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GroundStationListResult.DeserializeGroundStationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

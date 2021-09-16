@@ -10,15 +10,15 @@ using System;
 namespace AzureOrbital.Models
 {
     /// <summary> Properties of the Contact Resource. </summary>
-    public partial class ContactProperties
+    public partial class ContactsProperties
     {
-        /// <summary> Initializes a new instance of ContactProperties. </summary>
+        /// <summary> Initializes a new instance of ContactsProperties. </summary>
         /// <param name="reservationStartTime"> Reservation start time of a contact. </param>
         /// <param name="reservationEndTime"> Reservation end time of a contact. </param>
         /// <param name="groundStationName"> Azure Ground Station name. </param>
         /// <param name="contactProfile"> The reference to the contact profile resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groundStationName"/> or <paramref name="contactProfile"/> is null. </exception>
-        public ContactProperties(DateTimeOffset reservationStartTime, DateTimeOffset reservationEndTime, string groundStationName, ContactPropertiesContactProfile contactProfile)
+        public ContactsProperties(DateTimeOffset reservationStartTime, DateTimeOffset reservationEndTime, string groundStationName, ContactsPropertiesContactProfile contactProfile)
         {
             if (groundStationName == null)
             {
@@ -35,7 +35,7 @@ namespace AzureOrbital.Models
             ContactProfile = contactProfile;
         }
 
-        /// <summary> Initializes a new instance of ContactProperties. </summary>
+        /// <summary> Initializes a new instance of ContactsProperties. </summary>
         /// <param name="status"> Status of a contact. </param>
         /// <param name="reservationStartTime"> Reservation start time of a contact. </param>
         /// <param name="reservationEndTime"> Reservation end time of a contact. </param>
@@ -51,7 +51,7 @@ namespace AzureOrbital.Models
         /// <param name="startElevationDegrees"> Spacecraft elevation above the horizon at contact start. </param>
         /// <param name="endElevationDegrees"> Spacecraft elevation above the horizon at contact end. </param>
         /// <param name="contactProfile"> The reference to the contact profile resource. </param>
-        internal ContactProperties(ContactPropertiesStatus? status, DateTimeOffset reservationStartTime, DateTimeOffset reservationEndTime, DateTimeOffset? rxStartTime, DateTimeOffset? rxEndTime, DateTimeOffset? txStartTime, DateTimeOffset? txEndTime, string errorMessage, float? maximumElevationDegrees, float? startAzimuthDegrees, float? endAzimuthDegrees, string groundStationName, float? startElevationDegrees, float? endElevationDegrees, ContactPropertiesContactProfile contactProfile)
+        internal ContactsProperties(Status? status, DateTimeOffset reservationStartTime, DateTimeOffset reservationEndTime, DateTimeOffset? rxStartTime, DateTimeOffset? rxEndTime, DateTimeOffset? txStartTime, DateTimeOffset? txEndTime, string errorMessage, float? maximumElevationDegrees, float? startAzimuthDegrees, float? endAzimuthDegrees, string groundStationName, float? startElevationDegrees, float? endElevationDegrees, ContactsPropertiesContactProfile contactProfile)
         {
             Status = status;
             ReservationStartTime = reservationStartTime;
@@ -71,7 +71,7 @@ namespace AzureOrbital.Models
         }
 
         /// <summary> Status of a contact. </summary>
-        public ContactPropertiesStatus? Status { get; }
+        public Status? Status { get; }
         /// <summary> Reservation start time of a contact. </summary>
         public DateTimeOffset ReservationStartTime { get; set; }
         /// <summary> Reservation end time of a contact. </summary>
@@ -99,6 +99,6 @@ namespace AzureOrbital.Models
         /// <summary> Spacecraft elevation above the horizon at contact end. </summary>
         public float? EndElevationDegrees { get; }
         /// <summary> The reference to the contact profile resource. </summary>
-        public ContactPropertiesContactProfile ContactProfile { get; set; }
+        public ContactsPropertiesContactProfile ContactProfile { get; set; }
     }
 }

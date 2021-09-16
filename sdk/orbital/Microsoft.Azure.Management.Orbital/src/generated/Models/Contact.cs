@@ -21,14 +21,14 @@ namespace AzureOrbital.Models
         /// <param name="name"> Azure resource name. </param>
         /// <param name="properties"> Properties of the Contact Resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal Contact(string id, string type, string name, ContactProperties properties, string etag) : base(id, type, name)
+        internal Contact(string id, string type, string name, ContactsProperties properties, string etag) : base(id, type, name)
         {
             Properties = properties;
             Etag = etag;
         }
 
         /// <summary> Properties of the Contact Resource. </summary>
-        public ContactProperties Properties { get; set; }
+        public ContactsProperties Properties { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
     }

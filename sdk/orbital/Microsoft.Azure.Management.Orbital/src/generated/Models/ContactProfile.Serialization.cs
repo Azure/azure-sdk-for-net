@@ -47,7 +47,7 @@ namespace AzureOrbital.Models
             if (Optional.IsDefined(AutoTrackingConfiguration))
             {
                 writer.WritePropertyName("autoTrackingConfiguration");
-                writer.WriteStringValue(AutoTrackingConfiguration.Value.ToString());
+                writer.WriteStringValue(AutoTrackingConfiguration.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Links))
             {
@@ -71,9 +71,10 @@ namespace AzureOrbital.Models
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<ResourceSystemData> systemData = default;
             Optional<string> minimumViableContactDuration = default;
             Optional<float> minimumElevationDegrees = default;
-            Optional<ContactProfilesPropertiesAutoTrackingConfiguration> autoTrackingConfiguration = default;
+            Optional<AutoTrackingConfiguration> autoTrackingConfiguration = default;
             Optional<IList<ContactProfileLink>> links = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -117,6 +118,16 @@ namespace AzureOrbital.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = ResourceSystemData.DeserializeResourceSystemData(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -148,7 +159,7 @@ namespace AzureOrbital.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoTrackingConfiguration = new ContactProfilesPropertiesAutoTrackingConfiguration(property0.Value.GetString());
+                            autoTrackingConfiguration = property0.Value.GetString().ToAutoTrackingConfiguration();
                             continue;
                         }
                         if (property0.NameEquals("links"))
@@ -170,7 +181,7 @@ namespace AzureOrbital.Models
                     continue;
                 }
             }
-            return new ContactProfile(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, minimumViableContactDuration.Value, Optional.ToNullable(minimumElevationDegrees), Optional.ToNullable(autoTrackingConfiguration), Optional.ToList(links));
+            return new ContactProfile(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), systemData.Value, etag.Value, minimumViableContactDuration.Value, Optional.ToNullable(minimumElevationDegrees), Optional.ToNullable(autoTrackingConfiguration), Optional.ToList(links));
         }
     }
 }

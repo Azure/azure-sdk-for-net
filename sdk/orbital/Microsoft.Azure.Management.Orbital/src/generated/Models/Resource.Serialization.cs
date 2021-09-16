@@ -20,6 +20,7 @@ namespace AzureOrbital.Models
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<ResourceSystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -57,8 +58,18 @@ namespace AzureOrbital.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = ResourceSystemData.DeserializeResourceSystemData(property.Value);
+                    continue;
+                }
             }
-            return new Resource(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags));
+            return new Resource(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), systemData.Value);
         }
     }
 }

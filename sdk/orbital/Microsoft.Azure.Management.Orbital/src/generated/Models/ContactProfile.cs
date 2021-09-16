@@ -25,12 +25,13 @@ namespace AzureOrbital.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="minimumViableContactDuration"> Minimum viable contact duration in ISO 8601 format. </param>
         /// <param name="minimumElevationDegrees"> Minimum viable elevation for the contact in decimal degrees. </param>
         /// <param name="autoTrackingConfiguration"> Auto track configuration. </param>
-        /// <param name="links"></param>
-        internal ContactProfile(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags, string etag, string minimumViableContactDuration, float? minimumElevationDegrees, ContactProfilesPropertiesAutoTrackingConfiguration? autoTrackingConfiguration, IList<ContactProfileLink> links) : base(id, name, type, location, tags)
+        /// <param name="links"> Links of the Contact Profile. </param>
+        internal ContactProfile(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags, ResourceSystemData systemData, string etag, string minimumViableContactDuration, float? minimumElevationDegrees, AutoTrackingConfiguration? autoTrackingConfiguration, IList<ContactProfileLink> links) : base(id, name, type, location, tags, systemData)
         {
             Etag = etag;
             MinimumViableContactDuration = minimumViableContactDuration;
@@ -46,7 +47,8 @@ namespace AzureOrbital.Models
         /// <summary> Minimum viable elevation for the contact in decimal degrees. </summary>
         public float? MinimumElevationDegrees { get; set; }
         /// <summary> Auto track configuration. </summary>
-        public ContactProfilesPropertiesAutoTrackingConfiguration? AutoTrackingConfiguration { get; set; }
+        public AutoTrackingConfiguration? AutoTrackingConfiguration { get; set; }
+        /// <summary> Links of the Contact Profile. </summary>
         public IList<ContactProfileLink> Links { get; }
     }
 }

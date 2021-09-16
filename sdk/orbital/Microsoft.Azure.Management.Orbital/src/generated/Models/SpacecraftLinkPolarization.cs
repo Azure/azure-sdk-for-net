@@ -15,7 +15,7 @@ namespace AzureOrbital.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SpacecraftLinkPolarization"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpacecraftLinkPolarization"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SpacecraftLinkPolarization(string value)
         {

@@ -25,6 +25,7 @@ namespace AzureOrbital.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="noradId"> NORAD ID of the spacecraft. </param>
         /// <param name="authorizationStatus"> Authorization status of spacecraft. </param>
@@ -32,8 +33,8 @@ namespace AzureOrbital.Models
         /// <param name="titleLine"> Title line of Two Line Element (TLE). </param>
         /// <param name="tleLine1"> Line 1 of Two Line Element (TLE). </param>
         /// <param name="tleLine2"> Line 2 of Two Line Element (TLE). </param>
-        /// <param name="links"></param>
-        internal Spacecraft(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags, string etag, string noradId, SpacecraftsPropertiesAuthorizationStatus? authorizationStatus, string authorizationStatusExtended, string titleLine, string tleLine1, string tleLine2, IList<SpacecraftLink> links) : base(id, name, type, location, tags)
+        /// <param name="links"> Links of the Spacecraft. </param>
+        internal Spacecraft(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags, ResourceSystemData systemData, string etag, string noradId, AuthorizationStatus? authorizationStatus, string authorizationStatusExtended, string titleLine, string tleLine1, string tleLine2, IList<SpacecraftLink> links) : base(id, name, type, location, tags, systemData)
         {
             Etag = etag;
             NoradId = noradId;
@@ -50,7 +51,7 @@ namespace AzureOrbital.Models
         /// <summary> NORAD ID of the spacecraft. </summary>
         public string NoradId { get; set; }
         /// <summary> Authorization status of spacecraft. </summary>
-        public SpacecraftsPropertiesAuthorizationStatus? AuthorizationStatus { get; }
+        public AuthorizationStatus? AuthorizationStatus { get; }
         /// <summary> Details of the authorization status. </summary>
         public string AuthorizationStatusExtended { get; }
         /// <summary> Title line of Two Line Element (TLE). </summary>
@@ -59,6 +60,7 @@ namespace AzureOrbital.Models
         public string TleLine1 { get; set; }
         /// <summary> Line 2 of Two Line Element (TLE). </summary>
         public string TleLine2 { get; set; }
+        /// <summary> Links of the Spacecraft. </summary>
         public IList<SpacecraftLink> Links { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace AzureOrbital.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ContactProfileLinkPolarization"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactProfileLinkPolarization"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContactProfileLinkPolarization(string value)
         {

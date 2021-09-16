@@ -5,48 +5,58 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace AzureOrbital.Models
 {
     /// <summary> Ground Station contains one or more antennas. </summary>
-    public partial class GroundStation
+    public partial class GroundStation : Resource
     {
         /// <summary> Initializes a new instance of GroundStation. </summary>
-        internal GroundStation()
+        public GroundStation()
         {
+            Capabilities = new ChangeTrackingList<Capability>();
         }
 
         /// <summary> Initializes a new instance of GroundStation. </summary>
-        /// <param name="name"> Name of the ground station. </param>
-        /// <param name="location"> Azure region. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="city"> city of ground station. </param>
+        /// <param name="capabilities"> ground station capabilities. </param>
         /// <param name="providerName"> Ground station provider name. </param>
         /// <param name="longitudeDegrees"> Longitude of the ground station in decimal degrees. </param>
         /// <param name="latitudeDegrees"> Latitude of the ground station in decimal degrees. </param>
         /// <param name="altitudeMeters"> Altitude of the ground station. </param>
-        internal GroundStation(string name, string location, string city, string providerName, float? longitudeDegrees, float? latitudeDegrees, float? altitudeMeters)
+        /// <param name="globalCommunicationsInfo"> Describes the partner&apos;s global communications configuration for the site. </param>
+        internal GroundStation(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags, ResourceSystemData systemData, string city, IList<Capability> capabilities, string providerName, float? longitudeDegrees, float? latitudeDegrees, float? altitudeMeters, GroundStationsPropertiesGlobalCommunicationsInfo globalCommunicationsInfo) : base(id, name, type, location, tags, systemData)
         {
-            Name = name;
-            Location = location;
             City = city;
+            Capabilities = capabilities;
             ProviderName = providerName;
             LongitudeDegrees = longitudeDegrees;
             LatitudeDegrees = latitudeDegrees;
             AltitudeMeters = altitudeMeters;
+            GlobalCommunicationsInfo = globalCommunicationsInfo;
         }
 
-        /// <summary> Name of the ground station. </summary>
-        public string Name { get; }
-        /// <summary> Azure region. </summary>
-        public string Location { get; }
         /// <summary> city of ground station. </summary>
-        public string City { get; }
+        public string City { get; set; }
+        /// <summary> ground station capabilities. </summary>
+        public IList<Capability> Capabilities { get; }
         /// <summary> Ground station provider name. </summary>
-        public string ProviderName { get; }
+        public string ProviderName { get; set; }
         /// <summary> Longitude of the ground station in decimal degrees. </summary>
-        public float? LongitudeDegrees { get; }
+        public float? LongitudeDegrees { get; set; }
         /// <summary> Latitude of the ground station in decimal degrees. </summary>
-        public float? LatitudeDegrees { get; }
+        public float? LatitudeDegrees { get; set; }
         /// <summary> Altitude of the ground station. </summary>
-        public float? AltitudeMeters { get; }
+        public float? AltitudeMeters { get; set; }
+        /// <summary> Describes the partner&apos;s global communications configuration for the site. </summary>
+        public GroundStationsPropertiesGlobalCommunicationsInfo GlobalCommunicationsInfo { get; set; }
     }
 }

@@ -54,6 +54,7 @@ namespace AzureOrbital.Models
         public float? GainOverTemperature { get; set; }
         /// <summary> Effective Isotropic Radiated Power (EIRP) in dBW. </summary>
         public float? EirpdBW { get; set; }
+        /// <summary> Gets the channels. </summary>
         public IList<ContactProfileLinkChannel> Channels { get; }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace AzureOrbital.Models
 {
-    public partial class ContactProperties : IUtf8JsonSerializable
+    public partial class ContactsProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,9 +27,9 @@ namespace AzureOrbital.Models
             writer.WriteEndObject();
         }
 
-        internal static ContactProperties DeserializeContactProperties(JsonElement element)
+        internal static ContactsProperties DeserializeContactsProperties(JsonElement element)
         {
-            Optional<ContactPropertiesStatus> status = default;
+            Optional<Status> status = default;
             DateTimeOffset reservationStartTime = default;
             DateTimeOffset reservationEndTime = default;
             Optional<DateTimeOffset> rxStartTime = default;
@@ -43,7 +43,7 @@ namespace AzureOrbital.Models
             string groundStationName = default;
             Optional<float> startElevationDegrees = default;
             Optional<float> endElevationDegrees = default;
-            ContactPropertiesContactProfile contactProfile = default;
+            ContactsPropertiesContactProfile contactProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -53,7 +53,7 @@ namespace AzureOrbital.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new ContactPropertiesStatus(property.Value.GetString());
+                    status = property.Value.GetString().ToStatus();
                     continue;
                 }
                 if (property.NameEquals("reservationStartTime"))
@@ -168,11 +168,11 @@ namespace AzureOrbital.Models
                 }
                 if (property.NameEquals("contactProfile"))
                 {
-                    contactProfile = ContactPropertiesContactProfile.DeserializeContactPropertiesContactProfile(property.Value);
+                    contactProfile = ContactsPropertiesContactProfile.DeserializeContactsPropertiesContactProfile(property.Value);
                     continue;
                 }
             }
-            return new ContactProperties(Optional.ToNullable(status), reservationStartTime, reservationEndTime, Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), errorMessage.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), groundStationName, Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees), contactProfile);
+            return new ContactsProperties(Optional.ToNullable(status), reservationStartTime, reservationEndTime, Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), errorMessage.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), groundStationName, Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees), contactProfile);
         }
     }
 }

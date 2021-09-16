@@ -11,7 +11,7 @@ using Azure.Core;
 namespace AzureOrbital.Models
 {
     /// <summary> Response for the ListGroundStations API service call. </summary>
-    public partial class GroundStationListResult
+    internal partial class GroundStationListResult
     {
         /// <summary> Initializes a new instance of GroundStationListResult. </summary>
         internal GroundStationListResult()

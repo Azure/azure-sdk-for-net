@@ -54,9 +54,13 @@ namespace AzureOrbital.Models
         public float BandwidthMHz { get; set; }
         /// <summary> Customer End point to store/retrieve data during a contact. </summary>
         public EndPoint EndPoint { get; set; }
+        /// <summary> Gets or sets the modulation configuration. </summary>
         public string ModulationConfiguration { get; set; }
+        /// <summary> Gets or sets the demodulation configuration. </summary>
         public string DemodulationConfiguration { get; set; }
+        /// <summary> Gets or sets the encoding configuration. </summary>
         public string EncodingConfiguration { get; set; }
+        /// <summary> Gets or sets the decoding configuration. </summary>
         public string DecodingConfiguration { get; set; }
     }
 }

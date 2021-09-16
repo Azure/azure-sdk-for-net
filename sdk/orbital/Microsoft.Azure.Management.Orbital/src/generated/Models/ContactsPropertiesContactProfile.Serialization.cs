@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace AzureOrbital.Models
 {
-    public partial class ContactPropertiesContactProfile : IUtf8JsonSerializable
+    public partial class ContactsPropertiesContactProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace AzureOrbital.Models
             writer.WriteEndObject();
         }
 
-        internal static ContactPropertiesContactProfile DeserializeContactPropertiesContactProfile(JsonElement element)
+        internal static ContactsPropertiesContactProfile DeserializeContactsPropertiesContactProfile(JsonElement element)
         {
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace AzureOrbital.Models
                     continue;
                 }
             }
-            return new ContactPropertiesContactProfile(id.Value);
+            return new ContactsPropertiesContactProfile(id.Value);
         }
     }
 }

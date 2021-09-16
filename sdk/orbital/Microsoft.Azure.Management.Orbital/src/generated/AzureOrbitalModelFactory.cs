@@ -36,29 +36,50 @@ namespace AzureOrbital.Models
             return new OperationDisplay(provider, resource, operation, description);
         }
 
-        /// <summary> Initializes a new instance of GroundStationListResult. </summary>
-        /// <param name="value"> A list of ground station resources. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Models.GroundStationListResult"/> instance for mocking. </returns>
-        public static GroundStationListResult GroundStationListResult(IEnumerable<GroundStation> value = null, string nextLink = null)
+        /// <summary> Initializes a new instance of Resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
+        public static Resource Resource(string id = null, string name = null, string type = null, string location = null, IReadOnlyDictionary<string, string> tags = null, ResourceSystemData systemData = null)
         {
-            value ??= new List<GroundStation>();
+            tags ??= new Dictionary<string, string>();
 
-            return new GroundStationListResult(value?.ToList(), nextLink);
+            return new Resource(id, name, type, location, tags, systemData);
         }
 
-        /// <summary> Initializes a new instance of GroundStation. </summary>
-        /// <param name="name"> Name of the ground station. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="city"> city of ground station. </param>
-        /// <param name="providerName"> Ground station provider name. </param>
-        /// <param name="longitudeDegrees"> Longitude of the ground station in decimal degrees. </param>
-        /// <param name="latitudeDegrees"> Latitude of the ground station in decimal degrees. </param>
-        /// <param name="altitudeMeters"> Altitude of the ground station. </param>
-        /// <returns> A new <see cref="Models.GroundStation"/> instance for mocking. </returns>
-        public static GroundStation GroundStation(string name = null, string location = null, string city = null, string providerName = null, float? longitudeDegrees = null, float? latitudeDegrees = null, float? altitudeMeters = null)
+        /// <summary> Initializes a new instance of SystemData. </summary>
+        /// <param name="createdBy"> The identity that created the resource. </param>
+        /// <param name="createdByType"> The type of identity that created the resource. </param>
+        /// <param name="createdAt"> The timestamp of resource creation (UTC). </param>
+        /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
+        /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
+        /// <returns> A new <see cref="Models.SystemData"/> instance for mocking. </returns>
+        public static SystemData SystemData(string createdBy = null, CreatedByType? createdByType = null, DateTimeOffset? createdAt = null, string lastModifiedBy = null, CreatedByType? lastModifiedByType = null)
         {
-            return new GroundStation(name, location, city, providerName, longitudeDegrees, latitudeDegrees, altitudeMeters);
+            return new SystemData(createdBy, createdByType, createdAt, lastModifiedBy, lastModifiedByType);
+        }
+
+        /// <summary> Initializes a new instance of GlobalCommunicationsInfo. </summary>
+        /// <param name="globalCommunicationsSite"> A reference to a global communications site. </param>
+        /// <param name="partnerRouters"> The different customer routers of this site. </param>
+        /// <returns> A new <see cref="Models.GlobalCommunicationsInfo"/> instance for mocking. </returns>
+        public static GlobalCommunicationsInfo GlobalCommunicationsInfo(GlobalCommunicationsInfoGlobalCommunicationsSite globalCommunicationsSite = null, IEnumerable<PartnerRouter> partnerRouters = null)
+        {
+            partnerRouters ??= new List<PartnerRouter>();
+
+            return new GlobalCommunicationsInfo(globalCommunicationsSite, partnerRouters?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PartnerRouter. </summary>
+        /// <param name="name"> The unique name of the partnerRouter. </param>
+        /// <returns> A new <see cref="Models.PartnerRouter"/> instance for mocking. </returns>
+        public static PartnerRouter PartnerRouter(string name = null)
+        {
+            return new PartnerRouter(name);
         }
 
         /// <summary> Initializes a new instance of SpacecraftListResult. </summary>
@@ -72,26 +93,13 @@ namespace AzureOrbital.Models
             return new SpacecraftListResult(value?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of Resource. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
-        public static Resource Resource(string id = null, string name = null, string type = null, string location = null, IReadOnlyDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new Resource(id, name, type, location, tags);
-        }
-
         /// <summary> Initializes a new instance of Spacecraft. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="noradId"> NORAD ID of the spacecraft. </param>
         /// <param name="authorizationStatus"> Authorization status of spacecraft. </param>
@@ -99,14 +107,14 @@ namespace AzureOrbital.Models
         /// <param name="titleLine"> Title line of Two Line Element (TLE). </param>
         /// <param name="tleLine1"> Line 1 of Two Line Element (TLE). </param>
         /// <param name="tleLine2"> Line 2 of Two Line Element (TLE). </param>
-        /// <param name="links"></param>
+        /// <param name="links"> Links of the Spacecraft. </param>
         /// <returns> A new <see cref="Models.Spacecraft"/> instance for mocking. </returns>
-        public static Spacecraft Spacecraft(string id = null, string name = null, string type = null, string location = null, IReadOnlyDictionary<string, string> tags = null, string etag = null, string noradId = null, SpacecraftsPropertiesAuthorizationStatus? authorizationStatus = null, string authorizationStatusExtended = null, string titleLine = null, string tleLine1 = null, string tleLine2 = null, IEnumerable<SpacecraftLink> links = null)
+        public static Spacecraft Spacecraft(string id = null, string name = null, string type = null, string location = null, IReadOnlyDictionary<string, string> tags = null, ResourceSystemData systemData = null, string etag = null, string noradId = null, AuthorizationStatus? authorizationStatus = null, string authorizationStatusExtended = null, string titleLine = null, string tleLine1 = null, string tleLine2 = null, IEnumerable<SpacecraftLink> links = null)
         {
             tags ??= new Dictionary<string, string>();
             links ??= new List<SpacecraftLink>();
 
-            return new Spacecraft(id, name, type, location, tags, etag, noradId, authorizationStatus, authorizationStatusExtended, titleLine, tleLine1, tleLine2, links?.ToList());
+            return new Spacecraft(id, name, type, location, tags, systemData, etag, noradId, authorizationStatus, authorizationStatusExtended, titleLine, tleLine1, tleLine2, links?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContactListResult. </summary>
@@ -137,12 +145,12 @@ namespace AzureOrbital.Models
         /// <param name="properties"> Properties of the Contact Resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.Contact"/> instance for mocking. </returns>
-        public static Contact Contact(string id = null, string type = null, string name = null, ContactProperties properties = null, string etag = null)
+        public static Contact Contact(string id = null, string type = null, string name = null, ContactsProperties properties = null, string etag = null)
         {
             return new Contact(id, type, name, properties, etag);
         }
 
-        /// <summary> Initializes a new instance of ContactProperties. </summary>
+        /// <summary> Initializes a new instance of ContactsProperties. </summary>
         /// <param name="status"> Status of a contact. </param>
         /// <param name="reservationStartTime"> Reservation start time of a contact. </param>
         /// <param name="reservationEndTime"> Reservation end time of a contact. </param>
@@ -158,10 +166,10 @@ namespace AzureOrbital.Models
         /// <param name="startElevationDegrees"> Spacecraft elevation above the horizon at contact start. </param>
         /// <param name="endElevationDegrees"> Spacecraft elevation above the horizon at contact end. </param>
         /// <param name="contactProfile"> The reference to the contact profile resource. </param>
-        /// <returns> A new <see cref="Models.ContactProperties"/> instance for mocking. </returns>
-        public static ContactProperties ContactProperties(ContactPropertiesStatus? status = null, DateTimeOffset reservationStartTime = default, DateTimeOffset reservationEndTime = default, DateTimeOffset? rxStartTime = null, DateTimeOffset? rxEndTime = null, DateTimeOffset? txStartTime = null, DateTimeOffset? txEndTime = null, string errorMessage = null, float? maximumElevationDegrees = null, float? startAzimuthDegrees = null, float? endAzimuthDegrees = null, string groundStationName = null, float? startElevationDegrees = null, float? endElevationDegrees = null, ContactPropertiesContactProfile contactProfile = null)
+        /// <returns> A new <see cref="Models.ContactsProperties"/> instance for mocking. </returns>
+        public static ContactsProperties ContactsProperties(Status? status = null, DateTimeOffset reservationStartTime = default, DateTimeOffset reservationEndTime = default, DateTimeOffset? rxStartTime = null, DateTimeOffset? rxEndTime = null, DateTimeOffset? txStartTime = null, DateTimeOffset? txEndTime = null, string errorMessage = null, float? maximumElevationDegrees = null, float? startAzimuthDegrees = null, float? endAzimuthDegrees = null, string groundStationName = null, float? startElevationDegrees = null, float? endElevationDegrees = null, ContactsPropertiesContactProfile contactProfile = null)
         {
-            return new ContactProperties(status, reservationStartTime, reservationEndTime, rxStartTime, rxEndTime, txStartTime, txEndTime, errorMessage, maximumElevationDegrees, startAzimuthDegrees, endAzimuthDegrees, groundStationName, startElevationDegrees, endElevationDegrees, contactProfile);
+            return new ContactsProperties(status, reservationStartTime, reservationEndTime, rxStartTime, rxEndTime, txStartTime, txEndTime, errorMessage, maximumElevationDegrees, startAzimuthDegrees, endAzimuthDegrees, groundStationName, startElevationDegrees, endElevationDegrees, contactProfile);
         }
 
         /// <summary> Initializes a new instance of AvailableContactsListResult. </summary>
@@ -207,18 +215,19 @@ namespace AzureOrbital.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="minimumViableContactDuration"> Minimum viable contact duration in ISO 8601 format. </param>
         /// <param name="minimumElevationDegrees"> Minimum viable elevation for the contact in decimal degrees. </param>
         /// <param name="autoTrackingConfiguration"> Auto track configuration. </param>
-        /// <param name="links"></param>
+        /// <param name="links"> Links of the Contact Profile. </param>
         /// <returns> A new <see cref="Models.ContactProfile"/> instance for mocking. </returns>
-        public static ContactProfile ContactProfile(string id = null, string name = null, string type = null, string location = null, IReadOnlyDictionary<string, string> tags = null, string etag = null, string minimumViableContactDuration = null, float? minimumElevationDegrees = null, ContactProfilesPropertiesAutoTrackingConfiguration? autoTrackingConfiguration = null, IEnumerable<ContactProfileLink> links = null)
+        public static ContactProfile ContactProfile(string id = null, string name = null, string type = null, string location = null, IReadOnlyDictionary<string, string> tags = null, ResourceSystemData systemData = null, string etag = null, string minimumViableContactDuration = null, float? minimumElevationDegrees = null, AutoTrackingConfiguration? autoTrackingConfiguration = null, IEnumerable<ContactProfileLink> links = null)
         {
             tags ??= new Dictionary<string, string>();
             links ??= new List<ContactProfileLink>();
 
-            return new ContactProfile(id, name, type, location, tags, etag, minimumViableContactDuration, minimumElevationDegrees, autoTrackingConfiguration, links?.ToList());
+            return new ContactProfile(id, name, type, location, tags, systemData, etag, minimumViableContactDuration, minimumElevationDegrees, autoTrackingConfiguration, links?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContactProfileListResult. </summary>
