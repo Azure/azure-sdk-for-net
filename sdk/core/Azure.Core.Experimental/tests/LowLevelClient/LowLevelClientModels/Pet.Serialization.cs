@@ -8,25 +8,27 @@ using Azure.Core;
 
 namespace Azure.Core.Experimental.Tests.Models
 {
-    public partial class Pet
+    public partial class Pet : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+
+            writer.WritePropertyName("species");
+            writer.WriteStringValue(Species);
+
+            writer.WriteEndObject();
+        }
+
         internal static Pet DeserializePet(JsonElement element)
         {
-            Optional<int> id = default;
             Optional<string> name = default;
             Optional<string> species = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    id = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -38,7 +40,7 @@ namespace Azure.Core.Experimental.Tests.Models
                     continue;
                 }
             }
-            return new Pet(Optional.ToNullable(id), name.Value, species.Value);
+            return new Pet(name.Value, species.Value);
         }
     }
 }

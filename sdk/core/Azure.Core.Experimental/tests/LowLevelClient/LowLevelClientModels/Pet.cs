@@ -19,14 +19,12 @@ namespace Azure.Core.Experimental.Tests.Models
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="species"></param>
-        internal Pet(int? id, string name, string species)
+        internal Pet(string name, string species)
         {
-            Id = id;
             Name = name;
             Species = species;
         }
 
-        public int? Id { get; }
         public string Name { get; }
         public string Species { get; }
 

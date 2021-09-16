@@ -2,42 +2,52 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Experimental.Tests;
 using Azure.Core.Experimental.Tests.Models;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class LowLevelClientTests
+    public class LowLevelClientTests : ClientTestBase
     {
-        public LowLevelClientTests()
+        public LowLevelClientTests(bool isAsync) : base(isAsync)
         {
         }
 
         private PetStoreClient client { get; set; }
         private readonly Uri _url = new Uri("https://example.azurepetstore.com");
 
-        private TokenCredential GetCredential()
+        public PetStoreClient CreateClient(HttpPipelineTransport transport)
         {
-            return new EnvironmentCredential();
+            var options = new PetStoreClientOptions()
+            {
+                Transport = transport
+            };
+
+            return new PetStoreClient(_url, new MockCredential(), options);
         }
 
-        [SetUp]
-        public void TestSetup()
-        {
-            client = new PetStoreClient(_url, GetCredential());
-        }
-
-        //[Ignore("This test is not yet implemented.")]
         [Test]
         public async Task CanCallLlcGetMethodAsync()
         {
-            // This fails because there is no such service.
-            // We'll need to use the TestFramework's mock transport.
-            Response response = await client.GetPetAsync("pet1", new RequestOptions());
+            var mockResponse = new MockResponse(200);
+
+            Pet pet = new Pet("snoopy", "beagle");
+            mockResponse.SetContent(SerializationHelpers.Serialize(pet, SerializePet));
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            Response response = await client.GetPetAsync("snoopy", new RequestOptions());
+            var doc = JsonDocument.Parse(response.Content.ToMemory());
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual("snoopy", doc.RootElement.GetProperty("name").GetString());
+            Assert.AreEqual("beagle", doc.RootElement.GetProperty("species").GetString());
         }
 
         //[Ignore("This test is not yet implemented.")]
@@ -47,6 +57,19 @@ namespace Azure.Core.Tests
             // This currently fails because cast operator is not implemented.
             // We'll also need to use the TestFramework's mock transport here.
             Pet pet = await client.GetPetAsync("pet1");
+        }
+
+        private void SerializePet(ref Utf8JsonWriter writer, Pet pet)
+        {
+            writer.WriteStartObject();
+
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(pet.Name);
+
+            writer.WritePropertyName("species");
+            writer.WriteStringValue(pet.Species);
+
+            writer.WriteEndObject();
         }
     }
 }
