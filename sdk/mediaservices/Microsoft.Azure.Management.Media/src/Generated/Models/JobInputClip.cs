@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Initializes a new instance of the JobInputClip class.
         /// </summary>
         /// <param name="files">List of files. Required for JobInputHttp.
-        /// Maximum of 4000 characters each.</param>
+        /// Maximum of 4000 characters each. Query strings will not be returned
+        /// in service responses to prevent sensitive data exposure.</param>
         /// <param name="start">Defines a point on the timeline of the input
         /// media at which processing will start. Defaults to the beginning of
         /// the input media.</param>
@@ -67,7 +68,8 @@ namespace Microsoft.Azure.Management.Media.Models
 
         /// <summary>
         /// Gets or sets list of files. Required for JobInputHttp. Maximum of
-        /// 4000 characters each.
+        /// 4000 characters each. Query strings will not be returned in service
+        /// responses to prevent sensitive data exposure.
         /// </summary>
         [JsonProperty(PropertyName = "files")]
         public IList<string> Files { get; set; }

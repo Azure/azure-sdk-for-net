@@ -19,7 +19,7 @@ For the best development experience, developers should use the official Microsof
 
 Install the Azure Synapse client library for .NET with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Microsoft.Azure.Synapse
 ```
 

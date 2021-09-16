@@ -38,7 +38,7 @@ To quickly create the needed Service Bus resources in Azure and to receive a con
 
 Install the Azure Service Bus client library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Messaging.ServiceBus
 ```
 
