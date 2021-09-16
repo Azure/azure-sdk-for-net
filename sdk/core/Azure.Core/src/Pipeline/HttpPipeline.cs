@@ -70,9 +70,7 @@ namespace Azure.Core.Pipeline
         {
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
-            var value = _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
-            message.Response.EvaluateError(message);
-            return value;
+            return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
         }
 
         /// <summary>
@@ -85,7 +83,6 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
             _pipeline.Span[0].Process(message, _pipeline.Slice(1));
-            message.Response.EvaluateError(message);
         }
         /// <summary>
         /// Invokes the pipeline asynchronously with the provided request.
