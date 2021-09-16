@@ -271,15 +271,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             BlobContainerContainer blobContainerContainer1 = blobService1.GetBlobContainers();
             BlobService blobService2 = await destAccount.GetBlobServices().GetAsync("default");
             BlobContainerContainer blobContainerContainer2 = blobService2.GetBlobContainers();
+
             //enable changefeed and versoning
-            //blobService1.Data.ChangeFeed = new ChangeFeed();
-            //blobService1.Data.ChangeFeed.Enabled = true;
-            //blobService1.Data.ChangeFeed.RetentionInDays = 3;
             blobService1.Data.IsVersioningEnabled = true;
             await blobService1.SetServicePropertiesAsync(blobService1.Data);
-            //Assert.IsTrue(blobService1.Data.IsVersioningEnabled);
-            //Assert.IsTrue(blobService1.Data.ChangeFeed.Enabled);
-            //Assert.AreEqual(blobService1.Data.ChangeFeed.RetentionInDays.Value, 3);
 
             //create 2 pairs of source and dest blob containers
             string containerName1 = Recording.GenerateAssetName("testblob1");
