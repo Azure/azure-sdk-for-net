@@ -42,7 +42,7 @@
         /// operation.</param>
         /// <param name="supportedCapabilities">List of supported capabilities
         /// (like accelerated networking) for the image from which the OS disk
-        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?), string networkAccessPolicy = default(string), string publicNetworkAccess = default(string), string diskAccessId = default(string), double? completionPercent = default(double?), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities))
+        public DiskRestorePoint(string id, string name, string type, System.DateTime? timeCreated, string sourceResourceId, OperatingSystemTypes? osType, string hyperVGeneration, PurchasePlan purchasePlan, string familyId, string sourceUniqueId, Encryption encryption, bool? supportsHibernation, string networkAccessPolicy, string publicNetworkAccess, string diskAccessId, double? completionPercent, SupportedCapabilities supportedCapabilities)
             : base(id, name, type)
         {
             TimeCreated = timeCreated;
