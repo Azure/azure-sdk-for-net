@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "monitor/resource-manager" -AutoRestVersion "latest" -AutoRestCodeGenerationFlags "--csharp-profile=hybrid_2020_09_01" -SdkGenerationDirectory "$PSScriptRoot\Generated"

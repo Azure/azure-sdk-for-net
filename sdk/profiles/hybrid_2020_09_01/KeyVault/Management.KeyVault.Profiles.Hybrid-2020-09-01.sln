@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Management.KeyVault.Profiles.Hybrid-2020-09-01", "Management.KeyVault\Management.KeyVault.Profiles.Hybrid-2020-09-01.csproj", "{047C2A06-9C56-4281-AE58-798E02623180}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{047C2A06-9C56-4281-AE58-798E02623180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{047C2A06-9C56-4281-AE58-798E02623180}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{047C2A06-9C56-4281-AE58-798E02623180}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{047C2A06-9C56-4281-AE58-798E02623180}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A9B27D-106B-421C-8CDE-6F45CC887704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A9B27D-106B-421C-8CDE-6F45CC887704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A9B27D-106B-421C-8CDE-6F45CC887704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A9B27D-106B-421C-8CDE-6F45CC887704}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1554ECE4-EA65-4F0B-8E14-3ED97EDE54D4}
+	EndGlobalSection
+EndGlobal

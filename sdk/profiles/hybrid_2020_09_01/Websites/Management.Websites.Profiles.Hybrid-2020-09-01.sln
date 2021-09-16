@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Management.Websites.Profiles.Hybrid-2020-09-01", "Management.Websites\Management.Websites.Profiles.Hybrid-2020-09-01.csproj", "{B89D9000-85A2-4B0B-A754-F049669CC164}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B89D9000-85A2-4B0B-A754-F049669CC164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B89D9000-85A2-4B0B-A754-F049669CC164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B89D9000-85A2-4B0B-A754-F049669CC164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B89D9000-85A2-4B0B-A754-F049669CC164}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2748939-31E1-4F94-86D0-B42D66036164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2748939-31E1-4F94-86D0-B42D66036164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2748939-31E1-4F94-86D0-B42D66036164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2748939-31E1-4F94-86D0-B42D66036164}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4AC46E2-F9B7-46C0-817E-CB3B9A908D55}
+	EndGlobalSection
+EndGlobal

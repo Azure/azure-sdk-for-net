@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Management.Dns.Profiles.Hybrid-2020-09-01", "Management.Dns\Management.Dns.Profiles.Hybrid-2020-09-01.csproj", "{9FC092D9-87C9-4CB9-8C70-7862F0D7B036}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FC092D9-87C9-4CB9-8C70-7862F0D7B036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FC092D9-87C9-4CB9-8C70-7862F0D7B036}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FC092D9-87C9-4CB9-8C70-7862F0D7B036}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FC092D9-87C9-4CB9-8C70-7862F0D7B036}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34D150B2-4FAB-4183-AA64-0A9830DAC248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34D150B2-4FAB-4183-AA64-0A9830DAC248}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34D150B2-4FAB-4183-AA64-0A9830DAC248}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34D150B2-4FAB-4183-AA64-0A9830DAC248}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {330DEDEA-3000-495C-BFBB-AED32AD621A0}
+	EndGlobalSection
+EndGlobal
