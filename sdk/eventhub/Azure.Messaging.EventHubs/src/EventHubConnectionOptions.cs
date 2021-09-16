@@ -45,6 +45,8 @@ namespace Azure.Messaging.EventHubs
         ///   you've tested the impact of changing the idle timeout.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested timeout is negative.</exception>
+        ///
         public TimeSpan ConnectionIdleTimeout
         {
             get => _connectionIdleTimeout;

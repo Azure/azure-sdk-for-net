@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.KeyVault.Keys.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -1222,7 +1223,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Releases a key.
+        /// Releases the latest version of a key.
         /// </summary>
         /// <param name="name">The name of the key to release.</param>
         /// <param name="target">The attestation assertion for the target of the key release.</param>
@@ -1279,7 +1280,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Releases a key.
+        /// Releases the latest version of a key.
         /// </summary>
         /// <param name="name">The name of the key to release.</param>
         /// <param name="target">The attestation assertion for the target of the key release.</param>
@@ -1334,5 +1335,43 @@ namespace Azure.Security.KeyVault.Keys
                 throw;
             }
         }
+
+        /// <summary>
+        /// Get a <see cref="CryptographyClient"/> for the given key.
+        /// </summary>
+        /// <param name="name">The name of the key used to perform cryptographic operations.</param>
+        /// <param name="version">Optional version of the key used to perform cryptographic operations.</param>
+        /// <returns>A <see cref="CryptographyClient"/> using the same options and pipeline as this <see cref="KeyClient"/>.</returns>
+        /// <remarks>
+        /// <para>
+        /// Given a key <paramref name="name"/> and optional <paramref name="version"/>, a new <see cref="CryptographyClient"/> will be created
+        /// using the same <see cref="VaultUri"/> and options passed to this <see cref="KeyClient"/>, including the <see cref="KeyClientOptions.ServiceVersion"/>,
+        /// <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, and other options.
+        /// </para>
+        /// <para>
+        /// If you want to create a <see cref="CryptographyClient"/> using a different Key Vault or Managed HSM endpoint, with different options, or even with a
+        /// <see cref="JsonWebKey"/> you already have acquired, you can create a <see cref="CryptographyClient"/> directly with any of those alternatives.
+        /// </para>
+        /// </remarks>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        public virtual CryptographyClient GetCryptographyClient(string name, string version = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            Uri keyUri = CreateKeyUri(VaultUri, name, version);
+            return new(keyUri, _pipeline);
+        }
+
+        /// <summary>
+        /// Constructs a key <see cref="Uri"/>.
+        /// </summary>
+        /// <param name="vaultUri">The <see cref="Uri"/> to the Key Vault or Managed HSM.</param>
+        /// <param name="name">Name of the key.</param>
+        /// <param name="version">Optional version of the key.</param>
+        /// <returns>A key <see cref="Uri"/>.</returns>
+        internal static Uri CreateKeyUri(Uri vaultUri, string name, string version) => version is null
+            ? new(vaultUri, KeysPath + name)
+            : new(vaultUri, $"{KeysPath}{name}/{version}");
     }
 }

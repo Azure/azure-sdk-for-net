@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static DiskEncryptionSetList DeserializeDiskEncryptionSetList(JsonElement element)
         {
-            IReadOnlyList<DiskEncryptionSet> value = default;
+            IReadOnlyList<DiskEncryptionSetData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DiskEncryptionSet> array = new List<DiskEncryptionSet>();
+                    List<DiskEncryptionSetData> array = new List<DiskEncryptionSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskEncryptionSet.DeserializeDiskEncryptionSet(item));
+                        array.Add(DiskEncryptionSetData.DeserializeDiskEncryptionSetData(item));
                     }
                     value = array;
                     continue;

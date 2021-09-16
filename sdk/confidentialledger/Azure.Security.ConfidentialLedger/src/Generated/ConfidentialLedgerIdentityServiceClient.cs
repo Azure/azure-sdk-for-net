@@ -17,7 +17,8 @@ namespace Azure.Security.ConfidentialLedger
     public partial class ConfidentialLedgerIdentityServiceClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://confidential-ledger.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri identityServiceUri;
@@ -30,6 +31,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   ledgerId: string,
+        ///   ledgerTlsCertificate: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -37,11 +57,8 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();
             try
@@ -70,6 +87,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   ledgerId: string,
+        ///   ledgerTlsCertificate: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -77,11 +113,8 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();
             try
@@ -109,12 +142,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="GetLedgerIdentity"/> and <see cref="GetLedgerIdentityAsync"/> operations. </summary>
-        /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetLedgerIdentityRequest(string ledgerId, RequestOptions options = null)
+        private HttpMessage CreateGetLedgerIdentityRequest(string ledgerId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

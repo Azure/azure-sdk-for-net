@@ -18,15 +18,19 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ManagementPolicyAction. </summary>
         /// <param name="baseBlob"> The management policy action for base blob. </param>
         /// <param name="snapshot"> The management policy action for snapshot. </param>
-        internal ManagementPolicyAction(ManagementPolicyBaseBlob baseBlob, ManagementPolicySnapShot snapshot)
+        /// <param name="version"> The management policy action for version. </param>
+        internal ManagementPolicyAction(ManagementPolicyBaseBlob baseBlob, ManagementPolicySnapShot snapshot, ManagementPolicyVersion version)
         {
             BaseBlob = baseBlob;
             Snapshot = snapshot;
+            Version = version;
         }
 
         /// <summary> The management policy action for base blob. </summary>
         public ManagementPolicyBaseBlob BaseBlob { get; set; }
         /// <summary> The management policy action for snapshot. </summary>
         public ManagementPolicySnapShot Snapshot { get; set; }
+        /// <summary> The management policy action for version. </summary>
+        public ManagementPolicyVersion Version { get; set; }
     }
 }

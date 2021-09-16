@@ -1,0 +1,1941 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.3 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "5041ca4a68ad85b6223b005bfaa8c967",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 10 Sep 2021 10:51:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "16c1376d-cf93-4ee5-b0b9-d508256feb0a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "16c1376d-cf93-4ee5-b0b9-d508256feb0a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210910T105134Z:16c1376d-cf93-4ee5-b0b9-d508256feb0a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "tagKey1": "tagValue1",
+          "tagKey2": "tagValue2"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/deletedAccounts?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0459470ddea5fe4a8d54105f66ef2872-e93bb306961ae246-00",
+        "User-Agent": "azsdk-net-ResourceManager.Storage/1.0.0-alpha.20210910.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "62fc827f7fab6f1588d7e0656db7d434",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "53845",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 10 Sep 2021 10:51:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "abd103be-12ff-41c6-853f-da5312c1a00a",
+        "x-ms-original-request-ids": [
+          "5b44b25f-8072-4d37-9d2f-3c40af71b196",
+          "231f2630-a801-4db9-82de-2bfb278bea20",
+          "29f265a8-324d-4f2e-90f3-e60a3541a092",
+          "45dbd255-e686-440a-aff0-b18cb6497b56",
+          "42e03261-fe33-4eda-9875-5a5adace4b78",
+          "e3bc7376-f0ee-4f22-b8e2-a148d6be2f9a",
+          "7090831f-129f-4c06-800b-7a4d08b456cb",
+          "a3c3b7fa-5b8a-4506-82ca-5a8c4eb0ec19",
+          "c6b1673b-5c1b-4fe5-a3a8-737efc010ef4",
+          "597bf812-1fa0-4118-a6c6-d775a848d856",
+          "63de6bd4-e5b2-459e-8bad-c09142d564d3",
+          "c945b4db-5c0b-4962-90da-9e52905e3098",
+          "2e32ca99-519a-48db-8acf-2c5111622ef1",
+          "02d4d4a5-05e4-4211-b0f5-e8fa8aa7cbe6",
+          "bda3603a-8e65-4574-9264-5cda0843fb07",
+          "22b3fd65-8221-40af-b3d4-d2d05303a1c9",
+          "74e76466-da00-4093-bdd2-88cfcd9a4bd7",
+          "c3b2d349-c3df-4e0d-9f42-d34608cd7a42",
+          "d75121ff-61dd-4f64-9796-f58e56862ce1",
+          "46a8c0e2-92ac-4e7a-b552-fd228c0f7a08",
+          "ff61da82-c28f-45bd-a854-6713142e795c",
+          "2308f08a-f5ba-4d28-bf08-d6e54ac31e07",
+          "10f4253c-33d1-4ae2-8a45-196624ecec35",
+          "67bbfc8e-4c11-4f08-8f64-06915d36d4d4",
+          "750ab9db-7ed5-4489-b98f-c36d4851aaa2",
+          "483a78cd-9d23-437b-868c-6ba91228e000",
+          "dd161eab-5131-4ed1-96ba-a20b88298a95",
+          "64b64f2f-e054-4b8d-ba4a-a443b3270c22",
+          "d67f374c-edb2-409f-8d4e-db0c67348bdb",
+          "d4242dea-d49d-4ad7-bd43-b4fe0200e0aa",
+          "4ceb9db4-2b0f-457e-a628-f2de0a22cf3e",
+          "853c5189-5db9-43e4-b4d0-fd925cc33909",
+          "0ae552d6-cc6a-4225-8436-3315eb30db8e",
+          "12f9be8c-effa-4c17-95d8-95a38481455c",
+          "71e41fc7-0874-423e-9e64-86ebb4120d3b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "abd103be-12ff-41c6-853f-da5312c1a00a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210910T105135Z:abd103be-12ff-41c6-853f-da5312c1a00a"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "key": "sto2458|2021-09-01t03:41:47.2919527z",
+            "name": "sto2458",
+            "location": "eastus",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res8644",
+            "creationTime": "2021-09-01T03:41:47.2919527Z",
+            "deletionTime": "2021-09-01T03:42:08.6980624Z"
+          },
+          {
+            "key": "sto4722|2021-09-01t03:33:13.8376974z",
+            "name": "sto4722",
+            "location": "eastus",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res879",
+            "creationTime": "2021-09-01T03:33:13.8376974Z",
+            "deletionTime": "2021-09-01T03:33:35.5095584Z"
+          },
+          {
+            "key": "sto1444|2021-09-01t03:45:34.5731524z",
+            "name": "sto1444",
+            "location": "eastus",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6106",
+            "creationTime": "2021-09-01T03:45:34.5731524Z",
+            "deletionTime": "2021-09-01T03:46:53.7299068Z"
+          },
+          {
+            "key": "sto7434|2021-09-01t03:36:02.1031924z",
+            "name": "sto7434",
+            "location": "eastus",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9732",
+            "creationTime": "2021-09-01T03:36:02.1031924Z",
+            "deletionTime": "2021-09-01T03:36:22.6500583Z"
+          },
+          {
+            "key": "sto6737|2021-09-01t03:31:11.8206765z",
+            "name": "sto6737",
+            "location": "eastus",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1250",
+            "creationTime": "2021-09-01T03:31:11.8206765Z",
+            "deletionTime": "2021-09-01T03:31:34.4466034Z"
+          },
+          {
+            "key": "sto6197|2021-09-01t03:43:11.9633106z",
+            "name": "sto6197",
+            "location": "eastus",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res8670",
+            "creationTime": "2021-09-01T03:43:11.9633106Z",
+            "deletionTime": "2021-09-01T03:44:30.7286183Z"
+          },
+          {
+            "key": "sto2195|2021-09-01t03:34:39.0876246z",
+            "name": "sto2195",
+            "location": "eastus",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1795",
+            "creationTime": "2021-09-01T03:34:39.0876246Z",
+            "deletionTime": "2021-09-01T03:34:58.0251167Z"
+          },
+          {
+            "key": "sto1035|2021-09-01t01:23:13.2974951z",
+            "name": "sto1035",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1906",
+            "creationTime": "2021-09-01T01:23:13.2974951Z",
+            "deletionTime": "2021-09-01T01:23:34.7045909Z"
+          },
+          {
+            "key": "sto8736|2021-09-01t00:10:14.7160072z",
+            "name": "sto8736",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1902",
+            "creationTime": "2021-09-01T00:10:14.7160072Z",
+            "deletionTime": "2021-09-01T00:10:34.5450797Z"
+          },
+          {
+            "key": "storage2131|2021-09-03t07:10:34.9557732z",
+            "name": "storage2131",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-7503",
+            "creationTime": "2021-09-03T07:10:34.9557732Z",
+            "deletionTime": "2021-09-03T07:10:55.9253779Z"
+          },
+          {
+            "key": "sto6048|2021-09-01t02:17:54.9301301z",
+            "name": "sto6048",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res4740",
+            "creationTime": "2021-09-01T02:17:54.9301301Z",
+            "deletionTime": "2021-09-01T02:18:15.2121939Z"
+          },
+          {
+            "key": "sto1023|2021-09-01t01:21:47.9816635z",
+            "name": "sto1023",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9562",
+            "creationTime": "2021-09-01T01:21:47.9816635Z",
+            "deletionTime": "2021-09-01T01:22:08.7480913Z"
+          },
+          {
+            "key": "sdktestaccount18|2021-09-01t05:54:08.2946980z",
+            "name": "sdktestaccount18",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "Default-EventHub-4082",
+            "creationTime": "2021-09-01T05:54:08.294698Z",
+            "deletionTime": "2021-09-01T05:56:27.6282718Z"
+          },
+          {
+            "key": "sto166|2021-09-01t03:03:25.8055497z",
+            "name": "sto166",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2793",
+            "creationTime": "2021-09-01T03:03:25.8055497Z",
+            "deletionTime": "2021-09-01T03:03:53.9939557Z"
+          },
+          {
+            "key": "sto6969|2021-09-01t01:54:10.3412354z",
+            "name": "sto6969",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6580",
+            "creationTime": "2021-09-01T01:54:10.3412354Z",
+            "deletionTime": "2021-09-01T01:54:51.8272152Z"
+          },
+          {
+            "key": "sto3161|2021-08-31t23:34:00.2372666z",
+            "name": "sto3161",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2078",
+            "creationTime": "2021-08-31T23:34:00.2372666Z",
+            "deletionTime": "2021-08-31T23:35:19.6466776Z"
+          },
+          {
+            "key": "sto9882|2021-09-01t02:39:58.7330778z",
+            "name": "sto9882",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res3290",
+            "creationTime": "2021-09-01T02:39:58.7330778Z",
+            "deletionTime": "2021-09-01T02:41:19.939428Z"
+          },
+          {
+            "key": "sto4713|2021-09-01t00:51:32.6747693z",
+            "name": "sto4713",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6169",
+            "creationTime": "2021-09-01T00:51:32.6747693Z",
+            "deletionTime": "2021-09-01T00:52:14.3170255Z"
+          },
+          {
+            "key": "sto7819|2021-08-31t23:19:08.3420893z",
+            "name": "sto7819",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6275",
+            "creationTime": "2021-08-31T23:19:08.3420893Z",
+            "deletionTime": "2021-08-31T23:19:30.9836584Z"
+          },
+          {
+            "key": "sto6648|2021-09-01t01:42:08.1087231z",
+            "name": "sto6648",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6925",
+            "creationTime": "2021-09-01T01:42:08.1087231Z",
+            "deletionTime": "2021-09-01T01:43:32.6276271Z"
+          },
+          {
+            "key": "sto4444|2021-09-01t01:54:31.0920818z",
+            "name": "sto4444",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6580",
+            "creationTime": "2021-09-01T01:54:31.0920818Z",
+            "deletionTime": "2021-09-01T01:54:51.7334827Z"
+          },
+          {
+            "key": "storage123|2021-09-10t10:47:25.7070576z",
+            "name": "storage123",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-5745",
+            "creationTime": "2021-09-10T10:47:25.7070576Z",
+            "deletionTime": "2021-09-10T10:47:28.2227419Z"
+          },
+          {
+            "key": "sto5936|2021-09-01t00:46:04.6462609z",
+            "name": "sto5936",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5765",
+            "creationTime": "2021-09-01T00:46:04.6462609Z",
+            "deletionTime": "2021-09-01T00:47:25.7275Z"
+          },
+          {
+            "key": "sto7059|2021-09-01t00:07:12.4273169z",
+            "name": "sto7059",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7127",
+            "creationTime": "2021-09-01T00:07:12.4273169Z",
+            "deletionTime": "2021-09-01T00:07:36.8658209Z"
+          },
+          {
+            "key": "sto3936|2021-09-01t01:17:15.5020527z",
+            "name": "sto3936",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6864",
+            "creationTime": "2021-09-01T01:17:15.5020527Z",
+            "deletionTime": "2021-09-01T19:11:54.7567166Z"
+          },
+          {
+            "key": "sto8077|2021-08-31t23:09:54.0073846z",
+            "name": "sto8077",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6833",
+            "creationTime": "2021-08-31T23:09:54.0073846Z",
+            "deletionTime": "2021-08-31T23:10:15.8519773Z"
+          },
+          {
+            "key": "sto8077|2021-09-01t00:41:46.3541574z",
+            "name": "sto8077",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6833",
+            "creationTime": "2021-09-01T00:41:46.3541574Z",
+            "deletionTime": "2021-09-01T00:42:07.7455852Z"
+          },
+          {
+            "key": "sto532|2021-09-01t01:03:36.5164440z",
+            "name": "sto532",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2126",
+            "creationTime": "2021-09-01T01:03:36.516444Z",
+            "deletionTime": "2021-09-01T01:03:58.0641372Z"
+          },
+          {
+            "key": "sto7418|2021-09-01t02:42:26.2076553z",
+            "name": "sto7418",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1274",
+            "creationTime": "2021-09-01T02:42:26.2076553Z",
+            "deletionTime": "2021-09-01T02:43:48.0236092Z"
+          },
+          {
+            "key": "sto2286|2021-08-31t23:27:36.2529872z",
+            "name": "sto2286",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res8501",
+            "creationTime": "2021-08-31T23:27:36.2529872Z",
+            "deletionTime": "2021-08-31T23:27:59.0351387Z"
+          },
+          {
+            "key": "sto9511|2021-09-01t00:55:11.2931865z",
+            "name": "sto9511",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9633",
+            "creationTime": "2021-09-01T00:55:11.2931865Z",
+            "deletionTime": "2021-09-01T00:55:29.9970438Z"
+          },
+          {
+            "key": "sto1383|2021-09-01t01:20:23.3533258z",
+            "name": "sto1383",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res3780",
+            "creationTime": "2021-09-01T01:20:23.3533258Z",
+            "deletionTime": "2021-09-01T01:20:46.3229944Z"
+          },
+          {
+            "key": "sto583|2021-09-01t01:07:02.0401177z",
+            "name": "sto583",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1299",
+            "creationTime": "2021-09-01T01:07:02.0401177Z",
+            "deletionTime": "2021-09-01T01:07:43.4791408Z"
+          },
+          {
+            "key": "storage123|2021-09-09t04:22:53.9848509z",
+            "name": "storage123",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-1989",
+            "creationTime": "2021-09-09T04:22:53.9848509Z",
+            "deletionTime": "2021-09-09T04:22:55.7817747Z"
+          },
+          {
+            "key": "sto4024|2021-08-31t23:16:19.0226417z",
+            "name": "sto4024",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res945",
+            "creationTime": "2021-08-31T23:16:19.0226417Z",
+            "deletionTime": "2021-08-31T23:16:41.4765953Z"
+          },
+          {
+            "key": "sto4034|2021-09-01t02:08:26.0938332z",
+            "name": "sto4034",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1773",
+            "creationTime": "2021-09-01T02:08:26.0938332Z",
+            "deletionTime": "2021-09-01T02:08:47.9227866Z"
+          },
+          {
+            "key": "sto4080|2021-09-01t02:26:06.7152608z",
+            "name": "sto4080",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res4556",
+            "creationTime": "2021-09-01T02:26:06.7152608Z",
+            "deletionTime": "2021-09-01T02:27:26.0938467Z"
+          },
+          {
+            "key": "storage1120|2021-08-31t07:24:45.7367384z",
+            "name": "storage1120",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-1148",
+            "creationTime": "2021-08-31T07:24:45.7367384Z",
+            "deletionTime": "2021-08-31T07:24:47.0961449Z"
+          },
+          {
+            "key": "storage123|2021-09-09t03:54:47.9916755z",
+            "name": "storage123",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-133",
+            "creationTime": "2021-09-09T03:54:47.9916755Z",
+            "deletionTime": "2021-09-09T03:54:49.5073828Z"
+          },
+          {
+            "key": "sto1210|2021-09-01t02:29:54.8342087z",
+            "name": "sto1210",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res4748",
+            "creationTime": "2021-09-01T02:29:54.8342087Z",
+            "deletionTime": "2021-09-01T02:30:16.038143Z"
+          },
+          {
+            "key": "storage123|2021-09-10t10:47:13.3316402z",
+            "name": "storage123",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-8939",
+            "creationTime": "2021-09-10T10:47:13.3316402Z",
+            "deletionTime": "2021-09-10T10:47:14.7223151Z"
+          },
+          {
+            "key": "sto1015|2021-09-01t01:00:31.8839380z",
+            "name": "sto1015",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5163",
+            "creationTime": "2021-09-01T01:00:31.883938Z",
+            "deletionTime": "2021-09-01T01:02:30.9045424Z"
+          },
+          {
+            "key": "sto612|2021-09-01t01:47:05.3704921z",
+            "name": "sto612",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7687",
+            "creationTime": "2021-09-01T01:47:05.3704921Z",
+            "deletionTime": "2021-09-01T01:47:28.683981Z"
+          },
+          {
+            "key": "storage6449|2021-08-31t09:23:50.9442827z",
+            "name": "storage6449",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-1312",
+            "creationTime": "2021-08-31T09:23:50.9442827Z",
+            "deletionTime": "2021-08-31T09:24:13.4767706Z"
+          },
+          {
+            "key": "sto1190|2021-08-31t23:48:45.9469270z",
+            "name": "sto1190",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9487",
+            "creationTime": "2021-08-31T23:48:45.946927Z",
+            "deletionTime": "2021-08-31T23:49:06.9771529Z"
+          },
+          {
+            "key": "sto1789|2021-08-31t23:40:42.3629947z",
+            "name": "sto1789",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5701",
+            "creationTime": "2021-08-31T23:40:42.3629947Z",
+            "deletionTime": "2021-08-31T23:41:06.8639722Z"
+          },
+          {
+            "key": "storage456|2021-09-09t04:41:05.7157850z",
+            "name": "storage456",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-3245",
+            "creationTime": "2021-09-09T04:41:05.715785Z",
+            "deletionTime": "2021-09-09T04:41:07.3720962Z"
+          },
+          {
+            "key": "sto6602|2021-08-31t23:17:45.5573615z",
+            "name": "sto6602",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res8245",
+            "creationTime": "2021-08-31T23:17:45.5573615Z",
+            "deletionTime": "2021-08-31T23:18:05.7768413Z"
+          },
+          {
+            "key": "sto6107|2021-08-31t23:43:55.6675061z",
+            "name": "sto6107",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1766",
+            "creationTime": "2021-08-31T23:43:55.6675061Z",
+            "deletionTime": "2021-08-31T23:45:16.3426543Z"
+          },
+          {
+            "key": "sto7620|2021-09-01t02:01:09.8421170z",
+            "name": "sto7620",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7420",
+            "creationTime": "2021-09-01T02:01:09.842117Z",
+            "deletionTime": "2021-09-01T02:01:47.0623469Z"
+          },
+          {
+            "key": "sdktestaccount3984|2021-09-01t05:52:10.0713952z",
+            "name": "sdktestaccount3984",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "Default-EventHub-7509",
+            "creationTime": "2021-09-01T05:52:10.0713952Z",
+            "deletionTime": "2021-09-01T05:54:08.0290625Z"
+          },
+          {
+            "key": "sto6177|2021-09-01t02:06:21.3232621z",
+            "name": "sto6177",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5119",
+            "creationTime": "2021-09-01T02:06:21.3232621Z",
+            "deletionTime": "2021-09-01T02:06:40.2458595Z"
+          },
+          {
+            "key": "sdktestaccount18|2021-08-29t01:59:33.8201177z",
+            "name": "sdktestaccount18",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "Default-EventHub-4082",
+            "creationTime": "2021-08-29T01:59:33.8201177Z",
+            "deletionTime": "2021-08-29T10:11:49.5522918Z"
+          },
+          {
+            "key": "sto2919|2021-09-01t02:24:25.0550259z",
+            "name": "sto2919",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7833",
+            "creationTime": "2021-09-01T02:24:25.0550259Z",
+            "deletionTime": "2021-09-01T19:13:10.7933378Z"
+          },
+          {
+            "key": "sto983|2021-09-01t01:06:21.9448186z",
+            "name": "sto983",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1299",
+            "creationTime": "2021-09-01T01:06:21.9448186Z",
+            "deletionTime": "2021-09-01T01:07:43.4015314Z"
+          },
+          {
+            "key": "sto3817|2021-08-31t23:29:04.4600025z",
+            "name": "sto3817",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1126",
+            "creationTime": "2021-08-31T23:29:04.4600025Z",
+            "deletionTime": "2021-08-31T23:29:24.2733109Z"
+          },
+          {
+            "key": "sto2215|2021-09-01t02:02:52.1743806z",
+            "name": "sto2215",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1821",
+            "creationTime": "2021-09-01T02:02:52.1743806Z",
+            "deletionTime": "2021-09-01T02:04:12.6150706Z"
+          },
+          {
+            "key": "sto5682|2021-09-01t01:44:39.4427925z",
+            "name": "sto5682",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7599",
+            "creationTime": "2021-09-01T01:44:39.4427925Z",
+            "deletionTime": "2021-09-01T01:46:00.9461511Z"
+          },
+          {
+            "key": "sto3604|2021-09-01t00:50:04.1243642z",
+            "name": "sto3604",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res590",
+            "creationTime": "2021-09-01T00:50:04.1243642Z",
+            "deletionTime": "2021-09-01T00:50:25.0939792Z"
+          },
+          {
+            "key": "sto734|2021-09-01t00:56:32.4995051z",
+            "name": "sto734",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5943",
+            "creationTime": "2021-09-01T00:56:32.4995051Z",
+            "deletionTime": "2021-09-01T00:57:52.3467145Z"
+          },
+          {
+            "key": "sto6608|2021-08-31t23:13:52.0949898z",
+            "name": "sto6608",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1243",
+            "creationTime": "2021-08-31T23:13:52.0949898Z",
+            "deletionTime": "2021-08-31T23:15:16.0201743Z"
+          },
+          {
+            "key": "sto854|2021-09-01t00:14:14.7097755z",
+            "name": "sto854",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7078",
+            "creationTime": "2021-09-01T00:14:14.7097755Z",
+            "deletionTime": "2021-09-01T00:14:35.8981138Z"
+          },
+          {
+            "key": "storage704|2021-08-31t07:46:03.3499532z",
+            "name": "storage704",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-8604",
+            "creationTime": "2021-08-31T07:46:03.3499532Z",
+            "deletionTime": "2021-08-31T07:47:11.149509Z"
+          },
+          {
+            "key": "sto681|2021-08-31t23:53:20.7374312z",
+            "name": "sto681",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6929",
+            "creationTime": "2021-08-31T23:53:20.7374312Z",
+            "deletionTime": "2021-08-31T23:53:42.6289945Z"
+          },
+          {
+            "key": "sto443|2021-09-01t01:14:00.4944139z",
+            "name": "sto443",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9502",
+            "creationTime": "2021-09-01T01:14:00.4944139Z",
+            "deletionTime": "2021-09-01T01:14:20.6044724Z"
+          },
+          {
+            "key": "sto3041|2021-09-01t02:08:07.7493106z",
+            "name": "sto3041",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1773",
+            "creationTime": "2021-09-01T02:08:07.7493106Z",
+            "deletionTime": "2021-09-01T02:08:47.8759149Z"
+          },
+          {
+            "key": "sto4293|2021-09-01t01:57:42.2714657z",
+            "name": "sto4293",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res605",
+            "creationTime": "2021-09-01T01:57:42.2714657Z",
+            "deletionTime": "2021-09-01T01:59:01.8995534Z"
+          },
+          {
+            "key": "sto5936|2021-09-01t03:04:55.6995937z",
+            "name": "sto5936",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5765",
+            "creationTime": "2021-09-01T03:04:55.6995937Z",
+            "deletionTime": "2021-09-01T03:05:17.1378795Z"
+          },
+          {
+            "key": "sto8992|2021-08-31t23:30:29.8850968z",
+            "name": "sto8992",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5819",
+            "creationTime": "2021-08-31T23:30:29.8850968Z",
+            "deletionTime": "2021-08-31T23:31:28.1375263Z"
+          },
+          {
+            "key": "sto9345|2021-09-01t01:04:59.4096219z",
+            "name": "sto9345",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res3986",
+            "creationTime": "2021-09-01T01:04:59.4096219Z",
+            "deletionTime": "2021-09-01T01:05:19.2078201Z"
+          },
+          {
+            "key": "sto7189|2021-08-31t23:08:28.9103014z",
+            "name": "sto7189",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1853",
+            "creationTime": "2021-08-31T23:08:28.9103014Z",
+            "deletionTime": "2021-08-31T23:08:51.7393364Z"
+          },
+          {
+            "key": "sto3427|2021-09-01t02:57:08.9775814z",
+            "name": "sto3427",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res290",
+            "creationTime": "2021-09-01T02:57:08.9775814Z",
+            "deletionTime": "2021-09-01T02:58:30.637098Z"
+          },
+          {
+            "key": "storage5627|2021-08-31t07:43:58.5013026z",
+            "name": "storage5627",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-1079",
+            "creationTime": "2021-08-31T07:43:58.5013026Z",
+            "deletionTime": "2021-08-31T07:44:42.2530167Z"
+          },
+          {
+            "key": "sto166|2021-09-01t03:18:53.8738826z",
+            "name": "sto166",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2793",
+            "creationTime": "2021-09-01T03:18:53.8738826Z",
+            "deletionTime": "2021-09-01T03:20:22.9399235Z"
+          },
+          {
+            "key": "storage2035|2021-09-10t06:07:55.9226618z",
+            "name": "storage2035",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-9363",
+            "creationTime": "2021-09-10T06:07:55.9226618Z",
+            "deletionTime": "2021-09-10T06:13:09.9214856Z"
+          },
+          {
+            "key": "sto472|2021-08-31t23:32:31.4525598z",
+            "name": "sto472",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9759",
+            "creationTime": "2021-08-31T23:32:31.4525598Z",
+            "deletionTime": "2021-08-31T23:32:55.7660326Z"
+          },
+          {
+            "key": "sto3327|2021-09-01t01:48:35.6553950z",
+            "name": "sto3327",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res3108",
+            "creationTime": "2021-09-01T01:48:35.655395Z",
+            "deletionTime": "2021-09-01T01:48:58.0000069Z"
+          },
+          {
+            "key": "sto8731|2021-09-01t01:51:44.7875906z",
+            "name": "sto8731",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5576",
+            "creationTime": "2021-09-01T01:51:44.7875906Z",
+            "deletionTime": "2021-09-01T01:53:05.385066Z"
+          },
+          {
+            "key": "sto9689|2021-09-01t00:51:53.3161915z",
+            "name": "sto9689",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6169",
+            "creationTime": "2021-09-01T00:51:53.3161915Z",
+            "deletionTime": "2021-09-01T00:52:14.2232414Z"
+          },
+          {
+            "key": "sto5118|2021-09-01t01:55:55.6265973z",
+            "name": "sto5118",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7603",
+            "creationTime": "2021-09-01T01:55:55.6265973Z",
+            "deletionTime": "2021-09-01T01:56:33.5968559Z"
+          },
+          {
+            "key": "sto6263|2021-09-01t01:10:10.4068670z",
+            "name": "sto6263",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res3772",
+            "creationTime": "2021-09-01T01:10:10.406867Z",
+            "deletionTime": "2021-09-01T01:11:31.0661324Z"
+          },
+          {
+            "key": "sto6557|2021-09-01t02:12:57.0427899z",
+            "name": "sto6557",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7066",
+            "creationTime": "2021-09-01T02:12:57.0427899Z",
+            "deletionTime": "2021-09-01T02:13:57.6707966Z"
+          },
+          {
+            "key": "sto1469|2021-09-01t00:00:09.1136864z",
+            "name": "sto1469",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res3737",
+            "creationTime": "2021-09-01T00:00:09.1136864Z",
+            "deletionTime": "2021-09-01T00:00:31.5833315Z"
+          },
+          {
+            "key": "storage9556|2021-08-30t02:30:50.0446250z",
+            "name": "storage9556",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-2079",
+            "creationTime": "2021-08-30T02:30:50.044625Z",
+            "deletionTime": "2021-08-30T02:31:13.2486795Z"
+          },
+          {
+            "key": "sto7608|2021-09-01t01:06:40.2736404z",
+            "name": "sto7608",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1299",
+            "creationTime": "2021-09-01T01:06:40.2736404Z",
+            "deletionTime": "2021-09-01T01:07:43.3072601Z"
+          },
+          {
+            "key": "sto8644|2021-08-31t23:56:10.2128269z",
+            "name": "sto8644",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res4830",
+            "creationTime": "2021-08-31T23:56:10.2128269Z",
+            "deletionTime": "2021-08-31T23:57:29.1378439Z"
+          },
+          {
+            "key": "sto3467|2021-09-01t02:21:42.2360867z",
+            "name": "sto3467",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9717",
+            "creationTime": "2021-09-01T02:21:42.2360867Z",
+            "deletionTime": "2021-09-01T02:23:20.0680399Z"
+          },
+          {
+            "key": "sto8159|2021-08-31t23:24:36.3553126z",
+            "name": "sto8159",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2699",
+            "creationTime": "2021-08-31T23:24:36.3553126Z",
+            "deletionTime": "2021-08-31T23:24:58.2936504Z"
+          },
+          {
+            "key": "sto2893|2021-09-01t02:13:16.4496056z",
+            "name": "sto2893",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7066",
+            "creationTime": "2021-09-01T02:13:16.4496056Z",
+            "deletionTime": "2021-09-01T02:13:57.6707966Z"
+          },
+          {
+            "key": "sdktestaccount5630|2021-08-29t12:47:19.5884064z",
+            "name": "sdktestaccount5630",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "Default-EventHub-6244",
+            "creationTime": "2021-08-29T12:47:19.5884064Z",
+            "deletionTime": "2021-08-29T12:47:38.6985259Z"
+          },
+          {
+            "key": "sto175|2021-09-01t01:29:51.2036024z",
+            "name": "sto175",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1440",
+            "creationTime": "2021-09-01T01:29:51.2036024Z",
+            "deletionTime": "2021-09-01T01:30:12.0015957Z"
+          },
+          {
+            "key": "sto7101|2021-09-01t01:15:29.2635199z",
+            "name": "sto7101",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6856",
+            "creationTime": "2021-09-01T01:15:29.2635199Z",
+            "deletionTime": "2021-09-01T01:16:10.2338763Z"
+          },
+          {
+            "key": "sto4827|2021-09-01t02:28:32.2682705z",
+            "name": "sto4827",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5244",
+            "creationTime": "2021-09-01T02:28:32.2682705Z",
+            "deletionTime": "2021-09-01T02:28:53.1442637Z"
+          },
+          {
+            "key": "storage123|2021-09-09t03:55:18.6334989z",
+            "name": "storage123",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-6215",
+            "creationTime": "2021-09-09T03:55:18.6334989Z",
+            "deletionTime": "2021-09-09T03:55:20.6336125Z"
+          },
+          {
+            "key": "sto8627|2021-09-01t01:12:36.6317410z",
+            "name": "sto8627",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1486",
+            "creationTime": "2021-09-01T01:12:36.631741Z",
+            "deletionTime": "2021-09-01T01:12:56.9294702Z"
+          },
+          {
+            "key": "sto6558|2021-08-31t23:30:50.5110324z",
+            "name": "sto6558",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5819",
+            "creationTime": "2021-08-31T23:30:50.5110324Z",
+            "deletionTime": "2021-08-31T23:31:28.1062511Z"
+          },
+          {
+            "key": "sto6880|2021-08-31t23:26:01.2336225z",
+            "name": "sto6880",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2612",
+            "creationTime": "2021-08-31T23:26:01.2336225Z",
+            "deletionTime": "2021-08-31T23:26:22.5469585Z"
+          },
+          {
+            "key": "sto6180|2021-08-31t23:38:05.1536634z",
+            "name": "sto6180",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res377",
+            "creationTime": "2021-08-31T23:38:05.1536634Z",
+            "deletionTime": "2021-08-31T23:39:26.3131463Z"
+          },
+          {
+            "key": "sto1043|2021-09-01t01:56:14.6429954z",
+            "name": "sto1043",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7603",
+            "creationTime": "2021-09-01T01:56:14.6429954Z",
+            "deletionTime": "2021-09-01T01:56:33.5968559Z"
+          },
+          {
+            "key": "sto2799|2021-09-01t01:40:30.0267159z",
+            "name": "sto2799",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res272",
+            "creationTime": "2021-09-01T01:40:30.0267159Z",
+            "deletionTime": "2021-09-01T01:40:56.6996743Z"
+          },
+          {
+            "key": "sto166|2021-09-01t00:44:36.4080328z",
+            "name": "sto166",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2793",
+            "creationTime": "2021-09-01T00:44:36.4080328Z",
+            "deletionTime": "2021-09-01T00:45:00.5810846Z"
+          },
+          {
+            "key": "sto8077|2021-09-01t03:12:52.6872240z",
+            "name": "sto8077",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6833",
+            "creationTime": "2021-09-01T03:12:52.687224Z",
+            "deletionTime": "2021-09-01T03:14:12.0028535Z"
+          },
+          {
+            "key": "sto303|2021-09-01t03:19:16.5466046z",
+            "name": "sto303",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2793",
+            "creationTime": "2021-09-01T03:19:16.5466046Z",
+            "deletionTime": "2021-09-01T03:19:17.9685589Z"
+          },
+          {
+            "key": "sto2389|2021-09-01t01:31:14.8635352z",
+            "name": "sto2389",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5008",
+            "creationTime": "2021-09-01T01:31:14.8635352Z",
+            "deletionTime": "2021-09-01T01:31:42.4271467Z"
+          },
+          {
+            "key": "sto1996|2021-09-01t01:50:02.7056653z",
+            "name": "sto1996",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2391",
+            "creationTime": "2021-09-01T01:50:02.7056653Z",
+            "deletionTime": "2021-09-01T01:50:24.0033592Z"
+          },
+          {
+            "key": "sto1454|2021-09-01t01:01:10.8854734z",
+            "name": "sto1454",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5163",
+            "creationTime": "2021-09-01T01:01:10.8854734Z",
+            "deletionTime": "2021-09-01T01:02:30.7951378Z"
+          },
+          {
+            "key": "sto7059|2021-09-01t03:06:21.7341966z",
+            "name": "sto7059",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7127",
+            "creationTime": "2021-09-01T03:06:21.7341966Z",
+            "deletionTime": "2021-09-01T03:07:42.503003Z"
+          },
+          {
+            "key": "sto1404|2021-09-01t00:04:48.2654328z",
+            "name": "sto1404",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5333",
+            "creationTime": "2021-09-01T00:04:48.2654328Z",
+            "deletionTime": "2021-09-01T00:06:07.7216351Z"
+          },
+          {
+            "key": "sto7702|2021-08-31t23:36:23.0558271z",
+            "name": "sto7702",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9723",
+            "creationTime": "2021-08-31T23:36:23.0558271Z",
+            "deletionTime": "2021-08-31T23:36:42.6972548Z"
+          },
+          {
+            "key": "storage789|2021-09-09t04:53:17.2163470z",
+            "name": "storage789",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-4947",
+            "creationTime": "2021-09-09T04:53:17.216347Z",
+            "deletionTime": "2021-09-09T04:53:18.5757751Z"
+          },
+          {
+            "key": "sto5017|2021-09-01t02:49:56.1166354z",
+            "name": "sto5017",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1782",
+            "creationTime": "2021-09-01T02:49:56.1166354Z",
+            "deletionTime": "2021-09-01T02:50:18.18001Z"
+          },
+          {
+            "key": "storage123|2021-09-09t04:22:34.7331444z",
+            "name": "storage123",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-50",
+            "creationTime": "2021-09-09T04:22:34.7331444Z",
+            "deletionTime": "2021-09-09T04:22:36.1394492Z"
+          },
+          {
+            "key": "sto1605|2021-09-01t02:55:43.7710929z",
+            "name": "sto1605",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res4822",
+            "creationTime": "2021-09-01T02:55:43.7710929Z",
+            "deletionTime": "2021-09-01T02:56:05.6469488Z"
+          },
+          {
+            "key": "sto3430|2021-09-01t01:36:38.6581942z",
+            "name": "sto3430",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7042",
+            "creationTime": "2021-09-01T01:36:38.6581942Z",
+            "deletionTime": "2021-09-01T01:38:00.5521468Z"
+          },
+          {
+            "key": "sto8685|2021-08-31t23:20:34.7364127z",
+            "name": "sto8685",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res8964",
+            "creationTime": "2021-08-31T23:20:34.7364127Z",
+            "deletionTime": "2021-08-31T23:21:57.0677578Z"
+          },
+          {
+            "key": "sto118|2021-09-01t01:24:37.2538936z",
+            "name": "sto118",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res4550",
+            "creationTime": "2021-09-01T01:24:37.2538936Z",
+            "deletionTime": "2021-09-01T01:24:58.2390868Z"
+          },
+          {
+            "key": "sto2804|2021-09-01t02:11:14.1947631z",
+            "name": "sto2804",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1411",
+            "creationTime": "2021-09-01T02:11:14.1947631Z",
+            "deletionTime": "2021-09-01T02:11:33.7580513Z"
+          },
+          {
+            "key": "sto7957|2021-08-31t23:07:03.6100580z",
+            "name": "sto7957",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1328",
+            "creationTime": "2021-08-31T23:07:03.610058Z",
+            "deletionTime": "2021-08-31T23:07:25.2984036Z"
+          },
+          {
+            "key": "storage5639|2021-09-03t07:07:57.1058775z",
+            "name": "storage5639",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-3221",
+            "creationTime": "2021-09-03T07:07:57.1058775Z",
+            "deletionTime": "2021-09-03T07:08:18.0285818Z"
+          },
+          {
+            "key": "sto7604|2021-09-01t01:00:50.8846905z",
+            "name": "sto7604",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5163",
+            "creationTime": "2021-09-01T01:00:50.8846905Z",
+            "deletionTime": "2021-09-01T01:02:30.7795133Z"
+          },
+          {
+            "key": "sdktestaccount3682|2021-08-29t12:47:11.7599879z",
+            "name": "sdktestaccount3682",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "Default-EventHub-9336",
+            "creationTime": "2021-08-29T12:47:11.7599879Z",
+            "deletionTime": "2021-08-29T12:47:31.3545123Z"
+          },
+          {
+            "key": "sto192|2021-08-31t23:46:20.8768722z",
+            "name": "sto192",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6598",
+            "creationTime": "2021-08-31T23:46:20.8768722Z",
+            "deletionTime": "2021-08-31T23:47:41.645657Z"
+          },
+          {
+            "key": "sto8951|2021-09-01t02:54:16.7207921z",
+            "name": "sto8951",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1983",
+            "creationTime": "2021-09-01T02:54:16.7207921Z",
+            "deletionTime": "2021-09-01T02:54:40.7842284Z"
+          },
+          {
+            "key": "sto166|2021-08-31t23:58:40.0312651z",
+            "name": "sto166",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2793",
+            "creationTime": "2021-08-31T23:58:40.0312651Z",
+            "deletionTime": "2021-08-31T23:59:05.2493203Z"
+          },
+          {
+            "key": "sto3707|2021-09-01t00:11:50.3916353z",
+            "name": "sto3707",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res76",
+            "creationTime": "2021-09-01T00:11:50.3916353Z",
+            "deletionTime": "2021-09-01T00:13:10.2384916Z"
+          },
+          {
+            "key": "sto391|2021-09-01t00:54:52.0267713z",
+            "name": "sto391",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9633",
+            "creationTime": "2021-09-01T00:54:52.0267713Z",
+            "deletionTime": "2021-09-01T00:55:30.0907988Z"
+          },
+          {
+            "key": "sto793|2021-09-01t01:39:04.6015321z",
+            "name": "sto793",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6998",
+            "creationTime": "2021-09-01T01:39:04.6015321Z",
+            "deletionTime": "2021-09-01T01:39:27.430517Z"
+          },
+          {
+            "key": "sto2382|2021-09-01t02:07:48.9986039z",
+            "name": "sto2382",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1773",
+            "creationTime": "2021-09-01T02:07:48.9986039Z",
+            "deletionTime": "2021-09-01T02:08:47.8759149Z"
+          },
+          {
+            "key": "sto8077|2021-09-01t03:00:36.4389067z",
+            "name": "sto8077",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6833",
+            "creationTime": "2021-09-01T03:00:36.4389067Z",
+            "deletionTime": "2021-09-01T03:00:59.455801Z"
+          },
+          {
+            "key": "storage5732|2021-09-10t06:15:16.4268664z",
+            "name": "storage5732",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-4560",
+            "creationTime": "2021-09-10T06:15:16.4268664Z",
+            "deletionTime": "2021-09-10T06:16:33.2269243Z"
+          },
+          {
+            "key": "storage1368|2021-08-31t07:23:09.2167938z",
+            "name": "storage1368",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-5851",
+            "creationTime": "2021-08-31T07:23:09.2167938Z",
+            "deletionTime": "2021-08-31T07:23:29.1708292Z"
+          },
+          {
+            "key": "sto7702|2021-09-01t00:43:11.4356162z",
+            "name": "sto7702",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9723",
+            "creationTime": "2021-09-01T00:43:11.4356162Z",
+            "deletionTime": "2021-09-01T00:43:31.9989493Z"
+          },
+          {
+            "key": "sto303|2021-08-31t23:58:59.1243936z",
+            "name": "sto303",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2793",
+            "creationTime": "2021-08-31T23:58:59.1243936Z",
+            "deletionTime": "2021-08-31T23:59:00.514958Z"
+          },
+          {
+            "key": "sto1534|2021-09-01t00:59:04.6930270z",
+            "name": "sto1534",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res497",
+            "creationTime": "2021-09-01T00:59:04.693027Z",
+            "deletionTime": "2021-09-01T00:59:23.6781051Z"
+          },
+          {
+            "key": "storage6105|2021-09-10t06:24:23.6351223z",
+            "name": "storage6105",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-4560",
+            "creationTime": "2021-09-10T06:24:23.6351223Z",
+            "deletionTime": "2021-09-10T06:24:51.9642104Z"
+          },
+          {
+            "key": "sto3651|2021-09-01t01:15:47.4674077z",
+            "name": "sto3651",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6856",
+            "creationTime": "2021-09-01T01:15:47.4674077Z",
+            "deletionTime": "2021-09-01T01:16:10.2026533Z"
+          },
+          {
+            "key": "sto5683|2021-09-01t01:35:09.7742617z",
+            "name": "sto5683",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5529",
+            "creationTime": "2021-09-01T01:35:09.7742617Z",
+            "deletionTime": "2021-09-01T01:35:34.605678Z"
+          },
+          {
+            "key": "sdktestaccount3984|2021-08-29t01:30:00.6702655z",
+            "name": "sdktestaccount3984",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "Default-EventHub-7509",
+            "creationTime": "2021-08-29T01:30:00.6702655Z",
+            "deletionTime": "2021-08-29T10:10:56.4251823Z"
+          },
+          {
+            "key": "sto7504|2021-09-01t02:01:27.9834549z",
+            "name": "sto7504",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7420",
+            "creationTime": "2021-09-01T02:01:27.9834549Z",
+            "deletionTime": "2021-09-01T02:01:47.140456Z"
+          },
+          {
+            "key": "sto3503|2021-08-31t23:51:52.7336871z",
+            "name": "sto3503",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7172",
+            "creationTime": "2021-08-31T23:51:52.7336871Z",
+            "deletionTime": "2021-08-31T23:52:14.0001492Z"
+          },
+          {
+            "key": "sto5491|2021-09-01t02:19:19.1210617z",
+            "name": "sto5491",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res149",
+            "creationTime": "2021-09-01T02:19:19.1210617Z",
+            "deletionTime": "2021-09-01T02:20:39.5304596Z"
+          },
+          {
+            "key": "sto7702|2021-09-01t03:02:01.5051813z",
+            "name": "sto7702",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9723",
+            "creationTime": "2021-09-01T03:02:01.5051813Z",
+            "deletionTime": "2021-09-01T03:02:22.5372755Z"
+          },
+          {
+            "key": "sto5044|2021-09-01t02:16:27.9261871z",
+            "name": "sto5044",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5268",
+            "creationTime": "2021-09-01T02:16:27.9261871Z",
+            "deletionTime": "2021-09-01T02:16:48.2545152Z"
+          },
+          {
+            "key": "sto1410|2021-09-01t00:15:38.1193161z",
+            "name": "sto1410",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res590",
+            "creationTime": "2021-09-01T00:15:38.1193161Z",
+            "deletionTime": "2021-09-01T00:50:25.0158109Z"
+          },
+          {
+            "key": "sto5936|2021-09-01t00:01:36.4764931z",
+            "name": "sto5936",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5765",
+            "creationTime": "2021-09-01T00:01:36.4764931Z",
+            "deletionTime": "2021-09-01T00:02:12.1497758Z"
+          },
+          {
+            "key": "storage7439|2021-09-10t06:21:29.8951058z",
+            "name": "storage7439",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-9363",
+            "creationTime": "2021-09-10T06:21:29.8951058Z",
+            "deletionTime": "2021-09-10T06:21:57.9278731Z"
+          },
+          {
+            "key": "sto7059|2021-09-01t00:48:32.3395354z",
+            "name": "sto7059",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7127",
+            "creationTime": "2021-09-01T00:48:32.3395354Z",
+            "deletionTime": "2021-09-01T00:48:54.7622951Z"
+          },
+          {
+            "key": "sto9761|2021-09-01t02:09:50.3161902z",
+            "name": "sto9761",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res209",
+            "creationTime": "2021-09-01T02:09:50.3161902Z",
+            "deletionTime": "2021-09-01T02:10:10.7702442Z"
+          },
+          {
+            "key": "storage789|2021-09-09t04:52:00.3070093z",
+            "name": "storage789",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-7309",
+            "creationTime": "2021-09-09T04:52:00.3070093Z",
+            "deletionTime": "2021-09-09T04:52:01.744534Z"
+          },
+          {
+            "key": "sto5507|2021-09-01t03:22:15.9442951z",
+            "name": "sto5507",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9633",
+            "creationTime": "2021-09-01T03:22:15.9442951Z",
+            "deletionTime": "2021-09-01T03:23:13.6340835Z"
+          },
+          {
+            "key": "sto6221|2021-08-31t23:11:18.8548889z",
+            "name": "sto6221",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1255",
+            "creationTime": "2021-08-31T23:11:18.8548889Z",
+            "deletionTime": "2021-08-31T23:12:40.6859291Z"
+          },
+          {
+            "key": "sto6202|2021-09-01t01:07:21.2440104z",
+            "name": "sto6202",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1299",
+            "creationTime": "2021-09-01T01:07:21.2440104Z",
+            "deletionTime": "2021-09-01T01:07:43.0572254Z"
+          },
+          {
+            "key": "sto2188|2021-09-01t01:17:35.9872481z",
+            "name": "sto2188",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res8264",
+            "creationTime": "2021-09-01T01:17:35.9872481Z",
+            "deletionTime": "2021-09-01T01:17:57.4099456Z"
+          },
+          {
+            "key": "sto7032|2021-09-01t03:22:35.4763385z",
+            "name": "sto7032",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9633",
+            "creationTime": "2021-09-01T03:22:35.4763385Z",
+            "deletionTime": "2021-09-01T03:23:13.9153441Z"
+          },
+          {
+            "key": "sto303|2021-09-01t00:44:55.7839806z",
+            "name": "sto303",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2793",
+            "creationTime": "2021-09-01T00:44:55.7839806Z",
+            "deletionTime": "2021-09-01T00:44:57.4559365Z"
+          },
+          {
+            "key": "sto867|2021-09-01t02:13:35.8097270z",
+            "name": "sto867",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7066",
+            "creationTime": "2021-09-01T02:13:35.809727Z",
+            "deletionTime": "2021-09-01T02:13:57.5614147Z"
+          },
+          {
+            "key": "sdktestaccount3682|2021-08-28t14:55:22.4632306z",
+            "name": "sdktestaccount3682",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "Default-EventHub-9336",
+            "creationTime": "2021-08-28T14:55:22.4632306Z",
+            "deletionTime": "2021-08-28T15:48:23.4194502Z"
+          },
+          {
+            "key": "sto8295|2021-09-01t00:53:23.3977673z",
+            "name": "sto8295",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6050",
+            "creationTime": "2021-09-01T00:53:23.3977673Z",
+            "deletionTime": "2021-09-01T00:53:43.6332279Z"
+          },
+          {
+            "key": "storage2564|2021-08-30t02:30:14.5744911z",
+            "name": "storage2564",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-9649",
+            "creationTime": "2021-08-30T02:30:14.5744911Z",
+            "deletionTime": "2021-08-30T02:30:36.8722503Z"
+          },
+          {
+            "key": "sto233|2021-09-01t02:47:27.2981955z",
+            "name": "sto233",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res8238",
+            "creationTime": "2021-09-01T02:47:27.2981955Z",
+            "deletionTime": "2021-09-01T02:48:52.6453726Z"
+          },
+          {
+            "key": "sto4154|2021-09-01t02:24:43.6807250z",
+            "name": "sto4154",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1530",
+            "creationTime": "2021-09-01T02:24:43.680725Z",
+            "deletionTime": "2021-09-01T02:25:03.1346056Z"
+          },
+          {
+            "key": "sto6622|2021-08-31t23:50:11.6359317z",
+            "name": "sto6622",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6547",
+            "creationTime": "2021-08-31T23:50:11.6359317Z",
+            "deletionTime": "2021-08-31T23:50:32.3086354Z"
+          },
+          {
+            "key": "sto824|2021-09-01t02:51:20.8543650z",
+            "name": "sto824",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res1463",
+            "creationTime": "2021-09-01T02:51:20.854365Z",
+            "deletionTime": "2021-09-01T02:51:42.9333783Z"
+          },
+          {
+            "key": "sto303|2021-09-01t03:03:48.9156562z",
+            "name": "sto303",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2793",
+            "creationTime": "2021-09-01T03:03:48.9156562Z",
+            "deletionTime": "2021-09-01T03:03:50.3844625Z"
+          },
+          {
+            "key": "sto5936|2021-09-01t03:25:18.5765233z",
+            "name": "sto5936",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5765",
+            "creationTime": "2021-09-01T03:25:18.5765233Z",
+            "deletionTime": "2021-09-01T03:26:42.6423589Z"
+          },
+          {
+            "key": "sto4076|2021-09-01t02:52:46.4827414z",
+            "name": "sto4076",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9421",
+            "creationTime": "2021-09-01T02:52:46.4827414Z",
+            "deletionTime": "2021-09-01T02:53:13.780819Z"
+          },
+          {
+            "key": "sto9624|2021-09-01t02:31:20.2906957z",
+            "name": "sto9624",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res8116",
+            "creationTime": "2021-09-01T02:31:20.2906957Z",
+            "deletionTime": "2021-09-01T02:32:38.9968956Z"
+          },
+          {
+            "key": "storage8996|2021-08-31t09:28:08.4855352z",
+            "name": "storage8996",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-2281",
+            "creationTime": "2021-08-31T09:28:08.4855352Z",
+            "deletionTime": "2021-08-31T09:28:30.8458059Z"
+          },
+          {
+            "key": "storage5003|2021-08-31t07:26:22.0190890z",
+            "name": "storage5003",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-8602",
+            "creationTime": "2021-08-31T07:26:22.019089Z",
+            "deletionTime": "2021-08-31T07:26:42.4889761Z"
+          },
+          {
+            "key": "sto9068|2021-08-31t23:23:03.1484613z",
+            "name": "sto9068",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res8566",
+            "creationTime": "2021-08-31T23:23:03.1484613Z",
+            "deletionTime": "2021-08-31T23:23:24.4306211Z"
+          },
+          {
+            "key": "sto4141|2021-08-31t23:42:27.5390530z",
+            "name": "sto4141",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6027",
+            "creationTime": "2021-08-31T23:42:27.539053Z",
+            "deletionTime": "2021-08-31T23:42:51.4149768Z"
+          },
+          {
+            "key": "sto6117|2021-09-01t01:18:59.4126867z",
+            "name": "sto6117",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9542",
+            "creationTime": "2021-09-01T01:18:59.4126867Z",
+            "deletionTime": "2021-09-01T01:19:19.4290618Z"
+          },
+          {
+            "key": "sto9329|2021-08-31t23:54:44.8345238z",
+            "name": "sto9329",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res239",
+            "creationTime": "2021-08-31T23:54:44.8345238Z",
+            "deletionTime": "2021-08-31T23:55:07.4291513Z"
+          },
+          {
+            "key": "sto5986|2021-09-01t02:22:00.4086617z",
+            "name": "sto5986",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9717",
+            "creationTime": "2021-09-01T02:22:00.4086617Z",
+            "deletionTime": "2021-09-01T02:23:20.271174Z"
+          },
+          {
+            "key": "sto6850|2021-09-01t02:33:45.1713777z",
+            "name": "sto6850",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7840",
+            "creationTime": "2021-09-01T02:33:45.1713777Z",
+            "deletionTime": "2021-09-01T02:35:03.7370261Z"
+          },
+          {
+            "key": "sto2548|2021-09-01t02:12:38.6355858z",
+            "name": "sto2548",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7066",
+            "creationTime": "2021-09-01T02:12:38.6355858Z",
+            "deletionTime": "2021-09-01T02:13:57.6707966Z"
+          },
+          {
+            "key": "storage456|2021-09-09t04:40:46.6212909z",
+            "name": "storage456",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-6727",
+            "creationTime": "2021-09-09T04:40:46.6212909Z",
+            "deletionTime": "2021-09-09T04:40:48.1994752Z"
+          },
+          {
+            "key": "storage4626|2021-08-31t09:26:32.0284908z",
+            "name": "storage4626",
+            "location": "eastus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "teststorageRG-4497",
+            "creationTime": "2021-08-31T09:26:32.0284908Z",
+            "deletionTime": "2021-08-31T09:26:33.4504354Z"
+          },
+          {
+            "key": "sto597|2021-09-01t02:44:59.5365722z",
+            "name": "sto597",
+            "location": "westus",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2164",
+            "creationTime": "2021-09-01T02:44:59.5365722Z",
+            "deletionTime": "2021-09-01T02:46:22.6159698Z"
+          },
+          {
+            "key": "sto9149|2021-09-01t01:32:39.5499511z",
+            "name": "sto9149",
+            "location": "westus",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res524",
+            "creationTime": "2021-09-01T01:32:39.5499511Z",
+            "deletionTime": "2021-09-01T01:34:00.8159256Z"
+          },
+          {
+            "key": "sto7621|2021-09-01t01:27:27.9551370z",
+            "name": "sto7621",
+            "location": "westus",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5385",
+            "creationTime": "2021-09-01T01:27:27.955137Z",
+            "deletionTime": "2021-09-01T01:28:48.7214455Z"
+          },
+          {
+            "key": "sto208|2021-09-01t02:38:34.4884731z",
+            "name": "sto208",
+            "location": "westus",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res3450",
+            "creationTime": "2021-09-01T02:38:34.4884731Z",
+            "deletionTime": "2021-09-01T02:38:55.1916608Z"
+          },
+          {
+            "key": "sto5423|2021-09-01t00:03:16.9263190z",
+            "name": "sto5423",
+            "location": "westeurope",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res5270",
+            "creationTime": "2021-09-01T00:03:16.926319Z",
+            "deletionTime": "2021-09-01T00:03:48.8485215Z"
+          },
+          {
+            "key": "sto4406|2021-09-01t00:08:41.7570033z",
+            "name": "sto4406",
+            "location": "westeurope",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res9493",
+            "creationTime": "2021-09-01T00:08:41.7570033Z",
+            "deletionTime": "2021-09-01T00:09:07.9290598Z"
+          },
+          {
+            "key": "sto7530|2021-09-01t01:26:01.9910687z",
+            "name": "sto7530",
+            "location": "westeurope",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res7057",
+            "creationTime": "2021-09-01T01:26:01.9910687Z",
+            "deletionTime": "2021-09-01T01:26:23.8962679Z"
+          },
+          {
+            "key": "sto5195|2021-09-01t02:36:08.8290406z",
+            "name": "sto5195",
+            "location": "westeurope",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res6909",
+            "creationTime": "2021-09-01T02:36:08.8290406Z",
+            "deletionTime": "2021-09-01T02:37:31.5799602Z"
+          },
+          {
+            "key": "sto2421|2021-09-01t02:15:00.9263115z",
+            "name": "sto2421",
+            "location": "westeurope",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res3364",
+            "creationTime": "2021-09-01T02:15:00.9263115Z",
+            "deletionTime": "2021-09-01T02:15:25.5672023Z"
+          },
+          {
+            "key": "sto3230|2021-09-01t01:08:45.0603011z",
+            "name": "sto3230",
+            "location": "westeurope",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "res2825",
+            "creationTime": "2021-09-01T01:08:45.0603011Z",
+            "deletionTime": "2021-09-01T01:09:08.9199897Z"
+          },
+          {
+            "key": "cs1100320015b144862|2021-08-31t02:53:33.7323381z",
+            "name": "cs1100320015b144862",
+            "location": "southeastasia",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "cloud-shell-storage-southeastasia",
+            "creationTime": "2021-08-31T02:53:33.7323381Z",
+            "deletionTime": "2021-08-31T20:03:05.4615742Z"
+          },
+          {
+            "key": "averyfineitem3478087685|2021-08-31t08:10:48.0652652z",
+            "name": "averyfineitem3478087685",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "mini_batch_size",
+            "creationTime": "2021-08-31T08:10:48.0652652Z",
+            "deletionTime": "2021-08-31T08:48:48.7447963Z"
+          },
+          {
+            "key": "averyfineitem0916580886|2021-09-01t01:40:05.5867205z",
+            "name": "averyfineitem0916580886",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "redmond-chens-fans",
+            "creationTime": "2021-09-01T01:40:05.5867205Z",
+            "deletionTime": "2021-09-01T07:20:22.9019347Z"
+          },
+          {
+            "key": "neitherportal6742243621|2021-08-31t02:29:39.1779795z",
+            "name": "neitherportal6742243621",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "a_very_fine_item",
+            "creationTime": "2021-08-31T02:29:39.1779795Z",
+            "deletionTime": "2021-08-31T07:59:08.1419896Z"
+          },
+          {
+            "key": "mystorageaccountdvbb|2021-08-31t02:46:29.8850270z",
+            "name": "mystorageaccountdvbb",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "AutoRestResources2",
+            "creationTime": "2021-08-31T02:46:29.885027Z",
+            "deletionTime": "2021-08-31T20:04:38.716169Z"
+          },
+          {
+            "key": "averyfineitem0754648908|2021-09-02t03:11:59.7484236z",
+            "name": "averyfineitem0754648908",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "lazy_sdk_review",
+            "creationTime": "2021-09-02T03:11:59.7484236Z",
+            "deletionTime": "2021-09-02T20:08:20.7251483Z"
+          },
+          {
+            "key": "mymouseisbroken|2021-08-27t02:41:22.9426034z",
+            "name": "mymouseisbroken",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "\u663E\u5361\u4ECA\u5929\u77FF\u96BE\u4E86\u6CA1",
+            "creationTime": "2021-08-27T02:41:22.9426034Z",
+            "deletionTime": "2021-08-27T19:04:49.0913548Z"
+          },
+          {
+            "key": "mystorageaccountdvbb|2021-08-30t09:39:45.7162781z",
+            "name": "mystorageaccountdvbb",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "AutoRestResources2",
+            "creationTime": "2021-08-30T09:39:45.7162781Z",
+            "deletionTime": "2021-08-30T19:35:28.061333Z"
+          },
+          {
+            "key": "averyfineitem1821152701|2021-09-01t07:33:33.4656948z",
+            "name": "averyfineitem1821152701",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "redmond-chens-fans",
+            "creationTime": "2021-09-01T07:33:33.4656948Z",
+            "deletionTime": "2021-09-01T23:10:36.5073285Z"
+          },
+          {
+            "key": "averyfineitem2910730164|2021-08-31t08:58:26.9988262z",
+            "name": "averyfineitem2910730164",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "ml-test-lrl",
+            "creationTime": "2021-08-31T08:58:26.9988262Z",
+            "deletionTime": "2021-08-31T19:54:46.8386957Z"
+          },
+          {
+            "key": "testworkspace07881794881|2021-09-06t02:01:40.4342394z",
+            "name": "testworkspace07881794881",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "ml-test-lrl",
+            "creationTime": "2021-09-06T02:01:40.4342394Z",
+            "deletionTime": "2021-09-07T09:12:13.0236135Z"
+          },
+          {
+            "key": "butwhy|2021-08-27t08:39:56.6471254z",
+            "name": "butwhy",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "isgraphiccardspricenormaltoday",
+            "creationTime": "2021-08-27T08:39:56.6471254Z",
+            "deletionTime": "2021-08-27T19:21:21.7502036Z"
+          },
+          {
+            "key": "anant5139963240|2021-08-30t06:20:26.2939048z",
+            "name": "anant5139963240",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "a_very_fine_item",
+            "creationTime": "2021-08-30T06:20:26.2939048Z",
+            "deletionTime": "2021-08-30T19:09:45.7698056Z"
+          },
+          {
+            "key": "isolationd|2021-08-30t02:13:07.0429708z",
+            "name": "isolationd",
+            "location": "westus2",
+            "subscription": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+            "resourceGroupName": "test-ml-m910xuser",
+            "creationTime": "2021-08-30T02:13:07.0429708Z",
+            "deletionTime": "2021-08-30T03:09:41.9704717Z"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "187546767",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

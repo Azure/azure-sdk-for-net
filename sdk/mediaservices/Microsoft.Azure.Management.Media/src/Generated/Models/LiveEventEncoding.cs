@@ -31,14 +31,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Initializes a new instance of the LiveEventEncoding class.
         /// </summary>
         /// <param name="encodingType">Live event type. When encodingType is
-        /// set to None, the service simply passes through the incoming video
-        /// and audio layer(s) to the output. When encodingType is set to
-        /// Standard or Premium1080p, a live encoder transcodes the incoming
-        /// stream into multiple bitrates or layers. See
-        /// https://go.microsoft.com/fwlink/?linkid=2095101 for more
-        /// information. This property cannot be modified after the live event
-        /// is created. Possible values include: 'None', 'Standard',
-        /// 'Premium1080p'</param>
+        /// set to PassthroughBasic or PassthroughStandard, the service simply
+        /// passes through the incoming video and audio layer(s) to the output.
+        /// When encodingType is set to Standard or Premium1080p, a live
+        /// encoder transcodes the incoming stream into multiple bitrates or
+        /// layers. See https://go.microsoft.com/fwlink/?linkid=2095101 for
+        /// more information. This property cannot be modified after the live
+        /// event is created. Possible values include: 'None', 'Standard',
+        /// 'Premium1080p', 'PassthroughBasic', 'PassthroughStandard'</param>
         /// <param name="presetName">The optional encoding preset name, used
         /// when encodingType is not None. This value is specified at creation
         /// time and cannot be updated. If the encodingType is set to Standard,
@@ -71,15 +71,15 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets live event type. When encodingType is set to None, the
-        /// service simply passes through the incoming video and audio layer(s)
-        /// to the output. When encodingType is set to Standard or
-        /// Premium1080p, a live encoder transcodes the incoming stream into
-        /// multiple bitrates or layers. See
-        /// https://go.microsoft.com/fwlink/?linkid=2095101 for more
+        /// Gets or sets live event type. When encodingType is set to
+        /// PassthroughBasic or PassthroughStandard, the service simply passes
+        /// through the incoming video and audio layer(s) to the output. When
+        /// encodingType is set to Standard or Premium1080p, a live encoder
+        /// transcodes the incoming stream into multiple bitrates or layers.
+        /// See https://go.microsoft.com/fwlink/?linkid=2095101 for more
         /// information. This property cannot be modified after the live event
         /// is created. Possible values include: 'None', 'Standard',
-        /// 'Premium1080p'
+        /// 'Premium1080p', 'PassthroughBasic', 'PassthroughStandard'
         /// </summary>
         [JsonProperty(PropertyName = "encodingType")]
         public LiveEventEncodingType? EncodingType { get; set; }

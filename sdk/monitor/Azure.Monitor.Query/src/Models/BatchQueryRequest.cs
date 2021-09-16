@@ -5,5 +5,6 @@ namespace Azure.Monitor.Query.Models
 {
     internal partial class BatchQueryRequest
     {
+        internal LogsQueryOptions Options { get; set; }
     }
 }

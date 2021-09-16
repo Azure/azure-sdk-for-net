@@ -14,13 +14,13 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
-    public class ProcessorTests : ServiceBusTestBase
+    public class ProcessorTests
     {
         [Test]
         public void CannotAddNullHandler()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusProcessorOptions());
@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void MustSetMessageHandler()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusProcessorOptions());
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void MustSetErrorHandler()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusProcessorOptions());
@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotAddTwoHandlersToTheSameEvent()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusProcessorOptions());
@@ -75,7 +75,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotRemoveHandlerThatHasNotBeenAdded()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusProcessorOptions());
@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CanRemoveHandlerThatHasBeenAdded()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusProcessorOptions());
@@ -121,9 +121,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [Test]
         public void ProcessorOptionsSetOnClient()
         {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var client = new ServiceBusClient(connString);
             var options = new ServiceBusProcessorOptions
             {
@@ -285,7 +285,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public async Task CanDisposeStartedProcessorMultipleTimes()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusProcessorOptions());
@@ -301,7 +301,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public async Task CanDisposeClosedProcessor()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusProcessorOptions());
@@ -362,7 +362,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [Test]
         public async Task CannotStartProcessorWhenProcessorIsDisposed()
         {
-            var mockConnection = GetMockedReceiverConnection();
+            var mockConnection = ServiceBusTestUtilities.GetMockedReceiverConnection();
 
             var processor = new ServiceBusProcessor(
                 mockConnection,
@@ -425,7 +425,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var cts = new CancellationTokenSource();
 
             // mutate the cancellation token to distinguish it from CancellationToken.None
-            cts.CancelAfter(100);
+            cts.CancelAfter(500);
 
             await mockProcessor.Object.CloseAsync(cts.Token);
             mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));

@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
@@ -23,7 +25,7 @@ namespace Azure.Communication.CallingServer.Tests
         protected const string RESOURCE_IDENTIFIER = "016a7064-0581-40b9-be73-6dde64d69d72";
 
         // Random Gen Guid
-        protected const string GROUP_IDENTIFIER = "3500789f-e11b-4ceb-85cb-bc8df2a01768";
+        protected const string GROUP_IDENTIFIER = "f8c9bb0a-25ec-408d-b335-266dcc0c0c9a";
 
         protected string GetResourceId()
         {
@@ -102,7 +104,7 @@ namespace Azure.Communication.CallingServer.Tests
         /// Creates a <see cref="CallingServerClient" />
         /// </summary>
         /// <returns>The instrumented <see cref="CallingServerClient" />.</returns>
-        protected CallingServerClient CreateInstrumentedCallingServerClient()
+        protected CallingServerClient CreateInstrumentedCallingServerClientWithConnectionString()
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
             CallingServerClient callingServerClient = new CallingServerClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
@@ -113,6 +115,33 @@ namespace Azure.Communication.CallingServer.Tests
             #endregion Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
 
             return InstrumentClient(callingServerClient);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="CallingServerClient" />.
+        /// </summary>
+        /// <returns>The instrumented <see cref="CallingServerClient"/>.</returns>
+        protected CallingServerClient CreateInstrumentedCallingServerClientWithToken()
+        {
+            Uri endpoint = TestEnvironment.LiveTestStaticEndpoint;
+            TokenCredential tokenCredential;
+
+            if (Mode == RecordedTestMode.Playback)
+            {
+                tokenCredential = new MockCredential();
+            }
+            else
+            {
+                tokenCredential = new DefaultAzureCredential();
+                #region Snippet:Azure_Communication_CallingServer_Tests_Samples_CreateCallingServerClientWithToken
+                //@@ var endpoint = new Uri("https://my-resource.communication.azure.com");
+                //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
+                //@@ var client = new CallingServerClient(endpoint, tokenCredential);
+                #endregion Snippet:Azure_Communication_CallingServer_Tests_Samples_CreateCallingServerClientWithToken
+            }
+
+            CallingServerClient client = new CallingServerClient(endpoint, tokenCredential, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+            return InstrumentClient(client);
         }
 
         #region Api operation functions
@@ -292,7 +321,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             Console.WriteLine("Performing add participant operation to add a participant");
 
-            string invitedUser = GetFixedUserId("0000000a-b200-7a0d-570c-113a0d00288d");
+            string invitedUser = GetFixedUserId("0000000b-d8d8-aaa3-3ef0-8b3a0d002f3f");
 
             var response = await serverCall.AddParticipantAsync(
                 new CommunicationUserIdentifier(invitedUser),

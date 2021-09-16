@@ -119,6 +119,7 @@ namespace Azure.Security.KeyVault.Keys
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateOctKeyAsync(Azure.Security.KeyVault.Keys.CreateOctKeyOptions octKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> CreateRsaKey(Azure.Security.KeyVault.Keys.CreateRsaKeyOptions rsaKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateRsaKeyAsync(Azure.Security.KeyVault.Keys.CreateRsaKeyOptions rsaKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient GetCryptographyClient(string name, string version = null) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.DeletedKey> GetDeletedKey(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.DeletedKey>> GetDeletedKeyAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Security.KeyVault.Keys.DeletedKey> GetDeletedKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -310,6 +311,7 @@ namespace Azure.Security.KeyVault.Keys
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public static bool TryCreate(System.Uri id, out Azure.Security.KeyVault.Keys.KeyVaultKeyIdentifier identifier) { throw null; }
     }
     public partial class RandomBytes
     {

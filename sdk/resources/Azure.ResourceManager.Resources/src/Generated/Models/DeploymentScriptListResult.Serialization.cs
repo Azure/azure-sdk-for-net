@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DeploymentScriptListResult DeserializeDeploymentScriptListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DeploymentScript>> value = default;
+            Optional<IReadOnlyList<DeploymentScriptData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeploymentScript> array = new List<DeploymentScript>();
+                    List<DeploymentScriptData> array = new List<DeploymentScriptData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentScript.DeserializeDeploymentScript(item));
+                        array.Add(DeploymentScriptData.DeserializeDeploymentScriptData(item));
                     }
                     value = array;
                     continue;

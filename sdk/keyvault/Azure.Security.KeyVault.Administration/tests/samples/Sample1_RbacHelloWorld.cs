@@ -32,10 +32,10 @@ namespace Azure.Security.KeyVault.Administration.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = TestEnvironment.ManagedHsmUrl;
+            string managedHsmUrl = TestEnvironment.ManagedHsmUrl;
 
             #region Snippet:HelloCreateKeyVaultAccessControlClient
-            KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
             #endregion
             client = Client;
         }

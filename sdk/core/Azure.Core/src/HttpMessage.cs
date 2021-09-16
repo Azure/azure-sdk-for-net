@@ -68,7 +68,7 @@ namespace Azure.Core
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; }
+        public ResponseClassifier ResponseClassifier { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.

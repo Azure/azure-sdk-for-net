@@ -5,10 +5,22 @@ namespace Azure
         public RequestOptions() { }
         public RequestOptions(Azure.ResponseStatusOption statusOption) { }
         public RequestOptions(System.Action<Azure.Core.HttpMessage> perCall) { }
+        public RequestOptions(params int[] treatAsSuccess) { }
+        public RequestOptions(int[] statusCodes, Azure.ResponseClassification classification) { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? PerCallPolicy { get { throw null; } set { } }
         public Azure.ResponseStatusOption StatusOption { get { throw null; } set { } }
+        public void AddClassifier(System.Func<Azure.Core.HttpMessage, Azure.ResponseClassification?> classifier) { }
+        public void AddClassifier(int[] statusCodes, Azure.ResponseClassification classification) { }
+        public static void Apply(Azure.RequestOptions requestOptions, Azure.Core.HttpMessage message) { }
         public static implicit operator Azure.RequestOptions (Azure.ResponseStatusOption option) { throw null; }
+    }
+    public enum ResponseClassification
+    {
+        Retry = 0,
+        DontRetry = 1,
+        Throw = 2,
+        Success = 3,
     }
     public enum ResponseStatusOption
     {
@@ -34,26 +46,6 @@ namespace Azure.Core
         public static bool operator ==(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public static implicit operator Azure.Core.ContentType (string contentType) { throw null; }
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DateTimeRange : System.IEquatable<Azure.Core.DateTimeRange>
-    {
-        public DateTimeRange(System.DateTimeOffset start, System.DateTimeOffset end) { throw null; }
-        public DateTimeRange(System.DateTimeOffset start, System.TimeSpan duration) { throw null; }
-        public DateTimeRange(System.TimeSpan duration) { throw null; }
-        public DateTimeRange(System.TimeSpan duration, System.DateTimeOffset end) { throw null; }
-        public static Azure.Core.DateTimeRange All { get { throw null; } }
-        public System.TimeSpan Duration { get { throw null; } }
-        public System.DateTimeOffset? End { get { throw null; } }
-        public System.DateTimeOffset? Start { get { throw null; } }
-        public bool Equals(Azure.Core.DateTimeRange other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Core.DateTimeRange left, Azure.Core.DateTimeRange right) { throw null; }
-        public static implicit operator Azure.Core.DateTimeRange (System.TimeSpan timeSpan) { throw null; }
-        public static bool operator !=(Azure.Core.DateTimeRange left, Azure.Core.DateTimeRange right) { throw null; }
-        public static Azure.Core.DateTimeRange Parse(string value) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("Content: {_body}")]
@@ -190,23 +182,5 @@ namespace Azure.Core
     public partial class ProtocolClientOptions : Azure.Core.ClientOptions
     {
         public ProtocolClientOptions() { }
-    }
-    public sealed partial class ResponseError
-    {
-        public ResponseError(string? code, string? message, Azure.Core.ResponseInnerError? innerError, string? target, System.Collections.Generic.IReadOnlyList<Azure.Core.ResponseError>? details) { }
-        public string? Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResponseError> Details { get { throw null; } }
-        public Azure.Core.ResponseInnerError? InnerError { get { throw null; } }
-        public string? Message { get { throw null; } }
-        public string? Target { get { throw null; } }
-        public override string ToString() { throw null; }
-    }
-    public sealed partial class ResponseInnerError
-    {
-        internal ResponseInnerError() { }
-        public string? Code { get { throw null; } }
-        public Azure.Core.ResponseInnerError? InnerError { get { throw null; } }
-        public string? Message { get { throw null; } }
-        public override string ToString() { throw null; }
     }
 }

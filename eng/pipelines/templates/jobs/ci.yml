@@ -33,9 +33,6 @@ parameters:
 - name: MatrixReplace
   type: object
   default: []
-- name: SpellCheckPublicApiSurface
-  type: boolean
-  default: false
 
 jobs:
   - job: Build
@@ -133,6 +130,13 @@ jobs:
           versionSpec: '14.x'
         displayName: 'Install NodeJS'
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - task: DotNetCoreCLI@2
+        displayName: 'Install Snippet Generator Tool'
+        inputs:
+          command: custom
+          custom: 'tool'
+          arguments: 'install --global --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" --version "1.0.0-dev.20210730.3" "Azure.Sdk.Tools.SnippetGenerator"'
+          workingDirectory: '$(Agent.BuildDirectory)'
       - task: PowerShell@2
         displayName: "Verify generated code"
         inputs:
@@ -140,7 +144,7 @@ jobs:
           arguments: >
            -ServiceDirectory ${{ parameters.ServiceToTest }}
            -SDKType ${{ parameters.SDKType }}
-           -SpellCheckPublicApiSurface:$${{ parameters.SpellCheckPublicApiSurface }}
+           -SpellCheckPublicApiSurface
           pwsh: true
           failOnStderr:  false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0

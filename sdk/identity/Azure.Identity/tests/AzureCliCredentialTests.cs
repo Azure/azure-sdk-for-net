@@ -6,18 +6,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class AzureCliCredentialTests : ClientTestBase
+    public class AzureCliCredentialTests : CredentialTestBase
     {
-        private const string Scope = "https://vault.azure.net/.default";
-        private const string TenantId = "explicitTenantId";
-        private const string TenantIdHint = "tenantIdChallenge";
-
         public AzureCliCredentialTests(bool isAsync) : base(isAsync) { }
 
         [Test]

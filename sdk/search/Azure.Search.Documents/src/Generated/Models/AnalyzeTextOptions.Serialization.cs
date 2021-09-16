@@ -27,6 +27,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("tokenizer");
                 writer.WriteStringValue(TokenizerName.Value.ToString());
             }
+            if (Optional.IsDefined(NormalizerName))
+            {
+                writer.WritePropertyName("normalizer");
+                writer.WriteStringValue(NormalizerName.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters");

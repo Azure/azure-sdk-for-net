@@ -13,7 +13,7 @@ namespace Azure.Analytics.Purview.Catalog
     {
         internal PurviewTypes(HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, Uri endpoint, string apiVersion)
         {
-            Pipeline = pipeline;
+            _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             this.endpoint = endpoint;
             this.apiVersion = apiVersion;
