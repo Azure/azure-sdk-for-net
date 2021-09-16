@@ -9,7 +9,7 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage.Tests.Tests
 {
-    public class FileShareTests:StorageTestBase
+    public class FileShareTests : StorageTestBase
     {
         private ResourceGroup _resourceGroup;
         private StorageAccount _storageAccount;
@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         public FileShareTests(bool async) : base(async)
         {
         }
+
         [SetUp]
         public async Task CreateStorageAccountAndGetFileShareContainer()
         {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             _fileService = await _fileServiceContainer.GetAsync("default");
             _fileShareContainer = _fileService.GetFileShares();
         }
+
         [TearDown]
         public async Task ClearStorageAccount()
         {
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
                 _storageAccount = null;
             }
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateDeleteFileShare()
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             FileShare share2 = await _fileShareContainer.GetAsync(fileShareName);
             AssertFileShareEqual(share1, share2);
             Assert.IsTrue(await _fileShareContainer.CheckIfExistsAsync(fileShareName));
-            Assert.IsFalse(await _fileShareContainer.CheckIfExistsAsync(fileShareName+"1"));
+            Assert.IsFalse(await _fileShareContainer.CheckIfExistsAsync(fileShareName + "1"));
 
             //delete file share
             await share1.DeleteAsync();
@@ -70,6 +73,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.IsNull(fileShare3);
             Assert.IsFalse(await _fileShareContainer.CheckIfExistsAsync(fileShareName));
         }
+
         [Test]
         [RecordedTest]
         public async Task GetAllFileShares()
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.NotNull(share2.Data.Metadata);
             Assert.AreEqual(share2.Data.ShareQuota, shareData.ShareQuota);
             Assert.AreEqual(share2.Data.Metadata, shareData.Metadata);
-            FileShare share3 =await _fileShareContainer.GetAsync(fileShareName);
+            FileShare share3 = await _fileShareContainer.GetAsync(fileShareName);
             Assert.NotNull(share3.Data.Metadata);
             Assert.AreEqual(share3.Data.ShareQuota, shareData.ShareQuota);
             Assert.AreEqual(share3.Data.Metadata, shareData.Metadata);

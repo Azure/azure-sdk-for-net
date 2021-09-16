@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         public TableTests(bool async) : base(async)
         {
         }
+
         [SetUp]
         public async Task CreateStorageAccountAndGetTableContainer()
         {
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             _tableService = await _tableServiceContainer.GetAsync("default");
             _tableContainer = _tableService.GetTables();
         }
+
         [TearDown]
         public async Task ClearStorageAccount()
         {
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
                 _storageAccount = null;
             }
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateDeleteTable()
@@ -68,6 +71,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Table table3 = await _tableContainer.GetIfExistsAsync(tableName);
             Assert.IsNull(table3);
         }
+
         [Test]
         [RecordedTest]
         public async Task GetAllTables()
