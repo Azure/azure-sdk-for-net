@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
 
     /// <summary>
-    /// Defines values for LastModifiedByType.
+    /// Defines values for ResourceNameStatus.
     /// </summary>
-    public static class LastModifiedByType
+    public static class ResourceNameStatus
     {
-        public const string User = "User";
-        public const string Application = "Application";
-        public const string ManagedIdentity = "ManagedIdentity";
-        public const string Key = "Key";
+        public const string Allowed = "Allowed";
+        public const string Reserved = "Reserved";
     }
 }

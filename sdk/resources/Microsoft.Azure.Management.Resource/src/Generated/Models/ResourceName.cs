@@ -11,35 +11,31 @@
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The resource link.
+    /// Name and Type of the Resource
     /// </summary>
-    public partial class ResourceLink : IResource
+    public partial class ResourceName
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceLink class.
+        /// Initializes a new instance of the ResourceName class.
         /// </summary>
-        public ResourceLink()
+        public ResourceName()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceLink class.
+        /// Initializes a new instance of the ResourceName class.
         /// </summary>
-        /// <param name="id">The fully qualified ID of the resource
-        /// link.</param>
-        /// <param name="name">The name of the resource link.</param>
-        /// <param name="properties">Properties for resource link.</param>
-        public ResourceLink(string id = default(string), string name = default(string), ResourceLinkProperties properties = default(ResourceLinkProperties))
+        /// <param name="name">Name of the resource</param>
+        /// <param name="type">The type of the resource</param>
+        public ResourceName(string name, string type)
         {
-            Id = id;
             Name = name;
-            Properties = properties;
+            Type = type;
             CustomInit();
         }
 
@@ -49,22 +45,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the fully qualified ID of the resource link.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the resource link.
+        /// Gets or sets name of the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets properties for resource link.
+        /// Gets or sets the type of the resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public ResourceLinkProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -74,9 +64,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Properties != null)
+            if (Name == null)
             {
-                Properties.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
             }
         }
     }

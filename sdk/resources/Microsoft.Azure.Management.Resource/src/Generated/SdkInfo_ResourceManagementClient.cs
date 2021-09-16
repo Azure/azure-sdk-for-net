@@ -35,5 +35,16 @@ namespace Microsoft.Azure.Management.ResourceManager
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/resources/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-resources-2021-04 --csharp.output-folder=D:\\repo\\azure-sdk-for-net\\sdk\\resources\\Microsoft.Azure.Management.Resource\\src\\Generated";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "c9992af7235a6550087d4fed8f081ed35019f605";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

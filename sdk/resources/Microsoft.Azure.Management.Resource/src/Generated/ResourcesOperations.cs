@@ -269,14 +269,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Moves resources from one resource group to another resource group.
         /// </summary>
         /// <remarks>
-        /// The resources to move must be in the same source resource group. The target
-        /// resource group may be in a different subscription. When moving resources,
-        /// both the source group and the target group are locked for the duration of
-        /// the operation. Write and delete operations are blocked on the groups until
-        /// the move completes.
+        /// The resources to be moved must be in the same source resource group in the
+        /// source subscription being used. The target resource group may be in a
+        /// different subscription. When moving resources, both the source group and
+        /// the target group are locked for the duration of the operation. Write and
+        /// delete operations are blocked on the groups until the move completes.
         /// </remarks>
         /// <param name='sourceResourceGroupName'>
-        /// The name of the resource group containing the resources to move.
+        /// The name of the resource group from the source subscription containing the
+        /// resources to be moved.
         /// </param>
         /// <param name='parameters'>
         /// Parameters for moving resources.
@@ -300,16 +301,16 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         /// <remarks>
         /// This operation checks whether the specified resources can be moved to the
-        /// target. The resources to move must be in the same source resource group.
-        /// The target resource group may be in a different subscription. If validation
-        /// succeeds, it returns HTTP response code 204 (no content). If validation
-        /// fails, it returns HTTP response code 409 (Conflict) with an error message.
-        /// Retrieve the URL in the Location header value to check the result of the
-        /// long-running operation.
+        /// target. The resources to be moved must be in the same source resource group
+        /// in the source subscription being used. The target resource group may be in
+        /// a different subscription. If validation succeeds, it returns HTTP response
+        /// code 204 (no content). If validation fails, it returns HTTP response code
+        /// 409 (Conflict) with an error message. Retrieve the URL in the Location
+        /// header value to check the result of the long-running operation.
         /// </remarks>
         /// <param name='sourceResourceGroupName'>
-        /// The name of the resource group containing the resources to validate for
-        /// move.
+        /// The name of the resource group from the source subscription containing the
+        /// resources to be validated for move.
         /// </param>
         /// <param name='parameters'>
         /// Parameters for moving resources.
@@ -1532,14 +1533,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Moves resources from one resource group to another resource group.
         /// </summary>
         /// <remarks>
-        /// The resources to move must be in the same source resource group. The target
-        /// resource group may be in a different subscription. When moving resources,
-        /// both the source group and the target group are locked for the duration of
-        /// the operation. Write and delete operations are blocked on the groups until
-        /// the move completes.
+        /// The resources to be moved must be in the same source resource group in the
+        /// source subscription being used. The target resource group may be in a
+        /// different subscription. When moving resources, both the source group and
+        /// the target group are locked for the duration of the operation. Write and
+        /// delete operations are blocked on the groups until the move completes.
         /// </remarks>
         /// <param name='sourceResourceGroupName'>
-        /// The name of the resource group containing the resources to move.
+        /// The name of the resource group from the source subscription containing the
+        /// resources to be moved.
         /// </param>
         /// <param name='parameters'>
         /// Parameters for moving resources.
@@ -1736,16 +1738,16 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         /// <remarks>
         /// This operation checks whether the specified resources can be moved to the
-        /// target. The resources to move must be in the same source resource group.
-        /// The target resource group may be in a different subscription. If validation
-        /// succeeds, it returns HTTP response code 204 (no content). If validation
-        /// fails, it returns HTTP response code 409 (Conflict) with an error message.
-        /// Retrieve the URL in the Location header value to check the result of the
-        /// long-running operation.
+        /// target. The resources to be moved must be in the same source resource group
+        /// in the source subscription being used. The target resource group may be in
+        /// a different subscription. If validation succeeds, it returns HTTP response
+        /// code 204 (no content). If validation fails, it returns HTTP response code
+        /// 409 (Conflict) with an error message. Retrieve the URL in the Location
+        /// header value to check the result of the long-running operation.
         /// </remarks>
         /// <param name='sourceResourceGroupName'>
-        /// The name of the resource group containing the resources to validate for
-        /// move.
+        /// The name of the resource group from the source subscription containing the
+        /// resources to be validated for move.
         /// </param>
         /// <param name='parameters'>
         /// Parameters for moving resources.

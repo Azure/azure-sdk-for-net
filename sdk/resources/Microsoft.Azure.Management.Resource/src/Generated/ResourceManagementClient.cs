@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The ID of the target subscription.
+        /// The Microsoft Azure subscription ID.
         /// </summary>
         public string SubscriptionId { get; set; }
 

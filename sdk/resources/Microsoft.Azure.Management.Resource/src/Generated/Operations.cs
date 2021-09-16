@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ResourceManager
     /// <summary>
     /// Operations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<ResourceManagementClient>, IOperations
+    internal partial class Operations : IServiceOperations<SubscriptionClient>, IOperations
     {
         /// <summary>
         /// Initializes a new instance of the Operations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(ResourceManagementClient client)
+        internal Operations(SubscriptionClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a reference to the ResourceManagementClient
+        /// Gets a reference to the SubscriptionClient
         /// </summary>
-        public ResourceManagementClient Client { get; private set; }
+        public SubscriptionClient Client { get; private set; }
 
         /// <summary>
         /// Lists all of the available Microsoft.Resources REST API operations.

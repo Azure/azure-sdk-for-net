@@ -14,26 +14,27 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Lock owner properties.
+    /// Error description and code explaining why resource name is invalid.
     /// </summary>
-    public partial class ManagementLockOwner
+    public partial class ErrorDefinition
     {
         /// <summary>
-        /// Initializes a new instance of the ManagementLockOwner class.
+        /// Initializes a new instance of the ErrorDefinition class.
         /// </summary>
-        public ManagementLockOwner()
+        public ErrorDefinition()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagementLockOwner class.
+        /// Initializes a new instance of the ErrorDefinition class.
         /// </summary>
-        /// <param name="applicationId">The application ID of the lock
-        /// owner.</param>
-        public ManagementLockOwner(string applicationId = default(string))
+        /// <param name="message">Description of the error.</param>
+        /// <param name="code">Code of the error.</param>
+        public ErrorDefinition(string message = default(string), string code = default(string))
         {
-            ApplicationId = applicationId;
+            Message = message;
+            Code = code;
             CustomInit();
         }
 
@@ -43,10 +44,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the application ID of the lock owner.
+        /// Gets or sets description of the error.
         /// </summary>
-        [JsonProperty(PropertyName = "applicationId")]
-        public string ApplicationId { get; set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
+
+        /// <summary>
+        /// Gets or sets code of the error.
+        /// </summary>
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
     }
 }
