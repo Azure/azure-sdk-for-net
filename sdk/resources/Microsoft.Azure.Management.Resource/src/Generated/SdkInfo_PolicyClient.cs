@@ -20,15 +20,15 @@ namespace Microsoft.Azure.Management.ResourceManager
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("Authorization", "DataPolicyManifests", "2020-09-01"),
-                new Tuple<string, string, string>("Authorization", "PolicyAssignments", "2020-09-01"),
-                new Tuple<string, string, string>("Authorization", "PolicyDefinitions", "2020-09-01"),
+                new Tuple<string, string, string>("Authorization", "PolicyAssignments", "2021-06-01"),
+                new Tuple<string, string, string>("Authorization", "PolicyDefinitions", "2021-06-01"),
                 new Tuple<string, string, string>("Authorization", "PolicyExemptions", "2020-07-01-preview"),
-                new Tuple<string, string, string>("Authorization", "PolicySetDefinitions", "2020-09-01"),
-                new Tuple<string, string, string>("Management", "PolicyAssignments", "2020-09-01"),
-                new Tuple<string, string, string>("Management", "PolicyDefinitions", "2020-09-01"),
+                new Tuple<string, string, string>("Authorization", "PolicySetDefinitions", "2021-06-01"),
+                new Tuple<string, string, string>("Management", "PolicyAssignments", "2021-06-01"),
+                new Tuple<string, string, string>("Management", "PolicyDefinitions", "2021-06-01"),
                 new Tuple<string, string, string>("Management", "PolicyExemptions", "2020-07-01-preview"),
-                new Tuple<string, string, string>("Management", "PolicySetDefinitions", "2020-09-01"),
-                new Tuple<string, string, string>("PolicyClient", "PolicyAssignments", "2020-09-01"),
+                new Tuple<string, string, string>("Management", "PolicySetDefinitions", "2021-06-01"),
+                new Tuple<string, string, string>("PolicyClient", "PolicyAssignments", "2021-06-01"),
               }.AsEnumerable();
           }
       }

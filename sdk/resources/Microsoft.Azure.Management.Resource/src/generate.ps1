@@ -9,7 +9,6 @@ Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -Sdk
  Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-templatespecs-2021-05" -SdkGenerationDirectory "$PSScriptRoot\Generated" -ClearMetadataLog $false -ClearOutputFolder $false
 
 # Generate package with subscriptions tag
-#Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-subscriptions-2020-01" -SdkGenerationDirectory "$PSScriptRoot\Generated\Subscriptions"
  Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-subscriptions-2020-01" -SdkGenerationDirectory "$PSScriptRoot\Generated" -ClearMetadataLog $false -ClearOutputFolder $false
 
 # Generate package with policy tag

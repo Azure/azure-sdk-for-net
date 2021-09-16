@@ -3,7 +3,7 @@ namespace Azure.Monitor.Query
     public partial class LogsBatchQuery
     {
         public LogsBatchQuery() { }
-        public virtual string AddQuery(string workspaceId, string query, Azure.Core.DateTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null) { throw null; }
+        public virtual string AddQuery(string workspaceId, string query, Azure.Monitor.Query.MonitorQueryTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null) { throw null; }
     }
     public partial class LogsQueryClient
     {
@@ -14,12 +14,12 @@ namespace Azure.Monitor.Query
         public LogsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.LogsQueryClientOptions options) { }
         public System.Uri Endpoint { get { throw null; } }
         public static string CreateQuery(System.FormattableString query) { throw null; }
-        public virtual Azure.Response<Azure.Monitor.Query.Models.LogsQueryResult> Query(string workspaceId, string query, Azure.Core.DateTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.LogsQueryResult>> QueryAsync(string workspaceId, string query, Azure.Core.DateTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, Azure.Core.DateTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Monitor.Query.Models.LogsBatchQueryResults> QueryBatch(Azure.Monitor.Query.LogsBatchQuery batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.LogsBatchQueryResults>> QueryBatchAsync(Azure.Monitor.Query.LogsBatchQuery batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> Query<T>(string workspaceId, string query, Azure.Core.DateTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Monitor.Query.Models.LogsQueryResult> Query(string workspaceId, string query, Azure.Monitor.Query.MonitorQueryTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.LogsQueryResult>> QueryAsync(string workspaceId, string query, Azure.Monitor.Query.MonitorQueryTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, Azure.Monitor.Query.MonitorQueryTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Monitor.Query.Models.LogsBatchQueryResultCollection> QueryBatch(Azure.Monitor.Query.LogsBatchQuery batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.LogsBatchQueryResultCollection>> QueryBatchAsync(Azure.Monitor.Query.LogsBatchQuery batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> Query<T>(string workspaceId, string query, Azure.Monitor.Query.MonitorQueryTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LogsQueryClientOptions : Azure.Core.ClientOptions
     {
@@ -37,6 +37,7 @@ namespace Azure.Monitor.Query
         public bool IncludeStatistics { get { throw null; } set { } }
         public bool IncludeVisualization { get { throw null; } set { } }
         public System.TimeSpan? ServerTimeout { get { throw null; } set { } }
+        public bool ThrowOnPartialErrors { get { throw null; } set { } }
     }
     public partial class MetricsQueryClient
     {
@@ -68,7 +69,26 @@ namespace Azure.Monitor.Query
         public string MetricNamespace { get { throw null; } set { } }
         public string OrderBy { get { throw null; } set { } }
         public int? Size { get { throw null; } set { } }
-        public Azure.Core.DateTimeRange? TimeRange { get { throw null; } set { } }
+        public Azure.Monitor.Query.MonitorQueryTimeRange? TimeRange { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorQueryTimeRange : System.IEquatable<Azure.Monitor.Query.MonitorQueryTimeRange>
+    {
+        public MonitorQueryTimeRange(System.DateTimeOffset start, System.DateTimeOffset end) { throw null; }
+        public MonitorQueryTimeRange(System.DateTimeOffset start, System.TimeSpan duration) { throw null; }
+        public MonitorQueryTimeRange(System.TimeSpan duration) { throw null; }
+        public MonitorQueryTimeRange(System.TimeSpan duration, System.DateTimeOffset end) { throw null; }
+        public static Azure.Monitor.Query.MonitorQueryTimeRange All { get { throw null; } }
+        public System.TimeSpan Duration { get { throw null; } }
+        public System.DateTimeOffset? End { get { throw null; } }
+        public System.DateTimeOffset? Start { get { throw null; } }
+        public bool Equals(Azure.Monitor.Query.MonitorQueryTimeRange other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.MonitorQueryTimeRange left, Azure.Monitor.Query.MonitorQueryTimeRange right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.MonitorQueryTimeRange (System.TimeSpan timeSpan) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.MonitorQueryTimeRange left, Azure.Monitor.Query.MonitorQueryTimeRange right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Azure.Monitor.Query.Models
@@ -76,15 +96,20 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsBatchQueryResult : Azure.Monitor.Query.Models.LogsQueryResult
     {
         internal LogsBatchQueryResult() { }
-        public bool HasFailed { get { throw null; } }
         public string Id { get { throw null; } }
+        public Azure.Monitor.Query.Models.LogsBatchQueryResultStatus Status { get { throw null; } }
     }
-    public partial class LogsBatchQueryResults
+    public partial class LogsBatchQueryResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.Monitor.Query.Models.LogsBatchQueryResult>
     {
-        internal LogsBatchQueryResults() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsBatchQueryResult> Results { get { throw null; } }
+        internal LogsBatchQueryResultCollection() : base (default(System.Collections.Generic.IList<Azure.Monitor.Query.Models.LogsBatchQueryResult>)) { }
         public Azure.Monitor.Query.Models.LogsBatchQueryResult GetResult(string queryId) { throw null; }
         public System.Collections.Generic.IReadOnlyList<T> GetResult<T>(string queryId) { throw null; }
+    }
+    public enum LogsBatchQueryResultStatus
+    {
+        Success = 0,
+        PartialFailure = 1,
+        Failure = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LogsColumnType : System.IEquatable<Azure.Monitor.Query.Models.LogsColumnType>
@@ -116,7 +141,7 @@ namespace Azure.Monitor.Query.Models
     {
         internal LogsQueryResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsTable> AllTables { get { throw null; } }
-        public Azure.Core.ResponseError Error { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
         public Azure.Monitor.Query.Models.LogsTable Table { get { throw null; } }
         public System.BinaryData GetStatistics() { throw null; }
         public System.BinaryData GetVisualization() { throw null; }
@@ -136,34 +161,34 @@ namespace Azure.Monitor.Query.Models
         public Azure.Monitor.Query.Models.LogsColumnType Type { get { throw null; } }
         public override string ToString() { throw null; }
     }
-    public partial class LogsTableRow
+    public partial class LogsTableRow : System.Collections.Generic.IEnumerable<object>, System.Collections.Generic.IReadOnlyCollection<object>, System.Collections.Generic.IReadOnlyList<object>, System.Collections.IEnumerable
     {
         internal LogsTableRow() { }
         public int Count { get { throw null; } }
         public object this[int index] { get { throw null; } }
         public object this[string name] { get { throw null; } }
-        public bool GetBoolean(int index) { throw null; }
-        public bool GetBoolean(string name) { throw null; }
-        public System.DateTimeOffset GetDateTimeOffset(int index) { throw null; }
-        public System.DateTimeOffset GetDateTimeOffset(string name) { throw null; }
-        public decimal GetDecimal(int index) { throw null; }
-        public decimal GetDecimal(string name) { throw null; }
-        public double GetDouble(int index) { throw null; }
-        public double GetDouble(string name) { throw null; }
+        public bool? GetBoolean(int index) { throw null; }
+        public bool? GetBoolean(string name) { throw null; }
+        public System.DateTimeOffset? GetDateTimeOffset(int index) { throw null; }
+        public System.DateTimeOffset? GetDateTimeOffset(string name) { throw null; }
+        public decimal? GetDecimal(int index) { throw null; }
+        public decimal? GetDecimal(string name) { throw null; }
+        public double? GetDouble(int index) { throw null; }
+        public double? GetDouble(string name) { throw null; }
         public System.BinaryData GetDynamic(int index) { throw null; }
         public System.BinaryData GetDynamic(string name) { throw null; }
-        public System.Guid GetGuid(int index) { throw null; }
-        public System.Guid GetGuid(string name) { throw null; }
-        public int GetInt32(int index) { throw null; }
-        public int GetInt32(string name) { throw null; }
-        public long GetInt64(int index) { throw null; }
-        public long GetInt64(string name) { throw null; }
+        public System.Guid? GetGuid(int index) { throw null; }
+        public System.Guid? GetGuid(string name) { throw null; }
+        public int? GetInt32(int index) { throw null; }
+        public int? GetInt32(string name) { throw null; }
+        public long? GetInt64(int index) { throw null; }
+        public long? GetInt64(string name) { throw null; }
         public string GetString(int index) { throw null; }
         public string GetString(string name) { throw null; }
-        public System.TimeSpan GetTimeSpan(int index) { throw null; }
-        public System.TimeSpan GetTimeSpan(string name) { throw null; }
-        public bool IsNull(int index) { throw null; }
-        public bool IsNull(string name) { throw null; }
+        public System.TimeSpan? GetTimeSpan(int index) { throw null; }
+        public System.TimeSpan? GetTimeSpan(string name) { throw null; }
+        System.Collections.Generic.IEnumerator<object> System.Collections.Generic.IEnumerable<System.Object>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public override string ToString() { throw null; }
     }
     public enum MetricAggregationType
@@ -251,7 +276,7 @@ namespace Azure.Monitor.Query.Models
     {
         internal MetricResult() { }
         public string DisplayDescription { get { throw null; } }
-        public Azure.Core.ResponseError Error { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricTimeSeriesElement> TimeSeries { get { throw null; } }
@@ -266,7 +291,7 @@ namespace Azure.Monitor.Query.Models
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricResult> Metrics { get { throw null; } }
         public string Namespace { get { throw null; } }
         public string ResourceRegion { get { throw null; } }
-        public Azure.Core.DateTimeRange TimeSpan { get { throw null; } }
+        public Azure.Monitor.Query.MonitorQueryTimeRange TimeSpan { get { throw null; } }
     }
     public partial class MetricTimeSeriesElement
     {
