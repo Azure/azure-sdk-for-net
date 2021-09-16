@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static RequestData GetRequestData(Activity activity, ref TagEnumerationState monitorTags)
         {
-            string url = null;
+            string url = null; //comment
 
             AddActivityLinksToPartCTags(activity.Links, ref monitorTags.PartCTags);
 
