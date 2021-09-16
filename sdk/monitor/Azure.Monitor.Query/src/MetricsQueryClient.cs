@@ -90,7 +90,7 @@ namespace Azure.Monitor.Query
         ///     {
         ///         Console.WriteLine(&quot;Dimensions: &quot; + string.Join(&quot;,&quot;, element.Metadata));
         ///
-        ///         foreach (var metricValue in element.Data)
+        ///         foreach (var metricValue in element.Values)
         ///         {
         ///             Console.WriteLine(metricValue);
         ///         }
@@ -118,7 +118,7 @@ namespace Azure.Monitor.Query
                     timespan: options?.TimeRange?.ToString(),
                     interval: options?.Granularity,
                     filter: options?.Filter,
-                    top: options?.Top,
+                    top: options?.Size,
                     aggregation: GetAggregation(options),
                     metricnames: string.Join(",", metrics),
                     orderby: options?.OrderBy,
@@ -152,7 +152,7 @@ namespace Azure.Monitor.Query
         ///     {
         ///         Console.WriteLine(&quot;Dimensions: &quot; + string.Join(&quot;,&quot;, element.Metadata));
         ///
-        ///         foreach (var metricValue in element.Data)
+        ///         foreach (var metricValue in element.Values)
         ///         {
         ///             Console.WriteLine(metricValue);
         ///         }
@@ -180,7 +180,7 @@ namespace Azure.Monitor.Query
                     timespan: options?.TimeRange?.ToString(),
                     interval: options?.Granularity,
                     filter: options?.Filter,
-                    top: options?.Top,
+                    top: options?.Size,
                     aggregation: GetAggregation(options),
                     metricnames: string.Join(",", metrics),
                     orderby: options?.OrderBy,

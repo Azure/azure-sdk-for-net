@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.DataMigration.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 
 namespace DataMigration.Tests.ScenarioTests
 {
@@ -15,7 +16,6 @@ namespace DataMigration.Tests.ScenarioTests
         protected static string ResourceGroupName;
         protected static string DmsDeploymentName;
         protected static string DmsProjectName;
-        protected static string DmsTaskName;
         protected static string DmsFileName;
 
         public CRUDDMSTestsBase()
@@ -23,7 +23,6 @@ namespace DataMigration.Tests.ScenarioTests
             ResourceGroupName = "DmsSdkRg";
             DmsDeploymentName = "DmsSdkService";
             DmsProjectName = "DmsSdkProject";
-            DmsTaskName = "DmsSdkTask";
             DmsFileName = "DmsSdkFile";
         }
 

@@ -33,7 +33,14 @@ namespace Azure.AI.Translation.Document.Samples
             int docsSucceeded = 0;
             int docsFailed = 0;
 
-            await foreach (TranslationStatusResult translationStatus in client.GetTranslationStatusesAsync())
+            DateTimeOffset lastWeekTimestamp = DateTimeOffset.Now.AddDays(-7);
+
+            var options = new GetTranslationStatusesOptions
+            {
+                CreatedAfter = lastWeekTimestamp
+            };
+
+            await foreach (TranslationStatusResult translationStatus in client.GetTranslationStatusesAsync(options))
             {
                 if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
                     translationStatus.Status == DocumentTranslationStatus.Running)

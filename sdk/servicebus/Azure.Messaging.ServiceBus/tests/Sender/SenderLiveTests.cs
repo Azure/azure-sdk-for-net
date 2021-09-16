@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
             }
         }
 
@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
 
                 await using var sender = new ServiceBusClient(connectionString, options).CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
             }
         }
 
@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
             }
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
 
                 ServiceBusSender sender = client.CreateSender(scope.TopicName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
 
                 ServiceBusSender sender = client.CreateSender(scope.TopicName);
-                await sender.SendMessageAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                ServiceBusMessageBatch messageBatch = AddMessages(batch, 3);
+                ServiceBusMessageBatch messageBatch = ServiceBusTestUtilities.AddMessages(batch, 3);
 
                 await sender.SendMessagesAsync(messageBatch);
             }
@@ -184,7 +184,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 await using var sender = client.CreateSender(scope.QueueName);
                 var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
-                var seq = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
+                var seq = await sender.ScheduleMessageAsync(ServiceBusTestUtilities.GetMessage(), scheduleTime);
 
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
@@ -204,7 +204,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 await using var sender = client.CreateSender(scope.QueueName);
                 var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
-                var sequenceNums = await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
+                var sequenceNums = await sender.ScheduleMessagesAsync(ServiceBusTestUtilities.GetMessages(5), scheduleTime);
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 foreach (long seq in sequenceNums)
                 {
@@ -237,7 +237,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 await using var sender = client.CreateSender(scope.QueueName);
                 var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
-                var sequenceNums = await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
+                var sequenceNums = await sender.ScheduleMessagesAsync(ServiceBusTestUtilities.GetMessages(5), scheduleTime);
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 foreach (long seq in sequenceNums)
                 {
@@ -270,7 +270,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 await using var sender = client.CreateSender(scope.QueueName);
                 var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
-                var sequenceNums = await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
+                var sequenceNums = await sender.ScheduleMessagesAsync(ServiceBusTestUtilities.GetMessages(5), scheduleTime);
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 foreach (long seq in sequenceNums)
                 {
@@ -313,11 +313,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
                 var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
-                var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
+                var sequenceNum = await sender.ScheduleMessageAsync(ServiceBusTestUtilities.GetMessage(), scheduleTime);
                 await sender.DisposeAsync(); // shouldn't close connection, but should close send link
 
-                Assert.That(async () => await sender.SendMessageAsync(GetMessage()), Throws.InstanceOf<ObjectDisposedException>());
-                Assert.That(async () => await sender.ScheduleMessageAsync(GetMessage(), default), Throws.InstanceOf<ObjectDisposedException>());
+                Assert.That(async () => await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage()), Throws.InstanceOf<ObjectDisposedException>());
+                Assert.That(async () => await sender.ScheduleMessageAsync(ServiceBusTestUtilities.GetMessage(), default), Throws.InstanceOf<ObjectDisposedException>());
                 Assert.That(async () => await sender.CancelScheduledMessageAsync(sequenceNum), Throws.InstanceOf<ObjectDisposedException>());
 
                 // receive should still work
@@ -336,7 +336,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 for (int i = 0; i < 10; i++)
                 {
                     await Task.Delay(1000);
-                    await sender.SendMessageAsync(GetMessage());
+                    await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                 }
             }
         }
@@ -350,7 +350,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var sender = client.CreateSender(scope.QueueName);
                 // this is apparently supported. The session is ignored by the service but can be used
                 // as additional app data. Not recommended.
-                await sender.SendMessageAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var msg = await receiver.ReceiveMessageAsync();
                 Assert.AreEqual("sessionId", msg.SessionId);
@@ -364,7 +364,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
                 Assert.That(
-                    async () => await sender.SendMessageAsync(GetMessage()),
+                    async () => await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage()),
                     Throws.InstanceOf<InvalidOperationException>());
             }
         }
@@ -379,7 +379,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                     TestEnvironment.Credential);
                 await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
                 var messageCt = 10;
-                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCt);
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.GetMessages(messageCt);
                 await sender.SendMessagesAsync(messages);
 
                 var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions()
@@ -458,12 +458,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 await using var sender = client.CreateSender(scope.QueueName);
 
-                using var batch = AddMessages((await sender.CreateMessageBatchAsync()), 5);
+                using var batch = ServiceBusTestUtilities.AddMessages((await sender.CreateMessageBatchAsync()), 5);
                 await sender.SendMessagesAsync(batch);
 
                 // Close the client and attempt to send another message batch.
 
-                using var anotherBatch = AddMessages((await sender.CreateMessageBatchAsync()), 5);
+                using var anotherBatch = ServiceBusTestUtilities.AddMessages((await sender.CreateMessageBatchAsync()), 5);
                 await client.DisposeAsync();
 
                 Assert.That(async () => await sender.SendMessagesAsync(anotherBatch),
@@ -481,13 +481,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 await using var sender = client.CreateSender(scope.QueueName);
 
-                await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
+                await sender.ScheduleMessagesAsync(ServiceBusTestUtilities.GetMessages(5), scheduleTime);
 
                 // Close the client and attempt to schedule another set of messages.
 
                 await client.DisposeAsync();
 
-                Assert.That(async () => await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime),
+                Assert.That(async () => await sender.ScheduleMessagesAsync(ServiceBusTestUtilities.GetMessages(5), scheduleTime),
                     Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
             }
         }
@@ -502,12 +502,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 await using var sender = client.CreateSender(scope.QueueName);
 
-                var sequenceNumbers = await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
+                var sequenceNumbers = await sender.ScheduleMessagesAsync(ServiceBusTestUtilities.GetMessages(5), scheduleTime);
                 await sender.CancelScheduledMessagesAsync(sequenceNumbers);
 
                 // Close the client and attempt to cancel another set of scheduled messages.
 
-                sequenceNumbers = await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
+                sequenceNumbers = await sender.ScheduleMessagesAsync(ServiceBusTestUtilities.GetMessages(5), scheduleTime);
                 await client.DisposeAsync();
 
                 Assert.That(async () => await sender.CancelScheduledMessagesAsync(sequenceNumbers),

@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.16 (Unreleased)
+## 12.0.0-preview.17 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,9 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-preview.16 (2021-09-08)
+- This release contains bug fixes to improve quality.
 
 ## 12.0.0-preview.15 (2021-07-23)
 - This release contains bug fixes to improve quality.
