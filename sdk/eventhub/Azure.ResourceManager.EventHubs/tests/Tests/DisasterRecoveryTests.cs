@@ -14,21 +14,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Tests
 {
-    public class DisasterRecoveryTests: EventHubTestBase
+    public class DisasterRecoveryTests : EventHubTestBase
     {
         private ResourceGroup _resourceGroup;
-        private ArmDisasterRecoveryContainer _armDisasterRecoveryContainer;
         public DisasterRecoveryTests(bool isAsync) : base(isAsync)
         {
-        }
-        [SetUp]
-        public async Task CreateNamespaceAndDisasterRecoveryContainer()
-        {
-            _resourceGroup = await CreateResourceGroupAsync();
-            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
-            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
-            _armDisasterRecoveryContainer = eHNamespace.GetArmDisasterRecoveries();
         }
         [TearDown]
         public async Task ClearNamespaces()
@@ -44,6 +34,52 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 }
                 _resourceGroup = null;
             }
+        }
+        [Test]
+        [RecordedTest]
+        public async Task CreateGetUpdateDeleteDisasterRecovery()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            //create namespace1
+            string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt1");
+            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
+            EHNamespace eHNamespace1 = (await namespaceContainer.CreateOrUpdateAsync(namespaceName1, new EHNamespaceData(DefaultLocation))).Value;
+
+            //create namespace2
+            string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt2");
+            EHNamespace eHNamespace2 = (await namespaceContainer.CreateOrUpdateAsync(namespaceName2, new EHNamespaceData(Location.EastUS))).Value;
+
+            //create a disaster recovery
+            string disaterRecoveryName = Recording.GenerateAssetName("disasterrecovery");
+            ArmDisasterRecoveryData parameter = new ArmDisasterRecoveryData()
+            {
+                PartnerNamespace = eHNamespace2.Id
+            };
+            ArmDisasterRecovery armDisasterRecovery =(await eHNamespace1.GetArmDisasterRecoveries().CreateOrUpdateAsync(disaterRecoveryName, parameter)).Value;
+            Assert.NotNull(armDisasterRecovery);
+            Assert.AreEqual(armDisasterRecovery.Id.Name, disaterRecoveryName);
+            Assert.AreEqual(armDisasterRecovery.Data.PartnerNamespace, eHNamespace2.Id);
+
+            //get the disaster recovery - primary
+            armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disaterRecoveryName);
+            Assert.AreEqual(armDisasterRecovery.Data.Role, RoleDisasterRecovery.Primary);
+
+            //get the disaster recovery - secondary
+            ArmDisasterRecovery armDisasterRecoverySec = await eHNamespace2.GetArmDisasterRecoveries().GetAsync(disaterRecoveryName);
+            Assert.AreEqual(armDisasterRecoverySec.Data.Role, RoleDisasterRecovery.Secondary);
+
+            //break pairing
+            await armDisasterRecovery.BreakPairingAsync();
+
+            //fail over
+            await armDisasterRecovery.FailOverAsync();
+
+            //get all disaster recoveries for a name space
+            List<ArmDisasterRecovery> disaterRcoveries = await eHNamespace1.GetArmDisasterRecoveries().GetAllAsync().ToEnumerableAsync();
+            Assert.IsTrue(disaterRcoveries.Count >= 1);
+
+            //delete disaster recovery;
+            await armDisasterRecovery.DeleteAsync();
         }
     }
 }
