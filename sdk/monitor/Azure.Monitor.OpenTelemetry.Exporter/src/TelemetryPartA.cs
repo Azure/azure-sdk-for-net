@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return telemetryItem;
         }
 
-        private static string GetOperationName(Activity activity, ref AzMonList partBTags)
+        internal static string GetOperationName(Activity activity, ref AzMonList partBTags)
         {
             var httpMethod = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpMethod)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpMethod))
