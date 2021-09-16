@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualMachineRunCommandsRestOperations _restClient;
-        private readonly RunCommandDocumentData _data;
+        private readonly VirtualMachineRunCommandData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineRunCommandVirtualMachine"/> class for mocking. </summary>
         protected VirtualMachineRunCommandVirtualMachine()
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachineRunCommandVirtualMachine"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualMachineRunCommandVirtualMachine(ArmResource options, RunCommandDocumentData resource) : base(options, resource.Id)
+        internal VirtualMachineRunCommandVirtualMachine(ArmResource options, VirtualMachineRunCommandData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RunCommandDocumentData Data
+        public virtual VirtualMachineRunCommandData Data
         {
             get
             {
@@ -84,15 +84,16 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets specific run command for a subscription in a location. </summary>
+        /// <summary> The operation to get the run command. </summary>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VirtualMachineRunCommandVirtualMachine>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualMachineRunCommandVirtualMachine>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.Get");
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetByVirtualMachineAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachineRunCommandVirtualMachine(this, response.Value), response.GetRawResponse());
@@ -104,15 +105,16 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets specific run command for a subscription in a location. </summary>
+        /// <summary> The operation to get the run command. </summary>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualMachineRunCommandVirtualMachine> Get(CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineRunCommandVirtualMachine> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.Get");
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _restClient.GetByVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualMachineRunCommandVirtualMachine(this, response.Value), response.GetRawResponse());
@@ -183,17 +185,28 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
-        /// <summary> The operation to get the run command. </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualMachineRunCommandData>> GetByVirtualMachineAsync(string expand = null, CancellationToken cancellationToken = default)
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
+        public async virtual Task<Response<VirtualMachineRunCommandVirtualMachine>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetByVirtualMachine");
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.AddTag");
             scope.Start();
             try
             {
-                var response = await _restClient.GetByVirtualMachineAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                return response;
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.GetByVirtualMachineAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualMachineRunCommandVirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,17 +215,27 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to get the run command. </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualMachineRunCommandData> GetByVirtualMachine(string expand = null, CancellationToken cancellationToken = default)
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
+        public virtual Response<VirtualMachineRunCommandVirtualMachine> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetByVirtualMachine");
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.AddTag");
             scope.Start();
             try
             {
-                var response = _restClient.GetByVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
-                return response;
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _restClient.GetByVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
+                return Response.FromValue(new VirtualMachineRunCommandVirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,158 +244,118 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Lists all available run commands for a subscription in a location. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RunCommandDocumentBase> GetAll(CancellationToken cancellationToken = default)
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tags replaced. </returns>
+        public async virtual Task<Response<VirtualMachineRunCommandVirtualMachine>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Page<RunCommandDocumentBase> FirstPageFunc(int? pageSizeHint)
+            if (tags == null)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAll(Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
             }
-            Page<RunCommandDocumentBase> NextPageFunc(string nextLink, int? pageSizeHint)
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.SetTags");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.GetByVirtualMachineAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualMachineRunCommandVirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Lists all available run commands for a subscription in a location. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RunCommandDocumentBase> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tags replaced. </returns>
+        public virtual Response<VirtualMachineRunCommandVirtualMachine> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RunCommandDocumentBase>> FirstPageFunc(int? pageSizeHint)
+            if (tags == null)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAllAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
             }
-            async Task<Page<RunCommandDocumentBase>> NextPageFunc(string nextLink, int? pageSizeHint)
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.SetTags");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                TagResource.Delete(cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _restClient.GetByVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
+                return Response.FromValue(new VirtualMachineRunCommandVirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> The operation to get all run commands of a Virtual Machine. </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineRunCommandData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineRunCommandData> GetAllByVirtualMachine(string expand = null, CancellationToken cancellationToken = default)
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key of the tag to remove. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag removed. </returns>
+        public async virtual Task<Response<VirtualMachineRunCommandVirtualMachine>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineRunCommandData> FirstPageFunc(int? pageSizeHint)
+            if (string.IsNullOrWhiteSpace(key))
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetAllByVirtualMachine");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAllByVirtualMachine(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
             }
-            Page<VirtualMachineRunCommandData> NextPageFunc(string nextLink, int? pageSizeHint)
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.RemoveTag");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetAllByVirtualMachine");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAllByVirtualMachineNextPage(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.GetByVirtualMachineAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualMachineRunCommandVirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> The operation to get all run commands of a Virtual Machine. </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineRunCommandData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineRunCommandData> GetAllByVirtualMachineAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key of the tag to remove. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag removed. </returns>
+        public virtual Response<VirtualMachineRunCommandVirtualMachine> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineRunCommandData>> FirstPageFunc(int? pageSizeHint)
+            if (string.IsNullOrWhiteSpace(key))
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetAllByVirtualMachine");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAllByVirtualMachineAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
             }
-            async Task<Page<VirtualMachineRunCommandData>> NextPageFunc(string nextLink, int? pageSizeHint)
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.RemoveTag");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetAllByVirtualMachine");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAllByVirtualMachineNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _restClient.GetByVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
+                return Response.FromValue(new VirtualMachineRunCommandVirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> The operation to update the run command. </summary>
@@ -392,7 +375,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineRunCommandUpdateOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, response);
+                var operation = new VirtualMachineRunCommandUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -421,7 +404,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand, cancellationToken);
-                var operation = new VirtualMachineRunCommandUpdateOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, response);
+                var operation = new VirtualMachineRunCommandUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

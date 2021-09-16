@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal UpdateDomainListResult(IEnumerable<UpdateDomainData> value)
+        internal UpdateDomainListResult(IEnumerable<UpdateDomain> value)
         {
             if (value == null)
             {
@@ -31,13 +30,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal UpdateDomainListResult(IReadOnlyList<UpdateDomainData> value, string nextLink)
+        internal UpdateDomainListResult(IReadOnlyList<UpdateDomain> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        public IReadOnlyList<UpdateDomainData> Value { get; }
+        public IReadOnlyList<UpdateDomain> Value { get; }
         public string NextLink { get; }
     }
 }

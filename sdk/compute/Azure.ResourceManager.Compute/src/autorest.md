@@ -36,11 +36,13 @@ operation-group-to-resource-type:
   SharedGalleries: Microsoft.Compute/locations/sharedGalleries
   SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries/images
   SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images/versions
+  RunCommandDocuments: Microsoft.Compute/no/a/resource
 operation-group-to-resource:
   CloudServiceRoleInstances: CloudServiceRoleInstance
   CloudServiceRoles: CloudServiceRole
   CloudServiceOperatingSystems: OSVersion
-  VirtualMachineImages: VirtualMachineImage
+  CloudServicesUpdateDomain: NonResource
+  VirtualMachineImages: NonResource
   VirtualMachineExtensionImages: VirtualMachineExtensionImage
   VirtualMachineImagesEdgeZone: NonResource # this is a resource with the same model as VirtualMachineImage, but we cannot handle that case, therefore temporarily we mark this as a non-resource to let the sdk properly generate
   VirtualMachineScaleSetRollingUpgrades: VirtualMachineScaleSetRollingUpgrade
@@ -54,12 +56,14 @@ operation-group-to-resource:
   SharedGalleries: NonResource
   SharedGalleryImages: NonResource
   SharedGalleryImageVersions: NonResource
+  RunCommandDocuments: NonResource
 operation-group-to-parent:
   Usage: subscriptions
   LogAnalytics: subscriptions
   CloudServiceRoleInstances: Microsoft.Compute/cloudServices
   CloudServiceRoles: Microsoft.Compute/cloudServices
   CloudServiceOperatingSystems: subscriptions
+  CloudServicesUpdateDomain: Microsoft.Compute/cloudServices
   VirtualMachineSizes: subscriptions
   VirtualMachineImages: subscriptions
   VirtualMachineExtensionImages: subscriptions
@@ -77,10 +81,9 @@ operation-group-to-parent:
   SharedGalleryImageVersions: subscriptions
 #   SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries
 #   SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images
+  RunCommandDocuments: subscriptions
 operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
 # this corresponds to a resource with the same model as VirtualMachineImage, but we cannot handle that case, therefore temporarily we mark this as a non-resource to let the sdk properly generate
-request-path-is-non-resource:
-- /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}
 directive:
   ## first we need to unify all the paths by changing `virtualmachines` to `virtualMachines` so that every path could have consistent casing
   - from: swagger-document
@@ -159,4 +162,10 @@ directive:
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/start'].post.operationId
     transform: return 'CloudServices_PowerOn';
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands/{commandId}'].get.operationId
+    transform: return 'RunCommandDocuments_Get'
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands'].get.operationId
+    transform: return 'RunCommandDocuments_List'
 ```

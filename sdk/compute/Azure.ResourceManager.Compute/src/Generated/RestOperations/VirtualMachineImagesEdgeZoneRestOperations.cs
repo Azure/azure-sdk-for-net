@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/>, or <paramref name="version"/> is null. </exception>
-        public async Task<Response<VirtualMachineImageData>> GetAsync(string location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineImage>> GetAsync(string location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VirtualMachineImageData value = default;
+                        VirtualMachineImage value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualMachineImageData.DeserializeVirtualMachineImageData(document.RootElement);
+                        value = VirtualMachineImage.DeserializeVirtualMachineImage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/>, or <paramref name="version"/> is null. </exception>
-        public Response<VirtualMachineImageData> Get(string location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineImage> Get(string location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VirtualMachineImageData value = default;
+                        VirtualMachineImage value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualMachineImageData.DeserializeVirtualMachineImageData(document.RootElement);
+                        value = VirtualMachineImage.DeserializeVirtualMachineImage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

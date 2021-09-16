@@ -89,17 +89,6 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineImage
-        /// <summary> Gets an object representing a VirtualMachineImage along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineImage" /> object. </returns>
-        public static VirtualMachineImage GetVirtualMachineImage(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineImage(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
         #region VirtualMachine
         /// <summary> Gets an object representing a VirtualMachine along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -372,17 +361,6 @@ namespace Azure.ResourceManager.Compute
         public static CloudService GetCloudService(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CloudService(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region UpdateDomain
-        /// <summary> Gets an object representing a UpdateDomain along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UpdateDomain" /> object. </returns>
-        public static UpdateDomain GetUpdateDomain(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new UpdateDomain(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
