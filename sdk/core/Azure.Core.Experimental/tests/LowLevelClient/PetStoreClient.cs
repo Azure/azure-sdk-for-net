@@ -21,7 +21,6 @@ namespace Azure.Core.Experimental.Tests
         private Uri endpoint;
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ResponseClassifier _responseClassifier;
 
         /// <summary> Initializes a new instance of PetStoreClient for mocking. </summary>
         protected PetStoreClient()
@@ -45,7 +44,6 @@ namespace Azure.Core.Experimental.Tests
 
             options ??= new PetStoreClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _responseClassifier = new ResponseClassifier(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
@@ -75,7 +73,7 @@ namespace Azure.Core.Experimental.Tests
                         case 200:
                             return message.Response;
                         default:
-                            throw await _responseClassifier.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
@@ -112,7 +110,7 @@ namespace Azure.Core.Experimental.Tests
                         case 200:
                             return message.Response;
                         default:
-                            throw _responseClassifier.CreateRequestFailedException(message.Response);
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
