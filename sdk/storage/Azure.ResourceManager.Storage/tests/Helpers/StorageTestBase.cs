@@ -10,16 +10,16 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
-using SkuTier= Azure.ResourceManager.Storage.Models.SkuTier;
+using SkuTier = Azure.ResourceManager.Storage.Models.SkuTier;
 
 namespace Azure.ResourceManager.Storage.Tests.Helpers
 {
     [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/23897")]
     [ClientTestFixture]
-    public class StorageTestBase:ManagementRecordedTestBase<StorageManagementTestEnvironment>
+    public class StorageTestBase : ManagementRecordedTestBase<StorageManagementTestEnvironment>
     {
         public static Location DefaultLocation => Location.EastUS2;
-        public static string DefaultLocationString= "eastus2";
+        public static string DefaultLocationString = "eastus2";
         public static bool IsTestTenant = false;
         // These are used to create default accounts
         public static Sku DefaultSkuNameStandardGRS = new Sku(SkuName.StandardGRS);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         public async Task<ResourceGroup> CreateResourceGroupAsync()
         {
             string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
-            ResourceGroupCreateOrUpdateOperation operation= await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             {
                 accountName = Recording.GenerateAssetName(prefix);
                 StorageAccountCheckNameAvailabilityParameters parameter = new StorageAccountCheckNameAvailabilityParameters(accountName);
-                CheckNameAvailabilityResult result =await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
+                CheckNameAvailabilityResult result = await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
                 if (result.NameAvailable == true)
                 {
                     return accountName;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             return accountName;
         }
 
-        public static void VerifyAccountProperties(StorageAccount account,bool useDefaults)
+        public static void VerifyAccountProperties(StorageAccount account, bool useDefaults)
         {
             Assert.NotNull(account);
             Assert.NotNull(account.Id);
