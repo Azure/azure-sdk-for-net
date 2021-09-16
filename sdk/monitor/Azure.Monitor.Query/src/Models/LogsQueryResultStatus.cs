@@ -6,7 +6,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary>
     /// Represents a status of a batch query response.
     /// </summary>
-    public enum LogsBatchQueryResultStatus
+    public enum LogsQueryResultStatus
     {
         /// <summary>
         /// The query succeeded.

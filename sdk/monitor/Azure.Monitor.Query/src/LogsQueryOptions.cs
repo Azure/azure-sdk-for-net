@@ -40,6 +40,6 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets or sets the value indicating whether to throw when a partial error is returned with the logs response.
         /// </summary>
-        public bool ThrowOnPartialErrors { get; set; } = true;
+        public bool AllowPartialErrors { get; set; }
     }
 }
