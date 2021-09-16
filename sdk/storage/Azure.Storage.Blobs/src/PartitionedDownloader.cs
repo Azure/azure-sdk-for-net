@@ -79,7 +79,18 @@ namespace Azure.Storage.Blobs
                 _initialRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
 
-            _hashingOptions = hashingOptions;
+            if (hashingOptions?.DeferValidation ?? false)
+            {
+                throw Errors.CannotDeferTransactionalHashVerification();
+            }
+            // we defer hash validation on download calls to validate in-place with our existing buffer
+            _hashingOptions = hashingOptions == default
+                ? default
+                : new DownloadTransactionalHashingOptions
+                {
+                    Algorithm = hashingOptions.Algorithm,
+                    DeferValidation = true
+                };
         }
 
         public async Task<Response> DownloadToAsync(

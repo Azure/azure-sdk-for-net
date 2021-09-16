@@ -118,7 +118,8 @@ namespace Azure.Storage
             bool allowModifications,
             long initialLenght,
             long position = 0,
-            int? bufferSize = default)
+            int? bufferSize = default,
+            bool overrideDeferHash = false)
         {
             _downloadInternalFunc = downloadInternalFunc;
             _getPropertiesInternalFunc = getPropertiesFunc;
@@ -131,16 +132,18 @@ namespace Azure.Storage
             _length = initialLenght;
             _bufferInvalidated = false;
 
+            // the caller to this stream cannot defer validation, as they cannot access a returned hash
             if (hashingOptions?.DeferValidation ?? false)
             {
                 throw Errors.CannotDeferTransactionalHashVerification();
             }
+            // we defer hash validation on download calls (unless overridden) to validate in-place with our existing buffer
             _hashingOptions = hashingOptions == default
                 ? default
                 : new DownloadTransactionalHashingOptions
                 {
                     Algorithm = hashingOptions.Algorithm,
-                    DeferValidation = true
+                    DeferValidation = !overrideDeferHash
                 };
         }
 
@@ -255,6 +258,12 @@ namespace Azure.Storage
             _bufferPosition = 0;
             _bufferLength = totalCopiedBytes;
             _length = GetBlobLengthFromResponse(response.GetRawResponse());
+
+            // if we deferred transactional hash validation on download, validate now
+            if (_hashingOptions != default && _hashingOptions.DeferValidation)
+            {
+                ContentHasher.AssertResponseHashMatch(_buffer, _bufferPosition, _bufferLength, _hashingOptions.Algorithm, response.GetRawResponse());
+            }
 
             return totalCopiedBytes;
         }

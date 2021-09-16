@@ -39,7 +39,7 @@ namespace Azure.Storage.Shared
             // write streams don't support pre-calculated hashes
             if (_hashingOptions?.PrecalculatedHash != default)
             {
-                throw new ArgumentException("");
+                throw Errors.PrecalculatedHashNotSupportedOnSplit();
             }
 
             if (buffer != null)

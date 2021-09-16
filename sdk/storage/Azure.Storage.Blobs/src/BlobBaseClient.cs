@@ -1226,6 +1226,11 @@ namespace Azure.Storage.Blobs.Specialized
         {
             options ??= new BlobBaseDownloadOptions();
 
+            if ((options.TransactionalHashingOptions?.DeferValidation ?? false) && UsingClientSideEncryption)
+            {
+                throw Errors.CannotDeferTransactionalHashVerificationWithClientsideEncryption();
+            }
+
             HttpRange requestedRange = options.Range;
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
@@ -2704,7 +2709,9 @@ namespace Azure.Storage.Blobs.Specialized
                         allowModifications,
                         blobProperties.Value.ContentLength,
                         position,
-                        bufferSize);
+                        bufferSize,
+                        // if using clientside encryption, validation cannot be deferred; returned decrypted data is not what hash corresponds to
+                        overrideDeferHash: UsingClientSideEncryption);
                 }
                 catch (Exception ex)
                 {

@@ -23,6 +23,17 @@ namespace Azure.Storage
         public static void AssertResponseHashMatch(Stream content, TransactionalHashAlgorithm algorithm, Response response)
         {
             GetHashResult computedHash = GetHash(content, algorithm);
+            AssertResponseHashMatch(computedHash, algorithm, response);
+        }
+
+        public static void AssertResponseHashMatch(byte[] content, int offset, int count, TransactionalHashAlgorithm algorithm, Response response)
+        {
+            GetHashResult computedHash = GetHash(content, offset, count, algorithm);
+            AssertResponseHashMatch(computedHash, algorithm, response);
+        }
+
+        private static void AssertResponseHashMatch(GetHashResult computedHash, TransactionalHashAlgorithm algorithm, Response response)
+        {
             switch (algorithm)
             {
                 case TransactionalHashAlgorithm.MD5:
@@ -86,6 +97,26 @@ namespace Azure.Storage
                 TransactionalHashAlgorithm.StorageCrc64 => new GetHashResult() { StorageCrc64 = ComputeHash(content, StorageCrc64HashAlgorithm.Create()) },
 #pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms; MD5 being used for content integrity check, not encryption
                 TransactionalHashAlgorithm.MD5 => new GetHashResult() { MD5 = ComputeHash(content, MD5.Create()) },
+#pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
+                _ => new GetHashResult()
+            };
+        }
+
+        /// <summary>
+        /// Computes the requested hash, if desired.
+        /// </summary>
+        /// <param name="content">Content to hash.</param>
+        /// <param name="offset">Starting offset of content array to compute with.</param>
+        /// <param name="count">Numbert of bytes after offset to compute with.</param>
+        /// <param name="algorithmIdentifier">Algorithm to compute the hash with.</param>
+        /// <returns>Object containing the requested hash, or no hash, on its algorithm's respective property.</returns>
+        public static GetHashResult GetHash(byte[] content, int offset, int count, TransactionalHashAlgorithm algorithmIdentifier)
+        {
+            return algorithmIdentifier switch
+            {
+                TransactionalHashAlgorithm.StorageCrc64 => new GetHashResult() { StorageCrc64 = StorageCrc64HashAlgorithm.Create().ComputeHash(content, offset, count) },
+#pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms; MD5 being used for content integrity check, not encryption
+                TransactionalHashAlgorithm.MD5 => new GetHashResult() { MD5 = MD5.Create().ComputeHash(content, offset, count) },
 #pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
                 _ => new GetHashResult()
             };
