@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
 {
 
     /// <summary>
-    /// Defines values for SkuRestrictionReasonCode.
+    /// Defines values for SkuAvailability.
     /// </summary>
-    public static class SkuRestrictionReasonCode
+    public static class SkuAvailability
     {
-        public const string NotAvailableForSubscription = "NotAvailableForSubscription";
-        public const string QuotaId = "QuotaId";
+        public const string Available = "Available";
+        public const string Unavailable = "Unavailable";
     }
 }
