@@ -13,20 +13,21 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class ClusterIdentityUserAssignedIdentitiesValue
+    /// <summary>
+    /// The User Assigned Identity
+    /// </summary>
+    public partial class UserAssignedIdentity
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ClusterIdentityUserAssignedIdentitiesValue class.
+        /// Initializes a new instance of the UserAssignedIdentity class.
         /// </summary>
-        public ClusterIdentityUserAssignedIdentitiesValue()
+        public UserAssignedIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ClusterIdentityUserAssignedIdentitiesValue class.
+        /// Initializes a new instance of the UserAssignedIdentity class.
         /// </summary>
         /// <param name="principalId">The principal id of user assigned
         /// identity.</param>
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// identity.</param>
         /// <param name="tenantId">The tenant id of user assigned
         /// identity.</param>
-        public ClusterIdentityUserAssignedIdentitiesValue(string principalId = default(string), string clientId = default(string), string tenantId = default(string))
+        public UserAssignedIdentity(string principalId = default(string), string clientId = default(string), string tenantId = default(string))
         {
             PrincipalId = principalId;
             ClientId = clientId;

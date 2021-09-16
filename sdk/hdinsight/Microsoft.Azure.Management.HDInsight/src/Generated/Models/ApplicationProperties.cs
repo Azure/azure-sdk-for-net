@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="createdDate">The application create date time.</param>
         /// <param name="marketplaceIdentifier">The marketplace
         /// identifier.</param>
-        public ApplicationProperties(ComputeProfile computeProfile = default(ComputeProfile), IList<RuntimeScriptAction> installScriptActions = default(IList<RuntimeScriptAction>), IList<RuntimeScriptAction> uninstallScriptActions = default(IList<RuntimeScriptAction>), IList<ApplicationGetHttpsEndpoint> httpsEndpoints = default(IList<ApplicationGetHttpsEndpoint>), IList<ApplicationGetEndpoint> sshEndpoints = default(IList<ApplicationGetEndpoint>), string provisioningState = default(string), string applicationType = default(string), string applicationState = default(string), IList<Errors> errors = default(IList<Errors>), string createdDate = default(string), string marketplaceIdentifier = default(string))
+        /// <param name="privateLinkConfigurations">The private link
+        /// configurations.</param>
+        public ApplicationProperties(ComputeProfile computeProfile = default(ComputeProfile), IList<RuntimeScriptAction> installScriptActions = default(IList<RuntimeScriptAction>), IList<RuntimeScriptAction> uninstallScriptActions = default(IList<RuntimeScriptAction>), IList<ApplicationGetHttpsEndpoint> httpsEndpoints = default(IList<ApplicationGetHttpsEndpoint>), IList<ApplicationGetEndpoint> sshEndpoints = default(IList<ApplicationGetEndpoint>), string provisioningState = default(string), string applicationType = default(string), string applicationState = default(string), IList<Errors> errors = default(IList<Errors>), string createdDate = default(string), string marketplaceIdentifier = default(string), IList<PrivateLinkConfiguration> privateLinkConfigurations = default(IList<PrivateLinkConfiguration>))
         {
             ComputeProfile = computeProfile;
             InstallScriptActions = installScriptActions;
@@ -62,6 +64,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             Errors = errors;
             CreatedDate = createdDate;
             MarketplaceIdentifier = marketplaceIdentifier;
+            PrivateLinkConfigurations = privateLinkConfigurations;
             CustomInit();
         }
 
@@ -135,6 +138,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "marketplaceIdentifier")]
         public string MarketplaceIdentifier { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the private link configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateLinkConfigurations")]
+        public IList<PrivateLinkConfiguration> PrivateLinkConfigurations { get; set; }
 
     }
 }

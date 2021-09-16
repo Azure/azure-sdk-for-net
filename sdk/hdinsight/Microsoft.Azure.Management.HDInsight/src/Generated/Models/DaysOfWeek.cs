@@ -10,81 +10,18 @@
 
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DaysOfWeek.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DaysOfWeek
+    public static class DaysOfWeek
     {
-        [EnumMember(Value = "Monday")]
-        Monday,
-        [EnumMember(Value = "Tuesday")]
-        Tuesday,
-        [EnumMember(Value = "Wednesday")]
-        Wednesday,
-        [EnumMember(Value = "Thursday")]
-        Thursday,
-        [EnumMember(Value = "Friday")]
-        Friday,
-        [EnumMember(Value = "Saturday")]
-        Saturday,
-        [EnumMember(Value = "Sunday")]
-        Sunday
-    }
-    internal static class DaysOfWeekEnumExtension
-    {
-        internal static string ToSerializedValue(this DaysOfWeek? value)
-        {
-            return value == null ? null : ((DaysOfWeek)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this DaysOfWeek value)
-        {
-            switch( value )
-            {
-                case DaysOfWeek.Monday:
-                    return "Monday";
-                case DaysOfWeek.Tuesday:
-                    return "Tuesday";
-                case DaysOfWeek.Wednesday:
-                    return "Wednesday";
-                case DaysOfWeek.Thursday:
-                    return "Thursday";
-                case DaysOfWeek.Friday:
-                    return "Friday";
-                case DaysOfWeek.Saturday:
-                    return "Saturday";
-                case DaysOfWeek.Sunday:
-                    return "Sunday";
-            }
-            return null;
-        }
-
-        internal static DaysOfWeek? ParseDaysOfWeek(this string value)
-        {
-            switch( value )
-            {
-                case "Monday":
-                    return DaysOfWeek.Monday;
-                case "Tuesday":
-                    return DaysOfWeek.Tuesday;
-                case "Wednesday":
-                    return DaysOfWeek.Wednesday;
-                case "Thursday":
-                    return DaysOfWeek.Thursday;
-                case "Friday":
-                    return DaysOfWeek.Friday;
-                case "Saturday":
-                    return DaysOfWeek.Saturday;
-                case "Sunday":
-                    return DaysOfWeek.Sunday;
-            }
-            return null;
-        }
+        public const string Monday = "Monday";
+        public const string Tuesday = "Tuesday";
+        public const string Wednesday = "Wednesday";
+        public const string Thursday = "Thursday";
+        public const string Friday = "Friday";
+        public const string Saturday = "Saturday";
+        public const string Sunday = "Sunday";
     }
 }

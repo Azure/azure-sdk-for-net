@@ -16,26 +16,27 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     using System.Linq;
 
     /// <summary>
-    /// The virtual machine sizes capability.
+    /// A list of private link resources
     /// </summary>
-    public partial class VmSizesCapability
+    public partial class PrivateLinkResourceListResult
     {
         /// <summary>
-        /// Initializes a new instance of the VmSizesCapability class.
+        /// Initializes a new instance of the PrivateLinkResourceListResult
+        /// class.
         /// </summary>
-        public VmSizesCapability()
+        public PrivateLinkResourceListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VmSizesCapability class.
+        /// Initializes a new instance of the PrivateLinkResourceListResult
+        /// class.
         /// </summary>
-        /// <param name="available">The list of virtual machine size
-        /// capabilities.</param>
-        public VmSizesCapability(IList<string> available = default(IList<string>))
+        /// <param name="value">Array of private link resources</param>
+        public PrivateLinkResourceListResult(IList<PrivateLinkResource> value = default(IList<PrivateLinkResource>))
         {
-            Available = available;
+            Value = value;
             CustomInit();
         }
 
@@ -45,10 +46,10 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of virtual machine size capabilities.
+        /// Gets or sets array of private link resources
         /// </summary>
-        [JsonProperty(PropertyName = "available")]
-        public IList<string> Available { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<PrivateLinkResource> Value { get; set; }
 
     }
 }

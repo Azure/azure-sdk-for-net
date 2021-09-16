@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="status">The async operation state. Possible values
         /// include: 'InProgress', 'Succeeded', 'Failed'</param>
         /// <param name="error">The operation error information.</param>
-        public AsyncOperationResult(AsyncOperationState? status = default(AsyncOperationState?), Errors error = default(Errors))
+        public AsyncOperationResult(string status = default(string), Errors error = default(Errors))
         {
             Status = status;
             Error = error;
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// 'InProgress', 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public AsyncOperationState? Status { get; set; }
+        public string Status { get; set; }
 
         /// <summary>
         /// Gets or sets the operation error information.
