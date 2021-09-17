@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="KeyPermissions"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPermissions"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyPermissions(string value)
         {

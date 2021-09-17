@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class LogsQueryClientClientTests
+    public class LogsQueryClientTests
     {
         [Test]
         public void CanSetServiceTimeout_Mocked()
@@ -41,6 +41,47 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("wait=600", preferHeader);
             // The network timeout is adjusted with 15 sec buffer
             Assert.AreEqual(TimeSpan.FromMinutes(10).Add(TimeSpan.FromSeconds(15)), networkOverride);
+        }
+
+        [Test]
+        public void CanSetServiceTimeoutForBatch_Mocked()
+        {
+            string preferHeader = null;
+            TimeSpan? networkOverride = default;
+
+            var mockTransport = MockTransport.FromMessageCallback(message =>
+            {
+                Assert.True(message.Request.Headers.TryGetValue("prefer", out preferHeader));
+                networkOverride = message.NetworkTimeout;
+
+                return new MockResponse(403);
+            });
+
+            var client = new LogsQueryClient(new Uri("https://api.loganalytics.io"), new MockCredential(), new LogsQueryClientOptions()
+            {
+                Transport = mockTransport
+            });
+
+            var batch = new LogsBatchQuery();
+            batch.AddQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
+            {
+                ServerTimeout = TimeSpan.FromMinutes(1)
+            });
+            batch.AddQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
+            {
+                ServerTimeout = TimeSpan.FromMinutes(2)
+            });
+            batch.AddQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
+            {
+                ServerTimeout = TimeSpan.FromMinutes(3)
+            });
+
+            Assert.ThrowsAsync<RequestFailedException>(() => client.QueryBatchAsync(batch));
+
+            // 3 minutes (180 sec) is the max out of all individual queries
+            Assert.AreEqual("wait=180", preferHeader);
+            // The network timeout is adjusted with 15 sec buffer
+            Assert.AreEqual(TimeSpan.FromMinutes(3).Add(TimeSpan.FromSeconds(15)), networkOverride);
         }
 
         [Test]
@@ -73,7 +114,7 @@ namespace Azure.Monitor.Query.Tests
             });
 
             LogsBatchQuery batch = new LogsBatchQuery();
-            batch.AddQuery("wid", "query", MonitorQueryTimeRange.All);
+            batch.AddQuery("wid", "query", QueryTimeRange.All);
 
             LogsBatchQueryResultCollection batchResults = await client.QueryBatchAsync(batch);
             Assert.NotNull(batchResults.GetResult("0"));
@@ -82,10 +123,8 @@ namespace Azure.Monitor.Query.Tests
         [Test]
         public async Task UsesDefaultEndpoint()
         {
-            string uri = null;
-            var mockTransport = MockTransport.FromMessageCallback(message =>
+            var mockTransport = MockTransport.FromMessageCallback(_ =>
             {
-                uri = message.Request.Uri.ToString();
                 var mockResponse = new MockResponse(200);
                 mockResponse.SetContent("{\"tables\":[]}");
                 return mockResponse;
@@ -96,12 +135,13 @@ namespace Azure.Monitor.Query.Tests
                 Transport = mockTransport
             });
 
-            await client.QueryAsync("", "", MonitorQueryTimeRange.All);
-            StringAssert.StartsWith("https://api.loganalytics.io", uri);
+            await client.QueryAsync("", "", QueryTimeRange.All);
+            StringAssert.StartsWith("https://api.monitor.azure.com", mockTransport.SingleRequest.Uri.ToString());
         }
 
         [TestCase(null, "https://api.loganalytics.io//.default")]
-        [TestCase("https://api.loganalytics.gov//.default", "https://api.loganalytics.gov//.default")]
+        [TestCase("https://api.loganalytics.gov", "https://api.loganalytics.gov//.default")]
+        [TestCase("https://api.loganalytics.cn", "https://api.loganalytics.cn//.default")]
         public async Task UsesDefaultAuthScope(string scope, string expectedScope)
         {
             var mockTransport = MockTransport.FromMessageCallback(message =>
@@ -121,15 +161,15 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(mock.Object, new LogsQueryClientOptions()
             {
                 Transport = mockTransport,
-                AuthenticationScope = scope
+                Audience = scope == null ? (LogsQueryClientAudience?)null : new LogsQueryClientAudience(scope)
             });
 
-            await client.QueryAsync("", "", MonitorQueryTimeRange.All);
+            await client.QueryAsync("", "", QueryTimeRange.All);
             Assert.AreEqual(new[] { expectedScope }, scopes);
         }
 
         [Test]
-        public void PublicEndpoint()
+        public void ExposesPublicEndpoint()
         {
             var client = new LogsQueryClient(new Uri("https://api.loganalytics.io"), new MockCredential(), new LogsQueryClientOptions());
             Assert.AreEqual(new Uri("https://api.loganalytics.io"), client.Endpoint);

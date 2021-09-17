@@ -16,6 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.AzureCosmosDb;
         }
 
+        /// <summary> Gets or sets the data source parameter. </summary>
         public AzureCosmosDBParameterPatch DataSourceParameter { get; set; }
     }
 }

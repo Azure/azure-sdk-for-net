@@ -58,17 +58,29 @@ namespace Azure.Storage.Blobs.Models
             IsImmutableStorageWithVersioningEnabled = isImmutableStorageWithVersioningEnabled;
         }
 
+        /// <summary> Gets the last modified. </summary>
         public DateTimeOffset LastModified { get; }
+        /// <summary> Gets the etag. </summary>
         public string Etag { get; }
+        /// <summary> Gets the lease status. </summary>
         public LeaseStatus? LeaseStatus { get; }
+        /// <summary> Gets the lease state. </summary>
         public LeaseState? LeaseState { get; }
+        /// <summary> Gets the lease duration. </summary>
         public LeaseDurationType? LeaseDuration { get; }
+        /// <summary> Gets the public access. </summary>
         public PublicAccessType? PublicAccess { get; }
+        /// <summary> Gets the has immutability policy. </summary>
         public bool? HasImmutabilityPolicy { get; }
+        /// <summary> Gets the has legal hold. </summary>
         public bool? HasLegalHold { get; }
+        /// <summary> Gets the default encryption scope. </summary>
         public string DefaultEncryptionScope { get; }
+        /// <summary> Gets the prevent encryption scope override. </summary>
         public bool? PreventEncryptionScopeOverride { get; }
+        /// <summary> Gets the deleted time. </summary>
         public DateTimeOffset? DeletedTime { get; }
+        /// <summary> Gets the remaining retention days. </summary>
         public int? RemainingRetentionDays { get; }
         /// <summary> Indicates if version level worm is enabled on this container. </summary>
         public bool? IsImmutableStorageWithVersioningEnabled { get; }

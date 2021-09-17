@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AnomalyIncidentStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyIncidentStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnomalyIncidentStatus(string value)
         {
