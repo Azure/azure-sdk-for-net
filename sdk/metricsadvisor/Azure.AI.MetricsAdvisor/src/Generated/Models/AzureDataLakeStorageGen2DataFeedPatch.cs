@@ -16,6 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.AzureDataLakeStorage;
         }
 
+        /// <summary> Gets or sets the data source parameter. </summary>
         public AzureDataLakeStorageGen2ParameterPatch DataSourceParameter { get; set; }
     }
 }

@@ -18,6 +18,6 @@
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

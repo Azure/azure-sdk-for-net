@@ -215,14 +215,12 @@ namespace Azure.Data.Tables.Tests
                 }
 
                 // Get the table list.
-                var remainingItems = createdTables.Count;
-                await foreach (var page in service.QueryAsync( /*maxPerPage: pageCount*/ ).AsPages(pageSizeHint: pageCount))
+                await foreach (var page in service.QueryAsync().AsPages(pageSizeHint: pageCount))
                 {
                     Assert.That(page.Values, Is.Not.Empty);
                     if (pageCount.HasValue)
                     {
-                        Assert.That(page.Values.Count, Is.EqualTo(Math.Min(pageCount.Value, remainingItems)));
-                        remainingItems -= page.Values.Count;
+                        Assert.That(page.Values.Count, Is.LessThanOrEqualTo(pageCount.Value));
                     }
                     else
                     {

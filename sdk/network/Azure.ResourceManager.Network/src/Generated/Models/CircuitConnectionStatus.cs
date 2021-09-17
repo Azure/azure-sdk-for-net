@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CircuitConnectionStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CircuitConnectionStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CircuitConnectionStatus(string value)
         {

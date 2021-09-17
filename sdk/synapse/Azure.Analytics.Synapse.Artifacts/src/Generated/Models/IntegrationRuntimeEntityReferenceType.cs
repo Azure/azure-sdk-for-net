@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="IntegrationRuntimeEntityReferenceType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeEntityReferenceType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IntegrationRuntimeEntityReferenceType(string value)
         {

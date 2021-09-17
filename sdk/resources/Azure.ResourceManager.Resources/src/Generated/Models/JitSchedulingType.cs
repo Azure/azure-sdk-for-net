@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="JitSchedulingType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitSchedulingType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JitSchedulingType(string value)
         {

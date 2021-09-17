@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SparkStatementLanguageType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkStatementLanguageType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SparkStatementLanguageType(string value)
         {

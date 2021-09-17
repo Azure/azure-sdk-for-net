@@ -35,22 +35,22 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageSharedSources)Constants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)Errors.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroParser.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroConstants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroReader.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\StreamWithPosition.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageClientDiagnostics.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroParser.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroConstants.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroReader.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\StreamWithPosition.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>
