@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="..\..\Shared\src\CommunicationBearerTokenCredential.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />

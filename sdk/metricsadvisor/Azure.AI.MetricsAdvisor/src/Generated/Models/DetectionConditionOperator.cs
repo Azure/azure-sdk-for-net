@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DetectionConditionOperator"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectionConditionOperator"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DetectionConditionOperator(string value)
         {

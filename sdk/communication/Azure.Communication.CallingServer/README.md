@@ -8,7 +8,7 @@ This package contains a C# SDK for Azure Communication Services for Calling.
 ### Install the package
 Install the Azure Communication CallingServer client library for .NET with [NuGet][nuget]:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Communication.CallingServer --version 1.0.0-beta.2
 ``` 
 

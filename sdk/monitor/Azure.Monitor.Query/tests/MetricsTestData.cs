@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Tests
         private static Task _initialization;
         private static readonly object _initializationLock = new object();
 
-        private readonly MonitorQueryClientTestEnvironment _testEnvironment;
+        private readonly MonitorQueryTestEnvironment _testEnvironment;
         private static TimeSpan AllowedMetricAge = TimeSpan.FromMinutes(25);
         public string Name1 { get; } = "Guinness";
         public string Name2 { get; } = "Bessie";
@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Tests
         public string MetricNamespace { get; }
         public DateTimeOffset EndTime => StartTime.Add(Duration);
 
-        public MetricsTestData(MonitorQueryClientTestEnvironment environment, DateTimeOffset dateTimeOffset)
+        public MetricsTestData(MonitorQueryTestEnvironment environment, DateTimeOffset dateTimeOffset)
         {
             _testEnvironment = environment;
 
@@ -110,7 +110,7 @@ namespace Azure.Monitor.Query.Tests
             var metrics = await metricQueryClient.QueryAsync(_testEnvironment.MetricsResource, new[] {MetricName},
                 new MetricsQueryOptions()
                 {
-                    TimeRange = new MonitorQueryTimeRange(StartTime, Duration),
+                    TimeRange = new QueryTimeRange(StartTime, Duration),
                     MetricNamespace = MetricNamespace,
                     Granularity = TimeSpan.FromMinutes(1),
                     Aggregations =

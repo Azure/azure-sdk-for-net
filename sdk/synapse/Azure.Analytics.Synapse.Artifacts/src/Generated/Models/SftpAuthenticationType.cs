@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SftpAuthenticationType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SftpAuthenticationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SftpAuthenticationType(string value)
         {

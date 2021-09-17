@@ -25,9 +25,13 @@ namespace Azure.Storage.Blobs.Models
             Type = type;
         }
 
+        /// <summary> Gets the type. </summary>
         public string Type { get; }
+        /// <summary> Gets or sets the name. </summary>
         public string Name { get; set; }
+        /// <summary> Gets or sets the precision. </summary>
         public int? Precision { get; set; }
+        /// <summary> Gets or sets the scale. </summary>
         public int? Scale { get; set; }
     }
 }

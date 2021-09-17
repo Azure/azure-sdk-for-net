@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="RecordingChannelType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordingChannelType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RecordingChannelType(string value)
         {

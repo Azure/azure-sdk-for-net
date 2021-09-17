@@ -54,6 +54,7 @@ namespace Azure.Storage.Test
             public string ContentEncoding { get; protected internal set; }
             public string ContentLanguage { get; protected internal set; }
             public string ContentType { get; protected internal set; }
+            public string EncryptionScope { get; protected internal set; }
             public string AccountKey { get; protected internal set; }
             public DateTimeOffset StartTime { get; protected internal set; }
             public DateTimeOffset ExpiryTime { get; protected internal set; }
@@ -85,6 +86,7 @@ namespace Azure.Storage.Test
                     ContentEncoding = test.GetNewString(),
                     ContentLanguage = test.GetNewString(),
                     ContentType = test.GetNewString(),
+                    EncryptionScope = test.GetNewString(),
                     AccountKey = Convert.ToBase64String(Encoding.UTF8.GetBytes(test.GetNewString())),
                     StartTime = test.GetUtcNow().AddHours(-1),
                     ExpiryTime = test.GetUtcNow().AddHours(+1),

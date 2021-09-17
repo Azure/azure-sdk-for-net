@@ -32,10 +32,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             CurrentState = currentState;
         }
 
+        /// <summary> Gets the submitted at. </summary>
         public DateTimeOffset? SubmittedAt { get; }
+        /// <summary> Gets the scheduled at. </summary>
         public DateTimeOffset? ScheduledAt { get; }
+        /// <summary> Gets the ended at. </summary>
         public DateTimeOffset? EndedAt { get; }
+        /// <summary> Gets the cancellation requested at. </summary>
         public DateTimeOffset? CancellationRequestedAt { get; }
+        /// <summary> Gets the current state. </summary>
         public SchedulerCurrentState? CurrentState { get; }
     }
 }

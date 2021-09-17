@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataBoxEdge
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -35,7 +33,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             /// <param name='resourceGroupName'>
             /// The resource group name.
             /// </param>
-            public static IEnumerable<Node> ListByDataBoxEdgeDevice(this INodesOperations operations, string deviceName, string resourceGroupName)
+            public static IPage<Node> ListByDataBoxEdgeDevice(this INodesOperations operations, string deviceName, string resourceGroupName)
             {
                 return operations.ListByDataBoxEdgeDeviceAsync(deviceName, resourceGroupName).GetAwaiter().GetResult();
             }
@@ -55,9 +53,43 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Node>> ListByDataBoxEdgeDeviceAsync(this INodesOperations operations, string deviceName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Node>> ListByDataBoxEdgeDeviceAsync(this INodesOperations operations, string deviceName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByDataBoxEdgeDeviceWithHttpMessagesAsync(deviceName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the nodes currently configured under this Data Box Edge device
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Node> ListByDataBoxEdgeDeviceNext(this INodesOperations operations, string nextPageLink)
+            {
+                return operations.ListByDataBoxEdgeDeviceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the nodes currently configured under this Data Box Edge device
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Node>> ListByDataBoxEdgeDeviceNextAsync(this INodesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDataBoxEdgeDeviceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

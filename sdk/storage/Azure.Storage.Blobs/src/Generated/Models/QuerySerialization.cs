@@ -25,6 +25,7 @@ namespace Azure.Storage.Blobs.Models
             Format = format;
         }
 
+        /// <summary> Gets the format. </summary>
         public QueryFormat Format { get; }
     }
 }

@@ -30,11 +30,11 @@ namespace Azure.Monitor.Query.Models
         /// string countQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -56,14 +56,14 @@ namespace Azure.Monitor.Query.Models
                                             $" Please use the return value of {nameof(LogsBatchQuery)}.{nameof(LogsBatchQuery.AddQuery)} as the '{nameof(queryId)}' argument.", nameof(queryId));
             }
 
-            if (result.Status == LogsBatchQueryResultStatus.Failure)
+            if (result.Status == LogsQueryResultStatus.Failure)
             {
                 var message = $"Batch query with id '{queryId}' failed.{Environment.NewLine}{result.Error}";
                 throw new RequestFailedException(result.StatusCode, message, result.Error.Code, null);
             }
 
             if (result.Error != null &&
-                request?.Options?.ThrowOnPartialErrors != false)
+                request?.Options?.AllowPartialErrors != true)
             {
                 throw result.CreateExceptionForErrorResponse(result.StatusCode);
             }
