@@ -101,7 +101,7 @@ namespace Azure.Identity
                           clientSecret,
                           options as ITokenCacheOptions,
                           null,
-                          options?.IsLoggingPIIEnabled ?? false);
+                          options?.Diagnostics?.IsExtendedUnsafeLoggingEnabled ?? false);
         }
 
         /// <summary>

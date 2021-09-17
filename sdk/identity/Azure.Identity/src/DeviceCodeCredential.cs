@@ -94,7 +94,7 @@ namespace Azure.Identity
                 ClientId,
                 AzureAuthorityHosts.GetDeviceCodeRedirectUri(Pipeline.AuthorityHost).AbsoluteUri,
                 options as ITokenCacheOptions,
-                options?.IsLoggingPIIEnabled ?? false);
+                options?.Diagnostics?.IsExtendedUnsafeLoggingEnabled ?? false);
         }
 
         /// <summary>

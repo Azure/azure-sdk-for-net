@@ -45,7 +45,7 @@ namespace Azure.Identity
         {
             _tenantId = options?.TenantId ?? _commonTenant;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            Client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null, options?.IsLoggingPIIEnabled ?? false);
+            Client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null, options?.Diagnostics?.IsExtendedUnsafeLoggingEnabled ?? false);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
             _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;

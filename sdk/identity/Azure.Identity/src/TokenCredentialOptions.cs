@@ -14,6 +14,14 @@ namespace Azure.Identity
         private Uri _authorityHost;
 
         /// <summary>
+        /// Constructs a new <see cref="TokenCredentialOptions"/> with default options.
+        /// </summary>
+        public TokenCredentialOptions() : base()
+        {
+            base.Diagnostics = new TokenCredentialDiagnosticsOptions(base.Diagnostics);
+        }
+
+        /// <summary>
         /// The host of the Azure Active Directory authority. The default is https://login.microsoftonline.com/. For well known authority hosts for Azure cloud instances see <see cref="AzureAuthorityHosts"/>.
         /// </summary>
         public Uri AuthorityHost
@@ -29,10 +37,8 @@ namespace Azure.Identity
         public bool AllowMultiTenantAuthentication { get; set; }
 
         /// <summary>
-        /// Gets or sets value indicating if ETW logging that contains PII content should be logged.
-        /// Setting this property will not disable redaction of <see cref="Request"/> Content. To enable logging of sensitive <see cref="Request.Content"/>
-        /// the <see cref="DiagnosticsOptions.IsLoggingContentEnabled"/> property must be set to <c>true</c>.
+        /// Gets the credential diagnostic options.
         /// </summary>
-        public bool IsLoggingPIIEnabled { get; set; }
+        public new TokenCredentialDiagnosticsOptions Diagnostics => base.Diagnostics as TokenCredentialDiagnosticsOptions;
     }
 }

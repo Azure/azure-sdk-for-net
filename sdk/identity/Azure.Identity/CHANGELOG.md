@@ -6,6 +6,9 @@
 
 ### Breaking Changes
 
+#### Breaking Changes from 1.5.0-beta.4
+    - Replaced `TokenCredentialOptions.IsLoggingPiiEnabled` with `TokenCredentialOptions.Diagnostics.IsExtendedUnsafeLoggingEnabled`
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -81,7 +81,7 @@ namespace Azure.Identity
                 (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId,
                 null,
                 (options as ITokenCacheOptions) ?? s_DefaultCacheOptions,
-                options?.IsLoggingPIIEnabled ?? false);
+                options?.Diagnostics?.IsExtendedUnsafeLoggingEnabled ?? false);
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
         }
 

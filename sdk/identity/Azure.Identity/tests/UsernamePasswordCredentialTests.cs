@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
+        public void RespectsIsExtendedUnsafeLoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
         {
             var username = Guid.NewGuid().ToString();
             var password = Guid.NewGuid().ToString();
@@ -54,7 +54,7 @@ namespace Azure.Identity.Tests
                 password,
                 clientId,
                 tenantId,
-                new TokenCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled },
+                new TokenCredentialOptions { Diagnostics = { IsExtendedUnsafeLoggingEnabled = isLoggingPIIEnabled } },
                 default,
                 null);
 

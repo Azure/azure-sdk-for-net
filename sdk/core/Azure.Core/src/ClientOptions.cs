@@ -70,7 +70,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the client diagnostic options.
         /// </summary>
-        public DiagnosticsOptions Diagnostics { get; }
+        public DiagnosticsOptions Diagnostics { get; protected set; }
 
         /// <summary>
         /// Gets the client retry options.

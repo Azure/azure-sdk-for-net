@@ -49,7 +49,11 @@ namespace Azure.Core
             LoggedQueryParameters = new List<string>();
         }
 
-        internal DiagnosticsOptions(DiagnosticsOptions diagnosticsOptions)
+        /// <summary>
+        /// Initializes the newly created <see cref="DiagnosticsOptions"/> with the same settings as the specified diagnoticOptions.
+        /// </summary>
+        /// <param name="diagnosticsOptions">The <see cref="DiagnosticsOptions"/> to model the newly created instance on.</param>
+        protected internal DiagnosticsOptions(DiagnosticsOptions diagnosticsOptions)
         {
             ApplicationId = diagnosticsOptions.ApplicationId;
             IsLoggingEnabled = diagnosticsOptions.IsLoggingEnabled;

@@ -79,9 +79,9 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
+        public void RespectsIsExtendedUnsafeLoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
         {
-            var credential = new DeviceCodeCredential(new DeviceCodeCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled});
+            var credential = new DeviceCodeCredential(new DeviceCodeCredentialOptions { Diagnostics = { IsExtendedUnsafeLoggingEnabled = isLoggingPIIEnabled } });
 
             Assert.NotNull(credential.Client);
             Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);

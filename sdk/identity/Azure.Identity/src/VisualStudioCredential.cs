@@ -49,7 +49,7 @@ namespace Azure.Identity
 
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
         {
-            _logPII = options?.IsLoggingPIIEnabled ?? false;
+            _logPII = options?.Diagnostics?.IsExtendedUnsafeLoggingEnabled ?? false;
             _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             _tenantIdOptionProvided = tenantId != null;
             _tenantId = tenantId;

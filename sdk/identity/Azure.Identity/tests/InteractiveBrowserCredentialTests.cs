@@ -39,9 +39,9 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
+        public void RespectsIsExtendedUnsafeLoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
         {
-            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled});
+            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { Diagnostics = { IsExtendedUnsafeLoggingEnabled = isLoggingPIIEnabled } });
 
             Assert.NotNull(credential.Client);
             Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
