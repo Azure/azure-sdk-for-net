@@ -46,11 +46,15 @@ namespace Azure.Storage.Files.Shares.Models
             PermissionKey = permissionKey;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the file id. </summary>
         public string FileId { get; }
         /// <summary> File properties. </summary>
         public FileProperty Properties { get; }
+        /// <summary> Gets the attributes. </summary>
         public string Attributes { get; }
+        /// <summary> Gets the permission key. </summary>
         public string PermissionKey { get; }
     }
 }

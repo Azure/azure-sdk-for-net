@@ -30,6 +30,7 @@ namespace Azure.Quantum.Jobs.Models
             NextLink = nextLink;
         }
 
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<JobDetails> Value { get; }
         /// <summary> Total records count number. </summary>
         public long? Count { get; }

@@ -57,7 +57,13 @@ namespace Azure.Monitor.Query
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com//.default"));
+            Endpoint = endpoint;
+
+            var pipeline = HttpPipelineBuilder.Build(options,
+                new BearerTokenAuthenticationPolicy(
+                    credential,
+                    $"{options.Audience ?? MetricsQueryClientAudience.AzureResourceManagerPublicCloud}//.default"));
+
             _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, pipeline, endpoint);
             _metricsRestClient = new MetricsRestClient(_clientDiagnostics, pipeline, endpoint);
             _namespacesRestClient = new MetricNamespacesRestClient(_clientDiagnostics, pipeline, endpoint);
@@ -69,6 +75,11 @@ namespace Azure.Monitor.Query
         protected MetricsQueryClient()
         {
         }
+
+        /// <summary>
+        /// Gets the endpoint used by the client.
+        /// </summary>
+        public Uri Endpoint { get; }
 
         /// <summary>
         /// Queries metrics for a resource.

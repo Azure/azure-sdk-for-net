@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SasTokenType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasTokenType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SasTokenType(string value)
         {

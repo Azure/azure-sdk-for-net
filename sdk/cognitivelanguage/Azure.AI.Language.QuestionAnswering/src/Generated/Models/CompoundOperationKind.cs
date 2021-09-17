@@ -15,7 +15,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CompoundOperationKind"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompoundOperationKind"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CompoundOperationKind(string value)
         {

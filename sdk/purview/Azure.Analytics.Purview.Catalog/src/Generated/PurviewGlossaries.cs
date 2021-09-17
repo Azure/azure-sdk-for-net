@@ -7043,10 +7043,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
         ///   createTime: string,
         ///   lastUpdateTime: string,
-        ///   errorCode: number,
-        ///   errorMessage: string,
-        ///   importedTerms: string,
-        ///   totalTermsDetected: string
+        ///   properties: {
+        ///     importedTerms: string,
+        ///     totalTermsDetected: string
+        ///   },
+        ///   error: {
+        ///     errorCode: number,
+        ///     errorMessage: string
+        ///   }
         /// }
         /// </code>
         /// 
@@ -7097,10 +7101,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
         ///   createTime: string,
         ///   lastUpdateTime: string,
-        ///   errorCode: number,
-        ///   errorMessage: string,
-        ///   importedTerms: string,
-        ///   totalTermsDetected: string
+        ///   properties: {
+        ///     importedTerms: string,
+        ///     totalTermsDetected: string
+        ///   },
+        ///   error: {
+        ///     errorCode: number,
+        ///     errorMessage: string
+        ///   }
         /// }
         /// </code>
         /// 
@@ -7174,10 +7182,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
         ///   createTime: string,
         ///   lastUpdateTime: string,
-        ///   errorCode: number,
-        ///   errorMessage: string,
-        ///   importedTerms: string,
-        ///   totalTermsDetected: string
+        ///   properties: {
+        ///     importedTerms: string,
+        ///     totalTermsDetected: string
+        ///   },
+        ///   error: {
+        ///     errorCode: number,
+        ///     errorMessage: string
+        ///   }
         /// }
         /// </code>
         /// 
@@ -7228,10 +7240,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
         ///   createTime: string,
         ///   lastUpdateTime: string,
-        ///   errorCode: number,
-        ///   errorMessage: string,
-        ///   importedTerms: string,
-        ///   totalTermsDetected: string
+        ///   properties: {
+        ///     importedTerms: string,
+        ///     totalTermsDetected: string
+        ///   },
+        ///   error: {
+        ///     errorCode: number,
+        ///     errorMessage: string
+        ///   }
         /// }
         /// </code>
         /// 
@@ -7305,10 +7321,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
         ///   createTime: string,
         ///   lastUpdateTime: string,
-        ///   errorCode: number,
-        ///   errorMessage: string,
-        ///   importedTerms: string,
-        ///   totalTermsDetected: string
+        ///   properties: {
+        ///     importedTerms: string,
+        ///     totalTermsDetected: string
+        ///   },
+        ///   error: {
+        ///     errorCode: number,
+        ///     errorMessage: string
+        ///   }
         /// }
         /// </code>
         /// 
@@ -7357,10 +7377,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
         ///   createTime: string,
         ///   lastUpdateTime: string,
-        ///   errorCode: number,
-        ///   errorMessage: string,
-        ///   importedTerms: string,
-        ///   totalTermsDetected: string
+        ///   properties: {
+        ///     importedTerms: string,
+        ///     totalTermsDetected: string
+        ///   },
+        ///   error: {
+        ///     errorCode: number,
+        ///     errorMessage: string
+        ///   }
         /// }
         /// </code>
         /// 
