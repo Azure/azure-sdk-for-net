@@ -9,15 +9,15 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     public enum MessageDataType
     {
         /// <summary>
-        /// binary of application/octet-stream.
+        /// binary of content type application/octet-stream.
         /// </summary>
         Binary,
         /// <summary>
-        /// json of application/json.
+        /// json of content type application/json.
         /// </summary>
         Json,
         /// <summary>
-        /// text of text/plain.
+        /// text of content type text/plain.
         /// </summary>
         Text
     }

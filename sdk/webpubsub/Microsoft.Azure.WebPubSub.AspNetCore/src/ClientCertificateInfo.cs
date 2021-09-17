@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json.Serialization;
+
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
     /// <summary>
@@ -11,11 +13,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <summary>
         /// Certificate thumbprint.
         /// </summary>
-        public string Thumbprint { get; }
-
-        internal ClientCertificateInfo(string thumbprint)
-        {
-            Thumbprint = thumbprint;
-        }
+        [JsonPropertyName("thumbprint")]
+        public string Thumbprint { get; set; }
     }
 }

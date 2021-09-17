@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
@@ -26,6 +27,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         {
             foreach (var item in connectionStrings)
             {
+                if (string.IsNullOrEmpty(item))
+                {
+                    continue;
+                }
                 (Uri host, string accessKey) = ParseConnectionString(item);
                 _hostKeyMappings.Add(host.Host, accessKey);
             }
@@ -44,6 +49,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         internal bool TryGetKey(string host, out string accessKey)
         {
             return _hostKeyMappings.TryGetValue(host, out accessKey);
+        }
+
+        internal List<string> GetAllowedHosts()
+        {
+            return _hostKeyMappings.Select(x => x.Key).ToList();
         }
 
         /// <summary>

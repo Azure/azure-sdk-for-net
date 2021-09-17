@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
@@ -13,12 +14,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <summary>
         /// Message.
         /// </summary>
-        public BinaryData Message { get; }
+        [JsonPropertyName("message"), JsonConverter(typeof(BinaryDataJsonConverter))]
+        public BinaryData Message { get; set; }
 
         /// <summary>
         /// Message data type.
         /// </summary>
-        public MessageDataType DataType { get; }
+        [JsonPropertyName("dataType"), JsonConverter(typeof(JsonStringEnumConverter))]
+        public MessageDataType DataType { get; set; }
 
         /// <summary>
         /// Initialize an instance of MessageResponse.
@@ -34,10 +37,16 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <summary>
         /// Initialize an instance of MessageResponse.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="dataType"></param>
+        /// <param name="message">String type message</param>
+        /// <param name="dataType">Message data type. Default set to text.</param>
         public MessageResponse(string message, MessageDataType dataType = MessageDataType.Text)
             : this(BinaryData.FromString(message), dataType)
+        { }
+
+        /// <summary>
+        /// Default constructor for JsonSerialize
+        /// </summary>
+        public MessageResponse()
         { }
     }
 }

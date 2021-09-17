@@ -14,9 +14,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <summary>
         /// Handle request with methods defined by ServiceHub.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="hub"></param>
-        /// <returns></returns>
+        /// <param name="context">The Microsoft.AspNetCore.Http.HttpContext for the request</param>
+        /// <param name="hub">User implemented <see cref="ServiceHub"/> to process upstream requests.</param>
+        /// <returns>A task that represents the completion of request processing.</returns>
         public abstract Task HandleRequest<THub>(HttpContext context, THub hub) where THub : ServiceHub;
     }
 }

@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     public class ConnectedEventRequest : ServiceRequest
     {
         /// <summary>
-        /// string value of the request.
+        /// String name of the request.
         /// </summary>
         public override string Name => nameof(ConnectEventRequest);
 

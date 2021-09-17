@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Net;
+using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
@@ -10,20 +11,25 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     public abstract class ServiceRequest
     {
-        /// <summary>
-        /// ConnectionContext.
-        /// </summary>
-        public ConnectionContext ConnectionContext { get; set;}
+        internal const string ConnectionContextProperty = "connectionContext";
+        internal const string NameProperty = "name";
 
         /// <summary>
-        /// Request name.
+        /// Connection context contains connection metadata following CloudEvents.
         /// </summary>
+        [JsonPropertyName(ConnectionContextProperty)]
+        public ConnectionContext ConnectionContext { get; internal set;}
+
+        /// <summary>
+        /// Request name indicate request type.
+        /// </summary>
+        [JsonPropertyName(NameProperty)]
         public abstract string Name { get; }
 
         /// <summary>
-        /// Create instance of ServiceRequest.
+        /// Create instance of <see cref="ServiceRequest"/>
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">Parameter connection context.</param>
         public ServiceRequest(ConnectionContext context)
         {
             ConnectionContext = context;

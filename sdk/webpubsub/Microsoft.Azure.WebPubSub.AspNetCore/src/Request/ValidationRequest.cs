@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
@@ -11,13 +12,15 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     public sealed class ValidationRequest : ServiceRequest
     {
         /// <summary>
-        /// Flag to indicate whether a valid request.
+        /// Flag to indicate whether is a valid request.
         /// </summary>
+        [JsonPropertyName("valid")]
         public bool Valid { get; }
 
         /// <summary>
         /// Request hosts from headers.
         /// </summary>
+        [JsonPropertyName("requestHosts")]
         internal List<string> RequestHosts { get; }
 
         /// <summary>

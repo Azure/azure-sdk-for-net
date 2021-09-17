@@ -16,16 +16,16 @@ using Microsoft.Extensions.Primitives;
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
     /// <summary>
-    /// Help methods to parse upstream requests.
+    /// Helper methods to parse upstream requests.
     /// </summary>
     public static class ServiceRequestExtensions
     {
         /// <summary>
         /// Parse upstream request headers following CloudEvents.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="connection"></param>
-        /// <returns></returns>
+        /// <param name="request">Upstream HttpRequest.</param>
+        /// <param name="connection">Parsed connection context from request.</param>
+        /// <returns>True if request is an valid Web PubSub request, otherwise, false.</returns>
         public static bool TryParseCloudEvents(this HttpRequest request, out ConnectionContext connection)
         {
             // ConnectionId is required in upstream request, and method is POST.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 // connection states.
                 if (request.Headers.ContainsKey(Constants.Headers.CloudEvents.State))
                 {
-                    connection.States = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.State).DecodeConnectionState();
+                    connection.States = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.State).DecodeConnectionStates();
                 }
             }
             catch (Exception)
@@ -70,30 +70,30 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <summary>
         /// Check whether request is validation request of abuse protection.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="validationRequest"></param>
-        /// <returns></returns>
-        public static bool IsValidationRequest(this HttpRequest request, out ValidationRequest validationRequest)
+        /// <param name="request">Upstream HttpRequest.</param>
+        /// <param name="requestHosts">Parsed upstream request hosts from request.</param>
+        /// <returns>True if the request is abuse protection request, otherwise, false.</returns>
+        public static bool IsValidationRequest(this HttpRequest request, out List<string> requestHosts)
         {
             if (HttpMethods.IsOptions(request.Method))
             {
-                request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestHosts);
-                if (requestHosts.Any())
+                request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestOrigin);
+                if (requestOrigin.Any())
                 {
-                    validationRequest = new ValidationRequest(true, requestHosts.ToList());
+                    requestHosts = requestOrigin.ToList();
                     return true;
                 }
             }
-            validationRequest = null;
+            requestHosts = null;
             return false;
         }
 
         /// <summary>
         /// Validate request signature by connection-id and service key.
         /// </summary>
-        /// <param name="connectionContext"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        /// <param name="connectionContext">Current connection context</param>
+        /// <param name="options">Validation options contains validation metadata.</param>
+        /// <returns>True if the signature check passes, otherwise, false.</returns>
         public static bool IsValidSignature(this ConnectionContext connectionContext, WebPubSubValidationOptions options)
         {
             // no options skip validation.
@@ -121,11 +121,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         }
 
         /// <summary>
-        /// Parse request to different types.
+        /// Parse request to system/user type ServiceRequest, Abuse Protection ValidationRequest should use <see cref="IsValidSignature"/> to handle separately.
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="request">Upstream HttpRequest.</param>
         /// <param name="context"></param>
-        /// <returns></returns>
+        /// <returns>Deserialize <see cref="ServiceRequest"/></returns>
         public static async Task<ServiceRequest> ToServiceRequest(this HttpRequest request, ConnectionContext context = null)
         {
             if (context != null || request.TryParseCloudEvents(out context))
@@ -170,10 +170,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         }
 
         /// <summary>
-        /// Convert WebPubSubErrorCode to status code.
+        /// Convert WebPubSubErrorCode to <see cref="StatusCodes"/>.
         /// </summary>
-        /// <param name="errorCode"></param>
-        /// <returns></returns>
+        /// <param name="errorCode">The <see cref="WebPubSubErrorCode"/></param>
+        /// <returns>Equivalent <see cref="StatusCodes"/></returns>
         public static int ToStatusCode(this WebPubSubErrorCode errorCode) =>
             errorCode switch
             {
@@ -186,8 +186,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <summary>
         /// Convert MessageDataType to request ContentType.
         /// </summary>
-        /// <param name="dataType"></param>
-        /// <returns></returns>
+        /// <param name="dataType">The <see cref="MessageDataType"/></param>
+        /// <returns>Equivalent content type.</returns>
         public static string ToContentType(this MessageDataType dataType) =>
             dataType switch
             {
@@ -199,9 +199,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <summary>
         /// Decode connection state.
         /// </summary>
-        /// <param name="connectionStates"></param>
-        /// <returns></returns>
-        public static Dictionary<string, object> DecodeConnectionState(this string connectionStates)
+        /// <param name="connectionStates">The raw string value get from Web PubSub upstream request header.</param>
+        /// <returns>A dictionary of decoded connection states.</returns>
+        public static Dictionary<string, object> DecodeConnectionStates(this string connectionStates)
         {
             if (!string.IsNullOrEmpty(connectionStates))
             {
@@ -219,47 +219,40 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         }
 
         /// <summary>
-        /// Merge connection state.
+        /// Merge connection state
         /// </summary>
-        /// <param name="existValue"></param>
-        /// <param name="newValue"></param>
-        /// <returns></returns>
-        public static Dictionary<string, object> UpdateStates(this Dictionary<string, object> existValue, Dictionary<string, object> newValue)
+        /// <param name="connectionContext">Get existing connection state from upstream request connection context.</param>
+        /// <param name="response">Get updated connection state from user set response.</param>
+        /// <returns>A dictionary of  merged conection state, and null represents states are not in use or cleared by user.</returns>
+        public static Dictionary<string,object> UpdateStates(this ConnectionContext connectionContext, ServiceResponse response)
         {
-            // clear states.
-            if (newValue == null)
+            // states cleared.
+            if (response.States == null)
             {
                 return null;
             }
-            // empty is no change.
-            if (newValue.Count < 1)
+
+            if (connectionContext.States?.Count > 0 || response.States.Count > 0)
             {
-                return existValue;
+                var states = new Dictionary<string, object>();
+                if (connectionContext.States?.Count > 0)
+                {
+                    states = connectionContext.States;
+                }
+
+                // response states keep empty is no change.
+                if (response.States.Count == 0)
+                {
+                    return states;
+                }
+                foreach (var item in response.States)
+                {
+                    states[item.Key] = item.Value;
+                }
+                return states;
             }
 
-            // updates based on existing value.
-            foreach (var item in newValue)
-            {
-                if (existValue.ContainsKey(item.Key))
-                {
-                    existValue[item.Key] = item.Value;
-                }
-                else
-                {
-                    existValue.Add(item.Key, item.Value);
-                }
-            }
-            return existValue;
-        }
-
-        /// <summary>
-        /// Convert connection state to request header value.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static string ToHeaderStates(this Dictionary<string, object> value)
-        {
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value)));
+            return null;
         }
 
         internal static RequestType GetRequestType(this ConnectionContext context)
@@ -281,6 +274,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 return RequestType.Connected;
             }
             return RequestType.Ignored;
+        }
+
+        internal static string EncodeConnectionStates(this Dictionary<string, object> value)
+        {
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value)));
         }
 
         private static string GetFirstHeaderValueOrDefault(this IHeaderDictionary header, string key)

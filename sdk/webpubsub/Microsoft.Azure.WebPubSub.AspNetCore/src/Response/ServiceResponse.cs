@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
     /// <summary>
-    /// General Service Response.
+    /// A general type of Web PubSub service response to send to service.
     /// </summary>
     public abstract class ServiceResponse
     {

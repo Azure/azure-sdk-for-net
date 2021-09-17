@@ -9,15 +9,15 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     public enum WebPubSubErrorCode
     {
         /// <summary>
-        /// Unauthorized.
+        /// Unauthorized error.
         /// </summary>
         Unauthorized,
         /// <summary>
-        /// User Error.
+        /// User error.
         /// </summary>
         UserError,
         /// <summary>
-        /// Server Error.
+        /// Server error.
         /// </summary>
         ServerError
     }

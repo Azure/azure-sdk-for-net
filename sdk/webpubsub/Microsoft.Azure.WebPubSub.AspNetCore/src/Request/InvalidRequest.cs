@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json.Serialization;
+
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
     /// <summary>
@@ -11,6 +13,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <summary>
         /// Error message.
         /// </summary>
+        [JsonPropertyName("errorMessage")]
         public string ErrorMessage { get; }
 
         /// <summary>
