@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly int _value;
 
-        /// <summary> Determines if two <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/>. </summary>
         public PolicySettingsDefaultCustomBlockResponseStatusCode(int value)
         {
             _value = value;

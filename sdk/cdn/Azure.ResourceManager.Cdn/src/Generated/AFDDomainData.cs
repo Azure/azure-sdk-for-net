@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.Cdn
         public ResourceReference AzureDnsZone { get; set; }
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
+        /// <summary> Gets the deployment status. </summary>
         public DeploymentStatus? DeploymentStatus { get; }
         /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </summary>
         public DomainValidationState? DomainValidationState { get; }

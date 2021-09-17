@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
+        /// <summary> Gets the deployment status. </summary>
         public DeploymentStatus? DeploymentStatus { get; }
         /// <summary> object which contains secret parameters. </summary>
         public SecretParameters Parameters { get; set; }

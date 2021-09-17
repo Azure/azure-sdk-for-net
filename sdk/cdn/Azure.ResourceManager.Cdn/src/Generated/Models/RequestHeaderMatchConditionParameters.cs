@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = transforms;
         }
 
+        /// <summary> Gets or sets the odata type. </summary>
         public string OdataType { get; set; }
         /// <summary> Name of Header to be matched. </summary>
         public string Selector { get; set; }

@@ -26,8 +26,11 @@ namespace Azure.ResourceManager.Cdn.Models
             Percentage = percentage;
         }
 
+        /// <summary> Gets the metric. </summary>
         public string Metric { get; }
+        /// <summary> Gets the value. </summary>
         public long? Value { get; }
+        /// <summary> Gets the percentage. </summary>
         public float? Percentage { get; }
     }
 }

@@ -33,9 +33,13 @@ namespace Azure.ResourceManager.Cdn.Models
             Series = series;
         }
 
+        /// <summary> Gets the date time begin. </summary>
         public DateTimeOffset? DateTimeBegin { get; }
+        /// <summary> Gets the date time end. </summary>
         public DateTimeOffset? DateTimeEnd { get; }
+        /// <summary> Gets the granularity. </summary>
         public WafMetricsResponseGranularity? Granularity { get; }
+        /// <summary> Gets the series. </summary>
         public IReadOnlyList<WafMetricsResponseSeriesItem> Series { get; }
     }
 }

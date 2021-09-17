@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
             ParameterNameOverride = parameterNameOverride;
         }
 
+        /// <summary> Gets or sets the odata type. </summary>
         public string OdataType { get; set; }
         /// <summary> Algorithm to use for URL signing. </summary>
         public Algorithm? Algorithm { get; set; }

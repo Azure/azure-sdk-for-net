@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretVersion = secretVersion;
         }
 
+        /// <summary> Gets or sets the odata type. </summary>
         public string OdataType { get; set; }
         /// <summary> Subscription Id of the user&apos;s Key Vault containing the secret. </summary>
         public string SubscriptionId { get; set; }

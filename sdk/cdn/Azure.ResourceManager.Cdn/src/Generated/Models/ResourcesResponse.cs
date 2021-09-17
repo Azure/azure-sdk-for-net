@@ -29,7 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
             CustomDomains = customDomains;
         }
 
+        /// <summary> Gets the endpoints. </summary>
         public IReadOnlyList<ResourcesResponseEndpointsItem> Endpoints { get; }
+        /// <summary> Gets the custom domains. </summary>
         public IReadOnlyList<ResourcesResponseCustomDomainsItem> CustomDomains { get; }
     }
 }

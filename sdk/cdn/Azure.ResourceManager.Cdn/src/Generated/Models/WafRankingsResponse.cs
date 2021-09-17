@@ -34,9 +34,13 @@ namespace Azure.ResourceManager.Cdn.Models
             Data = data;
         }
 
+        /// <summary> Gets the date time begin. </summary>
         public DateTimeOffset? DateTimeBegin { get; }
+        /// <summary> Gets the date time end. </summary>
         public DateTimeOffset? DateTimeEnd { get; }
+        /// <summary> Gets the groups. </summary>
         public IReadOnlyList<string> Groups { get; }
+        /// <summary> Gets the data. </summary>
         public IReadOnlyList<WafRankingsResponseDataItem> Data { get; }
     }
 }

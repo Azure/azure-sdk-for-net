@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
             QueryParameters = queryParameters;
         }
 
+        /// <summary> Gets or sets the odata type. </summary>
         public string OdataType { get; set; }
         /// <summary> Caching behavior for the requests. </summary>
         public QueryStringBehavior QueryStringBehavior { get; set; }

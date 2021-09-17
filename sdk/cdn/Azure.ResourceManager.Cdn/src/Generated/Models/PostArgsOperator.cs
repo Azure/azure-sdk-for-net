@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PostArgsOperator"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostArgsOperator"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostArgsOperator(string value)
         {

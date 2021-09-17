@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PolicyResourceState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyResourceState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyResourceState(string value)
         {

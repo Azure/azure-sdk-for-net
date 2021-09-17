@@ -32,8 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
             CustomDomains = customDomains;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the history. </summary>
         public bool? History { get; }
+        /// <summary> Gets the custom domains. </summary>
         public IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem> CustomDomains { get; }
     }
 }

@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
             ContinentId = continentId;
         }
 
+        /// <summary> Gets the continent id. </summary>
         public string ContinentId { get; }
     }
 }

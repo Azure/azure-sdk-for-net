@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
             MatchValues = matchValues;
         }
 
+        /// <summary> Gets or sets the odata type. </summary>
         public string OdataType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public RequestMethodOperator Operator { get; set; }

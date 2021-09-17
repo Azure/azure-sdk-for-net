@@ -26,7 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
             Value = value;
         }
 
+        /// <summary> Gets the date time. </summary>
         public DateTimeOffset? DateTime { get; }
+        /// <summary> Gets the value. </summary>
         public float? Value { get; }
     }
 }

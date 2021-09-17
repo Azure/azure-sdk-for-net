@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.Cdn
         public EnabledState? SessionAffinityState { get; set; }
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
+        /// <summary> Gets the deployment status. </summary>
         public DeploymentStatus? DeploymentStatus { get; }
     }
 }

@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Value = value;
         }
 
+        /// <summary> Gets or sets the odata type. </summary>
         public string OdataType { get; set; }
         /// <summary> Action to perform. </summary>
         public HeaderAction HeaderAction { get; set; }

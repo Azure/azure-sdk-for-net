@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
             DeleteRule = deleteRule;
         }
 
+        /// <summary> Gets the odata type. </summary>
         public string OdataType { get; }
         /// <summary> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </summary>
         public string SubscriptionId { get; }

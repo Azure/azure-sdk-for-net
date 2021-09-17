@@ -34,9 +34,13 @@ namespace Azure.ResourceManager.Cdn.Models
             Data = data;
         }
 
+        /// <summary> Gets the metric. </summary>
         public string Metric { get; }
+        /// <summary> Gets the unit. </summary>
         public string Unit { get; }
+        /// <summary> Gets the groups. </summary>
         public IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> Groups { get; }
+        /// <summary> Gets the data. </summary>
         public IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> Data { get; }
     }
 }

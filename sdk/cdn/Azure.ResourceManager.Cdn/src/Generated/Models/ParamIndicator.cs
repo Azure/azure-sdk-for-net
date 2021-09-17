@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ParamIndicator"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParamIndicator"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ParamIndicator(string value)
         {

@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
             OriginGroup = originGroup;
         }
 
+        /// <summary> Gets or sets the odata type. </summary>
         public string OdataType { get; set; }
         /// <summary> defines the OriginGroup that would override the DefaultOriginGroup. </summary>
         public ResourceReference OriginGroup { get; set; }

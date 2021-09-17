@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = transforms;
         }
 
+        /// <summary> Gets or sets the odata type. </summary>
         public string OdataType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public UrlFileNameOperator Operator { get; set; }

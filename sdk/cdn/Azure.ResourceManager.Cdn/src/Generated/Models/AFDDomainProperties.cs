@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public DomainValidationProperties ValidationProperties { get; }
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
+        /// <summary> Gets the deployment status. </summary>
         public DeploymentStatus? DeploymentStatus { get; }
     }
 }

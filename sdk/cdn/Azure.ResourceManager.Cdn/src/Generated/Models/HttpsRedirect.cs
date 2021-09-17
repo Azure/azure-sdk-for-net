@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="HttpsRedirect"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpsRedirect"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HttpsRedirect(string value)
         {

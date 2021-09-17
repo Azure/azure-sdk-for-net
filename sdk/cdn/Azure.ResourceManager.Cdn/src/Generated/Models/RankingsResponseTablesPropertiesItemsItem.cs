@@ -28,7 +28,9 @@ namespace Azure.ResourceManager.Cdn.Models
             Metrics = metrics;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the metrics. </summary>
         public IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem> Metrics { get; }
     }
 }

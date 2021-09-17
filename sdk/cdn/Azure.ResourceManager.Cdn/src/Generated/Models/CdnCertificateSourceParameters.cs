@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CertificateType = certificateType;
         }
 
+        /// <summary> Gets the odata type. </summary>
         public string OdataType { get; }
         /// <summary> Type of certificate used. </summary>
         public CertificateType CertificateType { get; }

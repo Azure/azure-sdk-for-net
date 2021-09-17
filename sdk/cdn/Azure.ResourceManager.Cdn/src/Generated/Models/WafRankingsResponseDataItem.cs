@@ -29,7 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
             Metrics = metrics;
         }
 
+        /// <summary> Gets the group values. </summary>
         public IReadOnlyList<string> GroupValues { get; }
+        /// <summary> Gets the metrics. </summary>
         public IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> Metrics { get; }
     }
 }

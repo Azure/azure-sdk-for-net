@@ -31,8 +31,11 @@ namespace Azure.ResourceManager.Cdn.Models
             Tables = tables;
         }
 
+        /// <summary> Gets the date time begin. </summary>
         public DateTimeOffset? DateTimeBegin { get; }
+        /// <summary> Gets the date time end. </summary>
         public DateTimeOffset? DateTimeEnd { get; }
+        /// <summary> Gets the tables. </summary>
         public IReadOnlyList<RankingsResponseTablesItem> Tables { get; }
     }
 }

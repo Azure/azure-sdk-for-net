@@ -33,9 +33,13 @@ namespace Azure.ResourceManager.Cdn.Models
             Data = data;
         }
 
+        /// <summary> Gets the metric. </summary>
         public string Metric { get; }
+        /// <summary> Gets the unit. </summary>
         public MetricsResponseSeriesItemUnit? Unit { get; }
+        /// <summary> Gets the groups. </summary>
         public IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem> Groups { get; }
+        /// <summary> Gets the data. </summary>
         public IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> Data { get; }
     }
 }

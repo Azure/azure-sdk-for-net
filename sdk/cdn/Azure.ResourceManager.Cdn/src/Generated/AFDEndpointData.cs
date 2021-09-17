@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.Cdn
         public EnabledState? EnabledState { get; set; }
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
+        /// <summary> Gets the deployment status. </summary>
         public DeploymentStatus? DeploymentStatus { get; }
         /// <summary> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </summary>
         public string HostName { get; }

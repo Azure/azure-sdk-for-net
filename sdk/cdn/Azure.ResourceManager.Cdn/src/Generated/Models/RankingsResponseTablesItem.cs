@@ -28,7 +28,9 @@ namespace Azure.ResourceManager.Cdn.Models
             Data = data;
         }
 
+        /// <summary> Gets the ranking. </summary>
         public string Ranking { get; }
+        /// <summary> Gets the data. </summary>
         public IReadOnlyList<RankingsResponseTablesPropertiesItemsItem> Data { get; }
     }
 }

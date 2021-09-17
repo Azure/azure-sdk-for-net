@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public string HostName { get; }
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
+        /// <summary> Gets the deployment status. </summary>
         public DeploymentStatus? DeploymentStatus { get; }
     }
 }

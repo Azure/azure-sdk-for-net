@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Token = token;
         }
 
+        /// <summary> Gets the token. </summary>
         public string Token { get; }
     }
 }

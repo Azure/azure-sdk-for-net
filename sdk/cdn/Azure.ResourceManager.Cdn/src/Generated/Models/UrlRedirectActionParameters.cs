@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CustomFragment = customFragment;
         }
 
+        /// <summary> Gets or sets the odata type. </summary>
         public string OdataType { get; set; }
         /// <summary> The redirect type the rule will use when redirecting traffic. </summary>
         public RedirectType RedirectType { get; set; }

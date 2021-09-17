@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Id = id;
         }
 
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
     }
 }

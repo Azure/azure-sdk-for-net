@@ -29,7 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
             CountryOrRegions = countryOrRegions;
         }
 
+        /// <summary> Gets the continents. </summary>
         public IReadOnlyList<ContinentsResponseContinentsItem> Continents { get; }
+        /// <summary> Gets the country or regions. </summary>
         public IReadOnlyList<ContinentsResponseCountryOrRegionsItem> CountryOrRegions { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="QueryStringBehavior"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryStringBehavior"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueryStringBehavior(string value)
         {

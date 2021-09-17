@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CacheDuration = cacheDuration;
         }
 
+        /// <summary> Gets or sets the odata type. </summary>
         public string OdataType { get; set; }
         /// <summary> Caching behavior for the requests. </summary>
         public CacheBehavior CacheBehavior { get; set; }

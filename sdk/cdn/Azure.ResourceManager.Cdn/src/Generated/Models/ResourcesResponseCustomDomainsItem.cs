@@ -29,8 +29,11 @@ namespace Azure.ResourceManager.Cdn.Models
             History = history;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the endpoint id. </summary>
         public string EndpointId { get; }
+        /// <summary> Gets the history. </summary>
         public bool? History { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="IsDeviceMatchConditionParametersMatchValuesItem"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="IsDeviceMatchConditionParametersMatchValuesItem"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IsDeviceMatchConditionParametersMatchValuesItem(string value)
         {

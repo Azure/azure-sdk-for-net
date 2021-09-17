@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="RequestSchemeMatchConditionParametersMatchValuesItem"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchConditionParametersMatchValuesItem"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RequestSchemeMatchConditionParametersMatchValuesItem(string value)
         {

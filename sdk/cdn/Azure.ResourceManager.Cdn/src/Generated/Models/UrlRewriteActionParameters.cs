@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
             PreserveUnmatchedPath = preserveUnmatchedPath;
         }
 
+        /// <summary> Gets or sets the odata type. </summary>
         public string OdataType { get; set; }
         /// <summary> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </summary>
         public string SourcePattern { get; set; }

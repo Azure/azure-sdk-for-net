@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="EndpointResourceState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointResourceState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EndpointResourceState(string value)
         {
