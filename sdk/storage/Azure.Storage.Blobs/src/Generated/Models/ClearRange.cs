@@ -19,7 +19,9 @@ namespace Azure.Storage.Blobs.Models
             End = end;
         }
 
+        /// <summary> Gets the start. </summary>
         public long Start { get; }
+        /// <summary> Gets the end. </summary>
         public long End { get; }
     }
 }

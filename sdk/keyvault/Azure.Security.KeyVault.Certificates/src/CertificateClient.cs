@@ -181,6 +181,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
             scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -244,6 +245,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
             scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -351,6 +353,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
             scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -380,6 +383,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
             scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -408,6 +412,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
             scope.AddAttribute("certificate", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try
@@ -436,6 +441,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
             scope.AddAttribute("certificate", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try

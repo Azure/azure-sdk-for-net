@@ -18,6 +18,7 @@
           - Add user-assigned identity support for Policy Assignments
           - Add PATCH support to update identity portion of Policy Assignments
           - Add new SystemData property to Policy Definitions, Sets, and Assignments
+          - Add new APIs for feature registrations
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>

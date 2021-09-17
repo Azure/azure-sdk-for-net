@@ -38,7 +38,7 @@
 
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <!-- Pull in Microsoft.Azure.Core.Spatial -->
