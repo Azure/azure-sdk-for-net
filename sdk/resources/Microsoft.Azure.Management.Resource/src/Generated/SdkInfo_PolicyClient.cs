@@ -7,18 +7,18 @@
 
 namespace Microsoft.Azure.Management.ResourceManager
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
 
-    internal static partial class SdkInfo
-    {
-        public static IEnumerable<Tuple<string, string, string>> ApiInfo_PolicyClient
-        {
-            get
-            {
-                return new Tuple<string, string, string>[]
-                {
+  internal static partial class SdkInfo
+  {
+      public static IEnumerable<Tuple<string, string, string>> ApiInfo_PolicyClient
+      {
+          get
+          {
+              return new Tuple<string, string, string>[]
+              {
                 new Tuple<string, string, string>("Authorization", "DataPolicyManifests", "2020-09-01"),
                 new Tuple<string, string, string>("Authorization", "PolicyAssignments", "2021-06-01"),
                 new Tuple<string, string, string>("Authorization", "PolicyDefinitions", "2021-06-01"),
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.ResourceManager
                 new Tuple<string, string, string>("Management", "PolicyExemptions", "2020-07-01-preview"),
                 new Tuple<string, string, string>("Management", "PolicySetDefinitions", "2021-06-01"),
                 new Tuple<string, string, string>("PolicyClient", "PolicyAssignments", "2021-06-01"),
-                }.AsEnumerable();
-            }
-        }
-    }
+              }.AsEnumerable();
+          }
+      }
+  }
 }

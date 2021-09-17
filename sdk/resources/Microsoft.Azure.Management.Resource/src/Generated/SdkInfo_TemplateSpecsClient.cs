@@ -7,22 +7,22 @@
 
 namespace Microsoft.Azure.Management.ResourceManager
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
 
-    internal static partial class SdkInfo
-    {
-        public static IEnumerable<Tuple<string, string, string>> ApiInfo_TemplateSpecsClient
-        {
-            get
-            {
-                return new Tuple<string, string, string>[]
-                {
+  internal static partial class SdkInfo
+  {
+      public static IEnumerable<Tuple<string, string, string>> ApiInfo_TemplateSpecsClient
+      {
+          get
+          {
+              return new Tuple<string, string, string>[]
+              {
                 new Tuple<string, string, string>("Resources", "TemplateSpecVersions", "2021-05-01"),
                 new Tuple<string, string, string>("Resources", "TemplateSpecs", "2021-05-01"),
-                }.AsEnumerable();
-            }
-        }
-    }
+              }.AsEnumerable();
+          }
+      }
+  }
 }
