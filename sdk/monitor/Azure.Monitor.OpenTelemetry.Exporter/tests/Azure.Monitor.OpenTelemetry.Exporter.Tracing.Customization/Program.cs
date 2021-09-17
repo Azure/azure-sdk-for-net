@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
 
@@ -20,21 +19,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
             var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-            .SetResourceBuilder(resourceBuilder) // Sets ai.cloud.role as my-namespace.my-service and ai.cloud.roleinstance as my-instance.
-            .AddSource("OTel.AzureMonitor.Demo")
-            .AddProcessor(new ActivityEnrichingProcessor())
-            .AddAzureMonitorTraceExporter(o =>
-            {
-                o.ConnectionString = "<Your Connection String>";
-            })
-            .AddOtlpExporter() // send data to otlp
-            .Build();
-
-            using (var foo = DemoSource.StartActivity("Foo"))
-            {
-                using (var bar = DemoSource.StartActivity("Bar"))
+                .SetResourceBuilder(resourceBuilder) // Sets cloud_RoleName as "my-namespace.my-service" and cloud_RoleInstance as "my-instance"
+                .AddProcessor(new ActivityFilteringProcessor())
+                .AddProcessor(new ActivityEnrichingProcessor())
+                .AddAzureMonitorTraceExporter(o =>
                 {
-                }
+                    o.ConnectionString = "<Your Connection String>";
+                })
+                .Build();
+
+            using (var sampleActivity = DemoSource.StartActivity("TestActivity"))
+            {
+                sampleActivity?.AddTag("Foo", "1");
+                sampleActivity?.AddTag("Bar", "Hello");
             }
 
             System.Console.WriteLine("Press Enter key to exit.");
