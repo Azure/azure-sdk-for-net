@@ -193,6 +193,7 @@ try {
                     $command = $command -replace "\\", "/"
                     $command = $command -replace "blob/[\S]*/specification", ("blob/" + $commit[$i] + "/specification")
                     $command = $command -replace "--csharp-sdks-folder\=(.*)sdk[\s]*", "--csharp-sdks-folder=$path "
+                    $command = $command -replace "--csharp-output-folder\=(.*)sdk[\s]*", "--csharp-sdks-folder=$path "
                     $cmds[$i] = $command + " --use:@microsoft.azure/autorest.csharp@" + $csharpVersion[$i]
                 }
                $commandList += $cmds

@@ -11,12 +11,10 @@
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Error definition.
+    /// Error description and code explaining why resource name is invalid.
     /// </summary>
     public partial class ErrorDefinition
     {
@@ -31,15 +29,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ErrorDefinition class.
         /// </summary>
-        /// <param name="code">Service specific error code which serves as the
-        /// substatus for the HTTP error code.</param>
         /// <param name="message">Description of the error.</param>
-        /// <param name="details">Internal error details.</param>
-        public ErrorDefinition(string code = default(string), string message = default(string), IList<ErrorDefinition> details = default(IList<ErrorDefinition>))
+        /// <param name="code">Code of the error.</param>
+        public ErrorDefinition(string message = default(string), string code = default(string))
         {
-            Code = code;
             Message = message;
-            Details = details;
+            Code = code;
             CustomInit();
         }
 
@@ -49,23 +44,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets service specific error code which serves as the substatus for
-        /// the HTTP error code.
-        /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; private set; }
-
-        /// <summary>
-        /// Gets description of the error.
+        /// Gets or sets description of the error.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
+        public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets internal error details.
+        /// Gets or sets code of the error.
         /// </summary>
-        [JsonProperty(PropertyName = "details")]
-        public IList<ErrorDefinition> Details { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
     }
 }

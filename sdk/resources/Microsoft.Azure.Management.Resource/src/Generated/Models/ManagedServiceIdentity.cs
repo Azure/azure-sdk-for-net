@@ -33,12 +33,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         /// <param name="type">Type of the managed identity. Possible values
         /// include: 'UserAssigned'</param>
+        /// <param name="tenantId">ID of the Azure Active Directory.</param>
         /// <param name="userAssignedIdentities">The list of user-assigned
         /// managed identities associated with the resource. Key is the Azure
         /// resource Id of the managed identity.</param>
-        public ManagedServiceIdentity(string type = default(string), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
+        public ManagedServiceIdentity(string type = default(string), string tenantId = default(string), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
         {
             Type = type;
+            TenantId = tenantId;
             UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
@@ -54,6 +56,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// Gets ID of the Azure Active Directory.
+        /// </summary>
+        [JsonProperty(PropertyName = "tenantId")]
+        public string TenantId { get; private set; }
 
         /// <summary>
         /// Gets or sets the list of user-assigned managed identities

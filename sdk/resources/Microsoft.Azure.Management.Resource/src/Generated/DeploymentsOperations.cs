@@ -6103,8 +6103,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -6347,8 +6346,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -6772,8 +6770,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeScopeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -7007,8 +7004,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeScopeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -7242,8 +7238,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeScopedDeploymentWhatIf(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -7702,8 +7697,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeScopeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -7957,8 +7951,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeScopeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -8212,8 +8205,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeScopedDeploymentWhatIf(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -8642,8 +8634,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -8882,8 +8873,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -9122,8 +9112,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeDeploymentWhatIf(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -9603,8 +9592,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -9868,8 +9856,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -10133,8 +10120,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                // This will be overwritten by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeDeploymentWhatIf(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

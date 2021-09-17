@@ -20,10 +20,22 @@ namespace Microsoft.Azure.Management.ResourceManager
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("Resources", "Operations", "2020-01-01"),
+                new Tuple<string, string, string>("Resources", "checkResourceName", "2020-01-01"),
                 new Tuple<string, string, string>("SubscriptionClient", "Subscriptions", "2020-01-01"),
                 new Tuple<string, string, string>("SubscriptionClient", "Tenants", "2020-01-01"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/resources/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-subscriptions-2020-01 --csharp.output-folder=D:\\repo\\azure-sdk-for-net\\sdk\\resources\\Microsoft.Azure.Management.Resource\\src\\Generated";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "f7bdc95b45115dd1d5d7aec82d1b88ea17a938a7";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

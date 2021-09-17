@@ -223,6 +223,27 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Updates a policy assignment.
+            /// </summary>
+            /// <remarks>
+            /// This operation updates a policy assignment with the given scope and name.
+            /// Policy assignments apply to all resources contained within their scope. For
+            /// example, when you assign a policy at resource group scope, that policy
+            /// applies to all resources in the group.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope of the policy assignment. Valid scopes are: management group
+            /// (format:
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+            /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
+            /// (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
+            /// resource (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
+            /// </param>
             /// <param name='policyAssignmentName'>
             /// The name of the policy assignment.
             /// </param>
@@ -239,6 +260,26 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </summary>
             /// <remarks>
             /// This operation updates a policy assignment with the given scope and name.
+            /// Policy assignments apply to all resources contained within their scope. For
+            /// example, when you assign a policy at resource group scope, that policy
+            /// applies to all resources in the group.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope of the policy assignment. Valid scopes are: management group
+            /// (format:
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+            /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
+            /// (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
+            /// resource (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
+            /// </param>
+            /// <param name='policyAssignmentName'>
+            /// The name of the policy assignment.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters for policy assignment patch request.
             /// </param>
@@ -836,6 +877,27 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Updates a policy assignment.
+            /// </summary>
+            /// <remarks>
+            /// This operation updates the policy assignment with the given ID. Policy
+            /// assignments made on a scope apply to all resources contained in that scope.
+            /// For example, when you assign a policy to a resource group that policy
+            /// applies to all resources in the group. Policy assignment IDs have this
+            /// format:
+            /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
+            /// Valid scopes are: management group (format:
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+            /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
+            /// (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
+            /// resource (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyAssignmentId'>
             /// The ID of the policy assignment to update. Use the format
             /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
             /// </param>
@@ -852,6 +914,26 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </summary>
             /// <remarks>
             /// This operation updates the policy assignment with the given ID. Policy
+            /// assignments made on a scope apply to all resources contained in that scope.
+            /// For example, when you assign a policy to a resource group that policy
+            /// applies to all resources in the group. Policy assignment IDs have this
+            /// format:
+            /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
+            /// Valid scopes are: management group (format:
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+            /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
+            /// (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
+            /// resource (format:
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyAssignmentId'>
+            /// The ID of the policy assignment to update. Use the format
+            /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters for policy assignment patch request.
             /// </param>

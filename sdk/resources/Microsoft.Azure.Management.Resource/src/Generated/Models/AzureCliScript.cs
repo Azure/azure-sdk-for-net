@@ -35,21 +35,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the AzureCliScript class.
         /// </summary>
+        /// <param name="identity">Managed identity to be used for this
+        /// deployment script. Currently, only user-assigned MSI is
+        /// supported.</param>
         /// <param name="location">The location of the ACI and the storage
         /// account for the deployment script.</param>
         /// <param name="retentionInterval">Interval for which the service
         /// retains the script resource after it reaches a terminal state.
         /// Resource will be deleted when this duration expires. Duration is
-        /// based on ISO 8601 pattern (for example P7D means one week).</param>
+        /// based on ISO 8601 pattern (for example P1D means one day).</param>
         /// <param name="azCliVersion">Azure CLI module version to be
         /// used.</param>
         /// <param name="id">String Id used to locate any resource on
         /// Azure.</param>
         /// <param name="name">Name of this resource.</param>
         /// <param name="type">Type of this resource.</param>
-        /// <param name="identity">Optional property. Managed identity to be
-        /// used for this deployment script. Currently, only user-assigned MSI
-        /// is supported.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="systemData">The system metadata related to this
         /// resource.</param>
@@ -81,9 +81,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// should be forced to execute even if the script resource has not
         /// changed. Can be current time stamp or a GUID.</param>
         /// <param name="timeout">Maximum allowed script execution time
-        /// specified in ISO 8601 format. Default value is PT1H</param>
-        public AzureCliScript(string location, System.TimeSpan retentionInterval, string azCliVersion, string id = default(string), string name = default(string), string type = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), ContainerConfiguration containerSettings = default(ContainerConfiguration), StorageAccountConfiguration storageAccountSettings = default(StorageAccountConfiguration), string cleanupPreference = default(string), string provisioningState = default(string), ScriptStatus status = default(ScriptStatus), IDictionary<string, object> outputs = default(IDictionary<string, object>), string primaryScriptUri = default(string), IList<string> supportingScriptUris = default(IList<string>), string scriptContent = default(string), string arguments = default(string), IList<EnvironmentVariable> environmentVariables = default(IList<EnvironmentVariable>), string forceUpdateTag = default(string), System.TimeSpan? timeout = default(System.TimeSpan?))
-            : base(location, id, name, type, identity, tags, systemData)
+        /// specified in ISO 8601 format. Default value is P1D</param>
+        public AzureCliScript(ManagedServiceIdentity identity, string location, System.TimeSpan retentionInterval, string azCliVersion, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), ContainerConfiguration containerSettings = default(ContainerConfiguration), StorageAccountConfiguration storageAccountSettings = default(StorageAccountConfiguration), string cleanupPreference = default(string), string provisioningState = default(string), ScriptStatus status = default(ScriptStatus), IDictionary<string, object> outputs = default(IDictionary<string, object>), string primaryScriptUri = default(string), IList<string> supportingScriptUris = default(IList<string>), string scriptContent = default(string), string arguments = default(string), IList<EnvironmentVariable> environmentVariables = default(IList<EnvironmentVariable>), string forceUpdateTag = default(string), System.TimeSpan? timeout = default(System.TimeSpan?))
+            : base(identity, location, id, name, type, tags, systemData)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
@@ -194,14 +194,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Gets or sets interval for which the service retains the script
         /// resource after it reaches a terminal state. Resource will be
         /// deleted when this duration expires. Duration is based on ISO 8601
-        /// pattern (for example P7D means one week).
+        /// pattern (for example P1D means one day).
         /// </summary>
         [JsonProperty(PropertyName = "properties.retentionInterval")]
         public System.TimeSpan RetentionInterval { get; set; }
 
         /// <summary>
         /// Gets or sets maximum allowed script execution time specified in ISO
-        /// 8601 format. Default value is PT1H
+        /// 8601 format. Default value is P1D
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeout")]
         public System.TimeSpan? Timeout { get; set; }

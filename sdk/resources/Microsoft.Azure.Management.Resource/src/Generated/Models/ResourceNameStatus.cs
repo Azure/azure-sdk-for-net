@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
 
     /// <summary>
-    /// Defines values for SubscriptionFeatureRegistrationApprovalType.
+    /// Defines values for ResourceNameStatus.
     /// </summary>
-    public static class SubscriptionFeatureRegistrationApprovalType
+    public static class ResourceNameStatus
     {
-        public const string NotSpecified = "NotSpecified";
-        public const string ApprovalRequired = "ApprovalRequired";
-        public const string AutoApproval = "AutoApproval";
+        public const string Allowed = "Allowed";
+        public const string Reserved = "Reserved";
     }
 }
