@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             Application newApp = new Application
             {
                 DisplayName = $"Microsoft.Azure.Services.AppAuthentication.Test{guid}",
-                IdentifierUris = new List<string> { $"https://localhost/demo/{guid}" },
-                ReplyUrls = new List<string> { "https://localhost/demo" },
+                IdentifierUris = new List<string> { $"https://microsoft.com/demo/{guid}" },
+                ReplyUrls = new List<string> { "https://microsoft.com/demo" },
                 OdataType = "Microsoft.DirectoryServices.Application",
                 AppRolesODataType = "Collection(Microsoft.DirectoryServices.AppRole)",
                 IdentifierUrisODataType = "Collection(Edm.String)",
