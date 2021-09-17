@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         [Test]
         [RecordedTest]
-        public async Task AddTag()
+        public async Task AddRemoveTag()
         {
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
@@ -585,6 +585,12 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             //verify the tag is added successfully
             Assert.AreEqual(account.Data.Tags.Count, 1);
+
+            //remove tag
+            account = await account.RemoveTagAsync("key");
+
+            //verify the tag is removed successfully
+            Assert.AreEqual(account.Data.Tags.Count, 0);
         }
 
         [Test]
@@ -787,9 +793,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScope.Data.State);
             Assert.AreEqual(EncryptionScopeSource.MicrosoftStorage, encryptionScope.Data.Source);
 
-            //update encryption scope
+            //patch encryption scope
             encryptionScope.Data.State = EncryptionScopeState.Disabled;
-            encryptionScope = (await encryptionScopeContainer.CreateOrUpdateAsync("scope", encryptionScope.Data)).Value;
+            encryptionScope = await encryptionScope.PatchAsync(encryptionScope.Data);
             Assert.AreEqual(encryptionScope.Data.State, EncryptionScopeState.Disabled);
 
             //get all encryption scopes
@@ -815,6 +821,22 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //get all private endpoint connections
             List<PrivateEndpointConnection> privateEndpointConnections = await privateEndpointConnectionContainer.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(privateEndpointConnections);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task GetAllPrivateLinkResources()
+        {
+            //create resource group and storage account
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: new Sku(SkuName.StandardLRS), kind: Kind.StorageV2);
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            //get all private link resources
+            Response<IReadOnlyList<PrivateLinkResource>> privateLinkResources = await account.GetPrivateLinkResourcesAsync();
+            Assert.NotNull(privateLinkResources.Value);
         }
     }
 }

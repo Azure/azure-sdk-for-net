@@ -122,5 +122,27 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(queue2.Data.Metadata["key1"], "value1");
             Assert.AreEqual(queue2.Data.Metadata["key2"], "value2");
         }
+
+        [Test]
+        [RecordedTest]
+        public async Task UpdateQueueService()
+        {
+            //update cors
+            CorsRules cors = new CorsRules();
+            cors.CorsRulesValue.Add(new CorsRule(
+                allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
+                allowedMethods: new CorsRuleAllowedMethodsItem[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
+                 allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                exposedHeaders: new string[] { "x-ms-meta-*" },
+                maxAgeInSeconds: 100));
+            QueueServiceData parameter = new QueueServiceData()
+            {
+                Cors = cors,
+            };
+            _queueService = await _queueService.SetServicePropertiesAsync(parameter);
+
+            //validate
+            Assert.AreEqual(_queueService.Data.Cors.CorsRulesValue.Count, 1);
+        }
     }
 }
