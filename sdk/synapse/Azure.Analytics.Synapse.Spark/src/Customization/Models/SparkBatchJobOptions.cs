@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="file"></param>
         /// <param name="creationCompletionType"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="file"/> is null. </exception>
-        public SparkBatchJobOptions(string name, string file, SparkBatchOperationCompletionType creationCompletionType) : this(name, file)
+        public SparkBatchJobOptions(string name, string file, SparkBatchOperationCompletionType creationCompletionType = SparkBatchOperationCompletionType.JobSubmission) : this(name, file)
         {
             CreationCompletionType = creationCompletionType;
         }
@@ -23,6 +23,6 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// If <see cref="SparkBatchOperationCompletionType.JobSubmission"/> is used, the operation will be considered as complete when Livy state is starting/running/error/dead/success/killed.
         /// If <see cref="SparkBatchOperationCompletionType.JobExecution"/> is used, the operation will be considered as complete when Livy state is error/dead/success/killed.
         /// </summary>
-        public SparkBatchOperationCompletionType CreationCompletionType { get; set; } = SparkBatchOperationCompletionType.JobSubmission;
+        public SparkBatchOperationCompletionType CreationCompletionType { get; set; }
     }
 }

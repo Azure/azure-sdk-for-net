@@ -25,7 +25,6 @@ namespace Azure.Analytics.Synapse.Spark
 
         private int _sessionId;
         private readonly SparkSessionClient _client;
-        private readonly SparkStatement _value;
         private Response<SparkStatement> _response;
         private bool _completed;
         private RequestFailedException _requestFailedException;
@@ -33,7 +32,6 @@ namespace Azure.Analytics.Synapse.Spark
         internal SparkStatementOperation(SparkSessionClient client, ClientDiagnostics diagnostics, Response<SparkStatement> response, int sessionId)
         {
             _client = client;
-            _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
             _response = response;
             _sessionId = sessionId;
             _diagnostics = diagnostics;
@@ -43,7 +41,7 @@ namespace Azure.Analytics.Synapse.Spark
         protected SparkStatementOperation() {}
 
         /// <inheritdoc/>
-        public override string Id => _value.Id.ToString(CultureInfo.InvariantCulture);
+        public override string Id => _response.Value.Id.ToString(CultureInfo.InvariantCulture);
 
         /// <summary>
         /// Gets the <see cref="SparkSession"/>.
@@ -66,7 +64,7 @@ namespace Azure.Analytics.Synapse.Spark
                     throw _requestFailedException;
                 }
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                return _value;
+                return _response.Value;
             }
         }
 
@@ -106,13 +104,13 @@ namespace Azure.Analytics.Synapse.Spark
                 {
                     if (async)
                     {
-                        _response = await _client.RestClient.GetSparkStatementAsync(_sessionId, _value.Id, cancellationToken).ConfigureAwait(false);
+                        _response = await _client.RestClient.GetSparkStatementAsync(_sessionId, _response.Value.Id, cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        _response = _client.RestClient.GetSparkStatement(_sessionId, _value.Id, cancellationToken);
+                        _response = _client.RestClient.GetSparkStatement(_sessionId, _response.Value.Id, cancellationToken);
                     }
-                    _completed = IsJobComplete(_response.Value.State);
+                    _completed = IsJobComplete(_response.Value.State.Value);
                 }
                 catch (RequestFailedException e)
                 {
@@ -137,17 +135,9 @@ namespace Azure.Analytics.Synapse.Spark
             return GetRawResponse();
         }
 
-        private static bool IsJobComplete(string livyState)
+        private static bool IsJobComplete(LivyStatementStates livyState)
         {
-            switch (livyState)
-            {
-                case "starting":
-                case "waiting":
-                case "running":
-                case "cancelling":
-                    return false;
-            };
-            return true;
+            return livyState == LivyStatementStates.Available || livyState == LivyStatementStates.Error || livyState == LivyStatementStates.Cancelled;
         }
     }
 }

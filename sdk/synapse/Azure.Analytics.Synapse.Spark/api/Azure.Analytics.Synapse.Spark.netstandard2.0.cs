@@ -160,7 +160,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkBatchJobOptions
     {
         public SparkBatchJobOptions(string name, string file) { }
-        public SparkBatchJobOptions(string name, string file, Azure.Analytics.Synapse.Spark.Models.SparkBatchOperationCompletionType creationCompletionType) { }
+        public SparkBatchJobOptions(string name, string file, Azure.Analytics.Synapse.Spark.Models.SparkBatchOperationCompletionType creationCompletionType = Azure.Analytics.Synapse.Spark.Models.SparkBatchOperationCompletionType.JobSubmission) { }
         public System.Collections.Generic.IList<string> Archives { get { throw null; } }
         public System.Collections.Generic.IList<string> Arguments { get { throw null; } }
         public string ArtifactId { get { throw null; } set { } }

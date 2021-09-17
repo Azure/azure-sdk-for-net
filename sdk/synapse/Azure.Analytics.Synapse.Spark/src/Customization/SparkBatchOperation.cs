@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +22,6 @@ namespace Azure.Analytics.Synapse.Spark
 
         private readonly ClientDiagnostics _diagnostics;
         private readonly SparkBatchClient _client;
-        private readonly SparkBatchJob _value;
         private Response<SparkBatchJob> _response;
         private bool _completed;
         private RequestFailedException _requestFailedException;
@@ -32,7 +30,6 @@ namespace Azure.Analytics.Synapse.Spark
         internal SparkBatchOperation(SparkBatchClient client, ClientDiagnostics diagnostics, SparkBatchOperationCompletionType completionType, Response<SparkBatchJob> response)
         {
             _client = client;
-            _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
             _response = response;
             _diagnostics = diagnostics;
             _completionType = completionType;
@@ -42,7 +39,7 @@ namespace Azure.Analytics.Synapse.Spark
         protected SparkBatchOperation() {}
 
         /// <inheritdoc/>
-        public override string Id => _value.Id.ToString(CultureInfo.InvariantCulture);
+        public override string Id => _response.Value.Id.ToString(CultureInfo.InvariantCulture);
 
         /// <summary>
         /// Gets the <see cref="SparkBatchJob"/>.
@@ -105,13 +102,13 @@ namespace Azure.Analytics.Synapse.Spark
                 {
                     if (async)
                     {
-                        _response = await _client.RestClient.GetSparkBatchJobAsync(_value.Id, true, cancellationToken).ConfigureAwait(false);
+                        _response = await _client.RestClient.GetSparkBatchJobAsync(_response.Value.Id, true, cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        _response = _client.RestClient.GetSparkBatchJob(_value.Id, true, cancellationToken);
+                        _response = _client.RestClient.GetSparkBatchJob(_response.Value.Id, true, cancellationToken);
                     }
-                    _completed = IsJobComplete(_response.Value.Result ?? SparkBatchJobResultType.Uncertain, _response.Value.State, _completionType);
+                    _completed = IsJobComplete(_response.Value.Result ?? SparkBatchJobResultType.Uncertain, _response.Value.State.Value, _completionType);
                 }
                 catch (RequestFailedException e)
                 {
@@ -136,28 +133,20 @@ namespace Azure.Analytics.Synapse.Spark
             return GetRawResponse();
         }
 
-        private static bool IsJobComplete(SparkBatchJobResultType jobState, string livyState, SparkBatchOperationCompletionType creationCompletionType)
+        private static bool IsJobComplete(SparkBatchJobResultType jobState, LivyStates livyState, SparkBatchOperationCompletionType creationCompletionType)
         {
             if (jobState == SparkBatchJobResultType.Succeeded || jobState == SparkBatchJobResultType.Failed || jobState == SparkBatchJobResultType.Cancelled)
             {
                 return true;
             }
 
-            if (creationCompletionType == SparkBatchOperationCompletionType.JobSubmission)
-            {
-                switch (livyState)
-                {
-                    case "starting":
-                    case "running":
-                    case "error":
-                    case "dead":
-                    case "success":
-                    case "killed":
-                        return true;
-                }
-            }
-
-            return false;
+            return creationCompletionType == SparkBatchOperationCompletionType.JobSubmission
+                && (livyState == LivyStates.Starting
+                || livyState == LivyStates.Running
+                || livyState == LivyStates.Error
+                || livyState == LivyStates.Dead
+                || livyState == LivyStates.Success
+                || livyState == LivyStates.Killed);
         }
     }
 }

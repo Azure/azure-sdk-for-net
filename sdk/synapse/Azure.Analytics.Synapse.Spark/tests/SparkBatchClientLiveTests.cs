@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
 
             // Verify the Spark batch job submission starts successfully
-            Assert.True("starting".Equals(jobCreateResponse.State, StringComparison.OrdinalIgnoreCase) || "running".Equals(jobCreateResponse.State, StringComparison.OrdinalIgnoreCase),
+            Assert.True(LivyStates.Starting == jobCreateResponse.State || LivyStates.Running == jobCreateResponse.State || LivyStates.Success == jobCreateResponse.State,
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Error (if any): {2}",
                     jobCreateResponse.Id,
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
 
             // Verify the Spark batch job exuecution completes successfully
-            Assert.True("success".Equals(jobCreateResponse.State, StringComparison.OrdinalIgnoreCase) && jobCreateResponse.Result == SparkBatchJobResultType.Succeeded,
+            Assert.True(LivyStates.Success == jobCreateResponse.State  && jobCreateResponse.Result == SparkBatchJobResultType.Succeeded,
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                     jobCreateResponse.Id,
