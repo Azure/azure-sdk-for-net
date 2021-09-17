@@ -15,7 +15,11 @@ namespace Azure.Core
         {
         }
 
-        internal RetryOptions(RetryOptions retryOptions)
+        /// <summary>
+        /// Initializes the newly created <see cref="RetryOptions"/> with the same settings as the specified retryOptions.
+        /// </summary>
+        /// <param name="retryOptions">The <see cref="RetryOptions"/> to model the newly created instance on.</param>
+        protected internal RetryOptions(RetryOptions retryOptions)
         {
             MaxRetries = retryOptions.MaxRetries;
             Delay = retryOptions.Delay;

@@ -30,7 +30,8 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new instance of <see cref="ClientOptions"/>.
         /// </summary>
-        protected ClientOptions(): this(Default)
+        protected ClientOptions()
+            : this(Default)
         {
         }
 
@@ -38,9 +39,11 @@ namespace Azure.Core
         {
             if (clientOptions != null)
             {
-                Retry = new RetryOptions(clientOptions.Retry);
+#pragma warning disable CA2214 // Do not call overridable methods in constructors
+                Retry = CreateRetryOptions(clientOptions.Retry) ?? throw new InvalidOperationException("Implementers of CreateRetryOptions must not return null");
 
-                Diagnostics = new DiagnosticsOptions(clientOptions.Diagnostics);
+                Diagnostics = CreateDiagnosticsOptions(clientOptions.Diagnostics) ?? throw new InvalidOperationException("Implementers of CreateDiagnosticsOptions must not return null");
+#pragma warning restore CA2214 // Do not call overridable methods in constructors
 
                 _transport = clientOptions.Transport;
                 if (clientOptions.Policies != null)
@@ -70,7 +73,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the client diagnostic options.
         /// </summary>
-        public DiagnosticsOptions Diagnostics { get; protected set; }
+        public DiagnosticsOptions Diagnostics { get; }
 
         /// <summary>
         /// Gets the client retry options.
@@ -95,6 +98,34 @@ namespace Azure.Core
 
             Policies ??= new();
             Policies.Add((position, policy));
+        }
+
+        /// <summary>
+        /// Factory method used to initialize the <see cref="Diagnostics"/> property. Subclasses may override to modify default values or substitute a type deriving from <see cref="DiagnosticsOptions"/>.
+        /// </summary>
+        /// <param name="diagnosticOptions">The initial default values to be used for the newly created <see cref="DiagnosticsOptions"/>.</param>
+        /// <returns>A new instance of <see cref="DiagnosticsOptions"/> with initial values based on the supplied diagnosticOptions.</returns>
+        /// <remarks>
+        /// This virtual method will be called during construction of the <see cref="ClientOptions"/> so any overrides of this method should not rely on any instance based state of the object, as it will
+        /// not be fully constructed when this method is invoked.
+        /// </remarks>
+        protected virtual DiagnosticsOptions CreateDiagnosticsOptions(DiagnosticsOptions diagnosticOptions)
+        {
+            return new DiagnosticsOptions(diagnosticOptions);
+        }
+
+        /// <summary>
+        /// Factory method used to initialize the <see cref="Retry"/> property. Subclasses may override to modify default values or substitute a type deriving from <see cref="RetryOptions"/>.
+        /// </summary>
+        /// <param name="retryOptions">The initial default values to be used for the newly created <see cref="RetryOptions"/>.</param>
+        /// <returns>A new instance of <see cref="RetryOptions"/> with initial values based on the supplied retryOptions.</returns>
+        /// <remarks>
+        /// This virtual method will be called during construction of the <see cref="ClientOptions"/> so any overrides of this method should not rely on any instance based state of the object, as it will
+        /// not be fully constructed when this method is invoked.
+        /// </remarks>
+        protected virtual RetryOptions CreateRetryOptions(RetryOptions retryOptions)
+        {
+            return new RetryOptions(retryOptions);
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
