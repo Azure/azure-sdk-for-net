@@ -19,61 +19,18 @@ namespace Microsoft.Azure.Management.ResourceManager
     using System.Threading.Tasks;
 
     /// <summary>
-    /// FeaturesOperations operations.
+    /// SubscriptionFeatureRegistrationsOperations operations.
     /// </summary>
-    public partial interface IFeaturesOperations
+    public partial interface ISubscriptionFeatureRegistrationsOperations
     {
         /// <summary>
-        /// Gets all the preview features that are available through AFEC for
-        /// the subscription.
+        /// Returns a feature registration
         /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<FeatureResult>>> ListAllWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets all the preview features in a provider namespace that are
-        /// available through AFEC for the subscription.
-        /// </summary>
-        /// <param name='resourceProviderNamespace'>
-        /// The namespace of the resource provider for getting features.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<FeatureResult>>> ListWithHttpMessagesAsync(string resourceProviderNamespace, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the preview feature with the specified name.
-        /// </summary>
-        /// <param name='resourceProviderNamespace'>
-        /// The resource provider namespace for the feature.
+        /// <param name='providerNamespace'>
+        /// The provider namespace.
         /// </param>
         /// <param name='featureName'>
-        /// The name of the feature to get.
+        /// The feature name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -90,15 +47,18 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FeatureResult>> GetWithHttpMessagesAsync(string resourceProviderNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionFeatureRegistration>> GetWithHttpMessagesAsync(string providerNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Registers the preview feature for the subscription.
+        /// Create or update a feature registration.
         /// </summary>
-        /// <param name='resourceProviderNamespace'>
-        /// The namespace of the resource provider.
+        /// <param name='providerNamespace'>
+        /// The provider namespace.
         /// </param>
         /// <param name='featureName'>
-        /// The name of the feature to register.
+        /// The feature name.
+        /// </param>
+        /// <param name='subscriptionFeatureRegistrationType'>
+        /// Subscription Feature Registration Type details.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -115,15 +75,35 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FeatureResult>> RegisterWithHttpMessagesAsync(string resourceProviderNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionFeatureRegistration>> CreateOrUpdateWithHttpMessagesAsync(string providerNamespace, string featureName, SubscriptionFeatureRegistration subscriptionFeatureRegistrationType = default(SubscriptionFeatureRegistration), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Unregisters the preview feature for the subscription.
+        /// Deletes a feature registration
         /// </summary>
-        /// <param name='resourceProviderNamespace'>
-        /// The namespace of the resource provider.
+        /// <param name='providerNamespace'>
+        /// The provider namespace.
         /// </param>
         /// <param name='featureName'>
-        /// The name of the feature to unregister.
+        /// The feature name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string providerNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Returns subscription feature registrations for given subscription
+        /// and provider namespace.
+        /// </summary>
+        /// <param name='providerNamespace'>
+        /// The provider namespace.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -140,10 +120,29 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FeatureResult>> UnregisterWithHttpMessagesAsync(string resourceProviderNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SubscriptionFeatureRegistration>>> ListBySubscriptionWithHttpMessagesAsync(string providerNamespace, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the preview features that are available through AFEC for
-        /// the subscription.
+        /// Returns subscription feature registrations for given subscription.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<SubscriptionFeatureRegistration>>> ListAllBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Returns subscription feature registrations for given subscription
+        /// and provider namespace.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -163,10 +162,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<FeatureResult>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SubscriptionFeatureRegistration>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the preview features in a provider namespace that are
-        /// available through AFEC for the subscription.
+        /// Returns subscription feature registrations for given subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -186,6 +184,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<FeatureResult>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SubscriptionFeatureRegistration>>> ListAllBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
