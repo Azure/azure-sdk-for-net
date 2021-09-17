@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
@@ -47,6 +48,26 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute3", "3"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+        }
+
+        [Test]
+        public void ActivityDurationIsNotZeroWhenStoping()
+        {
+            TimeSpan? duration = null;
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
+            testListener.EventCallback = _ => { duration = Activity.Current?.Duration; };
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+
+            scope.Start();
+
+            Thread.Sleep(50);
+
+            scope.Dispose();
+
+            Assert.True(duration > TimeSpan.Zero);
         }
 
         [Test]

@@ -275,7 +275,11 @@ namespace Azure.Core.Pipeline
                         Links = (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>(),
                     };
                     _currentActivity.SetW3CFormat();
-                    _currentActivity.SetStartTime(_startTime.DateTime);
+
+                    if (_startTime != default)
+                    {
+                        _currentActivity.SetStartTime(_startTime.DateTime);
+                    }
 
                     if (_tagCollection != null)
                     {
@@ -319,6 +323,9 @@ namespace Azure.Core.Pipeline
                 {
                     return;
                 }
+
+                if (_currentActivity.Duration == TimeSpan.Zero)
+                    _currentActivity.SetEndTime(DateTime.UtcNow);
 
                 _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
 
