@@ -8,8 +8,8 @@ To create a new `DocumentTranslationClient` to run a translation operation for d
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentTranslationClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
+string endpoint = "<Document Translator Resource Endpoint>";
+string apiKey = "<Document Translator Resource API Key>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
@@ -23,7 +23,7 @@ To call `StartTranslationAsync` you need to initialize a list of `DocumentTransl
 See the [service documentation][Sas_token_permissions] for the supported SAS permissions.
 
 ```C# Snippet:MultipleInputsAsync
-Uri source1SasUriUri = new Uri("<source1 SAS URI>");
+Uri source1SasUri = new Uri("<source1 SAS URI>");
 Uri source2SasUri = new Uri("<source2 SAS URI>");
 Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
 Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
@@ -32,7 +32,7 @@ Uri frenchGlossarySasUri = new Uri("<french glossary SAS URI>");
 
 var glossaryFormat = "TSV";
 
-var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
+var input1 = new DocumentTranslationInput(source1SasUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
 input1.AddTarget(spanishTargetSasUri, "es");
 
 var input2 = new DocumentTranslationInput(source2SasUri, arabicTargetSasUri, "ar");
@@ -48,14 +48,14 @@ DocumentTranslationOperation operation = await client.StartTranslationAsync(inpu
 
 await operation.WaitForCompletionAsync();
 
-await foreach (DocumentStatus document in operation.GetValuesAsync())
+await foreach (DocumentStatusResult document in operation.GetValuesAsync())
 {
     Console.WriteLine($"Document with Id: {document.Id}");
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == DocumentTranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-        Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
+        Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
     }
     else

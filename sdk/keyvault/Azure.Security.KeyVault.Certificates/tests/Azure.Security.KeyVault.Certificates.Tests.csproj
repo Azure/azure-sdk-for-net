@@ -7,9 +7,8 @@
   <Import Project="..\..\Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems" Label="Shared" />
 
   <ItemGroup>
-    <Compile Update="CertificateClientLiveTests.Constants.cs">
-      <DependentUpon>CertificateClientLiveTests.cs</DependentUpon>
-    </Compile>
+    <Compile Update="CertificateClientLiveTests.Constants.cs" DependentUpon="CertificateClientLiveTests.cs" />
+    <Compile Update="PemReaderTests.Keys.cs" DependentUpon="PemReaderTests.cs" />
   </ItemGroup>
 
   <ItemGroup>

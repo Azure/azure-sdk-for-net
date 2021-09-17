@@ -9,7 +9,7 @@ is a cloud-based service that helps your applications choose the best content it
 
 Install the Azure Personalizer client library for .NET with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.AI.Personalizer --version 2.0.0-beta.1
 ```
 

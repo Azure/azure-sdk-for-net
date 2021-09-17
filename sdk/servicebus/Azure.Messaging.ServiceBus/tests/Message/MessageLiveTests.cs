@@ -117,7 +117,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
-                var msg = new ServiceBusMessage(new BinaryData(GetRandomBuffer(100)));
+                var msg = new ServiceBusMessage(new BinaryData(ServiceBusTestUtilities.GetRandomBuffer(100)));
                 msg.ContentType = "contenttype";
                 msg.CorrelationId = "correlationid";
                 msg.Subject = "label";
@@ -186,7 +186,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.TopicName);
-                var msg = new ServiceBusMessage(new BinaryData(GetRandomBuffer(100)));
+                var msg = new ServiceBusMessage(new BinaryData(ServiceBusTestUtilities.GetRandomBuffer(100)));
                 msg.ContentType = "contenttype";
                 msg.CorrelationId = "correlationid";
                 msg.Subject = "label";
@@ -290,8 +290,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     AmqpMessageBody.FromData(
                     new ReadOnlyMemory<byte>[]
                     {
-                        new ReadOnlyMemory<byte>(GetRandomBuffer(100)),
-                        new ReadOnlyMemory<byte>(GetRandomBuffer(100))
+                        new ReadOnlyMemory<byte>(ServiceBusTestUtilities.GetRandomBuffer(100)),
+                        new ReadOnlyMemory<byte>(ServiceBusTestUtilities.GetRandomBuffer(100))
                     }));
                 msg.AmqpMessage = amqp;
 
@@ -446,8 +446,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var msg = new ServiceBusMessage();
                 msg.GetRawAmqpMessage().Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[]
                     {
-                        new ReadOnlyMemory<byte>(GetRandomBuffer(100)),
-                        new ReadOnlyMemory<byte>(GetRandomBuffer(100))
+                        new ReadOnlyMemory<byte>(ServiceBusTestUtilities.GetRandomBuffer(100)),
+                        new ReadOnlyMemory<byte>(ServiceBusTestUtilities.GetRandomBuffer(100))
                     });
                 Guid guid = Guid.NewGuid();
                 msg.GetRawAmqpMessage().Properties.MessageId = new AmqpMessageId(guid.ToString());

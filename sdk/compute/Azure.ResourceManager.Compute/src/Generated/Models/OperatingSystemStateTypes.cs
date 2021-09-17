@@ -7,12 +7,12 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The OS State. </summary>
+    /// <summary> This property allows the user to specify whether the virtual machines created under this image are &apos;Generalized&apos; or &apos;Specialized&apos;. </summary>
     public enum OperatingSystemStateTypes
     {
-        /// <summary> Generalized image. Needs to be provisioned during deployment time. </summary>
+        /// <summary> Generalized. </summary>
         Generalized,
-        /// <summary> Specialized image. Contains already provisioned OS Disk. </summary>
+        /// <summary> Specialized. </summary>
         Specialized
     }
 }

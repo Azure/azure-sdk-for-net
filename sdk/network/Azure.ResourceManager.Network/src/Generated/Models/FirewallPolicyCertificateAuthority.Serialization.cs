@@ -15,52 +15,37 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultSecretId))
             {
                 writer.WritePropertyName("keyVaultSecretId");
                 writer.WriteStringValue(KeyVaultSecretId);
             }
-            writer.WriteEndObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
             writer.WriteEndObject();
         }
 
         internal static FirewallPolicyCertificateAuthority DeserializeFirewallPolicyCertificateAuthority(JsonElement element)
         {
-            Optional<string> name = default;
             Optional<string> keyVaultSecretId = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("keyVaultSecretId"))
+                {
+                    keyVaultSecretId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("keyVaultSecretId"))
-                        {
-                            keyVaultSecretId = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new FirewallPolicyCertificateAuthority(name.Value, keyVaultSecretId.Value);
+            return new FirewallPolicyCertificateAuthority(keyVaultSecretId.Value, name.Value);
         }
     }
 }

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,19 +17,14 @@ namespace Azure.ResourceManager.Network.Models
         internal static TopologyResource DeserializeTopologyResource(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> id = default;
             Optional<string> location = default;
             Optional<IReadOnlyList<TopologyAssociation>> associations = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -51,8 +47,13 @@ namespace Azure.ResourceManager.Network.Models
                     associations = array;
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new TopologyResource(name.Value, id.Value, location.Value, Optional.ToList(associations));
+            return new TopologyResource(id, name.Value, location.Value, Optional.ToList(associations));
         }
     }
 }

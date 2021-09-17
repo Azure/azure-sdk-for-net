@@ -90,7 +90,7 @@ After deployment completes, make note of the output variables as shown in the ex
 
 You can build, run, and even deploy the sample using [Visual Studio][visualstudio], [Visual Studio Code][visualstudiocode], or the [.NET command line interface (CLI)][dotnet_cli]. Using the `dotnet` CLI, for example, within the directory containing the sample application source run:
 
-```bash
+```dotnetcli
 dotnet build
 ```
 
@@ -134,28 +134,30 @@ Next you'll need to add the App Configuration connection string from the templat
 
 1. In the project folder, run the following to add a variable named `ConnectionStrings:AppConfig` with the `value` of the `appConfigurationConnectionString` output variable:
 
-   ```bash
+   ```dotnetcli
    dotnet user-secrets set "ConnectionStrings:AppConfig" "Endpoint=https://{appconfig-host-name}.azconfig.io;Id={id};Secret={secret}"
    ```
 
 2. With a *.cs* file open the command palette and run `Debug: Start debugging` or press `F5` (default binding).
 3. If prompted, select ".NET Core" to create a launch configuration and start debugging.
 
-#### [.NET CLI](#tab/dotnet_cli)
+#### [.NET](#tab/dotnet)
 
 1. In the project folder, run the following to add a variable named `ConnectionStrings:AppConfig` with the `value` of the `appConfigurationConnectionString` output variable:
 
-   ```bash
+   ```dotnetcli
    dotnet user-secrets set "ConnectionStrings:AppConfig" "Endpoint=https://{appconfig-host-name}.azconfig.io;Id={id};Secret={secret}"
    ```
 
 2. Run the project:
 
-   ```bash
+   ```dotnetcli
    dotnet run
    ```
 
-#### Deploying the sample
+---
+
+### Deploying the sample
 
 See the [ASP.NET quickstart][aspnet_quickstart] for instructions to deploy for Visual Studio, Visual Studio Code, and the `dotnet` CLI. For Visual Studio and Visual Studio Code, make sure you select your existing resource if you deployed the Bicep template above; otherwise, for the `dotnet` CLI you can deploy to an existing resource by [configuring Git support][aspnet_deploy_localgit] and pushing source, which will be built automatically on the host.
 
@@ -165,7 +167,7 @@ Using [Azure App Configuration][appconfig_overview] is an efficient way to store
 
 1. Add the following package to your project:
 
-   ```bash
+   ```dotnetcli
    dotnet add package Azure.Identity
    dotnet add package Microsoft.Extensions.Configuration.AzureAppConfiguration
    ```

@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class LogsQueryClientClientLiveTests : RecordedTestBase<MonitorQueryClientTestEnvironment>
+    public class LogsQueryClientClientLiveTests : RecordedTestBase<MonitorQueryTestEnvironment>
     {
         private LogsTestData _logsTestData;
 
@@ -51,7 +51,7 @@ namespace Azure.Monitor.Query.Tests
                 $"order by {LogsTestData.StringColumnName} asc",
                 _logsTestData.DataTimeRange);
 
-            var resultTable = results.Value.Tables.Single();
+            var resultTable = results.Value.Table;
             CollectionAssert.IsNotEmpty(resultTable.Columns);
 
             Assert.AreEqual("a", resultTable.Rows[0].GetString(0));
@@ -86,11 +86,25 @@ namespace Azure.Monitor.Query.Tests
 
             var results = await client.QueryAsync(TestEnvironment.WorkspaceId,
                 $"set truncationmaxrecords=1; datatable (s: string) ['a', 'b']",
-                _logsTestData.DataTimeRange);
+                _logsTestData.DataTimeRange, new LogsQueryOptions()
+                {
+                    ThrowOnPartialErrors = false
+                });
 
             Assert.NotNull(results.Value.Error.Code);
             Assert.NotNull(results.Value.Error.Message);
-            CollectionAssert.IsNotEmpty(results.Value.Error.Details);
+        }
+
+        [RecordedTest]
+        public void ThrowsOnQueryPartialSuccess()
+        {
+            var client = CreateClient();
+
+            var exception = Assert.ThrowsAsync<RequestFailedException>(() => client.QueryAsync(TestEnvironment.WorkspaceId,
+                $"set truncationmaxrecords=1; datatable (s: string) ['a', 'b']",
+                _logsTestData.DataTimeRange));
+
+            StringAssert.StartsWith("The result was returned but contained a partial error", exception.Message);
         }
 
         [RecordedTest]
@@ -185,13 +199,13 @@ namespace Azure.Monitor.Query.Tests
             LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
             string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
-            Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
+            Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
             var result1 = response.Value.GetResult(id1);
             var result2 = response.Value.GetResult(id2);
 
-            CollectionAssert.IsNotEmpty(result1.Tables[0].Columns);
-            CollectionAssert.IsNotEmpty(result2.Tables[0].Columns);
+            CollectionAssert.IsNotEmpty(result1.AllTables[0].Columns);
+            CollectionAssert.IsNotEmpty(result2.AllTables[0].Columns);
         }
 
         [RecordedTest]
@@ -203,18 +217,18 @@ namespace Azure.Monitor.Query.Tests
             string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeats", _logsTestData.DataTimeRange);
             string id3 = batch.AddQuery(TestEnvironment.WorkspaceId, "set truncationmaxrecords=1; datatable (s: string) ['a', 'b']", _logsTestData.DataTimeRange);
 
-            Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
+            Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
-            Assert.False(response.Value.Results.Single(r => r.Id == id1).HasFailed);
+            Assert.AreEqual(LogsBatchQueryResultStatus.Success, response.Value.Single(r => r.Id == id1).Status);
 
-            var failedResult = response.Value.Results.Single(r => r.Id == id2);
-            Assert.True(failedResult.HasFailed);
+            var failedResult = response.Value.Single(r => r.Id == id2);
+            Assert.AreEqual(LogsBatchQueryResultStatus.Failure, failedResult.Status);
             Assert.NotNull(failedResult.Error.Code);
             Assert.NotNull(failedResult.Error.Message);
 
-            var partialResult = response.Value.Results.Single(r => r.Id == id3);
-            Assert.False(partialResult.HasFailed);
-            CollectionAssert.IsNotEmpty(partialResult.PrimaryTable.Rows);
+            var partialResult = response.Value.Single(r => r.Id == id3);
+            Assert.AreEqual(LogsBatchQueryResultStatus.PartialFailure, partialResult.Status);
+            CollectionAssert.IsNotEmpty(partialResult.Table.Rows);
             Assert.NotNull(partialResult.Error.Code);
             Assert.NotNull(partialResult.Error.Message);
         }
@@ -240,7 +254,7 @@ namespace Azure.Monitor.Query.Tests
                 "dynamic({\"a\":123, \"b\":\"hello\", \"c\":[1,2,3], \"d\":{}})" +
                 "]", _logsTestData.DataTimeRange);
 
-            LogsQueryResultRow row = results.Value.PrimaryTable.Rows[0];
+            LogsTableRow row = results.Value.Table.Rows[0];
 
             var expectedDate = DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00");
             Assert.AreEqual(expectedDate, row.GetDateTimeOffset("DateTime"));
@@ -270,8 +284,8 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual(0.10101m, row.GetDecimal("Decimal"));
             Assert.AreEqual(0.10101m, row.GetDecimal(8));
             Assert.AreEqual(0.10101m, row.GetObject("Decimal"));
-            Assert.True(row.IsNull("NullBool"));
-            Assert.True(row.IsNull(9));
+            Assert.Null(row.GetBoolean("NullBool"));
+            Assert.Null(row.GetBoolean(9));
             Assert.IsNull(row.GetObject("NullBool"));
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetDynamic(10).ToString());
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetDynamic("Dynamic").ToString());
@@ -453,7 +467,7 @@ namespace Azure.Monitor.Query.Tests
             LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", _logsTestData.DataTimeRange);
             string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", timespan);
-            Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
+            Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
             var result1 = response.Value.GetResult<DateTimeOffset>(id1);
             var result2 = response.Value.GetResult<DateTimeOffset>(id2);
@@ -488,6 +502,21 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.AreEqual("BadArgumentError", exception.ErrorCode);
             StringAssert.StartsWith("Batch query with id '0' failed.", exception.Message);
+        }
+
+        [RecordedTest]
+        public async Task ThrowsExceptionWhenPartialSuccess()
+        {
+            var client = CreateClient();
+
+            LogsBatchQuery batch = new LogsBatchQuery();
+            var queryId = batch.AddQuery(TestEnvironment.WorkspaceId, "set truncationmaxrecords=1; datatable (s: string) ['a', 'b']", _logsTestData.DataTimeRange);
+            var batchResult = await client.QueryBatchAsync(batch);
+
+            var exception = Assert.Throws<RequestFailedException>(() => batchResult.Value.GetResult(queryId));
+
+            Assert.AreEqual("PartialError", exception.ErrorCode);
+            StringAssert.StartsWith("The result was returned but contained a partial error", exception.Message);
         }
 
         [RecordedTest]
@@ -594,10 +623,11 @@ namespace Azure.Monitor.Query.Tests
                 {
                     await client.QueryAsync(TestEnvironment.WorkspaceId, $"range x from 1 to {cnt} step 1 | count", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
                     {
-                        ServerTimeout = TimeSpan.FromSeconds(1)
+                        ServerTimeout = TimeSpan.FromSeconds(1),
+                        ThrowOnPartialErrors = false
                     });
                 }
-                catch (TaskCanceledException)
+                catch (AggregateException)
                 {
                     // The client cancelled, retry.
                     continue;

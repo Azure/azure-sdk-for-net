@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,15 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static SecurityGroupNetworkInterface DeserializeSecurityGroupNetworkInterface(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<SecurityRuleAssociations> securityRuleAssociations = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("securityRuleAssociations"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -33,8 +29,13 @@ namespace Azure.ResourceManager.Network.Models
                     securityRuleAssociations = SecurityRuleAssociations.DeserializeSecurityRuleAssociations(property.Value);
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new SecurityGroupNetworkInterface(id.Value, securityRuleAssociations.Value);
+            return new SecurityGroupNetworkInterface(id, securityRuleAssociations.Value);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.Storage.Models
         internal static AzureEntityResource DeserializeAzureEntityResource(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new AzureEntityResource(id.Value, name.Value, type.Value, etag.Value);
+            return new AzureEntityResource(id, name, type, etag.Value);
         }
     }
 }

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -31,11 +32,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("extendedLocation");
+                writer.WriteObjectValue(ExtendedLocation);
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Plan))
@@ -68,6 +71,21 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("hyperVGeneration");
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
+            if (Optional.IsDefined(Disallowed))
+            {
+                writer.WritePropertyName("disallowed");
+                writer.WriteObjectValue(Disallowed);
+            }
+            if (Optional.IsCollectionDefined(Features))
+            {
+                writer.WritePropertyName("features");
+                writer.WriteStartArray();
+                foreach (var item in Features)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -77,12 +95,15 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<string> id = default;
+            Optional<ExtendedLocation> extendedLocation = default;
+            ResourceIdentifier id = default;
             Optional<PurchasePlan> plan = default;
             Optional<OSDiskImage> osDiskImage = default;
             Optional<IList<DataDiskImage>> dataDiskImages = default;
             Optional<AutomaticOSUpgradeProperties> automaticOSUpgradeProperties = default;
             Optional<HyperVGenerationTypes> hyperVGeneration = default;
+            Optional<DisallowedConfiguration> disallowed = default;
+            Optional<IList<VirtualMachineImageFeature>> features = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -108,6 +129,16 @@ namespace Azure.ResourceManager.Compute.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("extendedLocation"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -179,11 +210,36 @@ namespace Azure.ResourceManager.Compute.Models
                             hyperVGeneration = new HyperVGenerationTypes(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("disallowed"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            disallowed = DisallowedConfiguration.DeserializeDisallowedConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("features"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<VirtualMachineImageFeature> array = new List<VirtualMachineImageFeature>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(VirtualMachineImageFeature.DeserializeVirtualMachineImageFeature(item));
+                            }
+                            features = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineImage(id.Value, name, location, Optional.ToDictionary(tags), plan.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration));
+            return new VirtualMachineImage(id, name, location, Optional.ToDictionary(tags), extendedLocation.Value, plan.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, Optional.ToList(features));
         }
     }
 }

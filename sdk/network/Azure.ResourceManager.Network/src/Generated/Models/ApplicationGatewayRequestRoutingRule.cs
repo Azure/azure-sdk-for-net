@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Request routing rule of an application gateway. </summary>
-    public partial class ApplicationGatewayRequestRoutingRule : SubResource
+    public partial class ApplicationGatewayRequestRoutingRule : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayRequestRoutingRule. </summary>
         public ApplicationGatewayRequestRoutingRule()
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayRequestRoutingRule. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of the request routing rule that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>

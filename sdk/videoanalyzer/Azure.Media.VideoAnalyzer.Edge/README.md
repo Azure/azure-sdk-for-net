@@ -26,13 +26,13 @@ ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(connectio
 
 Install the Video Analyzer Edge client library for .NET with [NuGet](https://www.nuget.org/):
 
-```bash
+```dotnetcli
 dotnet add package Azure.Media.VideoAnalyzer.Edge --prerelease
 ```
 
 Install the Azure IoT Hub SDk for .NET with [NuGet](https://www.nuget.org/):
 
-```bash
+```dotnetcli
 dotnet add package Microsoft.Azure.Devices
 ```
 
