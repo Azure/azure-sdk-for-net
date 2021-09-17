@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="RecordingFormatType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordingFormatType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RecordingFormatType(string value)
         {

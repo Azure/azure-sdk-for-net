@@ -32,7 +32,9 @@ namespace Azure.Monitor.Query.Models
             Headers = headers;
         }
 
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
+        /// <summary> Gets the status. </summary>
         public int? Status { get; }
         /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
         public LogsBatchQueryResult Body { get; }

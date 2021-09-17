@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     {
         public const string ServicePrincipal = "ServicePrincipal";
         public const string ManagedIdentity = "ManagedIdentity";
+        public const string UserAssignedManagedIdentity = "UserAssignedManagedIdentity";
     }
 }

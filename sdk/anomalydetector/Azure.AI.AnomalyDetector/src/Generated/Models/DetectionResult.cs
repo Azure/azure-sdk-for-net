@@ -46,6 +46,7 @@ namespace Azure.AI.AnomalyDetector.Models
             Results = results;
         }
 
+        /// <summary> Gets the result id. </summary>
         public Guid ResultId { get; }
         /// <summary> Multivariate anomaly detection status. </summary>
         public DetectionResultSummary Summary { get; }

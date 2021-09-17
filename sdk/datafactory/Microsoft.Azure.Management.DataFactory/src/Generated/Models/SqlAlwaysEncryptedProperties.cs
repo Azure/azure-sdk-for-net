@@ -35,17 +35,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="alwaysEncryptedAkvAuthType">Sql always encrypted AKV
         /// authentication type. Type: string (or Expression with resultType
         /// string). Possible values include: 'ServicePrincipal',
-        /// 'ManagedIdentity'</param>
+        /// 'ManagedIdentity', 'UserAssignedManagedIdentity'</param>
         /// <param name="servicePrincipalId">The client ID of the application
         /// in Azure Active Directory used for Azure Key Vault authentication.
         /// Type: string (or Expression with resultType string).</param>
         /// <param name="servicePrincipalKey">The key of the service principal
         /// used to authenticate against Azure Key Vault.</param>
-        public SqlAlwaysEncryptedProperties(string alwaysEncryptedAkvAuthType, object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase))
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        public SqlAlwaysEncryptedProperties(string alwaysEncryptedAkvAuthType, object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), CredentialReference credential = default(CredentialReference))
         {
             AlwaysEncryptedAkvAuthType = alwaysEncryptedAkvAuthType;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
+            Credential = credential;
             CustomInit();
         }
 
@@ -57,7 +60,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Gets or sets sql always encrypted AKV authentication type. Type:
         /// string (or Expression with resultType string). Possible values
-        /// include: 'ServicePrincipal', 'ManagedIdentity'
+        /// include: 'ServicePrincipal', 'ManagedIdentity',
+        /// 'UserAssignedManagedIdentity'
         /// </summary>
         [JsonProperty(PropertyName = "alwaysEncryptedAkvAuthType")]
         public string AlwaysEncryptedAkvAuthType { get; set; }
@@ -78,6 +82,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public SecretBase ServicePrincipalKey { get; set; }
 
         /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "credential")]
+        public CredentialReference Credential { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -88,6 +99,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (AlwaysEncryptedAkvAuthType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AlwaysEncryptedAkvAuthType");
+            }
+            if (Credential != null)
+            {
+                Credential.Validate();
             }
         }
     }
