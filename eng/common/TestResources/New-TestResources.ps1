@@ -36,7 +36,7 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
-    # Azure SDK Developer Playground subscription
+    # Azure SDK Developer Playground subscription is assumed if not set
     [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $SubscriptionId,
@@ -279,46 +279,13 @@ try {
         if (!$TenantId) {
             $TenantId = $context.Subscription.TenantId
         }
-
-        # If no test application ID is specified during an interactive session, create a new service principal.
-        if (!$TestApplicationId) {
-
-            # Cache the created service principal in this session for frequent reuse.
-            $servicePrincipal = if ($AzureTestPrincipal -and (Get-AzADServicePrincipal -ApplicationId $AzureTestPrincipal.ApplicationId) -and $AzureTestSubscription -eq $SubscriptionId) {
-                Log "TestApplicationId was not specified; loading cached service principal '$($AzureTestPrincipal.ApplicationId)'"
-                $AzureTestPrincipal
-            } else {
-                Log "TestApplicationId was not specified; creating a new service principal in subscription '$SubscriptionId'"
-                $suffix = (New-Guid).ToString('n').Substring(0, 4)
-                $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner -Scope "/subscriptions/$SubscriptionId" -DisplayName "test-resources-$($baseName)$suffix.microsoft.com"
-                $global:AzureTestSubscription = $SubscriptionId
-
-                Log "Created service principal '$($AzureTestPrincipal.ApplicationId)'"
-                $AzureTestPrincipal
-            }
-
-            $TestApplicationId = $servicePrincipal.ApplicationId
-            $TestApplicationSecret = (ConvertFrom-SecureString $servicePrincipal.Secret -AsPlainText);
-
-            # Make sure pre- and post-scripts are passed formerly required arguments.
-            $PSBoundParameters['TestApplicationId'] = $TestApplicationId
-            $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret
-        }
-
-        if (!$ProvisionerApplicationId) {
-            $ProvisionerApplicationId = $TestApplicationId
-            $ProvisionerApplicationSecret = $TestApplicationSecret
-            $TenantId = $context.Tenant.Id
-        }
     }
 
-    # Log in as and run pre- and post-scripts as the provisioner service principal.
+    # If a provisioner service principal was provided, log into it to perform the pre- and post-scripts and deployments.
     if ($ProvisionerApplicationId) {
         $null = Disable-AzContextAutosave -Scope Process
 
         Log "Logging into service principal '$ProvisionerApplicationId'."
-        Write-Warning 'Logging into service principal may fail until the principal is fully propagated.'
-
         $provisionerSecret = ConvertTo-SecureString -String $ProvisionerApplicationSecret -AsPlainText -Force
         $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
 
@@ -343,19 +310,24 @@ try {
         }
     }
 
-    # Get test application OID from ID if not already provided.
-    if ($TestApplicationId -and !$TestApplicationOid) {
-        $testServicePrincipal = Retry {
-            Get-AzADServicePrincipal -ApplicationId $TestApplicationId
-        }
-
-        if ($testServicePrincipal -and $testServicePrincipal.Id) {
-            $script:TestApplicationOid = $testServicePrincipal.Id
-        }
-    }
-
     # Determine the Azure context that the script is running in.
     $context = Get-AzContext;
+
+    # Make sure the provisioner OID is set so we can pass it through to the deployment.
+    $provisionerApplicationOid = if (!$ProvisionerApplicationId) {
+        if ($context.Account.Type -eq 'User') {
+            $user = Get-AzADUser -UserPrincipalName $context.Account.Id
+            $user.Id
+        } elseif ($context.Account.Type -eq 'ServicePrincipal') {
+            $sp = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
+            $sp.Id
+        } else {
+            Write-Warning "Getting the OID for provisioner type '$($context.Account.Type)' is not supported and will not be passed to deployments (seldom required)."
+        }
+    } else {
+        $sp = Get-AzADServicePrincipal -ApplicationId $ProvisionerApplicationId
+        $sp.Id
+    }
 
     # If the ServiceDirectory is an absolute path use the last directory name
     # (e.g. D:\foo\bar\ -> bar)
@@ -426,11 +398,88 @@ try {
         }
     }
 
+    # If no test application ID was specified during an interactive session, create a new service principal.
+    if (!$CI -and !$TestApplicationId) {
+        # Cache the created service principal in this session for frequent reuse.
+        $servicePrincipal = if ($AzureTestPrincipal -and (Get-AzADServicePrincipal -ApplicationId $AzureTestPrincipal.ApplicationId) -and $AzureTestSubscription -eq $SubscriptionId) {
+            Log "TestApplicationId was not specified; loading cached service principal '$($AzureTestPrincipal.ApplicationId)'"
+            $AzureTestPrincipal
+        } else {
+            Log "TestApplicationId was not specified; creating a new service principal in subscription '$SubscriptionId'"
+            $suffix = (New-Guid).ToString('n').Substring(0, 4)
+
+            # Service principals in the Microsoft AAD tenant must end with an @microsoft.com domain; those in other tenants
+            # are not permitted to do so. Format the non-MS name so there's an assocation with the Azure SDK.
+            if ($TenantId -eq '72f988bf-86f1-41af-91ab-2d7cd011db47') {
+                $displayName = "test-resources-$($baseName)$suffix.microsoft.com"
+            } else {
+                $displayName = "$($baseName)$suffix.test-resources.azure.sdk"
+            }
+
+            $servicePrincipal = Retry {
+                New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
+            }
+
+            $global:AzureTestPrincipal = $servicePrincipal
+            $global:AzureTestSubscription = $SubscriptionId
+
+            Log "Created service principal '$($AzureTestPrincipal.ApplicationId)'"
+            $AzureTestPrincipal
+            $resourceGroupRoleAssigned = $true
+        }
+
+        $TestApplicationId = $servicePrincipal.ApplicationId
+        $TestApplicationOid = $servicePrincipal.Id
+        $TestApplicationSecret = (ConvertFrom-SecureString $servicePrincipal.Secret -AsPlainText)
+    }
+
+    # Get test application OID from ID if not already provided. This may fail if the
+    # provisioner is a service principal without permissions to query AAD. This is a
+    # critical failure, but we should prompt with possible remediation.
+    if ($TestApplicationId -and !$TestApplicationOid) {
+        Log "Attempting to query the Object ID for the test service principal"
+
+        try {
+            $testServicePrincipal = Retry {
+                Get-AzADServicePrincipal -ApplicationId $TestApplicationId
+            }
+        }
+        catch {
+            Write-Warning "The Object ID of the test application was unable to be queried. You may want to consider passing it explicitly with the 'TestApplicationOid` parameter."
+            throw $_.Exception
+        }
+
+        if ($testServicePrincipal -and $testServicePrincipal.Id) {
+            $script:TestApplicationOid = $testServicePrincipal.Id
+        }
+    }
+
+    # Make sure pre- and post-scripts are passed formerly required arguments.
+    $PSBoundParameters['TestApplicationId'] = $TestApplicationId
+    $PSBoundParameters['TestApplicationOid'] = $TestApplicationOid
+    $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret
+
+    # Grant the test service principal ownership over the resource group. This may fail if the provisioner is a
+    # service principal without permissions to grant RBAC roles to other service principals. That should not be
+    # considered a critical failure, as the test application may have subscription-level permissions and not require
+    # the explicit grant.
+    if (!$resourceGroupRoleAssigned) {
+        Log "Attempting to assigning the 'Owner' role for '$ResourceGroupName' to the Test Application '$TestApplicationId'"
+        $principalOwnerAssignment = New-AzRoleAssignment -RoleDefinitionName "Owner" -ApplicationId "$TestApplicationId" -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
+
+        if ($principalOwnerAssignment.RoleDefinitionName -eq 'Owner') {
+            Write-Verbose "Successfully assigned ownership of '$ResourceGroupName' to the Test Application '$TestApplicationId'"
+        } else {
+            Write-Warning "The 'Owner' role for '$ResourceGroupName' could not be assigned. You may need to manually grant 'Owner' for the resource group to the Test Application '$TestApplicationId' if it does not have subscription-level permissions."
+        }
+    }
+
     # Populate the template parameters and merge any additional specified.
     $templateParameters = @{
         baseName = $BaseName
         testApplicationId = $TestApplicationId
         testApplicationOid = "$TestApplicationOid"
+        provisionerApplicationOid = "$provisionerApplicationOid"
     }
 
     if ($TenantId) {
@@ -484,7 +533,7 @@ try {
             "Deployment template $($templateFile.jsonFilePath) to resource group $($resourceGroup.ResourceGroupName)"
         }
         Log $msg
-        
+
         $deployment = Retry {
             $lastDebugPreference = $DebugPreference
             try {
@@ -609,22 +658,23 @@ if ($CI) {
 Deploys live test resources defined for a service directory to Azure.
 
 .DESCRIPTION
-Deploys live test resouces specified in test-resources.json files to a resource
-group.
+Deploys live test resouces specified in test-resources.json or test-resources.bicep
+files to a new resource group.
 
 This script searches the directory specified in $ServiceDirectory recursively
-for files named test-resources.json. All found test-resources.json files will be
-deployed to the test resource group.
+for files named test-resources.json or test-resources.bicep. All found test-resources.json
+and test-resources.bicep files will be deployed to the test resource group.
 
-If no test-resources.json files are located the script exits without making
-changes to the Azure environment.
+If no test-resources.json or test-resources.bicep files are located the script
+exits without making changes to the Azure environment.
 
-A service principal must first be created before this script is run and passed
-to $TestApplicationId and $TestApplicationSecret. Test resources will grant this
-service principal access.
+A service principal may optionally be passed to $TestApplicationId and $TestApplicationSecret.
+Test resources will grant this service principal access to the created resources.
+If no service principal is specified, a new one will be created and assigned the
+'Owner' role for the resource group associated with the test resources.
 
-This script uses credentials already specified in Connect-AzAccount or those
-specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
+This script runs in the context of credentials already specified in Connect-AzAccount
+or those specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
 
 .PARAMETER BaseName
 A name to use in the resource group and passed to the ARM template as 'baseName'.
@@ -636,16 +686,28 @@ by New-TestResources.ps1 if $CI is specified.
 
 .PARAMETER ResourceGroupName
 Set this value to deploy directly to a Resource Group that has already been
-created.
+created or to create a new resource group with this name.
+
+If not specified, the $BaseName will be used to generate name for the resource
+group that will be created.
 
 .PARAMETER ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories
-specified - in which to discover ARM templates named 'test-resources.json'.
-This can also be an absolute path or specify parent directories.
+specified - in which to discover ARM templates named 'test-resources.json' and
+Bicep templates named 'test-resources.bicep'. This can also be an absolute path
+or specify parent directories.
 
 .PARAMETER TestApplicationId
-The AAD Application ID to authenticate the test runner against deployed
-resources. Passed to the ARM template as 'testApplicationId'.
+Optional Azure Active Directory Application ID to authenticate the test runner
+against deployed resources. Passed to the ARM template as 'testApplicationId'.
+
+If not specified, a new AAD Application will be created and assigned the 'Owner'
+role for the resource group associated with the test resources. No permissions
+will be granted to the subscription or other resources.
+
+For those specifying a Provisioner Application principal as 'ProvisionerApplicationId',
+it will need the permission 'Application.ReadWrite.OwnedBy' for the Microsoft Graph API
+in order to create the Test Application principal.
 
 This application is used by the test runner to execute tests against the
 live test resources.
@@ -659,18 +721,24 @@ This application is used by the test runner to execute tests against the
 live test resources.
 
 .PARAMETER TestApplicationOid
-Service Principal Object ID of the AAD Test application. This is used to assign
+Service Principal Object ID of the AAD Test Application. This is used to assign
 permissions to the AAD application so it can access tested features on the live
 test resources (e.g. Role Assignments on resources). It is passed as to the ARM
 template as 'testApplicationOid'
+
+If not specified, an attempt will be made to query it from the Azure Active Directory
+tenant. For those specifying a service principal as 'ProvisionerApplicationId',
+it will need the permission 'Application.Read.All' for the Microsoft Graph API
+in order to query AAD.
 
 For more information on the relationship between AAD Applications and Service
 Principals see: https://docs.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals
 
 .PARAMETER TenantId
 The tenant ID of a service principal when a provisioner is specified. The same
-Tenant ID is used for Test Application and Provisioner Application. This value
-is passed to the ARM template as 'tenantId'.
+Tenant ID is used for Test Application and Provisioner Application.
+
+This value is passed to the ARM template as 'tenantId'.
 
 .PARAMETER SubscriptionId
 Optional subscription ID to use for new resources when logging in as a
@@ -683,18 +751,28 @@ Once you are logged in (or were previously), the selected SubscriptionId
 will be used for subsequent operations that are specific to a subscription.
 
 .PARAMETER ProvisionerApplicationId
-The AAD Application ID used to provision test resources when a provisioner is
-specified.
+Optional Application ID of the Azure Active Directory service principal to use for
+provisioning the test resources. If not, specified New-TestResources.ps1 uses the
+context of the caller to provision.
 
-If none is specified New-TestResources.ps1 uses the TestApplicationId.
+If specified, the Provisioner Application principal would benefit from the following
+permissions to the Microsoft Graph API:
+
+  - 'Application.Read.All' in order to query AAD to obtain the 'TestApplicaitonOid'
+
+  - 'Application.ReadWrite.OwnedBy' in order to create the Test Application principal
+     or grant an existing principal ownership of the resource group associated with
+     the test resources.
+
+If the provisioner does not have these permissions, it can still be used with
+New-TestResources.ps1 by specifying an existing Test Application principal, including
+its Object ID, and managing permissions to the resource group manually.
 
 This value is not passed to the ARM template.
 
 .PARAMETER ProvisionerApplicationSecret
 A service principal secret (password) used to provision test resources when a
 provisioner is specified.
-
-If none is specified New-TestResources.ps1 uses the TestApplicationSecret.
 
 This value is not passed to the ARM template.
 
@@ -718,7 +796,7 @@ is based on the cloud to which the template is being deployed:
 * Dogfood -> 'westus'
 
 .PARAMETER Environment
-Name of the cloud environment. The default is the Azure Public Cloud
+Optional name of the cloud environment. The default is the Azure Public Cloud
 ('AzureCloud')
 
 .PARAMETER AdditionalParameters
@@ -738,15 +816,84 @@ Deployment (CI/CD) build (only Azure Pipelines is currently supported).
 Force creation of resources instead of being prompted.
 
 .PARAMETER OutFile
-Save test environment settings into a test-resources.json.env file next to test-resources.json. File is protected via DPAPI. Supported only on windows.
-The environment file would be scoped to the current repository directory.
+Save test environment settings into a .env file next to test resources template.
+The contents of the file are protected via the .NET Data Protection API (DPAPI).
+This is supported only on Windows. The environment file is scoped to the current
+service directory.
+
+The environment file will be named for the test resources template that it was
+generated for. For ARM templates, it will be test-resources.json.env. For
+Bicep templates, test-resources.bicep.env.
 
 .EXAMPLE
 Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'
 New-TestResources.ps1 keyvault
 
-Run this in a desktop environment to create new AAD apps and Service Principals
-that can be used to provision resources and run live tests.
+Run this in a desktop environment to create a new AAD application and Service Principal
+for running live tests against the test resources created. The principal will have ownership
+rights to the resource group and the resources that it contains, but no other resources in
+the subscription.
+
+Requires PowerShell 7 to use ConvertFrom-SecureString -AsPlainText or convert
+the SecureString to plaintext by another means.
+
+.EXAMPLE
+Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'
+New-TestResources.ps1 `
+    -BaseName 'azsdk' `
+    -ServiceDirectory 'keyvault' `
+    -SubscriptionId 'REPLACE_WITH_SUBSCRIPTION_ID' `
+    -ResourceGroupName 'REPLACE_WITH_NAME_FOR_RESOURCE_GROUP' `
+    -Location 'eastus'
+
+Run this in a desktop environment to specify the name and location of the resource
+group that test resources are being deployed to. This will also create a new AAD
+application and Service Principal for running live tests against the rest resources
+created. The principal will have ownership rights to the resource group and the
+resources that it contains, but no other resources in the subscription.
+
+Requires PowerShell 7 to use ConvertFrom-SecureString -AsPlainText or convert
+the SecureString to plaintext by another means.
+
+.EXAMPLE
+Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'
+New-TestResources.ps1 `
+    -BaseName 'azsdk' `
+    -ServiceDirectory 'keyvault' `
+    -SubscriptionId 'REPLACE_WITH_SUBSCRIPTION_ID' `
+    -ResourceGroupName 'REPLACE_WITH_NAME_FOR_RESOURCE_GROUP' `
+    -Location 'eastus' `
+    -TestApplicationId 'REPLACE_WITH_TEST_APPLICATION_ID' `
+    -TestApplicationSecret 'REPLACE_WITH_TEST_APPLICATION_SECRET'
+
+Run this in a desktop environment to specify the name and location of the resource
+group that test resources are being deployed to. This will grant ownership rights
+to the 'TestApplicationId' for the resource group and the resources that it contains,
+without altering its existing permissions.
+
+.EXAMPLE
+New-TestResources.ps1 `
+    -BaseName 'azsdk' `
+    -ServiceDirectory 'keyvault' `
+    -SubscriptionId 'REPLACE_WITH_SUBSCRIPTION_ID' `
+    -ResourceGroupName 'REPLACE_WITH_NAME_FOR_RESOURCE_GROUP' `
+    -Location 'eastus' `
+    -ProvisionerApplicationId 'REPLACE_WITH_PROVISIONER_APPLICATION_ID' `
+    -ProvisionerApplicationSecret 'REPLACE_WITH_PROVISIONER_APPLICATION_ID' `
+    -TestApplicationId 'REPLACE_WITH_TEST_APPLICATION_ID' `
+    -TestApplicationOid 'REPLACE_WITH_TEST_APPLICATION_OBJECT_ID' `
+    -TestApplicationSecret 'REPLACE_WITH_TEST_APPLICATION_SECRET'
+
+Run this in a desktop environment to specify the name and location of the resource
+group that test resources are being deployed to. The script will be executed in the
+context of the 'ProvisionerApplicationId' rather than the caller.
+
+Depending on the permissions of the Provisioner Application principal, the script may
+grant ownership rights 'TestApplicationId' for the resource group and the resources
+that it contains, or may emit a message indicating that it was unable to perform the grant.
+
+For the Provisioner Application principal to perform the grant, it will need the
+permission 'Application.ReadWrite.OwnedBy' for the Microsoft Graph API.
 
 Requires PowerShell 7 to use ConvertFrom-SecureString -AsPlainText or convert
 the SecureString to plaintext by another means.

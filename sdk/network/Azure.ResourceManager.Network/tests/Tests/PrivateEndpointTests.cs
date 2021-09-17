@@ -11,7 +11,7 @@ using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class PrivateEndpointTests : NetworkServiceClientTestBase
     {

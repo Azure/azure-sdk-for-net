@@ -57,7 +57,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="name">The name of the policy set definition.</param>
         /// <param name="type">The type of the resource
         /// (Microsoft.Authorization/policySetDefinitions).</param>
-        public PolicySetDefinition(IList<PolicyDefinitionReference> policyDefinitions, string policyType = default(string), string displayName = default(string), string description = default(string), object metadata = default(object), IDictionary<string, ParameterDefinitionsValue> parameters = default(IDictionary<string, ParameterDefinitionsValue>), IList<PolicyDefinitionGroup> policyDefinitionGroups = default(IList<PolicyDefinitionGroup>), string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public PolicySetDefinition(IList<PolicyDefinitionReference> policyDefinitions, string policyType = default(string), string displayName = default(string), string description = default(string), object metadata = default(object), IDictionary<string, ParameterDefinitionsValue> parameters = default(IDictionary<string, ParameterDefinitionsValue>), IList<PolicyDefinitionGroup> policyDefinitionGroups = default(IList<PolicyDefinitionGroup>), string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
         {
             PolicyType = policyType;
             DisplayName = displayName;
@@ -69,6 +71,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -142,6 +145,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

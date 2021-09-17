@@ -82,8 +82,6 @@ Pageable<TableEntity> queryResultsSelect = tableClient.Query<TableEntity>(select
 
 To query entities by page, call `Query`, specify the desired entity return type, and pass in the desired maximum number of entities per page.
 
-// TODO: `maxPerPage` may be removed. Might only need to show page-by-page iteration?
-
 ```C# Snippet:TablesSample4QueryEntitiesMaxPerPage
 Pageable<TableEntity> queryResultsMaxPerPage = tableClient.Query<TableEntity>(maxPerPage: 10);
 

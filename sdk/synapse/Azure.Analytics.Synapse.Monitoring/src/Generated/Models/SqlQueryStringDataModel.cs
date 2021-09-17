@@ -22,6 +22,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             Query = query;
         }
 
+        /// <summary> Gets the query. </summary>
         public string Query { get; }
     }
 }

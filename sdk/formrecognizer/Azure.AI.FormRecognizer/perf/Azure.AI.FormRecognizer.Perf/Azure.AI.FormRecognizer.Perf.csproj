@@ -12,7 +12,7 @@
 
   <!-- Shared source from Azure.AI.FormRecognizer.Tests -->
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\tests\Infrastructure\TestFile.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\tests\Infrastructure\TestFile.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>
