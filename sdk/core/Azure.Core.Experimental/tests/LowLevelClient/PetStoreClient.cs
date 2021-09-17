@@ -59,6 +59,7 @@ namespace Azure.Core.Experimental.Tests
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
+
             using HttpMessage message = CreateGetPetRequest(id, options);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
@@ -95,7 +96,16 @@ namespace Azure.Core.Experimental.Tests
         public virtual Response GetPet(string id, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
+            if (options == null)
+            {
+                // We're in a helper method, not an LLC method
+                options = new RequestOptions();
+                options.AddClassifier(new[] { 200 }, ResponseClassification.Success);
+                options.AddClassifier(new[] { 404 }, ResponseClassification.Success);
+
+                // TODO: Do we need to designate errors explicitly?
+            }
+
             using HttpMessage message = CreateGetPetRequest(id, options);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");

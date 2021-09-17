@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
             var m = CreateTestMessage(200);
 
             var options = new RequestOptions();
-            options.AddClassifier(new[] { 200 }, ResponseClassification.Throw);
+            options.AddClassifier(new[] { 200 }, ResponseClassification.Error);
 
             RequestOptions.Apply(options, m);
 
