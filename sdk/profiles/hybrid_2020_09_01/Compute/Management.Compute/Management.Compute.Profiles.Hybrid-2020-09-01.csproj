@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.Profiles.hybrid_2020_09_01.Compute</PackageId>
+		<AssemblyTitle>Microsoft Azure Compute Management hybrid_2020_09_01 Profile</AssemblyTitle>
+		<Version>0.9.0-preview</Version>
+		<AssemblyName>Microsoft.Azure.Management.Profiles.hybrid_2020_09_01.Compute</AssemblyName>
+		<PackageTags>ComputeHybrid2019_03_01;Compute;</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
+		This is a public preview release of the Azure Compute SDK with Profiles Support for profile 2020-09-01.
+		]]>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+	<PropertyGroup>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>    
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.Profiles.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.Profiles.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
+</Project>
