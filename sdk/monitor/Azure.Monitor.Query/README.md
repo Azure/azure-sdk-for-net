@@ -24,7 +24,7 @@ The Azure Monitor Query client library is used to execute read-only queries agai
 
 Install the Azure Monitor Query client library for .NET with [NuGet][package]:
 
-```
+```dotnetcli
 dotnet add package Azure.Monitor.Query
 ```
 
@@ -97,7 +97,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<LogsQueryResult> response = await client.QueryAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
-    new DateTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
 LogsTable table = response.Value.Table;
 
@@ -127,7 +127,7 @@ string workspaceId = "<workspace_id>";
 Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-    new DateTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
 foreach (var logEntryModel in response.Value)
 {
@@ -148,7 +148,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
-    new DateTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
 foreach (var resourceGroup in response.Value)
 {
@@ -167,7 +167,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<LogsQueryResult> response = await client.QueryAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
-    new DateTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
 LogsTable table = response.Value.Table;
 
@@ -206,13 +206,13 @@ var batch = new LogsBatchQuery();
 string countQueryId = batch.AddQuery(
     workspaceId,
     "AzureActivity | count",
-    new DateTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 string topQueryId = batch.AddQuery(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-    new DateTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
-Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
+Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
 var count = response.Value.GetResult<int>(countQueryId).Single();
 var topEntries = response.Value.GetResult<MyLogEntryModel>(topQueryId);
@@ -239,7 +239,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
     workspaceId,
     "AzureActivity | summarize count()",
-    new DateTimeRange(TimeSpan.FromDays(1)),
+    new QueryTimeRange(TimeSpan.FromDays(1)),
     options: new LogsQueryOptions
     {
         ServerTimeout = TimeSpan.FromMinutes(10)
@@ -265,7 +265,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
     workspaceId,
     "AzureActivity | summarize count()",
-    new DateTimeRange(TimeSpan.FromDays(1)),
+    new QueryTimeRange(TimeSpan.FromDays(1)),
     options: new LogsQueryOptions
     {
         AdditionalWorkspaces = { additionalWorkspaceId }
@@ -329,7 +329,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 try
 {
     await client.QueryAsync(
-        workspaceId, "My Not So Valid Query", new DateTimeRange(TimeSpan.FromDays(1)));
+        workspaceId, "My Not So Valid Query", new QueryTimeRange(TimeSpan.FromDays(1)));
 }
 catch (Exception e)
 {

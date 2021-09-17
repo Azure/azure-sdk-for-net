@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPolicyName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewaySslPolicyName(string value)
         {
