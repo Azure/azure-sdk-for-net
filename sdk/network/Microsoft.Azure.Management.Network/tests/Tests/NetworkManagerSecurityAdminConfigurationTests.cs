@@ -344,7 +344,7 @@ namespace Networks.Tests
                 commit.ConfigurationIds.Add(putNmscResponse.Id);
                 networkManagementClient.NetworkManagerCommits.Post(commit, resourceGroupName, networkManagerName);
                 
-                Thread.Sleep(40000);
+                Thread.Sleep(50000);
 
                 ActiveConfigurationParameter activeConfigurationParameter = new ActiveConfigurationParameter();
                 activeConfigurationParameter.Regions = new List<string>();
@@ -363,7 +363,7 @@ namespace Networks.Tests
                 unCommit.TargetLocations.Add(location);
                 networkManagementClient.NetworkManagerCommits.Post(unCommit, resourceGroupName, networkManagerName);
 
-                Thread.Sleep(40000);
+                Thread.Sleep(50000);
 
                 // Delete Rules
                 networkManagementClient.AdminRules.Delete(resourceGroupName, networkManagerName, networkmanagerSecurityConfigName, networkSecurityRuleCollectionName, networkSecurityRuleName);
