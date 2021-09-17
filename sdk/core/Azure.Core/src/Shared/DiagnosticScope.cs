@@ -603,6 +603,10 @@ namespace Azure.Core.Pipeline
 
         public static object? CreateActivitySource(string name)
         {
+            if (!SupportsActivitySource())
+            {
+                return null;
+            }
             if (ActivitySourceType == null)
             {
                 return null;
