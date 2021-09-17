@@ -245,10 +245,26 @@ namespace Azure.Core.Tests
         }
 
 #if NET5_0
+        [SetUp]
+        [TearDown]
+        public void ResetFeatureSwitch()
+        {
+            ActivityExtensions.ResetFeatureSwitch();
+        }
+
+        private static TestAppContextSwitch SetAppConfigSwitch()
+        {
+            var s = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
+            ActivityExtensions.ResetFeatureSwitch();
+            return s;
+        }
+
         [Test]
         [NonParallelizable]
         public async Task ActivitySourceActivityStartedOnRequest()
         {
+            using var _ = SetAppConfigSwitch();
+
             ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             try
@@ -276,7 +292,7 @@ namespace Azure.Core.Tests
                 await requestTask;
 
                 Assert.AreEqual(activity, testListener.Activities.Single());
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, int>("http.status_code", 201));
+                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.status_code", "201"));
                 CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/"));
                 CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.method", "GET"));
                 CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));

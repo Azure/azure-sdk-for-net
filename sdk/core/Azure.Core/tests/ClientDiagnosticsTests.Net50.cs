@@ -21,6 +21,13 @@ namespace Azure.Core.Tests
             ActivityExtensions.ResetFeatureSwitch();
         }
 
+        private static TestAppContextSwitch SetAppConfigSwitch()
+        {
+            var s = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
+            ActivityExtensions.ResetFeatureSwitch();
+            return s;
+        }
+
         [Test]
         [NonParallelizable]
         public void StartActivityNoOpsWithoutSwitch()
@@ -173,13 +180,6 @@ namespace Azure.Core.Tests
             scope.Dispose();
 
             Assert.AreEqual(0, activityListener.Activities.Single().Links.Count());
-        }
-
-        private static TestAppContextSwitch SetAppConfigSwitch()
-        {
-            var s =  new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
-            ActivityExtensions.ResetFeatureSwitch();
-            return s;
         }
     }
 #endif
