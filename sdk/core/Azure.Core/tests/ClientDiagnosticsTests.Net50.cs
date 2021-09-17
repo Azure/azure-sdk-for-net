@@ -15,6 +15,7 @@ namespace Azure.Core.Tests
     public partial class ClientDiagnosticsTests
     {
         [SetUp]
+        [TearDown]
         public void ResetFeatureSwitch()
         {
             ActivityExtensions.ResetFeatureSwitch();
