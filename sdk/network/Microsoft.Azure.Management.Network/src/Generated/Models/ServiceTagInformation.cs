@@ -33,14 +33,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// information.</param>
         /// <param name="name">The name of service tag.</param>
         /// <param name="id">The ID of service tag.</param>
-        /// <param name="serviceTagChangeNumber">The iteration number of
-        /// service tag object for region.</param>
-        public ServiceTagInformation(ServiceTagInformationPropertiesFormat properties = default(ServiceTagInformationPropertiesFormat), string name = default(string), string id = default(string), string serviceTagChangeNumber = default(string))
+        public ServiceTagInformation(ServiceTagInformationPropertiesFormat properties = default(ServiceTagInformationPropertiesFormat), string name = default(string), string id = default(string))
         {
             Properties = properties;
             Name = name;
             Id = id;
-            ServiceTagChangeNumber = serviceTagChangeNumber;
             CustomInit();
         }
 
@@ -66,12 +63,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the iteration number of service tag object for region.
-        /// </summary>
-        [JsonProperty(PropertyName = "serviceTagChangeNumber")]
-        public string ServiceTagChangeNumber { get; private set; }
 
     }
 }

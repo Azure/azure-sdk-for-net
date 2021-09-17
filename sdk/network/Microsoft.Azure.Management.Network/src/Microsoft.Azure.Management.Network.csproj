@@ -10,18 +10,12 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>20.6.0</Version>
+		<Version>20.6.1-Beta</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Added new api version 2021-03-01
-			- Added new parameter to enable/disable BGP route translation for NAT VirtualWan VpnGateway
-			- Added Bastion Host Configuration Features
-			- Added PL ASG
-			- Implemented Private Endpoint configuration
-			- Added missing properties of ServiceEndpointPolicy
-			- Added new service tag details api
-			- Added 3 new properties to InboundNatRule resource
+			- Added new api version 2021-02-01-preview
+			- Added new service networkmanager
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

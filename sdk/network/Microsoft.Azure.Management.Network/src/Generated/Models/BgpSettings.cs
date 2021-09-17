@@ -88,16 +88,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Asn != null)
+            if (Asn > 4294967295)
             {
-                if (Asn > 4294967295)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Asn", 4294967295);
-                }
-                if (Asn < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Asn", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Asn", 4294967295);
+            }
+            if (Asn < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Asn", 0);
             }
         }
     }

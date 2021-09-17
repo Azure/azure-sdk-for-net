@@ -51,8 +51,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// rule of the application gateway.</param>
         /// <param name="redirectConfiguration">Redirect configuration resource
         /// of the application gateway.</param>
-        /// <param name="loadDistributionPolicy">Load Distribution Policy
-        /// resource of the application gateway.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// request routing rule resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -61,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayRequestRoutingRule(string id = default(string), string ruleType = default(string), int? priority = default(int?), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource httpListener = default(SubResource), SubResource urlPathMap = default(SubResource), SubResource rewriteRuleSet = default(SubResource), SubResource redirectConfiguration = default(SubResource), SubResource loadDistributionPolicy = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayRequestRoutingRule(string id = default(string), string ruleType = default(string), int? priority = default(int?), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource httpListener = default(SubResource), SubResource urlPathMap = default(SubResource), SubResource rewriteRuleSet = default(SubResource), SubResource redirectConfiguration = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             RuleType = ruleType;
@@ -72,7 +70,6 @@ namespace Microsoft.Azure.Management.Network.Models
             UrlPathMap = urlPathMap;
             RewriteRuleSet = rewriteRuleSet;
             RedirectConfiguration = redirectConfiguration;
-            LoadDistributionPolicy = loadDistributionPolicy;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -139,13 +136,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource RedirectConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets load Distribution Policy resource of the application
-        /// gateway.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.loadDistributionPolicy")]
-        public SubResource LoadDistributionPolicy { get; set; }
-
-        /// <summary>
         /// Gets the provisioning state of the request routing rule resource.
         /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
         /// 'Failed'
@@ -181,16 +171,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Priority != null)
+            if (Priority > 20000)
             {
-                if (Priority > 20000)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Priority", 20000);
-                }
-                if (Priority < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Priority", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Priority", 20000);
+            }
+            if (Priority < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Priority", 1);
             }
         }
     }
