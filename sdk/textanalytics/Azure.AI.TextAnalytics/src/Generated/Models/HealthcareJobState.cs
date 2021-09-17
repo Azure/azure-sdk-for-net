@@ -47,8 +47,11 @@ namespace Azure.AI.TextAnalytics.Models
             NextLink = nextLink;
         }
 
+        /// <summary> Gets the results. </summary>
         public HealthcareResult Results { get; }
+        /// <summary> Gets the errors. </summary>
         public IReadOnlyList<TextAnalyticsErrorInternal> Errors { get; }
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

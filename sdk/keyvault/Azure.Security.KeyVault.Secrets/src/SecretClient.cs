@@ -90,6 +90,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
             scope.AddAttribute("secret", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -122,6 +123,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
             scope.AddAttribute("secret", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -235,6 +237,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
             scope.AddAttribute("secret", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try
@@ -268,6 +271,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
             scope.AddAttribute("secret", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try
