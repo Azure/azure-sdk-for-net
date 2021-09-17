@@ -80,16 +80,25 @@ namespace Azure.Storage.Files.Shares.Models
             DirectoryId = directoryId;
         }
 
+        /// <summary> Gets the service endpoint. </summary>
         public string ServiceEndpoint { get; }
+        /// <summary> Gets the share name. </summary>
         public string ShareName { get; }
+        /// <summary> Gets the share snapshot. </summary>
         public string ShareSnapshot { get; }
+        /// <summary> Gets the directory path. </summary>
         public string DirectoryPath { get; }
+        /// <summary> Gets the prefix. </summary>
         public string Prefix { get; }
+        /// <summary> Gets the marker. </summary>
         public string Marker { get; }
+        /// <summary> Gets the max results. </summary>
         public int? MaxResults { get; }
         /// <summary> Abstract for entries that can be listed from Directory. </summary>
         public FilesAndDirectoriesListSegment Segment { get; }
+        /// <summary> Gets the next marker. </summary>
         public string NextMarker { get; }
+        /// <summary> Gets the directory id. </summary>
         public string DirectoryId { get; }
     }
 }

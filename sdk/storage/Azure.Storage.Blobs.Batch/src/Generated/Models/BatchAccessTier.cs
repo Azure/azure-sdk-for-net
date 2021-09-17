@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Batch.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="BatchAccessTier"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccessTier"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchAccessTier(string value)
         {

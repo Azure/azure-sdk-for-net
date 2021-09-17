@@ -56,20 +56,35 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             TotalDuration = totalDuration;
         }
 
+        /// <summary> Gets the state. </summary>
         public string State { get; }
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the submitter. </summary>
         public string Submitter { get; }
+        /// <summary> Gets the compute. </summary>
         public string Compute { get; }
+        /// <summary> Gets the spark application id. </summary>
         public string SparkApplicationId { get; }
+        /// <summary> Gets the livy id. </summary>
         public string LivyId { get; }
+        /// <summary> Gets the timing. </summary>
         public IReadOnlyList<string> Timing { get; }
+        /// <summary> Gets the spark job definition. </summary>
         public string SparkJobDefinition { get; }
+        /// <summary> Gets the pipeline. </summary>
         public IReadOnlyList<SparkJob> Pipeline { get; }
+        /// <summary> Gets the job type. </summary>
         public string JobType { get; }
+        /// <summary> Gets the submit time. </summary>
         public DateTimeOffset? SubmitTime { get; }
+        /// <summary> Gets the end time. </summary>
         public DateTimeOffset? EndTime { get; }
+        /// <summary> Gets the queued duration. </summary>
         public string QueuedDuration { get; }
+        /// <summary> Gets the running duration. </summary>
         public string RunningDuration { get; }
+        /// <summary> Gets the total duration. </summary>
         public string TotalDuration { get; }
     }
 }
