@@ -30,8 +30,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
 
             using (var sampleActivity = DemoSource.StartActivity("TestActivity"))
             {
-                sampleActivity?.AddTag("Foo", "1");
-                sampleActivity?.AddTag("Bar", "Hello");
+                sampleActivity?.SetTag("CustomTag1", "Value1");
+                sampleActivity?.SetTag("CustomTag2", "Value2");
             }
 
             System.Console.WriteLine("Press Enter key to exit.");
