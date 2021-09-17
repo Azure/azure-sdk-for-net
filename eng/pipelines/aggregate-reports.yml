@@ -34,6 +34,7 @@ stages:
           - download: net-core
             artifact: packages
             patterns: '*'
+            displayName: "Download packages artifacts from 'net - core' pipeline "
           - pwsh: |
               npx cspell lint `
                 --config ./.vscode/cspell.json `
@@ -124,13 +125,22 @@ stages:
               pwsh: true
               workingDirectory: $(Build.SourcesDirectory)
               filePath: eng/common/scripts/Verify-Resource-Ref.ps1
+
+  - stage: ComplianceTools
+    displayName: Compliance Tools
+    dependsOn: []
+
+    jobs:
+      - job: ComplianceTools
+        timeoutInMinutes: 120
+        steps:
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
             displayName: 'Run CredScan'
             inputs:
               suppressionsFile: 'eng\CredScanSuppression.json'
             condition: succeededOrFailed()
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
-            displayName: 'Post Analysis'
+            displayName: 'Post Analysis (CredScan)'
             inputs:
               GdnBreakAllTools: false
               GdnBreakGdnToolCredScan: true
@@ -142,22 +152,11 @@ stages:
               # GdnBreakOutputBaseline: baseline
             condition: succeededOrFailed()
             continueOnError: true
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
-            displayName: 'Publish Security Analysis Logs'
-            condition: succeededOrFailed()
-
-  - stage: ComplianceTools
-    displayName: Compliance Tools
-    dependsOn: []
-
-    jobs:
-      - job: ComplianceTools
-        timeoutInMinutes: 120
-        steps:
           - pwsh: |
               azcopy copy "https://azuresdkartifacts.blob.core.windows.net/policheck/DotNetPoliCheckExclusion.mdb?$(azuresdk-policheck-blob-SAS)" `
               "$(Build.BinariesDirectory)"
             displayName: 'Download PoliCheck Exclusion Database'
+            condition: succeededOrFailed()
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
             displayName: 'Run PoliCheck'
             inputs:
@@ -169,12 +168,15 @@ stages:
               optionsPE: 1|2|3|4
               optionsRulesDBPath: "$(Build.BinariesDirectory)/DotNetPoliCheckExclusion.mdb"
               optionsUEPATH: "$(Build.SourcesDirectory)/eng/guardian-tools/policheck/PolicheckExclusions.xml"
+            condition: succeededOrFailed()
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
-            displayName: 'Guardian Break (PoliCheck)'
+            displayName: 'Post Analysis (PoliCheck)'
             inputs:
               GdnBreakAllTools: false
               GdnBreakGdnToolPoliCheck: true
               GdnBreakGdnToolPoliCheckSeverity: Warning
+            condition: succeededOrFailed()
             continueOnError: true
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
-            displayName: 'Publish Guardian Artifacts'
+            displayName: 'Publish Security Analysis Logs'
+            condition: succeededOrFailed()
