@@ -21,6 +21,7 @@ jobs:
         parameters:
           Paths:
             - bundlepackages/
+            - metadata/
           Repositories:
             - Name: $(DocRepoOwner)/$(DocRepoName)
               WorkingDirectory: $(DocRepoLocation)
