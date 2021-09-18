@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.ResourceManager.Resources;
@@ -10,8 +9,6 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Tests
 {
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         public async Task CreateDeleteConsumerGroup()
         {
             //create consumer group
-            string consumerGroupName = Recording.GenerateAssetName("consumergroup");
+            string consumerGroupName = Recording.GenerateAssetName("testconsumergroup");
             ConsumerGroup consumerGroup = (await _consumerGroupContainer.CreateOrUpdateAsync(consumerGroupName, new ConsumerGroupData())).Value;
             Assert.NotNull(consumerGroup);
             Assert.AreEqual(consumerGroup.Id.Name, consumerGroupName);
@@ -81,7 +78,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             //create two consumer groups
             for (int i = 0; i < 10; i++)
             {
-                string consumerGroupName = Recording.GenerateAssetName("consumergroup" + i.ToString());
+                string consumerGroupName = Recording.GenerateAssetName("testconsumergroup" + i.ToString());
                 _= (await _consumerGroupContainer.CreateOrUpdateAsync(consumerGroupName, new ConsumerGroupData())).Value;
             }
 
@@ -97,7 +94,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         public async Task UpdateConsumerGroup()
         {
             //create consumer group
-            string consumerGroupName = Recording.GenerateAssetName("consumergroup");
+            string consumerGroupName = Recording.GenerateAssetName("testconsumergroup");
             ConsumerGroup consumerGroup = (await _consumerGroupContainer.CreateOrUpdateAsync(consumerGroupName, new ConsumerGroupData())).Value;
             Assert.NotNull(consumerGroup);
             Assert.AreEqual(consumerGroup.Id.Name, consumerGroupName);

@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("keySource");
                 writer.WriteStringValue(KeySource);
             }
+            if (Optional.IsDefined(RequireInfrastructureEncryption))
+            {
+                writer.WritePropertyName("requireInfrastructureEncryption");
+                writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
             Optional<IList<KeyVaultProperties>> keyVaultProperties = default;
             Optional<string> keySource = default;
+            Optional<bool> requireInfrastructureEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"))
@@ -60,8 +66,18 @@ namespace Azure.ResourceManager.EventHubs.Models
                     keySource = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("requireInfrastructureEncryption"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    requireInfrastructureEncryption = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new Encryption(Optional.ToList(keyVaultProperties), keySource.Value);
+            return new Encryption(Optional.ToList(keyVaultProperties), keySource.Value, Optional.ToNullable(requireInfrastructureEncryption));
         }
     }
 }

@@ -183,92 +183,6 @@ namespace Azure.ResourceManager.EventHubs
                 throw;
             }
         }
-        /// <summary> Gets the primary and secondary connection strings for the Namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetKeysAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the primary and secondary connection strings for the Namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccessKeys> GetKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetKeys(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check the give Namespace name availability. </summary>
-        /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.CheckNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.CheckNameAvailabilityAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check the give Namespace name availability. </summary>
-        /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.CheckNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = _restClient.CheckNameAvailability(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> This operation disables the Disaster Recovery and stops replicating changes from primary to secondary namespaces. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> BreakPairingAsync(CancellationToken cancellationToken = default)
@@ -332,6 +246,42 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _restClient.FailOver(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the primary and secondary connection strings for the Namespace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<AccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetKeys");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetKeysAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the primary and secondary connection strings for the Namespace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<AccessKeys> GetKeys(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetKeys");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetKeys(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

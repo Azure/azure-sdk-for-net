@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.EventHubs
         private readonly NamespacesRestOperations _restClient;
         private readonly EHNamespaceData _data;
         private PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient { get; }
+        private DisasterRecoveryConfigNameRestOperations _disasterRecoveryConfigNameRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="EHNamespace"/> class for mocking. </summary>
         protected EHNamespace()
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.EventHubs
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="EHNamespace"/> class. </summary>
@@ -52,6 +54,7 @@ namespace Azure.ResourceManager.EventHubs
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="EHNamespace"/> class. </summary>
@@ -65,6 +68,7 @@ namespace Azure.ResourceManager.EventHubs
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -445,11 +449,54 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets a list of IpFilterRules in the EHNamespace. </summary>
-        /// <returns> An object representing collection of IpFilterRules and their operations over a EHNamespace. </returns>
-        public IpFilterRuleContainer GetIpFilterRules()
+        /// <summary> Check the give Namespace name availability. </summary>
+        /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckDisasterRecoveryConfigNameAvailabilityAsync(CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
         {
-            return new IpFilterRuleContainer(this);
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.CheckDisasterRecoveryConfigNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await _disasterRecoveryConfigNameRestClient.CheckAvailabilityAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check the give Namespace name availability. </summary>
+        /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<CheckNameAvailabilityResult> CheckDisasterRecoveryConfigNameAvailability(CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.CheckDisasterRecoveryConfigNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = _disasterRecoveryConfigNameRestClient.CheckAvailability(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets a list of PrivateEndpointConnections in the EHNamespace. </summary>
@@ -459,11 +506,18 @@ namespace Azure.ResourceManager.EventHubs
             return new PrivateEndpointConnectionContainer(this);
         }
 
-        /// <summary> Gets a list of VirtualNetworkRules in the EHNamespace. </summary>
-        /// <returns> An object representing collection of VirtualNetworkRules and their operations over a EHNamespace. </returns>
-        public VirtualNetworkRuleContainer GetVirtualNetworkRules()
+        /// <summary> Gets a list of Eventhubs in the EHNamespace. </summary>
+        /// <returns> An object representing collection of Eventhubs and their operations over a EHNamespace. </returns>
+        public EventhubContainer GetEventhubs()
         {
-            return new VirtualNetworkRuleContainer(this);
+            return new EventhubContainer(this);
+        }
+
+        /// <summary> Gets a list of ArmDisasterRecoveries in the EHNamespace. </summary>
+        /// <returns> An object representing collection of ArmDisasterRecoveries and their operations over a EHNamespace. </returns>
+        public ArmDisasterRecoveryContainer GetArmDisasterRecoveries()
+        {
+            return new ArmDisasterRecoveryContainer(this);
         }
 
         /// <summary> Gets an object representing a NetworkRuleSet along with the instance operations that can be performed on it. </summary>
@@ -478,20 +532,6 @@ namespace Azure.ResourceManager.EventHubs
         public AuthorizationRuleNamespaceContainer GetAuthorizationRuleNamespaces()
         {
             return new AuthorizationRuleNamespaceContainer(this);
-        }
-
-        /// <summary> Gets a list of ArmDisasterRecoveries in the EHNamespace. </summary>
-        /// <returns> An object representing collection of ArmDisasterRecoveries and their operations over a EHNamespace. </returns>
-        public ArmDisasterRecoveryContainer GetArmDisasterRecoveries()
-        {
-            return new ArmDisasterRecoveryContainer(this);
-        }
-
-        /// <summary> Gets a list of Eventhubs in the EHNamespace. </summary>
-        /// <returns> An object representing collection of Eventhubs and their operations over a EHNamespace. </returns>
-        public EventhubContainer GetEventhubs()
-        {
-            return new EventhubContainer(this);
         }
     }
 }

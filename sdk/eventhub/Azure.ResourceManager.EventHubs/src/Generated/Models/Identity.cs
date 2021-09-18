@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Properties to configure Identity for Bring your Own Keys. </summary>
@@ -13,25 +17,29 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of Identity. </summary>
         public Identity()
         {
-            Type = "SystemAssigned";
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of Identity. </summary>
         /// <param name="principalId"> ObjectId from the KeyVault. </param>
         /// <param name="tenantId"> TenantId from the KeyVault. </param>
-        /// <param name="type"> Enumerates the possible value Identity type, which currently supports only &apos;SystemAssigned&apos;. </param>
-        internal Identity(string principalId, string tenantId, string type)
+        /// <param name="type"> Type of managed service identity. </param>
+        /// <param name="userAssignedIdentities"> Properties for User Assigned Identities. </param>
+        internal Identity(string principalId, string tenantId, ManagedServiceIdentityType? type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
         }
 
         /// <summary> ObjectId from the KeyVault. </summary>
-        public string PrincipalId { get; set; }
+        public string PrincipalId { get; }
         /// <summary> TenantId from the KeyVault. </summary>
-        public string TenantId { get; set; }
-        /// <summary> Enumerates the possible value Identity type, which currently supports only &apos;SystemAssigned&apos;. </summary>
-        public string Type { get; set; }
+        public string TenantId { get; }
+        /// <summary> Type of managed service identity. </summary>
+        public ManagedServiceIdentityType? Type { get; set; }
+        /// <summary> Properties for User Assigned Identities. </summary>
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ClustersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2018-01-01-preview")
+        public ClustersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-06-01-preview")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAvailableClusterRegionRequest()
+        internal HttpMessage CreateGetAllBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/availableClusterRegions", false);
+            uri.AppendPath("/providers/Microsoft.EventHub/clusters", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.EventHubs
             return message;
         }
 
-        /// <summary> List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region. </summary>
+        /// <summary> Lists the available Event Hubs Clusters within an ARM resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AvailableClustersList>> GetAvailableClusterRegionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterListResult>> GetAllBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAvailableClusterRegionRequest();
+            using var message = CreateGetAllBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AvailableClustersList value = default;
+                        ClusterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AvailableClustersList.DeserializeAvailableClustersList(document.RootElement);
+                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -81,19 +81,19 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region. </summary>
+        /// <summary> Lists the available Event Hubs Clusters within an ARM resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AvailableClustersList> GetAvailableClusterRegion(CancellationToken cancellationToken = default)
+        public Response<ClusterListResult> GetAllBySubscription(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAvailableClusterRegionRequest();
+            using var message = CreateGetAllBySubscriptionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AvailableClustersList value = default;
+                        ClusterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AvailableClustersList.DeserializeAvailableClustersList(document.RootElement);
+                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -602,6 +602,74 @@ namespace Azure.ResourceManager.EventHubs
                         EHNamespaceIdListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = EHNamespaceIdListResult.DeserializeEHNamespaceIdListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAllBySubscriptionNextPageRequest(string nextLink)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Lists the available Event Hubs Clusters within an ARM resource group. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<Response<ClusterListResult>> GetAllBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ClusterListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists the available Event Hubs Clusters within an ARM resource group. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public Response<ClusterListResult> GetAllBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ClusterListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

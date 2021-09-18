@@ -9,12 +9,14 @@ using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Tests
 {
-    public class EHNamespaceTests: EventHubTestBase
+    public class EHNamespaceTests : EventHubTestBase
     {
         private ResourceGroup _resourceGroup;
         public EHNamespaceTests(bool isAsync) : base(isAsync)
@@ -76,10 +78,10 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             var updateNamespaceParameter = eHNamespace.Data;
             updateNamespaceParameter.Tags.Add("key1", "value1");
             updateNamespaceParameter.Tags.Add("key2", "value2");
-            eHNamespace=await eHNamespace.UpdateAsync(updateNamespaceParameter);
+            eHNamespace = await eHNamespace.UpdateAsync(updateNamespaceParameter);
 
             //validate
-            Assert.AreEqual(eHNamespace.Data.Tags.Count,2);
+            Assert.AreEqual(eHNamespace.Data.Tags.Count, 2);
             Assert.AreEqual("value1", eHNamespace.Data.Tags["key1"]);
             Assert.AreEqual("value2", eHNamespace.Data.Tags["key2"]);
         }
@@ -121,18 +123,18 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EHNamespace eHNamespace=(await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
-            AuthorizationRuleNamespaceContainer ruleContainer=eHNamespace.GetAuthorizationRuleNamespaces();
+            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
+            AuthorizationRuleNamespaceContainer ruleContainer = eHNamespace.GetAuthorizationRuleNamespaces();
 
             //create authorization rule
-            string ruleName= Recording.GenerateAssetName("authorizationrule");
+            string ruleName = Recording.GenerateAssetName("authorizationrule");
             AuthorizationRuleData parameter = new AuthorizationRuleData()
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            AuthorizationRuleNamespace authorizationRule=(await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            AuthorizationRuleNamespace authorizationRule = (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
-            Assert.AreEqual(authorizationRule.Data.Rights.Count , parameter.Rights.Count);
+            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get authorization rule
             authorizationRule = await ruleContainer.GetAsync(ruleName);
@@ -141,7 +143,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<AuthorizationRuleNamespace> rules=await ruleContainer.GetAllAsync().ToEnumerableAsync();
+            List<AuthorizationRuleNamespace> rules = await ruleContainer.GetAllAsync().ToEnumerableAsync();
 
             //there should be two authorization rules
             Assert.True(rules.Count > 1);
@@ -163,7 +165,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
             //update authorization rule
             parameter.Rights.Add(AccessRights.Manage);
-            authorizationRule= (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            authorizationRule = (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -187,7 +189,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EHNamespaceData parameter = new EHNamespaceData(DefaultLocation)
             {
-            KafkaEnabled=true
+                KafkaEnabled = true
             };
             EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
             VerifyNamespaceProperties(eHNamespace, false);
@@ -215,7 +217,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
-            AccessKeys keys1=await authorizationRule.GetKeysAsync();
+            AccessKeys keys1 = await authorizationRule.GetKeysAsync();
             Assert.NotNull(keys1);
             Assert.NotNull(keys1.PrimaryConnectionString);
             Assert.NotNull(keys1.SecondaryConnectionString);
@@ -233,6 +235,88 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
                 Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
             }
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task SetGetNetworkRuleSets()
+        {
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
+
+            //prepare vnet
+            string vnetName = Recording.GenerateAssetName("sdktestvnet");
+            var parameters = new VirtualNetworkData
+            {
+                AddressSpace = new AddressSpace { AddressPrefixes = { "10.0.0.0/16" } },
+                Subnets = {
+                    new SubnetData
+                    {
+                        Name = "default1",
+                        AddressPrefix = "10.0.0.0/24",
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                    },
+                    new SubnetData
+                    {
+                        Name = "default2",
+                        AddressPrefix = "10.0.1.0/24",
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                    },
+                    new SubnetData
+                    {
+                        Name = "default3",
+                        AddressPrefix = "10.0.2.0/24",
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                    }
+                },
+                Location = "eastus2"
+            };
+            await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, parameters);
+
+            //set network rule set
+            string subscriptionId = DefaultSubscription.Id.ToString();
+            NetworkRuleSetData parameter = new NetworkRuleSetData()
+            {
+                DefaultAction = DefaultAction.Deny,
+                VirtualNetworkRules =
+                {
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet("/subscriptions/" + subscriptionId + "/resourcegroups/"+ _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default1") },
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet("/subscriptions/" + subscriptionId + "/resourcegroups/"+  _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default2") },
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet("/subscriptions/" + subscriptionId + "/resourcegroups/"+  _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default3") }
+                },
+                IpRules =
+                    {
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.1", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.2", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.3", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.4", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" }
+                    }
+            };
+            await eHNamespace.GetNetworkRuleSet().CreateOrUpdateAsync(parameter);
+
+            //get the network rule set
+            NetworkRuleSet networkRuleSet = await eHNamespace.GetNetworkRuleSet().GetAsync();
+            Assert.NotNull(networkRuleSet);
+            Assert.NotNull(networkRuleSet.Data);
+            Assert.NotNull(networkRuleSet.Data.IpRules);
+            Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
+            Assert.AreEqual(networkRuleSet.Data.VirtualNetworkRules, 3);
+            Assert.AreEqual(networkRuleSet.Data.IpRules, 5);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task test()
+        {
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
+            var a=eHNamespace.GetNetworkRuleSet();
         }
     }
 }

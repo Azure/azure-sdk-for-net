@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         {
             Sanitizer = new EventHubRecordedTestSanitizer();
         }
-        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, RecordedTestMode.Record)
+        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             Sanitizer = new EventHubRecordedTestSanitizer();
         }

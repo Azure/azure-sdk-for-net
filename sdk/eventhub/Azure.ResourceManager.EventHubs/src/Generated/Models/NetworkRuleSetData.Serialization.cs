@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -50,12 +51,18 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static NetworkRuleSetData DeserializeNetworkRuleSetData(JsonElement element)
         {
+            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,8 +70,19 @@ namespace Azure.ResourceManager.EventHubs
             Optional<DefaultAction> defaultAction = default;
             Optional<IList<NWRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
             Optional<IList<NWRuleSetIpRules>> ipRules = default;
+            Optional<PublicNetworkAccessFlag> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -139,11 +157,21 @@ namespace Azure.ResourceManager.EventHubs
                             ipRules = array;
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publicNetworkAccess = new PublicNetworkAccessFlag(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new NetworkRuleSetData(id, name, type, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules));
+            return new NetworkRuleSetData(id, name, type, systemData, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

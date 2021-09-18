@@ -23,16 +23,20 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="createdAt"> Exact time the message was created. </param>
         /// <param name="updatedAt"> The exact time the message was updated. </param>
         /// <param name="userMetadata"> User Metadata is a placeholder to store user-defined string data with maximum length 1024. e.g. it can be used to store descriptive data, such as list of teams and their contact information also user-defined configuration settings can be stored. </param>
-        internal ConsumerGroupData(ResourceIdentifier id, string name, ResourceType type, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string userMetadata) : base(id, name, type)
+        internal ConsumerGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string userMetadata) : base(id, name, type)
         {
+            SystemData = systemData;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             UserMetadata = userMetadata;
         }
 
+        /// <summary> The system meta data relating to this resource. </summary>
+        public SystemData SystemData { get; }
         /// <summary> Exact time the message was created. </summary>
         public DateTimeOffset? CreatedAt { get; }
         /// <summary> The exact time the message was updated. </summary>

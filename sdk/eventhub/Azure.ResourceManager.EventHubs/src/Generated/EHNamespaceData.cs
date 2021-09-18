@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="location"> The location. </param>
         public EHNamespaceData(Location location) : base(location)
         {
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of EHNamespaceData. </summary>
@@ -31,6 +33,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of sku resource. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
+        /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
         /// <param name="status"> Status of the Namespace. </param>
         /// <param name="createdAt"> The time the Namespace was created. </param>
@@ -43,10 +46,13 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="kafkaEnabled"> Value that indicates whether Kafka is enabled for eventhub namespace. </param>
         /// <param name="zoneRedundant"> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </param>
         /// <param name="encryption"> Properties of BYOK Encryption description. </param>
-        internal EHNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, Identity identity, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, Encryption encryption) : base(id, name, type, tags, location)
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="disableLocalAuth"> This property disables SAS authentication for the Event Hubs namespace. </param>
+        internal EHNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, Identity identity, SystemData systemData, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, Encryption encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;
+            SystemData = systemData;
             ProvisioningState = provisioningState;
             Status = status;
             CreatedAt = createdAt;
@@ -59,12 +65,16 @@ namespace Azure.ResourceManager.EventHubs
             KafkaEnabled = kafkaEnabled;
             ZoneRedundant = zoneRedundant;
             Encryption = encryption;
+            PrivateEndpointConnections = privateEndpointConnections;
+            DisableLocalAuth = disableLocalAuth;
         }
 
         /// <summary> Properties of sku resource. </summary>
         public Models.Sku Sku { get; set; }
         /// <summary> Properties of BYOK Identity description. </summary>
         public Identity Identity { get; set; }
+        /// <summary> The system meta data relating to this resource. </summary>
+        public SystemData SystemData { get; }
         /// <summary> Provisioning state of the Namespace. </summary>
         public string ProvisioningState { get; }
         /// <summary> Status of the Namespace. </summary>
@@ -89,5 +99,9 @@ namespace Azure.ResourceManager.EventHubs
         public bool? ZoneRedundant { get; set; }
         /// <summary> Properties of BYOK Encryption description. </summary>
         public Encryption Encryption { get; set; }
+        /// <summary> List of private endpoint connections. </summary>
+        public IList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> This property disables SAS authentication for the Event Hubs namespace. </summary>
+        public bool? DisableLocalAuth { get; set; }
     }
 }

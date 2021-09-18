@@ -23,13 +23,15 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="provisioningState"> Provisioning state of the Alias(Disaster Recovery configuration) - possible values &apos;Accepted&apos; or &apos;Succeeded&apos; or &apos;Failed&apos;. </param>
         /// <param name="partnerNamespace"> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
         /// <param name="role"> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
-        internal ArmDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType type, ProvisioningStateDR? provisioningState, string partnerNamespace, string alternateName, RoleDisasterRecovery? role, long? pendingReplicationOperationsCount) : base(id, name, type)
+        internal ArmDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningStateDR? provisioningState, string partnerNamespace, string alternateName, RoleDisasterRecovery? role, long? pendingReplicationOperationsCount) : base(id, name, type)
         {
+            SystemData = systemData;
             ProvisioningState = provisioningState;
             PartnerNamespace = partnerNamespace;
             AlternateName = alternateName;
@@ -37,6 +39,8 @@ namespace Azure.ResourceManager.EventHubs
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;
         }
 
+        /// <summary> The system meta data relating to this resource. </summary>
+        public SystemData SystemData { get; }
         /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values &apos;Accepted&apos; or &apos;Succeeded&apos; or &apos;Failed&apos;. </summary>
         public ProvisioningStateDR? ProvisioningState { get; }
         /// <summary> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </summary>

@@ -16,13 +16,17 @@ operation-group-to-resource-type:
     Regions: Microsoft.EventHub/sku/regions
     Configuration: Microsoft.EventHub/clusters/quotaConfiguration/default
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules
-    NamespaceName: Microsoft.EventHub/namespacessss
+    NamespaceName: nonresourcetype1
+    AvailableClusters: nonresourcetype2
+    DisasterRecoveryConfigName: nonresourcetype3
 operation-group-to-resource:
     PrivateLinkResources: NonResource
     Regions: NonResource
     Configuration: ClusterQuotaConfigurationProperties
     DisasterRecoveryConfigAuthorizationRules: AuthorizationRule
     NamespaceName: NonResource
+    AvailableClusters: NonResource
+    DisasterRecoveryConfigName: NonResource
 operation-group-to-parent:
     Namespaces: resourceGroups
     Configuration: Microsoft.EventHub/clusters
@@ -32,20 +36,13 @@ operation-group-to-parent:
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs
     EventHubAuthorizationRules: Microsoft.EventHub/namespaces/eventhubs
     NamespaceName: subscriptions
+    AvailableClusters: subscriptions
+    DisasterRecoveryConfigName: Microsoft.EventHub/namespaces
 operation-group-is-extension: NamespaceAuthorizationRules;DisasterRecoveryConfigAuthorizationRules;EventHubAuthorizationRules
+operation-group-to-singleton-resource:
+    NetworkRuleSets: networkRuleSets/default
+    Configuration: quotaConfiguration/default
 directive:
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/ipfilterrules'].get.operationId
-      transform: return "IpFilterRules_List"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/ipfilterrules/{ipFilterRuleName}'].put.operationId
-      transform: return "IpFilterRules_CreateOrUpdate"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/ipfilterrules/{ipFilterRuleName}'].delete.operationId
-      transform: return "IpFilterRules_Delete"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/ipfilterrules/{ipFilterRuleName}'].get.operationId
-      transform: return "IpFilterRules_Get"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/virtualnetworkrules'].get.operationId
       transform: return "VirtualNetworkRules_List"
@@ -119,6 +116,12 @@ directive:
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}/regenerateKeys'].post.operationId
       transform: return "EventHubAuthorizationRules_RegenerateKeys"
     - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions'].get.operationId
+      transform: return "AvailableClusters_ListRegion"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/checkNameAvailability'].post.operationId
+      transform: return "DisasterRecoveryConfigName_CheckAvailability"
+    - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability'].post.operationId
-      transform: return 'NamespaceName_CheckAvailability'
+      transform: return "NamespaceName_CheckAvailability"
 ```

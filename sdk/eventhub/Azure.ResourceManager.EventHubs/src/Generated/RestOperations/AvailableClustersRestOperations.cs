@@ -17,7 +17,7 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal partial class PrivateLinkResourcesRestOperations
+    internal partial class AvailableClustersRestOperations
     {
         private string subscriptionId;
         private Uri endpoint;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventHubs
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
 
-        /// <summary> Initializes a new instance of PrivateLinkResourcesRestOperations. </summary>
+        /// <summary> Initializes a new instance of AvailableClustersRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PrivateLinkResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-06-01-preview")
+        public AvailableClustersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-06-01-preview")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string namespaceName)
+        internal HttpMessage CreateGetRegionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,11 +53,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendPath("/providers/Microsoft.EventHub/availableClusterRegions", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -65,31 +61,19 @@ namespace Azure.ResourceManager.EventHubs
             return message;
         }
 
-        /// <summary> Gets lists of resources that supports Privatelinks. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <summary> List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<PrivateLinkResourcesListResult>> GetAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableClustersList>> GetRegionAsync(CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-
-            using var message = CreateGetRequest(resourceGroupName, namespaceName);
+            using var message = CreateGetRegionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PrivateLinkResourcesListResult value = default;
+                        AvailableClustersList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkResourcesListResult.DeserializePrivateLinkResourcesListResult(document.RootElement);
+                        value = AvailableClustersList.DeserializeAvailableClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,31 +81,19 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets lists of resources that supports Privatelinks. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <summary> List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public Response<PrivateLinkResourcesListResult> Get(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<AvailableClustersList> GetRegion(CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-
-            using var message = CreateGetRequest(resourceGroupName, namespaceName);
+            using var message = CreateGetRegionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PrivateLinkResourcesListResult value = default;
+                        AvailableClustersList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkResourcesListResult.DeserializePrivateLinkResourcesListResult(document.RootElement);
+                        value = AvailableClustersList.DeserializeAvailableClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

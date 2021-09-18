@@ -11,6 +11,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs
@@ -72,14 +73,30 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections");
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                writer.WritePropertyName("disableLocalAuth");
+                writer.WriteBooleanValue(DisableLocalAuth.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static EHNamespaceData DeserializeEHNamespaceData(JsonElement element)
         {
-            Optional<Sku> sku = default;
+            Optional<Models.Sku> sku = default;
             Optional<Identity> identity = default;
+            Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             Location location = default;
             ResourceIdentifier id = default;
@@ -97,6 +114,8 @@ namespace Azure.ResourceManager.EventHubs
             Optional<bool> kafkaEnabled = default;
             Optional<bool> zoneRedundant = default;
             Optional<Encryption> encryption = default;
+            Optional<IList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<bool> disableLocalAuth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -106,7 +125,7 @@ namespace Azure.ResourceManager.EventHubs
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -117,6 +136,16 @@ namespace Azure.ResourceManager.EventHubs
                         continue;
                     }
                     identity = Identity.DeserializeIdentity(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -253,11 +282,36 @@ namespace Azure.ResourceManager.EventHubs
                             encryption = Encryption.DeserializeEncryption(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("privateEndpointConnections"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("disableLocalAuth"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            disableLocalAuth = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new EHNamespaceData(id, name, type, tags, location, sku.Value, identity.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value);
+            return new EHNamespaceData(id, name, type, tags, location, sku.Value, identity.Value, systemData, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth));
         }
     }
 }

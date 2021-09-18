@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,20 +17,21 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalId))
-            {
-                writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId);
-            }
-            if (Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
-            }
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Type.Value.ToSerialString());
+            }
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            {
+                writer.WritePropertyName("userAssignedIdentities");
+                writer.WriteStartObject();
+                foreach (var item in UserAssignedIdentities)
+                {
+                    writer.WritePropertyName(item.Key);
+                    JsonSerializer.Serialize(writer, item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }
@@ -37,7 +40,8 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
             Optional<string> principalId = default;
             Optional<string> tenantId = default;
-            Optional<string> type = default;
+            Optional<ManagedServiceIdentityType> type = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
@@ -52,11 +56,31 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = property.Value.GetString().ToManagedServiceIdentityType();
+                    continue;
+                }
+                if (property.NameEquals("userAssignedIdentities"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.ToString()));
+                    }
+                    userAssignedIdentities = dictionary;
                     continue;
                 }
             }
-            return new Identity(principalId.Value, tenantId.Value, type.Value);
+            return new Identity(principalId.Value, tenantId.Value, Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

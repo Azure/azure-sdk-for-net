@@ -26,12 +26,16 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
-        internal AuthorizationRuleData(ResourceIdentifier id, string name, ResourceType type, IList<AccessRights> rights) : base(id, name, type)
+        internal AuthorizationRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<AccessRights> rights) : base(id, name, type)
         {
+            SystemData = systemData;
             Rights = rights;
         }
 
+        /// <summary> The system meta data relating to this resource. </summary>
+        public SystemData SystemData { get; }
         /// <summary> The rights associated with the rule. </summary>
         public IList<AccessRights> Rights { get; }
     }
