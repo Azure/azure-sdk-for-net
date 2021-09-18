@@ -162,26 +162,23 @@ stages:
                   deploy:
                     steps:
                       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-
-                      - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
                         parameters:
-                          ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
-                          PackageRepository: Nuget
-                          ReleaseSha: $(Build.SourceVersion)
-                          RepoId: Azure/azure-sdk-for-net
+                          SkipDefaultCheckout: true
+                          Paths:
+                            - sdk/**/*.md
+                      - download: current
+                      - template: /eng/common/pipelines/templates/steps/update-docsms-metadata.yml
+                        parameters:
+                          PackageInfoLocations:
+                            - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
+                          RepoId: Azure/azure-sdk-for-js
                           WorkingDirectory: $(System.DefaultWorkingDirectory)
                           TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
                           TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-                          PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
-                          ArtifactName: ${{artifact.name}}
                           Language: 'dotnet'
-                          DocRepoDestinationPath: 'api/overview/azure/'
-                          CIConfigs: $(CIConfigs)
-                          OnboardingBranch: 'onboarding'
-                          CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
                           SparseCheckoutPaths:
-                            - api
-
+                            - api/overview/azure/
+                            - metadata/
 
           - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
             - deployment: PublishDocs
@@ -286,7 +283,7 @@ stages:
       steps:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
-            SkipDefaultCheckout: true 
+            SkipDefaultCheckout: true
             Paths:
               - sdk/**/*.md
         - download: current
