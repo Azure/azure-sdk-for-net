@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3  (Unreleased)
 
 * [Update Request Name to match Operation Name](https://github.com/Azure/azure-sdk-for-net/pull/24059)
 * [Fix success field logic for request and dependency](https://github.com/Azure/azure-sdk-for-net/pull/23757)
