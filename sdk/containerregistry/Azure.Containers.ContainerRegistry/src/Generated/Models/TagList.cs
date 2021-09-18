@@ -58,6 +58,7 @@ namespace Azure.Containers.ContainerRegistry
         public string Repository { get; }
         /// <summary> List of tag attribute details. </summary>
         public IReadOnlyList<TagAttributesBase> TagAttributeBases { get; }
+        /// <summary> Gets the link. </summary>
         public string Link { get; }
     }
 }

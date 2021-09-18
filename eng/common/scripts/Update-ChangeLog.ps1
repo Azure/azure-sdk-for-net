@@ -4,7 +4,6 @@
 # Version : Version to add or replace in change log
 # Unreleased: Default is true. If it is set to false, then today's date will be set in verion title. If it is True then title will show "Unreleased"
 # ReplaceLatestEntryTitle: Replaces the latest changelog entry title.
-# SanitizeEntry: Removes all empty section in the entry that is updated
 
 param (
   [Parameter(Mandatory = $true)]
@@ -14,8 +13,7 @@ param (
   [Boolean]$Unreleased = $true,
   [Boolean]$ReplaceLatestEntryTitle = $false,
   [String]$ChangelogPath,
-  [String]$ReleaseDate,
-  [Boolean]$SanitizeEntry = $false
+  [String]$ReleaseDate
 )
 Set-StrictMode -Version 3
 
@@ -108,12 +106,7 @@ if ($LatestsSorted[0] -ne $Version) {
 
 if ($ReplaceLatestEntryTitle)
 {
-    $entryToBeUpdated = $ChangeLogEntries[$LatestVersion]
-    if ($SanitizeEntry)
-    {
-        $entryToBeUpdated = Remove-EmptySections -ChangeLogEntry $entryToBeUpdated
-    }
-    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -Content $entryToBeUpdated
+    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -InitialAtxHeader $ChangeLogEntries.InitialAtxHeader -Content $ChangeLogEntries[$LatestVersion].ReleaseContent
     LogDebug "Resetting latest entry title to [$($newChangeLogEntry.ReleaseTitle)]"
     $ChangeLogEntries.Remove($LatestVersion)
     if ($newChangeLogEntry) {
@@ -128,16 +121,12 @@ elseif ($ChangeLogEntries.Contains($Version))
 {
     LogDebug "Updating ReleaseStatus for Version [$Version] to [$($ReleaseStatus)]"
     $ChangeLogEntries[$Version].ReleaseStatus = $ReleaseStatus
-    $ChangeLogEntries[$Version].ReleaseTitle = "## $Version $ReleaseStatus"
-    if ($SanitizeEntry)
-    {
-        $ChangeLogEntries[$Version] = Remove-EmptySections -ChangeLogEntry $ChangeLogEntries[$Version]
-    }
+    $ChangeLogEntries[$Version].ReleaseTitle = "$($ChangeLogEntries.InitialAtxHeader)# $Version $ReleaseStatus"
 }
 else
 {
     LogDebug "Adding new ChangeLog entry for Version [$Version]"
-    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus
+    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -InitialAtxHeader $ChangeLogEntries.InitialAtxHeader
     if ($newChangeLogEntry) {
         $ChangeLogEntries.Insert(0, $Version, $newChangeLogEntry)
     }

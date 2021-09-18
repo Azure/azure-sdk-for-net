@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class MetricsQueryClientSamples: SamplesBase<MonitorQueryClientTestEnvironment>
+    public class MetricsQueryClientSamples: SamplesBase<MonitorQueryTestEnvironment>
     {
         [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21657")]

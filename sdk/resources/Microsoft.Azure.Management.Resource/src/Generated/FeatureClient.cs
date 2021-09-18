@@ -23,14 +23,6 @@ namespace Microsoft.Azure.Management.ResourceManager
     using System.Threading;
     using System.Threading.Tasks;
 
-    /// <summary>
-    /// Azure Feature Exposure Control (AFEC) provides a mechanism for the
-    /// resource providers to control feature exposure to users. Resource
-    /// providers typically use this mechanism to provide public/private
-    /// preview for new features prior to making them generally available.
-    /// Users need to explicitly register for AFEC features to get access to
-    /// such functionality.
-    /// </summary>
     public partial class FeatureClient : ServiceClient<FeatureClient>, IFeatureClient, IAzureClient
     {
         /// <summary>
@@ -54,7 +46,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The ID of the target subscription.
+        /// The Azure subscription ID.
         /// </summary>
         public string SubscriptionId { get; set; }
 
@@ -85,6 +77,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets the IFeaturesOperations.
         /// </summary>
         public virtual IFeaturesOperations Features { get; private set; }
+
+        /// <summary>
+        /// Gets the ISubscriptionFeatureRegistrationsOperations.
+        /// </summary>
+        public virtual ISubscriptionFeatureRegistrationsOperations SubscriptionFeatureRegistrations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the FeatureClient class.
@@ -328,8 +325,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         private void Initialize()
         {
             Features = new FeaturesOperations(this);
+            SubscriptionFeatureRegistrations = new SubscriptionFeatureRegistrationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2015-12-01";
+            ApiVersion = "2021-07-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -370,7 +368,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -469,14 +467,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, DeserializationSettings);
+                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -486,10 +483,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -546,7 +539,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -642,14 +635,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, DeserializationSettings);
+                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -659,10 +651,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);

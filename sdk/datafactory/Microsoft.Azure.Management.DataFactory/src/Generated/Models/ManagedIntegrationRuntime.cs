@@ -48,14 +48,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// integration runtime.</param>
         /// <param name="ssisProperties">SSIS properties for managed
         /// integration runtime.</param>
+        /// <param name="customerVirtualNetwork">The name of virtual network to
+        /// which Azure-SSIS integration runtime will join</param>
         /// <param name="managedVirtualNetwork">Managed Virtual Network
         /// reference.</param>
-        public ManagedIntegrationRuntime(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string state = default(string), IntegrationRuntimeComputeProperties computeProperties = default(IntegrationRuntimeComputeProperties), IntegrationRuntimeSsisProperties ssisProperties = default(IntegrationRuntimeSsisProperties), ManagedVirtualNetworkReference managedVirtualNetwork = default(ManagedVirtualNetworkReference))
+        public ManagedIntegrationRuntime(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string state = default(string), IntegrationRuntimeComputeProperties computeProperties = default(IntegrationRuntimeComputeProperties), IntegrationRuntimeSsisProperties ssisProperties = default(IntegrationRuntimeSsisProperties), IntegrationRuntimeCustomerVirtualNetwork customerVirtualNetwork = default(IntegrationRuntimeCustomerVirtualNetwork), ManagedVirtualNetworkReference managedVirtualNetwork = default(ManagedVirtualNetworkReference))
             : base(additionalProperties, description)
         {
             State = state;
             ComputeProperties = computeProperties;
             SsisProperties = ssisProperties;
+            CustomerVirtualNetwork = customerVirtualNetwork;
             ManagedVirtualNetwork = managedVirtualNetwork;
             CustomInit();
         }
@@ -85,6 +88,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.ssisProperties")]
         public IntegrationRuntimeSsisProperties SsisProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of virtual network to which Azure-SSIS
+        /// integration runtime will join
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.customerVirtualNetwork")]
+        public IntegrationRuntimeCustomerVirtualNetwork CustomerVirtualNetwork { get; set; }
 
         /// <summary>
         /// Gets or sets managed Virtual Network reference.

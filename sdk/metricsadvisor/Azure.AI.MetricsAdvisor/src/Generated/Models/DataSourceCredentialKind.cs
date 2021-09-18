@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DataSourceCredentialKind"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentialKind"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataSourceCredentialKind(string value)
         {
