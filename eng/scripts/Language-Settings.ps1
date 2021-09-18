@@ -386,7 +386,7 @@ function EnsureCustomSource($package) {
   
   # Matches package version against output: 
   # "Azure.Security.KeyVault.Secrets 4.3.0-alpha.20210915.3"
-  $matchedVersion = $existingVersions.Where({$_.Version -eq $package.Version})
+  $matchedVersion = $existingVersions.Where({$_.Version -eq $package.Versions})
 
   if (!$matchedVersion) { 
     return $package
