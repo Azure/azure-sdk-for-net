@@ -369,7 +369,8 @@ function Get-DocsCiLine ($item) {
   return $line
 }
 
-function EnsureCustomSource($package) { 
+function EnsureCustomSource($package) {
+  Write-Host "EnsureCustomSource - $PackageSourceOverride"
   # $PackageSourceOverride is a global variable provided in 
   # Update-DocsMsPackages.ps1. Its value can set a "customSource" property.
   # If it is empty then the property is not overridden.
