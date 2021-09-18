@@ -81,14 +81,9 @@ jobs:
         inputs:
           pwsh: true
           filePath: eng/common/scripts/Queue-Pipeline.ps1
-          # SourceBranch must be "master" as this repo is managed by the docs 
-          # team and will be updated according to their timeline.
-
-          # TODO: Make the BuildParametersJson scrutable
           arguments: >
             -Organization "apidrop"
             -Project "Content%20CI"
-            -SourceBranch "master"
             -DefinitionId 397
             -Base64EncodedAuthToken "$(azuresdk-apidrop-devops-queue-build-pat)"
-            -BuildParametersJson '{"params": "{\"TFM\": \"net471\",\"target_repo\": {\"url\": \"https://github.com/Azure/azure-docs-sdk-dotnet\",\"branch\": \"$(DailyDocsBranchName)\",\"folder\": \"xml\"},\"source_repo\": {\"url\": \"https://github.com/Azure/azure-docs-sdk-dotnet\",\"branch\": \"main\",\"csvPath\": \"bundlepackages\"},\"import_content\": true}"}'
+            -BuildParametersJson (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)

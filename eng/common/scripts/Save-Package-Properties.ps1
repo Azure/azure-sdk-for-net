@@ -17,10 +17,6 @@ Service directory in which to search for packages
 Output location (generally a package artifact directory in DevOps) for JSON 
 files
 
-.PARAMETER packageSourceOverride
-Sets an optional PackageSource property if the package is not published to the
-default feed (e.g. daily dev packages)
-
 .PARAMETER addDevVersion
 Reads the version out of the source and adds a DevVersion property to the 
 package properties JSON file. If the package properties JSON file already 
@@ -36,7 +32,6 @@ Param (
   [string] $serviceDirectory,
   [Parameter(Mandatory=$True)]
   [string] $outDirectory,
-  [string] $packageSourceOverride,
   [switch] $addDevVersion
 )
 
