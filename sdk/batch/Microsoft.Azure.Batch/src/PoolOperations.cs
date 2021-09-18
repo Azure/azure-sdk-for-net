@@ -11,7 +11,7 @@ using Common = Microsoft.Azure.Batch.Common;
 
 namespace Microsoft.Azure.Batch
 {
-    using Models = Microsoft.Azure.Batch.Protocol.Models;
+    using Models = Protocol.Models;
     using Microsoft.Rest.Azure;
 
     /// <summary>
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Batch
         public IPagedEnumerable<CloudPool> ListPools(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             PagedEnumerable<CloudPool> enumerable = new PagedEnumerable<CloudPool>( // the lamda will be the enumerator factory
                 () =>
@@ -99,23 +99,23 @@ namespace Microsoft.Azure.Batch
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="CloudPool"/> containing information about the specified Azure Batch pool.</returns>
         /// <remarks>The get pool operation runs asynchronously.</remarks>
-        public async System.Threading.Tasks.Task<CloudPool> GetPoolAsync(
+        public async Task<CloudPool> GetPoolAsync(
             string poolId,
             DetailLevel detailLevel = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors, detailLevel);
 
             // start call to server
-            System.Threading.Tasks.Task<AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>> asyncTask =
-                this.ParentBatchClient.ProtocolLayer.GetPool(poolId, bhMgr, cancellationToken);
+            Task<AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>> asyncTask =
+                ParentBatchClient.ProtocolLayer.GetPool(poolId, bhMgr, cancellationToken);
 
             AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders> response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
 
             // construct object model Pool
-            CloudPool bcPool = new CloudPool(this.ParentBatchClient, response.Body, this.CustomBehaviors);
+            CloudPool bcPool = new CloudPool(ParentBatchClient, response.Body, CustomBehaviors);
 
             return bcPool;
         }
@@ -134,12 +134,12 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task<CloudPool> asyncTask = GetPoolAsync(poolId, detailLevel, additionalBehaviors);
-            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-        internal async System.Threading.Tasks.Task DeletePoolAsyncImpl(string poolIdToDelete, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        internal async Task DeletePoolAsyncImpl(string poolIdToDelete, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
-            System.Threading.Tasks.Task<AzureOperationHeaderResponse<Models.PoolDeleteHeaders>> asyncTask = _parentBatchClient.ProtocolLayer.DeletePool(poolIdToDelete, bhMgr, cancellationToken);
+            Task<AzureOperationHeaderResponse<Models.PoolDeleteHeaders>> asyncTask = _parentBatchClient.ProtocolLayer.DeletePool(poolIdToDelete, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -150,21 +150,21 @@ namespace Microsoft.Azure.Batch
         /// <param name="poolId">The id of the pool to delete.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The delete operation requests that the pool be deleted.  The request puts the pool in the <see cref="Common.PoolState.Deleting"/> state.
         /// The Batch service will requeue any running tasks and perform the actual pool deletion without any further client action.</para>
         /// <para>The delete operation runs asynchronously.</para>
         /// </remarks>
-        public async System.Threading.Tasks.Task DeletePoolAsync(
+        public async Task DeletePoolAsync(
             string poolId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = DeletePoolAsyncImpl(poolId, bhMgr, cancellationToken);
+            Task asyncTask = DeletePoolAsyncImpl(poolId, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Batch
         public void DeletePool(string poolId, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = DeletePoolAsync(poolId, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Batch
         /// To add the pool to the Batch account, call <see cref="CloudPool.CommitAsync"/>.</returns>
         public CloudPool CreatePool()
         {
-            CloudPool unboundPool = new CloudPool(this.ParentBatchClient, this.CustomBehaviors);
+            CloudPool unboundPool = new CloudPool(ParentBatchClient, CustomBehaviors);
 
             return unboundPool;
         }
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Batch
             int? targetDedicatedComputeNodes = null,
             int? targetLowPriorityComputeNodes = null)
         {
-            CloudPool unboundPool = new CloudPool(this.ParentBatchClient, this.CustomBehaviors)
+            CloudPool unboundPool = new CloudPool(ParentBatchClient, CustomBehaviors)
                 {
                     CloudServiceConfiguration = cloudServiceConfiguration,
                     Id = poolId,
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Batch
             int? targetDedicatedComputeNodes = null,
             int? targetLowPriorityComputeNodes = null)
         {
-            CloudPool unboundPool = new CloudPool(this.ParentBatchClient, this.CustomBehaviors)
+            CloudPool unboundPool = new CloudPool(ParentBatchClient, CustomBehaviors)
                 {
                     Id = poolId,
                     VirtualMachineConfiguration = virtualMachineConfiguration,
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Batch
             return unboundPool;
         }
 
-        internal System.Threading.Tasks.Task ResizePoolAsyncImpl(
+        internal Task ResizePoolAsyncImpl(
             string poolId,
             int? targetDedicatedComputeNodes,
             int? targetLowPriorityComputeNodes,
@@ -286,7 +286,7 @@ namespace Microsoft.Azure.Batch
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.ResizePool(
+            Task asyncTask = _parentBatchClient.ProtocolLayer.ResizePool(
                 poolId,
                 targetDedicatedComputeNodes,
                 targetLowPriorityComputeNodes,
@@ -316,18 +316,18 @@ namespace Microsoft.Azure.Batch
         /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The resize operation requests that the pool be resized.  The request puts the pool in the <see cref="Common.AllocationState.Resizing"/> allocation state.
         /// The Batch service will perform the actual resize without any further client action, and set the allocation state to <see cref="Common.AllocationState.Steady"/> once complete.</para>
         /// <para>
         /// You can only resize a pool when its <see cref="CloudPool.AllocationState"/> is <see cref="Common.AllocationState.Steady"/>.
         /// You cannot resize pools which are configured for automatic scaling (that is, the <see cref="CloudPool.AutoScaleEnabled"/> property of the pool is true).
-        /// If you decrease the pool size, the Batch service chooses which nodes to remove.  To remove specific nodes, call <see cref="PoolOperations.RemoveFromPoolAsync(string, IEnumerable{string}, Common.ComputeNodeDeallocationOption?, TimeSpan?, IEnumerable{BatchClientBehavior}, CancellationToken)"/>.
+        /// If you decrease the pool size, the Batch service chooses which nodes to remove.  To remove specific nodes, call <see cref="RemoveFromPoolAsync(string, IEnumerable{string}, Common.ComputeNodeDeallocationOption?, TimeSpan?, IEnumerable{BatchClientBehavior}, CancellationToken)"/>.
         /// </para>
         /// <para>The resize operation runs asynchronously.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task ResizePoolAsync(
+        public Task ResizePoolAsync(
             string poolId,
             int? targetDedicatedComputeNodes = null,
             int? targetLowPriorityComputeNodes = null,
@@ -337,9 +337,9 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = ResizePoolAsyncImpl(
+            Task asyncTask = ResizePoolAsyncImpl(
                 poolId,
                 targetDedicatedComputeNodes,
                 targetLowPriorityComputeNodes,
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Batch
         /// <para>
         /// You can only resize a pool when its <see cref="CloudPool.AllocationState"/> is <see cref="Common.AllocationState.Steady"/>.
         /// You cannot resize pools which are configured for automatic scaling (that is, the <see cref="CloudPool.AutoScaleEnabled"/> property of the pool is true).
-        /// If you decrease the pool size, the Batch service chooses which nodes to remove.  To remove specific nodes, call <see cref="PoolOperations.RemoveFromPool(string, IEnumerable{string}, Common.ComputeNodeDeallocationOption?, TimeSpan?, IEnumerable{BatchClientBehavior})"/>.
+        /// If you decrease the pool size, the Batch service chooses which nodes to remove.  To remove specific nodes, call <see cref="RemoveFromPool(string, IEnumerable{string}, Common.ComputeNodeDeallocationOption?, TimeSpan?, IEnumerable{BatchClientBehavior})"/>.
         /// </para>
         /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="ResizePoolAsync"/>.</para>
         /// </remarks>
@@ -394,12 +394,12 @@ namespace Microsoft.Azure.Batch
                 resizeTimeout,
                 deallocationOption,
                 additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-        internal System.Threading.Tasks.Task StopResizePoolAsyncImpl(string poolId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        internal Task StopResizePoolAsyncImpl(string poolId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
-            System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.StopResizePool(poolId, bhMgr, cancellationToken);
+            Task asyncTask = _parentBatchClient.ProtocolLayer.StopResizePool(poolId, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>
         /// This operation stops an ongoing resize operation on the pool.  The pool size will stabilize at the number of nodes it is at
@@ -419,15 +419,15 @@ namespace Microsoft.Azure.Batch
         /// </para>
         /// <para>The stop resize operation runs asynchronously.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task StopResizePoolAsync(
+        public Task StopResizePoolAsync(
             string poolId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = StopResizePoolAsyncImpl(poolId, bhMgr, cancellationToken);
+            Task asyncTask = StopResizePoolAsyncImpl(poolId, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -437,7 +437,7 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>
         /// This operation stops an ongoing resize operation on the pool.  The pool size will stabilize at the number of nodes it is at
@@ -449,7 +449,7 @@ namespace Microsoft.Azure.Batch
         public void StopResizePool(string poolId, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = StopResizePoolAsync(poolId, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
 
@@ -488,7 +488,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // get enumerable
             IPagedEnumerable<ComputeNode> enumerable = ListComputeNodesImpl(poolId, bhMgr, detailLevel);
@@ -497,18 +497,18 @@ namespace Microsoft.Azure.Batch
         }
 
 
-        internal async System.Threading.Tasks.Task<ComputeNode> GetComputeNodeAsyncImpl(
+        internal async Task<ComputeNode> GetComputeNodeAsyncImpl(
             string poolId,
             string computeNodeId,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
             Task<AzureOperationResponse<Models.ComputeNode, Models.ComputeNodeGetHeaders>> asyncTask =
-                this.ParentBatchClient.ProtocolLayer.GetComputeNode(poolId, computeNodeId, bhMgr, cancellationToken);
+                ParentBatchClient.ProtocolLayer.GetComputeNode(poolId, computeNodeId, bhMgr, cancellationToken);
             AzureOperationResponse<Models.ComputeNode, Models.ComputeNodeGetHeaders> result = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
 
             // construct a new object bound to the protocol layer object
-            ComputeNode newComputeNode = new ComputeNode(this.ParentBatchClient, poolId, result.Body, bhMgr.BaseBehaviors);
+            ComputeNode newComputeNode = new ComputeNode(ParentBatchClient, poolId, result.Body, bhMgr.BaseBehaviors);
 
             return newComputeNode;
         }
@@ -523,7 +523,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="ComputeNode"/> containing information about the specified compute node.</returns>
         /// <remarks>The get node operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task<ComputeNode> GetComputeNodeAsync(
+        public Task<ComputeNode> GetComputeNodeAsync(
             string poolId,
             string computeNodeId,
             DetailLevel detailLevel = null,
@@ -531,9 +531,9 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors, detailLevel);
 
-            System.Threading.Tasks.Task<ComputeNode> asyncTask = GetComputeNodeAsyncImpl(poolId, computeNodeId, bhMgr, cancellationToken);
+            Task<ComputeNode> asyncTask = GetComputeNodeAsyncImpl(poolId, computeNodeId, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -554,7 +554,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task<ComputeNode> asyncTask = GetComputeNodeAsync(poolId, computeNodeId, detailLevel, additionalBehaviors);
-            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -564,18 +564,18 @@ namespace Microsoft.Azure.Batch
         /// <param name="computeNodeId">The id of the compute node.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>This operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task EnableComputeNodeSchedulingAsync(
+        public Task EnableComputeNodeSchedulingAsync(
             string poolId,
             string computeNodeId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = this.ParentBatchClient.ProtocolLayer.EnableComputeNodeScheduling(poolId, computeNodeId, bhMgr, cancellationToken);
+            Task asyncTask = ParentBatchClient.ProtocolLayer.EnableComputeNodeScheduling(poolId, computeNodeId, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -593,7 +593,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = EnableComputeNodeSchedulingAsync(poolId, computeNodeId, additionalBehaviors, CancellationToken.None);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -604,9 +604,9 @@ namespace Microsoft.Azure.Batch
         /// <param name="disableComputeNodeSchedulingOption">Specifies what to do with currently running tasks. The default is <see cref="Common.DisableComputeNodeSchedulingOption.Requeue"/>.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>This operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task DisableComputeNodeSchedulingAsync(
+        public Task DisableComputeNodeSchedulingAsync(
             string poolId,
             string computeNodeId,
             Common.DisableComputeNodeSchedulingOption? disableComputeNodeSchedulingOption,
@@ -614,9 +614,9 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = this.ParentBatchClient.ProtocolLayer.DisableComputeNodeScheduling(poolId, computeNodeId, disableComputeNodeSchedulingOption, bhMgr, cancellationToken);
+            Task asyncTask = ParentBatchClient.ProtocolLayer.DisableComputeNodeScheduling(poolId, computeNodeId, disableComputeNodeSchedulingOption, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -636,10 +636,10 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = DisableComputeNodeSchedulingAsync(poolId, computeNodeId, disableComputeNodeSchedulingOption, additionalBehaviors, CancellationToken.None);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-        internal async System.Threading.Tasks.Task EnableAutoScaleAsyncImpl(
+        internal async Task EnableAutoScaleAsyncImpl(
             string poolId,
             string autoscaleFormula,
             TimeSpan? autoscaleEvaluationInterval,
@@ -647,7 +647,7 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken)
         {
             // start call
-            System.Threading.Tasks.Task asyncTask = this.ParentBatchClient.ProtocolLayer.EnableAutoScale(
+            Task asyncTask = ParentBatchClient.ProtocolLayer.EnableAutoScale(
                 poolId,
                 autoscaleFormula,
                 autoscaleEvaluationInterval,
@@ -670,7 +670,7 @@ namespace Microsoft.Azure.Batch
             string nodeId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            BehaviorManager combinedBehaviors = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager combinedBehaviors = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             PagedEnumerable<NodeVMExtension> enumerable = new PagedEnumerable<NodeVMExtension>(
                 () =>
@@ -756,13 +756,13 @@ namespace Microsoft.Azure.Batch
         /// <param name="autoscaleEvaluationInterval">The time interval at which to automatically adjust the pool size according to the AutoScale formula. The default value is 15 minutes. The minimum allowed value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The formula is checked for validity before it is applied to the pool. If the formula is not valid, an exception occurs.</para>
         /// <para>You cannot enable automatic scaling on a pool if a resize operation is in progress on the pool.</para>
         /// <para>The enable autoscale operation runs asynchronously.</para>
         /// </remarks>
-        public async System.Threading.Tasks.Task EnableAutoScaleAsync(
+        public async Task EnableAutoScaleAsync(
             string poolId,
             string autoscaleFormula = null,
             TimeSpan? autoscaleEvaluationInterval = null,
@@ -770,10 +770,10 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // start call
-            System.Threading.Tasks.Task asyncTask = EnableAutoScaleAsyncImpl(poolId, autoscaleFormula, autoscaleEvaluationInterval, bhMgr, cancellationToken);
+            Task asyncTask = EnableAutoScaleAsyncImpl(poolId, autoscaleFormula, autoscaleEvaluationInterval, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -797,13 +797,13 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = EnableAutoScaleAsync(poolId, autoscaleFormula, autoscaleEvaluationInterval, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-        internal async System.Threading.Tasks.Task DisableAutoScaleAsyncImpl(string poolId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        internal async Task DisableAutoScaleAsyncImpl(string poolId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             // start call
-            System.Threading.Tasks.Task asyncTask = this.ParentBatchClient.ProtocolLayer.DisableAutoScale(poolId, bhMgr, cancellationToken);
+            Task asyncTask = ParentBatchClient.ProtocolLayer.DisableAutoScale(poolId, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -814,20 +814,20 @@ namespace Microsoft.Azure.Batch
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The disable autoscale operation runs asynchronously.</para>
         /// </remarks>
-        public async System.Threading.Tasks.Task DisableAutoScaleAsync(
+        public async Task DisableAutoScaleAsync(
             string poolId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // start call
-            System.Threading.Tasks.Task asyncTask = DisableAutoScaleAsyncImpl(poolId, bhMgr, cancellationToken);
+            Task asyncTask = DisableAutoScaleAsyncImpl(poolId, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -844,18 +844,18 @@ namespace Microsoft.Azure.Batch
         public void DisableAutoScale(string poolId, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = DisableAutoScaleAsync(poolId, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-        internal async System.Threading.Tasks.Task<AutoScaleRun> EvaluateAutoScaleAsyncImpl(
+        internal async Task<AutoScaleRun> EvaluateAutoScaleAsyncImpl(
             string poolId,
             string autoscaleFormula,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
             // start call
-            System.Threading.Tasks.Task<AzureOperationResponse<Models.AutoScaleRun, Models.PoolEvaluateAutoScaleHeaders>> asyncTask =
-                this._parentBatchClient.ProtocolLayer.EvaluateAutoScale(poolId, autoscaleFormula, bhMgr, cancellationToken);
+            Task<AzureOperationResponse<Models.AutoScaleRun, Models.PoolEvaluateAutoScaleHeaders>> asyncTask =
+                _parentBatchClient.ProtocolLayer.EvaluateAutoScale(poolId, autoscaleFormula, bhMgr, cancellationToken);
 
             var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
 
@@ -877,17 +877,17 @@ namespace Microsoft.Azure.Batch
         /// <para>This method does not change any state of the pool, and does not affect the <see cref="CloudPool.LastModified"/> or <see cref="CloudPool.ETag"/>.</para>
         /// <para>The evaluate operation runs asynchronously.</para>
         /// </remarks>
-        public async System.Threading.Tasks.Task<AutoScaleRun> EvaluateAutoScaleAsync(
+        public async Task<AutoScaleRun> EvaluateAutoScaleAsync(
             string poolId,
             string autoscaleFormula,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // start call
-            System.Threading.Tasks.Task<AutoScaleRun> asyncTask = EvaluateAutoScaleAsyncImpl(
+            Task<AutoScaleRun> asyncTask = EvaluateAutoScaleAsyncImpl(
                 poolId,
                 autoscaleFormula,
                 bhMgr,
@@ -918,7 +918,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task<AutoScaleRun> asyncTask = EvaluateAutoScaleAsync(poolId, autoscaleFormula, additionalBehaviors);
-            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -931,14 +931,14 @@ namespace Microsoft.Azure.Batch
         /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>If you need to remove multiple compute nodes from a pool, it is more efficient to use the <see cref="RemoveFromPoolAsync(string, IEnumerable{string}, Common.ComputeNodeDeallocationOption?, TimeSpan?, IEnumerable{BatchClientBehavior}, CancellationToken)"/> overload.</para>
         /// <para>You can only remove nodes from a pool when the <see cref="CloudPool.AllocationState"/> of the pool is <see cref="Common.AllocationState.Steady"/>. If the pool is already resizing, an exception occurs.</para>
         /// <para>When you remove nodes from a pool, the pool's AllocationState changes from Steady to <see cref="Common.AllocationState.Resizing"/>.</para>
         /// <para>The remove operation runs asynchronously.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task RemoveFromPoolAsync(
+        public Task RemoveFromPoolAsync(
             string poolId,
             string computeNodeId,
             Common.ComputeNodeDeallocationOption? deallocationOption = null,
@@ -948,7 +948,7 @@ namespace Microsoft.Azure.Batch
             //Create a dummy compute node id list with just one element
             List<string> computeNodeIdList = new List<string> {computeNodeId};
 
-            System.Threading.Tasks.Task asyncTask = RemoveFromPoolAsync(poolId, computeNodeIdList, deallocationOption,
+            Task asyncTask = RemoveFromPoolAsync(poolId, computeNodeIdList, deallocationOption,
                 resizeTimeout, additionalBehaviors);
 
             return asyncTask;
@@ -978,10 +978,10 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = RemoveFromPoolAsync(poolId, computeNodeId, deallocationOption, resizeTimeout, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-        internal System.Threading.Tasks.Task RemoveFromPoolAsyncImpl(
+        internal Task RemoveFromPoolAsyncImpl(
             string poolId,
             IEnumerable<string> computeNodeIds,
             Common.ComputeNodeDeallocationOption? deallocationOption,
@@ -990,7 +990,7 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken)
         {
             // start call
-            System.Threading.Tasks.Task asyncTask = this._parentBatchClient.ProtocolLayer.RemovePoolComputeNodes(
+            Task asyncTask = _parentBatchClient.ProtocolLayer.RemovePoolComputeNodes(
                 poolId,
                 computeNodeIds,
                 deallocationOption,
@@ -1012,13 +1012,13 @@ namespace Microsoft.Azure.Batch
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>You can only remove nodes from a pool when the <see cref="CloudPool.AllocationState"/> of the pool is <see cref="Common.AllocationState.Steady"/>. If the pool is already resizing, an exception occurs.</para>
         /// <para>When you remove nodes from a pool, the pool's AllocationState changes from Steady to <see cref="Common.AllocationState.Resizing"/>.</para>
         /// <para>The remove operation runs asynchronously.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task RemoveFromPoolAsync(
+        public Task RemoveFromPoolAsync(
             string poolId,
             IEnumerable<string> computeNodeIds,
             Common.ComputeNodeDeallocationOption? deallocationOption = null,
@@ -1027,10 +1027,10 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // start call
-            System.Threading.Tasks.Task asyncTask = RemoveFromPoolAsyncImpl(
+            Task asyncTask = RemoveFromPoolAsyncImpl(
                 poolId,
                 computeNodeIds,
                 deallocationOption,
@@ -1064,7 +1064,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = RemoveFromPoolAsync(poolId, computeNodeIds, deallocationOption, resizeTimeout, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -1077,14 +1077,14 @@ namespace Microsoft.Azure.Batch
         /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>If you need to remove multiple compute nodes from a pool, it is more efficient to use the <see cref="RemoveFromPoolAsync(string, IEnumerable{ComputeNode}, Common.ComputeNodeDeallocationOption?, TimeSpan?, IEnumerable{BatchClientBehavior}, CancellationToken)"/> overload.</para>
         /// <para>You can only remove nodes from a pool when the <see cref="CloudPool.AllocationState"/> of the pool is <see cref="Common.AllocationState.Steady"/>. If the pool is already resizing, an exception occurs.</para>
         /// <para>When you remove nodes from a pool, the pool's AllocationState changes from Steady to <see cref="Common.AllocationState.Resizing"/>.</para>
         /// <para>The remove operation runs asynchronously.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task RemoveFromPoolAsync(
+        public Task RemoveFromPoolAsync(
             string poolId,
             ComputeNode computeNode,
             Common.ComputeNodeDeallocationOption? deallocationOption = null,
@@ -1094,7 +1094,7 @@ namespace Microsoft.Azure.Batch
             //Create a dummy ComputeNode list with just one element
             List<ComputeNode> computeNodeList = new List<ComputeNode> {computeNode};
 
-            System.Threading.Tasks.Task asyncTask = RemoveFromPoolAsync(poolId, computeNodeList, deallocationOption,
+            Task asyncTask = RemoveFromPoolAsync(poolId, computeNodeList, deallocationOption,
                 resizeTimeout, additionalBehaviors);
 
             return asyncTask;
@@ -1124,10 +1124,10 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = RemoveFromPoolAsync(poolId, computeNode, deallocationOption, resizeTimeout, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-        internal System.Threading.Tasks.Task RemoveFromPoolAsyncImpl(
+        internal Task RemoveFromPoolAsyncImpl(
             string poolId,
             IEnumerable<ComputeNode> computeNodes,
             Common.ComputeNodeDeallocationOption? deallocationOption,
@@ -1143,7 +1143,7 @@ namespace Microsoft.Azure.Batch
             }
 
             // start call
-            System.Threading.Tasks.Task asyncTask = RemoveFromPoolAsyncImpl(
+            Task asyncTask = RemoveFromPoolAsyncImpl(
                 poolId,
                 computeNodeIds,
                 deallocationOption,
@@ -1165,13 +1165,13 @@ namespace Microsoft.Azure.Batch
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>You can only remove nodes from a pool when the <see cref="CloudPool.AllocationState"/> of the pool is <see cref="Common.AllocationState.Steady"/>. If the pool is already resizing, an exception occurs.</para>
         /// <para>When you remove nodes from a pool, the pool's AllocationState changes from Steady to <see cref="Common.AllocationState.Resizing"/>.</para>
         /// <para>The remove operation runs asynchronously.</para>
         /// </remarks>
-        public async System.Threading.Tasks.Task RemoveFromPoolAsync(
+        public async Task RemoveFromPoolAsync(
             string poolId,
             IEnumerable<ComputeNode> computeNodes,
             Common.ComputeNodeDeallocationOption? deallocationOption = null,
@@ -1180,10 +1180,10 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // start call
-            System.Threading.Tasks.Task asyncTask = RemoveFromPoolAsyncImpl(
+            Task asyncTask = RemoveFromPoolAsyncImpl(
                 poolId,
                 computeNodes,
                 deallocationOption,
@@ -1217,7 +1217,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = RemoveFromPoolAsync(poolId, computeNodes, deallocationOption, resizeTimeout, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -1230,7 +1230,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>To add the new user, call <see cref="ComputeNodeUser.CommitAsync"/>.</remarks>
         public ComputeNodeUser CreateComputeNodeUser(string poolId, string computeNodeId)
         {
-            ComputeNodeUser newUser = new ComputeNodeUser(this.ParentBatchClient, this.CustomBehaviors, poolId, computeNodeId);
+            ComputeNodeUser newUser = new ComputeNodeUser(ParentBatchClient, CustomBehaviors, poolId, computeNodeId);
 
             return newUser;
         }
@@ -1243,12 +1243,12 @@ namespace Microsoft.Azure.Batch
         /// <param name="userName">The name of the user account to be deleted.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>You can delete a user account from a compute node only when it is in the <see cref="Common.ComputeNodeState.Idle"/> or <see cref="Common.ComputeNodeState.Running"/> state.</para>
         /// <para>The delete operation runs asynchronously.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task DeleteComputeNodeUserAsync(
+        public Task DeleteComputeNodeUserAsync(
             string poolId,
             string computeNodeId,
             string userName,
@@ -1256,9 +1256,9 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.DeleteComputeNodeUser(
+            Task asyncTask = _parentBatchClient.ProtocolLayer.DeleteComputeNodeUser(
                 poolId,
                 computeNodeId,
                 userName,
@@ -1283,7 +1283,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = DeleteComputeNodeUserAsync(poolId, computeNodeId, userName, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -1294,7 +1294,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="rdpStream">The <see cref="Stream"/> into which the RDP file contents will be written.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>This method does not close the <paramref name="rdpStream"/> stream, and it does not reset the position after writing.
         /// It is the caller's responsibility to close the stream, or to reset the position if required.</para>
@@ -1303,7 +1303,7 @@ namespace Microsoft.Azure.Batch
         /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict).
         /// For pools with <see cref="VirtualMachineConfiguration"/> property, the new method <see cref="GetRemoteLoginSettings"/> must be used.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task GetRDPFileAsync(
+        public Task GetRDPFileAsync(
             string poolId,
             string computeNodeId,
             Stream rdpStream,
@@ -1311,9 +1311,9 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.GetComputeNodeRDPFile(
+            Task asyncTask = _parentBatchClient.ProtocolLayer.GetComputeNodeRDPFile(
                 poolId,
                 computeNodeId,
                 rdpStream,
@@ -1343,10 +1343,10 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = GetRDPFileAsync(poolId, computeNodeId, rdpStream, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-        internal async System.Threading.Tasks.Task GetRDPFileViaFileNameAsyncImpl(
+        internal async Task GetRDPFileViaFileNameAsyncImpl(
             string poolId,
             string computeNodeId,
             string rdpFileNameToCreate,
@@ -1356,7 +1356,7 @@ namespace Microsoft.Azure.Batch
             // create the file
             using (FileStream rdpStream = File.Create(rdpFileNameToCreate))
             {
-                System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.GetComputeNodeRDPFile(poolId,
+                Task asyncTask = _parentBatchClient.ProtocolLayer.GetComputeNodeRDPFile(poolId,
                     computeNodeId, rdpStream, bhMgr, cancellationToken);
 
                 await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
@@ -1374,7 +1374,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="rdpFileNameToCreate">The file path at which to create the RDP file.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>If the file specified by <paramref name="rdpFileNameToCreate"/> already exists, it is overwritten.</para>
         /// <para>The get RDP file operation runs asynchronously.</para>
@@ -1382,7 +1382,7 @@ namespace Microsoft.Azure.Batch
         /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict).
         /// For pools with <see cref="VirtualMachineConfiguration"/> property, the new method <see cref="GetRemoteLoginSettingsAsync"/> must be used.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task GetRDPFileAsync(
+        public Task GetRDPFileAsync(
             string poolId,
             string computeNodeId,
             string rdpFileNameToCreate,
@@ -1390,9 +1390,9 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = GetRDPFileViaFileNameAsyncImpl(
+            Task asyncTask = GetRDPFileViaFileNameAsyncImpl(
                 poolId,
                 computeNodeId,
                 rdpFileNameToCreate,
@@ -1420,10 +1420,10 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = GetRDPFileAsync(poolId, computeNodeId, rdpFileNameToCreate, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-        internal async System.Threading.Tasks.Task<RemoteLoginSettings> GetRemoteLoginSettingsImpl(string poolId, string computeNodeId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        internal async Task<RemoteLoginSettings> GetRemoteLoginSettingsImpl(string poolId, string computeNodeId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var asyncTask = _parentBatchClient.ProtocolLayer.GetRemoteLoginSettings(poolId, computeNodeId, bhMgr, cancellationToken);
 
@@ -1443,23 +1443,23 @@ namespace Microsoft.Azure.Batch
         /// <param name="computeNodeId">The id of the compute node for which to get a Remote Desktop file.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The get remote login settings operation runs asynchronously.</para>
         /// <para>This method can be invoked only if the pool is created with a <see cref="VirtualMachineConfiguration"/> property.
-        /// If this method is invoked on pools created with <see cref="Microsoft.Azure.Batch.CloudServiceConfiguration" />, then Batch service returns 409 (Conflict).
-        /// For pools with a <see cref="Microsoft.Azure.Batch.CloudServiceConfiguration" /> property, one of the GetRDPFileAsync/GetRDPFile methods must be used.</para>
+        /// If this method is invoked on pools created with <see cref="CloudServiceConfiguration" />, then Batch service returns 409 (Conflict).
+        /// For pools with a <see cref="CloudServiceConfiguration" /> property, one of the GetRDPFileAsync/GetRDPFile methods must be used.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task<RemoteLoginSettings> GetRemoteLoginSettingsAsync(
+        public Task<RemoteLoginSettings> GetRemoteLoginSettingsAsync(
             string poolId,
             string computeNodeId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task<RemoteLoginSettings> asyncTask = GetRemoteLoginSettingsImpl(
+            Task<RemoteLoginSettings> asyncTask = GetRemoteLoginSettingsImpl(
                     poolId,
                     computeNodeId,
                     bhMgr,
@@ -1486,7 +1486,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task<RemoteLoginSettings> asyncTask = GetRemoteLoginSettingsAsync(poolId, computeNodeId, additionalBehaviors);
-            RemoteLoginSettings rls = asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            RemoteLoginSettings rls = asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
 
             return rls;
         }
@@ -1499,21 +1499,21 @@ namespace Microsoft.Azure.Batch
         /// <param name="rebootOption">Specifies when to reboot the node and what to do with currently running tasks. The default is <see cref="Common.ComputeNodeRebootOption.Requeue"/>.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>You can reboot a compute node only when it is in the <see cref="Common.ComputeNodeState.Idle"/> or <see cref="Common.ComputeNodeState.Running"/> state.</para>
         /// <para>The reboot operation runs asynchronously.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task RebootAsync(string poolId,
+        public Task RebootAsync(string poolId,
             string computeNodeId,
             Common.ComputeNodeRebootOption? rebootOption = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.RebootComputeNode(
+            Task asyncTask = _parentBatchClient.ProtocolLayer.RebootComputeNode(
                 poolId,
                 computeNodeId,
                 rebootOption,
@@ -1538,7 +1538,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = RebootAsync(poolId, computeNodeId, rebootOption, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -1549,12 +1549,12 @@ namespace Microsoft.Azure.Batch
         /// <param name="reimageOption">Specifies when to reimage the node and what to do with currently running tasks. The default is <see cref="Common.ComputeNodeReimageOption.Requeue"/>.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>You can reimage a compute node only when it is in the <see cref="Common.ComputeNodeState.Idle"/> or <see cref="Common.ComputeNodeState.Running"/> state.</para>
         /// <para>The reimage operation runs asynchronously.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task ReimageAsync(
+        public Task ReimageAsync(
             string poolId,
             string computeNodeId,
             Common.ComputeNodeReimageOption? reimageOption = null,
@@ -1562,9 +1562,9 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.ReimageComputeNode(poolId, computeNodeId, reimageOption, bhMgr, cancellationToken);
+            Task asyncTask = _parentBatchClient.ProtocolLayer.ReimageComputeNode(poolId, computeNodeId, reimageOption, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -1584,17 +1584,17 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = ReimageAsync(poolId, computeNodeId, reimageOption, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-        internal async System.Threading.Tasks.Task<NodeFile> GetNodeFileAsyncImpl(
+        internal async Task<NodeFile> GetNodeFileAsyncImpl(
             string poolId,
             string computeNodeId,
             string filePath,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var getNodeFilePropertiesTask = await this.ParentBatchClient.ProtocolLayer.GetNodeFilePropertiesByNode(
+            var getNodeFilePropertiesTask = await ParentBatchClient.ProtocolLayer.GetNodeFilePropertiesByNode(
                 poolId,
                 computeNodeId,
                 filePath,
@@ -1619,7 +1619,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="NodeFile"/> containing information about the file, and which can be used to download the file (see <see cref="NodeFile.CopyToStreamAsync"/>).</returns>
         /// <remarks>The get file operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task<NodeFile> GetNodeFileAsync(
+        public Task<NodeFile> GetNodeFileAsync(
             string poolId,
             string computeNodeId,
             string filePath,
@@ -1627,9 +1627,9 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsyncImpl(
+            Task<NodeFile> asyncTask = GetNodeFileAsyncImpl(
                 poolId,
                 computeNodeId,
                 filePath,
@@ -1651,8 +1651,8 @@ namespace Microsoft.Azure.Batch
         public NodeFile GetNodeFile(string poolId, string computeNodeId, string filePath,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task<NodeFile> asyncTask = this.GetNodeFileAsync(poolId, computeNodeId, filePath, additionalBehaviors);
-            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            Task<NodeFile> asyncTask = GetNodeFileAsync(poolId, computeNodeId, filePath, additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         internal async Task CopyNodeFileContentToStreamAsyncImpl(
@@ -1664,7 +1664,7 @@ namespace Microsoft.Azure.Batch
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            await this.ParentBatchClient.ProtocolLayer.GetNodeFileByNode(
+            await ParentBatchClient.ProtocolLayer.GetNodeFileByNode(
                 poolId,
                 computeNodeId,
                 filePath,
@@ -1695,8 +1695,8 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
-            return this.CopyNodeFileContentToStreamAsyncImpl(poolId, computeNodeId, filePath, stream, byteRange, bhMgr, cancellationToken);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
+            return CopyNodeFileContentToStreamAsyncImpl(poolId, computeNodeId, filePath, stream, byteRange, bhMgr, cancellationToken);
         }
 
         /// <summary>
@@ -1717,8 +1717,8 @@ namespace Microsoft.Azure.Batch
             GetFileRequestByteRange byteRange = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task asyncTask = this.CopyNodeFileContentToStreamAsync(poolId, computeNodeId, filePath, stream, byteRange, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            Task asyncTask = CopyNodeFileContentToStreamAsync(poolId, computeNodeId, filePath, stream, byteRange, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         internal Task<string> CopyNodeFileContentToStringAsyncImpl(
@@ -1732,7 +1732,7 @@ namespace Microsoft.Azure.Batch
         {
             return UtilitiesInternal.ReadNodeFileAsStringAsync(
                 // Note that behaviors is purposefully dropped in the below call since it's already managed by the bhMgr
-                (stream, bRange, behaviors, ct) => this.CopyNodeFileContentToStreamAsyncImpl(poolId, computeNodeId, filePath, stream, bRange, bhMgr, ct),
+                (stream, bRange, behaviors, ct) => CopyNodeFileContentToStreamAsyncImpl(poolId, computeNodeId, filePath, stream, bRange, bhMgr, ct),
                 encoding,
                 byteRange,
                 additionalBehaviors: null,
@@ -1760,7 +1760,7 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
             return CopyNodeFileContentToStringAsyncImpl(poolId, computeNodeId, filePath, encoding, byteRange, bhMgr, cancellationToken);
         }
 
@@ -1782,8 +1782,8 @@ namespace Microsoft.Azure.Batch
             GetFileRequestByteRange byteRange = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task<string> asyncTask = this.CopyNodeFileContentToStringAsync(poolId, computeNodeId, filePath, encoding, byteRange, additionalBehaviors);
-            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            Task<string> asyncTask = CopyNodeFileContentToStringAsync(poolId, computeNodeId, filePath, encoding, byteRange, additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         internal IPagedEnumerable<NodeFile> ListNodeFilesImpl(
@@ -1827,10 +1827,10 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // get the enumerable
-            IPagedEnumerable<NodeFile> enumerable = this.ListNodeFilesImpl(
+            IPagedEnumerable<NodeFile> enumerable = ListNodeFilesImpl(
                 poolId,
                 computeNodeId,
                 recursive,
@@ -1853,9 +1853,9 @@ namespace Microsoft.Azure.Batch
         /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>The delete operation runs asynchronously.</remarks>
-        public System.Threading.Tasks.Task DeleteNodeFileAsync(
+        public Task DeleteNodeFileAsync(
             string poolId,
             string computeNodeId,
             string filePath,
@@ -1864,9 +1864,9 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.DeleteNodeFileByNode(
+            Task asyncTask = _parentBatchClient.ProtocolLayer.DeleteNodeFileByNode(
                 poolId,
                 computeNodeId,
                 filePath,
@@ -1897,8 +1897,8 @@ namespace Microsoft.Azure.Batch
             bool? recursive = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task asyncTask = this.DeleteNodeFileAsync(poolId, computeNodeId, filePath, recursive, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            Task asyncTask = DeleteNodeFileAsync(poolId, computeNodeId, filePath, recursive, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
 
@@ -1911,13 +1911,13 @@ namespace Microsoft.Azure.Batch
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>The aggregated pool statistics.</returns>
         /// <remarks>The get statistics operation runs asynchronously.</remarks>
-        public async System.Threading.Tasks.Task<PoolStatistics> GetAllLifetimeStatisticsAsync(IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<PoolStatistics> GetAllLifetimeStatisticsAsync(IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> asyncTask =
-                this.ParentBatchClient.ProtocolLayer.GetAllPoolLifetimeStats(bhMgr, cancellationToken);
+            Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> asyncTask =
+                ParentBatchClient.ProtocolLayer.GetAllPoolLifetimeStats(bhMgr, cancellationToken);
 
             var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
 
@@ -1936,8 +1936,8 @@ namespace Microsoft.Azure.Batch
         /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetAllLifetimeStatisticsAsync"/>.</remarks>
         public PoolStatistics GetAllLifetimeStatistics(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task<PoolStatistics> asyncTask = this.GetAllLifetimeStatisticsAsync(additionalBehaviors);
-            PoolStatistics statistics = asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            Task<PoolStatistics> asyncTask = GetAllLifetimeStatisticsAsync(additionalBehaviors);
+            PoolStatistics statistics = asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
 
             return statistics;
         }
@@ -1955,7 +1955,7 @@ namespace Microsoft.Azure.Batch
         public IPagedEnumerable<PoolUsageMetrics> ListPoolUsageMetrics(DateTime? startTime = null, DateTime? endTime = null, DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             PagedEnumerable<PoolUsageMetrics> enumerable = new PagedEnumerable<PoolUsageMetrics>( // the lamda will be the enumerator factory
                 () =>
@@ -1981,7 +1981,7 @@ namespace Microsoft.Azure.Batch
         public IPagedEnumerable<ImageInformation> ListSupportedImages(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             PagedEnumerable<ImageInformation> enumerable = new PagedEnumerable<ImageInformation>( // the lamda will be the enumerator factory
                 () =>
@@ -1997,7 +1997,7 @@ namespace Microsoft.Azure.Batch
             return enumerable;
         }
 
-        internal async System.Threading.Tasks.Task<UploadBatchServiceLogsResult> UploadComputeNodeBatchServiceLogsAsyncImpl(
+        internal async Task<UploadBatchServiceLogsResult> UploadComputeNodeBatchServiceLogsAsyncImpl(
             string poolId,
             string computeNodeId,
             string containerUrl,
@@ -2040,12 +2040,12 @@ namespace Microsoft.Azure.Batch
         /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// This is for gathering Azure Batch service log files in an automated fashion from nodes if you are experiencing an error and wish to escalate to Azure support.
         /// The Azure Batch service log files should be shared with Azure support to aid in debugging issues with the Batch service.
         /// </remarks>
-        public System.Threading.Tasks.Task<UploadBatchServiceLogsResult> UploadComputeNodeBatchServiceLogsAsync(
+        public Task<UploadBatchServiceLogsResult> UploadComputeNodeBatchServiceLogsAsync(
             string poolId,
             string computeNodeId,
             string containerUrl,
@@ -2055,7 +2055,7 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             return UploadComputeNodeBatchServiceLogsAsyncImpl(
                 poolId,
@@ -2087,12 +2087,12 @@ namespace Microsoft.Azure.Batch
         /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// This is for gathering Azure Batch service log files in an automated fashion from nodes if you are experiencing an error and wish to escalate to Azure support.
         /// The Azure Batch service log files should be shared with Azure support to aid in debugging issues with the Batch service.
         /// </remarks>
-        public System.Threading.Tasks.Task<UploadBatchServiceLogsResult> UploadComputeNodeBatchServiceLogsAsync(
+        public Task<UploadBatchServiceLogsResult> UploadComputeNodeBatchServiceLogsAsync(
             string poolId,
             string computeNodeId,
             string containerUrl,
@@ -2103,7 +2103,7 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             return UploadComputeNodeBatchServiceLogsAsyncImpl(
                 poolId,
@@ -2146,14 +2146,14 @@ namespace Microsoft.Azure.Batch
             DateTime? endTime = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            var asyncTask = this.UploadComputeNodeBatchServiceLogsAsync(
+            var asyncTask = UploadComputeNodeBatchServiceLogsAsync(
                 poolId,
                 computeNodeId,
                 containerUrl,
                 startTime,
                 endTime,
                 additionalBehaviors);
-            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -2188,7 +2188,7 @@ namespace Microsoft.Azure.Batch
             DateTime? endTime = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            var asyncTask = this.UploadComputeNodeBatchServiceLogsAsync(
+            var asyncTask = UploadComputeNodeBatchServiceLogsAsync(
                 poolId,
                 computeNodeId,
                 containerUrl,
@@ -2196,7 +2196,7 @@ namespace Microsoft.Azure.Batch
                 startTime,
                 endTime,
                 additionalBehaviors);
-            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -2210,7 +2210,7 @@ namespace Microsoft.Azure.Batch
         public IPagedEnumerable<PoolNodeCounts> ListPoolNodeCounts(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             PagedEnumerable<PoolNodeCounts> enumerable = new PagedEnumerable<PoolNodeCounts>( // the lamda will be the enumerator factory
                 () =>

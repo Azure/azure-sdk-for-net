@@ -57,7 +57,7 @@
                         boundJob.AddTask(unboundTaskQuick);
                     }
 
-                    System.Threading.Thread.Sleep(5000);
+                    Thread.Sleep(5000);
 
                     // wait for fast tasks to complete
                     {
@@ -71,7 +71,7 @@
 
                             foreach (CloudTask curTask in boundJob.ListTasks())
                             {
-                                if (curTask.State != Microsoft.Azure.Batch.Common.TaskState.Completed)
+                                if (curTask.State != TaskState.Completed)
                                 {
                                     repeat = true;
 
@@ -113,7 +113,7 @@
                     testOutputHelper.WriteLine("Calling TaskStateMonitor.WaitAll().  This will take a while.");
 
                     TimeSpan timeToWait = TimeSpan.FromMinutes(5);
-                    Task whenAll = tsm.WhenAll(taskList, Microsoft.Azure.Batch.Common.TaskState.Completed, timeToWait, controlParams: odmc);
+                    Task whenAll = tsm.WhenAll(taskList, TaskState.Completed, timeToWait, controlParams: odmc);
 
                     //This could throw, if it does the test will fail, which is what we want
                     whenAll.Wait();
@@ -143,7 +143,7 @@
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 //Create a job
 
-                string jobId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestBoundJobVerbs";
+                string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestBoundJobVerbs";
 
                 try
                 {
@@ -242,7 +242,7 @@
             void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
-                string jobId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestBoundJobCommit";
+                string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestBoundJobCommit";
                 try
                 {
                     //

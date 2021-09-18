@@ -16,13 +16,13 @@
 
         public ObjectModelTypeData()
         {
-            this.Properties = new List<KeyValuePair<PropertyData, PropertyData>>();
-            this.ParentPathVariables = new List<string>();
-            this.CustomIncludes = new List<string>();
+            Properties = new List<KeyValuePair<PropertyData, PropertyData>>();
+            ParentPathVariables = new List<string>();
+            CustomIncludes = new List<string>();
 
             //By default, force the order of the constructor parameters to be the order specified in the specification
-            this.ForceConstructorOrder = true;
-            this.ConstructorAccess = AccessModifier.Public; //Default is public visibility
+            ForceConstructorOrder = true;
+            ConstructorAccess = AccessModifier.Public; //Default is public visibility
         }
 
         /// <summary>
@@ -71,7 +71,7 @@
         /// Gets a value indicating if this type is statically read only. A statically read
         /// only type has properties which do not have any setters.
         /// </summary>
-        public bool IsStaticallyReadOnly => this.Properties.All(kvp => !kvp.Key.HasPublicSetter);
+        public bool IsStaticallyReadOnly => Properties.All(kvp => !kvp.Key.HasPublicSetter);
 
         /// <summary>
         /// Gets or sets a value indicating if the constructor of this type is public.
@@ -114,7 +114,7 @@
         /// <summary>
         /// Gets a collection of includes that are used by this object model type.
         /// </summary>
-        public IEnumerable<string> Includes => UniversalIncludes.Union(this.CustomIncludes).OrderBy(str => str);
+        public IEnumerable<string> Includes => UniversalIncludes.Union(CustomIncludes).OrderBy(str => str);
 
         /// <summary>
         /// Gets a mapping of OM properties to protocol properties. Protocol type can be null in which case the default property mapper (same name, same type) will be used.
@@ -125,30 +125,30 @@
         /// Gets a mapping of OM properties to protocol properties that are public.
         /// </summary>
         public List<KeyValuePair<PropertyData, PropertyData>> PublicProperties =>
-            this.Properties.Where(kvp => !kvp.Key.IsOutsidePropertyContainer).ToList();
+            Properties.Where(kvp => !kvp.Key.IsOutsidePropertyContainer).ToList();
 
         /// <summary>
         /// Gets a mapping of properties ordered by property name.
         /// </summary>
-        public List<KeyValuePair<PropertyData, PropertyData>> OrderedPublicProperties => this.PublicProperties.OrderBy(kvp => kvp.Key.Name).ToList();
+        public List<KeyValuePair<PropertyData, PropertyData>> OrderedPublicProperties => PublicProperties.OrderBy(kvp => kvp.Key.Name).ToList();
 
         /// <summary>
         /// Gets a mapping of properties that are outside the property container.  This is used for example for properties like ParentBatchClient.
         /// </summary>
         public List<KeyValuePair<PropertyData, PropertyData>> OutsidePropertyContainerProperties =>
-            this.Properties.Where(p => p.Key.IsOutsidePropertyContainer).ToList();
+            Properties.Where(p => p.Key.IsOutsidePropertyContainer).ToList();
 
         /// <summary>
         /// Gets a mapping of properties which are retrieved from the underlying protocol object.
         /// </summary>
         public List<KeyValuePair<PropertyData, PropertyData>> BoundProperties =>
-            this.OrderedPublicProperties.Where(kvp => kvp.Key.BoundAccess != BindingAccess.None && !kvp.Key.IsClientOnly).ToList();
+            OrderedPublicProperties.Where(kvp => kvp.Key.BoundAccess != BindingAccess.None && !kvp.Key.IsClientOnly).ToList();
 
         /// <summary>
         /// Gets a mapping of properties which can be set on the underlying protocol object.
         /// </summary>
         public List<KeyValuePair<PropertyData, PropertyData>> UnboundProperties =>
-            this.OrderedPublicProperties.Where(kvp => kvp.Key.UnboundAccess != BindingAccess.None).ToList();
+            OrderedPublicProperties.Where(kvp => kvp.Key.UnboundAccess != BindingAccess.None).ToList();
 
         /// <summary>
         /// Gets a collection of properties which are used in the constructor of this type.
@@ -158,12 +158,12 @@
         {
             get
             {
-                var properties = this.ForceConstructorOrder ? this.Properties : this.OrderedPublicProperties;
+                var properties = ForceConstructorOrder ? Properties : OrderedPublicProperties;
                 IEnumerable<PropertyData> realProperties = properties.Select(kvp => kvp.Key)
                     .Where(p => p.ConstructorArgumentType != ConstructorArgumentType.None)
                     .OrderBy(p => p.ConstructorArgumentType == ConstructorArgumentType.Optional);
 
-                if (this.IsTopLevelObject)
+                if (IsTopLevelObject)
                 {
                     IEnumerable<PropertyData> topLevelObjectProperties = new List<PropertyData>
                         {
@@ -187,7 +187,7 @@
                                 },
                         };
 
-                    IEnumerable<PropertyData> parentPathVariableProperties = this.ParentPathVariables.Select(
+                    IEnumerable<PropertyData> parentPathVariableProperties = ParentPathVariables.Select(
                         parentPathVariable => new PropertyData()
                         {
                             Name = parentPathVariable,
@@ -209,7 +209,7 @@
         /// <summary>
         /// Gets a value indicating if this type should define a custom constructor.
         /// </summary>
-        public bool ShouldDefineCustomConstructor => (this.ConstructorProperties.Any() || this.ConstructorAccess != AccessModifier.Internal) && !this.HideCustomConstructor;
+        public bool ShouldDefineCustomConstructor => (ConstructorProperties.Any() || ConstructorAccess != AccessModifier.Internal) && !HideCustomConstructor;
 
         private bool CustomConstructorExternallyAccessibly => ConstructorAccess == AccessModifier.Protected || ConstructorAccess == AccessModifier.Public;
 
@@ -225,13 +225,13 @@
         /// In cases where the type is never serialized back to the server, GetTransportObject and the corresponding interface are not
         /// needed.
         /// </summary>
-        public bool ShouldDefineGetTransportObject => this.Properties.Select(kvp => kvp.Key).Any(
+        public bool ShouldDefineGetTransportObject => Properties.Select(kvp => kvp.Key).Any(
                 p => p.BoundAccess.HasFlag(BindingAccess.Write) || p.UnboundAccess.HasFlag(BindingAccess.Write));
 
         /// <summary>
         /// Gets the name of the transport type (used in the GetTransportObject method).
         /// </summary>
-        public string TransportObjectTypeName => string.IsNullOrEmpty(this.TransportProtocolName) ? this.ProtocolName : this.TransportProtocolName;
+        public string TransportObjectTypeName => string.IsNullOrEmpty(TransportProtocolName) ? ProtocolName : TransportProtocolName;
 
         /// <summary>
         /// Gets the custom constructors parameter string.
@@ -241,8 +241,8 @@
         public string GetCustomConstructorParametersString(int spacesIndented)
         {
             //Extract required constructor parameters
-            var requiredProperties = this.ConstructorProperties.Where(p => p.ConstructorArgumentType == ConstructorArgumentType.Required);
-            var optionalProperties = this.ConstructorProperties.Where(p => p.ConstructorArgumentType == ConstructorArgumentType.Optional);
+            var requiredProperties = ConstructorProperties.Where(p => p.ConstructorArgumentType == ConstructorArgumentType.Required);
+            var optionalProperties = ConstructorProperties.Where(p => p.ConstructorArgumentType == ConstructorArgumentType.Optional);
 
             List<string> argumentStrings = new List<string>();
 
@@ -266,12 +266,12 @@
         /// <returns>The bound constructors parameter string.</returns>
         public string GetBoundConstructorParameterString(int spacesIndented)
         {
-            string result = this.ProtocolName + " protocolObject";
-            if (this.IsTopLevelObject)
+            string result = ProtocolName + " protocolObject";
+            if (IsTopLevelObject)
             {
                 List<string> parameters = new List<string>();
                 parameters.Add(string.Format("{0} {1}", ParentBatchClientTypeName, ParentBatchClientConstructorParameterName));
-                foreach (string parentPathVariable in this.ParentPathVariables)
+                foreach (string parentPathVariable in ParentPathVariables)
                 {
                     parameters.Add(string.Format("string {0}", parentPathVariable));
                 }
@@ -288,7 +288,7 @@
         /// Gets the additional property initialization statements
         /// </summary>
         public IEnumerable<string> AdditionalPropertyInitializationStatements(IList<string> excluded = null) =>
-            this.ConstructorProperties.Where(p => !string.IsNullOrEmpty(p.AdditionalPropertyInitializationStatement) && (excluded == null || excluded.Contains(p.Name) == false)).Select(p => p.AdditionalPropertyInitializationStatement);
+            ConstructorProperties.Where(p => !string.IsNullOrEmpty(p.AdditionalPropertyInitializationStatement) && (excluded == null || excluded.Contains(p.Name) == false)).Select(p => p.AdditionalPropertyInitializationStatement);
 
         /// <summary>
         /// Generates a string containing the specified arguments one per line, indented by the specified number of spaces. So a collection of arguments "string foo" and "int bar" would
