@@ -404,7 +404,8 @@ function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
     Register-PackageSource `
       -Name CustomPackageSource `
       -Location $PackageSourceOverride `
-      -ProviderName NuGet
+      -ProviderName NuGet `
+      -Force
   }
   
 
