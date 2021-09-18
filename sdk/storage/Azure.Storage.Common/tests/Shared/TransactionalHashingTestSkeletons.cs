@@ -296,85 +296,21 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
-        public static async Task TestParallelUploadUsePrecalculatedHashOnOneshotAsync<TClient, TParentClient, TClientOptions>(
+        public static void TestPrecalculatedHashNotAccepted(
             TestRandom random,
             TransactionalHashAlgorithm algorithm,
-            Func<TClientOptions> getOptions,
-            TParentClient parentClient,
-            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
-            Func<TClient, Stream, UploadTransactionalHashingOptions, StorageTransferOptions, Task> parallelUploadAsync,
-            Func<Request, bool> isHashExpected = default) where TClientOptions : ClientOptions
+            Func<Stream, UploadTransactionalHashingOptions, Task> uploadAsync)
         {
             var data = TestHelper.GetRandomBuffer(Constants.KB, random);
-            // hash needs to be wrong so we detect difference from auto-SDK correct calculation
-            var precalculatedHash = TestHelper.GetRandomBuffer(16, random);
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm,
-                PrecalculatedHash = precalculatedHash
-            };
-            // excessively large threshold before split
-            var transferOptions = new StorageTransferOptions
-            {
-                InitialTransferSize = long.MaxValue,
-                MaximumTransferSize = long.MaxValue
+                PrecalculatedHash = TestHelper.GetRandomBuffer(16, random)
             };
 
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm, isHashExpected, precalculatedHash));
-            var clientOptions = getOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
-
-            var client = await getObjectClientAsync(parentClient, clientOptions);
-
-            hashPipelineAssertion.CheckRequest = true;
-            using (var stream = new MemoryStream(data))
-            {
-                AssertWriteHashMismatch(async () => await parallelUploadAsync(client, stream, hashingOptions, transferOptions), algorithm);
-            }
-        }
-
-        public static async Task TestParallelUploadIgnorePrecalculatedOnSplitAsync<TClient, TParentClient, TClientOptions>(
-            TestRandom random,
-            TransactionalHashAlgorithm algorithm,
-            Func<TClientOptions> getOptions,
-            TParentClient parentClient,
-            Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
-            Func<TClient, Stream, UploadTransactionalHashingOptions, StorageTransferOptions, Task> parallelUploadAsync,
-            Func<Request, bool> isHashExpected = default,
-            // file share upload can't customize transfer options, so this is an overload to trigger a split
-            int? forceDataSize = default) where TClientOptions : ClientOptions
-        {
-            const int blockSize = Constants.KB;
-            var data = TestHelper.GetRandomBuffer(forceDataSize ?? (2 * blockSize), random);
-            var transferOptions = new StorageTransferOptions
-            {
-                InitialTransferSize = blockSize,
-                MaximumTransferSize = blockSize
-            };
-
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(
-                algorithm,
-                // only check put block, not put block list
-                isHashExpected: isHashExpected));
-            var clientOptions = getOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
-
-            var client = await getObjectClientAsync(parentClient, clientOptions);
-
-            // create bad hash to ignore
-            var precalculatedHash = TestHelper.GetRandomBuffer(16, random);
-            var hashingOptions = new UploadTransactionalHashingOptions
-            {
-                Algorithm = algorithm,
-                PrecalculatedHash = precalculatedHash
-            };
-
-            // Act / Assert
-            using (var stream = new MemoryStream(data))
-            {
-                hashPipelineAssertion.CheckRequest = true;
-                await parallelUploadAsync(client, stream, hashingOptions, transferOptions);
-            }
+            var exception = Assert.ThrowsAsync<ArgumentException>(
+                async () => await uploadAsync(new MemoryStream(data), hashingOptions));
+            Assert.AreEqual("Precalculated hash not supported when potentially partitioning an upload.", exception.Message);
         }
         #endregion
 

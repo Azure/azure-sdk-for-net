@@ -202,27 +202,19 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
-        public async Task FileUploadUsePrecalculatedOnOneshot(TransactionalHashAlgorithm algorithm)
+        //[TestCase(TransactionalHashAlgorithm.StorageCrc64)] TODO #23578
+        public async Task BlockBlobClientUploadRejectPrecalculatedHash(TransactionalHashAlgorithm algorithm)
         {
             await using DisposingShare test = await GetTestShareAsync();
 
-            await TransactionalHashingTestSkeletons.TestParallelUploadUsePrecalculatedHashOnOneshotAsync(
-                Recording.Random, algorithm, () => GetOptions(), test.Share,
-                async (fileShare, clientOptions) => await MakeFileClient(fileShare, clientOptions, createFile: true),
-                FileParallelUploadAction);
-        }
+            var client = await MakeFileClient(test.Share, GetOptions(), false);
 
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        public async Task FileUploadIgnorePrecalculatedOnSplit(TransactionalHashAlgorithm algorithm)
-        {
-            await using DisposingShare test = await GetTestShareAsync();
-
-            int dataSize = 5 * Constants.MB;
-            await TransactionalHashingTestSkeletons.TestParallelUploadIgnorePrecalculatedOnSplitAsync(
-                Recording.Random, algorithm, () => GetOptions(), test.Share,
-                async (fileShare, clientOptions) => await MakeFileClient(fileShare, clientOptions, createFile: true, fileSize: dataSize),
-                FileParallelUploadAction,
-                forceDataSize: dataSize);
+            TransactionalHashingTestSkeletons.TestPrecalculatedHashNotAccepted(
+                Recording.Random, algorithm,
+                async (stream, hashingOptions) => await client.UploadAsync(new ShareFileUploadOptions(stream)
+                {
+                    TransactionalHashingOptions = hashingOptions
+                }));
         }
         #endregion
 

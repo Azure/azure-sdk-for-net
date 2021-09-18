@@ -113,12 +113,6 @@ namespace Azure.Storage
         public static ArgumentException CannotDeferTransactionalHashVerification()
             => new ArgumentException($"Cannot defer transactional hash verification. Returned hash is unavailable to caller.");
 
-        public static ArgumentException CannotDeferTransactionalHashVerificationWithClientsideEncryption()
-            => new ArgumentException($"Cannot defer transactional hash verification. Hash goes to pre-decrypted contents, which are unavailable to caller.");
-
-        public static ArgumentException PrecalculatedHashNotSupportedOnSplit()
-            => new ArgumentException("Precalculated hash not supported when potentially partitioning an upload.");
-
         public static void VerifyHttpsTokenAuth(Uri uri)
         {
             if (uri.Scheme != Constants.Https)

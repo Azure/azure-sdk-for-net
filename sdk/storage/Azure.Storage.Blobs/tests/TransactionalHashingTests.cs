@@ -278,23 +278,18 @@ namespace Azure.Storage.Blobs.Tests
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
         //[TestCase(TransactionalHashAlgorithm.StorageCrc64)] TODO #23578
-        public async Task BlobClientUploadUsePrecalculatedOnOneshot(TransactionalHashAlgorithm algorithm)
+        public async Task BlobClientUploadRejectPrecalculatedHash(TransactionalHashAlgorithm algorithm)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            await TransactionalHashingTestSkeletons.TestParallelUploadUsePrecalculatedHashOnOneshotAsync(
-                Recording.Random, algorithm, () => GetOptions(), test.Container, MakeBlobClient, BlobParallelUploadAction);
-        }
+            var client = await MakeBlobClient(test.Container, GetOptions());
 
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public async Task BlobClientUploadIgnorePrecalculatedOnSplit(TransactionalHashAlgorithm algorithm)
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            await TransactionalHashingTestSkeletons.TestParallelUploadIgnorePrecalculatedOnSplitAsync(
-                Recording.Random, algorithm, () => GetOptions(), test.Container, MakeBlobClient, BlobParallelUploadAction,
-                request => request.Uri.Query.Contains("blockid="));
+            TransactionalHashingTestSkeletons.TestPrecalculatedHashNotAccepted(
+                Recording.Random, algorithm,
+                async (stream, hashingOptions) => await client.UploadAsync(stream, new BlobUploadOptions()
+                {
+                    TransactionalHashingOptions = hashingOptions
+                }));
         }
         #endregion
 
@@ -322,23 +317,18 @@ namespace Azure.Storage.Blobs.Tests
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
         //[TestCase(TransactionalHashAlgorithm.StorageCrc64)] TODO #23578
-        public async Task BlockBlobClientUploadUsePrecalculatedOnOneshot(TransactionalHashAlgorithm algorithm)
+        public async Task BlockBlobClientUploadRejectPrecalculatedHash(TransactionalHashAlgorithm algorithm)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            await TransactionalHashingTestSkeletons.TestParallelUploadUsePrecalculatedHashOnOneshotAsync(
-                Recording.Random, algorithm, () => GetOptions(), test.Container, MakeBlockBlobClient, BlockBlobParallelUploadAction);
-        }
+            var client = await MakeBlockBlobClient(test.Container, GetOptions());
 
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public async Task BlockBlobClientUploadIgnorePrecalculatedOnSplit(TransactionalHashAlgorithm algorithm)
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            await TransactionalHashingTestSkeletons.TestParallelUploadIgnorePrecalculatedOnSplitAsync(
-                Recording.Random, algorithm, () => GetOptions(), test.Container, MakeBlockBlobClient, BlockBlobParallelUploadAction,
-                request => request.Uri.Query.Contains("blockid="));
+            TransactionalHashingTestSkeletons.TestPrecalculatedHashNotAccepted(
+                Recording.Random, algorithm,
+                async (stream, hashingOptions) => await client.UploadAsync(stream, new BlobUploadOptions()
+                {
+                    TransactionalHashingOptions = hashingOptions
+                }));
         }
         #endregion
 

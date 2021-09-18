@@ -226,28 +226,18 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
         //[TestCase(TransactionalHashAlgorithm.StorageCrc64)] TODO #23578
-        public async Task FileUploadUsePrecalculatedOnOneshot(TransactionalHashAlgorithm algorithm)
+        public async Task BlockBlobClientUploadRejectPrecalculatedHash(TransactionalHashAlgorithm algorithm)
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
 
-            await TransactionalHashingTestSkeletons.TestParallelUploadUsePrecalculatedHashOnOneshotAsync(
-                Recording.Random, algorithm, () => GetOptions(), test.FileSystem,
-                async (fileSystem, clientOptions) => await MakeFileClient(fileSystem, clientOptions, createFile: false),
-                FileParallelUploadAction,
-                request => request.Uri.Query.Contains("action=append"));
-        }
+            var client = await MakeFileClient(test.FileSystem, GetOptions(), false);
 
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public async Task FileUploadIgnorePrecalculatedOnSplit(TransactionalHashAlgorithm algorithm)
-        {
-            await using DisposingFileSystem test = await GetNewFileSystem();
-
-            await TransactionalHashingTestSkeletons.TestParallelUploadIgnorePrecalculatedOnSplitAsync(
-                Recording.Random, algorithm, () => GetOptions(), test.FileSystem,
-                async (fileSystem, clientOptions) => await MakeFileClient(fileSystem, clientOptions, createFile: false),
-                FileParallelUploadAction,
-                request => request.Uri.Query.Contains("action=append"));
+            TransactionalHashingTestSkeletons.TestPrecalculatedHashNotAccepted(
+                Recording.Random, algorithm,
+                async (stream, hashingOptions) => await client.UploadAsync(stream, new DataLakeFileUploadOptions()
+                {
+                    TransactionalHashingOptions = hashingOptions
+                }));
         }
         #endregion
 
