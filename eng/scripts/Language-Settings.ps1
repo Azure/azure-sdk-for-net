@@ -370,11 +370,10 @@ function Get-DocsCiLine ($item) {
 }
 
 function EnsureCustomSource($package) {
-  Write-Host "EnsureCustomSource - $PackageSourceOverride"
   # $PackageSourceOverride is a global variable provided in 
   # Update-DocsMsPackages.ps1. Its value can set a "customSource" property.
   # If it is empty then the property is not overridden.
-  if (!$PackageSourceOverride) { 
+  if (!$PackageSourceOverride) {
     return $package
   }
 
@@ -408,7 +407,6 @@ function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
       -ProviderName NuGet `
       -Force
   }
-  
 
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
@@ -461,7 +459,7 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
       Write-Host "Update tracked package: $($package.Name) to version $($updatedVersions)"
       $package.Versions[0] = $updatedVersion
       $package = EnsureCustomSource $package
-    } else { 
+    } else {
       Write-Host "Keep tracked package: $($package.Name)"
     }
 
@@ -485,7 +483,7 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
   }
 
   # Add packages that exist in the metadata but are not onboarded in docs config
-  # TODO: tfm='netstandard2.0' is a temporary workaround for 
+  # TODO: tfm='netstandard2.0' is a temporary workaround for
   # https://github.com/Azure/azure-sdk-for-net/issues/22494
   $newPackageProperties = [ordered]@{ tfm = 'netstandard2.0' }
   if ($Mode -eq 'preview') {
