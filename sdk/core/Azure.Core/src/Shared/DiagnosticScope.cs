@@ -15,9 +15,7 @@ using System.Reflection;
 
 namespace Azure.Core.Pipeline
 {
-#pragma warning disable CA1001 // Implement IDisposable
     internal readonly struct DiagnosticScope : IDisposable
-#pragma warning restore CA1001 // Implement IDisposable
     {
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
@@ -41,6 +39,13 @@ namespace Azure.Core.Pipeline
 
         public bool IsEnabled { get; }
 
+        /// <summary>
+        /// This method combines client namespace and operation name into an ActivitySource name and creates the activity source.
+        /// For example:
+        ///     ns: Azure.Storage.Blobs
+        ///     name: BlobClient.DownloadTo
+        ///     result Azure.Storage.Blobs.BlobClient
+        /// </summary>
         private static object? GetActivitySource(string ns, string name)
         {
             if (!ActivityExtensions.SupportsActivitySource())
@@ -535,7 +540,7 @@ namespace Azure.Core.Pipeline
                 if (method == null ||
                     ActivitySourceType == null)
                 {
-                    ActivitySourceHasListenersMethod = o => false;
+                    ActivitySourceHasListenersMethod = _ => false;
                 }
                 else
                 {

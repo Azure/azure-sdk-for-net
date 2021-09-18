@@ -28,23 +28,26 @@ namespace Azure.Core.Pipeline
 
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            if (!ShouldCreateActivity)
+            if (ShouldCreateActivity)
+            {
+                return ProcessAsync(message, pipeline, true);
+            }
+            else
             {
                 return ProcessNextAsync(message, pipeline, true);
             }
-
-            return ProcessAsync(message, pipeline, true);
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            if (!ShouldCreateActivity)
+            if (ShouldCreateActivity)
+            {
+                ProcessAsync(message, pipeline, false).EnsureCompleted();
+            }
+            else
             {
                 ProcessNextAsync(message, pipeline, false).EnsureCompleted();
-                return;
             }
-
-            ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
