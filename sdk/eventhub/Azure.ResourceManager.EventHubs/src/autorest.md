@@ -6,7 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
-require: D:\yukun\projects\azure-rest-api-specs\specification\eventhub\resource-manager\readme.md
+tag: package-2017-04
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c9992af7235a6550087d4fed8f081ed35019f605/specification/eventhub/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -17,15 +18,13 @@ operation-group-to-resource-type:
     Configuration: Microsoft.EventHub/clusters/quotaConfiguration/default
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules
     NamespaceName: nonresourcetype1
-    AvailableClusters: nonresourcetype2
-    DisasterRecoveryConfigName: nonresourcetype3
+    DisasterRecoveryConfigName: nonresourcetype2
 operation-group-to-resource:
     PrivateLinkResources: NonResource
     Regions: NonResource
     Configuration: ClusterQuotaConfigurationProperties
     DisasterRecoveryConfigAuthorizationRules: AuthorizationRule
     NamespaceName: NonResource
-    AvailableClusters: NonResource
     DisasterRecoveryConfigName: NonResource
 operation-group-to-parent:
     Namespaces: resourceGroups
@@ -36,12 +35,8 @@ operation-group-to-parent:
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs
     EventHubAuthorizationRules: Microsoft.EventHub/namespaces/eventhubs
     NamespaceName: subscriptions
-    AvailableClusters: subscriptions
     DisasterRecoveryConfigName: Microsoft.EventHub/namespaces
 operation-group-is-extension: NamespaceAuthorizationRules;DisasterRecoveryConfigAuthorizationRules;EventHubAuthorizationRules
-operation-group-to-singleton-resource:
-    NetworkRuleSets: networkRuleSets/default
-    Configuration: quotaConfiguration/default
 directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/virtualnetworkrules'].get.operationId
@@ -125,3 +120,4 @@ directive:
       where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability'].post.operationId
       transform: return "NamespaceName_CheckAvailability"
 ```
+

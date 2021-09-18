@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.EventHubs
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespacesRestOperations _restClient;
         private readonly EHNamespaceData _data;
-        private PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient { get; }
         private DisasterRecoveryConfigNameRestOperations _disasterRecoveryConfigNameRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="EHNamespace"/> class for mocking. </summary>
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.EventHubs
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.EventHubs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
@@ -67,7 +64,6 @@ namespace Azure.ResourceManager.EventHubs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
@@ -413,16 +409,16 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets lists of resources that supports Privatelinks. </summary>
+        /// <summary> Gets messaging plan for specified namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<PrivateLinkResource>>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MessagingPlan>> GetMessagingPlanAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetPrivateLinkResources");
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetMessagingPlan");
             scope.Start();
             try
             {
-                var response = await _privateLinkResourcesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                var response = await _restClient.GetMessagingPlanAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -431,16 +427,16 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets lists of resources that supports Privatelinks. </summary>
+        /// <summary> Gets messaging plan for specified namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        public virtual Response<MessagingPlan> GetMessagingPlan(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetPrivateLinkResources");
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetMessagingPlan");
             scope.Start();
             try
             {
-                var response = _privateLinkResourcesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                var response = _restClient.GetMessagingPlan(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -449,6 +445,81 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// <summary> Gets list of NetworkRuleSet for a Namespace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkRuleSetData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkRuleSetData> GetNetworkRuleSets(CancellationToken cancellationToken = default)
+        {
+            Page<NetworkRuleSetData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.GetNetworkRuleSets(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<NetworkRuleSetData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.GetNetworkRuleSetsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets list of NetworkRuleSet for a Namespace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkRuleSetData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkRuleSetData> GetNetworkRuleSetsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<NetworkRuleSetData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.GetNetworkRuleSetsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<NetworkRuleSetData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.GetNetworkRuleSetsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
         /// <summary> Check the give Namespace name availability. </summary>
         /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -499,18 +570,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets a list of PrivateEndpointConnections in the EHNamespace. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a EHNamespace. </returns>
-        public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()
+        /// <summary> Gets a list of AuthorizationRuleNamespaces in the EHNamespace. </summary>
+        /// <returns> An object representing collection of AuthorizationRuleNamespaces and their operations over a EHNamespace. </returns>
+        public AuthorizationRuleNamespaceContainer GetAuthorizationRuleNamespaces()
         {
-            return new PrivateEndpointConnectionContainer(this);
-        }
-
-        /// <summary> Gets a list of Eventhubs in the EHNamespace. </summary>
-        /// <returns> An object representing collection of Eventhubs and their operations over a EHNamespace. </returns>
-        public EventhubContainer GetEventhubs()
-        {
-            return new EventhubContainer(this);
+            return new AuthorizationRuleNamespaceContainer(this);
         }
 
         /// <summary> Gets a list of ArmDisasterRecoveries in the EHNamespace. </summary>
@@ -520,18 +584,18 @@ namespace Azure.ResourceManager.EventHubs
             return new ArmDisasterRecoveryContainer(this);
         }
 
+        /// <summary> Gets a list of Eventhubs in the EHNamespace. </summary>
+        /// <returns> An object representing collection of Eventhubs and their operations over a EHNamespace. </returns>
+        public EventhubContainer GetEventhubs()
+        {
+            return new EventhubContainer(this);
+        }
+
         /// <summary> Gets an object representing a NetworkRuleSet along with the instance operations that can be performed on it. </summary>
         /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
         public NetworkRuleSet GetNetworkRuleSet()
         {
             return new NetworkRuleSet(this, Id + "/networkRuleSets/default");
-        }
-
-        /// <summary> Gets a list of AuthorizationRuleNamespaces in the EHNamespace. </summary>
-        /// <returns> An object representing collection of AuthorizationRuleNamespaces and their operations over a EHNamespace. </returns>
-        public AuthorizationRuleNamespaceContainer GetAuthorizationRuleNamespaces()
-        {
-            return new AuthorizationRuleNamespaceContainer(this);
         }
     }
 }

@@ -10,7 +10,6 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -37,23 +36,12 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static AuthorizationRuleData DeserializeAuthorizationRuleData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<IList<AccessRights>> rights = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -97,7 +85,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new AuthorizationRuleData(id, name, type, systemData, Optional.ToList(rights));
+            return new AuthorizationRuleData(id, name, type, Optional.ToList(rights));
         }
     }
 }

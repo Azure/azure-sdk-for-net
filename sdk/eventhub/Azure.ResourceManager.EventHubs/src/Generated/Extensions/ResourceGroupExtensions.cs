@@ -12,16 +12,6 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region Cluster
-        /// <summary> Gets an object representing a ClusterContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ClusterContainer" /> object. </returns>
-        public static ClusterContainer GetClusters(this ResourceGroup resourceGroup)
-        {
-            return new ClusterContainer(resourceGroup);
-        }
-        #endregion
-
         #region EHNamespace
         /// <summary> Gets an object representing a EHNamespaceContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>

@@ -5,26 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.EventHubs.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.EventHubs
+namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class ClusterData : IUtf8JsonSerializable
+    public partial class MessagingPlan : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku");
-                writer.WriteObjectValue(Sku);
-            }
             writer.WritePropertyName("tags");
             writer.WriteStartObject();
             foreach (var item in Tags)
@@ -41,41 +35,19 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static ClusterData DeserializeClusterData(JsonElement element)
+        internal static MessagingPlan DeserializeMessagingPlan(JsonElement element)
         {
-            Optional<ClusterSku> sku = default;
-            Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             Location location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> createdAt = default;
-            Optional<string> updatedAt = default;
-            Optional<string> metricId = default;
-            Optional<string> status = default;
+            Optional<int> sku = default;
+            Optional<int> selectedEventHubUnit = default;
+            Optional<DateTimeOffset> updatedAt = default;
+            Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sku = ClusterSku.DeserializeClusterSku(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -115,31 +87,51 @@ namespace Azure.ResourceManager.EventHubs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("createdAt"))
+                        if (property0.NameEquals("sku"))
                         {
-                            createdAt = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sku = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("selectedEventHubUnit"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            selectedEventHubUnit = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("updatedAt"))
                         {
-                            updatedAt = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("metricId"))
+                        if (property0.NameEquals("revision"))
                         {
-                            metricId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("status"))
-                        {
-                            status = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            revision = property0.Value.GetInt64();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ClusterData(id, name, type, tags, location, sku.Value, systemData, createdAt.Value, updatedAt.Value, metricId.Value, status.Value);
+            return new MessagingPlan(id, name, type, tags, location, Optional.ToNullable(sku), Optional.ToNullable(selectedEventHubUnit), Optional.ToNullable(updatedAt), Optional.ToNullable(revision));
         }
     }
 }

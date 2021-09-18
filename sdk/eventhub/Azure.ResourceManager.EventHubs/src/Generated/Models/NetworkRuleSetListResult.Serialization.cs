@@ -8,14 +8,16 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EHNamespaceIdListResult
+    internal partial class NetworkRuleSetListResult
     {
-        internal static EHNamespaceIdListResult DeserializeEHNamespaceIdListResult(JsonElement element)
+        internal static NetworkRuleSetListResult DeserializeNetworkRuleSetListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<EHNamespaceIdContainer>> value = default;
+            Optional<IReadOnlyList<NetworkRuleSetData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +27,21 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EHNamespaceIdContainer> array = new List<EHNamespaceIdContainer>();
+                    List<NetworkRuleSetData> array = new List<NetworkRuleSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EHNamespaceIdContainer.DeserializeEHNamespaceIdContainer(item));
+                        array.Add(NetworkRuleSetData.DeserializeNetworkRuleSetData(item));
                     }
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new EHNamespaceIdListResult(Optional.ToList(value));
+            return new NetworkRuleSetListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

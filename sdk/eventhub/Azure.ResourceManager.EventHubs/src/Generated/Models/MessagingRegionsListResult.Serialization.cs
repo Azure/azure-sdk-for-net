@@ -11,11 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class AvailableClustersList
+    internal partial class MessagingRegionsListResult
     {
-        internal static AvailableClustersList DeserializeAvailableClustersList(JsonElement element)
+        internal static MessagingRegionsListResult DeserializeMessagingRegionsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AvailableCluster>> value = default;
+            Optional<IReadOnlyList<MessagingRegions>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +26,21 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AvailableCluster> array = new List<AvailableCluster>();
+                    List<MessagingRegions> array = new List<MessagingRegions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableCluster.DeserializeAvailableCluster(item));
+                        array.Add(MessagingRegions.DeserializeMessagingRegions(item));
                     }
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AvailableClustersList(Optional.ToList(value));
+            return new MessagingRegionsListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

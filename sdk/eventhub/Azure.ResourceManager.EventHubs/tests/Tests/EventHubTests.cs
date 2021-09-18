@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
             //create an authrization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
-            AuthorizationRuleEventHubContainer ruleContainer =eventhub.GetAuthorizationRuleEventHubs();
+            AuthorizationRuleEventHubContainer ruleContainer = eventhub.GetAuthorizationRuleEventHubs();
             AuthorizationRuleData parameter = new AuthorizationRuleData()
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            AuthorizationRuleEventHub authorizationRule = (await ruleContainer.CreateOrUpdateAsync(ruleName,parameter)).Value;
+            AuthorizationRuleEventHub authorizationRule = (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 

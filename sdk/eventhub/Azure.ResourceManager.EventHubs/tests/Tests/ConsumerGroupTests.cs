@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             for (int i = 0; i < 10; i++)
             {
                 string consumerGroupName = Recording.GenerateAssetName("testconsumergroup" + i.ToString());
-                _= (await _consumerGroupContainer.CreateOrUpdateAsync(consumerGroupName, new ConsumerGroupData())).Value;
+                _ = (await _consumerGroupContainer.CreateOrUpdateAsync(consumerGroupName, new ConsumerGroupData())).Value;
             }
 
             //validate
             List<ConsumerGroup> list = await _consumerGroupContainer.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(list.Count, 11);
-            list=await _consumerGroupContainer.GetAllAsync(5, 5).ToEnumerableAsync();
+            list = await _consumerGroupContainer.GetAllAsync(5, 5).ToEnumerableAsync();
             Assert.AreEqual(list.Count, 6);
         }
 
