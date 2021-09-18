@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal EndpointUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Endpoint>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EndpointUpdateOperation");
+            _operation = new OperationInternals<Endpoint>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "EndpointUpdateOperation");
             _operationBase = operationsBase;
         }
 

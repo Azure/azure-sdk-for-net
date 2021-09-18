@@ -95,28 +95,56 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(DefaultOriginGroup))
             {
-                writer.WritePropertyName("defaultOriginGroup");
-                writer.WriteObjectValue(DefaultOriginGroup);
+                if (DefaultOriginGroup != null)
+                {
+                    writer.WritePropertyName("defaultOriginGroup");
+                    writer.WriteObjectValue(DefaultOriginGroup);
+                }
+                else
+                {
+                    writer.WriteNull("defaultOriginGroup");
+                }
             }
             if (Optional.IsCollectionDefined(UrlSigningKeys))
             {
-                writer.WritePropertyName("urlSigningKeys");
-                writer.WriteStartArray();
-                foreach (var item in UrlSigningKeys)
+                if (UrlSigningKeys != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("urlSigningKeys");
+                    writer.WriteStartArray();
+                    foreach (var item in UrlSigningKeys)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("urlSigningKeys");
+                }
             }
             if (Optional.IsDefined(DeliveryPolicy))
             {
-                writer.WritePropertyName("deliveryPolicy");
-                writer.WriteObjectValue(DeliveryPolicy);
+                if (DeliveryPolicy != null)
+                {
+                    writer.WritePropertyName("deliveryPolicy");
+                    writer.WriteObjectValue(DeliveryPolicy);
+                }
+                else
+                {
+                    writer.WriteNull("deliveryPolicy");
+                }
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
-                writer.WritePropertyName("webApplicationFirewallPolicyLink");
-                writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                if (WebApplicationFirewallPolicyLink != null)
+                {
+                    writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                }
+                else
+                {
+                    writer.WriteNull("webApplicationFirewallPolicyLink");
+                }
             }
             if (Optional.IsCollectionDefined(Origins))
             {
@@ -324,7 +352,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                defaultOriginGroup = null;
                                 continue;
                             }
                             defaultOriginGroup = ResourceReference.DeserializeResourceReference(property0.Value);
@@ -334,7 +362,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                urlSigningKeys = null;
                                 continue;
                             }
                             List<UrlSigningKey> array = new List<UrlSigningKey>();
@@ -349,7 +377,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                deliveryPolicy = null;
                                 continue;
                             }
                             deliveryPolicy = EndpointPropertiesUpdateParametersDeliveryPolicy.DeserializeEndpointPropertiesUpdateParametersDeliveryPolicy(property0.Value);
@@ -359,7 +387,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                webApplicationFirewallPolicyLink = null;
                                 continue;
                             }
                             webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);

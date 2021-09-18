@@ -26,13 +26,27 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(HttpPort))
             {
-                writer.WritePropertyName("httpPort");
-                writer.WriteNumberValue(HttpPort.Value);
+                if (HttpPort != null)
+                {
+                    writer.WritePropertyName("httpPort");
+                    writer.WriteNumberValue(HttpPort.Value);
+                }
+                else
+                {
+                    writer.WriteNull("httpPort");
+                }
             }
             if (Optional.IsDefined(HttpsPort))
             {
-                writer.WritePropertyName("httpsPort");
-                writer.WriteNumberValue(HttpsPort.Value);
+                if (HttpsPort != null)
+                {
+                    writer.WritePropertyName("httpsPort");
+                    writer.WriteNumberValue(HttpsPort.Value);
+                }
+                else
+                {
+                    writer.WriteNull("httpsPort");
+                }
             }
             if (Optional.IsDefined(OriginHostHeader))
             {
@@ -82,8 +96,8 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             string name = default;
             Optional<string> hostName = default;
-            Optional<int> httpPort = default;
-            Optional<int> httpsPort = default;
+            Optional<int?> httpPort = default;
+            Optional<int?> httpsPort = default;
             Optional<string> originHostHeader = default;
             Optional<int> priority = default;
             Optional<int> weight = default;
@@ -117,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                httpPort = null;
                                 continue;
                             }
                             httpPort = property0.Value.GetInt32();
@@ -127,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                httpsPort = null;
                                 continue;
                             }
                             httpsPort = property0.Value.GetInt32();

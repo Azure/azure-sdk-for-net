@@ -42,13 +42,43 @@ operation-group-to-parent:
 directive:
   - from: swagger-document
     where: $.definitions.DeliveryRuleAction
-    transform: $["x-ms-client-name"] = "DeliveryRuleOperation"
+    transform: $['x-ms-client-name'] = 'DeliveryRuleOperation'
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}'].patch
     transform: >
       $['x-ms-long-running-operation-options'] = {
           "final-state-via": "original-uri"
       }
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'].patch
+    transform: >
+      $['x-ms-long-running-operation-options'] = {
+          "final-state-via": "original-uri"
+      }
+  - from: swagger-document
+    where: $.definitions.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.EndpointPropertiesUpdateParameters.properties.urlSigningKeys
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.EndpointPropertiesUpdateParameters.properties.deliveryPolicy
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.EndpointPropertiesUpdateParameters.properties.webApplicationFirewallPolicyLink
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.DeepCreatedOriginGroupProperties.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.DeepCreatedOriginGroupProperties.properties.responseBasedOriginErrorDetectionSettings
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.DeepCreatedOriginProperties.properties.httpPort
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.DeepCreatedOriginProperties.properties.httpsPort
+    transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.paths['/providers/Microsoft.Cdn/checkNameAvailability'].post.operationId
     transform: return 'NameCheckWithTenant_CheckAvailability'

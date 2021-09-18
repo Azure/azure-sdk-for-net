@@ -90,28 +90,56 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(DefaultOriginGroup))
             {
-                writer.WritePropertyName("defaultOriginGroup");
-                writer.WriteObjectValue(DefaultOriginGroup);
+                if (DefaultOriginGroup != null)
+                {
+                    writer.WritePropertyName("defaultOriginGroup");
+                    writer.WriteObjectValue(DefaultOriginGroup);
+                }
+                else
+                {
+                    writer.WriteNull("defaultOriginGroup");
+                }
             }
             if (Optional.IsCollectionDefined(UrlSigningKeys))
             {
-                writer.WritePropertyName("urlSigningKeys");
-                writer.WriteStartArray();
-                foreach (var item in UrlSigningKeys)
+                if (UrlSigningKeys != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("urlSigningKeys");
+                    writer.WriteStartArray();
+                    foreach (var item in UrlSigningKeys)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("urlSigningKeys");
+                }
             }
             if (Optional.IsDefined(DeliveryPolicy))
             {
-                writer.WritePropertyName("deliveryPolicy");
-                writer.WriteObjectValue(DeliveryPolicy);
+                if (DeliveryPolicy != null)
+                {
+                    writer.WritePropertyName("deliveryPolicy");
+                    writer.WriteObjectValue(DeliveryPolicy);
+                }
+                else
+                {
+                    writer.WriteNull("deliveryPolicy");
+                }
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
-                writer.WritePropertyName("webApplicationFirewallPolicyLink");
-                writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                if (WebApplicationFirewallPolicyLink != null)
+                {
+                    writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                }
+                else
+                {
+                    writer.WriteNull("webApplicationFirewallPolicyLink");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
