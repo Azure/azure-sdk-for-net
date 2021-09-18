@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Tests.Helpers;
 using Azure.ResourceManager.Storage.Models;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Tests.Tests
 {
@@ -125,6 +126,68 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.NotNull(share3.Data.Metadata);
             Assert.AreEqual(share3.Data.ShareQuota, shareData.ShareQuota);
             Assert.AreEqual(share3.Data.Metadata, shareData.Metadata);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task UpdateFileService()
+        {
+            //update service property
+            FileServiceData parameter = new FileServiceData()
+            {
+                ShareDeleteRetentionPolicy = new DeleteRetentionPolicy()
+                {
+                    Enabled = true,
+                    Days = 5
+                }
+            };
+            _fileService = await _fileService.SetServicePropertiesAsync(parameter);
+
+            //validate
+            Assert.IsTrue(_fileService.Data.ShareDeleteRetentionPolicy.Enabled);
+            Assert.AreEqual(_fileService.Data.ShareDeleteRetentionPolicy.Days, 5);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task RestoreFileShare()
+        {
+            //enable soft delete in service property
+            FileServiceData parameter = new FileServiceData()
+            {
+                ShareDeleteRetentionPolicy = new DeleteRetentionPolicy()
+                {
+                    Enabled = true,
+                    Days = 5
+                }
+            };
+            _fileService = await _fileService.SetServicePropertiesAsync(parameter);
+
+            //create file share
+            string fileShareName = Recording.GenerateAssetName("testfileshare");
+            FileShare share1 = (await _fileShareContainer.CreateOrUpdateAsync(fileShareName, new FileShareData())).Value;
+            Assert.AreEqual(share1.Id.Name, fileShareName);
+
+            //delete this share
+            await share1.DeleteAsync();
+
+            //get the deleted share version
+            string deletedShareVersion = null;
+            List<FileShare> fileShares = await _fileShareContainer.GetAllAsync(expand: "deleted").ToEnumerableAsync();
+            deletedShareVersion = fileShares[0].Data.Version;
+
+            //restore file share
+            //Don't need sleep when playback, or test will be very slow. Need sleep when live and record.
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(30000);
+            }
+            DeletedShare deletedShare = new DeletedShare(fileShareName, deletedShareVersion);
+            await share1.RestoreAsync(deletedShare);
+
+            //validate
+            fileShares = await _fileShareContainer.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(fileShares.Count, 1);
         }
     }
 }
