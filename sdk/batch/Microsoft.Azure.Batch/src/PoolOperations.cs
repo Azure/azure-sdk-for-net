@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -655,6 +655,97 @@ namespace Microsoft.Azure.Batch
                 cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        /// <summary>
+        /// Enumerates the <see cref="NodeVMExtension">extensions</see> of the specified <see cref="ComputeNode"/>.
+        /// </summary>
+        /// <param name="poolId">The Id of the <see cref="CloudPool">pool</see> to which the <see cref="NodeVMExtension">extension</see> belongs.</param>
+        /// <param name="nodeId">The Id of the <see cref="ComputeNode"/> of the returned extensions.</param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <returns>An <see cref="IPagedEnumerable{Certificate}"/> that can be used to enumerate certificates asynchronously or synchronously.</returns>
+        /// <remarks>This method returns immediately; the certificates are retrieved from the Batch service only when the collection is enumerated.
+        /// Retrieval is non-atomic; certificates are retrieved in pages during enumeration of the collection.</remarks>
+        public IPagedEnumerable<NodeVMExtension> ListComputeNodeExtensions(string poolId,
+            string nodeId,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            BehaviorManager combinedBehaviors = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+
+            PagedEnumerable<NodeVMExtension> enumerable = new PagedEnumerable<NodeVMExtension>(
+                () =>
+                {
+                    AsyncListComputeNodeExtensionsEnumerator typedEnumerator = new AsyncListComputeNodeExtensionsEnumerator(this, poolId, nodeId, combinedBehaviors, null);
+
+                    PagedEnumeratorBase<NodeVMExtension> enumeratorBase = typedEnumerator;
+
+                    return enumeratorBase;
+                });
+
+            return enumerable;
+        }
+
+        internal async Task<NodeVMExtension> GetComputeNodeExtensionAsyncImpl(
+            string poolId,
+            string computeNodeId,
+            string extensionName,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken)
+        {
+            Task<AzureOperationResponse<Models.NodeVMExtension, Models.ComputeNodeExtensionGetHeaders>> asyncTask = 
+                ParentBatchClient.ProtocolLayer.GetComputeNodeExtension(poolId, computeNodeId, extensionName, bhMgr, cancellationToken);
+            AzureOperationResponse<Models.NodeVMExtension, Models.ComputeNodeExtensionGetHeaders> result = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+
+            NodeVMExtension newExtension = new NodeVMExtension(result.Body);
+
+            return newExtension;
+        }
+
+        /// <summary>
+        /// Gets the specified compute node extension.
+        /// </summary>
+        /// <param name="poolId">The id of the pool.</param>
+        /// <param name="computeNodeId">The id of the compute node that has the extension.</param>
+        /// <param name="extensionName">The name of the extension to get from the pool.</param>
+        /// <param name="detailLevel">A <see cref="DetailLevel"/> used for controlling which properties are retrieved from the service.</param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/> and <paramref name="detailLevel"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="NodeVMExtension"/> containing information about the specified compute node extension.</returns>
+        /// <remarks>The get node extension operation runs asynchronously.</remarks>
+        public Task<NodeVMExtension> GetComputeNodeExtensionAsync(
+            string poolId,
+            string computeNodeId,
+            string extensionName,
+            DetailLevel detailLevel = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors, detailLevel);
+
+            Task<NodeVMExtension> asyncTask = GetComputeNodeExtensionAsyncImpl(poolId, computeNodeId, extensionName, bhMgr, cancellationToken);
+
+            return asyncTask;
+        }
+
+        /// <summary>
+        /// Gets the specified compute node.
+        /// </summary>
+        /// <param name="poolId">The id of the pool.</param>
+        /// <param name="computeNodeId">The id of the compute node to get from the pool.</param>
+        /// <param name="extensionName">The name of the extension to get from the pool.</param>
+        /// <param name="detailLevel">A <see cref="DetailLevel"/> used for controlling which properties are retrieved from the service.</param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <returns>A <see cref="NodeVMExtension"/> containing information about the specified compute node extension.</returns>
+        /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetComputeNodeExtensionAsync"/>.</remarks>
+        public NodeVMExtension GetComputeNodeExtension(
+            string poolId,
+            string computeNodeId,
+            string extensionName,
+            DetailLevel detailLevel = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            Task<NodeVMExtension> asyncTask = GetComputeNodeExtensionAsync(poolId, computeNodeId, extensionName, detailLevel, additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
