@@ -35,6 +35,7 @@ stages:
             artifact: packages
             patterns: '*'
             displayName: "Download packages artifacts from 'net - core' pipeline "
+
           - pwsh: |
               npx cspell lint `
                 --config ./.vscode/cspell.json `
@@ -45,23 +46,28 @@ stages:
             # become blockers when this is rolled out to all services. For now, turn
             # the pipeline yellow if spelling errors are detected but do not block.
             continueOnError: true
+
           - template: /eng/common/pipelines/templates/steps/verify-links.yml
             parameters:
               Directory: ""
               CheckLinkGuidance: $true
+
           - pwsh: |
               mkdir "$(System.ArtifactsDirectory)/BuildArtifacts"
               ls "$(PIPELINE.WORKSPACE)/net-core/packages"
               Copy-Item -Path "$(PIPELINE.WORKSPACE)/net-core/packages/*" -Destination "$(System.ArtifactsDirectory)/BuildArtifacts"
             displayName: Create Artifact Directory
+
           - pwsh: |
               mkdir '$(System.ArtifactsDirectory)/Packages'
               Move-Item -Path '$(System.ArtifactsDirectory)/BuildArtifacts/*' -Destination '$(System.ArtifactsDirectory)/Packages/' -Include Azure.*.nupkg -Exclude *.symbols.nupkg
             displayName: Isolate packages to process
+
           - pwsh: |
               mkdir '$(Build.ArtifactStagingDirectory)/reports'
               Copy-Item -Path '$(Build.SourcesDirectory)/eng/common/InterdependencyGraph.html' -Destination '$(Build.ArtifactStagingDirectory)/reports/InterdependencyGraph.html'
             displayName: Setup reports directory
+
           - task: PowerShell@2
             displayName: Generate Dependency Report
             inputs:
@@ -72,6 +78,7 @@ stages:
                 -LockfilePath '$(Build.SourcesDirectory)/eng/Packages.Data.props'
                 -OutPath '$(Build.ArtifactStagingDirectory)/reports/dependencies.html'
                 -DumpPath '$(Build.ArtifactStagingDirectory)/reports/data.js'
+
           - task: PowerShell@2
             displayName: 'Generate azure-sdk.deps.json'
             inputs:
@@ -81,6 +88,7 @@ stages:
                 -PackagesPath '$(System.ArtifactsDirectory)/Packages/'
                 -DepsOutputFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
                 -ProjectRefPath '$(Build.ArtifactStagingDirectory)/reports'
+
           - task: PowerShell@2
             displayName: 'Validate dependencies with pwsh servicing'
             inputs:
@@ -89,6 +97,7 @@ stages:
               arguments: >
                 -PSDepsFile 'https://aka.ms/ps-deps-servicing'
                 -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
+
           - task: PowerShell@2
             displayName: 'Validate dependencies with pwsh stable'
             inputs:
@@ -97,6 +106,7 @@ stages:
               arguments: >
                 -PSDepsFile 'https://aka.ms/ps-deps-stable'
                 -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
+
           - task: PowerShell@2
             displayName: 'Validate dependencies with pwsh preview'
             inputs:
@@ -105,11 +115,13 @@ stages:
               arguments: >
                 -PSDepsFile 'https://aka.ms/ps-deps-preview'
                 -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
+
           - task: PublishPipelineArtifact@1
             displayName: 'Publish Report Artifacts'
             inputs:
               artifactName: reports
               path: '$(Build.ArtifactStagingDirectory)/reports'
+
           - task: AzureFileCopy@2
             displayName: 'Upload dependency report'
             inputs:
@@ -119,6 +131,7 @@ stages:
               storage: azuresdkartifacts
               containerName: 'azure-sdk-for-net'
               blobPrefix: dependencies
+
           - task: PowerShell@2
             displayName: "Verify Repository Resource Refs"
             inputs:
@@ -139,6 +152,7 @@ stages:
             inputs:
               suppressionsFile: 'eng\CredScanSuppression.json'
             condition: succeededOrFailed()
+
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
             displayName: 'Post Analysis (CredScan)'
             inputs:
@@ -152,11 +166,13 @@ stages:
               # GdnBreakOutputBaseline: baseline
             condition: succeededOrFailed()
             continueOnError: true
+
           - pwsh: |
               azcopy copy "https://azuresdkartifacts.blob.core.windows.net/policheck/DotNetPoliCheckExclusion.mdb?$(azuresdk-policheck-blob-SAS)" `
               "$(Build.BinariesDirectory)"
             displayName: 'Download PoliCheck Exclusion Database'
             condition: succeededOrFailed()
+
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
             displayName: 'Run PoliCheck'
             inputs:
@@ -169,6 +185,7 @@ stages:
               optionsRulesDBPath: "$(Build.BinariesDirectory)/DotNetPoliCheckExclusion.mdb"
               optionsUEPATH: "$(Build.SourcesDirectory)/eng/guardian-tools/policheck/PolicheckExclusions.xml"
             condition: succeededOrFailed()
+
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
             displayName: 'Post Analysis (PoliCheck)'
             inputs:
@@ -177,6 +194,7 @@ stages:
               GdnBreakGdnToolPoliCheckSeverity: Warning
             condition: succeededOrFailed()
             continueOnError: true
+
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
             displayName: 'Publish Security Analysis Logs'
             condition: succeededOrFailed()
