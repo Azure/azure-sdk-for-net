@@ -28,10 +28,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             [TelemetryType.Event] = "Event",
         };
 
-        internal static string RoleName { get; set; }
-
-        internal static string RoleInstance { get; set; }
-
         internal static TelemetryItem GetTelemetryItem(Activity activity, ref TagEnumerationState monitorTags, Resource resource, string instrumentationKey)
         {
             TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
@@ -39,7 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 InstrumentationKey = instrumentationKey
             };
 
-            InitRoleInfo(resource);
+            InitRoleInfo(resource, out string RoleName, out string RoleInstance);
 
             if (activity.ParentSpanId != default)
             {
@@ -117,12 +113,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return telemetryItem;
         }
 
-        internal static void InitRoleInfo(Resource resource)
+        internal static void InitRoleInfo(Resource resource, out string RoleName, out string RoleInstance)
         {
-            if (RoleName != null || RoleInstance != null)
-            {
-                return;
-            }
+            RoleName = null;
+            RoleInstance = null;
 
             if (resource == null)
             {

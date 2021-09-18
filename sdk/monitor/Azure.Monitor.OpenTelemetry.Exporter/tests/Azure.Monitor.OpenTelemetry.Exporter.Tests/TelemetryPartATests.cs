@@ -35,79 +35,73 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             ActivitySource.AddActivityListener(listener);
         }
 
-        public TelemetryPartATests()
-        {
-            TelemetryPartA.RoleName = null;
-            TelemetryPartA.RoleInstance = null;
-        }
-
         [Fact]
         public void InitRoleInfo_NullResource()
         {
-            TelemetryPartA.InitRoleInfo(null);
+            TelemetryPartA.InitRoleInfo(null, out string RoleName, out string RoleInstance);
 
-            Assert.Null(TelemetryPartA.RoleName);
-            Assert.Null(TelemetryPartA.RoleInstance);
+            Assert.Null(RoleName);
+            Assert.Null(RoleInstance);
         }
 
         [Fact]
         public void InitRoleInfo_Default()
         {
             var resource = CreateTestResource();
-            TelemetryPartA.InitRoleInfo(resource);
+            TelemetryPartA.InitRoleInfo(resource, out string RoleName, out string RoleInstance);;
 
-            Assert.StartsWith("unknown_service", TelemetryPartA.RoleName);
-            Assert.Equal(Dns.GetHostName(), TelemetryPartA.RoleInstance);
+            Assert.StartsWith("unknown_service", RoleName);
+            Assert.Equal(Dns.GetHostName(), RoleInstance);
         }
 
         [Fact]
         public void InitRoleInfo_ServiceName()
         {
             var resource = CreateTestResource(serviceName: "my-service");
-            TelemetryPartA.InitRoleInfo(resource);
+            TelemetryPartA.InitRoleInfo(resource, out string RoleName, out string RoleInstance);;
 
-            Assert.Equal("my-service", TelemetryPartA.RoleName);
-            Assert.Equal(Dns.GetHostName(), TelemetryPartA.RoleInstance);
+            Assert.Equal("my-service", RoleName);
+            Assert.Equal(Dns.GetHostName(), RoleInstance);
         }
 
         [Fact]
         public void InitRoleInfo_ServiceInstance()
         {
             var resource = CreateTestResource(serviceInstance: "my-instance");
-            TelemetryPartA.InitRoleInfo(resource);
+            TelemetryPartA.InitRoleInfo(resource, out string RoleName, out string RoleInstance);;
 
-            Assert.StartsWith("unknown_service", TelemetryPartA.RoleName);
-            Assert.Equal("my-instance", TelemetryPartA.RoleInstance);
+            Assert.StartsWith("unknown_service", RoleName);
+            Assert.Equal("my-instance", RoleInstance);
         }
 
         [Fact]
         public void InitRoleInfo_ServiceNamespace()
         {
             var resource = CreateTestResource(serviceNamespace: "my-namespace");
-            TelemetryPartA.InitRoleInfo(resource);
+            TelemetryPartA.InitRoleInfo(resource, out string RoleName, out string RoleInstance);;
 
-            Assert.StartsWith("my-namespace.unknown_service", TelemetryPartA.RoleName);
-            Assert.Equal(Dns.GetHostName(), TelemetryPartA.RoleInstance);
+            Assert.StartsWith("my-namespace.unknown_service", RoleName);
+            Assert.Equal(Dns.GetHostName(), RoleInstance);
         }
 
         [Fact]
         public void InitRoleInfo_ServiceNameAndInstance()
         {
             var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
-            TelemetryPartA.InitRoleInfo(resource);
+            TelemetryPartA.InitRoleInfo(resource, out string RoleName, out string RoleInstance);;
 
-            Assert.Equal("my-service", TelemetryPartA.RoleName);
-            Assert.Equal("my-instance", TelemetryPartA.RoleInstance);
+            Assert.Equal("my-service", RoleName);
+            Assert.Equal("my-instance", RoleInstance);
         }
 
         [Fact]
         public void InitRoleInfo_ServiceNameAndInstanceAndNamespace()
         {
             var resource = CreateTestResource(serviceName: "my-service", serviceNamespace: "my-namespace", serviceInstance: "my-instance");
-            TelemetryPartA.InitRoleInfo(resource);
+            TelemetryPartA.InitRoleInfo(resource, out string RoleName, out string RoleInstance);;
 
-            Assert.Equal("my-namespace.my-service", TelemetryPartA.RoleName);
-            Assert.Equal("my-instance", TelemetryPartA.RoleInstance);
+            Assert.Equal("my-namespace.my-service", RoleName);
+            Assert.Equal("my-instance", RoleInstance);
         }
 
         [Fact]
