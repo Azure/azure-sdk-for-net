@@ -351,6 +351,29 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
+        #region ClassifyCustomCategoryResult
+        internal static ClassifyCustomCategoryResultCollection ConvertToClassifyCustomCategoryResultCollection(CustomSingleClassificationResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var classifiedCustomCategoryResults = new List<ClassifyCustomCategoryResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                classifiedCustomCategoryResults.Add(new ClassifyCustomCategoryResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read sentiments
+            foreach (SingleClassificationDocument classificationDocument in results.Documents)
+            {
+                classifiedCustomCategoryResults.Add(new ClassifyCustomCategoryResult(docSentiment.Id, docSentiment.Statistics ?? default, new DocumentSentiment(docSentiment)));
+            }
+
+            classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
+
+            return new ClassifyCustomCategoryResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ModelVersion);
+        }
+        #endregion
+
         #region Analyze Operation
 
         internal static PiiTask ConvertToPiiTask(RecognizePiiEntitiesAction action)
@@ -440,6 +463,16 @@ namespace Azure.AI.TextAnalytics
                 }
             };
         }
+        internal static CustomSingleClassificationTask ConvertToCustomSingleClassificationTask(ClassifyCustomCategoryAction action)
+        {
+            return new CustomSingleClassificationTask()
+            {
+                Parameters = new CustomSingleClassificationTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                }
+            };
+        }
 
         internal static IList<EntityLinkingTask> ConvertFromRecognizeLinkedEntitiesActionsToTasks(IReadOnlyCollection<RecognizeLinkedEntitiesAction> recognizeLinkedEntitiesActions)
         {
@@ -513,6 +546,18 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
+        internal static IList<CustomSingleClassificationTask> ConvertFromClassifyCustomCategoryActionsToTasks(IReadOnlyCollection<ClassifyCustomCategoryAction> classifyCustomCategoryActions)
+        {
+            List<CustomSingleClassificationTask> list = new List<CustomSingleClassificationTask>();
+
+            foreach (ClassifyCustomCategoryAction action in classifyCustomCategoryActions)
+            {
+                list.Add(ConvertToCustomSingleClassificationTask(action));
+            }
+
+            return list;
+        }
+
         private static string[] parseActionErrorTarget(string targetReference)
         {
             if (string.IsNullOrEmpty(targetReference))
@@ -542,6 +587,7 @@ namespace Azure.AI.TextAnalytics
             IDictionary<int, TextAnalyticsErrorInternal> entitiesLinkingRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> analyzeSentimentErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> extractSummaryErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+            IDictionary<int, TextAnalyticsErrorInternal> classifyCustomCategoryErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
 
             if (jobState.Errors.Any())
             {
@@ -578,6 +624,10 @@ namespace Azure.AI.TextAnalytics
                     {
                         extractSummaryErrors.Add(taskIndex, error);
                     }
+                    else if ("customSingleClassificationTasks".Equals(taskName))
+                    {
+                        classifyCustomCategoryErrors.Add(taskIndex, error);
+                    }
                     else
                     {
                         throw new InvalidOperationException($"Invalid task name in target reference - {taskName}. \n Additional information: Error code: {error.Code} Error message: {error.Message}");
@@ -591,7 +641,30 @@ namespace Azure.AI.TextAnalytics
                 ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors),
                 ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
                 ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
-                ConvertToExtractSummaryActionsResults(jobState, map, extractSummaryErrors));
+                ConvertToExtractSummaryActionsResults(jobState, map, extractSummaryErrors),
+                ConvertToClassifyCustomCategoryResults(jobState, map, classifyCustomCategoryErrors));
+        }
+
+        private static IReadOnlyCollection<ClassifyCustomCategoryActionResult> ConvertToClassifyCustomCategoryResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
+        {
+            var collection = new List<ClassifyCustomCategoryActionResult>();
+            int index = 0;
+            foreach (CustomSingleClassificationTasksItem task in jobState.Tasks.CustomSingleClassificationTasks)
+            {
+                tasksErrors.TryGetValue(index, out TextAnalyticsErrorInternal taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new ClassifyCustomCategoryActionResult(task.LastUpdateDateTime, taskError));
+                }
+                else
+                {
+                    collection.Add(new ClassifyCustomCategoryActionResult(ConvertToClassifyCustomCategoryResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
         }
 
         private static IReadOnlyCollection<AnalyzeSentimentActionResult> ConvertToAnalyzeSentimentActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)

@@ -2474,6 +2474,10 @@ namespace Azure.AI.TextAnalytics
             {
                 tasks.ExtractiveSummarizationTasks = Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions);
             }
+            if (actions.ClassifyCustomCategoryAction != null)
+            {
+                tasks.CustomSingleClassificationTasks = Transforms.ConvertFromClassifyCustomCategoryActionsToTasks(actions.ClassifyCustomCategoryAction);
+            }
             return tasks;
         }
 
