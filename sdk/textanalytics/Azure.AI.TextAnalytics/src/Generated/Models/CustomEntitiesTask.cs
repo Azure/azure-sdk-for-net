@@ -7,16 +7,16 @@
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The ExtractiveSummarizationTask. </summary>
-    internal partial class ExtractiveSummarizationTask
+    /// <summary> The CustomEntitiesTask. </summary>
+    internal partial class CustomEntitiesTask
     {
-        /// <summary> Initializes a new instance of ExtractiveSummarizationTask. </summary>
-        public ExtractiveSummarizationTask()
+        /// <summary> Initializes a new instance of CustomEntitiesTask. </summary>
+        public CustomEntitiesTask()
         {
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public ExtractiveSummarizationTaskParameters Parameters { get; set; }
+        public CustomEntitiesTaskParameters Parameters { get; set; }
         /// <summary> Gets or sets the task name. </summary>
         public string TaskName { get; set; }
     }
