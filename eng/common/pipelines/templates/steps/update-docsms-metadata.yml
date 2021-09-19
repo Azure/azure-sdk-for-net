@@ -75,7 +75,11 @@ steps:
       DefaultBranchVariableName: TargetBranchName
 
 - pwsh: |
-    $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"')
+    # The convertToJson function does not escape characters like backslashes
+    # which leads to JSON parse errors
+    $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}' `
+      .Trim('"')`
+      .Replace('\', '\\')
     Write-Host $packageInfoJson
     $packageInfoLocations = ConvertFrom-Json $packageInfoJson
     ${{ parameters.ScriptDirectory }}/Update-DocsMsMetadata.ps1 `
