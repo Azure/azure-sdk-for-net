@@ -182,6 +182,29 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
+        #region Recognize Custom Entities
+        internal static RecognizeCustomEntitiesResultCollection ConvertToRecognizeCustomEntitiesResultCollection(CustomEntitiesResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeEntities = new List<RecognizeEntitiesResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizeEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document entities
+            foreach (DocumentEntities docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizeEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToCategorizedEntityCollection(docEntities)));
+            }
+
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+
+            return new RecognizeCustomEntitiesResultCollection(recognizeEntities, results.Statistics, results.ProjectName, results.DeploymentName);
+        }
+        #endregion
+
         #region Recognize PII Entities
 
         internal static List<PiiEntity> ConvertToPiiEntityList(List<Entity> entities)
@@ -495,6 +518,17 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
+        internal static CustomEntitiesTask ConvertToCustomEntitiesTask(RecognizeCustomEntitiesAction action)
+        {
+            return new CustomEntitiesTask()
+            {
+                Parameters = new CustomEntitiesTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                }
+            };
+        }
+
         internal static CustomSingleClassificationTask ConvertToCustomSingleClassificationTask(SingleCategoryClassifyAction action)
         {
             return new CustomSingleClassificationTask()
@@ -588,18 +622,6 @@ namespace Azure.AI.TextAnalytics
 
             return list;
         }
-        internal static IList<CustomMultiClassificationTask> ConvertFromMultiCategoryClassifyActionsToTasks(IReadOnlyCollection<MultiCategoryClassifyAction> MultiCategoryClassifyActions)
-        {
-            List<CustomMultiClassificationTask> list = new List<CustomMultiClassificationTask>();
-
-            foreach (MultiCategoryClassifyAction action in MultiCategoryClassifyActions)
-            {
-                list.Add(ConvertToCustomMultiClassificationTask(action));
-            }
-
-            return list;
-        }
-
         internal static IList<CustomSingleClassificationTask> ConvertFromSingleCategoryClassifyActionsToTasks(IReadOnlyCollection<SingleCategoryClassifyAction> singleCategoryClassifyActions)
         {
             List<CustomSingleClassificationTask> list = new List<CustomSingleClassificationTask>();
@@ -612,13 +634,36 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
+        internal static IList<CustomMultiClassificationTask> ConvertFromMultiCategoryClassifyActionsToTasks(IReadOnlyCollection<MultiCategoryClassifyAction> MultiCategoryClassifyActions)
+        {
+            List<CustomMultiClassificationTask> list = new List<CustomMultiClassificationTask>();
+
+            foreach (MultiCategoryClassifyAction action in MultiCategoryClassifyActions)
+            {
+                list.Add(ConvertToCustomMultiClassificationTask(action));
+            }
+
+            return list;
+        }
+        internal static IList<CustomEntitiesTask> ConvertFromRecognizeCustomEntitiesActionsToTasks(IReadOnlyCollection<RecognizeCustomEntitiesAction> recognizeCustomEntitiesActions)
+        {
+            var list = new List<CustomEntitiesTask>();
+
+            foreach (var action in recognizeCustomEntitiesActions)
+            {
+                list.Add(ConvertToCustomEntitiesTask(action));
+            }
+
+            return list;
+        }
+
         private static string[] parseActionErrorTarget(string targetReference)
         {
             if (string.IsNullOrEmpty(targetReference))
             {
                 throw new InvalidOperationException("Expected an error with a target field referencing an action but did not get one");
             }
-            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks|customMultiClassificationTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
             // action could be failed and the target reference is "#/tasks/keyPhraseExtractionTasks/0";
             Match targetMatch = _targetRegex.Match(targetReference);
@@ -641,6 +686,7 @@ namespace Azure.AI.TextAnalytics
             IDictionary<int, TextAnalyticsErrorInternal> entitiesLinkingRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> analyzeSentimentErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> extractSummaryErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+            IDictionary<int, TextAnalyticsErrorInternal> customEntitiesRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> singleCategoryClassifyErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> multiCategoryClassifyErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
 
@@ -679,6 +725,10 @@ namespace Azure.AI.TextAnalytics
                     {
                         extractSummaryErrors.Add(taskIndex, error);
                     }
+                    else if ("customEntityRecognitionTasks".Equals(taskName))
+                    {
+                        customEntitiesRecognitionErrors.Add(taskIndex, error);
+                    }
                     else if ("customSingleClassificationTasks".Equals(taskName))
                     {
                         singleCategoryClassifyErrors.Add(taskIndex, error);
@@ -701,6 +751,7 @@ namespace Azure.AI.TextAnalytics
                 ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
                 ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
                 ConvertToExtractSummaryActionsResults(jobState, map, extractSummaryErrors),
+                ConvertToRecognizeCustomEntitiesActionsResults(jobState, map, customEntitiesRecognitionErrors),
                 ConvertToSingleCategoryClassifyResults(jobState, map, singleCategoryClassifyErrors),
                 ConvertToMultiCategoryClassifyActionsResults(jobState, map, multiCategoryClassifyErrors)
                 );
@@ -853,6 +904,28 @@ namespace Azure.AI.TextAnalytics
                 else
                 {
                     collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
+        }
+
+        private static IReadOnlyCollection<RecognizeCustomEntitiesActionResult> ConvertToRecognizeCustomEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
+        {
+            var collection = new List<RecognizeCustomEntitiesActionResult>();
+            int index = 0;
+            foreach (var task in jobState.Tasks.CustomEntityRecognitionTasks)
+            {
+                tasksErrors.TryGetValue(index, out TextAnalyticsErrorInternal taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new RecognizeCustomEntitiesActionResult(task.LastUpdateDateTime, taskError));
+                }
+                else
+                {
+                    collection.Add(new RecognizeCustomEntitiesActionResult(ConvertToRecognizeCustomEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
                 }
                 index++;
             }

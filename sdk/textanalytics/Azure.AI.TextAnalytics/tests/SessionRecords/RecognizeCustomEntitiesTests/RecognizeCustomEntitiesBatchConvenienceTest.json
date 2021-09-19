@@ -1,0 +1,210 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "410",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-d450a3b7ad199c40a3009218558f5ec9-7c6776d1735cb946-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210927.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "c3eb54e49604a79312c6b18e5927ea06",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "A recent report by the Government Accountability Office found a dramatic increase in oil.",
+              "language": "en"
+            },
+            {
+              "id": "1",
+              "text": "Capital Call #20 for Berkshire Multifamily.",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": {
+          "customEntityRecognitionTasks": [
+            {
+              "parameters": {
+                "project-name": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+                "deployment-name": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "0ae60fa9-40e5-4574-a79c-05b2f9d524ab",
+        "Date": "Mon, 27 Sep 2021 14:28:59 GMT",
+        "operation-location": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze/jobs/0b3137b9-eaa3-4d87-a0a2-2d9abedc60d3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "235"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze/jobs/0b3137b9-eaa3-4d87-a0a2-2d9abedc60d3",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210927.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "8dc4d48801b8b544409fecdfe93766ef",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "faafcea0-eda4-4a3e-bb9a-908adef47f2c",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 27 Sep 2021 14:28:59 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "jobId": "0b3137b9-eaa3-4d87-a0a2-2d9abedc60d3",
+        "lastUpdateDateTime": "2021-09-27T14:28:59Z",
+        "createdDateTime": "2021-09-27T14:28:59Z",
+        "expirationDateTime": "2021-09-28T14:28:59Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze/jobs/0b3137b9-eaa3-4d87-a0a2-2d9abedc60d3",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210927.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "bc84030af5b83db90df750441ea7e52f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e44600c2-a1af-43e5-91b3-ce70d9cde6e4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 27 Sep 2021 14:29:01 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "234"
+      },
+      "ResponseBody": {
+        "jobId": "0b3137b9-eaa3-4d87-a0a2-2d9abedc60d3",
+        "lastUpdateDateTime": "2021-09-27T14:29:00Z",
+        "createdDateTime": "2021-09-27T14:28:59Z",
+        "expirationDateTime": "2021-09-28T14:28:59Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "customEntityRecognitionTasks": [
+            {
+              "lastUpdateDateTime": "2021-09-27T14:29:00.3596127Z",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "text": "recent",
+                        "category": "object_select",
+                        "offset": 2,
+                        "length": 6,
+                        "confidenceScore": 0.08
+                      },
+                      {
+                        "text": "Government",
+                        "category": "restaurant_name",
+                        "offset": 23,
+                        "length": 10,
+                        "confidenceScore": 0.05
+                      },
+                      {
+                        "text": "Office",
+                        "category": "restaurant_name",
+                        "offset": 49,
+                        "length": 6,
+                        "confidenceScore": 0.11
+                      },
+                      {
+                        "text": "Accountability",
+                        "category": "geographic_poi",
+                        "offset": 34,
+                        "length": 14,
+                        "confidenceScore": 0.07
+                      },
+                      {
+                        "text": "dramatic",
+                        "category": "sort",
+                        "offset": 64,
+                        "length": 8,
+                        "confidenceScore": 0.03
+                      },
+                      {
+                        "text": "oil",
+                        "category": "music_item",
+                        "offset": 85,
+                        "length": 3,
+                        "confidenceScore": 0.06
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Berkshire Multifamily",
+                        "category": "location_name",
+                        "offset": 21,
+                        "length": 21,
+                        "confidenceScore": 0.46
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "projectName": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+                "deploymentName": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "409427476",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_DEPLOYMENT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveweppe.azure-api.net",
+    "TEXT_ANALYTICS_PROJECT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
+  }
+}

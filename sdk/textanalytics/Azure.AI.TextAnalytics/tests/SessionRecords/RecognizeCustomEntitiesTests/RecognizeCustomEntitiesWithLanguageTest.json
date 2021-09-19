@@ -1,0 +1,192 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "367",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-9eef6aa8c3804246905bae43a49be9de-612aa5eab342ec4a-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210927.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "20b2726b6f72ee77862e98bbfb8ef41b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "1",
+              "text": "Un informe reciente de la Oficina de Responsabilidad del Gobierno encontr\u00F3 un aumento dram\u00E1tico en el petr\u00F3leo.",
+              "language": "es"
+            }
+          ]
+        },
+        "tasks": {
+          "customEntityRecognitionTasks": [
+            {
+              "parameters": {
+                "project-name": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+                "deployment-name": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "002df656-a8b1-4f52-980f-a1ef6d8082c8",
+        "Date": "Mon, 27 Sep 2021 14:29:08 GMT",
+        "operation-location": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze/jobs/4c0e44ed-6d5c-4a0d-9243-d81bbb38399e",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "141"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze/jobs/4c0e44ed-6d5c-4a0d-9243-d81bbb38399e",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210927.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "96569e75810e8734457b06ee9d1971d5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "69345d67-52bf-4f0e-870f-4ddee8983726",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 27 Sep 2021 14:29:08 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "jobId": "4c0e44ed-6d5c-4a0d-9243-d81bbb38399e",
+        "lastUpdateDateTime": "2021-09-27T14:29:09Z",
+        "createdDateTime": "2021-09-27T14:29:09Z",
+        "expirationDateTime": "2021-09-28T14:29:09Z",
+        "status": "notStarted",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze/jobs/4c0e44ed-6d5c-4a0d-9243-d81bbb38399e",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210927.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "a26c7ed5ef2f5bb1ae0a76384973c0ab",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "bc8017b6-2118-4d81-88f6-906e2dddc077",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 27 Sep 2021 14:29:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "57"
+      },
+      "ResponseBody": {
+        "jobId": "4c0e44ed-6d5c-4a0d-9243-d81bbb38399e",
+        "lastUpdateDateTime": "2021-09-27T14:29:10Z",
+        "createdDateTime": "2021-09-27T14:29:09Z",
+        "expirationDateTime": "2021-09-28T14:29:09Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "customEntityRecognitionTasks": [
+            {
+              "lastUpdateDateTime": "2021-09-27T14:29:10.1076609Z",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "reciente",
+                        "category": "object_select",
+                        "offset": 11,
+                        "length": 8,
+                        "confidenceScore": 0.05
+                      },
+                      {
+                        "text": "Responsabilidad",
+                        "category": "state",
+                        "offset": 37,
+                        "length": 15,
+                        "confidenceScore": 0.03
+                      },
+                      {
+                        "text": "del",
+                        "category": "restaurant_name",
+                        "offset": 53,
+                        "length": 3,
+                        "confidenceScore": 0.06
+                      },
+                      {
+                        "text": "Gobierno",
+                        "category": "location_name",
+                        "offset": 57,
+                        "length": 8,
+                        "confidenceScore": 0.03
+                      },
+                      {
+                        "text": "dram\u00E1tico",
+                        "category": "sort",
+                        "offset": 86,
+                        "length": 9,
+                        "confidenceScore": 0.03
+                      },
+                      {
+                        "text": "petr\u00F3leo",
+                        "category": "timeRange",
+                        "offset": 102,
+                        "length": 8,
+                        "confidenceScore": 0.02
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "projectName": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+                "deploymentName": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "522932983",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_DEPLOYMENT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveweppe.azure-api.net",
+    "TEXT_ANALYTICS_PROJECT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
+  }
+}
