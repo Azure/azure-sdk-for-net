@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class AnalyzeOperationTests : TextAnalyticsClientLiveTestBase
     {
         public AnalyzeOperationTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -60,6 +60,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
         public async Task AnalyzeOperationTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -82,6 +83,7 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
             IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionsResults = resultCollection.ExtractSummaryResults;
+            IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyResults = resultCollection.SingleCategoryClassifyResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
             Assert.IsNotNull(entitiesActionsResults);
@@ -89,6 +91,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(entityLinkingActionsResults);
             Assert.IsNotNull(analyzeSentimentActionsResults);
             Assert.IsNotNull(extractSummaryActionsResults);
+            Assert.IsNotNull(singleCategoryClassifyResults);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };

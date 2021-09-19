@@ -5,8 +5,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
+    /// <summary>
+    /// CustomSingleClassificationTaskParameters.
+    /// </summary>
     [CodeGenModel("CustomSingleClassificationTaskParameters")]
-    internal partial class CustomSingleClassificationTaskParameters
-    {
-    }
+    internal partial class CustomSingleClassificationTaskParameters { }
 }

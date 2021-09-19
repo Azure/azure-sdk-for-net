@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<SentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
             Optional<IReadOnlyList<ExtractiveSummarizationTasksItem>> extractiveSummarizationTasks = default;
             Optional<IReadOnlyList<TasksStateTasksCustomEntityRecognitionTasksItem>> customEntityRecognitionTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksCustomSingleClassificationTasksItem>> customSingleClassificationTasks = default;
+            Optional<IReadOnlyList<CustomSingleClassificationTasksItem>> customSingleClassificationTasks = default;
             Optional<IReadOnlyList<TasksStateTasksCustomMultiClassificationTasksItem>> customMultiClassificationTasks = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -162,10 +162,10 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TasksStateTasksCustomSingleClassificationTasksItem> array = new List<TasksStateTasksCustomSingleClassificationTasksItem>();
+                    List<CustomSingleClassificationTasksItem> array = new List<CustomSingleClassificationTasksItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TasksStateTasksCustomSingleClassificationTasksItem.DeserializeTasksStateTasksCustomSingleClassificationTasksItem(item));
+                        array.Add(CustomSingleClassificationTasksItem.DeserializeCustomSingleClassificationTasksItem(item));
                     }
                     customSingleClassificationTasks = array;
                     continue;
