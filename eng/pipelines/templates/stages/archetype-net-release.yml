@@ -233,7 +233,7 @@ stages:
                           PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
                           PRLabels: "auto-merge"
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
-
+          # TODO: Uncomment smoke tests
           # - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
           #   - template: /eng/pipelines/templates/jobs/smoke.tests.yml
           #     parameters:
