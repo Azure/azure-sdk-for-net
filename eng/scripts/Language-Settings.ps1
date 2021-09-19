@@ -490,7 +490,6 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
     $newPackageProperties['isPrerelease'] = 'true'
   }
 
-  
   foreach ($package in $remainingPackages) {
     Write-Host "Add new package from metadata: $($package.Package)"
     $versions = @($package.VersionGA.Trim())
