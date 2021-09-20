@@ -32,13 +32,13 @@ Use the client library for Azure Service Bus to:
 
 To quickly create the needed Service Bus resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
 
 ### Install the package
 
 Install the Azure Service Bus client library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Messaging.ServiceBus
 ```
 
@@ -58,7 +58,13 @@ To see how to authenticate using Azure.Identity, view this [example](#authentica
 
 ### ASP.NET Core
 
-To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, register the client in the `Startup.ConfigureServices` method:
+To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, install the Azure client library integration for ASP.NET Core package.
+
+```dotnetcli
+dotnet add package Microsoft.Extensions.Azure
+```
+
+Then register the client in the `Startup.ConfigureServices` method:
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)

@@ -65,6 +65,7 @@ namespace Azure.Storage.Blobs
             V2020_06_12 = 6,
             V2020_08_04 = 7,
             V2020_10_02 = 8,
+            V2020_12_06 = 9,
         }
     }
     public partial class BlobContainerClient
@@ -443,6 +444,7 @@ namespace Azure.Storage.Blobs.Models
         internal BlobCopyInfo() { }
         public string CopyId { get { throw null; } }
         public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get { throw null; } }
+        public string EncryptionScope { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public string VersionId { get { throw null; } }
@@ -1749,6 +1751,7 @@ namespace Azure.Storage.Sas
         public string ContentLanguage { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
+        public string EncryptionScope { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
@@ -1791,6 +1794,7 @@ namespace Azure.Storage.Sas
         Move = 256,
         Execute = 512,
         SetImmutabilityPolicy = 1024,
+        PermanentDelete = 2048,
     }
     public sealed partial class BlobSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
     {
@@ -1810,6 +1814,7 @@ namespace Azure.Storage.Sas
         All = -1,
         Delete = 1,
         SetImmutabilityPolicy = 2,
+        PermanentDelete = 4,
     }
     [System.FlagsAttribute]
     public enum SnapshotSasPermissions
@@ -1819,6 +1824,7 @@ namespace Azure.Storage.Sas
         Write = 2,
         Delete = 4,
         SetImmutabilityPolicy = 8,
+        PermanentDelete = 16,
     }
 }
 namespace Microsoft.Extensions.Azure

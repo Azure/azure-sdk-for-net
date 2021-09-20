@@ -15,7 +15,7 @@ await containerClient.CreateIfNotExistsAsync();
 Next, we will upload our large message body to a blob, and then assign the blob name to an application property in our `ServiceBusMessage`. In this example, we use a helper method that generates a random byte array of the specified size. For the blob name, we generate a GUID.
 
 ```C# Snippet:UploadMessage
-byte[] body = GetRandomBuffer(1000000);
+byte[] body = ServiceBusTestUtilities.GetRandomBuffer(1000000);
 string blobName = Guid.NewGuid().ToString();
 await containerClient.UploadBlobAsync(blobName, new BinaryData(body));
 var message = new ServiceBusMessage

@@ -208,6 +208,13 @@ namespace Azure
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
+    public sealed partial class ResponseError
+    {
+        public ResponseError(string? code, string? message) { }
+        public string? Code { get { throw null; } }
+        public string? Message { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class Response<T>
     {
         protected Response() { }
@@ -301,6 +308,7 @@ namespace Azure.Core
             public static string IfModifiedSince { get { throw null; } }
             public static string IfNoneMatch { get { throw null; } }
             public static string IfUnmodifiedSince { get { throw null; } }
+            public static string Prefer { get { throw null; } }
             public static string Range { get { throw null; } }
             public static string Referer { get { throw null; } }
             public static string UserAgent { get { throw null; } }

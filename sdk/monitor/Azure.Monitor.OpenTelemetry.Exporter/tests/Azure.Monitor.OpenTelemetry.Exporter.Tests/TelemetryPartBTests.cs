@@ -8,6 +8,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Xunit;
 
@@ -45,6 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var httpUrl = "https://www.foo.bar/search";
             activity.SetStatus(Status.Ok);
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in HttpHelperTests.
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
 
@@ -52,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
 
-            Assert.Equal(activity.DisplayName, requestData.Name);
+            Assert.Equal($"GET {activity.DisplayName}", requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
             Assert.Equal(httpUrl, requestData.Url);
             Assert.Equal("0", requestData.ResponseCode);
@@ -156,6 +159,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             var remoteDependencyDataTypeForChild = TelemetryPartB.GetRemoteDependencyData(childActivity, ref monitorTagsChild).Type;
 
             Assert.Equal("InProc", remoteDependencyDataTypeForChild);
+        }
+
+        [Theory]
+        [InlineData("Get")]
+        [InlineData(null)]
+        public void RequestNameMatchesOperationName(string httpMethod)
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+
+            activity.DisplayName = "displayname";
+            if (httpMethod != null)
+            {
+                activity.SetTag(SemanticConventions.AttributeHttpMethod, httpMethod);
+            }
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, ResourceBuilder.CreateDefault().Build(), null);
+            var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
+
+            Assert.Equal(requestData.Name, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
     }
 }

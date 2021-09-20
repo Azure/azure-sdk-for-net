@@ -102,7 +102,7 @@ namespace Maintenance.Tests
                 MaintenanceTestUtilities.VerifyMaintenanceConfigurationProperties(maintenanceConfiguration2, retrievedMaintenanceConfiguration2);
             }
         }
-
+        
         /// <summary>
         /// Test list public maintenance configurations.
         /// </summary>
@@ -155,6 +155,7 @@ namespace Maintenance.Tests
                 // Create maintenance configuration.
                 var maintenanceConfigurationName = TestUtilities.GenerateName("maintenancesdk");
                 var maintenanceConfiguration = MaintenanceTestUtilities.CreateTestPublicMaintenanceConfiguration(maintenanceConfigurationName);
+                maintenanceClient.MaintenanceConfigurations.CreateOrUpdate(resourceGroup.Name, maintenanceConfigurationName, maintenanceConfiguration);
 
                 // Verifiy retrieved maintenance configuration.
                 var retrievedMaintenanceConfiguration = maintenanceClient.PublicMaintenanceConfigurations.Get( maintenanceConfigurationName);
@@ -162,5 +163,33 @@ namespace Maintenance.Tests
             }
         }
 
+        /// <summary>
+        /// Test create maintenance configuration.
+        /// </summary>
+        [Fact]
+        public void MaintenanceConfigurationCreateInGuestPatchTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = MaintenanceTestUtilities.GetResourceManagementClient(context, handler);
+                var maintenanceClient = MaintenanceTestUtilities.GetMaintenanceManagementClient(context, handler);
+
+                var resourceGroup = MaintenanceTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create maintenance configuration.
+                var maintenanceConfigurationName1 = TestUtilities.GenerateName("maintenancesdk");
+                var maintenanceConfigurationName2 = TestUtilities.GenerateName("maintenancesdk");
+                var maintenanceConfiguration1 = MaintenanceTestUtilities.CreateTestMaintenanceConfigurationInGuestPatchScope(maintenanceConfigurationName1);
+                var maintenanceConfiguration2 = MaintenanceTestUtilities.CreateTestMaintenanceConfigurationInGuestPatchScope(maintenanceConfigurationName2, true);
+
+                // Verify created maintenance configuration.
+                var createdMaintenanceConfiguration1 = maintenanceClient.MaintenanceConfigurations.CreateOrUpdate(resourceGroup.Name, maintenanceConfigurationName1, maintenanceConfiguration1);
+                var createdMaintenanceConfiguration2 = maintenanceClient.MaintenanceConfigurations.CreateOrUpdate(resourceGroup.Name, maintenanceConfigurationName2, maintenanceConfiguration2);
+                MaintenanceTestUtilities.VerifyMaintenanceConfigurationProperties(maintenanceConfiguration1, createdMaintenanceConfiguration1);
+                MaintenanceTestUtilities.VerifyMaintenanceConfigurationProperties(maintenanceConfiguration2, createdMaintenanceConfiguration2);
+            }
+        }
     }
 }

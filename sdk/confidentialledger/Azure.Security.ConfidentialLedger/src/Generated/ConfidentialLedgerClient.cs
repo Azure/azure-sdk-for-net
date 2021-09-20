@@ -17,7 +17,8 @@ namespace Azure.Security.ConfidentialLedger
     public partial class ConfidentialLedgerClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://confidential-ledger.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri ledgerUri;
@@ -48,19 +49,38 @@ namespace Azure.Security.ConfidentialLedger
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.ledgerUri = ledgerUri;
             apiVersion = options.Version;
         }
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   digest: string,
+        ///   script: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetConstitutionAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetConstitutionRequest(options);
+            using HttpMessage message = CreateGetConstitutionRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
@@ -90,13 +110,32 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   digest: string,
+        ///   script: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetConstitution(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetConstitutionRequest(options);
+            using HttpMessage message = CreateGetConstitutionRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
@@ -125,11 +164,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="GetConstitution"/> and <see cref="GetConstitutionAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetConstitutionRequest(RequestOptions options = null)
+        private HttpMessage CreateGetConstitutionRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -142,13 +179,36 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   members: [
+        ///     {
+        ///       certificate: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetConsortiumMembersAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetConsortiumMembersRequest(options);
+            using HttpMessage message = CreateGetConsortiumMembersRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
@@ -178,13 +238,36 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   members: [
+        ///     {
+        ///       certificate: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetConsortiumMembers(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetConsortiumMembersRequest(options);
+            using HttpMessage message = CreateGetConsortiumMembersRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
@@ -213,11 +296,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="GetConsortiumMembers"/> and <see cref="GetConsortiumMembersAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetConsortiumMembersRequest(RequestOptions options = null)
+        private HttpMessage CreateGetConsortiumMembersRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -230,13 +311,32 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   currentNodeId: string,
+        ///   enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetEnclaveQuotesAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEnclaveQuotesRequest(options);
+            using HttpMessage message = CreateGetEnclaveQuotesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
@@ -266,13 +366,32 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   currentNodeId: string,
+        ///   enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetEnclaveQuotes(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEnclaveQuotesRequest(options);
+            using HttpMessage message = CreateGetEnclaveQuotesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
@@ -301,11 +420,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEnclaveQuotes"/> and <see cref="GetEnclaveQuotesAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetEnclaveQuotesRequest(RequestOptions options = null)
+        private HttpMessage CreateGetEnclaveQuotesRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -318,6 +435,32 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. Only entries in the specified (or default) sub-ledger will be returned. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   @nextLink: string,
+        ///   entries: [
+        ///     {
+        ///       contents: string,
+        ///       subLedgerId: string,
+        ///       transactionId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
@@ -327,7 +470,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId, options);
+            using HttpMessage message = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntries");
             scope.Start();
@@ -357,6 +500,32 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. Only entries in the specified (or default) sub-ledger will be returned. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   @nextLink: string,
+        ///   entries: [
+        ///     {
+        ///       contents: string,
+        ///       subLedgerId: string,
+        ///       transactionId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
@@ -366,7 +535,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId, options);
+            using HttpMessage message = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntries");
             scope.Start();
@@ -395,14 +564,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="GetLedgerEntries"/> and <see cref="GetLedgerEntriesAsync"/> operations. </summary>
-        /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
-        /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetLedgerEntriesRequest(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestOptions options = null)
+        private HttpMessage CreateGetLedgerEntriesRequest(string subLedgerId, string fromTransactionId, string toTransactionId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -429,32 +593,29 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>contents</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Contents of the ledger entry.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subLedgerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Identifier for sub-ledgers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>transactionId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   contents: string (required),
+        ///   subLedgerId: string,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   subLedgerId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
@@ -464,7 +625,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, options);
+            using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
@@ -496,32 +657,29 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>contents</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Contents of the ledger entry.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subLedgerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Identifier for sub-ledgers.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>transactionId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   contents: string (required),
+        ///   subLedgerId: string,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   subLedgerId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
@@ -531,7 +689,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, options);
+            using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
@@ -560,13 +718,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="PostLedgerEntry"/> and <see cref="PostLedgerEntryAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreatePostLedgerEntryRequest(RequestContent content, string subLedgerId = null, RequestOptions options = null)
+        private HttpMessage CreatePostLedgerEntryRequest(RequestContent content, string subLedgerId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -585,6 +739,29 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   entry: {
+        ///     contents: string,
+        ///     subLedgerId: string,
+        ///     transactionId: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="options"> The request options. </param>
@@ -593,7 +770,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId, options);
+            using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
@@ -623,6 +800,29 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   entry: {
+        ///     contents: string,
+        ///     subLedgerId: string,
+        ///     transactionId: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="options"> The request options. </param>
@@ -631,7 +831,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId, options);
+            using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
@@ -660,13 +860,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="GetLedgerEntry"/> and <see cref="GetLedgerEntryAsync"/> operations. </summary>
-        /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetLedgerEntryRequest(string transactionId, string subLedgerId = null, RequestOptions options = null)
+        private HttpMessage CreateGetLedgerEntryRequest(string transactionId, string subLedgerId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -684,6 +880,37 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   receipt: {
+        ///     leaf: string,
+        ///     nodeId: string,
+        ///     proof: [
+        ///       {
+        ///         left: string,
+        ///         right: string
+        ///       }
+        ///     ],
+        ///     root: string,
+        ///     signature: string
+        ///   },
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -691,7 +918,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetReceiptRequest(transactionId, options);
+            using HttpMessage message = CreateGetReceiptRequest(transactionId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
@@ -721,6 +948,37 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   receipt: {
+        ///     leaf: string,
+        ///     nodeId: string,
+        ///     proof: [
+        ///       {
+        ///         left: string,
+        ///         right: string
+        ///       }
+        ///     ],
+        ///     root: string,
+        ///     signature: string
+        ///   },
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -728,7 +986,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetReceiptRequest(transactionId, options);
+            using HttpMessage message = CreateGetReceiptRequest(transactionId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
@@ -757,12 +1015,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="GetReceipt"/> and <see cref="GetReceiptAsync"/> operations. </summary>
-        /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetReceiptRequest(string transactionId, RequestOptions options = null)
+        private HttpMessage CreateGetReceiptRequest(string transactionId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -777,6 +1032,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets the status of an entry identified by a transaction id. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Committed&quot; | &quot;Pending&quot;,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -784,7 +1058,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTransactionStatusRequest(transactionId, options);
+            using HttpMessage message = CreateGetTransactionStatusRequest(transactionId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
@@ -814,6 +1088,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets the status of an entry identified by a transaction id. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   state: &quot;Committed&quot; | &quot;Pending&quot;,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -821,7 +1114,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTransactionStatusRequest(transactionId, options);
+            using HttpMessage message = CreateGetTransactionStatusRequest(transactionId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
@@ -850,12 +1143,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTransactionStatus"/> and <see cref="GetTransactionStatusAsync"/> operations. </summary>
-        /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTransactionStatusRequest(string transactionId, RequestOptions options = null)
+        private HttpMessage CreateGetTransactionStatusRequest(string transactionId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -870,6 +1160,26 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   contents: string,
+        ///   subLedgerId: string,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -877,7 +1187,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId, options);
+            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
@@ -907,6 +1217,26 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   contents: string,
+        ///   subLedgerId: string,
+        ///   transactionId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -914,7 +1244,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId, options);
+            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
@@ -943,12 +1273,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="GetCurrentLedgerEntry"/> and <see cref="GetCurrentLedgerEntryAsync"/> operations. </summary>
-        /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetCurrentLedgerEntryRequest(string subLedgerId = null, RequestOptions options = null)
+        private HttpMessage CreateGetCurrentLedgerEntryRequest(string subLedgerId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -965,6 +1292,18 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Deletes a user from the Confidential Ledger. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -972,7 +1311,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteUserRequest(userId, options);
+            using HttpMessage message = CreateDeleteUserRequest(userId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
@@ -1002,6 +1341,18 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Deletes a user from the Confidential Ledger. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1009,7 +1360,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteUserRequest(userId, options);
+            using HttpMessage message = CreateDeleteUserRequest(userId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
@@ -1038,12 +1389,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteUser"/> and <see cref="DeleteUserAsync"/> operations. </summary>
-        /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteUserRequest(string userId, RequestOptions options = null)
+        private HttpMessage CreateDeleteUserRequest(string userId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1057,6 +1405,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets a user. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;,
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1064,7 +1431,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetUserRequest(userId, options);
+            using HttpMessage message = CreateGetUserRequest(userId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
@@ -1094,6 +1461,25 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets a user. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;,
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1101,7 +1487,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetUserRequest(userId, options);
+            using HttpMessage message = CreateGetUserRequest(userId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
@@ -1130,12 +1516,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="GetUser"/> and <see cref="GetUserAsync"/> operations. </summary>
-        /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetUserRequest(string userId, RequestOptions options = null)
+        private HttpMessage CreateGetUserRequest(string userId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1151,26 +1534,29 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A JSON merge patch is applied for existing users. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>assignedRole</term>
-        ///     <term>&quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term>Represents an assignable role.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot; (required),
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;,
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -1180,7 +1566,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content, options);
+            using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
@@ -1212,26 +1598,29 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A JSON merge patch is applied for existing users. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>assignedRole</term>
-        ///     <term>&quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;</term>
-        ///     <term>Yes</term>
-        ///     <term>Represents an assignable role.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>userId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot; (required),
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;,
+        ///   userId: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     innererror: ConfidentialLedgerErrorBody
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -1241,7 +1630,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content, options);
+            using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
@@ -1270,13 +1659,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateUser"/> and <see cref="CreateOrUpdateUserAsync"/> operations. </summary>
-        /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateUserRequest(string userId, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateUserRequest(string userId, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();

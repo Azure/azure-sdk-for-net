@@ -20,8 +20,8 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

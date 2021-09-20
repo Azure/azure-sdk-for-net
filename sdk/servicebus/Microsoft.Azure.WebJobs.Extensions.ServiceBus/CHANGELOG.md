@@ -1,14 +1,20 @@
 # Release History
 
-## 5.0.0-beta.6 (Unreleased)
+## 5.0.0-beta.7 (Unreleased)
 
 ### Features Added
+- Adding DynamicConcurrency support
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.0.0-beta.6 (2021-09-07)
+
+### Features Added
+- Support binding to `BinaryData` instances.
 
 ## 5.0.0-beta.5 (2021-07-07)
 

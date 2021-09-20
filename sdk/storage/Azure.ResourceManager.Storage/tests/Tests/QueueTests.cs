@@ -9,7 +9,7 @@ using Azure.ResourceManager.Storage.Tests.Helpers;
 
 namespace Azure.ResourceManager.Storage.Tests.Tests
 {
-    public class QueueTests:StorageTestBase
+    public class QueueTests : StorageTestBase
     {
         private ResourceGroup _resourceGroup;
         private StorageAccount _storageAccount;
@@ -19,17 +19,19 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         public QueueTests(bool async) : base(async)
         {
         }
+
         [SetUp]
         public async Task CreateStorageAccountAndGetQueueContainer()
         {
             _resourceGroup = await CreateResourceGroupAsync();
-            string accountName = Recording.GenerateAssetName("storage");
+            string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
             _storageAccount = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             _queueServiceContainer = _storageAccount.GetQueueServices();
             _queueService = await _queueServiceContainer.GetAsync("default");
             _storageQueueContainer = _queueService.GetStorageQueues();
         }
+
         [TearDown]
         public async Task ClearStorageAccount()
         {
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
                 _storageAccount = null;
             }
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateDeleteStorageQueue()
@@ -70,6 +73,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             StorageQueue queue3 = await _storageQueueContainer.GetIfExistsAsync(storageQueueName);
             Assert.IsNull(queue3);
         }
+
         [Test]
         [RecordedTest]
         public async Task GetAllStorageQueues()
@@ -96,6 +100,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.IsNotNull(queue3);
             Assert.IsNotNull(queue4);
         }
+
         [Test]
         [RecordedTest]
         public async Task UpdateStorageQueue()
@@ -110,12 +115,34 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             StorageQueueData queueData = new StorageQueueData();
             queueData.Metadata.Add("key1", "value1");
             queueData.Metadata.Add("key2", "value2");
-            StorageQueue queue2=await queue1.UpdateAsync(queueData);
+            StorageQueue queue2 = await queue1.UpdateAsync(queueData);
             //validate
             Assert.NotNull(queue2);
             Assert.NotNull(queue2.Data.Metadata);
             Assert.AreEqual(queue2.Data.Metadata["key1"], "value1");
             Assert.AreEqual(queue2.Data.Metadata["key2"], "value2");
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task UpdateQueueService()
+        {
+            //update cors
+            CorsRules cors = new CorsRules();
+            cors.CorsRulesValue.Add(new CorsRule(
+                allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
+                allowedMethods: new CorsRuleAllowedMethodsItem[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
+                 allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                exposedHeaders: new string[] { "x-ms-meta-*" },
+                maxAgeInSeconds: 100));
+            QueueServiceData parameter = new QueueServiceData()
+            {
+                Cors = cors,
+            };
+            _queueService = await _queueService.SetServicePropertiesAsync(parameter);
+
+            //validate
+            Assert.AreEqual(_queueService.Data.Cors.CorsRulesValue.Count, 1);
         }
     }
 }
