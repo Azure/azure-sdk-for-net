@@ -20,6 +20,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            #region Snippet:TextAnalyticsClassifyCustomCategoryAsync
             // Get input document.
             string document = @"I am so hungry! I can hear my stomach growling; I need this order to get here as soon as possible!";
 
@@ -41,7 +42,9 @@ namespace Azure.AI.TextAnalytics.Samples
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchInput, actions);
 
             await operation.WaitForCompletionAsync();
+            #endregion Snippet:TextAnalyticsClassifyCustomCategoryAsync
 
+            #region Snippet:TextAnalyticsClassifyCustomCategoryOperationStatus
             // View operation status.
             Console.WriteLine($"AnalyzeActions operation has completed");
             Console.WriteLine();
@@ -52,7 +55,9 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Status       : {operation.Status}");
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
+            #endregion Snippet:TextAnalyticsClassifyCustomCategoryOperationStatus
 
+            #region Snippet:TextAnalyticsClassifyCustomCategoryAsyncViewResults
             // View operation results.
             await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
@@ -83,6 +88,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
                 }
             }
+            #endregion Snippet:TextAnalyticsClassifyCustomCategoryAsyncViewResults
         }
     }
 }
