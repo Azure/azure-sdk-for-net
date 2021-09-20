@@ -370,12 +370,21 @@ function Get-DocsCiLine ($item) {
 }
 
 function EnsureCustomSource($package) {
-  # $PackageSourceOverride is a global variable provided in 
+  # $PackageSourceOverride is a global variable provided in
   # Update-DocsMsPackages.ps1. Its value can set a "customSource" property.
   # If it is empty then the property is not overridden.
   $customPackageSource = Get-Variable -Name 'PackageSourceOverride' -ValueOnly -ErrorAction 'Ignore'
   if (!$customPackageSource) {
     return $package
+  }
+
+  if (!(Get-PackageSource -Name CustomPackageSource)) {
+    Write-Host "Registering custom package source $customPackageSource"
+    Register-PackageSource `
+      -Name CustomPackageSource `
+      -Location $customPackageSource `
+      -ProviderName NuGet `
+      -Force
   }
 
   Write-Host "Checking custom package source for $($package.Name)"
@@ -398,18 +407,6 @@ function EnsureCustomSource($package) {
 }
 
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
-  # $PackageSourceOverride is a global variable provided in 
-  # Update-DocsMsPackages.ps1.
-  $customPackageSource = Get-Variable -Name 'PackageSourceOverride' -ValueOnly -ErrorAction 'Ignore'
-  if ($customPackageSource) {
-    Write-Host "Registering custom package source $customPackageSource"
-    Register-PackageSource `
-      -Name CustomPackageSource `
-      -Location $customPackageSource `
-      -ProviderName NuGet `
-      -Force
-  }
-
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
     'preview' `
