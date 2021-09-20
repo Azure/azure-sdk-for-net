@@ -12,6 +12,7 @@ using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
 {
@@ -21,8 +22,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     /// </summary>
     ///
     [TestFixture]
-    [Category(TestCategory.Live)]
-    [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public class Sample11_MockEventHubProducerClientTests
     {
         /// <summary>
@@ -30,48 +29,48 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public void EventDataBatch()
+        public async Task EventDataBatch()
         {
             #region Snippet:EventHubs_Sample11_EventDataBatch
 
-            // Data batch mock simulating failure adding events to it.
+            const int TotalEvents = 10;
 
-            var mockEventDataBatch = EventHubsModelFactory.EventDataBatch(
-                It.IsAny<long>(),
-                It.IsAny<IList<EventData>>(),
-                It.IsAny<CreateBatchOptions>(),
-                _ => false);
+            IList<EventData> actualEvents = new List<EventData>();
 
-            // Producer mock.
+            var eventDataBatch = EventHubsModelFactory.EventDataBatch(
+                500,
+                actualEvents,
+                null,
+                // Custom function filtering out events for the Partition A
+                (eventData) => { return eventData.PartitionKey.Equals("Partition A"); });
 
             var mockProducer = new Mock<EventHubProducerClient>();
-            mockProducer.Setup(producer => producer.CreateBatchAsync(It.IsAny<CancellationToken>())).ReturnsAsync(mockEventDataBatch);
+            mockProducer.Setup(p => p.CreateBatchAsync(It.IsAny<CancellationToken>())).ReturnsAsync(eventDataBatch);
 
             var producer = mockProducer.Object;
 
-            // An example method demonstrating basic scenario of adding events to a batch.
+            using var eventBatch = await producer.CreateBatchAsync();
 
-            async Task methodUnderTest()
+            for (int eventCount = 0; eventCount < TotalEvents; eventCount++)
             {
-                try
-                {
-                    using var eventBatch = await producer.CreateBatchAsync();
-                    var eventData = new EventData("This is an event body");
+                EventData eventData = EventHubsModelFactory.EventData(
+                       new BinaryData("This is a sample event body"),
+                       null,
+                       null,
+                       "Partition " + (eventCount % 2 == 0 ? "A" : "B"));
 
-                    if (!eventBatch.TryAdd(eventData))
-                    {
-                        throw new Exception($"The event could not be added.");
-                    }
-                }
-                finally
+                Constraint constraint = eventCount switch
                 {
-                    await producer.CloseAsync();
-                }
+                    _ when (eventCount % 2 == 0) => Is.True,
+                    _ => Is.False
+                };
+
+                Assert.That(eventBatch.TryAdd(eventData), constraint);
             }
 
-            // Testing condition of the method.
+            // The producer should be returning our batch with the Event Data addressed to the Partition A.
 
-            Assert.That(async () => await methodUnderTest(), Throws.Exception);
+            Assert.That(actualEvents.Count, Is.EqualTo(TotalEvents / 2));
 
             #endregion
         }
