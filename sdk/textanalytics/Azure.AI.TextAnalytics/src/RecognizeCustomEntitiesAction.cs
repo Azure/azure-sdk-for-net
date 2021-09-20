@@ -16,8 +16,10 @@ namespace Azure.AI.TextAnalytics
         /// a Recognize Custom Entities action in a set of documents.
         /// For example, set project name and disable deployment name.
         /// </summary>
-        public RecognizeCustomEntitiesAction()
+        public RecognizeCustomEntitiesAction(string projectName, string deploymentName)
         {
+            ProjectName = projectName;
+            DeploymentName = deploymentName;
         }
 
         /// <summary> Gets the project name. </summary>
