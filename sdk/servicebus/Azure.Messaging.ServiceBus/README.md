@@ -58,7 +58,13 @@ To see how to authenticate using Azure.Identity, view this [example](#authentica
 
 ### ASP.NET Core
 
-To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, register the client in the `Startup.ConfigureServices` method:
+To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, install the Azure client library integration for ASP.NET Core package.
+
+```dotnetcli
+dotnet add package Microsoft.Extensions.Azure
+```
+
+Then register the client in the `Startup.ConfigureServices` method:
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
