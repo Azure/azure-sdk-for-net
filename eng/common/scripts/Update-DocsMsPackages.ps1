@@ -20,7 +20,9 @@ Location of the docs.microsoft.com reference docs repo.
 
 .PARAMETER PackageSourceOverride
 Optional parameter to supply a different package source (useful for daily dev
-docs generation from pacakges which are not published to the default feed)
+docs generation from pacakges which are not published to the default feed). This
+variable is meant to be used in the domain-specific business logic in
+&$UpdateDocsMsPackagesFn
 
 #>
 param (
