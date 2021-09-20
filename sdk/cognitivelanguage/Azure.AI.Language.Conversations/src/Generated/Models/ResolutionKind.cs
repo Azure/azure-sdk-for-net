@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Conversations.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ResolutionKind"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResolutionKind"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResolutionKind(string value)
         {
