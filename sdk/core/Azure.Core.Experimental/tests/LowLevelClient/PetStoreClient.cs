@@ -62,6 +62,10 @@ namespace Azure.Core.Experimental.Tests
             // Add a RequestOptions per method
             cache["GetPet"] = new GetPetResponseClassifier(_clientDiagnostics);
 
+            // Code generator will not generate new classifier types for classifiers
+            // with duplicate status code logic, but will reuse previously-generated
+            // ones.  It will need to identify duplicates.
+
             return cache;
         }
 
@@ -72,27 +76,28 @@ namespace Azure.Core.Experimental.Tests
         public virtual async Task<Response> GetPetAsync(string id, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
             using HttpMessage message = CreateGetPetRequest(id, options);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
+                await Pipeline.SendAsync(message, options?.CancellationToken).ConfigureAwait(false);
+
+                if (options.StatusOption == ResponseStatusOption.SuppressExceptions)
                 {
                     return message.Response;
+                }
+                else // options.StatusOption == ResponseStatusOption.ThrowOnError
+                {
+                    if (!message.ResponseClassifier.IsErrorResponse(message))
+                    {
+                        return message.Response;
+                    }
+                    else
+                    {
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
                 }
             }
             catch (Exception e)
@@ -109,36 +114,29 @@ namespace Azure.Core.Experimental.Tests
         public virtual Response GetPet(string id, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            if (options == null)
-            {
-                // We're in a helper method, not an LLC method
-                options = new RequestOptions();
-                //options.AddClassifier(new[] { 200 }, ResponseClassification.Success);
-                //options.AddClassifier(new[] { 404 }, ResponseClassification.Success);
-
-                // TODO: Do we need to designate errors explicitly?
-            }
-
             using HttpMessage message = CreateGetPetRequest(id, options);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
+                Pipeline.Send(message, options?.CancellationToken);
+
+                if (options.StatusOption == ResponseStatusOption.SuppressExceptions)
                 {
                     return message.Response;
+                }
+                else // options.StatusOption == ResponseStatusOption.ThrowOnError
+                {
+                    // This will change to message.Response.IsError in a later PR
+                    if (!message.ResponseClassifier.IsErrorResponse(message))
+                    {
+                        return message.Response;
+                    }
+                    else
+                    {
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
                 }
             }
             catch (Exception e)
@@ -162,6 +160,7 @@ namespace Azure.Core.Experimental.Tests
             uri.AppendPath(id, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = _responseClassifierCache["GetPet"];
             return message;
         }
 
@@ -181,7 +180,7 @@ namespace Azure.Core.Experimental.Tests
                     case 200:
                         return false;
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                        return true;
                 }
             }
         }
