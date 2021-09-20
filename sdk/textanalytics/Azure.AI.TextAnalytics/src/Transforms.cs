@@ -400,6 +400,14 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
+        internal static CustomEntitiesTask ConvertToCustomEntitiesTask(RecognizeCustomEntitiesAction action)
+        {
+            return new CustomEntitiesTask()
+            {
+                Parameters = new CustomEntitiesTaskParameters(action.ProjectName, action.DeploymentName)
+            };
+        }
+
         internal static KeyPhrasesTask ConvertToKeyPhrasesTask(ExtractKeyPhrasesAction action)
         {
             return new KeyPhrasesTask()
@@ -460,6 +468,18 @@ namespace Azure.AI.TextAnalytics
             foreach (RecognizeEntitiesAction action in recognizeEntitiesActions)
             {
                 list.Add(ConvertToEntitiesTask(action));
+            }
+
+            return list;
+        }
+
+        internal static IList<CustomEntitiesTask> ConvertFromRecognizeCustomEntitiesActionsToTasks(IReadOnlyCollection<RecognizeCustomEntitiesAction> recognizeCustomEntitiesActions)
+        {
+            var list = new List<CustomEntitiesTask>();
+
+            foreach (var action in recognizeCustomEntitiesActions)
+            {
+                list.Add(ConvertToCustomEntitiesTask(action));
             }
 
             return list;

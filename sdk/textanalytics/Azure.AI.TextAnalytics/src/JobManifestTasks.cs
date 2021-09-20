@@ -39,6 +39,11 @@ namespace Azure.AI.TextAnalytics
         internal IList<SentimentAnalysisTask> SentimentAnalysisTasks { get; set; }
 
         /// <summary>
+        /// SentimentAnalysisTasks
+        /// </summary>
+        internal IList<CustomEntitiesTask> CustomEntityRecognitionTasks { get; set; }
+
+        /// <summary>
         /// ExtractiveSummarizationTasks
         /// </summary>
         public IList<ExtractiveSummarizationTask> ExtractiveSummarizationTasks { get; set; }

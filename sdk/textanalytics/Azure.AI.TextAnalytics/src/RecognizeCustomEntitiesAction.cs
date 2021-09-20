@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="RecognizeCustomEntitiesAction"/>
         /// class which allows callers to specify details about how to execute
-        /// a Recognize Entities action in a set of documents.
+        /// a Recognize Custom Entities action in a set of documents.
         /// For example, set project name and disable deployment name.
         /// </summary>
         public RecognizeCustomEntitiesAction()
