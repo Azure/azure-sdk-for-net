@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -13,13 +14,19 @@ namespace Azure.AI.TextAnalytics
     public class ClassifyCustomCategoryResult : TextAnalyticsResult
     {
         private readonly DocumentClassification _documentClassification;
-        internal ClassifyCustomCategoryResult(string id, TextDocumentStatistics statistics, SummarySentenceCollection sentences)
+        internal ClassifyCustomCategoryResult(string id, TextDocumentStatistics statistics, DocumentClassification documentClassification , IReadOnlyCollection<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
-            _sentences = sentences;
+            _documentClassification = documentClassification;
+            Warnings = warnings;
         }
 
         internal ClassifyCustomCategoryResult(string id, TextAnalyticsError error) : base(id, error) { }
+
+        /// <summary>
+        /// Gets the collection of summary sentences extracted from the document.
+        /// </summary>
+        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
 
         /// <summary>
         /// Gets the collection of summary sentences extracted from the document.

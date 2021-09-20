@@ -365,12 +365,12 @@ namespace Azure.AI.TextAnalytics
             //Read sentiments
             foreach (SingleClassificationDocument classificationDocument in results.Documents)
             {
-                classifiedCustomCategoryResults.Add(new ClassifyCustomCategoryResult(docSentiment.Id, docSentiment.Statistics ?? default, new DocumentSentiment(docSentiment)));
+                classifiedCustomCategoryResults.Add(new ClassifyCustomCategoryResult(classificationDocument.Id, classificationDocument.Statistics ?? default, new DocumentClassification(classificationDocument), ConvertToWarnings(classificationDocument.Warnings)));
             }
 
             classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
 
-            return new ClassifyCustomCategoryResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ModelVersion);
+            return new ClassifyCustomCategoryResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ProjectName, results.DeploymentName);
         }
         #endregion
 

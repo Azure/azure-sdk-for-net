@@ -12,13 +12,15 @@ namespace Azure.AI.TextAnalytics
     /// Collection of <see cref="ClassifyCustomCategoryResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
-    [DebuggerTypeProxy(typeof(ExtractSummaryResultCollectionDebugView))]
-    public class ClassifyCustomCategoryResultCollection : ReadOnlyCollection<ExtractSummaryResult>
+    [DebuggerTypeProxy(typeof(ClassifyCustomCategoryResultCollectionDebugView))]
+    public class ClassifyCustomCategoryResultCollection : ReadOnlyCollection<ClassifyCustomCategoryResult>
     {
-        internal ClassifyCustomCategoryResultCollection(IList<ClassifyCustomCategoryResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
+        internal ClassifyCustomCategoryResultCollection(IList<ClassifyCustomCategoryResult> list, TextDocumentBatchStatistics statistics,
+            string projectName, string deploymentName) : base(list)
         {
             Statistics = statistics;
-            ModelVersion = modelVersion;
+            ProjectName = projectName;
+            DeploymentName = deploymentName;
         }
 
         /// <summary>
@@ -29,25 +31,29 @@ namespace Azure.AI.TextAnalytics
         public TextDocumentBatchStatistics Statistics { get; }
 
         /// <summary>
-        /// Gets the version of the Text Analytics model used by this operation
-        /// on this batch of documents.
+        /// TODO
         /// </summary>
-        public string ModelVersion { get; }
+        public string ProjectName { get; }
 
         /// <summary>
-        /// Debugger Proxy class for <see cref="ExtractSummaryResultCollection"/>.
+        /// TODO
         /// </summary>
-        internal class ExtractSummaryResultCollectionDebugView
-        {
-            private ExtractSummaryResultCollection BaseCollection { get; }
+        public string DeploymentName { get; }
 
-            public ExtractSummaryResultCollectionDebugView(ExtractSummaryResultCollection collection)
+        /// <summary>
+        /// Debugger Proxy class for <see cref="ClassifyCustomCategoryResultCollection"/>.
+        /// </summary>
+        internal class ClassifyCustomCategoryResultCollectionDebugView
+        {
+            private ClassifyCustomCategoryResultCollection BaseCollection { get; }
+
+            public ClassifyCustomCategoryResultCollectionDebugView(ClassifyCustomCategoryResultCollection collection)
             {
                 BaseCollection = collection;
             }
 
             [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-            public List<ExtractSummaryResult> Items
+            public List<ClassifyCustomCategoryResult> Items
             {
                 get
                 {
@@ -63,11 +69,19 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
+            public string ProjectName
+            {
+                get
+                {
+                    return BaseCollection.ProjectName;
+                }
+            }
+
             public string ModelVersion
             {
                 get
                 {
-                    return BaseCollection.ModelVersion;
+                    return BaseCollection.DeploymentName;
                 }
             }
         }
