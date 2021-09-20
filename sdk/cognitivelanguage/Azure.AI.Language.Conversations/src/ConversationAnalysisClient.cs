@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationAnalysisClient"/> class.
         /// </summary>
-        /// <param name="endpoint">The Converation Analysis endpoint on which to operate.</param>
+        /// <param name="endpoint">The Conversation Analysis endpoint on which to operate.</param>
         /// <param name="credential">An <see cref="AzureKeyCredential"/> used to authenticate requests to the <paramref name="endpoint"/>.</param>
         /// <param name="options">Optional <see cref="ConversationAnalysisClientOptions"/> to customize requests sent to the endpoint.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
