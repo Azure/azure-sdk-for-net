@@ -486,6 +486,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Lists the properties of all enabled and disabled keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKeyAsync"/>.
         /// </summary>
+        /// <remarks>
         /// <para>
         /// Retrieves a list of the keys in the Key Vault that contains the public part of a stored key.
         /// The list operation is applicable to all key types, however only the base key identifier,
@@ -496,6 +497,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <para>
         /// Managed keys may also be listed. They are the public key for certificates stored in Key Vault.
         /// </para>
+        /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual AsyncPageable<KeyProperties> GetPropertiesOfKeysAsync(CancellationToken cancellationToken = default)
         {

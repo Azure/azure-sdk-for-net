@@ -167,6 +167,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecret"/>.
         /// </summary>
+        /// <remarks>
         /// <para>
         /// The full secret identifier and attributes are provided in the response. No
         /// values are returned for the secrets. This operations requires the
@@ -175,6 +176,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <para>
         /// Managed secrets may also be listed. They contain the certificate and private key for certificates stored in Key Vault.
         /// </para>
+        /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
