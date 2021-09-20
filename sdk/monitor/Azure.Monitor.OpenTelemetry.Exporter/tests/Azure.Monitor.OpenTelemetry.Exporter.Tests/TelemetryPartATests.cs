@@ -15,6 +15,7 @@ using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 {
+    [NonParallelizable]
     public class TelemetryPartATests
     {
         private const string ResourcePropertyName = "OTel.Resource";
