@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
-using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
 using NUnit.Framework;
@@ -33,44 +31,122 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Sample11_EventDataBatch
 
-            const int TotalEvents = 10;
+            // Collection of the events added to the batch
 
-            IList<EventData> actualEvents = new List<EventData>();
+            var actualEvents = new List<EventData>() {
+                EventHubsModelFactory.EventData(new BinaryData("Sample event body"))
+            };
 
-            var eventDataBatch = EventHubsModelFactory.EventDataBatch(
-                500,
-                actualEvents,
-                null,
-                // Custom function filtering out events for the Partition A
-                (eventData) => { return eventData.PartitionKey.Equals("Partition A"); });
+            // Mocking "almost full" event data batch corner case.
+            // It won't accept new events of larger than the size of the available bytes
+
+            var crateBatchOptions = new CreateBatchOptions() { MaximumSizeInBytes = 516 };
+            var batchSizeBytes = 500;
+
+            var almostFullBatch = EventHubsModelFactory.EventDataBatch(
+                batchSizeBytes, // Accumulated batch size of all previously added events
+                actualEvents, // New events to be added in this collection
+                crateBatchOptions, // Batch options mocking MaximumSizeInBytes property
+                eventData =>
+                {
+                    // Custom tryAddCallback function checking available bytes size in the bach
+                    return eventData.Body.Length <= crateBatchOptions.MaximumSizeInBytes - batchSizeBytes;
+                });
 
             var mockProducer = new Mock<EventHubProducerClient>();
-            mockProducer.Setup(p => p.CreateBatchAsync(It.IsAny<CancellationToken>())).ReturnsAsync(eventDataBatch);
+            mockProducer.Setup(p => p.CreateBatchAsync(It.IsAny<CancellationToken>())).ReturnsAsync(almostFullBatch);
 
             var producer = mockProducer.Object;
 
             using var eventBatch = await producer.CreateBatchAsync();
 
-            for (int eventCount = 0; eventCount < TotalEvents; eventCount++)
+            // Try to fit relatively large amount of the data in "almost full" batch
+
+            var largeEventBody = new BinaryData("Sample large event body");
+            var largeEventData = EventHubsModelFactory.EventData(largeEventBody);
+
+            // Assert event won't fit
+
+            Assert.IsFalse(eventBatch.TryAdd(largeEventData));
+            Assert.That(actualEvents.Count, Is.EqualTo(1));
+
+            // Try to fit smaller amount of the data in "almost full" batch
+
+            var smallEventBody = new BinaryData("Small event body");
+            var smallEventData = EventHubsModelFactory.EventData(smallEventBody);
+
+            // Assert large event won't fit
+
+            Assert.IsTrue(eventBatch.TryAdd(smallEventData));
+            Assert.That(actualEvents.Count, Is.EqualTo(2));
+
+            #endregion
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public async Task PartitionPublishingProperties()
+        {
+            #region Snippet:EventHubs_Sample11_PartitionPublishingProperties
+
+            var partitions = new Dictionary<string, PartitionPublishingProperties>() {
+                // The owner level of the partition publishing properties is equal to null,
+                // therefore we assume that this partition can be processed by multiple readers
+                { "Multiple readers partitions", EventHubsModelFactory.PartitionPublishingProperties(false, null, null, null) },
+
+                // The owner level of this partition is set to 42,
+                // so we assume this partition's events are processed by an exlusive reader.
+                { "Exclusive reader partition", EventHubsModelFactory.PartitionPublishingProperties(false, null, 42, null) } };
+
+            var mockProducer = new Mock<EventHubProducerClient>();
+
+            mockProducer.Setup(prod => prod.GetPartitionIdsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(partitions.Keys.ToArray());
+
+            foreach (var partition in partitions)
             {
-                EventData eventData = EventHubsModelFactory.EventData(
-                       new BinaryData("This is a sample event body"),
-                       null,
-                       null,
-                       "Partition " + (eventCount % 2 == 0 ? "A" : "B"));
-
-                Constraint constraint = eventCount switch
-                {
-                    _ when (eventCount % 2 == 0) => Is.True,
-                    _ => Is.False
-                };
-
-                Assert.That(eventBatch.TryAdd(eventData), constraint);
+                mockProducer
+                    .Setup(prod => prod.GetPartitionPublishingPropertiesAsync(partition.Key, It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(partition.Value);
             }
 
-            // The producer should be returning our batch with the Event Data addressed to the Partition A.
+            var producer = mockProducer.Object;
+            const int SmallBatchSize = 69;
+            const int LargeBatchSize = 420;
 
-            Assert.That(actualEvents.Count, Is.EqualTo(TotalEvents / 2));
+            foreach (var partition in partitions)
+            {
+                var publishingProperties = await producer.GetPartitionPublishingPropertiesAsync(partition.Key);
+
+                // If the partition has owner level set - then it has exclusive reader.
+                // For the partitions with the exclusive reader we want to send events in smaller batches.
+
+                var eventsInBatchCount = publishingProperties.OwnerLevel.HasValue ? SmallBatchSize : LargeBatchSize;
+
+                var eventsToSend = new List<EventData>();
+
+                for (var index = 0; index < eventsInBatchCount; ++index)
+                {
+                    var eventBody = new BinaryData("Hello, Event Hubs!");
+                    var eventData = new EventData(eventBody);
+
+                    eventsToSend.Add(eventData);
+                }
+
+                await producer.SendAsync(eventsToSend, new SendEventOptions(partition.Key, string.Empty));
+            }
+
+            foreach (var partition in partitions)
+            {
+                // Verify that the batch with less events have been sent to the partition with exlusive reader (owner level set)
+
+                mockProducer.Verify(prod => prod.SendAsync(
+                    It.Is<List<EventData>>(evts => evts.Count == (partition.Value.OwnerLevel.HasValue ? SmallBatchSize : LargeBatchSize)),
+                    It.Is<SendEventOptions>(opts => opts.PartitionId == partition.Key),
+                    It.IsAny<CancellationToken>()), Times.Once);
+            }
 
             #endregion
         }
