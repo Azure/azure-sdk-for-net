@@ -4,10 +4,7 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core.Experimental.Tests
@@ -22,11 +19,23 @@ namespace Azure.Core.Experimental.Tests
         private Uri endpoint;
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private Dictionary<string, ResponseClassifier> _responseClassifierCache;
+        private ResponseClassifier _classifier200;
 
         /// <summary> Initializes a new instance of PetStoreClient for mocking. </summary>
         protected PetStoreClient()
         {
+        }
+
+        private ResponseClassifier Classifier200
+        {
+            get
+            {
+                if (_classifier200 == null)
+                {
+                    _classifier200 = new ResponseClassifier200();
+                }
+                return _classifier200;
+            }
         }
 
         /// <summary> Initializes a new instance of PetStoreClient. </summary>
@@ -51,22 +60,6 @@ namespace Azure.Core.Experimental.Tests
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
-
-            _responseClassifierCache = CreateResponseClassifierCache();
-        }
-
-        private Dictionary<string, ResponseClassifier> CreateResponseClassifierCache()
-        {
-            Dictionary<string, ResponseClassifier> cache = new();
-
-            // Add a RequestOptions per method
-            cache["GetPet"] = new GetPetResponseClassifier(_clientDiagnostics);
-
-            // Code generator will not generate new classifier types for classifiers
-            // with duplicate status code logic, but will reuse previously-generated
-            // ones.  It will need to identify duplicates.
-
-            return cache;
         }
 
         /// <summary> Get a pet by its Id. </summary>
@@ -162,19 +155,12 @@ namespace Azure.Core.Experimental.Tests
             uri.AppendPath(id, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = _responseClassifierCache["GetPet"];
+            message.ResponseClassifier = Classifier200;
             return message;
         }
 
-        private class GetPetResponseClassifier : ResponseClassifier
+        private class ResponseClassifier200 : ResponseClassifier
         {
-            private ClientDiagnostics _clientDiagnostics;
-
-            public GetPetResponseClassifier(ClientDiagnostics clientDiagnostics)
-            {
-                _clientDiagnostics = clientDiagnostics;
-            }
-
             public override bool IsErrorResponse(HttpMessage message)
             {
                 switch (message.Response.Status)
