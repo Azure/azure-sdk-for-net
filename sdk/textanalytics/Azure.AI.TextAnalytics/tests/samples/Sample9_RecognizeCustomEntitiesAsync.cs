@@ -37,9 +37,37 @@ namespace Azure.AI.TextAnalytics.Tests.samples
 
             await operation.WaitForCompletionAsync();
 
+            Console.WriteLine($"Status: {operation.Status}");
+            Console.WriteLine($"Created On: {operation.CreatedOn}");
+            Console.WriteLine($"Expires On: {operation.ExpiresOn}");
+            Console.WriteLine($"Last modified: {operation.LastModified}");
+            if (!string.IsNullOrEmpty(operation.DisplayName))
+                Console.WriteLine($"Display name: {operation.DisplayName}");
+            Console.WriteLine($"Total actions: {operation.ActionsTotal}");
+            Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
+            Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
+            Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
+
             await foreach (var result in operation.Value)
             {
                 var results = result.RecognizeCustomEntitiesActionResult;
+                foreach (var document in results)
+                {
+                    var entitiesInDocument = document.DocumentsResults[0].Entities;
+
+                    Console.WriteLine($"Recognized {entitiesInDocument.Count} entities:");
+                    foreach (CategorizedEntity entity in entitiesInDocument)
+                    {
+                        Console.WriteLine($"    Text: {entity.Text}");
+                        Console.WriteLine($"    Offset: {entity.Offset}");
+                        Console.WriteLine($"  Length: {entity.Length}");
+                        Console.WriteLine($"    Category: {entity.Category}");
+                        if (!string.IsNullOrEmpty(entity.SubCategory))
+                            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                        Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+                        Console.WriteLine("");
+                    }
+                }
             }
         }
     }

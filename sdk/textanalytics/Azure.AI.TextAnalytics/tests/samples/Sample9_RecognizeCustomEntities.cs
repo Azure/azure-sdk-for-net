@@ -55,6 +55,28 @@ namespace Azure.AI.TextAnalytics.Tests.samples
                     Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
                 }
             }
+
+            foreach (var result in operation.GetValues())
+            {
+                var results = result.RecognizeCustomEntitiesActionResult;
+                foreach (var document in results)
+                {
+                    var entitiesInDocument = document.DocumentsResults[0].Entities;
+
+                    Console.WriteLine($"Recognized {entitiesInDocument.Count} entities:");
+                    foreach (CategorizedEntity entity in entitiesInDocument)
+                    {
+                        Console.WriteLine($"    Text: {entity.Text}");
+                        Console.WriteLine($"    Offset: {entity.Offset}");
+                        Console.WriteLine($"  Length: {entity.Length}");
+                        Console.WriteLine($"    Category: {entity.Category}");
+                        if (!string.IsNullOrEmpty(entity.SubCategory))
+                            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                        Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+                        Console.WriteLine("");
+                    }
+                }
+            }
         }
     }
 }
