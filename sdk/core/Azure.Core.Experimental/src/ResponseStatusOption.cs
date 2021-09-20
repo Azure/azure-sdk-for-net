@@ -11,10 +11,10 @@ namespace Azure
         /// <summary>
         /// Indicates that an operation should throw an exception when the response indicates a failure.
         /// </summary>
-        ThrowOnError = 0,
+        Default = 0,
         /// <summary>
         /// Indicates that an operation should not throw an exception when the response indicates a failure.
         /// </summary>
-        SuppressExceptions = 1,
+        NoThrow = 1,
     }
 }
