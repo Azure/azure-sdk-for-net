@@ -57,6 +57,7 @@ namespace Azure.Storage.Test.Shared
 
         public string GetGarbageLeaseId() => Recording.Random.NewGuid().ToString();
         public string GetNewContainerName() => $"test-container-{Recording.Random.NewGuid()}";
+        public string GetNewBlobDirectoryName() => $"test-blob-dir-{Recording.Random.NewGuid()}";
         public string GetNewBlobName() => $"test-blob-{Recording.Random.NewGuid()}";
         public string GetNewBlockName() => $"test-block-{Recording.Random.NewGuid()}";
         public string GetNewNonAsciiBlobName() => $"test-β£©þ‽%3A-{Recording.Random.NewGuid()}";

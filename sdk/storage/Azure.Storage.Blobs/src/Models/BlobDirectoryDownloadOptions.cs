@@ -27,6 +27,6 @@ namespace Azure.Storage.Blobs.Models
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </summary>
-        public StorageTransferOptions transferOptions { get; set; }
+        public StorageTransferOptions TransferOptions { get; set; }
     }
 }

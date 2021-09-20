@@ -8,24 +8,15 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional parameters for uploading to a Blob directory.
+    /// Optional parameters for uploading to a Blob Virtual Directory.
     /// </summary>
     public class BlobDirectoryUploadOptions
     {
         /// <summary>
-        /// Optional Blob Type to Upload. Defaults to upload Block Blobs.
-        /// </summary>
-        /// TODO: uncomment or replace when uploading page and append blobs
-        /// public BlobType blobType { get; set; }
-
-        /// <summary>
         /// Optional standard HTTP header properties that can be set for the
         /// each blob that is uploaded.
-        ///
-        /// TODO: remove and replace with onl ythe headers that can apply
-        /// to all blows iwthin the directory
         /// </summary>
-        public BlobHttpHeaders HttpHeaders { get; set; }
+        public BlobDirectoryHttpHeaders HttpHeaders { get; set; }
 
         /// <summary>
         /// Optional custom metadata to set for each blob uploaded.
@@ -40,13 +31,6 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Tags Tags { get; set; }
 #pragma warning restore CA2227 // Collection properties should be readonly
-
-        /// <summary>
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
-        /// TODO: replace long value with appropriate model similar to BlobUploadDirectoryResponse
-        /// </summary>
-        public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
         /// Optional <see cref="AccessTier"/> to set on each blob uploaded.

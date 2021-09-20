@@ -568,7 +568,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="path">The name of the blob.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
-        protected internal BlobVirtualDirectoryClient GetBlobDirectoryClientCore(string path)
+        protected internal BlobVirtualDirectoryClient GetBlobVirtualDirectoryClientCore(string path)
         {
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
             {
