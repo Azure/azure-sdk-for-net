@@ -270,6 +270,14 @@ namespace Microsoft.Azure.Batch
             InheritUtil.InheritClientBehaviorsAndSetPublicProperty(this, baseBehaviors);
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="CloudPool"/> class.
+        /// </summary>
+        protected CloudPool()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal CloudPool(
             BatchClient parentBatchClient,
             Models.CloudPool protocolObject,

@@ -197,7 +197,7 @@ if (type.ShouldDefineCustomConstructor)
 
         }
     }
-    foreach (var statement in type.AdditionalPropertyInitializationStatements)
+    foreach (var statement in type.AdditionalPropertyInitializationStatements())
     {
 
             this.Write("            ");
@@ -209,6 +209,31 @@ if (type.ShouldDefineCustomConstructor)
             this.Write("        }\r\n\r\n");
 
 }
+
+if (type.ShouldDefineMockableConstructor)
+{
+
+    this.Write("        /// <summary>\r\n        /// Default constructor to support mocking the <see cref=\"");
+    this.Write(this.ToStringHelper.ToStringWithCulture(type.Name));
+    this.Write("\"/> class.\r\n        /// </summary>\r\n");
+
+    this.Write("        protected ");
+    this.Write(this.ToStringHelper.ToStringWithCulture(type.Name));
+    this.Write("()\r\n        {\r\n            this.propertyContainer = new PropertyContainer();\r\n");
+
+    foreach (var statement in type.AdditionalPropertyInitializationStatements(new List<string>{ "baseBehaviors" }))
+    {
+
+        this.Write("            ");
+        this.Write(this.ToStringHelper.ToStringWithCulture(statement));
+        this.Write("\r\n");
+
+    }
+
+    this.Write("        }\r\n\r\n");
+
+}
+
 if (type.BoundProperties.Any())
 {
 
@@ -234,7 +259,7 @@ if (type.BoundProperties.Any())
 
             this.Write("            this.parentBatchClient = parentBatchClient;\r\n");
 
-        foreach (var statement in type.AdditionalPropertyInitializationStatements)
+        foreach (var statement in type.AdditionalPropertyInitializationStatements())
         {
 
             this.Write("            ");

@@ -90,6 +90,11 @@
         public bool HideCustomConstructor { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating if the mockable constructor should be hidden no matter what.
+        /// </summary>
+        public bool HideMockableConstructor { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating if this type is a "top level" object. For example top level objects
         /// include job, job schedule, certificate.
         /// </summary>
@@ -206,6 +211,15 @@
         /// </summary>
         public bool ShouldDefineCustomConstructor => (this.ConstructorProperties.Any() || this.ConstructorAccess != AccessModifier.Internal) && !this.HideCustomConstructor;
 
+        private bool CustomConstructorExternallyAccessibly => ConstructorAccess == AccessModifier.Protected || ConstructorAccess == AccessModifier.Public;
+
+        /// <summary>
+        /// Gets a value indicating if this type should define a protected, empty constructor for testing.
+        /// This is necessary if there is no custom constructor, if the custom constructor isn't at externally accessible, or if the custom constructor has properties.
+        /// </summary>
+        public bool ShouldDefineMockableConstructor => HideMockableConstructor == false &&
+            (ShouldDefineCustomConstructor == false || CustomConstructorExternallyAccessibly == false || ConstructorProperties.Any());
+
         /// <summary>
         /// Gets a value indicating if this type should define a GetTransportObject method and implement the corresponding interface.
         /// In cases where the type is never serialized back to the server, GetTransportObject and the corresponding interface are not
@@ -273,8 +287,8 @@
         /// <summary>
         /// Gets the additional property initialization statements
         /// </summary>
-        public IEnumerable<string> AdditionalPropertyInitializationStatements =>
-            this.ConstructorProperties.Where(p => !string.IsNullOrEmpty(p.AdditionalPropertyInitializationStatement)).Select(p => p.AdditionalPropertyInitializationStatement);
+        public IEnumerable<string> AdditionalPropertyInitializationStatements(IList<string> excluded = null) =>
+            this.ConstructorProperties.Where(p => !string.IsNullOrEmpty(p.AdditionalPropertyInitializationStatement) && (excluded == null || excluded.Contains(p.Name) == false)).Select(p => p.AdditionalPropertyInitializationStatement);
 
         /// <summary>
         /// Generates a string containing the specified arguments one per line, indented by the specified number of spaces. So a collection of arguments "string foo" and "int bar" would

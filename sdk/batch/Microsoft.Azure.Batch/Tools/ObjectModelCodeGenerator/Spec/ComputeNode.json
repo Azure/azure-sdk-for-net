@@ -1,285 +1,286 @@
+{
+  "Name": "ComputeNode",
+  "ProtocolName": "Models.ComputeNode",
+  "SummaryComment": "Summarizes the state of a compute node.",
+  "ParentPathVariables": [ "parentPoolId" ],
+  "IsTopLevelObject": true,
+  "ConstructorAccess": "internal",
+  "HideCustomConstructor": true,
+  "HideMockableConstructor":  true,
+  "Properties": [
     {
-      "Name": "ComputeNode",
-      "ProtocolName": "Models.ComputeNode",
-      "SummaryComment": "Summarizes the state of a compute node.",
-      "ParentPathVariables": [ "parentPoolId" ],
-      "IsTopLevelObject": true,
-      "ConstructorAccess": "internal",
-      "HideCustomConstructor": true,
-      "Properties": [
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "Id",
-            "SummaryComment": "The id of compute node.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "Url",
-            "SummaryComment": "The URL of compute node.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "Common.SchedulingState?",
-            "Name": "SchedulingState",
-            "SummaryComment": "Whether the node is available for task scheduling.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "Models.SchedulingState?",
-            "Name": "SchedulingState"
-          }
-        },
-        {
-          "Key": {
-            "Type": "Common.ComputeNodeState?",
-            "Name": "State",
-            "SummaryComment": "The current state of the compute node.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "Models.ComputeNodeState?",
-            "Name": "State"
-          }
-        },
-        {
-          "Key": {
-            "Type": "DateTime?",
-            "Name": "StateTransitionTime",
-            "SummaryComment": "The time at which the compute node entered the current state.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "DateTime?",
-            "Name": "LastBootTime",
-            "SummaryComment": "The time at which the compute node was started.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "DateTime?",
-            "Name": "AllocationTime",
-            "SummaryComment": "The time at which this compute node was allocated to the pool.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "IPAddress",
-            "SummaryComment": "The IP address associated with the compute node.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "string",
-            "Name": "IpAddress"
-          }
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "AffinityId",
-            "SummaryComment": "An opaque string that contains information about the location of the compute node.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "VirtualMachineSize",
-            "SummaryComment": "The size of the virtual machine hosting the compute node.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "string",
-            "Name": "VmSize"
-          }
-        },
-        {
-          "Key": {
-            "Type": "int?",
-            "Name": "TotalTasksRun",
-            "SummaryComment": "The number of tasks that have been run on this compute node from the time it was allocated to this pool. This includes Job Preparation, Job Release, and Job Manager tasks, but not the pool start task.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "int?",
-            "Name": "TotalTasksSucceeded",
-            "SummaryComment": "The total number of tasks which completed successfully (with exitCode 0) on the compute node. This includes Job Preparation, Job Release, and Job Manager tasks, but not the pool start task.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "int?",
-            "Name": "RunningTasksCount",
-            "SummaryComment": "The total number of currently running tasks on the compute node. This includes Job Preparation, Job Release, and Job Manager tasks, but not the pool start task.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "StartTaskInformation",
-            "Name": "StartTaskInformation",
-            "SummaryComment": "The detailed runtime information of the start task, including current state, error details, exit code, start time, end time, etc.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "StartTaskInformation",
-            "Name": "StartTaskInfo"
-          }
-        },
-        {
-          "Key": {
-            "Type": "IReadOnlyList<TaskInformation>",
-            "Name": "RecentTasks",
-            "SummaryComment": "The execution information for the most recent tasks that ran on this compute node. Note that this element is only returned if at least one task was run on this compute node since the time it was assigned to its current pool.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "StartTask",
-            "Name": "StartTask",
-            "SummaryComment": "The start task associated with all compute nodes in this pool.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "IReadOnlyList<CertificateReference>",
-            "Name": "CertificateReferences",
-            "SummaryComment": "the list of certificates installed on this compute node. ",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "IReadOnlyList<ComputeNodeError>",
-            "Name": "Errors",
-            "SummaryComment": "The list of errors that are currently being encountered by the compute node.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "bool?",
-            "Name": "IsDedicated",
-            "SummaryComment": "Whether this compute node is a dedicated node. If false, the node is a low-priority node.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "ComputeNodeEndpointConfiguration",
-            "Name": "EndpointConfiguration",
-            "SummaryComment": "The endpoint configuration for the compute node.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "NodeAgentInformation",
-            "Name": "NodeAgentInformation",
-            "SummaryComment": "Information about the node agent version and the time the node upgraded to a new version.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "NodeAgentInformation",
-            "Name": "NodeAgentInfo"
-          }
-        },
-        {
-          "Key": {
-            "Type": "int?",
-            "Name": "RunningTaskSlotsCount",
-            "SummaryComment": "The total number of scheduling slots used by currently running Job Tasks on the Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job Preparation, Job Release or Start Tasks.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "int?",
-            "Name": "RunningTaskSlotsCount"
-          }
-        },
-        {
-          "Key": {
-            "Type": "VirtualMachineInfo",
-            "Name": "VirtualMachineInfo",
-            "SummaryComment": "Info about the current state of the virtual machine.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        }
-      ]
+      "Key": {
+        "Type": "string",
+        "Name": "Id",
+        "SummaryComment": "The id of compute node.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "Url",
+        "SummaryComment": "The URL of compute node.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "Common.SchedulingState?",
+        "Name": "SchedulingState",
+        "SummaryComment": "Whether the node is available for task scheduling.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "Models.SchedulingState?",
+        "Name": "SchedulingState"
+      }
+    },
+    {
+      "Key": {
+        "Type": "Common.ComputeNodeState?",
+        "Name": "State",
+        "SummaryComment": "The current state of the compute node.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "Models.ComputeNodeState?",
+        "Name": "State"
+      }
+    },
+    {
+      "Key": {
+        "Type": "DateTime?",
+        "Name": "StateTransitionTime",
+        "SummaryComment": "The time at which the compute node entered the current state.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "DateTime?",
+        "Name": "LastBootTime",
+        "SummaryComment": "The time at which the compute node was started.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "DateTime?",
+        "Name": "AllocationTime",
+        "SummaryComment": "The time at which this compute node was allocated to the pool.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "IPAddress",
+        "SummaryComment": "The IP address associated with the compute node.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "string",
+        "Name": "IpAddress"
+      }
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "AffinityId",
+        "SummaryComment": "An opaque string that contains information about the location of the compute node.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "VirtualMachineSize",
+        "SummaryComment": "The size of the virtual machine hosting the compute node.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "string",
+        "Name": "VmSize"
+      }
+    },
+    {
+      "Key": {
+        "Type": "int?",
+        "Name": "TotalTasksRun",
+        "SummaryComment": "The number of tasks that have been run on this compute node from the time it was allocated to this pool. This includes Job Preparation, Job Release, and Job Manager tasks, but not the pool start task.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int?",
+        "Name": "TotalTasksSucceeded",
+        "SummaryComment": "The total number of tasks which completed successfully (with exitCode 0) on the compute node. This includes Job Preparation, Job Release, and Job Manager tasks, but not the pool start task.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int?",
+        "Name": "RunningTasksCount",
+        "SummaryComment": "The total number of currently running tasks on the compute node. This includes Job Preparation, Job Release, and Job Manager tasks, but not the pool start task.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "StartTaskInformation",
+        "Name": "StartTaskInformation",
+        "SummaryComment": "The detailed runtime information of the start task, including current state, error details, exit code, start time, end time, etc.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "StartTaskInformation",
+        "Name": "StartTaskInfo"
+      }
+    },
+    {
+      "Key": {
+        "Type": "IReadOnlyList<TaskInformation>",
+        "Name": "RecentTasks",
+        "SummaryComment": "The execution information for the most recent tasks that ran on this compute node. Note that this element is only returned if at least one task was run on this compute node since the time it was assigned to its current pool.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "StartTask",
+        "Name": "StartTask",
+        "SummaryComment": "The start task associated with all compute nodes in this pool.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "IReadOnlyList<CertificateReference>",
+        "Name": "CertificateReferences",
+        "SummaryComment": "the list of certificates installed on this compute node. ",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "IReadOnlyList<ComputeNodeError>",
+        "Name": "Errors",
+        "SummaryComment": "The list of errors that are currently being encountered by the compute node.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "bool?",
+        "Name": "IsDedicated",
+        "SummaryComment": "Whether this compute node is a dedicated node. If false, the node is a low-priority node.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "ComputeNodeEndpointConfiguration",
+        "Name": "EndpointConfiguration",
+        "SummaryComment": "The endpoint configuration for the compute node.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "NodeAgentInformation",
+        "Name": "NodeAgentInformation",
+        "SummaryComment": "Information about the node agent version and the time the node upgraded to a new version.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "NodeAgentInformation",
+        "Name": "NodeAgentInfo"
+      }
+    },
+    {
+      "Key": {
+        "Type": "int?",
+        "Name": "RunningTaskSlotsCount",
+        "SummaryComment": "The total number of scheduling slots used by currently running Job Tasks on the Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job Preparation, Job Release or Start Tasks.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "int?",
+        "Name": "RunningTaskSlotsCount"
+      }
+    },
+    {
+      "Key": {
+        "Type": "VirtualMachineInfo",
+        "Name": "VirtualMachineInfo",
+        "SummaryComment": "Info about the current state of the virtual machine.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
     }
+  ]
+}
