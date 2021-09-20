@@ -862,7 +862,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Lists the properties of all certificates in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificate(string, CancellationToken)"/>.
+        /// Lists the properties of all enabled and disabled certificates in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificate(string, CancellationToken)"/>.
         /// This operation requires the certificates/list permission.
         /// </summary>
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well.</param>
@@ -876,7 +876,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Lists the properties of all certificates in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificate(string, CancellationToken)"/>.
+        /// Lists the properties of all enabled and disabled certificates in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificate(string, CancellationToken)"/>.
         /// This operation requires the certificates/list permission.
         /// </summary>
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well.</param>
@@ -890,7 +890,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Lists the properties of all versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersion(string, string, CancellationToken)"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersion(string, string, CancellationToken)"/>.
         /// This operation requires the certificates/list permission.
         /// </summary>
         /// <param name="certificateName">The name of the certificate whose versions should be retrieved.</param>
@@ -908,7 +908,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Lists the properties of all versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersion(string, string, CancellationToken)"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersion(string, string, CancellationToken)"/>.
         /// This operation requires the certificates/list permission.
         /// </summary>
         /// <param name="certificateName">The name of the certificate whose versions should be retrieved.</param>
