@@ -39,16 +39,12 @@ For examples of Logs and Metrics queries, see the [Examples](#examples) section.
 ## Key concepts
 
 - `LogsQueryClient` - Client that provides methods to query logs from Azure Monitor Logs.
-Here is a heirarchy of the LogsQueryResult response:
+Here's a heirarchy of the LogsQueryResult response:
 
 ```
 LogsQueryResult
-|---Statistics
-|---Visualization
-|---Error
 |---AllTables (list of `LogsTable` objects)
     |---Name
-    |---InternalRows
     |---Columns (list of `LogsTableColumn` objects)
         |---Name
         |---Type
@@ -56,7 +52,7 @@ LogsQueryResult
 
 - `MetricsQueryClient` - Client that provides methods to query metrics from Azure Monitor Metrics.
 
-Here is a heirarchy of the MetricsQueryResult response:
+Here's a heirarchy of the MetricsQueryResult response:
 
 ```
 MetricsQueryResult
@@ -67,11 +63,8 @@ MetricsQueryResult
 |---Metrics (list of `MetricResult` objects)
     |---Id
     |---Type
-    |---LocalizedName
     |---Name
     |---DisplayDescription
-    |---ErrorCode
-    |---ErrorMessage
     |---Error
     |---Unit
     |---TimeSeries (list of `MetricTimeSeriesElement` objects)
