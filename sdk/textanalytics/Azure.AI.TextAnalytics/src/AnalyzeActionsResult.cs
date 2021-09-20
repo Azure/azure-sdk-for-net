@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics
             RecognizeLinkedEntitiesResults = recognizeLinkedEntitiesActionResults;
             AnalyzeSentimentResults = analyzeSentimentActionResults;
             ExtractSummaryResults = extractSummaryActionResults;
-            ClassifyCustomCategoryActionResults = classifyCustomCategoryActionResults;
+            ClassifyCustomCategoryResults = classifyCustomCategoryActionResults;
         }
 
         /// <summary>
@@ -62,6 +62,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Determines the collection of <see cref="ClassifyCustomCategoryActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<ClassifyCustomCategoryActionResult> ClassifyCustomCategoryActionResults { get; }
+        public IReadOnlyCollection<ClassifyCustomCategoryActionResult> ClassifyCustomCategoryResults { get; }
     }
 }
