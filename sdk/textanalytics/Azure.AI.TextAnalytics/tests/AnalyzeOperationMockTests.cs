@@ -883,6 +883,11 @@ namespace Azure.AI.TextAnalytics.Tests
                         ""code"": ""InvalidRequest"",
                         ""message"": ""Some error"",
                         ""target"": ""#/tasks/extractiveSummarizationTasks/0""
+                      },
+                      {
+                        ""code"": ""InvalidRequest"",
+                        ""message"": ""Some error"",
+                        ""target"": ""#/tasks/customSingleClassificationTasks/0""
                       }
                     ],
                     ""tasks"": {
@@ -891,9 +896,9 @@ namespace Azure.AI.TextAnalytics.Tests
                         ""lastUpdateDateTime"": ""2021-03-03T22:39:37Z""
                       },
                       ""completed"": 0,
-                      ""failed"": 6,
+                      ""failed"": 7,
                       ""inProgress"": 0,
-                      ""total"": 6,
+                      ""total"": 7,
                       ""entityRecognitionTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
@@ -935,6 +940,13 @@ namespace Azure.AI.TextAnalytics.Tests
                           ""taskName"": ""something"",
                           ""state"": ""failed""
                         }
+                      ],
+                    ""customSingleClassificationTasks"": [
+                        {
+                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
+                          ""taskName"": ""something"",
+                          ""state"": ""failed""
+                        }
                       ]
                     }
                 }"));
@@ -958,16 +970,17 @@ namespace Azure.AI.TextAnalytics.Tests
                 RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
                 AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
                 ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() },
+                ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction> { new ClassifyCustomCategoryAction(FakeProjectName, FakeDeploymentName)},
                 DisplayName = "AnalyzeOperationBatchWithErrorTest"
             };
 
             var operation = new AnalyzeActionsOperation("75d521bc-c2aa-4d8a-aabe-713e72d53a2d", client);
             await operation.UpdateStatusAsync();
 
-            Assert.AreEqual(6, operation.ActionsFailed);
+            Assert.AreEqual(7, operation.ActionsFailed);
             Assert.AreEqual(0, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(6, operation.ActionsTotal);
+            Assert.AreEqual(7, operation.ActionsTotal);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -978,6 +991,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults.FirstOrDefault();
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
             ExtractSummaryActionResult extractSummaryActionsResults = resultCollection.ExtractSummaryResults.FirstOrDefault();
+            ClassifyCustomCategoryActionResult classifyCustomCategoryActionResult = resultCollection.ClassifyCustomCategoryResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
@@ -996,6 +1010,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(extractSummaryActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => extractSummaryActionsResults.DocumentsResults.GetType());
+
+            Assert.IsTrue(classifyCustomCategoryActionResult.HasError);
+            Assert.Throws<InvalidOperationException>(() => classifyCustomCategoryActionResult.DocumentsResults.GetType());
         }
 
         [Test]
