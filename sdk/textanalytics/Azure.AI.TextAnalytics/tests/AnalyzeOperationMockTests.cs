@@ -19,6 +19,8 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         private static readonly string s_endpoint = "https://contoso-textanalytics.cognitiveservices.azure.com/";
         private static readonly string s_apiKey = "FakeapiKey";
+        private static readonly string FakeProjectName = "FakeProjectName";
+        private static readonly string FakeDeploymentName = "FakeDeploymentName";
 
         public AnalyzeOperationMockTests(bool isAsync) : base(isAsync)
         {
@@ -773,6 +775,72 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         #endregion Extract summary
+
+        #region Classify Custom Category
+
+        [Test]
+        public async Task AnalyzeOperationClassifyCustomCategoryWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new ClassifyCustomCategoryAction(FakeProjectName, FakeDeploymentName)
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        [Test]
+        public void AnalyzeOperationClassifyCustomCategoryWithTwoActions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction>()
+                {
+                    new ClassifyCustomCategoryAction(FakeProjectName, FakeDeploymentName),
+                    new ClassifyCustomCategoryAction(FakeProjectName, FakeDeploymentName)
+                    {
+                        DisableServiceLogs = true
+                    }
+                },
+            };
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
+            Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
+        }
+        #endregion
 
         [Test]
         public async Task AnalyzeOperationWithActionsError()

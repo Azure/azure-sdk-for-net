@@ -68,6 +68,6 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
         /// </remarks>
-        public IReadOnlyCollection<ClassifyCustomCategoryAction> ClassifyCustomCategoryAction { get; set; }
+        public IReadOnlyCollection<ClassifyCustomCategoryAction> ClassifyCustomCategoryActions { get; set; }
     }
 }

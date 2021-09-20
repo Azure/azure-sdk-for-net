@@ -17,7 +17,8 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
             IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults,
-            IReadOnlyCollection<ClassifyCustomCategoryActionResult> classifyCustomCategoryActionResults)
+            IReadOnlyCollection<ClassifyCustomCategoryActionResult> classifyCustomCategoryActionResults
+            )
         {
             ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
             RecognizeEntitiesResults = recognizeEntitiesActionResults;
