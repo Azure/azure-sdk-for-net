@@ -529,6 +529,11 @@ namespace Azure.Core.Pipeline
 
         public static bool ActivitySourceHasListeners(object? activitySource)
         {
+            if (!SupportsActivitySource())
+            {
+                return false;
+            }
+
             if (activitySource == null)
             {
                 return false;
@@ -615,10 +620,6 @@ namespace Azure.Core.Pipeline
 
         public static object? CreateActivitySource(string name)
         {
-            if (!SupportsActivitySource())
-            {
-                return null;
-            }
             if (ActivitySourceType == null)
             {
                 return null;
