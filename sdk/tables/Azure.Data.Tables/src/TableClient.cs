@@ -625,6 +625,16 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull("message", nameof(partitionKey));
             Argument.AssertNotNull("message", nameof(rowKey));
 
+            // Escape the values
+            if (partitionKey.Contains("'"))
+            {
+                partitionKey = TableOdataFilter.EscapeStringValue(partitionKey);
+            }
+            if (rowKey.Contains("'"))
+            {
+                rowKey = TableOdataFilter.EscapeStringValue(rowKey);
+            }
+
             string selectArg = select == null ? null : string.Join(",", select);
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
@@ -667,6 +677,16 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull("message", nameof(partitionKey));
             Argument.AssertNotNull("message", nameof(rowKey));
+
+            // Escape the values
+            if (partitionKey.Contains("'"))
+            {
+                partitionKey = TableOdataFilter.EscapeStringValue(partitionKey);
+            }
+            if (rowKey.Contains("'"))
+            {
+                rowKey = TableOdataFilter.EscapeStringValue(rowKey);
+            }
 
             string selectArg = select == null ? null : string.Join(",", select);
 

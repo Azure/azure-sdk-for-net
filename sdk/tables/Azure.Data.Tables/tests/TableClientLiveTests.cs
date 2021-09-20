@@ -51,6 +51,9 @@ namespace Azure.Data.Tables.Tests
                 entityResults = await client.QueryAsync<TableEntity>(TableOdataFilter.Create($"PartitionKey eq {partitionKeyValue} and RowKey eq {rowKeyValue}")).ToEnumerableAsync().ConfigureAwait(false);
             }
             Assert.AreEqual(1, entityResults.Count, "The entity result count should match the created count");
+
+            // GetEntity works also
+            await client.GetEntityAsync<TableEntity>(partitionKeyValue, rowKeyValue);
         }
 
         /// <summary>
