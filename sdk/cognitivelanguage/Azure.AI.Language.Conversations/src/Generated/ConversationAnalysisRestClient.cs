@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Conversations
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateAnalyzeConversationsRequest(string projectName, string deploymentName, AnalyzeConversationOptions conversationAnalysisInput)
+        internal HttpMessage CreateAnalyzeConversationRequest(string projectName, string deploymentName, AnalyzeConversationOptions analyzeConversationOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,18 +53,18 @@ namespace Azure.AI.Language.Conversations
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(conversationAnalysisInput);
+            content.JsonWriter.WriteObjectValue(analyzeConversationOptions);
             request.Content = content;
             return message;
         }
 
         /// <summary> Analyzes the input conversation utterance. </summary>
-        /// <param name="projectName"> The project name. </param>
-        /// <param name="deploymentName"> The deployment name/deployed version. </param>
-        /// <param name="conversationAnalysisInput"> Post body of the request. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="analyzeConversationOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="conversationAnalysisInput"/> is null. </exception>
-        public async Task<Response<AnalyzeConversationResult>> AnalyzeConversationsAsync(string projectName, string deploymentName, AnalyzeConversationOptions conversationAnalysisInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="analyzeConversationOptions"/> is null. </exception>
+        public async Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(string projectName, string deploymentName, AnalyzeConversationOptions analyzeConversationOptions, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
             {
@@ -74,12 +74,12 @@ namespace Azure.AI.Language.Conversations
             {
                 throw new ArgumentNullException(nameof(deploymentName));
             }
-            if (conversationAnalysisInput == null)
+            if (analyzeConversationOptions == null)
             {
-                throw new ArgumentNullException(nameof(conversationAnalysisInput));
+                throw new ArgumentNullException(nameof(analyzeConversationOptions));
             }
 
-            using var message = CreateAnalyzeConversationsRequest(projectName, deploymentName, conversationAnalysisInput);
+            using var message = CreateAnalyzeConversationRequest(projectName, deploymentName, analyzeConversationOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -96,12 +96,12 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> Analyzes the input conversation utterance. </summary>
-        /// <param name="projectName"> The project name. </param>
-        /// <param name="deploymentName"> The deployment name/deployed version. </param>
-        /// <param name="conversationAnalysisInput"> Post body of the request. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="analyzeConversationOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="conversationAnalysisInput"/> is null. </exception>
-        public Response<AnalyzeConversationResult> AnalyzeConversations(string projectName, string deploymentName, AnalyzeConversationOptions conversationAnalysisInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="analyzeConversationOptions"/> is null. </exception>
+        public Response<AnalyzeConversationResult> AnalyzeConversation(string projectName, string deploymentName, AnalyzeConversationOptions analyzeConversationOptions, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
             {
@@ -111,12 +111,12 @@ namespace Azure.AI.Language.Conversations
             {
                 throw new ArgumentNullException(nameof(deploymentName));
             }
-            if (conversationAnalysisInput == null)
+            if (analyzeConversationOptions == null)
             {
-                throw new ArgumentNullException(nameof(conversationAnalysisInput));
+                throw new ArgumentNullException(nameof(analyzeConversationOptions));
             }
 
-            using var message = CreateAnalyzeConversationsRequest(projectName, deploymentName, conversationAnalysisInput);
+            using var message = CreateAnalyzeConversationRequest(projectName, deploymentName, analyzeConversationOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

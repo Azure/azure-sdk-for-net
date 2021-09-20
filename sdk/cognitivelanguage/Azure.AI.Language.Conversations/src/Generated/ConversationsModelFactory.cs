@@ -104,10 +104,37 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="offset"> The starting index of this entity in the query. </param>
         /// <param name="length"> The length of the text. </param>
         /// <param name="confidenceScore"> The entity confidence score. </param>
+        /// <param name="resolution"> A array with extra information about the entity. </param>
         /// <returns> A new <see cref="Models.DeepstackEntity"/> instance for mocking. </returns>
-        public static DeepstackEntity DeepstackEntity(string category = null, string text = null, int offset = default, int length = default, float confidenceScore = default)
+        public static DeepstackEntity DeepstackEntity(string category = null, string text = null, int offset = default, int length = default, float confidenceScore = default, IEnumerable<DeepStackEntityResolution> resolution = null)
         {
-            return new DeepstackEntity(category, text, offset, length, confidenceScore);
+            resolution ??= new List<DeepStackEntityResolution>();
+
+            return new DeepstackEntity(category, text, offset, length, confidenceScore, resolution?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DeepStackEntityResolution. </summary>
+        /// <param name="resolutionKind"> The type of an entity resolution. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.DeepStackEntityResolution"/> instance for mocking. </returns>
+        public static DeepStackEntityResolution DeepStackEntityResolution(ResolutionKind resolutionKind = default, IReadOnlyDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new DeepStackEntityResolution(resolutionKind, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of DictionaryNormalizedValueResolution. </summary>
+        /// <param name="resolutionKind"> The type of an entity resolution. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="values"> A list of normalized entities. </param>
+        /// <returns> A new <see cref="Models.DictionaryNormalizedValueResolution"/> instance for mocking. </returns>
+        public static DictionaryNormalizedValueResolution DictionaryNormalizedValueResolution(ResolutionKind resolutionKind = default, IReadOnlyDictionary<string, object> additionalProperties = null, IEnumerable<string> values = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+            values ??= new List<string>();
+
+            return new DictionaryNormalizedValueResolution(resolutionKind, additionalProperties, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of LuisTargetIntentResult. </summary>

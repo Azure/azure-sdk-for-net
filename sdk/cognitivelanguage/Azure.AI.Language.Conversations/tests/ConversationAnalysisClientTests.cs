@@ -35,11 +35,18 @@ namespace Azure.AI.Language.Conversations.Tests
         [Test]
         public void ValidateAnalyzeConversation()
         {
-            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation(null, null, null), Throws.ArgumentNullException.WithParamName("projectName"));
-            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync(null, null, null), Throws.ArgumentNullException.WithParamName("projectName"));
+            // Validate query parameter first given the order the constructors get called.
+            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation(null, null, null), Throws.ArgumentNullException.WithParamName("query"));
+            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync(null, null, null), Throws.ArgumentNullException.WithParamName("query"));
 
-            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation("test", null, null), Throws.ArgumentNullException.WithParamName("options"));
-            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync("test", null, null), Throws.ArgumentNullException.WithParamName("options"));
+            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation(null, null, "test"), Throws.ArgumentNullException.WithParamName("projectName"));
+            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync(null, null, "test"), Throws.ArgumentNullException.WithParamName("projectName"));
+
+            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation("test", null, "test"), Throws.ArgumentNullException.WithParamName("deploymentName"));
+            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync("test", null, "test"), Throws.ArgumentNullException.WithParamName("deploymentName"));
+
+            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation(null), Throws.ArgumentNullException.WithParamName("options"));
+            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync(null), Throws.ArgumentNullException.WithParamName("options"));
         }
     }
 }

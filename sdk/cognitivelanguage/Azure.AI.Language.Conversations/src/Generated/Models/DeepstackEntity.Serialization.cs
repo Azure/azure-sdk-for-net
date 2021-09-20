@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,6 +20,7 @@ namespace Azure.AI.Language.Conversations.Models
             int offset = default;
             int length = default;
             float confidenceScore = default;
+            Optional<IReadOnlyList<DeepStackEntityResolution>> resolution = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"))
@@ -46,8 +48,23 @@ namespace Azure.AI.Language.Conversations.Models
                     confidenceScore = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("resolution"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DeepStackEntityResolution> array = new List<DeepStackEntityResolution>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DeepStackEntityResolution.DeserializeDeepStackEntityResolution(item));
+                    }
+                    resolution = array;
+                    continue;
+                }
             }
-            return new DeepstackEntity(category, text, offset, length, confidenceScore);
+            return new DeepstackEntity(category, text, offset, length, confidenceScore, Optional.ToList(resolution));
         }
     }
 }

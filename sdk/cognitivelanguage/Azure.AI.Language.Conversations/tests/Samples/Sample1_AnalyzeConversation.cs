@@ -18,12 +18,17 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversation
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions("We'll have 2 plates of seared salmon nigiri.");
 
 #if SNIPPET
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation("Menu", options);
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+                "Menu",
+                "production",
+                "We'll have 2 plates of seared salmon nigiri.");
 #else
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+                TestEnvironment.ProjectName,
+                TestEnvironment.DeploymentName,
+                "We'll have 2 plates of seared salmon nigiri.");
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
@@ -43,9 +48,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             AnalyzeConversationOptions options = new AnalyzeConversationOptions("We'll have 2 plates of seared salmon nigiri.");
 
 #if SNIPPET
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync("Menu", options);
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+                "Menu",
+                "production",
+                "We'll have 2 plates of seared salmon nigiri.");
 #else
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.DeploymentName,
+                "We'll have 2 plates of seared salmon nigiri.");
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");

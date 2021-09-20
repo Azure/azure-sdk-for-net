@@ -126,7 +126,10 @@ For example, if you submit a question to a non-existant knowledge base, a `400` 
 ```C# Snippet:ConversationAnalysisClient_BadRequest
 try
 {
-    Response<AnalyzeConversationResult> response = client.AnalyzeConversation("invalid-knowledgebase", options);
+    Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+        "invalid-project",
+        "production",
+        "We'll have 2 plates of seared salmon nigiri.");
 }
 catch (RequestFailedException ex)
 {

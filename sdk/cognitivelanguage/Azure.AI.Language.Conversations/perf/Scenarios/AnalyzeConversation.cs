@@ -3,7 +3,6 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Language.Conversations.Models;
 using Azure.AI.Language.Conversations.Perf.Infrastructure;
 using Azure.Test.Perf;
 using CommandLine;
@@ -18,14 +17,12 @@ namespace Azure.AI.Language.Conversations.Perf.Scenarios
 
         public override void Run(CancellationToken cancellationToken)
         {
-            AnalyzeConversationOptions options = new("We'll have 2 plates of seared salmon nigiri.");
-            Client.AnalyzeConversation(TestEnvironment.ProjectName, options);
+            Client.AnalyzeConversation(TestEnvironment.ProjectName, TestEnvironment.DeploymentName, "We'll have 2 plates of seared salmon nigiri.");
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            AnalyzeConversationOptions options = new("We'll have 2 plates of seared salmon nigiri.");
-            await Client.AnalyzeConversationAsync(TestEnvironment.ProjectName, options);
+            await Client.AnalyzeConversationAsync(TestEnvironment.ProjectName, TestEnvironment.DeploymentName, "We'll have 2 plates of seared salmon nigiri.");
         }
 
         public class ConversationAnalysisClient : PerfOptions

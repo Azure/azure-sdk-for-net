@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -35,6 +37,24 @@ namespace Azure.AI.Language.Conversations.Models
             Offset = offset;
             Length = length;
             ConfidenceScore = confidenceScore;
+            Resolution = new ChangeTrackingList<DeepStackEntityResolution>();
+        }
+
+        /// <summary> Initializes a new instance of DeepstackEntity. </summary>
+        /// <param name="category"> The entity category. </param>
+        /// <param name="text"> The predicted entity text. </param>
+        /// <param name="offset"> The starting index of this entity in the query. </param>
+        /// <param name="length"> The length of the text. </param>
+        /// <param name="confidenceScore"> The entity confidence score. </param>
+        /// <param name="resolution"> A array with extra information about the entity. </param>
+        internal DeepstackEntity(string category, string text, int offset, int length, float confidenceScore, IReadOnlyList<DeepStackEntityResolution> resolution)
+        {
+            Category = category;
+            Text = text;
+            Offset = offset;
+            Length = length;
+            ConfidenceScore = confidenceScore;
+            Resolution = resolution;
         }
 
         /// <summary> The entity category. </summary>
@@ -47,5 +67,7 @@ namespace Azure.AI.Language.Conversations.Models
         public int Length { get; }
         /// <summary> The entity confidence score. </summary>
         public float ConfidenceScore { get; }
+        /// <summary> A array with extra information about the entity. </summary>
+        public IReadOnlyList<DeepStackEntityResolution> Resolution { get; }
     }
 }

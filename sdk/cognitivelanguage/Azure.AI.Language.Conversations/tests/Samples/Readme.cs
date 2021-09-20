@@ -24,12 +24,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void BadArgument()
         {
             ConversationAnalysisClient client = Client;
-            AnalyzeConversationOptions options = new("We'll have 2 plates of seared salmon nigiri.");
 
             #region Snippet:ConversationAnalysisClient_BadRequest
             try
             {
-                Response<AnalyzeConversationResult> response = client.AnalyzeConversation("invalid-knowledgebase", options);
+                Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+                    "invalid-project",
+                    "production",
+                    "We'll have 2 plates of seared salmon nigiri.");
             }
             catch (RequestFailedException ex)
             {

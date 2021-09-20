@@ -1,13 +1,27 @@
 namespace Azure.AI.Language.Conversations
 {
+    public partial class AnalyzeConversationOptions
+    {
+        public AnalyzeConversationOptions(string projectName, string deploymentName, string query) { }
+        public string DeploymentName { get { throw null; } }
+        public string DirectTarget { get { throw null; } set { } }
+        public bool? IsLoggingEnabled { get { throw null; } set { } }
+        public string Language { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Conversations.Models.AnalyzeParameters> Parameters { get { throw null; } }
+        public string ProjectName { get { throw null; } }
+        public string Query { get { throw null; } }
+        public bool? Verbose { get { throw null; } set { } }
+    }
     public partial class ConversationAnalysisClient
     {
         protected ConversationAnalysisClient() { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
-        public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult> AnalyzeConversation(string projectName, Azure.AI.Language.Conversations.Models.AnalyzeConversationOptions options, string deploymentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult>> AnalyzeConversationAsync(string projectName, Azure.AI.Language.Conversations.Models.AnalyzeConversationOptions options, string deploymentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult> AnalyzeConversation(Azure.AI.Language.Conversations.AnalyzeConversationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult> AnalyzeConversation(string projectName, string deploymentName, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult>> AnalyzeConversationAsync(Azure.AI.Language.Conversations.AnalyzeConversationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult>> AnalyzeConversationAsync(string projectName, string deploymentName, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ConversationAnalysisClientOptions : Azure.Core.ClientOptions
     {
@@ -20,16 +34,6 @@ namespace Azure.AI.Language.Conversations
 }
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class AnalyzeConversationOptions
-    {
-        public AnalyzeConversationOptions(string query) { }
-        public string DirectTarget { get { throw null; } set { } }
-        public bool? IsLoggingEnabled { get { throw null; } set { } }
-        public string Language { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Conversations.Models.AnalyzeParameters> Parameters { get { throw null; } }
-        public string Query { get { throw null; } }
-        public bool? Verbose { get { throw null; } set { } }
-    }
     public partial class AnalyzeConversationResult
     {
         internal AnalyzeConversationResult() { }
@@ -51,10 +55,12 @@ namespace Azure.AI.Language.Conversations.Models
     {
         public static Azure.AI.Language.Conversations.Models.AnalyzeConversationResult AnalyzeConversationResult(string query = null, string detectedLanguage = null, Azure.AI.Language.Conversations.Models.BasePrediction prediction = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.BasePrediction BasePrediction(Azure.AI.Language.Conversations.Models.ProjectKind projectKind = default(Azure.AI.Language.Conversations.Models.ProjectKind), string topIntent = null) { throw null; }
-        public static Azure.AI.Language.Conversations.Models.DeepstackEntity DeepstackEntity(string category = null, string text = null, int offset = 0, int length = 0, float confidenceScore = 0f) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.DeepstackEntity DeepstackEntity(string category = null, string text = null, int offset = 0, int length = 0, float confidenceScore = 0f, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.DeepStackEntityResolution> resolution = null) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.DeepStackEntityResolution DeepStackEntityResolution(Azure.AI.Language.Conversations.Models.ResolutionKind resolutionKind = default(Azure.AI.Language.Conversations.Models.ResolutionKind), System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.DeepstackIntent DeepstackIntent(string category = null, float confidenceScore = 0f) { throw null; }
         public static Azure.AI.Language.Conversations.Models.DeepstackPrediction DeepstackPrediction(Azure.AI.Language.Conversations.Models.ProjectKind projectKind = default(Azure.AI.Language.Conversations.Models.ProjectKind), string topIntent = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.DeepstackIntent> intents = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.DeepstackEntity> entities = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.DeepstackResult DeepstackResult(string query = null, string detectedLanguage = null, Azure.AI.Language.Conversations.Models.DeepstackPrediction prediction = null) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.DictionaryNormalizedValueResolution DictionaryNormalizedValueResolution(Azure.AI.Language.Conversations.Models.ResolutionKind resolutionKind = default(Azure.AI.Language.Conversations.Models.ResolutionKind), System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null, System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.DSTargetIntentResult DSTargetIntentResult(Azure.AI.Language.Conversations.Models.TargetKind targetKind = default(Azure.AI.Language.Conversations.Models.TargetKind), string apiVersion = null, double confidenceScore = 0, Azure.AI.Language.Conversations.Models.DeepstackResult result = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.LuisTargetIntentResult LuisTargetIntentResult(Azure.AI.Language.Conversations.Models.TargetKind targetKind = default(Azure.AI.Language.Conversations.Models.TargetKind), string apiVersion = null, double confidenceScore = 0, object result = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(Azure.AI.Language.Conversations.Models.TargetKind targetKind = default(Azure.AI.Language.Conversations.Models.TargetKind), string apiVersion = null, double confidenceScore = 0, object result = null) { throw null; }
@@ -75,7 +81,14 @@ namespace Azure.AI.Language.Conversations.Models
         public float ConfidenceScore { get { throw null; } }
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Conversations.Models.DeepStackEntityResolution> Resolution { get { throw null; } }
         public string Text { get { throw null; } }
+    }
+    public partial class DeepStackEntityResolution
+    {
+        internal DeepStackEntityResolution() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> AdditionalProperties { get { throw null; } }
+        public Azure.AI.Language.Conversations.Models.ResolutionKind ResolutionKind { get { throw null; } }
     }
     public partial class DeepstackIntent
     {
@@ -100,6 +113,11 @@ namespace Azure.AI.Language.Conversations.Models
         public string DetectedLanguage { get { throw null; } }
         public Azure.AI.Language.Conversations.Models.DeepstackPrediction Prediction { get { throw null; } }
         public string Query { get { throw null; } }
+    }
+    public partial class DictionaryNormalizedValueResolution : Azure.AI.Language.Conversations.Models.DeepStackEntityResolution
+    {
+        internal DictionaryNormalizedValueResolution() { }
+        public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
     }
     public partial class DSTargetIntentResult : Azure.AI.Language.Conversations.Models.TargetIntentResult
     {
@@ -155,6 +173,23 @@ namespace Azure.AI.Language.Conversations.Models
     {
         internal QuestionAnsweringTargetIntentResult() { }
         public object Result { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResolutionKind : System.IEquatable<Azure.AI.Language.Conversations.Models.ResolutionKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResolutionKind(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.ResolutionKind DictionaryNormalizedValue { get { throw null; } }
+        public bool Equals(Azure.AI.Language.Conversations.Models.ResolutionKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.Conversations.Models.ResolutionKind left, Azure.AI.Language.Conversations.Models.ResolutionKind right) { throw null; }
+        public static implicit operator Azure.AI.Language.Conversations.Models.ResolutionKind (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.Conversations.Models.ResolutionKind left, Azure.AI.Language.Conversations.Models.ResolutionKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TargetIntentResult
     {
