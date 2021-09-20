@@ -18,6 +18,7 @@ namespace Azure.Core.Tests
         {
         }
 
+        private PetStoreClient client { get; set; }
         private readonly Uri _url = new Uri("https://example.azurepetstore.com");
 
         public PetStoreClient CreateClient(HttpPipelineTransport transport)

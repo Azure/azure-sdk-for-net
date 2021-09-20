@@ -162,7 +162,7 @@ namespace Azure
 
             public override bool IsErrorResponse(HttpMessage message)
             {
-                if (Applies(message, ResponseClassification.Error)) return true;
+                if (Applies(message, ResponseClassification.Throw)) return true;
                 if (Applies(message, ResponseClassification.Success)) return false;
 
                 return _inner.IsErrorResponse(message);
@@ -212,27 +212,27 @@ namespace Azure
     }
 
     /// <summary>
-    /// Specifies how the response will be processed by the pipeline and the client.
+    /// Specifies how response would be processed by the pipeline and the client.
     /// </summary>
     public enum ResponseClassification
     {
         /// <summary>
-        /// The response will be retried.
+        /// The response would be retried.
         /// </summary>
         Retry,
 
         /// <summary>
-        /// The response will not be retried.
+        /// The response would be retried.
         /// </summary>
         DontRetry,
 
         /// <summary>
-        /// The client considers this response to be an error.
+        /// The client would throw an exception for the response.
         /// </summary>
-        Error,
+        Throw,
 
         /// <summary>
-        /// The client considers this reponse to be a success.
+        /// The client would tread the response a successful.
         /// </summary>
         Success,
     }
