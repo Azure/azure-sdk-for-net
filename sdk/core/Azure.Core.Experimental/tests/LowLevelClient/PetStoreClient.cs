@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -21,6 +22,7 @@ namespace Azure.Core.Experimental.Tests
         private Uri endpoint;
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private Dictionary<string, ResponseClassifier> _responseClassifierCache;
 
         /// <summary> Initializes a new instance of PetStoreClient for mocking. </summary>
         protected PetStoreClient()
@@ -49,6 +51,18 @@ namespace Azure.Core.Experimental.Tests
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
+
+            _responseClassifierCache = CreateResponseClassifierCache();
+        }
+
+        private Dictionary<string, ResponseClassifier> CreateResponseClassifierCache()
+        {
+            Dictionary<string, ResponseClassifier> cache = new();
+
+            // Add a RequestOptions per method
+            cache["GetPet"] = new GetPetResponseClassifier(_clientDiagnostics);
+
+            return cache;
         }
 
         /// <summary> Get a pet by its Id. </summary>
@@ -99,8 +113,8 @@ namespace Azure.Core.Experimental.Tests
             {
                 // We're in a helper method, not an LLC method
                 options = new RequestOptions();
-                options.AddClassifier(new[] { 200 }, ResponseClassification.Success);
-                options.AddClassifier(new[] { 404 }, ResponseClassification.Success);
+                //options.AddClassifier(new[] { 200 }, ResponseClassification.Success);
+                //options.AddClassifier(new[] { 404 }, ResponseClassification.Success);
 
                 // TODO: Do we need to designate errors explicitly?
             }
@@ -149,6 +163,27 @@ namespace Azure.Core.Experimental.Tests
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             return message;
+        }
+
+        private class GetPetResponseClassifier : ResponseClassifier
+        {
+            private ClientDiagnostics _clientDiagnostics;
+
+            public GetPetResponseClassifier(ClientDiagnostics clientDiagnostics)
+            {
+                _clientDiagnostics = clientDiagnostics;
+            }
+
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        return false;
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
+            }
         }
     }
 }
