@@ -116,6 +116,11 @@ namespace Azure
         /// </summary>
         public bool IsError { get; protected set; }
 
+        internal void EvaluateError(HttpMessage message)
+        {
+            IsError = message.ResponseClassifier.IsErrorResponse(message);
+        }
+
         /// <summary>
         /// Creates a new instance of <see cref="Response{T}"/> with the provided value and HTTP response.
         /// </summary>
