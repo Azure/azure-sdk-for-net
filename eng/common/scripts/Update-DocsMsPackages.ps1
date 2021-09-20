@@ -18,10 +18,17 @@ packages which have not released to a central package manager.
 .PARAMETER DocRepoLocation
 Location of the docs.microsoft.com reference docs repo.
 
+.PARAMETER PackageSourceOverride
+Optional parameter to supply a different package source (useful for daily dev
+docs generation from pacakges which are not published to the default feed)
+
 #>
 param (
   [Parameter(Mandatory = $true)]
-  $DocRepoLocation # the location of the cloned doc repo
+  [string] $DocRepoLocation, # the location of the cloned doc repo
+
+  [Parameter(Mandatory = $false)]
+  [string] $PackageSourceOverride
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
