@@ -373,7 +373,8 @@ function EnsureCustomSource($package) {
   # $PackageSourceOverride is a global variable provided in 
   # Update-DocsMsPackages.ps1. Its value can set a "customSource" property.
   # If it is empty then the property is not overridden.
-  if (!$PackageSourceOverride) {
+  $customPackageSource = Get-Variable -Name 'PackageSourceOverride' -ValueOnly -ErrorAction 'Ignore'
+  if (!$customPackageSource) {
     return $package
   }
 
@@ -392,18 +393,19 @@ function EnsureCustomSource($package) {
     return $package
   }
 
-  $package.Properties['customSource'] = $PackageSourceOverride
+  $package.Properties['customSource'] = $customPackageSource
   return $package
 }
 
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
   # $PackageSourceOverride is a global variable provided in 
   # Update-DocsMsPackages.ps1.
-  if ($PackageSourceOverride) {
-    Write-Host "Registering custom package source $PackageSourceOverride"
+  $customPackageSource = Get-Variable -Name 'PackageSourceOverride' -ValueOnly -ErrorAction 'Ignore'
+  if ($customPackageSource) {
+    Write-Host "Registering custom package source $customPackageSource"
     Register-PackageSource `
       -Name CustomPackageSource `
-      -Location $PackageSourceOverride `
+      -Location $customPackageSource `
       -ProviderName NuGet `
       -Force
   }
