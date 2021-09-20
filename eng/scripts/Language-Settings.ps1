@@ -378,7 +378,7 @@ function EnsureCustomSource($package) {
     return $package
   }
 
-  if (!(Get-PackageSource -Name CustomPackageSource)) {
+  if (!(Get-PackageSource -Name CustomPackageSource -ErrorAction SilentlyContinue)) {
     Write-Host "Registering custom package source $customPackageSource"
     Register-PackageSource `
       -Name CustomPackageSource `
