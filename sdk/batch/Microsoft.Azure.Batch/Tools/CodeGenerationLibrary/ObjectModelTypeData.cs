@@ -22,7 +22,7 @@
 
             //By default, force the order of the constructor parameters to be the order specified in the specification
             this.ForceConstructorOrder = true;
-            this.IsConstructorPublic = true; //Default is public visibility
+            this.ConstructorAccess = AccessModifier.Public; //Default is public visibility
         }
 
         /// <summary>
@@ -76,7 +76,7 @@
         /// <summary>
         /// Gets or sets a value indicating if the constructor of this type is public.
         /// </summary>
-        public bool IsConstructorPublic { get; set; }
+        public AccessModifier ConstructorAccess { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating if the constructor parameter order should be as written in
@@ -204,7 +204,7 @@
         /// <summary>
         /// Gets a value indicating if this type should define a custom constructor.
         /// </summary>
-        public bool ShouldDefineCustomConstructor => (this.ConstructorProperties.Any() || this.IsConstructorPublic) && !this.HideCustomConstructor;
+        public bool ShouldDefineCustomConstructor => (this.ConstructorProperties.Any() || this.ConstructorAccess != AccessModifier.Internal) && !this.HideCustomConstructor;
 
         /// <summary>
         /// Gets a value indicating if this type should define a GetTransportObject method and implement the corresponding interface.
@@ -218,11 +218,6 @@
         /// Gets the name of the transport type (used in the GetTransportObject method).
         /// </summary>
         public string TransportObjectTypeName => string.IsNullOrEmpty(this.TransportProtocolName) ? this.ProtocolName : this.TransportProtocolName;
-
-        /// <summary>
-        /// Gets this types constructor visibility string.
-        /// </summary>
-        public string ConstructorVisibilityString => this.IsConstructorPublic ? "public" : "internal";
 
         /// <summary>
         /// Gets the custom constructors parameter string.

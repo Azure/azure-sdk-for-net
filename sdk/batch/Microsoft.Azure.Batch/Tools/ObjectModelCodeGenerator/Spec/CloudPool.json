@@ -4,7 +4,7 @@
       "TransportProtocolName": "Models.PoolAddParameter",
       "SummaryComment": "A pool in the Azure Batch service.",
       "IsTopLevelObject": true,
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

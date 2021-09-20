@@ -4,7 +4,7 @@
       "SummaryComment": "Summarizes the state of a compute node.",
       "ParentPathVariables": [ "parentPoolId" ],
       "IsTopLevelObject": true,
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "HideCustomConstructor": true,
       "Properties": [
         {

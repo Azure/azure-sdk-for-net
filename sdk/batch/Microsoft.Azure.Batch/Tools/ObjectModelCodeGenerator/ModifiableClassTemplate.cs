@@ -177,7 +177,7 @@ if (type.ShouldDefineCustomConstructor)
     }
 
             this.Write("        ");
-            this.Write(this.ToStringHelper.ToStringWithCulture(type.ConstructorVisibilityString));
+            this.Write(this.ToStringHelper.ToStringWithCulture(type.ConstructorAccess.ToString().ToLower()));
             this.Write(" ");
             this.Write(this.ToStringHelper.ToStringWithCulture(type.Name));
             this.Write("(");

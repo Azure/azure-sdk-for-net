@@ -2,7 +2,7 @@
   "Name": "OutputFileDestination",
   "ProtocolName": "Models.OutputFileDestination",
   "SummaryComment": "The destination to which a file should be uploaded.",
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {
