@@ -112,6 +112,11 @@ namespace Azure
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
         /// <summary>
+        /// Indicates whether this response is an error, according to the REST API.
+        /// </summary>
+        public bool IsError { get; protected set; }
+
+        /// <summary>
         /// Creates a new instance of <see cref="Response{T}"/> with the provided value and HTTP response.
         /// </summary>
         /// <typeparam name="T">The type of the value.</typeparam>

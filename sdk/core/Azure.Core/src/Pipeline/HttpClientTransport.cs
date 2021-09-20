@@ -129,7 +129,7 @@ namespace Azure.Core.Pipeline
                 throw new RequestFailedException(e.Message, e);
             }
 
-            message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
+            message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream, message);
         }
 
         private static HttpClient CreateDefaultClient()
@@ -500,12 +500,13 @@ namespace Azure.Core.Pipeline
             private Stream? _contentStream;
 #pragma warning restore CA2213
 
-            public PipelineResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream)
+            public PipelineResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream, HttpMessage message)
             {
                 ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
                 _responseMessage = responseMessage ?? throw new ArgumentNullException(nameof(responseMessage));
                 _contentStream = contentStream;
                 _responseContent = _responseMessage.Content;
+                IsError = message.ResponseClassifier.IsErrorResponse(message);
             }
 
             public override int Status => (int)_responseMessage.StatusCode;
