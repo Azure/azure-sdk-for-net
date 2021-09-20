@@ -82,13 +82,14 @@ namespace Azure.Core.Experimental.Tests
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options?.CancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, options?.CancellationToken ?? default).ConfigureAwait(false);
+                var statusOption = options?.StatusOption ?? ResponseStatusOption.ThrowOnError;
 
-                if (options.StatusOption == ResponseStatusOption.SuppressExceptions)
+                if (statusOption == ResponseStatusOption.SuppressExceptions)
                 {
                     return message.Response;
                 }
-                else // options.StatusOption == ResponseStatusOption.ThrowOnError
+                else
                 {
                     if (!message.ResponseClassifier.IsErrorResponse(message))
                     {
@@ -120,13 +121,14 @@ namespace Azure.Core.Experimental.Tests
             scope.Start();
             try
             {
-                Pipeline.Send(message, options?.CancellationToken);
+                Pipeline.Send(message, options?.CancellationToken ?? default);
+                var statusOption = options?.StatusOption ?? ResponseStatusOption.ThrowOnError;
 
-                if (options.StatusOption == ResponseStatusOption.SuppressExceptions)
+                if (statusOption == ResponseStatusOption.SuppressExceptions)
                 {
                     return message.Response;
                 }
-                else // options.StatusOption == ResponseStatusOption.ThrowOnError
+                else
                 {
                     // This will change to message.Response.IsError in a later PR
                     if (!message.ResponseClassifier.IsErrorResponse(message))
