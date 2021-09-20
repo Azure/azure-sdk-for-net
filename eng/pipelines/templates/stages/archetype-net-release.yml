@@ -36,9 +36,9 @@ stages:
                   artifact: ${{parameters.ArtifactName}}-signed
                   displayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
 
-  - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+  - ${{if and(in(variables['Build.Reason'], 'Manual', ''), eq(variables['System.TeamProject'], 'internal'))}}:
     - ${{ each artifact in parameters.Artifacts }}:
-      - stage: Release_${{artifact.safeName}}
+      - stage:
         displayName: 'Release: ${{artifact.name}}'
         dependsOn: Signing
         condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
