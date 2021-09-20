@@ -1,5 +1,7 @@
 using Microsoft.Azure.Management.Orbital.Models;
 using Microsoft.Azure.Management.Orbital.Tests.Helpers;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using System.Net;
@@ -10,8 +12,6 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
     public class SpacecraftTests : TestBase
     {
         private RecordedDelegatingHandler handler;
-
-        private AzureOrbitalClient client;
         
         public SpacecraftTests()
             : base()
@@ -20,73 +20,79 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
         }
 
         [Fact]
-        public void SpacecraftCRUDTests()
+        public void SpacecraftApiTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                this.client = GetClientWithHandler(context, handler);
+                var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-                // create a resource group
-                Assert.True(VerifyExistenceOrCreateResourceGroup(rgName, this.location));
+                var resourcesClient = GetResourceManagementClientWithHandler(context, handler1);
+                var azureOrbitalClient = GetAzureOrbitalClientWithHandler(context, handler2);
+                var location = "westus2";
 
-                // create a spacecraft
-                CreateSpacecraftTest(this.client);
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(
+                    resourceGroupName,
+                    new ResourceGroup()
+                    { 
+                        Location = location 
+                    });
 
-                // get a spacecraft that was just created 
-                GetSpacecraftTest();
+                var spacecraftName = TestUtilities.GenerateName();
+                var noradId = "25544";
+                var titleLine = "ISS";
+                var tleLine1 = "1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927";
+                var tleLine2 = "2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537";
+                var links = new List<SpacecraftLink>()
+                    {
+                        new SpacecraftLink(45, 45, "uplink", "RHCP"),
+                        new SpacecraftLink(55, 55, "downlink", "LHCP")
 
-                // delete a spacecraft 
-                DeleteSpacecraftTest(this.client);
+                    };
 
-                // delete a resource group
-                DeleteResourceGroupTest();
+                var putSpacecraft = azureOrbitalClient.Orbital.CreateOrUpdateSpacecraft(
+                    resourceGroupName,
+                    spacecraftName,
+                    noradId,
+                    location,
+                    tags: null,
+                    titleLine,
+                    tleLine1,
+                    tleLine2,
+                    links);
+
+                Assert.Equal(spacecraftName, putSpacecraft.Name);
+                Assert.Equal(noradId, putSpacecraft.NoradId);
+                Assert.Equal(titleLine, putSpacecraft.TitleLine);
+                Assert.Equal(tleLine1, putSpacecraft.TleLine1);
+                Assert.Equal(tleLine2, putSpacecraft.TleLine2);
+                Assert.NotNull(putSpacecraft.Links);
+
+                var getSpacecraft = azureOrbitalClient.Orbital.GetSpacecraft(resourceGroupName, spacecraftName);
+
+                Assert.Equal(spacecraftName, getSpacecraft.Name);
+                Assert.Equal(noradId, getSpacecraft.NoradId);
+                Assert.Equal(titleLine, getSpacecraft.TitleLine);
+                Assert.Equal(tleLine1, getSpacecraft.TleLine1);
+                Assert.Equal(tleLine2, getSpacecraft.TleLine2);
+                Assert.NotNull(getSpacecraft.Links);
+
+                var listSpacecraftsByResourceGroup = azureOrbitalClient.Orbital.ListSpacecraftsByResourceGroup(resourceGroupName);
+
+                Assert.Single(listSpacecraftsByResourceGroup.Value);
+                Assert.Equal(spacecraftName, listSpacecraftsByResourceGroup.Value[0].Name);
+                Assert.Equal(noradId, listSpacecraftsByResourceGroup.Value[0].NoradId);
+                Assert.Equal(titleLine, listSpacecraftsByResourceGroup.Value[0].TitleLine);
+                Assert.Equal(tleLine1, listSpacecraftsByResourceGroup.Value[0].TleLine1);
+                Assert.Equal(tleLine2, listSpacecraftsByResourceGroup.Value[0].TleLine2);
+                Assert.NotNull(listSpacecraftsByResourceGroup.Value[0].Links);
+
+                azureOrbitalClient.Orbital.DeleteSpacecraft(resourceGroupName, spacecraftName);
+                listSpacecraftsByResourceGroup = azureOrbitalClient.Orbital.ListSpacecraftsByResourceGroup(resourceGroupName);
+                Assert.Empty(listSpacecraftsByResourceGroup.Value);
+
             }
-        }
-
-        /** Spacecraft Test cases **/
-        internal Spacecraft CreateSpacecraftTest(AzureOrbitalClient client)
-        {
-            var links = new List<SpacecraftLink>();
-            links.Add(new SpacecraftLink(45, 45, "uplink", "RHCP"));
-            links.Add(new SpacecraftLink(55, 55, "downlink", "LHCP"));
-
-
-            Spacecraft actual = client.Orbital.BeginCreateOrUpdateSpacecraft(
-                rgName,
-                this.spacecraftName,
-                "25544",
-                this.location,
-                null,
-                "ISS",
-                "1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927",
-                "2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537",
-                links);
-
-            if (!this.IsRecording)
-            {
-                Assert.NotNull(actual);
-            }
-
-            return actual;
-        }
-       
-        private void GetSpacecraftTest()
-        {
-            Spacecraft actual = this.client.Orbital.GetSpacecraft(rgName, this.spacecraftName);
-
-            if (!this.IsRecording)
-            {
-                Assert.NotNull(actual);
-                Assert.Equal(this.spacecraftName, actual.Name);
-            }
-        }
-        internal void DeleteSpacecraftTest(AzureOrbitalClient client)
-        {
-            client.Orbital.DeleteSpacecraft(rgName, this.spacecraftName);
-        }
-        private void DeleteResourceGroupTest()
-        {
-            DeleteResourceGroup(rgName);
         }
     }
 }
