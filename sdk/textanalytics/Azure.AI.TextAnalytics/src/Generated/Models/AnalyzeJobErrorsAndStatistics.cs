@@ -29,6 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
             Statistics = statistics;
         }
 
+        /// <summary> Gets the errors. </summary>
         public IReadOnlyList<TextAnalyticsErrorInternal> Errors { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public TextDocumentBatchStatistics Statistics { get; }

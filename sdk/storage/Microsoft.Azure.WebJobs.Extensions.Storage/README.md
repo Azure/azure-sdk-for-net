@@ -8,7 +8,7 @@ This extension provides functionality for accessing Azure Storage Blobs and Queu
 
 Install the Storage Blobs and Queues extension with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.WebJobs.Extensions.Storage
 ```
 

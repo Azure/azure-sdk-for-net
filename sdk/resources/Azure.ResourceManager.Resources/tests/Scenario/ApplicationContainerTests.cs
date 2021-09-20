@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -101,32 +100,6 @@ namespace Azure.ResourceManager.Resources.Tests
             AssertValidApplication(application, getApplication);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplications().GetAsync(null));
         }
-
-        private static ApplicationDefinitionData CreateApplicationDefinitionData(string displayName) => new ApplicationDefinitionData(Location.WestUS2, ApplicationLockLevel.None)
-        {
-            DisplayName = displayName,
-            Description = $"{displayName} description",
-            PackageFileUri = "https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip"
-        };
-
-        private static ApplicationData CreateApplicationData(string applicationDefinitionId, string managedResourceGroupId, string storageAccountPrefix) => new ApplicationData(Location.WestUS2, "ServiceCatalog")
-        {
-            ApplicationDefinitionId = applicationDefinitionId,
-            ManagedResourceGroupId = managedResourceGroupId,
-            Parameters = new JsonObject()
-            {
-                {"storageAccountNamePrefix", new JsonObject()
-                    {
-                        {"value", storageAccountPrefix }
-                    }
-                },
-                {"storageAccountType", new JsonObject()
-                    {
-                        {"value", "Standard_LRS" }
-                    }
-                }
-            }
-        };
 
         private static void AssertValidApplication(Application model, Application getResult)
         {

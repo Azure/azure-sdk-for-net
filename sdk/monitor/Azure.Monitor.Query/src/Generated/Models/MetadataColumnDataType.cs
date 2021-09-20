@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="MetadataColumnDataType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataColumnDataType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetadataColumnDataType(string value)
         {

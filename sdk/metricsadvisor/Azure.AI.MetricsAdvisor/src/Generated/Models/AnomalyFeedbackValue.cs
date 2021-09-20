@@ -17,6 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             AnomalyValue = anomalyValue;
         }
 
+        /// <summary> Gets or sets the anomaly value. </summary>
         public AnomalyValue AnomalyValue { get; set; }
     }
 }

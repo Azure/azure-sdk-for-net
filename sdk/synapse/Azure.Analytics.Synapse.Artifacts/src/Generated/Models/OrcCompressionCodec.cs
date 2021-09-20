@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="OrcCompressionCodec"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrcCompressionCodec"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OrcCompressionCodec(string value)
         {

@@ -28,7 +28,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             NextLink = nextLink;
         }
 
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<AnomalyDetectionConfiguration> Value { get; }
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="VMGuestPatchClassificationLinux"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMGuestPatchClassificationLinux"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VMGuestPatchClassificationLinux(string value)
         {

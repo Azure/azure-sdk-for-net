@@ -17,7 +17,8 @@ namespace Azure.Verticals.AgriFood.Farming
     public partial class WeatherClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -48,7 +49,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
@@ -136,7 +137,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
+            using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
             scope.Start();
@@ -248,7 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
+            using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
             scope.Start();
@@ -277,23 +278,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="List"/> and <see cref="ListAsync"/> operations. </summary>
-        /// <param name="farmerId"> Farmer ID. </param>
-        /// <param name="boundaryId"> Boundary ID. </param>
-        /// <param name="extensionId"> ID of the weather extension. </param>
-        /// <param name="weatherDataType"> Type of weather data (forecast/historical). </param>
-        /// <param name="granularity"> Granularity of weather data (daily/hourly). </param>
-        /// <param name="startDateTime"> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListRequest(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateListRequest(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -375,7 +362,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
@@ -453,7 +440,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
@@ -482,12 +469,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="GetDataIngestionJobDetails"/> and <see cref="GetDataIngestionJobDetailsAsync"/> operations. </summary>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetDataIngestionJobDetailsRequest(string jobId, RequestOptions options = null)
+        private HttpMessage CreateGetDataIngestionJobDetailsRequest(string jobId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -573,7 +557,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
@@ -675,7 +659,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
@@ -704,13 +688,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateDataIngestionJob"/> and <see cref="CreateDataIngestionJobAsync"/> operations. </summary>
-        /// <param name="jobId"> Job id supplied by user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateDataIngestionJobRequest(string jobId, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateDataIngestionJobRequest(string jobId, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -774,7 +754,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
@@ -852,7 +832,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
@@ -881,12 +861,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="GetDataDeleteJobDetails"/> and <see cref="GetDataDeleteJobDetailsAsync"/> operations. </summary>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetDataDeleteJobDetailsRequest(string jobId, RequestOptions options = null)
+        private HttpMessage CreateGetDataDeleteJobDetailsRequest(string jobId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -972,7 +949,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
@@ -1074,7 +1051,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
@@ -1103,13 +1080,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateDataDeleteJob"/> and <see cref="CreateDataDeleteJobAsync"/> operations. </summary>
-        /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateDataDeleteJobRequest(string jobId, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateDataDeleteJobRequest(string jobId, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();

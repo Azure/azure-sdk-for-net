@@ -60,7 +60,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// required when utilizing managed identity.</param>
         /// <param name="identity">The managed identity associated with the
         /// policy assignment.</param>
-        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), IDictionary<string, ParameterValuesValue> parameters = default(IDictionary<string, ParameterValuesValue>), string description = default(string), object metadata = default(object), string enforcementMode = default(string), IList<NonComplianceMessage> nonComplianceMessages = default(IList<NonComplianceMessage>), string id = default(string), string type = default(string), string name = default(string), string location = default(string), Identity identity = default(Identity))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), IDictionary<string, ParameterValuesValue> parameters = default(IDictionary<string, ParameterValuesValue>), string description = default(string), object metadata = default(object), string enforcementMode = default(string), IList<NonComplianceMessage> nonComplianceMessages = default(IList<NonComplianceMessage>), string id = default(string), string type = default(string), string name = default(string), string location = default(string), Identity identity = default(Identity), SystemData systemData = default(SystemData))
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -76,6 +78,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Name = name;
             Location = location;
             Identity = identity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -176,6 +179,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public Identity Identity { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

@@ -30,9 +30,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Output = output;
         }
 
+        /// <summary> Gets the id. </summary>
         public int Id { get; }
+        /// <summary> Gets the code. </summary>
         public string Code { get; }
+        /// <summary> Gets the state. </summary>
         public string State { get; }
+        /// <summary> Gets the output. </summary>
         public SparkStatementOutput Output { get; }
     }
 }

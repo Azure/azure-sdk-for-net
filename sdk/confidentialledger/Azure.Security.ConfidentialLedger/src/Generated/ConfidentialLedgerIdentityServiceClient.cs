@@ -17,7 +17,8 @@ namespace Azure.Security.ConfidentialLedger
     public partial class ConfidentialLedgerIdentityServiceClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://confidential-ledger.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri identityServiceUri;
@@ -56,7 +57,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
+            using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();
@@ -112,7 +113,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId, options);
+            using HttpMessage message = CreateGetLedgerIdentityRequest(ledgerId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();
@@ -141,12 +142,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="GetLedgerIdentity"/> and <see cref="GetLedgerIdentityAsync"/> operations. </summary>
-        /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetLedgerIdentityRequest(string ledgerId, RequestOptions options = null)
+        private HttpMessage CreateGetLedgerIdentityRequest(string ledgerId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
