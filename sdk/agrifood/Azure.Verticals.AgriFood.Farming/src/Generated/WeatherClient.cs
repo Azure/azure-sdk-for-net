@@ -19,11 +19,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
         private HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly WeatherRestClient _restClient;
         private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of WeatherClient for mocking. </summary>
         protected WeatherClient()
@@ -50,270 +49,12 @@ namespace Azure.Verticals.AgriFood.Farming
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
-        }
-
-        /// <summary> Returns a paginated list of weather data. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       boundaryId: string,
-        ///       extensionId: string,
-        ///       location: {
-        ///         latitude: number,
-        ///         longitude: number
-        ///       },
-        ///       dateTime: string (ISO 8601 Format),
-        ///       unitSystemCode: string,
-        ///       extensionVersion: string,
-        ///       weatherDataType: string,
-        ///       granularity: string,
-        ///       cloudCover: {
-        ///         unit: string,
-        ///         value: number
-        ///       },
-        ///       dewPoint: Measure,
-        ///       growingDegreeDay: Measure,
-        ///       precipitation: Measure,
-        ///       pressure: Measure,
-        ///       relativeHumidity: Measure,
-        ///       soilMoisture: Measure,
-        ///       soilTemperature: Measure,
-        ///       temperature: Measure,
-        ///       visibility: Measure,
-        ///       wetBulbTemperature: Measure,
-        ///       windChill: Measure,
-        ///       windDirection: Measure,
-        ///       windGust: Measure,
-        ///       windSpeed: Measure,
-        ///       id: string,
-        ///       eTag: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> Farmer ID. </param>
-        /// <param name="boundaryId"> Boundary ID. </param>
-        /// <param name="extensionId"> ID of the weather extension. </param>
-        /// <param name="weatherDataType"> Type of weather data (forecast/historical). </param>
-        /// <param name="granularity"> Granularity of weather data (daily/hourly). </param>
-        /// <param name="startDateTime"> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Returns a paginated list of weather data. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       boundaryId: string,
-        ///       extensionId: string,
-        ///       location: {
-        ///         latitude: number,
-        ///         longitude: number
-        ///       },
-        ///       dateTime: string (ISO 8601 Format),
-        ///       unitSystemCode: string,
-        ///       extensionVersion: string,
-        ///       weatherDataType: string,
-        ///       granularity: string,
-        ///       cloudCover: {
-        ///         unit: string,
-        ///         value: number
-        ///       },
-        ///       dewPoint: Measure,
-        ///       growingDegreeDay: Measure,
-        ///       precipitation: Measure,
-        ///       pressure: Measure,
-        ///       relativeHumidity: Measure,
-        ///       soilMoisture: Measure,
-        ///       soilTemperature: Measure,
-        ///       temperature: Measure,
-        ///       visibility: Measure,
-        ///       wetBulbTemperature: Measure,
-        ///       windChill: Measure,
-        ///       windDirection: Measure,
-        ///       windGust: Measure,
-        ///       windSpeed: Measure,
-        ///       id: string,
-        ///       eTag: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> Farmer ID. </param>
-        /// <param name="boundaryId"> Boundary ID. </param>
-        /// <param name="extensionId"> ID of the weather extension. </param>
-        /// <param name="weatherDataType"> Type of weather data (forecast/historical). </param>
-        /// <param name="granularity"> Granularity of weather data (daily/hourly). </param>
-        /// <param name="startDateTime"> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response List(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateListRequest(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/weather", false);
-            uri.AppendQuery("farmerId", farmerId, true);
-            uri.AppendQuery("boundaryId", boundaryId, true);
-            uri.AppendQuery("extensionId", extensionId, true);
-            uri.AppendQuery("weatherDataType", weatherDataType, true);
-            uri.AppendQuery("granularity", granularity, true);
-            if (startDateTime != null)
-            {
-                uri.AppendQuery("startDateTime", startDateTime.Value, "O", true);
-            }
-            if (endDateTime != null)
-            {
-                uri.AppendQuery("endDateTime", endDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            _restClient = new WeatherRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
         }
 
         /// <summary> Get weather ingestion job. </summary>
+        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -337,7 +78,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -355,34 +95,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetDataIngestionJobDetailsAsync(jobId, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -392,6 +113,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get weather ingestion job. </summary>
+        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -415,7 +138,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -433,279 +155,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetDataIngestionJobDetails(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetDataIngestionJobDetails(jobId, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateGetDataIngestionJobDetailsRequest(string jobId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/weather/ingest-data/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Create a weather data ingestion job. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   boundaryId: string (required),
-        ///   farmerId: string (required),
-        ///   extensionId: string (required),
-        ///   extensionApiName: string (required),
-        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt; (required),
-        ///   extensionDataProviderAppId: string,
-        ///   extensionDataProviderApiKey: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   boundaryId: string,
-        ///   farmerId: string,
-        ///   extensionId: string,
-        ///   extensionApiName: string,
-        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;,
-        ///   extensionDataProviderAppId: string,
-        ///   extensionDataProviderApiKey: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="jobId"> Job id supplied by user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> CreateDataIngestionJobAsync(string jobId, RequestContent content, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataIngestionJob");
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataIngestionJob");
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a weather data ingestion job. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   boundaryId: string (required),
-        ///   farmerId: string (required),
-        ///   extensionId: string (required),
-        ///   extensionApiName: string (required),
-        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt; (required),
-        ///   extensionDataProviderAppId: string,
-        ///   extensionDataProviderApiKey: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   boundaryId: string,
-        ///   farmerId: string,
-        ///   extensionId: string,
-        ///   extensionApiName: string,
-        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;,
-        ///   extensionDataProviderAppId: string,
-        ///   extensionDataProviderApiKey: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="jobId"> Job id supplied by user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Operation<BinaryData> CreateDataIngestionJob(string jobId, RequestContent content, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataIngestionJob");
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataIngestionJob");
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateCreateDataIngestionJobRequest(string jobId, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/weather/ingest-data/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
         }
 
         /// <summary> Get weather data delete job. </summary>
+        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -729,7 +198,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -747,34 +215,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetDataDeleteJobDetailsAsync(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetDataDeleteJobDetailsAsync(jobId, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -784,6 +233,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get weather data delete job. </summary>
+        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -807,7 +258,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -825,34 +275,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetDataDeleteJobDetails(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetDataDeleteJobDetails(jobId, options);
             }
             catch (Exception e)
             {
@@ -861,22 +292,414 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        private HttpMessage CreateGetDataDeleteJobDetailsRequest(string jobId)
+        /// <summary> Returns a paginated list of weather data. </summary>
+        /// <param name="farmerId"> Farmer ID. </param>
+        /// <param name="boundaryId"> Boundary ID. </param>
+        /// <param name="extensionId"> ID of the weather extension. </param>
+        /// <param name="weatherDataType"> Type of weather data (forecast/historical). </param>
+        /// <param name="granularity"> Granularity of weather data (daily/hourly). </param>
+        /// <param name="startDateTime"> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       boundaryId: string,
+        ///       extensionId: string,
+        ///       location: {
+        ///         latitude: number,
+        ///         longitude: number
+        ///       },
+        ///       dateTime: string (ISO 8601 Format),
+        ///       unitSystemCode: string,
+        ///       extensionVersion: string,
+        ///       weatherDataType: string,
+        ///       granularity: string,
+        ///       cloudCover: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       dewPoint: Measure,
+        ///       growingDegreeDay: Measure,
+        ///       precipitation: Measure,
+        ///       pressure: Measure,
+        ///       relativeHumidity: Measure,
+        ///       soilMoisture: Measure,
+        ///       soilTemperature: Measure,
+        ///       temperature: Measure,
+        ///       visibility: Measure,
+        ///       wetBulbTemperature: Measure,
+        ///       windChill: Measure,
+        ///       windDirection: Measure,
+        ///       windGust: Measure,
+        ///       windSpeed: Measure,
+        ///       id: string,
+        ///       eTag: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> ListAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/weather/delete-data/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            options ??= new RequestOptions();
+            async Task<Page<BinaryData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
+                scope.Start();
+                try
+                {
+                    Response response = await _restClient.ListAsync(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options).ConfigureAwait(false);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            async Task<Page<BinaryData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
+                scope.Start();
+                try
+                {
+                    Response response = await _restClient.ListNextPageAsync(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options).ConfigureAwait(false);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Returns a paginated list of weather data. </summary>
+        /// <param name="farmerId"> Farmer ID. </param>
+        /// <param name="boundaryId"> Boundary ID. </param>
+        /// <param name="extensionId"> ID of the weather extension. </param>
+        /// <param name="weatherDataType"> Type of weather data (forecast/historical). </param>
+        /// <param name="granularity"> Granularity of weather data (daily/hourly). </param>
+        /// <param name="startDateTime"> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       boundaryId: string,
+        ///       extensionId: string,
+        ///       location: {
+        ///         latitude: number,
+        ///         longitude: number
+        ///       },
+        ///       dateTime: string (ISO 8601 Format),
+        ///       unitSystemCode: string,
+        ///       extensionVersion: string,
+        ///       weatherDataType: string,
+        ///       granularity: string,
+        ///       cloudCover: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       dewPoint: Measure,
+        ///       growingDegreeDay: Measure,
+        ///       precipitation: Measure,
+        ///       pressure: Measure,
+        ///       relativeHumidity: Measure,
+        ///       soilMoisture: Measure,
+        ///       soilTemperature: Measure,
+        ///       temperature: Measure,
+        ///       visibility: Measure,
+        ///       wetBulbTemperature: Measure,
+        ///       windChill: Measure,
+        ///       windDirection: Measure,
+        ///       windGust: Measure,
+        ///       windSpeed: Measure,
+        ///       id: string,
+        ///       eTag: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> List(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            Page<BinaryData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
+                scope.Start();
+                try
+                {
+                    Response response = _restClient.List(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<BinaryData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
+                scope.Start();
+                try
+                {
+                    Response response = _restClient.ListNextPage(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Create a weather data ingestion job. </summary>
+        /// <param name="jobId"> Job id supplied by user. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   boundaryId: string (required),
+        ///   farmerId: string (required),
+        ///   extensionId: string (required),
+        ///   extensionApiName: string (required),
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt; (required),
+        ///   extensionDataProviderAppId: string,
+        ///   extensionDataProviderApiKey: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   boundaryId: string,
+        ///   farmerId: string,
+        ///   extensionId: string,
+        ///   extensionApiName: string,
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;,
+        ///   extensionDataProviderAppId: string,
+        ///   extensionDataProviderApiKey: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Operation<BinaryData>> CreateDataIngestionJobAsync(string jobId, RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = _restClient.CreateCreateDataIngestionJobRequest(jobId, content);
+                Response response = await _restClient.CreateDataIngestionJobAsync(jobId, content, options).ConfigureAwait(false);
+                return new LowLevelFuncOperation<BinaryData>(_clientDiagnostics, _pipeline, message.Request, response, OperationFinalStateVia.Location, "WeatherClient.CreateDataIngestionJob", LowLevelOperationHelpers.ResponseContentSelector);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create a weather data ingestion job. </summary>
+        /// <param name="jobId"> Job id supplied by user. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   boundaryId: string (required),
+        ///   farmerId: string (required),
+        ///   extensionId: string (required),
+        ///   extensionApiName: string (required),
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt; (required),
+        ///   extensionDataProviderAppId: string,
+        ///   extensionDataProviderApiKey: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   boundaryId: string,
+        ///   farmerId: string,
+        ///   extensionId: string,
+        ///   extensionApiName: string,
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;,
+        ///   extensionDataProviderAppId: string,
+        ///   extensionDataProviderApiKey: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Operation<BinaryData> CreateDataIngestionJob(string jobId, RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = _restClient.CreateCreateDataIngestionJobRequest(jobId, content);
+                Response response = _restClient.CreateDataIngestionJob(jobId, content, options);
+                return new LowLevelFuncOperation<BinaryData>(_clientDiagnostics, _pipeline, message.Request, response, OperationFinalStateVia.Location, "WeatherClient.CreateDataIngestionJob", LowLevelOperationHelpers.ResponseContentSelector);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create a weather data delete job. </summary>
+        /// <param name="jobId"> Job ID supplied by end user. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -900,7 +723,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   extensionId: string,
@@ -923,7 +745,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -941,35 +762,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Operation<BinaryData>> CreateDataDeleteJobAsync(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataDeleteJob");
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataDeleteJob");
-                }
+                using HttpMessage message = _restClient.CreateCreateDataDeleteJobRequest(jobId, content);
+                Response response = await _restClient.CreateDataDeleteJobAsync(jobId, content, options).ConfigureAwait(false);
+                return new LowLevelFuncOperation<BinaryData>(_clientDiagnostics, _pipeline, message.Request, response, OperationFinalStateVia.Location, "WeatherClient.CreateDataDeleteJob", LowLevelOperationHelpers.ResponseContentSelector);
             }
             catch (Exception e)
             {
@@ -979,6 +782,9 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a weather data delete job. </summary>
+        /// <param name="jobId"> Job ID supplied by end user. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1002,7 +808,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   extensionId: string,
@@ -1025,7 +830,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -1043,58 +847,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Operation<BinaryData> CreateDataDeleteJob(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataDeleteJob");
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataDeleteJob");
-                }
+                using HttpMessage message = _restClient.CreateCreateDataDeleteJobRequest(jobId, content);
+                Response response = _restClient.CreateDataDeleteJob(jobId, content, options);
+                return new LowLevelFuncOperation<BinaryData>(_clientDiagnostics, _pipeline, message.Request, response, OperationFinalStateVia.Location, "WeatherClient.CreateDataDeleteJob", LowLevelOperationHelpers.ResponseContentSelector);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateCreateDataDeleteJobRequest(string jobId, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/weather/delete-data/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
         }
     }
 }

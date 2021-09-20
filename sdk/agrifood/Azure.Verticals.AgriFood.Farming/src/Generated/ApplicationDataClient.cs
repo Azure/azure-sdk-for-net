@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -20,11 +21,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
         private HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ApplicationDataRestClient _restClient;
         private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of ApplicationDataClient for mocking. </summary>
         protected ApplicationDataClient()
@@ -51,747 +51,13 @@ namespace Azure.Verticals.AgriFood.Farming
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
-        }
-
-        /// <summary> Returns a paginated list of application data resources under a particular farm. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       applicationProductDetails: [
-        ///         {
-        ///           productName: string,
-        ///           isCarrier: boolean,
-        ///           avgMaterial: {
-        ///             unit: string,
-        ///             value: number
-        ///           },
-        ///           totalMaterial: Measure
-        ///         }
-        ///       ],
-        ///       avgMaterial: Measure,
-        ///       totalMaterial: Measure,
-        ///       area: Measure,
-        ///       source: string,
-        ///       operationModifiedDateTime: string (ISO 8601 Format),
-        ///       operationStartDateTime: string (ISO 8601 Format),
-        ///       operationEndDateTime: string (ISO 8601 Format),
-        ///       attachmentsLink: string,
-        ///       associatedBoundaryId: string,
-        ///       operationBoundaryId: string,
-        ///       farmerId: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
-        /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
-        /// <param name="minTotalMaterial"> Minimum total amount of material applied during the application (inclusive). </param>
-        /// <param name="maxTotalMaterial"> Maximum total amount of material applied during the application (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListByFarmerIdAsync(string farmerId, double? minAvgMaterial = null, double? maxAvgMaterial = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.ListByFarmerId");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Returns a paginated list of application data resources under a particular farm. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       applicationProductDetails: [
-        ///         {
-        ///           productName: string,
-        ///           isCarrier: boolean,
-        ///           avgMaterial: {
-        ///             unit: string,
-        ///             value: number
-        ///           },
-        ///           totalMaterial: Measure
-        ///         }
-        ///       ],
-        ///       avgMaterial: Measure,
-        ///       totalMaterial: Measure,
-        ///       area: Measure,
-        ///       source: string,
-        ///       operationModifiedDateTime: string (ISO 8601 Format),
-        ///       operationStartDateTime: string (ISO 8601 Format),
-        ///       operationEndDateTime: string (ISO 8601 Format),
-        ///       attachmentsLink: string,
-        ///       associatedBoundaryId: string,
-        ///       operationBoundaryId: string,
-        ///       farmerId: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
-        /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
-        /// <param name="minTotalMaterial"> Minimum total amount of material applied during the application (inclusive). </param>
-        /// <param name="maxTotalMaterial"> Maximum total amount of material applied during the application (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response ListByFarmerId(string farmerId, double? minAvgMaterial = null, double? maxAvgMaterial = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.ListByFarmerId");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateListByFarmerIdRequest(string farmerId, double? minAvgMaterial, double? maxAvgMaterial, double? minTotalMaterial, double? maxTotalMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/application-data", false);
-            if (minAvgMaterial != null)
-            {
-                uri.AppendQuery("minAvgMaterial", minAvgMaterial.Value, true);
-            }
-            if (maxAvgMaterial != null)
-            {
-                uri.AppendQuery("maxAvgMaterial", maxAvgMaterial.Value, true);
-            }
-            if (minTotalMaterial != null)
-            {
-                uri.AppendQuery("minTotalMaterial", minTotalMaterial.Value, true);
-            }
-            if (maxTotalMaterial != null)
-            {
-                uri.AppendQuery("maxTotalMaterial", maxTotalMaterial.Value, true);
-            }
-            if (sources != null)
-            {
-                uri.AppendQueryDelimited("sources", sources, ",", true);
-            }
-            if (associatedBoundaryIds != null)
-            {
-                uri.AppendQueryDelimited("associatedBoundaryIds", associatedBoundaryIds, ",", true);
-            }
-            if (operationBoundaryIds != null)
-            {
-                uri.AppendQueryDelimited("operationBoundaryIds", operationBoundaryIds, ",", true);
-            }
-            if (minOperationStartDateTime != null)
-            {
-                uri.AppendQuery("minOperationStartDateTime", minOperationStartDateTime.Value, "O", true);
-            }
-            if (maxOperationStartDateTime != null)
-            {
-                uri.AppendQuery("maxOperationStartDateTime", maxOperationStartDateTime.Value, "O", true);
-            }
-            if (minOperationEndDateTime != null)
-            {
-                uri.AppendQuery("minOperationEndDateTime", minOperationEndDateTime.Value, "O", true);
-            }
-            if (maxOperationEndDateTime != null)
-            {
-                uri.AppendQuery("maxOperationEndDateTime", maxOperationEndDateTime.Value, "O", true);
-            }
-            if (minOperationModifiedDateTime != null)
-            {
-                uri.AppendQuery("minOperationModifiedDateTime", minOperationModifiedDateTime.Value, "O", true);
-            }
-            if (maxOperationModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxOperationModifiedDateTime", maxOperationModifiedDateTime.Value, "O", true);
-            }
-            if (minArea != null)
-            {
-                uri.AppendQuery("minArea", minArea.Value, true);
-            }
-            if (maxArea != null)
-            {
-                uri.AppendQuery("maxArea", maxArea.Value, true);
-            }
-            if (ids != null)
-            {
-                uri.AppendQueryDelimited("ids", ids, ",", true);
-            }
-            if (names != null)
-            {
-                uri.AppendQueryDelimited("names", names, ",", true);
-            }
-            if (propertyFilters != null)
-            {
-                uri.AppendQueryDelimited("propertyFilters", propertyFilters, ",", true);
-            }
-            if (statuses != null)
-            {
-                uri.AppendQueryDelimited("statuses", statuses, ",", true);
-            }
-            if (minCreatedDateTime != null)
-            {
-                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
-            }
-            if (maxCreatedDateTime != null)
-            {
-                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
-            }
-            if (minLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Returns a paginated list of application data resources across all farmers. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       applicationProductDetails: [
-        ///         {
-        ///           productName: string,
-        ///           isCarrier: boolean,
-        ///           avgMaterial: {
-        ///             unit: string,
-        ///             value: number
-        ///           },
-        ///           totalMaterial: Measure
-        ///         }
-        ///       ],
-        ///       avgMaterial: Measure,
-        ///       totalMaterial: Measure,
-        ///       area: Measure,
-        ///       source: string,
-        ///       operationModifiedDateTime: string (ISO 8601 Format),
-        ///       operationStartDateTime: string (ISO 8601 Format),
-        ///       operationEndDateTime: string (ISO 8601 Format),
-        ///       attachmentsLink: string,
-        ///       associatedBoundaryId: string,
-        ///       operationBoundaryId: string,
-        ///       farmerId: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
-        /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
-        /// <param name="minTotalMaterial"> Minimum total amount of material applied during the application (inclusive). </param>
-        /// <param name="maxTotalMaterial"> Maximum total amount of material applied during the application (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListAsync(double? minAvgMaterial = null, double? maxAvgMaterial = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.List");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Returns a paginated list of application data resources across all farmers. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       applicationProductDetails: [
-        ///         {
-        ///           productName: string,
-        ///           isCarrier: boolean,
-        ///           avgMaterial: {
-        ///             unit: string,
-        ///             value: number
-        ///           },
-        ///           totalMaterial: Measure
-        ///         }
-        ///       ],
-        ///       avgMaterial: Measure,
-        ///       totalMaterial: Measure,
-        ///       area: Measure,
-        ///       source: string,
-        ///       operationModifiedDateTime: string (ISO 8601 Format),
-        ///       operationStartDateTime: string (ISO 8601 Format),
-        ///       operationEndDateTime: string (ISO 8601 Format),
-        ///       attachmentsLink: string,
-        ///       associatedBoundaryId: string,
-        ///       operationBoundaryId: string,
-        ///       farmerId: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
-        /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
-        /// <param name="minTotalMaterial"> Minimum total amount of material applied during the application (inclusive). </param>
-        /// <param name="maxTotalMaterial"> Maximum total amount of material applied during the application (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response List(double? minAvgMaterial = null, double? maxAvgMaterial = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.List");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateListRequest(double? minAvgMaterial, double? maxAvgMaterial, double? minTotalMaterial, double? maxTotalMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/application-data", false);
-            if (minAvgMaterial != null)
-            {
-                uri.AppendQuery("minAvgMaterial", minAvgMaterial.Value, true);
-            }
-            if (maxAvgMaterial != null)
-            {
-                uri.AppendQuery("maxAvgMaterial", maxAvgMaterial.Value, true);
-            }
-            if (minTotalMaterial != null)
-            {
-                uri.AppendQuery("minTotalMaterial", minTotalMaterial.Value, true);
-            }
-            if (maxTotalMaterial != null)
-            {
-                uri.AppendQuery("maxTotalMaterial", maxTotalMaterial.Value, true);
-            }
-            if (sources != null)
-            {
-                uri.AppendQueryDelimited("sources", sources, ",", true);
-            }
-            if (associatedBoundaryIds != null)
-            {
-                uri.AppendQueryDelimited("associatedBoundaryIds", associatedBoundaryIds, ",", true);
-            }
-            if (operationBoundaryIds != null)
-            {
-                uri.AppendQueryDelimited("operationBoundaryIds", operationBoundaryIds, ",", true);
-            }
-            if (minOperationStartDateTime != null)
-            {
-                uri.AppendQuery("minOperationStartDateTime", minOperationStartDateTime.Value, "O", true);
-            }
-            if (maxOperationStartDateTime != null)
-            {
-                uri.AppendQuery("maxOperationStartDateTime", maxOperationStartDateTime.Value, "O", true);
-            }
-            if (minOperationEndDateTime != null)
-            {
-                uri.AppendQuery("minOperationEndDateTime", minOperationEndDateTime.Value, "O", true);
-            }
-            if (maxOperationEndDateTime != null)
-            {
-                uri.AppendQuery("maxOperationEndDateTime", maxOperationEndDateTime.Value, "O", true);
-            }
-            if (minOperationModifiedDateTime != null)
-            {
-                uri.AppendQuery("minOperationModifiedDateTime", minOperationModifiedDateTime.Value, "O", true);
-            }
-            if (maxOperationModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxOperationModifiedDateTime", maxOperationModifiedDateTime.Value, "O", true);
-            }
-            if (minArea != null)
-            {
-                uri.AppendQuery("minArea", minArea.Value, true);
-            }
-            if (maxArea != null)
-            {
-                uri.AppendQuery("maxArea", maxArea.Value, true);
-            }
-            if (ids != null)
-            {
-                uri.AppendQueryDelimited("ids", ids, ",", true);
-            }
-            if (names != null)
-            {
-                uri.AppendQueryDelimited("names", names, ",", true);
-            }
-            if (propertyFilters != null)
-            {
-                uri.AppendQueryDelimited("propertyFilters", propertyFilters, ",", true);
-            }
-            if (statuses != null)
-            {
-                uri.AppendQueryDelimited("statuses", statuses, ",", true);
-            }
-            if (minCreatedDateTime != null)
-            {
-                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
-            }
-            if (maxCreatedDateTime != null)
-            {
-                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
-            }
-            if (minLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            _restClient = new ApplicationDataRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
         }
 
         /// <summary> Get a specified application data resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <param name="applicationDataId"> ID of the application data resource. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -827,7 +93,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -845,35 +110,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="applicationDataId"> ID of the application data resource. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetAsync(string farmerId, string applicationDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRequest(farmerId, applicationDataId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.Get");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetAsync(farmerId, applicationDataId, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -883,6 +128,9 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get a specified application data resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <param name="applicationDataId"> ID of the application data resource. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -918,7 +166,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -936,35 +183,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="applicationDataId"> ID of the application data resource. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response Get(string farmerId, string applicationDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRequest(farmerId, applicationDataId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.Get");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.Get(farmerId, applicationDataId, options);
             }
             catch (Exception e)
             {
@@ -973,24 +200,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        private HttpMessage CreateGetRequest(string farmerId, string applicationDataId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/application-data/", false);
-            uri.AppendPath(applicationDataId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Creates or updates an application data resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="applicationDataId"> ID of the application data resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1026,7 +240,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   applicationProductDetails: [
@@ -1061,7 +274,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -1079,37 +291,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="applicationDataId"> ID of the application data resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string applicationDataId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, applicationDataId, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 201:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.CreateOrUpdateAsync(farmerId, applicationDataId, content, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1119,6 +309,10 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates an application data resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="applicationDataId"> ID of the application data resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1154,7 +348,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   applicationProductDetails: [
@@ -1189,7 +382,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -1207,37 +399,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="applicationDataId"> ID of the application data resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response CreateOrUpdate(string farmerId, string applicationDataId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, applicationDataId, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 201:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.CreateOrUpdate(farmerId, applicationDataId, content, options);
             }
             catch (Exception e)
             {
@@ -1246,26 +416,10 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string applicationDataId, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/application-data/", false);
-            uri.AppendPath(applicationDataId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Deletes a specified application data resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <param name="applicationDataId"> ID of the application data. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1284,35 +438,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="applicationDataId"> ID of the application data. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(string farmerId, string applicationDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(farmerId, applicationDataId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.Delete");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.DeleteAsync(farmerId, applicationDataId, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1322,6 +456,9 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified application data resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <param name="applicationDataId"> ID of the application data. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1340,35 +477,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="applicationDataId"> ID of the application data. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response Delete(string farmerId, string applicationDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(farmerId, applicationDataId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.Delete");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.Delete(farmerId, applicationDataId, options);
             }
             catch (Exception e)
             {
@@ -1377,21 +494,558 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        private HttpMessage CreateDeleteRequest(string farmerId, string applicationDataId)
+        /// <summary> Returns a paginated list of application data resources under a particular farm. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
+        /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
+        /// <param name="minTotalMaterial"> Minimum total amount of material applied during the application (inclusive). </param>
+        /// <param name="maxTotalMaterial"> Maximum total amount of material applied during the application (inclusive). </param>
+        /// <param name="sources"> Sources of the operation data. </param>
+        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
+        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
+        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
+        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       applicationProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           isCarrier: boolean,
+        ///           avgMaterial: {
+        ///             unit: string,
+        ///             value: number
+        ///           },
+        ///           totalMaterial: Measure
+        ///         }
+        ///       ],
+        ///       avgMaterial: Measure,
+        ///       totalMaterial: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> ListByFarmerIdAsync(string farmerId, double? minAvgMaterial = null, double? maxAvgMaterial = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/application-data/", false);
-            uri.AppendPath(applicationDataId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            options ??= new RequestOptions();
+            var sourcesValues = sources.ToArray();
+            var associatedBoundaryIdsValues = associatedBoundaryIds.ToArray();
+            var operationBoundaryIdsValues = operationBoundaryIds.ToArray();
+            var idsValues = ids.ToArray();
+            var namesValues = names.ToArray();
+            var propertyFiltersValues = propertyFilters.ToArray();
+            var statusesValues = statuses.ToArray();
+            async Task<Page<BinaryData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.ListByFarmerId");
+                scope.Start();
+                try
+                {
+                    Response response = await _restClient.ListByFarmerIdAsync(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sourcesValues, associatedBoundaryIdsValues, operationBoundaryIdsValues, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, idsValues, namesValues, propertyFiltersValues, statusesValues, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options).ConfigureAwait(false);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            async Task<Page<BinaryData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.ListByFarmerId");
+                scope.Start();
+                try
+                {
+                    Response response = await _restClient.ListByFarmerIdNextPageAsync(nextLink, farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sourcesValues, associatedBoundaryIdsValues, operationBoundaryIdsValues, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, idsValues, namesValues, propertyFiltersValues, statusesValues, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options).ConfigureAwait(false);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Returns a paginated list of application data resources under a particular farm. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
+        /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
+        /// <param name="minTotalMaterial"> Minimum total amount of material applied during the application (inclusive). </param>
+        /// <param name="maxTotalMaterial"> Maximum total amount of material applied during the application (inclusive). </param>
+        /// <param name="sources"> Sources of the operation data. </param>
+        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
+        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
+        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
+        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       applicationProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           isCarrier: boolean,
+        ///           avgMaterial: {
+        ///             unit: string,
+        ///             value: number
+        ///           },
+        ///           totalMaterial: Measure
+        ///         }
+        ///       ],
+        ///       avgMaterial: Measure,
+        ///       totalMaterial: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> ListByFarmerId(string farmerId, double? minAvgMaterial = null, double? maxAvgMaterial = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            var sourcesValues = sources.ToArray();
+            var associatedBoundaryIdsValues = associatedBoundaryIds.ToArray();
+            var operationBoundaryIdsValues = operationBoundaryIds.ToArray();
+            var idsValues = ids.ToArray();
+            var namesValues = names.ToArray();
+            var propertyFiltersValues = propertyFilters.ToArray();
+            var statusesValues = statuses.ToArray();
+            Page<BinaryData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.ListByFarmerId");
+                scope.Start();
+                try
+                {
+                    Response response = _restClient.ListByFarmerId(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sourcesValues, associatedBoundaryIdsValues, operationBoundaryIdsValues, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, idsValues, namesValues, propertyFiltersValues, statusesValues, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<BinaryData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.ListByFarmerId");
+                scope.Start();
+                try
+                {
+                    Response response = _restClient.ListByFarmerIdNextPage(nextLink, farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sourcesValues, associatedBoundaryIdsValues, operationBoundaryIdsValues, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, idsValues, namesValues, propertyFiltersValues, statusesValues, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Returns a paginated list of application data resources across all farmers. </summary>
+        /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
+        /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
+        /// <param name="minTotalMaterial"> Minimum total amount of material applied during the application (inclusive). </param>
+        /// <param name="maxTotalMaterial"> Maximum total amount of material applied during the application (inclusive). </param>
+        /// <param name="sources"> Sources of the operation data. </param>
+        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
+        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
+        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
+        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       applicationProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           isCarrier: boolean,
+        ///           avgMaterial: {
+        ///             unit: string,
+        ///             value: number
+        ///           },
+        ///           totalMaterial: Measure
+        ///         }
+        ///       ],
+        ///       avgMaterial: Measure,
+        ///       totalMaterial: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> ListAsync(double? minAvgMaterial = null, double? maxAvgMaterial = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            var sourcesValues = sources.ToArray();
+            var associatedBoundaryIdsValues = associatedBoundaryIds.ToArray();
+            var operationBoundaryIdsValues = operationBoundaryIds.ToArray();
+            var idsValues = ids.ToArray();
+            var namesValues = names.ToArray();
+            var propertyFiltersValues = propertyFilters.ToArray();
+            var statusesValues = statuses.ToArray();
+            async Task<Page<BinaryData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.List");
+                scope.Start();
+                try
+                {
+                    Response response = await _restClient.ListAsync(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sourcesValues, associatedBoundaryIdsValues, operationBoundaryIdsValues, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, idsValues, namesValues, propertyFiltersValues, statusesValues, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options).ConfigureAwait(false);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            async Task<Page<BinaryData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.List");
+                scope.Start();
+                try
+                {
+                    Response response = await _restClient.ListNextPageAsync(nextLink, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sourcesValues, associatedBoundaryIdsValues, operationBoundaryIdsValues, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, idsValues, namesValues, propertyFiltersValues, statusesValues, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options).ConfigureAwait(false);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Returns a paginated list of application data resources across all farmers. </summary>
+        /// <param name="minAvgMaterial"> Minimum average amount of material applied during the application (inclusive). </param>
+        /// <param name="maxAvgMaterial"> Maximum average amount of material applied during the application (inclusive). </param>
+        /// <param name="minTotalMaterial"> Minimum total amount of material applied during the application (inclusive). </param>
+        /// <param name="maxTotalMaterial"> Maximum total amount of material applied during the application (inclusive). </param>
+        /// <param name="sources"> Sources of the operation data. </param>
+        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
+        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
+        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
+        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       applicationProductDetails: [
+        ///         {
+        ///           productName: string,
+        ///           isCarrier: boolean,
+        ///           avgMaterial: {
+        ///             unit: string,
+        ///             value: number
+        ///           },
+        ///           totalMaterial: Measure
+        ///         }
+        ///       ],
+        ///       avgMaterial: Measure,
+        ///       totalMaterial: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> List(double? minAvgMaterial = null, double? maxAvgMaterial = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            var sourcesValues = sources.ToArray();
+            var associatedBoundaryIdsValues = associatedBoundaryIds.ToArray();
+            var operationBoundaryIdsValues = operationBoundaryIds.ToArray();
+            var idsValues = ids.ToArray();
+            var namesValues = names.ToArray();
+            var propertyFiltersValues = propertyFilters.ToArray();
+            var statusesValues = statuses.ToArray();
+            Page<BinaryData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.List");
+                scope.Start();
+                try
+                {
+                    Response response = _restClient.List(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sourcesValues, associatedBoundaryIdsValues, operationBoundaryIdsValues, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, idsValues, namesValues, propertyFiltersValues, statusesValues, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<BinaryData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ApplicationDataClient.List");
+                scope.Start();
+                try
+                {
+                    Response response = _restClient.ListNextPage(nextLink, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sourcesValues, associatedBoundaryIdsValues, operationBoundaryIdsValues, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, idsValues, namesValues, propertyFiltersValues, statusesValues, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+                    return LowLevelPagableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }
