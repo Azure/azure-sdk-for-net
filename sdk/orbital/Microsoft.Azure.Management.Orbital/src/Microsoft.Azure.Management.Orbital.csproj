@@ -8,9 +8,9 @@
     <Description>Provides management capabilities for Azure Orbital.</Description>
     <Version>1.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Orbital</AssemblyName>
-    <PackageTags>Microsoft Azure Orbital;Orbital; Azure Orbital</PackageTags>
+    <PackageTags>Microsoft Azure Orbital; Orbital; Azure Orbital</PackageTags>
     <PackageReleaseNotes>
-      <![CDATA[This is a release SDK for Azure Orbital, which allows you to:
+      <![CDATA[SDK for Azure Orbital, which allows you to:
  - create/read/update/delete Spacecrafts.
  - create/read/update/delete Contact Profiles.
  - create/read/update/delete Contacts.
