@@ -23,9 +23,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="SessionRecords\ContactProfileTests\" />
-    <Folder Include="SessionRecords\ContactTests\" />
-  </ItemGroup>
-
 </Project>
