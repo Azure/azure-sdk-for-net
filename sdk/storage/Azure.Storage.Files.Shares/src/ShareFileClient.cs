@@ -4775,6 +4775,12 @@ namespace Azure.Storage.Files.Shares
         {
             Errors.VerifyStreamPosition(content, nameof(content));
 
+            // partitioned uploads don't support pre-calculated hashes
+            if (hashingOptions?.PrecalculatedHash != default)
+            {
+                throw Errors.PrecalculatedHashNotSupportedOnSplit();
+            }
+
             // Try to upload the file as a single range
             Debug.Assert(singleRangeThreshold <= Constants.File.MaxFileUpdateRange);
             var length = content?.Length - content?.Position;

@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
         //[TestCase(TransactionalHashAlgorithm.StorageCrc64)] TODO #23578
-        public async Task BlockBlobClientUploadRejectPrecalculatedHash(TransactionalHashAlgorithm algorithm)
+        public async Task FileUploadRejectPrecalculatedHash(TransactionalHashAlgorithm algorithm)
         {
             await using DisposingShare test = await GetTestShareAsync();
 
