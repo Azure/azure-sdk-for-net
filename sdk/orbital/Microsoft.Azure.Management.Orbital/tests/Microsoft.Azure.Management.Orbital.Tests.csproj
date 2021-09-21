@@ -7,6 +7,9 @@
     <VersionPrefix>1.0.0</VersionPrefix>    
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="C:\git_repos\azure-sdk-for-net\eng\mgmt\DisableTestRunParallel.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="3.11.1-preview" />
   </ItemGroup>
 
@@ -18,6 +21,11 @@
     <None Update="Properties\launchSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SessionRecords\ContactProfileTests\" />
+    <Folder Include="SessionRecords\ContactTests\" />
   </ItemGroup>
 
 </Project>

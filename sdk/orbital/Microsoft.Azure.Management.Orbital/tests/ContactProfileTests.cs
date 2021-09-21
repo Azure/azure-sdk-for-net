@@ -1,5 +1,7 @@
 using Microsoft.Azure.Management.Orbital.Models;
 using Microsoft.Azure.Management.Orbital.Tests.Helpers;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using System.Net;
@@ -10,93 +12,126 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
 {
     public class ContactProfileTests : TestBase
     {
-        private RecordedDelegatingHandler handler;
-        private AzureOrbitalClient client; 
-
-        public ContactProfileTests()
-            : base()
-        {
-            handler = new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = HttpStatusCode.OK };
-        }
-
         [Fact]
-        public void ContactProfileCRUDTests()
+        public void ContactProfileApiTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                this.client = GetClientWithHandler(context, handler);
+                var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-                // create a resource group
-                Assert.True(VerifyExistenceOrCreateResourceGroup(rgName, this.location));
-                               
-                // create a contact profile
-                CreateContactProfileTest(this.client);
+                var resourcesClient = GetResourceManagementClientWithHandler(context, handler1);
+                var azureOrbitalClient = GetAzureOrbitalClientWithHandler(context, handler2);
+                var location = "westus2";
 
-                // get a contact profile that was just created 
-                GetContactProfileTest();
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(
+                    resourceGroupName,
+                    new ResourceGroup()
+                    {
+                        Location = location
+                    });
 
-                // delete a contact profile 
-                DeleteContactProfileTest(this.client);
 
-                // delete a resource group
-                DeleteResourceGroupTest();
+                var contactProfileName = TestUtilities.GenerateName();
+                var polarization = "RHCP";
+                var direction = "Downlink";
+                var gainOverTemperature = 25;
+                var eirpdBW = 0;
+                var centerFrequencyMHz = 8160;
+                var bandwidthMHz = 150;
+                var ipAddress = "10.2.0.3";
+                var endPointName = "AQUA_directplayback";
+                var port = "4000";
+                var protocol = "TCP";
+                var minimumViableContactDuration = "PT1M";
+                var minimumElevationDegrees = 5;
+                var autoTrackingConfiguration = AutoTrackingConfiguration.XBand;
+                var demodulationConfiguration = "<config factory=\"Attribute\" factoryType=\"generic\">\r\n\t<projectName>quantumRX</projectName>\r\n\t<projectVersion>1.0.0</projectVersion></config>\r\n";
+
+                var links = new List<ContactProfileLink>()
+                {
+                    new ContactProfileLink(){
+                        Polarization = polarization,
+                        Direction = direction,
+                        GainOverTemperature = gainOverTemperature,
+                        EirpdBW = eirpdBW,
+                        Channels = new List<ContactProfileLinkChannel>(){
+                            new ContactProfileLinkChannel()
+                            {
+                                CenterFrequencyMHz = centerFrequencyMHz,
+                                BandwidthMHz = bandwidthMHz,
+                                EndPoint = new EndPoint()
+                                {
+                                    IpAddress = ipAddress,
+                                    EndPointName = endPointName,
+                                    Port = port,
+                                    Protocol = protocol
+                                },
+                                ModulationConfiguration = null,
+                                DemodulationConfiguration = demodulationConfiguration,
+                                EncodingConfiguration = null,
+                                DecodingConfiguration = null
+                             }}}};
+
+                var putContactProfile = azureOrbitalClient.Orbital.CreateOrUpdateContactProfile(
+                    resourceGroupName,
+                    contactProfileName,
+                    links,
+                    location,
+                    tags: null,
+                    minimumViableContactDuration,
+                    minimumElevationDegrees,
+                    autoTrackingConfiguration);
+
+                Assert.Equal(contactProfileName, putContactProfile.Name);
+                Assert.Equal(minimumElevationDegrees, putContactProfile.MinimumElevationDegrees);
+                Assert.Equal(minimumViableContactDuration, putContactProfile.MinimumViableContactDuration);
+                Assert.Equal(autoTrackingConfiguration, putContactProfile.AutoTrackingConfiguration);
+                Assert.Single(putContactProfile.Links);
+                Assert.Equal(polarization, putContactProfile.Links[0].Polarization);
+                Assert.Equal(direction, putContactProfile.Links[0].Direction);
+                Assert.Equal(gainOverTemperature, putContactProfile.Links[0].GainOverTemperature);
+                Assert.Equal(eirpdBW, putContactProfile.Links[0].EirpdBW);
+                Assert.Single(putContactProfile.Links[0].Channels);
+                Assert.Equal(centerFrequencyMHz, putContactProfile.Links[0].Channels[0].CenterFrequencyMHz);
+                Assert.Equal(bandwidthMHz, putContactProfile.Links[0].Channels[0].BandwidthMHz);
+                Assert.Equal(demodulationConfiguration, putContactProfile.Links[0].Channels[0].DemodulationConfiguration);
+                Assert.NotNull(putContactProfile.Links[0].Channels[0].EndPoint);
+                Assert.Equal(ipAddress, putContactProfile.Links[0].Channels[0].EndPoint.IpAddress);
+                Assert.Equal(port, putContactProfile.Links[0].Channels[0].EndPoint.Port);
+                Assert.Equal(protocol, putContactProfile.Links[0].Channels[0].EndPoint.Protocol);
+
+                var getContactProfile = azureOrbitalClient.Orbital.GetContactProfile(resourceGroupName, contactProfileName);
+
+                Assert.Equal(contactProfileName, getContactProfile.Name);
+                Assert.Equal(minimumElevationDegrees, getContactProfile.MinimumElevationDegrees);
+                Assert.Equal(minimumViableContactDuration, getContactProfile.MinimumViableContactDuration);
+                Assert.Equal(autoTrackingConfiguration, getContactProfile.AutoTrackingConfiguration);
+                Assert.Single(getContactProfile.Links);
+                Assert.Equal(polarization, getContactProfile.Links[0].Polarization);
+                Assert.Equal(direction, getContactProfile.Links[0].Direction);
+                Assert.Equal(gainOverTemperature, getContactProfile.Links[0].GainOverTemperature);
+                Assert.Equal(eirpdBW, getContactProfile.Links[0].EirpdBW);
+                Assert.Single(getContactProfile.Links[0].Channels);
+                Assert.Equal(centerFrequencyMHz, getContactProfile.Links[0].Channels[0].CenterFrequencyMHz);
+                Assert.Equal(bandwidthMHz, getContactProfile.Links[0].Channels[0].BandwidthMHz);
+                Assert.Equal(demodulationConfiguration, getContactProfile.Links[0].Channels[0].DemodulationConfiguration);
+                Assert.NotNull(getContactProfile.Links[0].Channels[0].EndPoint);
+                Assert.Equal(ipAddress, getContactProfile.Links[0].Channels[0].EndPoint.IpAddress);
+                Assert.Equal(port, getContactProfile.Links[0].Channels[0].EndPoint.Port);
+                Assert.Equal(protocol, getContactProfile.Links[0].Channels[0].EndPoint.Protocol);
+
+                var listContactProfile = azureOrbitalClient.Orbital.ListContactProfilesByResourceGroup(resourceGroupName);
+
+                Assert.NotNull(listContactProfile);
+                Assert.Single(listContactProfile.Value);
+
+                azureOrbitalClient.Orbital.DeleteContactProfile(resourceGroupName, contactProfileName);
+                listContactProfile = azureOrbitalClient.Orbital.ListContactProfilesByResourceGroup(resourceGroupName);
+                Assert.Empty(listContactProfile.Value);
+
             }
-        }
-        internal void DeleteContactProfileTest(AzureOrbitalClient client)
-        {
-            client.Orbital.DeleteContactProfile(rgName, this.contactProfileName);
-        }
-        private void GetContactProfileTest()
-        {
-            ContactProfile actual = this.client.Orbital.GetContactProfile(rgName, this.contactProfileName);
-
-            if (!this.IsRecording)
-            {
-                Assert.NotNull(actual);
-
-                Assert.Equal(this.contactProfileName, actual.Name);
-            }
-        }
-        internal ContactProfile CreateContactProfileTest(AzureOrbitalClient client)
-        {
-            var links = new List<ContactProfileLink>();
-
-            var channel = new List<ContactProfileLinkChannel>();
-
-            var endpoint1 = new EndPoint("10.0.1.0", "AQUA_command", "4000", "TCP");
-
-            var channel1 = new ContactProfileLinkChannel(2106.4063, 0.036, endpoint1, "AQUA_UPLINK_BPSK", "na", "AQUA_CMD_CCSDS", "na");
-
-            channel.Add(channel1);
-
-            links.Add(new ContactProfileLink(
-                "RHCP",
-                "uplink",
-                channel,
-                0,
-                45));
-
-            ContactProfile actual = client.Orbital.BeginCreateOrUpdateContactProfile(
-                rgName,
-                this.contactProfileName,
-                links,
-                this.location,
-                null,
-                "PT1M",
-                10);
-
-
-            if (!this.IsRecording)
-            {
-                Assert.NotNull(actual);
-            }
-
-            return actual;
-        }
-
-        private void DeleteResourceGroupTest()
-        {
-            DeleteResourceGroup(rgName);
         }
     }
 }

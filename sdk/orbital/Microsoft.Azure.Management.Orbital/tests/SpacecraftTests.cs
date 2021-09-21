@@ -11,14 +11,6 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
 {
     public class SpacecraftTests : TestBase
     {
-        private RecordedDelegatingHandler handler;
-        
-        public SpacecraftTests()
-            : base()
-        {
-            handler = new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = HttpStatusCode.OK };
-        }
-
         [Fact]
         public void SpacecraftApiTests()
         {
