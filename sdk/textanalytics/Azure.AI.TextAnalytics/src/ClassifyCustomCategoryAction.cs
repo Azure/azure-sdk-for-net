@@ -5,16 +5,17 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Configurations that allow callers to specify details about how to execute
-    /// a Classify Custom Category action in a set of documents.
-    /// For example,the name of the project and deployment are req.
+    /// a Classify Custom Category action on a set of documents.
+    /// For example, the target project and deployment names are required
+    /// for a successful custom classification action.
     /// </summary>
     public class ClassifyCustomCategoryAction
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassifyCustomCategoryAction"/>
         /// class which allows callers to specify details about how to execute
-        /// a Classify Custom Category action in a set of documents.
-        /// Sets the <see cref="ProjectName"/> and <see cref="DeploymentName"/> properties
+        /// a Classify Custom Category action on a set of documents.
+        /// Sets the <see cref="ProjectName"/> and <see cref="DeploymentName"/> properties.
         /// </summary>
         public ClassifyCustomCategoryAction(string projectName, string deploymentName)
         {
@@ -24,13 +25,15 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the value of the property corresponding to the name of the
-        /// project for this action.
+        /// target project for this action. This property is set when calling
+        /// the <see cref="ClassifyCustomCategoryAction"/> constructor.
         /// </summary>
         public string ProjectName { get; }
 
         /// <summary>
         /// Gets the value of the property corresponding to the name of the
-        /// deployment for this action.
+        /// deployment for this action. This property is set when calling
+        /// the <see cref="ClassifyCustomCategoryAction"/> constructor.
         /// </summary>
         public string DeploymentName { get; }
 

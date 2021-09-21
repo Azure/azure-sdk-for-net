@@ -31,12 +31,18 @@ namespace Azure.AI.TextAnalytics
         public TextDocumentBatchStatistics Statistics { get; }
 
         /// <summary>
-        /// TODO
+        /// Gets the value of the property corresponding to the name of the
+        /// target project that produced these results. This should be the same
+        /// as the project name set when creating the <see cref="ClassifyCustomCategoryAction"/>
+        /// object used to start the operation.
         /// </summary>
         public string ProjectName { get; }
 
         /// <summary>
-        /// TODO
+        /// Gets the value of the property corresponding to the deployment name
+        /// of the project that produced these results. This should be the same
+        /// as the deployment name set when creating the <see cref="ClassifyCustomCategoryAction"/>
+        /// object used to start the operation.
         /// </summary>
         public string DeploymentName { get; }
 

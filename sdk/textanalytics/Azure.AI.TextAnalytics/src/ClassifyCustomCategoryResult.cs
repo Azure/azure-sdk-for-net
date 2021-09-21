@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// The result of the classify custom category operation on a document,
     /// containing the <see cref="DocumentClassification"/> object predicted
-    /// for this document.
+    /// for that document.
     /// </summary>
     public class ClassifyCustomCategoryResult : TextAnalyticsResult
     {
@@ -24,12 +24,12 @@ namespace Azure.AI.TextAnalytics
         internal ClassifyCustomCategoryResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
-        /// Gets the collection of summary sentences extracted from the document.
+        /// Warnings encountered while processing the document.
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
 
         /// <summary>
-        /// Gets the collection of summary sentences extracted from the document.
+        /// Gets the <see cref="DocumentClassification"/> object predicted for the corresponding document.
         /// </summary>
         public DocumentClassification DocumentClassification
         {

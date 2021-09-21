@@ -19,7 +19,9 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the predicted category for the respective document.
+        /// Gets the predicted category for the respective document. The possible values
+        /// of the category string depends on the custom categories set in the Text Analytics
+        /// service for the targetted project.
         /// </summary>
         public string Category { get; }
 
