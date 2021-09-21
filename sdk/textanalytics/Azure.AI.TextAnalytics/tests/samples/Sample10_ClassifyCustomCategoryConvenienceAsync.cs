@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             #region Snippet:TextAnalyticsClassifyCustomCategoryAsync
             // Get input document.
-            string document = @"I am so hungry! I can hear my stomach growling; I need this order to get here as soon as possible!";
+            string document = @"I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and add it to my playlist.";
 
             // Prepare analyze operation input. You can add multiple documents to this list and perform the same
             // operation to all of them.
