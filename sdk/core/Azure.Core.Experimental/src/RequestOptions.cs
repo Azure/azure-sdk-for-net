@@ -47,7 +47,7 @@ namespace Azure
         /// <summary>
         /// Controls under what conditions the operation raises an exception if the underlying response indicates a failure.
         /// </summary>
-        public ResponseStatusOption StatusOption { get; set; } = ResponseStatusOption.ThrowOnError;
+        public ResponseStatusOption StatusOption { get; set; } = ResponseStatusOption.Default;
 
         /// <summary>
         /// A <see cref="HttpPipelinePolicy"/> to use as part of this operation. This policy will be applied at the start

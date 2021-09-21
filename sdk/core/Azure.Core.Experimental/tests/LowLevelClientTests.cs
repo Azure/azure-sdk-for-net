@@ -102,7 +102,7 @@ namespace Azure.Core.Tests
 
             RequestOptions options = new RequestOptions()
             {
-                StatusOption = ResponseStatusOption.SuppressExceptions
+                StatusOption = ResponseStatusOption.NoThrow
             };
 
             Response response = default;
@@ -127,7 +127,7 @@ namespace Azure.Core.Tests
 
             Response response = await client.GetPetAsync("snoopy", new RequestOptions()
             {
-                StatusOption = ResponseStatusOption.ThrowOnError
+                StatusOption = ResponseStatusOption.Default
             });
             var doc = JsonDocument.Parse(response.Content.ToMemory());
 
@@ -148,7 +148,7 @@ namespace Azure.Core.Tests
             {
                 await client.GetPetAsync("snoopy", new RequestOptions()
                 {
-                    StatusOption = ResponseStatusOption.ThrowOnError
+                    StatusOption = ResponseStatusOption.Default
                 });
             });
         }

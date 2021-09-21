@@ -76,9 +76,9 @@ namespace Azure.Core.Experimental.Tests
             try
             {
                 await Pipeline.SendAsync(message, options?.CancellationToken ?? default).ConfigureAwait(false);
-                var statusOption = options?.StatusOption ?? ResponseStatusOption.ThrowOnError;
+                var statusOption = options?.StatusOption ?? ResponseStatusOption.Default;
 
-                if (statusOption == ResponseStatusOption.SuppressExceptions)
+                if (statusOption == ResponseStatusOption.NoThrow)
                 {
                     return message.Response;
                 }
@@ -115,9 +115,9 @@ namespace Azure.Core.Experimental.Tests
             try
             {
                 Pipeline.Send(message, options?.CancellationToken ?? default);
-                var statusOption = options?.StatusOption ?? ResponseStatusOption.ThrowOnError;
+                var statusOption = options?.StatusOption ?? ResponseStatusOption.Default;
 
-                if (statusOption == ResponseStatusOption.SuppressExceptions)
+                if (statusOption == ResponseStatusOption.NoThrow)
                 {
                     return message.Response;
                 }

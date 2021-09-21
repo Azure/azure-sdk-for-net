@@ -13,8 +13,8 @@ namespace Azure
     }
     public enum ResponseStatusOption
     {
-        ThrowOnError = 0,
-        SuppressExceptions = 1,
+        Default = 0,
+        NoThrow = 1,
     }
 }
 namespace Azure.Core
