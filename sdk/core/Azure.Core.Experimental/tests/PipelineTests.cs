@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            //Assert.IsTrue(response.IsError);
+            Assert.IsTrue(((ClassifiedResponse)response).IsError);
         }
 
         [Test]
@@ -42,14 +42,14 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(
                 new MockResponse(200));
 
-            var pipeline = new HttpPipeline(mockTransport);
+            var pipeline = new HttpPipeline(mockTransport, new[] { new ResponsePropertiesPolicy() });
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            //Assert.IsFalse(response.IsError);
+            Assert.IsFalse(((ClassifiedResponse)response).IsError);
         }
 
         [Test]
@@ -58,14 +58,16 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(
                 new MockResponse(404));
 
-            var pipeline = new HttpPipeline(mockTransport, responseClassifier: new CustomResponseClassifier());
+            var pipeline = new HttpPipeline(mockTransport,
+                new[] { new ResponsePropertiesPolicy() },
+                new CustomResponseClassifier());
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            //Assert.IsFalse(response.IsError);
+            Assert.IsFalse(((ClassifiedResponse)response).IsError);
         }
 
         private class CustomResponseClassifier : ResponseClassifier

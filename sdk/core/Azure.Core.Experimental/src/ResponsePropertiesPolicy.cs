@@ -25,8 +25,6 @@ namespace Azure.Core
 
         private static async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            message.EvaluateError();
-
             if (async)
             {
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
@@ -35,6 +33,12 @@ namespace Azure.Core
             {
                 ProcessNext(message, pipeline);
             }
+
+			// In the non-experimental version of this policy, these lines reduce to 
+			// > message.Response.EvaluateError(message);
+            ClassifiedResponse response = new ClassifiedResponse(message.Response);
+            response.EvaluateError(message);
+            message.Response = response;
         }
     }
 }
