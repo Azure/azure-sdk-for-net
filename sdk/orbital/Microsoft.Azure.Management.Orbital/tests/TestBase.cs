@@ -1,12 +1,6 @@
 using Microsoft.Azure.Management.Orbital.Tests.Helpers;
 using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace Microsoft.Azure.Management.Orbital.Tests.Tests
 {
