@@ -133,16 +133,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities { get; private set; }
 
         /// <summary>
-        /// Gets the ITransparentDataEncryptionsOperations.
-        /// </summary>
-        public virtual ITransparentDataEncryptionsOperations TransparentDataEncryptions { get; private set; }
-
-        /// <summary>
-        /// Gets the ITransparentDataEncryptionActivitiesOperations.
-        /// </summary>
-        public virtual ITransparentDataEncryptionActivitiesOperations TransparentDataEncryptionActivities { get; private set; }
-
-        /// <summary>
         /// Gets the IServerUsagesOperations.
         /// </summary>
         public virtual IServerUsagesOperations ServerUsages { get; private set; }
@@ -623,6 +613,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IWorkloadGroupsOperations WorkloadGroups { get; private set; }
 
         /// <summary>
+        /// Gets the ITransparentDataEncryptionsOperations.
+        /// </summary>
+        public virtual ITransparentDataEncryptionsOperations TransparentDataEncryptions { get; private set; }
+
+        /// <summary>
         /// Gets the IBackupShortTermRetentionPoliciesOperations.
         /// </summary>
         public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
@@ -671,19 +666,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IUsagesOperations.
         /// </summary>
         public virtual IUsagesOperations Usages { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the SqlManagementClient class.
-        /// </summary>
-        /// <param name='httpClient'>
-        /// HttpClient to be used
-        /// </param>
-        /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling SqlManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected SqlManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
-        {
-            Initialize();
-        }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -768,33 +750,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Thrown when a required parameter is null
         /// </exception>
         public SqlManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the SqlManagementClient class.
-        /// </summary>
-        /// <param name='credentials'>
-        /// Required. Credentials needed for the client to connect to Azure.
-        /// </param>
-        /// <param name='httpClient'>
-        /// HttpClient to be used
-        /// </param>
-        /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling SqlManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public SqlManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -925,8 +880,6 @@ namespace Microsoft.Azure.Management.Sql
             ServiceObjectives = new ServiceObjectivesOperations(this);
             ElasticPoolActivities = new ElasticPoolActivitiesOperations(this);
             ElasticPoolDatabaseActivities = new ElasticPoolDatabaseActivitiesOperations(this);
-            TransparentDataEncryptions = new TransparentDataEncryptionsOperations(this);
-            TransparentDataEncryptionActivities = new TransparentDataEncryptionActivitiesOperations(this);
             ServerUsages = new ServerUsagesOperations(this);
             ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
             ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
@@ -1023,6 +976,7 @@ namespace Microsoft.Azure.Management.Sql
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             WorkloadClassifiers = new WorkloadClassifiersOperations(this);
             WorkloadGroups = new WorkloadGroupsOperations(this);
+            TransparentDataEncryptions = new TransparentDataEncryptionsOperations(this);
             BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             DatabaseExtensions = new DatabaseExtensionsOperations(this);
             DatabaseOperations = new DatabaseOperations(this);

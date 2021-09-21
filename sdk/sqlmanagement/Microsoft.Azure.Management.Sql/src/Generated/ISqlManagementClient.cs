@@ -128,16 +128,6 @@ namespace Microsoft.Azure.Management.Sql
         IElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities { get; }
 
         /// <summary>
-        /// Gets the ITransparentDataEncryptionsOperations.
-        /// </summary>
-        ITransparentDataEncryptionsOperations TransparentDataEncryptions { get; }
-
-        /// <summary>
-        /// Gets the ITransparentDataEncryptionActivitiesOperations.
-        /// </summary>
-        ITransparentDataEncryptionActivitiesOperations TransparentDataEncryptionActivities { get; }
-
-        /// <summary>
         /// Gets the IServerUsagesOperations.
         /// </summary>
         IServerUsagesOperations ServerUsages { get; }
@@ -616,6 +606,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IWorkloadGroupsOperations.
         /// </summary>
         IWorkloadGroupsOperations WorkloadGroups { get; }
+
+        /// <summary>
+        /// Gets the ITransparentDataEncryptionsOperations.
+        /// </summary>
+        ITransparentDataEncryptionsOperations TransparentDataEncryptions { get; }
 
         /// <summary>
         /// Gets the IBackupShortTermRetentionPoliciesOperations.
