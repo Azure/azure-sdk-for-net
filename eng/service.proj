@@ -18,9 +18,9 @@
     <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj" />
     <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" />
-    <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" />
+    <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
-    <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\*.csproj" Exclude="@(TestProjects);@(SamplesProjects)"/>
+    <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" />
     <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true'" />
     <ProjectReference Include="@(SamplesProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamples)' == 'true'" />
     <ProjectReference Include="@(PerfProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludePerf)' == 'true'" />
