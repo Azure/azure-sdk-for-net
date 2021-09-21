@@ -30,7 +30,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
                 .AddOtlpExporter()
                 .Build();
 
-            using (var sampleActivity = DemoSource.StartActivity("TestActivity"))
+            using (var sampleActivity = DemoSource.StartActivity("TestInternalActivity", ActivityKind.Internal))
+            {
+                sampleActivity?.SetTag("CustomTag1", "Value1");
+                sampleActivity?.SetTag("CustomTag2", "Value2");
+            }
+
+            using (var sampleActivity = DemoSource.StartActivity("TestServerActivity", ActivityKind.Server))
             {
                 sampleActivity?.SetTag("CustomTag1", "Value1");
                 sampleActivity?.SetTag("CustomTag2", "Value2");
