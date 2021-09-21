@@ -58,13 +58,21 @@ namespace Azure.Storage.Blobs.Models
             NextMarker = nextMarker;
         }
 
+        /// <summary> Gets the service endpoint. </summary>
         public string ServiceEndpoint { get; }
+        /// <summary> Gets the container name. </summary>
         public string ContainerName { get; }
+        /// <summary> Gets the prefix. </summary>
         public string Prefix { get; }
+        /// <summary> Gets the marker. </summary>
         public string Marker { get; }
+        /// <summary> Gets the max results. </summary>
         public int? MaxResults { get; }
+        /// <summary> Gets the delimiter. </summary>
         public string Delimiter { get; }
+        /// <summary> Gets the segment. </summary>
         public BlobHierarchyListSegment Segment { get; }
+        /// <summary> Gets the next marker. </summary>
         public string NextMarker { get; }
     }
 }

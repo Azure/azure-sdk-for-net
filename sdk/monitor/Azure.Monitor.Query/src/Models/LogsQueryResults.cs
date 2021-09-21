@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Gets the single table result of the query.
         /// </summary>
-        public LogsQueryResultTable Table
+        public LogsTable Table
         {
             get
             {
@@ -38,10 +38,15 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary>
+        /// Gets or sets the value indicating whether the query was successful.
+        /// </summary>
+        public LogsQueryResultStatus Status { get; internal set; }
+
+        /// <summary>
         /// Gets the multi-table result of the query.
         /// </summary>
         [CodeGenMember("Tables")]
-        public IReadOnlyList<LogsQueryResultTable> AllTables { get; }
+        public IReadOnlyList<LogsTable> AllTables { get; }
 
         /// <summary>
         /// Returns the query statistics if the <see cref="LogsQueryOptions.IncludeStatistics"/> is set to <c>true</c>. <c>null</c> otherwise.
@@ -57,5 +62,18 @@ namespace Azure.Monitor.Query.Models
         /// Gets the error that occurred during query processing. The value is <c>null</c> if the query succeeds.
         /// </summary>
         public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText());
+
+        internal Exception CreateExceptionForErrorResponse(int status)
+        {
+            return new RequestFailedException(
+                status,
+                $"The result was returned but contained a partial error. Exceptions for partial errors can be disabled " +
+                $" using {nameof(LogsQueryOptions)}.{nameof(LogsQueryOptions.AllowPartialErrors)}." +
+                $"Partial errors can be inspected using the {nameof(LogsQueryResult)}.{nameof(Error)} property.{Environment.NewLine}" +
+                $"Error:{Environment.NewLine}{Error}",
+                Error.Code,
+                innerException: null
+            );
+        }
     }
 }

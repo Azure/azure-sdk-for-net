@@ -46,10 +46,10 @@ namespace Azure.Messaging.ServiceBus
         /// The primitive for ensuring that the service is not overloaded with
         /// accept session requests.
         /// </summary>
-        private SemaphoreSlim MaxConcurrentAcceptSessionsSemaphore { get; }
+        private readonly SemaphoreSlim _maxConcurrentAcceptSessionsSemaphore = new(0, int.MaxValue);
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
-        private readonly SemaphoreSlim _processingStartStopSemaphore = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _processingStartStopSemaphore = new(1, 1);
 
         private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
@@ -123,6 +123,8 @@ namespace Azure.Messaging.ServiceBus
         internal int MaxConcurrentCallsPerSession => _maxConcurrentCallsPerSession;
         private volatile int _maxConcurrentCallsPerSession;
 
+        private int _currentAcceptSessions;
+
         internal TimeSpan? MaxReceiveWaitTime { get; }
 
         /// <summary>
@@ -131,6 +133,10 @@ namespace Azure.Messaging.ServiceBus
         /// message handler triggers an exception, the message will not be automatically
         /// completed.
         /// </summary>
+        /// <remarks>
+        /// If the message handler triggers an exception and did not settle the message,
+        /// then the message will be automatically abandoned, irrespective of <see cref= "AutoCompleteMessages" />.
+        /// </remarks>
         ///
         /// <value>true to complete the message processing automatically on
         /// successful execution of the operation; otherwise, false.</value>
@@ -184,6 +190,7 @@ namespace Azure.Messaging.ServiceBus
         internal readonly List<(Task Task, CancellationTokenSource Cts, ReceiverManager ReceiverManager)> _tasks = new();
         private readonly List<ReceiverManager> _orphanedReceiverManagers = new();
         private CancellationTokenSource _handlerCts = new();
+        private readonly int _processorCount = Environment.ProcessorCount;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
@@ -236,11 +243,6 @@ namespace Azure.Messaging.ServiceBus
                     ? Math.Min(_sessionIds.Length, _maxConcurrentSessions)
                     : _maxConcurrentSessions * _maxConcurrentCallsPerSession;
             }
-
-            var maxAcceptSessions = Math.Min(_maxConcurrentCalls, 2 * Environment.ProcessorCount);
-            MaxConcurrentAcceptSessionsSemaphore = new SemaphoreSlim(
-                maxAcceptSessions,
-                maxAcceptSessions);
 
             AutoCompleteMessages = Options.AutoCompleteMessages;
 
@@ -311,6 +313,10 @@ namespace Azure.Messaging.ServiceBus
         /// or Subscription.
         /// Implementation is mandatory.
         /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
             Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
@@ -386,6 +392,10 @@ namespace Azure.Messaging.ServiceBus
         /// this processor is running.
         /// Implementation is mandatory.
         /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
             Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
@@ -607,7 +617,7 @@ namespace Azure.Messaging.ServiceBus
                             new SessionReceiverManager(
                                 _sessionProcessor,
                                 sessionId,
-                                MaxConcurrentAcceptSessionsSemaphore,
+                                _maxConcurrentAcceptSessionsSemaphore,
                                 _scopeFactory,
                                 KeepOpenOnReceiveTimeout));
                     }
@@ -634,7 +644,7 @@ namespace Azure.Messaging.ServiceBus
                                 new SessionReceiverManager(
                                     _sessionProcessor,
                                     null,
-                                    MaxConcurrentAcceptSessionsSemaphore,
+                                    _maxConcurrentAcceptSessionsSemaphore,
                                     _scopeFactory,
                                     KeepOpenOnReceiveTimeout));
                         }
@@ -941,6 +951,7 @@ namespace Azure.Messaging.ServiceBus
         public async ValueTask DisposeAsync()
         {
             await CloseAsync().ConfigureAwait(false);
+            _handlerCts.Dispose();
             GC.SuppressFinalize(this);
         }
 
@@ -980,6 +991,7 @@ namespace Azure.Messaging.ServiceBus
             // wake up the handler loop
             var handlerCts = Interlocked.Exchange(ref _handlerCts, new CancellationTokenSource());
             handlerCts.Cancel();
+            handlerCts.Dispose();
         }
 
         private async Task ReconcileConcurrencyAsync()
@@ -1027,6 +1039,25 @@ namespace Azure.Messaging.ServiceBus
                 {
                     await _messageHandlerSemaphore.WaitAsync().ConfigureAwait(false);
                 }
+            }
+
+            if (IsSessionProcessor)
+            {
+                int maxAcceptSessions = Math.Min(maxConcurrentCalls, 2 * _processorCount);
+                int diffAcceptSessions = maxAcceptSessions - _currentAcceptSessions;
+                if (diffAcceptSessions > 0)
+                {
+                    _maxConcurrentAcceptSessionsSemaphore.Release(diffAcceptSessions);
+                }
+                else
+                {
+                    int diffAcceptLimit = Math.Abs(diffAcceptSessions);
+                    for (int i = 0; i < diffAcceptLimit; i++)
+                    {
+                        await _maxConcurrentAcceptSessionsSemaphore.WaitAsync().ConfigureAwait(false);
+                    }
+                }
+                _currentAcceptSessions = maxAcceptSessions;
             }
 
             ReconcileReceiverManagers(maxConcurrentSessions);

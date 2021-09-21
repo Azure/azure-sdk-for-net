@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> VPN authentication types enabled for the VpnServerConfiguration. </summary>
+    /// <summary> VPN authentication types enabled for the virtual network gateway. </summary>
     public readonly partial struct VpnAuthenticationType : IEquatable<VpnAuthenticationType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="VpnAuthenticationType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnAuthenticationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VpnAuthenticationType(string value)
         {

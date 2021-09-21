@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     /// <summary> Model factory for read-only models. </summary>
@@ -22,15 +25,20 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointProperties. </summary>
+        /// <param name="name"> The name of managed private endpoint. </param>
         /// <param name="privateLinkResourceId"> The ARM resource ID of the resource to which the managed private endpoint is created. </param>
         /// <param name="groupId"> The groupId to which the managed private endpoint is created. </param>
         /// <param name="provisioningState"> The managed private endpoint provisioning state. </param>
         /// <param name="connectionState"> The managed private endpoint connection state. </param>
         /// <param name="isReserved"> Denotes whether the managed private endpoint is reserved. </param>
+        /// <param name="fqdns"> List of fully qualified domain names. </param>
+        /// <param name="isCompliant"> Denotes whether the managed private endpoint is compliant. </param>
         /// <returns> A new <see cref="Models.ManagedPrivateEndpointProperties"/> instance for mocking. </returns>
-        public static ManagedPrivateEndpointProperties ManagedPrivateEndpointProperties(string privateLinkResourceId = null, string groupId = null, string provisioningState = null, ManagedPrivateEndpointConnectionState connectionState = null, bool? isReserved = null)
+        public static ManagedPrivateEndpointProperties ManagedPrivateEndpointProperties(string name = null, string privateLinkResourceId = null, string groupId = null, string provisioningState = null, ManagedPrivateEndpointConnectionState connectionState = null, bool? isReserved = null, IEnumerable<string> fqdns = null, bool? isCompliant = null)
         {
-            return new ManagedPrivateEndpointProperties(privateLinkResourceId, groupId, provisioningState, connectionState, isReserved);
+            fqdns ??= new List<string>();
+
+            return new ManagedPrivateEndpointProperties(name, privateLinkResourceId, groupId, provisioningState, connectionState, isReserved, fqdns?.ToList(), isCompliant);
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointConnectionState. </summary>

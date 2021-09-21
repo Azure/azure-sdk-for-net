@@ -52,11 +52,6 @@ namespace Microsoft.Azure.Management.Synapse
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -75,9 +70,9 @@ namespace Microsoft.Azure.Management.Synapse
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IBigDataPoolsOperations.
+        /// Gets the IAzureADOnlyAuthenticationsOperations.
         /// </summary>
-        public virtual IBigDataPoolsOperations BigDataPools { get; private set; }
+        public virtual IAzureADOnlyAuthenticationsOperations AzureADOnlyAuthentications { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -90,64 +85,9 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual IIpFirewallRulesOperations IpFirewallRules { get; private set; }
 
         /// <summary>
-        /// Gets the IIntegrationRuntimesOperations.
-        /// </summary>
-        public virtual IIntegrationRuntimesOperations IntegrationRuntimes { get; private set; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeNodeIpAddressOperations.
-        /// </summary>
-        public virtual IIntegrationRuntimeNodeIpAddressOperations IntegrationRuntimeNodeIpAddress { get; private set; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
-        /// </summary>
-        public virtual IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; private set; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeNodesOperations.
-        /// </summary>
-        public virtual IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; private set; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeCredentialsOperations.
-        /// </summary>
-        public virtual IIntegrationRuntimeCredentialsOperations IntegrationRuntimeCredentials { get; private set; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeConnectionInfosOperations.
-        /// </summary>
-        public virtual IIntegrationRuntimeConnectionInfosOperations IntegrationRuntimeConnectionInfos { get; private set; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeAuthKeysOperations.
-        /// </summary>
-        public virtual IIntegrationRuntimeAuthKeysOperations IntegrationRuntimeAuthKeys { get; private set; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeMonitoringDataOperations.
-        /// </summary>
-        public virtual IIntegrationRuntimeMonitoringDataOperations IntegrationRuntimeMonitoringData { get; private set; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeStatusOperations.
-        /// </summary>
-        public virtual IIntegrationRuntimeStatusOperations IntegrationRuntimeStatus { get; private set; }
-
-        /// <summary>
         /// Gets the IKeysOperations.
         /// </summary>
         public virtual IKeysOperations Keys { get; private set; }
-
-        /// <summary>
-        /// Gets the ILibraryOperations.
-        /// </summary>
-        public virtual ILibraryOperations Library { get; private set; }
-
-        /// <summary>
-        /// Gets the ILibrariesOperations.
-        /// </summary>
-        public virtual ILibrariesOperations Libraries { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -378,6 +318,76 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the IRestorableDroppedSqlPoolsOperations.
         /// </summary>
         public virtual IRestorableDroppedSqlPoolsOperations RestorableDroppedSqlPools { get; private set; }
+
+        /// <summary>
+        /// Gets the IBigDataPoolsOperations.
+        /// </summary>
+        public virtual IBigDataPoolsOperations BigDataPools { get; private set; }
+
+        /// <summary>
+        /// Gets the ILibraryOperations.
+        /// </summary>
+        public virtual ILibraryOperations Library { get; private set; }
+
+        /// <summary>
+        /// Gets the ILibrariesOperations.
+        /// </summary>
+        public virtual ILibrariesOperations Libraries { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimesOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimesOperations IntegrationRuntimes { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeNodeIpAddressOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimeNodeIpAddressOperations IntegrationRuntimeNodeIpAddress { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeNodesOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeCredentialsOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimeCredentialsOperations IntegrationRuntimeCredentials { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeConnectionInfosOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimeConnectionInfosOperations IntegrationRuntimeConnectionInfos { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeAuthKeysOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimeAuthKeysOperations IntegrationRuntimeAuthKeys { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeMonitoringDataOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimeMonitoringDataOperations IntegrationRuntimeMonitoringData { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeStatusOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimeStatusOperations IntegrationRuntimeStatus { get; private set; }
+
+        /// <summary>
+        /// Gets the ISparkConfigurationOperations.
+        /// </summary>
+        public virtual ISparkConfigurationOperations SparkConfiguration { get; private set; }
+
+        /// <summary>
+        /// Gets the ISparkConfigurationsOperations.
+        /// </summary>
+        public virtual ISparkConfigurationsOperations SparkConfigurations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SynapseManagementClient class.
@@ -620,21 +630,10 @@ namespace Microsoft.Azure.Management.Synapse
         /// </summary>
         private void Initialize()
         {
-            BigDataPools = new BigDataPoolsOperations(this);
+            AzureADOnlyAuthentications = new AzureADOnlyAuthenticationsOperations(this);
             Operations = new Operations(this);
             IpFirewallRules = new IpFirewallRulesOperations(this);
-            IntegrationRuntimes = new IntegrationRuntimesOperations(this);
-            IntegrationRuntimeNodeIpAddress = new IntegrationRuntimeNodeIpAddressOperations(this);
-            IntegrationRuntimeObjectMetadata = new IntegrationRuntimeObjectMetadataOperations(this);
-            IntegrationRuntimeNodes = new IntegrationRuntimeNodesOperations(this);
-            IntegrationRuntimeCredentials = new IntegrationRuntimeCredentialsOperations(this);
-            IntegrationRuntimeConnectionInfos = new IntegrationRuntimeConnectionInfosOperations(this);
-            IntegrationRuntimeAuthKeys = new IntegrationRuntimeAuthKeysOperations(this);
-            IntegrationRuntimeMonitoringData = new IntegrationRuntimeMonitoringDataOperations(this);
-            IntegrationRuntimeStatus = new IntegrationRuntimeStatusOperations(this);
             Keys = new KeysOperations(this);
-            Library = new LibraryOperations(this);
-            Libraries = new LibrariesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateLinkHubPrivateLinkResources = new PrivateLinkHubPrivateLinkResourcesOperations(this);
@@ -681,8 +680,21 @@ namespace Microsoft.Azure.Management.Synapse
             WorkspaceSqlAadAdmins = new WorkspaceSqlAadAdminsOperations(this);
             WorkspaceManagedIdentitySqlControlSettings = new WorkspaceManagedIdentitySqlControlSettingsOperations(this);
             RestorableDroppedSqlPools = new RestorableDroppedSqlPoolsOperations(this);
+            BigDataPools = new BigDataPoolsOperations(this);
+            Library = new LibraryOperations(this);
+            Libraries = new LibrariesOperations(this);
+            IntegrationRuntimes = new IntegrationRuntimesOperations(this);
+            IntegrationRuntimeNodeIpAddress = new IntegrationRuntimeNodeIpAddressOperations(this);
+            IntegrationRuntimeObjectMetadata = new IntegrationRuntimeObjectMetadataOperations(this);
+            IntegrationRuntimeNodes = new IntegrationRuntimeNodesOperations(this);
+            IntegrationRuntimeCredentials = new IntegrationRuntimeCredentialsOperations(this);
+            IntegrationRuntimeConnectionInfos = new IntegrationRuntimeConnectionInfosOperations(this);
+            IntegrationRuntimeAuthKeys = new IntegrationRuntimeAuthKeysOperations(this);
+            IntegrationRuntimeMonitoringData = new IntegrationRuntimeMonitoringDataOperations(this);
+            IntegrationRuntimeStatus = new IntegrationRuntimeStatusOperations(this);
+            SparkConfiguration = new SparkConfigurationOperations(this);
+            SparkConfigurations = new SparkConfigurationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-04-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

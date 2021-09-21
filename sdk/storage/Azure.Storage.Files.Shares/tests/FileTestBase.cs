@@ -25,6 +25,7 @@ namespace Azure.Storage.Files.Shares.Tests
         ShareClientOptions.ServiceVersion.V2020_06_12,
         ShareClientOptions.ServiceVersion.V2020_08_04,
         ShareClientOptions.ServiceVersion.V2020_10_02,
+        ShareClientOptions.ServiceVersion.V2020_12_06,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,

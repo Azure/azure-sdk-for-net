@@ -14,13 +14,13 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> Metrics returned as the result of the query. </summary>
         [CodeGenMember("Value")]
-        public IReadOnlyList<Metric> Metrics { get; }
+        public IReadOnlyList<MetricResult> Metrics { get; }
 
         /// <summary>
         /// The timespan for which the data was retrieved.
         /// This may be adjusted in the future and returned back from what was originally requested.
         /// </summary>
-        public DateTimeRange TimeSpan => DateTimeRange.Parse(_timespan);
+        public QueryTimeRange TimeSpan => QueryTimeRange.Parse(_timespan);
 
         /// <summary> The region of the resource being queried for metrics. </summary>
         [CodeGenMember("Resourceregion")]

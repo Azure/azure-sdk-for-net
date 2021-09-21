@@ -10,7 +10,7 @@ The Question Answering service is a cloud-based API service that lets you create
 
 Install the Azure Cognitive Language Services Question Answering client library for .NET with [NuGet][nuget]:
 
-```powershell
+```dotnetcli
 dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
 ```
 
@@ -200,7 +200,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [nuget]: https://www.nuget.org/
 [questionanswering_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/QuestionAnsweringClient.cs
 [questionanswering_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/
-[questionanswering_docs]: https://azure.microsoft.com/services/cognitive-services/qna-maker/
+[questionanswering_docs]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/
 [questionanswering_docs_chat]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base
 [questionanswering_docs_demos]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#demo
 [questionanswering_docs_features]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#features

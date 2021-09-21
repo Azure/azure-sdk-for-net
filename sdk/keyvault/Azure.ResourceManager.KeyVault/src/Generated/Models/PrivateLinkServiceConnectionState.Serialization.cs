@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ActionRequired))
+            if (Optional.IsDefined(ActionsRequired))
             {
-                writer.WritePropertyName("actionRequired");
-                writer.WriteStringValue(ActionRequired);
+                writer.WritePropertyName("actionsRequired");
+                writer.WriteStringValue(ActionsRequired.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Optional<PrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
-            Optional<string> actionRequired = default;
+            Optional<ActionsRequired> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -55,13 +55,18 @@ namespace Azure.ResourceManager.KeyVault.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionRequired"))
+                if (property.NameEquals("actionsRequired"))
                 {
-                    actionRequired = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    actionsRequired = new ActionsRequired(property.Value.GetString());
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionRequired.Value);
+            return new PrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired));
         }
     }
 }

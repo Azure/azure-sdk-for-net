@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class MetricsQueryClientSamples: SamplesBase<MonitorQueryClientTestEnvironment>
+    public class MetricsQueryClientSamples: SamplesBase<MonitorQueryTestEnvironment>
     {
         [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21657")]
@@ -40,7 +40,7 @@ namespace Azure.Monitor.Query.Tests
                 {
                     Console.WriteLine("Dimensions: " + string.Join(",", element.Metadata));
 
-                    foreach (var metricValue in element.Data)
+                    foreach (var metricValue in element.Values)
                     {
                         Console.WriteLine(metricValue);
                     }

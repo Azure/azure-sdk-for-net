@@ -455,6 +455,62 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Gets list of outbound network dependencies for a given Azure-SSIS
+            /// integration runtime.
+            /// </summary>
+            /// <remarks>
+            /// Gets the list of outbound network dependencies for a given Azure-SSIS
+            /// integration runtime.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            public static IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse ListOutboundNetworkDependenciesEndpoints(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            {
+                return operations.ListOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets list of outbound network dependencies for a given Azure-SSIS
+            /// integration runtime.
+            /// </summary>
+            /// <remarks>
+            /// Gets the list of outbound network dependencies for a given Azure-SSIS
+            /// integration runtime.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse> ListOutboundNetworkDependenciesEndpointsAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOutboundNetworkDependenciesEndpointsWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Enable interactive query in integration runtime
             /// </summary>
             /// <param name='operations'>

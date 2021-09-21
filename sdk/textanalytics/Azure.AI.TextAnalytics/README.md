@@ -1,5 +1,5 @@
 # Azure Cognitive Services Text Analytics client library for .NET
-Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes the following main functions: 
+Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes the following main features: 
 * Language Detection
 * Sentiment Analysis
 * Key Phrase Extraction
@@ -17,7 +17,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 ### Install the package
 Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.AI.TextAnalytics
 ```
 
@@ -147,7 +147,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
-The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient-with-azure-active-directory-credential), and covers the main functions of Text Analytics. Although most of the snippets below make use of synchronous service calls, keep in mind that the Azure.AI.TextAnalytics package supports both synchronous and asynchronous APIs.
+The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient-with-azure-active-directory-credential), and covers the main features of Text Analytics. Although most of the snippets below make use of synchronous service calls, keep in mind that the Azure.AI.TextAnalytics package supports both synchronous and asynchronous APIs.
 
 ### Sync examples
 * [Detect Language](#detect-language)

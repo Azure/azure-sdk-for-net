@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="StoredProcedureParameterType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoredProcedureParameterType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StoredProcedureParameterType(string value)
         {

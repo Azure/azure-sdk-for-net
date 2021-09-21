@@ -10,10 +10,7 @@ namespace Azure.Monitor.Query.Models
     [CodeGenModel("batchQueryResults")]
     public partial class LogsBatchQueryResult: LogsQueryResult
     {
-        /// <summary>
-        /// Gets or sets the value indicating whether the batch query was successful.
-        /// </summary>
-        public bool HasFailed { get; internal set; }
+        internal int StatusCode { get; set; }
 
         /// <summary>
         /// Gets or sets the query id.
@@ -24,7 +21,7 @@ namespace Azure.Monitor.Query.Models
         internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element)
         {
             Optional<JsonElement> error = default;
-            IReadOnlyList<LogsQueryResultTable> tables = default;
+            IReadOnlyList<LogsTable> tables = default;
             Optional<JsonElement> statistics = default;
             Optional<JsonElement> render = default;
 
@@ -56,10 +53,10 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("tables"))
                 {
-                    List<LogsQueryResultTable> array = new List<LogsQueryResultTable>();
+                    List<LogsTable> array = new List<LogsTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogsQueryResultTable.DeserializeLogsQueryResultTable(item));
+                        array.Add(LogsTable.DeserializeLogsTable(item));
                     }
                     tables = array;
                     continue;

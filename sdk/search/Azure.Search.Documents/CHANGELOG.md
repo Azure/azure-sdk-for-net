@@ -1,5 +1,20 @@
 # Release History
 
+## 11.4.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 11.4.0-beta.3 (2021-09-07)
+
+### Features Added
+- Support for [Lexical normalizers](https://docs.microsoft.com/azure/search/search-normalizers#normalizers) in [text analysers](https://docs.microsoft.com/rest/api/searchservice/test-analyzer) via `AnalyzeTextOptions`.
+
 ## 11.4.0-beta.2 (2021-08-10)
 
 ### Features Added

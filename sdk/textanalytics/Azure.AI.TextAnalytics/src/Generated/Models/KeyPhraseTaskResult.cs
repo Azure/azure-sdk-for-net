@@ -22,6 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
             Results = results;
         }
 
+        /// <summary> Gets the results. </summary>
         public KeyPhraseResult Results { get; }
     }
 }

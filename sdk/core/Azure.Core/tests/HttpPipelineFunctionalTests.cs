@@ -238,8 +238,9 @@ namespace Azure.Core.Tests
             await Task.WhenAll(requests);
         }
 
-        [Test]
-        public async Task BufferedResponsesReadableAfterMessageDisposed()
+        [TestCase(200)]
+        [TestCase(404)]
+        public async Task BufferedResponsesReadableAfterMessageDisposed(int status)
         {
             byte[] buffer = { 0 };
 
@@ -250,6 +251,7 @@ namespace Azure.Core.Tests
             using TestServer testServer = new TestServer(
                 async context =>
                 {
+                    context.Response.StatusCode = status;
                     for (int i = 0; i < bodySize; i++)
                     {
                         await context.Response.Body.WriteAsync(buffer, 0, 1);
@@ -646,6 +648,33 @@ namespace Azure.Core.Tests
                 });
 
             testServerAddress = testServer.Address;
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            using Response response = await ExecuteRequest(request, httpPipeline);
+            Assert.AreEqual(response.Status, 200);
+        }
+
+        [Test]
+        public async Task HandlesRelativeRedirects()
+        {
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    if (context.Request.Path.ToString().Contains("/redirected"))
+                    {
+                        context.Response.StatusCode = 200;
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 300;
+                        context.Response.Headers.Add("Location", "/redirected");
+                    }
+                    return Task.CompletedTask;
+                });
 
             using Request request = httpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;

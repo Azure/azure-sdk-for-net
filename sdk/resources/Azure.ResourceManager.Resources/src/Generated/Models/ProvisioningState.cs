@@ -15,13 +15,14 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProvisioningState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string NotSpecifiedValue = "NotSpecified";
         private const string AcceptedValue = "Accepted";
         private const string RunningValue = "Running";
         private const string ReadyValue = "Ready";
@@ -34,6 +35,8 @@ namespace Azure.ResourceManager.Resources.Models
         private const string SucceededValue = "Succeeded";
         private const string UpdatingValue = "Updating";
 
+        /// <summary> NotSpecified. </summary>
+        public static ProvisioningState NotSpecified { get; } = new ProvisioningState(NotSpecifiedValue);
         /// <summary> Accepted. </summary>
         public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
         /// <summary> Running. </summary>

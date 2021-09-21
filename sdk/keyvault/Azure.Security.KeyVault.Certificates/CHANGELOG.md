@@ -1,12 +1,20 @@
 # Release History
 
-## 4.3.0-beta.1 (Unreleased)
+## 4.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
+- Added `KeyVaultCertificateIdentifier.TryCreate` to parse certificate URIs without throwing an exception when invalid. ([#23146](https://github.com/Azure/azure-sdk-for-net/issues/23146))
+
 ### Breaking Changes
 
-### Key Bugs Fixed
+### Bugs Fixed
+
+- Added certificate version to distributed tracing. ([#12907](https://github.com/Azure/azure-sdk-for-net/issues/12907))
+
+### Other Changes
+
+## 4.3.0-beta.1 (2021-08-10)
 
 ### Fixed
 

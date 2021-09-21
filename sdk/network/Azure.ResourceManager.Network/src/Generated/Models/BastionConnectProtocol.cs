@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The protocol used to connect to the target. </summary>
-    public readonly partial struct BastionConnectProtocol : IEquatable<BastionConnectProtocol>
+    internal readonly partial struct BastionConnectProtocol : IEquatable<BastionConnectProtocol>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="BastionConnectProtocol"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionConnectProtocol"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BastionConnectProtocol(string value)
         {

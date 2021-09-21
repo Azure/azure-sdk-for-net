@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(NetworkApiVersion))
+            {
+                writer.WritePropertyName("networkApiVersion");
+                writer.WriteStringValue(NetworkApiVersion.Value.ToString());
+            }
             writer.WriteEndObject();
         }
     }

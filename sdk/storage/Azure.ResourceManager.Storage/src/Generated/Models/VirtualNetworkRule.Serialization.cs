@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state");
-                writer.WriteStringValue(State.Value.ToSerialString());
+                writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = property.Value.GetString().ToState();
+                    state = new State(property.Value.GetString());
                     continue;
                 }
             }

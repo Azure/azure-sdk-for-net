@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualNetworkPeeringListResult. </summary>
         internal VirtualNetworkPeeringListResult()
         {
-            Value = new ChangeTrackingList<VirtualNetworkPeering>();
+            Value = new ChangeTrackingList<VirtualNetworkPeeringData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkPeeringListResult. </summary>
         /// <param name="value"> The peerings in a virtual network. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal VirtualNetworkPeeringListResult(IReadOnlyList<VirtualNetworkPeering> value, string nextLink)
+        internal VirtualNetworkPeeringListResult(IReadOnlyList<VirtualNetworkPeeringData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The peerings in a virtual network. </summary>
-        public IReadOnlyList<VirtualNetworkPeering> Value { get; }
+        public IReadOnlyList<VirtualNetworkPeeringData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -10,13 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
-    public class SessionReceiverTests : ServiceBusTestBase
+    public class SessionReceiverTests
     {
         [Test]
         public void SessionReceiverCannotPerformMessageLock()
         {
             var receiver = new ServiceBusSessionReceiver(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "fakeQueue",
                 options: new ServiceBusSessionReceiverOptions(),
                 cancellationToken: CancellationToken.None);

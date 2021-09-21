@@ -223,7 +223,7 @@ internal static class Program
 
             new Option<bool>(
                 aliases: new[] { "-r", "--read-only" },
-                description: "Make the sharable link read-only"
+                description: "Make the shareable link read-only"
             ),
         };
 

@@ -119,12 +119,12 @@ namespace EventHub.Tests.ScenarioTests
 
                     var checknameAlias = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(disasterRecoveryName));
 
-                    Assert.True(checknameAlias.NameAvailable, "The Alias Name: '" + disasterRecoveryName + "' is not avilable");
+                    Assert.True(checknameAlias.NameAvailable, "The Alias Name: '" + disasterRecoveryName + "' is not available");
 
                     //CheckNameAvaliability for Alias with same as namespace name (alternateName will be used in this case)
                     var checknameAliasSame = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(namespaceName));
 
-                    // Assert.True(checknameAliasSame.NameAvailable, "The Alias Name: '" + namespaceName + "' is not avilable");
+                    // Assert.True(checknameAliasSame.NameAvailable, "The Alias Name: '" + namespaceName + "' is not available");
 
 
                     var DisasterRecoveryResponse = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, disasterRecoveryName, new ArmDisasterRecovery()
