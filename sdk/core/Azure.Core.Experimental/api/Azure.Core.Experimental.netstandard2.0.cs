@@ -5,22 +5,11 @@ namespace Azure
         public RequestOptions() { }
         public RequestOptions(Azure.ResponseStatusOption statusOption) { }
         public RequestOptions(System.Action<Azure.Core.HttpMessage> perCall) { }
-        public RequestOptions(params int[] treatAsSuccess) { }
-        public RequestOptions(int[] statusCodes, Azure.ResponseClassification classification) { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? PerCallPolicy { get { throw null; } set { } }
         public Azure.ResponseStatusOption StatusOption { get { throw null; } set { } }
-        public void AddClassifier(System.Func<Azure.Core.HttpMessage, Azure.ResponseClassification?> classifier) { }
-        public void AddClassifier(int[] statusCodes, Azure.ResponseClassification classification) { }
         public static void Apply(Azure.RequestOptions requestOptions, Azure.Core.HttpMessage message) { }
         public static implicit operator Azure.RequestOptions (Azure.ResponseStatusOption option) { throw null; }
-    }
-    public enum ResponseClassification
-    {
-        Retry = 0,
-        DontRetry = 1,
-        Throw = 2,
-        Success = 3,
     }
     public enum ResponseStatusOption
     {
