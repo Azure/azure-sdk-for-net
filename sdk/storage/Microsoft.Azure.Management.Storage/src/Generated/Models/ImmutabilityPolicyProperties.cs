@@ -48,15 +48,25 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// immutability protection and compliance. Only new blocks can be
         /// added and any existing blocks cannot be modified or deleted. This
         /// property cannot be changed with ExtendImmutabilityPolicy
-        /// API</param>
+        /// API.</param>
+        /// <param name="allowProtectedAppendWritesAll">This property can only
+        /// be changed for unlocked time-based retention policies. When
+        /// enabled, new blocks can be written to both 'Append and Bock Blobs'
+        /// while maintaining immutability protection and compliance. Only new
+        /// blocks can be added and any existing blocks cannot be modified or
+        /// deleted. This property cannot be changed with
+        /// ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and
+        /// 'allowProtectedAppendWritesAll' properties are mutually
+        /// exclusive.</param>
         /// <param name="etag">ImmutabilityPolicy Etag.</param>
         /// <param name="updateHistory">The ImmutabilityPolicy update history
         /// of the blob container.</param>
-        public ImmutabilityPolicyProperties(int? immutabilityPeriodSinceCreationInDays = default(int?), string state = default(string), bool? allowProtectedAppendWrites = default(bool?), string etag = default(string), IList<UpdateHistoryProperty> updateHistory = default(IList<UpdateHistoryProperty>))
+        public ImmutabilityPolicyProperties(int? immutabilityPeriodSinceCreationInDays = default(int?), string state = default(string), bool? allowProtectedAppendWrites = default(bool?), bool? allowProtectedAppendWritesAll = default(bool?), string etag = default(string), IList<UpdateHistoryProperty> updateHistory = default(IList<UpdateHistoryProperty>))
         {
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             State = state;
             AllowProtectedAppendWrites = allowProtectedAppendWrites;
+            AllowProtectedAppendWritesAll = allowProtectedAppendWritesAll;
             Etag = etag;
             UpdateHistory = updateHistory;
             CustomInit();
@@ -88,10 +98,23 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// written to an append blob while maintaining immutability protection
         /// and compliance. Only new blocks can be added and any existing
         /// blocks cannot be modified or deleted. This property cannot be
-        /// changed with ExtendImmutabilityPolicy API
+        /// changed with ExtendImmutabilityPolicy API.
         /// </summary>
         [JsonProperty(PropertyName = "properties.allowProtectedAppendWrites")]
         public bool? AllowProtectedAppendWrites { get; set; }
+
+        /// <summary>
+        /// Gets or sets this property can only be changed for unlocked
+        /// time-based retention policies. When enabled, new blocks can be
+        /// written to both 'Append and Bock Blobs' while maintaining
+        /// immutability protection and compliance. Only new blocks can be
+        /// added and any existing blocks cannot be modified or deleted. This
+        /// property cannot be changed with ExtendImmutabilityPolicy API. The
+        /// 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll'
+        /// properties are mutually exclusive.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowProtectedAppendWritesAll")]
+        public bool? AllowProtectedAppendWritesAll { get; set; }
 
         /// <summary>
         /// Gets immutabilityPolicy Etag.

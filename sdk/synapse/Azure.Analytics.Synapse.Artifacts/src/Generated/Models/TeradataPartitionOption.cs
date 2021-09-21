@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="TeradataPartitionOption"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeradataPartitionOption"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TeradataPartitionOption(string value)
         {

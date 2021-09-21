@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Scanning
     public partial class PurviewScanClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -60,7 +61,7 @@ namespace Azure.Analytics.Purview.Scanning
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             this.dataSourceName = dataSourceName;
             this.scanName = scanName;
@@ -105,7 +106,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetFilterRequest(options);
+            using HttpMessage message = CreateGetFilterRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
@@ -172,7 +173,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetFilterRequest(options);
+            using HttpMessage message = CreateGetFilterRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
@@ -201,11 +202,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetFilter"/> and <see cref="GetFilterAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetFilterRequest(RequestOptions options = null)
+        private HttpMessage CreateGetFilterRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -271,7 +270,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateFilterRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateFilterRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
@@ -351,7 +350,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateFilterRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateFilterRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
@@ -381,12 +380,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateFilter"/> and <see cref="CreateOrUpdateFilterAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateFilterRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateFilterRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -532,7 +528,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
@@ -690,7 +686,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
@@ -720,12 +716,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -819,7 +812,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetPropertiesRequest(options);
+            using HttpMessage message = CreateGetPropertiesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
@@ -925,7 +918,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetPropertiesRequest(options);
+            using HttpMessage message = CreateGetPropertiesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
@@ -954,11 +947,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetProperties"/> and <see cref="GetPropertiesAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetPropertiesRequest(RequestOptions options = null)
+        private HttpMessage CreateGetPropertiesRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1050,7 +1041,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(options);
+            using HttpMessage message = CreateDeleteRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
@@ -1158,7 +1149,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(options);
+            using HttpMessage message = CreateDeleteRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
@@ -1189,11 +1180,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(RequestOptions options = null)
+        private HttpMessage CreateDeleteRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1259,7 +1248,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateRunScanRequest(runId, scanLevel, options);
+            using HttpMessage message = CreateRunScanRequest(runId, scanLevel);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
@@ -1339,7 +1328,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateRunScanRequest(runId, scanLevel, options);
+            using HttpMessage message = CreateRunScanRequest(runId, scanLevel);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
@@ -1368,13 +1357,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="RunScan"/> and <see cref="RunScanAsync"/> operations. </summary>
-        /// <param name="runId"> The String to use. </param>
-        /// <param name="scanLevel"> The ScanLevelType to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateRunScanRequest(string runId, string scanLevel = null, RequestOptions options = null)
+        private HttpMessage CreateRunScanRequest(string runId, string scanLevel)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1445,7 +1430,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCancelScanRequest(runId, options);
+            using HttpMessage message = CreateCancelScanRequest(runId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
@@ -1524,7 +1509,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCancelScanRequest(runId, options);
+            using HttpMessage message = CreateCancelScanRequest(runId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
@@ -1553,12 +1538,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="CancelScan"/> and <see cref="CancelScanAsync"/> operations. </summary>
-        /// <param name="runId"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCancelScanRequest(string runId, RequestOptions options = null)
+        private HttpMessage CreateCancelScanRequest(string runId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1652,7 +1634,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRunsRequest(options);
+            using HttpMessage message = CreateGetRunsRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetRuns");
             scope.Start();
@@ -1757,7 +1739,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRunsRequest(options);
+            using HttpMessage message = CreateGetRunsRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetRuns");
             scope.Start();
@@ -1786,11 +1768,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetRuns"/> and <see cref="GetRunsAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRunsRequest(RequestOptions options = null)
+        private HttpMessage CreateGetRunsRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1869,7 +1849,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTriggerRequest(options);
+            using HttpMessage message = CreateGetTriggerRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
@@ -1961,7 +1941,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTriggerRequest(options);
+            using HttpMessage message = CreateGetTriggerRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
@@ -1990,11 +1970,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTrigger"/> and <see cref="GetTriggerAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTriggerRequest(RequestOptions options = null)
+        private HttpMessage CreateGetTriggerRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2110,7 +2088,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
@@ -2240,7 +2218,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, options);
+            using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
@@ -2270,12 +2248,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateTrigger"/> and <see cref="CreateOrUpdateTriggerAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateTriggerRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateTriggerRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -2356,7 +2331,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteTriggerRequest(options);
+            using HttpMessage message = CreateDeleteTriggerRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
@@ -2450,7 +2425,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteTriggerRequest(options);
+            using HttpMessage message = CreateDeleteTriggerRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
@@ -2481,11 +2456,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteTrigger"/> and <see cref="DeleteTriggerAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteTriggerRequest(RequestOptions options = null)
+        private HttpMessage CreateDeleteTriggerRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();

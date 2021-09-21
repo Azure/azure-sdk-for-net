@@ -18,7 +18,8 @@ namespace Azure.Verticals.AgriFood.Farming
     public partial class ScenesClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -49,7 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
@@ -125,7 +126,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, options);
+            using HttpMessage message = CreateListRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.List");
             scope.Start();
@@ -225,7 +226,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, options);
+            using HttpMessage message = CreateListRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.List");
             scope.Start();
@@ -254,27 +255,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="List"/> and <see cref="ListAsync"/> operations. </summary>
-        /// <param name="provider"> Provider name of scene data. </param>
-        /// <param name="farmerId"> FarmerId. </param>
-        /// <param name="boundaryId"> BoundaryId. </param>
-        /// <param name="source"> Source name of scene data, default value Sentinel_2_L2A (Sentinel 2 L2A). </param>
-        /// <param name="startDateTime"> Scene start UTC datetime (inclusive), sample format: yyyy-MM-ddThh:mm:ssZ. </param>
-        /// <param name="endDateTime"> Scene end UTC datetime (inclusive), sample format: yyyy-MM-dThh:mm:ssZ. </param>
-        /// <param name="maxCloudCoveragePercentage"> Filter scenes with cloud coverage percentage less than max value. Range [0 to 100.0]. </param>
-        /// <param name="maxDarkPixelCoveragePercentage"> Filter scenes with dark pixel coverage percentage less than max value. Range [0 to 100.0]. </param>
-        /// <param name="imageNames"> List of image names to be filtered. </param>
-        /// <param name="imageResolutions"> List of image resolutions in meters to be filtered. </param>
-        /// <param name="imageFormats"> List of image formats to be filtered. </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListRequest(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateListRequest(string provider, string farmerId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -410,7 +393,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateSatelliteDataIngestionJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateSatelliteDataIngestionJobRequest(jobId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.CreateSatelliteDataIngestionJob");
             scope.Start();
@@ -520,7 +503,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateSatelliteDataIngestionJobRequest(jobId, content, options);
+            using HttpMessage message = CreateCreateSatelliteDataIngestionJobRequest(jobId, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.CreateSatelliteDataIngestionJob");
             scope.Start();
@@ -549,13 +532,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateSatelliteDataIngestionJob"/> and <see cref="CreateSatelliteDataIngestionJobAsync"/> operations. </summary>
-        /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateSatelliteDataIngestionJobRequest(string jobId, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateSatelliteDataIngestionJobRequest(string jobId, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -623,7 +602,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetSatelliteDataIngestionJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetSatelliteDataIngestionJobDetailsRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.GetSatelliteDataIngestionJobDetails");
             scope.Start();
@@ -705,7 +684,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetSatelliteDataIngestionJobDetailsRequest(jobId, options);
+            using HttpMessage message = CreateGetSatelliteDataIngestionJobDetailsRequest(jobId);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.GetSatelliteDataIngestionJobDetails");
             scope.Start();
@@ -734,12 +713,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="GetSatelliteDataIngestionJobDetails"/> and <see cref="GetSatelliteDataIngestionJobDetailsAsync"/> operations. </summary>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetSatelliteDataIngestionJobDetailsRequest(string jobId, RequestOptions options = null)
+        private HttpMessage CreateGetSatelliteDataIngestionJobDetailsRequest(string jobId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -778,7 +754,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDownloadRequest(filePath, options);
+            using HttpMessage message = CreateDownloadRequest(filePath);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.Download");
             scope.Start();
@@ -833,7 +809,7 @@ namespace Azure.Verticals.AgriFood.Farming
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDownloadRequest(filePath, options);
+            using HttpMessage message = CreateDownloadRequest(filePath);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.Download");
             scope.Start();
@@ -862,12 +838,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="Download"/> and <see cref="DownloadAsync"/> operations. </summary>
-        /// <param name="filePath"> cloud storage path of scene file. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDownloadRequest(string filePath, RequestOptions options = null)
+        private HttpMessage CreateDownloadRequest(string filePath)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

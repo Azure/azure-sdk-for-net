@@ -15,7 +15,7 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="TimeSeriesPropertyType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesPropertyType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TimeSeriesPropertyType(string value)
         {

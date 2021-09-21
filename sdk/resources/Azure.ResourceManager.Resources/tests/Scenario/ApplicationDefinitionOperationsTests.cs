@@ -30,11 +30,5 @@ namespace Azure.ResourceManager.Resources.Tests
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await applicationDefinition.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
-        private static ApplicationDefinitionData CreateApplicationDefinitionData(string displayName) => new ApplicationDefinitionData(Location.WestUS2, ApplicationLockLevel.None)
-        {
-            DisplayName = displayName,
-            Description = $"{displayName} description",
-            PackageFileUri = "https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip"
-        };
     }
 }
