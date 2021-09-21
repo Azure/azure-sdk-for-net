@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
     {
         private readonly string name;
 
-        public ActivityEnrichingProcessor(string name = "ActivityEnrichingProcesor")
+        public ActivityEnrichingProcessor(string name = "ActivityEnrichingProcessor")
         {
             this.name = name;
         }
