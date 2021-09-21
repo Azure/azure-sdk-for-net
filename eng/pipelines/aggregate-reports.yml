@@ -147,26 +147,6 @@ stages:
       - job: ComplianceTools
         timeoutInMinutes: 120
         steps:
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
-            displayName: 'Run CredScan'
-            inputs:
-              suppressionsFile: 'eng\CredScanSuppression.json'
-            condition: succeededOrFailed()
-
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
-            displayName: 'Post Analysis (CredScan)'
-            inputs:
-              GdnBreakAllTools: false
-              GdnBreakGdnToolCredScan: true
-              GdnBreakGdnToolCredScanSeverity: Error
-              GdnBreakBaselineFiles: $(Build.SourcesDirectory)\eng\dotnet.gdnbaselines
-              GdnBreakBaselines: baseline  
-              # Used for generating baseline file
-              # GdnBreakOutputBaselineFile: dotnet
-              # GdnBreakOutputBaseline: baseline
-            condition: succeededOrFailed()
-            continueOnError: true
-
           - pwsh: |
               azcopy copy "https://azuresdkartifacts.blob.core.windows.net/policheck/DotNetPoliCheckExclusion.mdb?$(azuresdk-policheck-blob-SAS)" `
               "$(Build.BinariesDirectory)"
@@ -192,6 +172,26 @@ stages:
               GdnBreakAllTools: false
               GdnBreakGdnToolPoliCheck: true
               GdnBreakGdnToolPoliCheckSeverity: Warning
+            condition: succeededOrFailed()
+            continueOnError: true
+
+          - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
+            displayName: 'Run CredScan'
+            inputs:
+              suppressionsFile: 'eng\CredScanSuppression.json'
+            condition: succeededOrFailed()
+
+          - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+            displayName: 'Post Analysis (CredScan)'
+            inputs:
+              GdnBreakAllTools: false
+              GdnBreakGdnToolCredScan: true
+              GdnBreakGdnToolCredScanSeverity: Error
+              GdnBreakBaselineFiles: $(Build.SourcesDirectory)\eng\dotnet.gdnbaselines
+              GdnBreakBaselines: baseline  
+              # Used for generating baseline file
+              # GdnBreakOutputBaselineFile: dotnet
+              # GdnBreakOutputBaseline: baseline
             condition: succeededOrFailed()
             continueOnError: true
 
