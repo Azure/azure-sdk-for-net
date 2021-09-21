@@ -5,7 +5,8 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Configurations that allow callers to specify details about how to execute
-    /// a Classify Custom Category action on a set of documents.
+    /// a Classify Custom Category action on a set of documents.This corresponds
+    /// to a Single Classification task in the text analytics service.
     /// For example, the target project and deployment names are required
     /// for a successful custom classification action.
     /// </summary>
