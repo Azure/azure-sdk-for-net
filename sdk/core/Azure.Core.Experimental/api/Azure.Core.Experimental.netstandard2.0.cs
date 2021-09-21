@@ -183,4 +183,10 @@ namespace Azure.Core
     {
         public ProtocolClientOptions() { }
     }
+    public partial class ResponsePropertiesPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
+    {
+        public ResponsePropertiesPolicy() { }
+        public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
+    }
 }

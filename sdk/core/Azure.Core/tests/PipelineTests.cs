@@ -58,54 +58,6 @@ namespace Azure.Core.Tests
             Assert.False(message.TryGetProperty("SomeName", out _));
         }
 
-        [Test]
-        public async Task PipelineSetsResponseIsErrorTrue()
-        {
-            var mockTransport = new MockTransport(
-                new MockResponse(500));
-
-            var pipeline = new HttpPipeline(mockTransport);
-
-            Request request = pipeline.CreateRequest();
-            request.Method = RequestMethod.Get;
-            request.Uri.Reset(new Uri("https://contoso.a.io"));
-            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
-
-            Assert.IsTrue(response.IsError);
-        }
-
-        [Test]
-        public async Task PipelineSetsResponseIsErrorFalse()
-        {
-            var mockTransport = new MockTransport(
-                new MockResponse(200));
-
-            var pipeline = new HttpPipeline(mockTransport);
-
-            Request request = pipeline.CreateRequest();
-            request.Method = RequestMethod.Get;
-            request.Uri.Reset(new Uri("https://contoso.a.io"));
-            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
-
-            Assert.IsFalse(response.IsError);
-        }
-
-        [Test]
-        public async Task CustomClassifierSetsResponseIsError()
-        {
-            var mockTransport = new MockTransport(
-                new MockResponse(404));
-
-            var pipeline = new HttpPipeline(mockTransport, responseClassifier: new CustomResponseClassifier());
-
-            Request request = pipeline.CreateRequest();
-            request.Method = RequestMethod.Get;
-            request.Uri.Reset(new Uri("https://contoso.a.io"));
-            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
-
-            Assert.IsFalse(response.IsError);
-        }
-
         private class CustomResponseClassifier : ResponseClassifier
         {
             public override bool IsRetriableResponse(HttpMessage message)
