@@ -156,8 +156,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!--References after mergin to main repo-->
 [conversationanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/ConversationAnalysisClient.cs
 [conversationanalysis_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/
-[conversationanalysis_nuget_package]: https://nuget.org/packages/Azure.AI.Language.Conversations/
 [conversationanalysis_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/
+
+<!--Update once nuget is released-->
+[conversationanalysis_nuget_package]: https://nuget.org/packages
 
 <!--Will be updated once service documentation is public-->
 [conversationanalysis_docs]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/ 
