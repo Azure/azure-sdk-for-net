@@ -17,27 +17,23 @@ namespace Azure.AI.TextAnalytics.Tests
         {
         }
 
-        private const string EnglishDocument1 = "Microsoft was founded by Bill Gates and Paul Allen.";
+        private const string EnglishDocument1 = "A recent report by the Government Accountability Office (GAO) found that the dramatic increase in oil and natural gas development on federal lands over the past six years has stretched the staff of the BLM to a point that it has been unable to meet its environmental protection responsibilities.";
 
         private static readonly List<string> s_document1ExpectedOutput = new List<string>
         {
-            "Microsoft",
-            "Bill Gates",
-            "Paul Allen"
+            //TODO
         };
 
         [RecordedTest]
         public async Task RecognizeCustomEntitiesWithADDTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
-            string projectName = "";
-            string deploymentName = "";
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(projectName, deploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.ProjectName, TestEnvironment.DeploymentName)
                 }
             };
 
@@ -55,21 +51,18 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeCustomEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
-            string projectName = "";
-            string deploymentName = "";
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(projectName, deploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.ProjectName, TestEnvironment.DeploymentName)
                 }
             };
 
             var operation = await client.StartAnalyzeActionsAsync(new List<string> { EnglishDocument1 }, batchActions);
 
             await operation.WaitForCompletionAsync();
-
             var Documents = ExtractDocumentsResultsFromResponse(operation);
             var FirstDocument = Documents.First();
             var Entites = FirstDocument.Entities;
@@ -77,17 +70,15 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task RecognizePiiEntitiesWithLanguageTest()
+        public async Task RecognizeCustomEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            string projectName = "";
-            string deploymentName = "";
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(projectName, deploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.ProjectName, TestEnvironment.DeploymentName)
                 }
             };
 

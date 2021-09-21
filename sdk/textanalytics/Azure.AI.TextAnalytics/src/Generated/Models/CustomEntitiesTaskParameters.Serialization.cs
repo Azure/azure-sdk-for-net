@@ -15,9 +15,9 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("projectName");
+            writer.WritePropertyName("project-name");
             writer.WriteStringValue(ProjectName);
-            writer.WritePropertyName("deploymentName");
+            writer.WritePropertyName("deployment-name");
             writer.WriteStringValue(DeploymentName);
             if (Optional.IsDefined(LoggingOptOut))
             {

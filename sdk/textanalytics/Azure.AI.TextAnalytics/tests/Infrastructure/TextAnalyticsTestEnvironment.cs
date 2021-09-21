@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         public string Endpoint => GetRecordedVariable("TEXT_ANALYTICS_ENDPOINT");
         public string ApiKey => GetRecordedVariable("TEXT_ANALYTICS_API_KEY", options => options.IsSecret());
-        public string ProjectName => "TEXT_ANALYTICS_PROJECT_NAME";
-        public string DeploymentName => "TEXT_ANALYTICS_DEPLOYMENT_NAME";
+        public string ProjectName => GetRecordedVariable("TEXT_ANALYTICS_PROJECT_NAME");
+        public string DeploymentName => GetRecordedVariable("TEXT_ANALYTICS_DEPLOYMENT_NAME");
     }
 }

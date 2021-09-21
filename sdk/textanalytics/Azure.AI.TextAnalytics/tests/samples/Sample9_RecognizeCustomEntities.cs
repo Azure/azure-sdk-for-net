@@ -21,14 +21,13 @@ namespace Azure.AI.TextAnalytics.Tests.samples
 
             #region Snippet:RecognizeCustomEntities
             // Get input document(s).
-            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
-                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                                We tried again today and it was amazing. Everyone in my family liked the trail although
-                                it was too challenging for the less athletic among us.";
+            string documentA = @"A recent report by the Government Accountability Office (GAO) found that the dramatic
+                                increase in oil and natural gas development on federal lands over the past six years
+                                has stretched the staff of the BLM to a point that it has been unable to meet its 
+                                environmental protection responsibilities.";
 
-            string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
-                                our anniversary so they helped me organize a little surprise for my partner.
-                                The room was clean and with the decoration I requested. It was perfect!";
+            string documentB = @"David Schmidt, senior vice president--Food Safety, International Food Information 
+                                Council (IFIC), Washington, D.C., discussed the physical activity component.";
 
             var batchDocuments = new List<TextDocumentInput>
             {

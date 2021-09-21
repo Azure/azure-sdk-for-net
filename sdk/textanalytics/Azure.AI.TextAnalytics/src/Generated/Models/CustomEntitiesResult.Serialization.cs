@@ -53,12 +53,12 @@ namespace Azure.AI.TextAnalytics.Models
                     statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("projectName"))
+                if (property.NameEquals("project-name"))
                 {
                     projectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deploymentName"))
+                if (property.NameEquals("deployment-name"))
                 {
                     deploymentName = property.Value.GetString();
                     continue;
