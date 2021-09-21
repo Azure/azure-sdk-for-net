@@ -199,3 +199,10 @@ namespace Azure.Core
         public ProtocolClientOptions() { }
     }
 }
+namespace Azure.Core.Pipeline
+{
+    public static partial class ResponseExtensions
+    {
+        public static bool IsError(this Azure.Response response) { throw null; }
+    }
+}

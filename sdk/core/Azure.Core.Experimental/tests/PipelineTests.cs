@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            Assert.IsTrue(((ClassifiedResponse)response).IsError);
+            Assert.IsTrue(response.IsError());
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            Assert.IsFalse(((ClassifiedResponse)response).IsError);
+            Assert.IsFalse(response.IsError());
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Azure.Core.Tests
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            Assert.IsFalse(((ClassifiedResponse)response).IsError);
+            Assert.IsFalse(response.IsError());
         }
 
         private class CustomResponseClassifier : ResponseClassifier
