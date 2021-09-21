@@ -19,6 +19,8 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         private static readonly string s_endpoint = "https://contoso-textanalytics.cognitiveservices.azure.com/";
         private static readonly string s_apiKey = "FakeapiKey";
+        private static readonly string FakeProjectName = "FakeProjectName";
+        private static readonly string FakeDeploymentName = "FakeDeploymentName";
 
         public AnalyzeOperationMockTests(bool isAsync) : base(isAsync)
         {
@@ -312,7 +314,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 "Elon Musk is the CEO of SpaceX and Tesla."
             };
 
-            var actions = new RecognizeCustomEntitiesAction("projectName", "deploymentName")
+            var actions = new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName)
             {
                 DisableServiceLogs = true
             };
@@ -348,8 +350,8 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction("projectName", "deploymentName"),
-                    new RecognizeCustomEntitiesAction("projectName", "deploymentName")
+                    new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName),
+                    new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName)
                 },
             };
 
@@ -964,7 +966,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
                 AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
                 ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() },
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>() { new RecognizeCustomEntitiesAction("projectName", "deploymentName") },
+                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>() { new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName) },
                 DisplayName = "AnalyzeOperationBatchWithErrorTest"
             };
 
@@ -985,7 +987,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults.FirstOrDefault();
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
             ExtractSummaryActionResult extractSummaryActionsResults = resultCollection.ExtractSummaryResults.FirstOrDefault();
-            RecognizeCustomEntitiesActionResult recognizeCustomEntitiesActionResults = resultCollection.RecognizeCustomEntitiesActionResult.FirstOrDefault();
+            RecognizeCustomEntitiesActionResult recognizeCustomEntitiesActionResults = resultCollection.RecognizeCustomEntitiesActionResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());

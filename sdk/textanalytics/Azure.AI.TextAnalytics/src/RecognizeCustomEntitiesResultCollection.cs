@@ -30,12 +30,14 @@ namespace Azure.AI.TextAnalytics
         public TextDocumentBatchStatistics Statistics { get; }
 
         /// <summary>
-        /// TODO
+        /// Gets the value of the property corresponding to the name of the
+        /// deployment for this action.
         /// </summary>
         public string DeploymentName { get; }
 
         /// <summary>
-        /// TODO
+        /// Gets the value of the property corresponding to the name of the
+        /// project for this action.
         /// </summary>
         public string ProjectName { get; }
 

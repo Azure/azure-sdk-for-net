@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Tests.samples
     public partial class RecognizeCustomEntitiesSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public void RecognizeCustomEntities()
+        public void RecognizeCustomEntitiesConvenience()
         {
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
@@ -30,16 +30,10 @@ namespace Azure.AI.TextAnalytics.Tests.samples
                                 our anniversary so they helped me organize a little surprise for my partner.
                                 The room was clean and with the decoration I requested. It was perfect!";
 
-            var batchDocuments = new List<TextDocumentInput>
+            var batchDocuments = new List<string>
             {
-                new TextDocumentInput("1", documentA)
-                {
-                     Language = "en",
-                },
-                new TextDocumentInput("2", documentB)
-                {
-                     Language = "en",
-                }
+                documentA,
+                documentB
             };
 
             //prepare actions

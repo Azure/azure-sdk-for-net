@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -12,15 +13,15 @@ namespace Azure.AI.TextAnalytics.Tests.samples
     public partial class RecognizeCustomEntitiesSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public void RecognizeCustomEntities()
+        public async Task RecognizeCustomEntitiesAsyncConvenience()
         {
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:RecognizeCustomEntities
-            // Get input document(s).
+            #region Snippet:RecognizeCustomEntitiesAsync
+            // Get input document.
             string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
                                 worth the hike! Yesterday was foggy though, so we missed the spectacular views.
                                 We tried again today and it was amazing. Everyone in my family liked the trail although
@@ -30,16 +31,10 @@ namespace Azure.AI.TextAnalytics.Tests.samples
                                 our anniversary so they helped me organize a little surprise for my partner.
                                 The room was clean and with the decoration I requested. It was perfect!";
 
-            var batchDocuments = new List<TextDocumentInput>
+            var batchDocuments = new List<string>
             {
-                new TextDocumentInput("1", documentA)
-                {
-                     Language = "en",
-                },
-                new TextDocumentInput("2", documentB)
-                {
-                     Language = "en",
-                }
+                documentA,
+                documentB
             };
 
             //prepare actions
@@ -51,31 +46,11 @@ namespace Azure.AI.TextAnalytics.Tests.samples
                 }
             };
 
-            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchDocuments, actions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
 
-            TimeSpan pollingInterval = new TimeSpan(1000);
+            await operation.WaitForCompletionAsync();
 
-            while (!operation.HasCompleted)
-            {
-                Thread.Sleep(pollingInterval);
-                operation.UpdateStatus();
-
-                Console.WriteLine($"Status: {operation.Status}");
-                //If operation has not started, all other fields are null
-                if (operation.Status != TextAnalyticsOperationStatus.NotStarted)
-                {
-                    Console.WriteLine($"Expires On: {operation.ExpiresOn}");
-                    Console.WriteLine($"Last modified: {operation.LastModified}");
-                    if (!string.IsNullOrEmpty(operation.DisplayName))
-                        Console.WriteLine($"Display name: {operation.DisplayName}");
-                    Console.WriteLine($"Total actions: {operation.ActionsTotal}");
-                    Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
-                    Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
-                    Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
-                }
-            }
-
-            foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
+            await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
                 IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesResults = documentsInPage.RecognizeCustomEntitiesActionResults;
                 foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResulsts in customEntitiesResults)

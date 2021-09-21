@@ -109,7 +109,7 @@ namespace Azure.AI.TextAnalytics.Tests
         private RecognizeCustomEntitiesResultCollection ExtractDocumentsResultsFromResponse(AnalyzeActionsOperation analyzeActionOperation)
         {
             var resultCollection = analyzeActionOperation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            var RecognizeCustomEntitiesActionResult = resultCollection.RecognizeCustomEntitiesActionResult;
+            var RecognizeCustomEntitiesActionResult = resultCollection.RecognizeCustomEntitiesActionResults;
             var ActionResult = RecognizeCustomEntitiesActionResult.First();
             return ActionResult.DocumentsResults;
         }

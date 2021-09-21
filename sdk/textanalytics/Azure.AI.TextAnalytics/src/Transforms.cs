@@ -423,14 +423,6 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
-        internal static CustomEntitiesTask ConvertToCustomEntitiesTask(RecognizeCustomEntitiesAction action)
-        {
-            return new CustomEntitiesTask()
-            {
-                Parameters = new CustomEntitiesTaskParameters(action.ProjectName, action.DeploymentName)
-            };
-        }
-
         internal static KeyPhrasesTask ConvertToKeyPhrasesTask(ExtractKeyPhrasesAction action)
         {
             return new KeyPhrasesTask()
@@ -472,6 +464,17 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
+        internal static CustomEntitiesTask ConvertToCustomEntitiesTask(RecognizeCustomEntitiesAction action)
+        {
+            return new CustomEntitiesTask()
+            {
+                Parameters = new CustomEntitiesTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                }
+            };
+        }
+
         internal static IList<EntityLinkingTask> ConvertFromRecognizeLinkedEntitiesActionsToTasks(IReadOnlyCollection<RecognizeLinkedEntitiesAction> recognizeLinkedEntitiesActions)
         {
             List<EntityLinkingTask> list = new List<EntityLinkingTask>();
@@ -491,18 +494,6 @@ namespace Azure.AI.TextAnalytics
             foreach (RecognizeEntitiesAction action in recognizeEntitiesActions)
             {
                 list.Add(ConvertToEntitiesTask(action));
-            }
-
-            return list;
-        }
-
-        internal static IList<CustomEntitiesTask> ConvertFromRecognizeCustomEntitiesActionsToTasks(IReadOnlyCollection<RecognizeCustomEntitiesAction> recognizeCustomEntitiesActions)
-        {
-            var list = new List<CustomEntitiesTask>();
-
-            foreach (var action in recognizeCustomEntitiesActions)
-            {
-                list.Add(ConvertToCustomEntitiesTask(action));
             }
 
             return list;
@@ -556,6 +547,18 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
+        internal static IList<CustomEntitiesTask> ConvertFromRecognizeCustomEntitiesActionsToTasks(IReadOnlyCollection<RecognizeCustomEntitiesAction> recognizeCustomEntitiesActions)
+        {
+            var list = new List<CustomEntitiesTask>();
+
+            foreach (var action in recognizeCustomEntitiesActions)
+            {
+                list.Add(ConvertToCustomEntitiesTask(action));
+            }
+
+            return list;
+        }
+
         private static string[] parseActionErrorTarget(string targetReference)
         {
             if (string.IsNullOrEmpty(targetReference))
@@ -581,11 +584,11 @@ namespace Azure.AI.TextAnalytics
         {
             IDictionary<int, TextAnalyticsErrorInternal> keyPhraseErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> entitiesRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
-            IDictionary<int, TextAnalyticsErrorInternal> customEntitiesRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> entitiesPiiRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> entitiesLinkingRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> analyzeSentimentErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> extractSummaryErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+            IDictionary<int, TextAnalyticsErrorInternal> customEntitiesRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
 
             if (jobState.Errors.Any())
             {
