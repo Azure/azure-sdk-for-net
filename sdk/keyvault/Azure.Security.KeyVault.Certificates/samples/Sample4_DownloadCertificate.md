@@ -41,7 +41,7 @@ Debug.WriteLine($"Signature: {Convert.ToBase64String(signature)}");
 
 You can optionally pass a `DownloadCertificateOptions` object to customize creation of the `X509Certificate2`. For example,
 `X509KeyStorageFlags.EphemeralKeySet | X509KeyStorageFlags.MachineKeySet` is common in applications such as Azure Functions
-but will not work in all cases or on all platforms. The default is `X509KeyStorageFlags.DefaultKeySet` and behavior may
+but will not work in all cases or on all platforms. The default is `X509KeyStorageFlags.DefaultKeySet`. Behavior of the `X509KeyStorageFlags` may
 vary across platforms.
 
 ### Downloading a certificate asynchronously
