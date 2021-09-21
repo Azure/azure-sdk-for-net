@@ -42,8 +42,8 @@
         /// operation.</param>
         /// <param name="supportedCapabilities">List of supported capabilities
         /// (like accelerated networking) for the image from which the OS disk
-        public DiskRestorePoint(string id, string name, string type, System.DateTime? timeCreated, string sourceResourceId, OperatingSystemTypes? osType, string hyperVGeneration, PurchasePlan purchasePlan, string familyId, string sourceUniqueId, Encryption encryption, bool? supportsHibernation, string networkAccessPolicy, string publicNetworkAccess, string diskAccessId, double? completionPercent, SupportedCapabilities supportedCapabilities)
-            : base(id, name, type)
+        public DiskRestorePoint(string id, string name, string type, System.DateTime? timeCreated, string sourceResourceId, OperatingSystemTypes? osType, string hyperVGeneration, PurchasePlan purchasePlan, string familyId, string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?))
+                    : base(id, name, type)
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;
@@ -54,12 +54,8 @@
             SourceUniqueId = sourceUniqueId;
             Encryption = encryption;
             SupportsHibernation = supportsHibernation;
-            NetworkAccessPolicy = networkAccessPolicy;
-            PublicNetworkAccess = publicNetworkAccess;
-            DiskAccessId = diskAccessId;
-            CompletionPercent = completionPercent;
-            SupportedCapabilities = supportedCapabilities;
             CustomInit();
         }
+
     }
 }

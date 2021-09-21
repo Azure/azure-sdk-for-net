@@ -104,10 +104,8 @@
         /// operation.</param>
         /// <param name="publicNetworkAccess">Possible values include:
         /// 'Enabled', 'Disabled'</param>
-        public Disk(string location, CreationData creationData, string id, string name, string type, IDictionary<string, string> tags, string managedBy, IList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, System.DateTime? timeCreated, OperatingSystemTypes? osType, 
-            string hyperVGeneration, PurchasePlan purchasePlan, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, string diskState, 
-            Encryption encryption, int? maxShares, IList<ShareInfoElement> shareInfo, string networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, SupportedCapabilities supportedCapabilities, double? completionPercent, string publicNetworkAccess)
-            : base(location, id, name, type, tags)
+        public Disk(string location, CreationData creationData, string id, string name, string type, IDictionary<string, string> tags, string managedBy, IList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, System.DateTime? timeCreated, OperatingSystemTypes? osType, string hyperVGeneration, PurchasePlan purchasePlan, , int? diskSizeGB, long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), DiskSecurityProfile securityProfile = default(DiskSecurityProfile))
+                    : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
@@ -139,9 +137,6 @@
             PropertyUpdatesInProgress = propertyUpdatesInProgress;
             SupportsHibernation = supportsHibernation;
             SecurityProfile = securityProfile;
-            CompletionPercent = completionPercent;
-            PublicNetworkAccess = publicNetworkAccess;
-            SupportedCapabilities = supportedCapabilities;
             CustomInit();
         }
     }

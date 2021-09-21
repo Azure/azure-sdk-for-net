@@ -71,8 +71,8 @@
         /// <param name="supportedCapabilities">List of supported capabilities
         /// (like Accelerated Networking) for the image from which the source
         /// disk from the snapshot was originally created.</param>
-        public Snapshot(string location, CreationData creationData, string id, string name, string type, IDictionary<string, string> tags, string managedBy, SnapshotSku sku, ExtendedLocation extendedLocation, System.DateTime? timeCreated, OperatingSystemTypes? osType, string hyperVGeneration, PurchasePlan purchasePlan, int? diskSizeGB, long? diskSizeBytes, string diskState, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, bool? incremental, Encryption encryption, string networkAccessPolicy, string diskAccessId, bool? supportsHibernation, string publicNetworkAccess, double? completionPercent, SupportedCapabilities supportedCapabilities)
-            : base(location, id, name, type, tags)
+        public Snapshot(string location, CreationData creationData, string id, string name, string type, IDictionary<string, string> tags, string managedBy, SnapshotSku sku, ExtendedLocation extendedLocation, System.DateTime? timeCreated, OperatingSystemTypes? osType, string hyperVGeneration, PurchasePlan purchasePlan, int? diskSizeGB, long? diskSizeBytes = default(long?), string diskState = default(string), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), bool? supportsHibernation = default(bool?))
+                    : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
             Sku = sku;
@@ -93,10 +93,7 @@
             NetworkAccessPolicy = networkAccessPolicy;
             DiskAccessId = diskAccessId;
             SupportsHibernation = supportsHibernation;
-            PublicNetworkAccess = publicNetworkAccess;
-            CompletionPercent = completionPercent;
-            SupportedCapabilities = supportedCapabilities;
             CustomInit();
-        }    
+        }
     }
 }

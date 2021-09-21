@@ -53,11 +53,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the provisioned performance target of the disk. Bursting is
         /// disabled by default. Does not apply to Ultra disks.</param>
         /// <param name="purchasePlan">Purchase plan information to be added on
-        /// <param name="supportsHibernation">Indicates the OS on a disk
-        /// supports hibernation.</param>
-        /// <param name="publicNetworkAccess">Possible values include:
-        /// 'Enabled', 'Disabled'</param>
-        /// the OS disk</param>
         public DiskUpdate(OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsCollection encryptionSettingsCollection, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, int? maxShares, Encryption encryption, string networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PurchasePlan purchasePlan)
         {
             OsType = osType;
@@ -118,7 +113,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             CustomInit();
         }
 
-        public DiskUpdate(OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsCollection encryptionSettingsCollection, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, int? maxShares, Encryption encryption, string networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PurchasePlan purchasePlan, IDictionary<string, string> tags, DiskSku sku, SupportedCapabilities supportedCapabilities, string publicNetworkAccess)
+        public DiskUpdate(OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsCollection encryptionSettingsCollection, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, int? maxShares, Encryption encryption, string networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PurchasePlan purchasePlan, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -134,10 +129,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             Tier = tier;
             BurstingEnabled = burstingEnabled;
             PurchasePlan = purchasePlan;
+            PropertyUpdatesInProgress = propertyUpdatesInProgress;
+            SupportsHibernation = supportsHibernation;
             Tags = tags;
             Sku = sku;
-            SupportedCapabilities = supportedCapabilities;
-            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
     }
