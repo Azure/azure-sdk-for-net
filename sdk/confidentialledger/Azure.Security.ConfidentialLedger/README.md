@@ -13,7 +13,7 @@ This section should include everything a developer needs to do to install and cr
 
 Install the Confidential Ledger client library for .NET with [NuGet][client_nuget_package]:
 
-```bash
+```dotnetcli
 dotnet add package Azure.Security.ConfidentialLedger --prerelease
 ```
 

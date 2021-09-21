@@ -1749,6 +1749,26 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
         [JsonSample]
+        public const string AmazonRdsForSqlServerTableV2 = @"
+{
+    name: ""AmazonRdsForSqlServerTable"",
+    properties:
+    {
+        type: ""AmazonRdsForSqlServerTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
         public const string AzureSqlDWTableV2 = @"
 {
     name: ""AzureSqlDWTable"",

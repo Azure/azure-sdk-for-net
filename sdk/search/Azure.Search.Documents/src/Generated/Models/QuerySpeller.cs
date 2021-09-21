@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="QuerySpeller"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuerySpeller"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QuerySpeller(string value)
         {

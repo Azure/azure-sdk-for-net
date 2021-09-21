@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="KeyVaultDataAction"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultDataAction"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultDataAction(string value)
         {

@@ -35,13 +35,17 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// <param name="roleId">ID of the role to which share is
         /// mounted.</param>
         /// <param name="mountPoint">Mount point for the share.</param>
+        /// <param name="mountType">Mounting type. Possible values include:
+        /// 'Volume', 'HostPath'</param>
         /// <param name="roleType">Role type. Possible values include: 'IOT',
-        /// 'ASA', 'Functions', 'Cognitive'</param>
-        public MountPointMap(string shareId, string roleId = default(string), string mountPoint = default(string), string roleType = default(string))
+        /// 'ASA', 'Functions', 'Cognitive', 'MEC', 'CloudEdgeManagement',
+        /// 'Kubernetes'</param>
+        public MountPointMap(string shareId, string roleId = default(string), string mountPoint = default(string), string mountType = default(string), string roleType = default(string))
         {
             ShareId = shareId;
             RoleId = roleId;
             MountPoint = mountPoint;
+            MountType = mountType;
             RoleType = roleType;
             CustomInit();
         }
@@ -70,8 +74,14 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public string MountPoint { get; private set; }
 
         /// <summary>
+        /// Gets mounting type. Possible values include: 'Volume', 'HostPath'
+        /// </summary>
+        [JsonProperty(PropertyName = "mountType")]
+        public string MountType { get; private set; }
+
+        /// <summary>
         /// Gets role type. Possible values include: 'IOT', 'ASA', 'Functions',
-        /// 'Cognitive'
+        /// 'Cognitive', 'MEC', 'CloudEdgeManagement', 'Kubernetes'
         /// </summary>
         [JsonProperty(PropertyName = "roleType")]
         public string RoleType { get; private set; }

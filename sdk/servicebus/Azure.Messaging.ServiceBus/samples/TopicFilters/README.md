@@ -42,7 +42,7 @@ To build the sample:
 
 2. Run in the project directory:
 
-   ```bash
+   ```dotnetcli
    dotnet build
    ```
 
@@ -56,13 +56,13 @@ You can use any of the [authentication mechanisms](https://docs.microsoft.com/do
 
 To run the sample using Azure Identity:
 
-```bash
+```dotnetcli
 dotnet run -- --namespace <fully qualified namespace>
 ```
 ### Use a Service Bus connection string
 The other way to run the sample is by specifying an environment variable that contains the connection string for the namespace you wish to use:
 
-```bash
+```dotnetcli
 dotnet run -- --connection-variable <environment variable name>
 ```
 

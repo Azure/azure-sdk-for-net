@@ -22,12 +22,12 @@ The `SetupAsync` method override will create multiple Twins that is configurable
 ## Running the tests
 
 Build a performance test project
-```bash
+```dotnetcli
 dotnet run -c Release -f <supported-framework> --no-build -p <path/to/project/file> -- [parameters needed for the test]
 ```
 
 Run the executable output of a project
-```bash
+```dotnetcli
 dotnet run -c Release -f <supported-framework> --no-build -p <path/to/project/file> -- [parameters needed for the test]
 ```
 

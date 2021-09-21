@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// The resource group name.
         /// </param>
         /// <param name='filter'>
-        /// Specify $filter='UserType eq &lt;type&gt;' to filter on user type
+        /// Specify $filter='Type eq &lt;type&gt;' to filter on user type
         /// property
         /// </param>
         /// <param name='customHeaders'>

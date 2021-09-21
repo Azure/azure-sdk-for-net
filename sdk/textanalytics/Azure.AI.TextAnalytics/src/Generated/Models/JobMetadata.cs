@@ -47,9 +47,13 @@ namespace Azure.AI.TextAnalytics.Models
             Status = status;
         }
 
+        /// <summary> Gets the created date time. </summary>
         public DateTimeOffset CreatedDateTime { get; }
+        /// <summary> Gets the expiration date time. </summary>
         public DateTimeOffset? ExpirationDateTime { get; }
+        /// <summary> Gets the last update date time. </summary>
         public DateTimeOffset LastUpdateDateTime { get; }
+        /// <summary> Gets the status. </summary>
         public TextAnalyticsOperationStatus Status { get; }
     }
 }
