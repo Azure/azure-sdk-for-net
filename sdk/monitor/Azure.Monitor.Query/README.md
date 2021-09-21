@@ -43,11 +43,16 @@ Here's a heirarchy of the LogsQueryResult response:
 
 ```
 LogsQueryResult
-|---AllTables (list of `LogsTable` objects)
+|---Error
+|---Status
+|---Table
     |---Name
     |---Columns (list of `LogsTableColumn` objects)
         |---Name
         |---Type
+    |---Rows (list of `LogsTableRows` objects)
+        |---Count
+|---AllTables (list of `LogsTable` objects)    
 ```
 
 - `MetricsQueryClient` - Client that provides methods to query metrics from Azure Monitor Metrics.
@@ -60,6 +65,7 @@ MetricsQueryResult
 |---Interval
 |---Namespace
 |---ResourceRegion
+|---TimeSpan
 |---Metrics (list of `MetricResult` objects)
     |---Id
     |---Type
