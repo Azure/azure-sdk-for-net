@@ -66,13 +66,12 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
+        public async ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
-            var value = _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
+            await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
             message.Response.EvaluateError(message);
-            return value;
         }
 
         /// <summary>
