@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The CustomEntitiesTaskParameters. </summary>
-    internal partial class CustomEntitiesTaskParameters
+    public partial class CustomEntitiesTaskParameters
     {
         /// <summary> Initializes a new instance of CustomEntitiesTaskParameters. </summary>
         /// <param name="projectName"></param>
