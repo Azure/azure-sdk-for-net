@@ -30,6 +30,21 @@ namespace Azure
 }
 namespace Azure.Core
 {
+    public partial class ClassifiedResponse : Azure.Response
+    {
+        public ClassifiedResponse(Azure.Response response) { }
+        public override string ClientRequestId { get { throw null; } set { } }
+        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
+        public bool IsError { get { throw null; } }
+        public override string ReasonPhrase { get { throw null; } }
+        public override int Status { get { throw null; } }
+        protected override bool ContainsHeader(string name) { throw null; }
+        public override void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
+        protected override bool TryGetHeader(string name, out string? value) { throw null; }
+        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentType : System.IEquatable<Azure.Core.ContentType>, System.IEquatable<string>
     {
@@ -93,10 +108,6 @@ namespace Azure.Core
         protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
         protected override bool TryGetHeader(string name, out string? value) { throw null; }
         protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
-    }
-    public static partial class HttpMessageExtensions
-    {
-        public static bool ResponseIsError(this Azure.Core.HttpMessage message) { throw null; }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.JsonData>
