@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
     internal class ActivityFilteringProcessor : BaseProcessor<Activity>
     {
         private readonly string name;
-        public ActivityFilteringProcessor(string name = "ActivityENrichingProcesor")
+        public ActivityFilteringProcessor(string name = "ActivityFilteringProcessor")
         {
             this.name = name;
         }

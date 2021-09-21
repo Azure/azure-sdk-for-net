@@ -19,6 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
             var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource("OTel.AzureMonitor.Demo")
                 .SetResourceBuilder(resourceBuilder) // Sets cloud_RoleName as "my-namespace.my-service" and cloud_RoleInstance as "my-instance"
                 .AddProcessor(new ActivityFilteringProcessor())
                 .AddProcessor(new ActivityEnrichingProcessor())
