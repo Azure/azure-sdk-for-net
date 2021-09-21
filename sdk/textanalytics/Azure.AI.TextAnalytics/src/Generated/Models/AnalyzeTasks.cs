@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.AI.TextAnalytics.Internal;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -30,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
             EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTasksItem>();
             SentimentAnalysisTasks = new ChangeTrackingList<SentimentAnalysisTasksItem>();
             ExtractiveSummarizationTasks = new ChangeTrackingList<ExtractiveSummarizationTasksItem>();
-            CustomEntityRecognitionTasks = new ChangeTrackingList<TasksStateTasksCustomEntityRecognitionTasksItem>();
+            CustomEntityRecognitionTasks = new ChangeTrackingList<CustomEntityRecognitionTasksItem>();
             CustomSingleClassificationTasks = new ChangeTrackingList<TasksStateTasksCustomSingleClassificationTasksItem>();
             CustomMultiClassificationTasks = new ChangeTrackingList<TasksStateTasksCustomMultiClassificationTasksItem>();
         }
@@ -49,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="customEntityRecognitionTasks"></param>
         /// <param name="customSingleClassificationTasks"></param>
         /// <param name="customMultiClassificationTasks"></param>
-        internal AnalyzeTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<SentimentAnalysisTasksItem> sentimentAnalysisTasks, IReadOnlyList<ExtractiveSummarizationTasksItem> extractiveSummarizationTasks, IReadOnlyList<TasksStateTasksCustomEntityRecognitionTasksItem> customEntityRecognitionTasks, IReadOnlyList<TasksStateTasksCustomSingleClassificationTasksItem> customSingleClassificationTasks, IReadOnlyList<TasksStateTasksCustomMultiClassificationTasksItem> customMultiClassificationTasks)
+        internal AnalyzeTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<SentimentAnalysisTasksItem> sentimentAnalysisTasks, IReadOnlyList<ExtractiveSummarizationTasksItem> extractiveSummarizationTasks, IReadOnlyList<CustomEntityRecognitionTasksItem> customEntityRecognitionTasks, IReadOnlyList<TasksStateTasksCustomSingleClassificationTasksItem> customSingleClassificationTasks, IReadOnlyList<TasksStateTasksCustomMultiClassificationTasksItem> customMultiClassificationTasks)
         {
             Completed = completed;
             Failed = failed;
@@ -87,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Gets the extractive summarization tasks. </summary>
         public IReadOnlyList<ExtractiveSummarizationTasksItem> ExtractiveSummarizationTasks { get; }
         /// <summary> Gets the custom entity recognition tasks. </summary>
-        public IReadOnlyList<TasksStateTasksCustomEntityRecognitionTasksItem> CustomEntityRecognitionTasks { get; }
+        public IReadOnlyList<CustomEntityRecognitionTasksItem> CustomEntityRecognitionTasks { get; }
         /// <summary> Gets the custom single classification tasks. </summary>
         public IReadOnlyList<TasksStateTasksCustomSingleClassificationTasksItem> CustomSingleClassificationTasks { get; }
         /// <summary> Gets the custom multi classification tasks. </summary>

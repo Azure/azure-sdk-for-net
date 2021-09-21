@@ -8,13 +8,14 @@
 using System;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics.Internal
 {
-    internal partial class TasksStateTasksCustomEntityRecognitionTasksItem
+    internal partial class CustomEntityRecognitionTasksItem
     {
-        internal static TasksStateTasksCustomEntityRecognitionTasksItem DeserializeTasksStateTasksCustomEntityRecognitionTasksItem(JsonElement element)
+        internal static CustomEntityRecognitionTasksItem DeserializeCustomEntityRecognitionTasksItem(JsonElement element)
         {
             Optional<CustomEntitiesResult> results = default;
             DateTimeOffset lastUpdateDateTime = default;
@@ -48,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new TasksStateTasksCustomEntityRecognitionTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            return new CustomEntityRecognitionTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
         }
     }
 }
