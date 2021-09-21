@@ -15,7 +15,7 @@ namespace CosmosDB.Tests.ScenarioTests
     {
         const string location = "eastus2";
         const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "sqltestaccount124";
+        const string databaseAccountName = "sqltestaccount125";
         const string databaseName = "TestDB1";
         const string containerName = "TestContainer2";
 
