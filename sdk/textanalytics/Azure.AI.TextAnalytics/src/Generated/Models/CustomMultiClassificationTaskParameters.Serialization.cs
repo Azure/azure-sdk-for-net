@@ -10,20 +10,19 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomMultiClassificationTaskParameters : IUtf8JsonSerializable
+    public partial class CustomMultiClassificationTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProjectName))
+            writer.WritePropertyName("projectName");
+            writer.WriteStringValue(ProjectName);
+            writer.WritePropertyName("deploymentName");
+            writer.WriteStringValue(DeploymentName);
+            if (Optional.IsDefined(LoggingOptOut))
             {
-                writer.WritePropertyName("projectName");
-                writer.WriteStringValue(ProjectName);
-            }
-            if (Optional.IsDefined(DeploymentName))
-            {
-                writer.WritePropertyName("deploymentName");
-                writer.WriteStringValue(DeploymentName);
+                writer.WritePropertyName("loggingOptOut");
+                writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             writer.WriteEndObject();
         }
