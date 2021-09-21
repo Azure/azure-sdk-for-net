@@ -26,6 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
                 {
                     o.ConnectionString = "<Your Connection String>";
                 })
+                .AddOtlpExporter()
                 .Build();
 
             using (var sampleActivity = DemoSource.StartActivity("TestActivity"))
