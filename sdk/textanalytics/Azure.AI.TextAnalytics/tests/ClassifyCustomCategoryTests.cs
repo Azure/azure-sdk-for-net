@@ -18,10 +18,10 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         private const string ClassifyCustomCategoryDocument1 =
-            "TempString";
+            "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and add it to my playlist";
 
         private const string ClassifyCustomCategoryDocument2 =
-            "TempString";
+            "David Schmidt, senior vice president--Food Safety, International Food Information Council (IFIC), Washington, D.C., discussed the physical activity component.";
 
         private static readonly List<string> s_classifyCustomCategoryBatchConvenienceDocuments = new List<string>
         {
@@ -61,8 +61,7 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<ClassifyCustomCategoryActionResult> classifyCustomCategoryActionsResults = resultCollection.ClassifyCustomCategoryResults;
 
             Assert.IsNotNull(classifyCustomCategoryActionsResults);
-            //TODO: depends on test example
-            //Assert.AreEqual(2, extractSummaryActionsResults.FirstOrDefault().DocumentsResults.Count);
+            Assert.AreEqual(2, classifyCustomCategoryActionsResults.FirstOrDefault().DocumentsResults.Count);
         }
 
         [RecordedTest]
@@ -222,8 +221,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateSummaryBatchResult(ClassifyCustomCategoryResultCollection results, bool includeStatistics = false)
         {
-            Assert.Equals(results.ProjectName, TestEnvironment.ProjectName);
-            Assert.Equals(results.DeploymentName, TestEnvironment.DeploymentName);
+            Assert.AreEqual(results.ProjectName, TestEnvironment.ProjectName);
+            Assert.AreEqual(results.DeploymentName, TestEnvironment.DeploymentName);
 
             if (includeStatistics)
             {
