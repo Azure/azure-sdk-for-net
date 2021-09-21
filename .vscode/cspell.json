@@ -58,6 +58,7 @@
     "azsdk",
     "blazor",
     "contoso",
+    "deduplication",
     "deserializable",
     "deserializes",
     "diagnoser",
@@ -96,6 +97,13 @@
     {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]
+    },
+    {
+      "filename": "**/sdk/cognitivelanguage/**/*",
+      "words": [
+        "apim",
+        "nigiri"
+      ]
     },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",

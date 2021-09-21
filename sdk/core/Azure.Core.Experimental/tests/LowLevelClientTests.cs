@@ -18,7 +18,6 @@ namespace Azure.Core.Tests
         {
         }
 
-        private PetStoreClient client { get; set; }
         private readonly Uri _url = new Uri("https://example.azurepetstore.com");
 
         public PetStoreClient CreateClient(HttpPipelineTransport transport)
@@ -91,6 +90,67 @@ namespace Azure.Core.Tests
             writer.WriteStringValue(pet.Species);
 
             writer.WriteEndObject();
+        }
+
+        [Test]
+        public void CanSuppressExceptions()
+        {
+            var mockResponse = new MockResponse(404);
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            RequestOptions options = new RequestOptions()
+            {
+                StatusOption = ResponseStatusOption.NoThrow
+            };
+
+            Response response = default;
+            Assert.DoesNotThrowAsync(async () =>
+            {
+                response = await client.GetPetAsync("snoopy", options);
+            });
+
+            Assert.AreEqual(404, response.Status);
+        }
+
+        [Test]
+        public async Task ThrowOnErrorDoesntThrowOnSuccess()
+        {
+            var mockResponse = new MockResponse(200);
+
+            Pet pet = new Pet("snoopy", "beagle");
+            mockResponse.SetContent(SerializationHelpers.Serialize(pet, SerializePet));
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            Response response = await client.GetPetAsync("snoopy", new RequestOptions()
+            {
+                StatusOption = ResponseStatusOption.Default
+            });
+            var doc = JsonDocument.Parse(response.Content.ToMemory());
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual("snoopy", doc.RootElement.GetProperty("name").GetString());
+            Assert.AreEqual("beagle", doc.RootElement.GetProperty("species").GetString());
+        }
+
+        [Test]
+        public void ThrowOnErrorThrowsOnError()
+        {
+            var mockResponse = new MockResponse(404);
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await client.GetPetAsync("snoopy", new RequestOptions()
+                {
+                    StatusOption = ResponseStatusOption.Default
+                });
+            });
         }
 
         #endregion
