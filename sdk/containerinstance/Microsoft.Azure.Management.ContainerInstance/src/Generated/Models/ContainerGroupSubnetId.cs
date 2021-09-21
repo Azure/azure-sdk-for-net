@@ -15,27 +15,27 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
     using System.Linq;
 
     /// <summary>
-    /// Container group network profile information.
+    /// Container group subnet information.
     /// </summary>
-    public partial class ContainerGroupNetworkProfile
+    public partial class ContainerGroupSubnetId
     {
         /// <summary>
-        /// Initializes a new instance of the ContainerGroupNetworkProfile
-        /// class.
+        /// Initializes a new instance of the ContainerGroupSubnetId class.
         /// </summary>
-        public ContainerGroupNetworkProfile()
+        public ContainerGroupSubnetId()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ContainerGroupNetworkProfile
-        /// class.
+        /// Initializes a new instance of the ContainerGroupSubnetId class.
         /// </summary>
-        /// <param name="id">The identifier for a network profile.</param>
-        public ContainerGroupNetworkProfile(string id)
+        /// <param name="id">Resource ID of virtual network and subnet.</param>
+        /// <param name="name">Friendly name for the subnet.</param>
+        public ContainerGroupSubnetId(string id, string name = default(string))
         {
             Id = id;
+            Name = name;
             CustomInit();
         }
 
@@ -45,10 +45,16 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the identifier for a network profile.
+        /// Gets or sets resource ID of virtual network and subnet.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets friendly name for the subnet.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -94,7 +94,7 @@ Azure SDKs are instrumented for distributed tracing using ApplicationsInsights o
 
 Application Insights, a feature of Azure Monitor, is an extensible Application Performance Management (APM) service for developers and DevOps professionals. Use it to monitor your live applications. It will automatically detect performance anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually do with your app
 
-If you application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`. 
+If your application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`. 
 
 To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
 
