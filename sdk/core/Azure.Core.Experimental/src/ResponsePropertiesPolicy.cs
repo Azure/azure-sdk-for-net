@@ -9,7 +9,7 @@ namespace Azure.Core
 {
     /// <summary>
     /// </summary>
-    public class ResponsePropertiesPolicy : HttpPipelinePolicy
+    internal class ResponsePropertiesPolicy : HttpPipelinePolicy
     {
         /// <inheritdoc/>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)

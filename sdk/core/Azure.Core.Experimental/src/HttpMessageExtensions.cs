@@ -5,8 +5,15 @@ using System;
 
 namespace Azure.Core
 {
-    internal static class HttpMessageExtensions
+    /// <summary>
+    /// </summary>
+    public static class HttpMessageExtensions
     {
+        /// <summary>
+        /// Stand-in for Response.IsError during experimentation
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public static bool ResponseIsError(this HttpMessage message)
         {
             if (message.TryGetProperty("ResponseIsError", out object? isError))

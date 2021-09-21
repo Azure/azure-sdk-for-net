@@ -94,6 +94,10 @@ namespace Azure.Core
         protected override bool TryGetHeader(string name, out string? value) { throw null; }
         protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
+    public static partial class HttpMessageExtensions
+    {
+        public static bool ResponseIsError(this Azure.Core.HttpMessage message) { throw null; }
+    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.JsonData>
     {
@@ -182,11 +186,5 @@ namespace Azure.Core
     public partial class ProtocolClientOptions : Azure.Core.ClientOptions
     {
         public ProtocolClientOptions() { }
-    }
-    public partial class ResponsePropertiesPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
-    {
-        public ResponsePropertiesPolicy() { }
-        public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
 }
