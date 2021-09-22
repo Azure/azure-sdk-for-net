@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.DeviceUpdate
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Microsoft Device Update resource provider.
@@ -80,9 +84,33 @@ namespace Microsoft.Azure.Management.DeviceUpdate
         IInstancesOperations Instances { get; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Checks ADU resource name availability.
+        /// </summary>
+        /// <param name='request'>
+        /// Check Name Availability Request.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CheckNameAvailabilityResponse>> CheckNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

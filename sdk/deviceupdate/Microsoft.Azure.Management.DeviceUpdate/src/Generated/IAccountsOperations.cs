@@ -90,6 +90,28 @@ namespace Microsoft.Azure.Management.DeviceUpdate
         /// </exception>
         Task<AzureOperationResponse<Account>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Checks whether account exists.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='accountName'>
+        /// Account name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> HeadWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Creates or updates Account.
         /// </summary>
         /// <param name='resourceGroupName'>
