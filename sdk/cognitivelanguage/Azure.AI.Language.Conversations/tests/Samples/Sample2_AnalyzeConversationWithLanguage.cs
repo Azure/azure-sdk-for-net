@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
+            #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
 
 #if SNIPPET
             AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",

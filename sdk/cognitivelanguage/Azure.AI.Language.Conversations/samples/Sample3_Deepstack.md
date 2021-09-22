@@ -46,8 +46,6 @@ foreach (DeepstackEntity entity in deepstackPrediction.Entities)
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationDeepstackAsync
-AnalyzeConversationOptions options = new AnalyzeConversationOptions("We'll have 2 plates of seared salmon nigiri.");
-
 Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
     "Menu",
     "production",

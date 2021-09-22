@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
+            #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
 
 #if SNIPPET
             AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",

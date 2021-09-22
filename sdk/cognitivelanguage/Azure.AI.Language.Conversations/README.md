@@ -87,7 +87,31 @@ Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
 
-To set additional properties such as language of the query and verbosity, you can initialize an `AnalyzeConversationOptions` instance with your chosen parameters. You can then call `AnalyzeConversation()` using the options as a parameter.
+The specified parameters can also be used to initialize a `AnalyzeConversationOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
+
+```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
+AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",
+    "production", "We'll have 2 plates of seared salmon nigiri.");
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+
+Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+```
+
+### Analyze a conversation in a different language
+
+The language property in the `AnalyzeConversationOptions` can be used to specify the language of the conversation. 
+
+```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
+AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",
+    "production", "Tendremos 2 platos de nigiri de salmón braseado.")
+{
+    Language = "es"
+};
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+
+Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+```
+Other optional properties can be set such as verbosity and whether service logging is enabled.
 
 ## Troubleshooting
 
