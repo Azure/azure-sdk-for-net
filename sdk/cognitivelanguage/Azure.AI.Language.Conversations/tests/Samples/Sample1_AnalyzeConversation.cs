@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [RecordedTest]
         [SyncOnly]
-        public void QueryKnowledgeBase()
+        public void AnalyzeConversation()
         {
             ConversationAnalysisClient client = Client;
 
@@ -40,12 +40,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [RecordedTest]
         [AsyncOnly]
-        public async Task QueryKnowledgeBaseAsync()
+        public async Task AnalyzeConversationAsync()
         {
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationAsync
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions("We'll have 2 plates of seared salmon nigiri.");
 
 #if SNIPPET
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
