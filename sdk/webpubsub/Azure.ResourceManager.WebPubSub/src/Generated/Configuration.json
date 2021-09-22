@@ -1,0 +1,19 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.WebPubSub",
+  "LibraryName": "WebPubSub",
+  "SharedSourceFolders": [
+    "..\\..\\..\\..\\core\\Azure.Core\\src\\Shared\\",
+    "C:\\Users\\v-minghc\\.nuget\\packages\\microsoft.azure.autorest.csharp\\3.0.0-beta.20210915.2\\content\\Generator.Shared\\"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "head-as-boolean": true,
+  "OperationGroupToResourceType": {
+    "Usages": "Microsoft.SignalRService/locations/usages",
+    "WebPubSubPrivateLinkResources": "Microsoft.SignalRService/webPubSub/privateLinkResources"
+  },
+  "OperationGroupToResource": {
+    "WebPubSubPrivateLinkResources": "NonResource"
+  }
+}
