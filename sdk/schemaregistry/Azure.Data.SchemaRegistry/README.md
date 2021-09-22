@@ -8,7 +8,7 @@ Azure Schema Registry is a schema repository service hosted by Azure Event Hubs,
 
 Install the Azure Schema Registry client library for .NET with [NuGet][nuget]:
 
-```bash
+```dotnetcli
 dotnet add package --prerelease Azure.Data.SchemaRegistry
 ```
 

@@ -1,0 +1,79 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Azure SDK for .NET",
+    "description": "Create a new Azure SDK e.g. dotnet new azuresdk --name Azure.MyService --output sdk/myservice --ServiceDirectory myservice --ProjectName Azure.MyService",
+    "classifications": [ "Azure", "ClassLibrary" ],
+    "identity": "Azure.Template",
+    "name": "Azure SDK",
+    "shortName": "azuresdk",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "sourceName": "Azure.Template",
+    "preferNameDirectory": true,
+    "symbols": {
+        "ServiceDirectory": {
+            "type": "parameter",
+            "description": "This must match the name of the directory you create under the \"sdk\" directory e.g., \"myservice\" if outputting \"sdk/mysevice\".",
+            "datatype": "text",
+            "isRequired": true
+        },
+        "ProjectName": {
+            "type": "parameter",
+            "description": "This must match the name of the project e.g. pass the same value as you do to the built-in \"--name\" parameter.",
+            "datatype": "text",
+            "isRequired": true
+        },
+        "ServiceDirectoryPath": {
+            "type": "generated",
+            "generator": "join",
+            "parameters": {
+                "symbols": [
+                    {
+                        "type": "const",
+                        "value": "sdk/"
+                    },
+                    {
+                        "type": "ref",
+                        "value": "ServiceDirectory"
+                    }
+                ],
+                "separator": ""
+            },
+            "replaces": "sdk/template"
+        },
+        "SafeProjectName": {
+            "type": "generated",
+            "generator": "regex",
+            "parameters": {
+                "source": "ProjectName",
+                "steps": [
+                    {
+                        "regex": "\\.",
+                        "replacement": ""
+                    }
+                ]
+            },
+            "replaces": "AzureTemplate"
+        },
+        "YamlServiceDirectory": {
+            "type": "generated",
+            "generator": "join",
+            "parameters": {
+                "symbols": [
+                    {
+                        "type": "const",
+                        "value": "ServiceDirectory: "
+                    },
+                    {
+                        "type": "ref",
+                        "value": "ServiceDirectory"
+                    }
+                ],
+                "separator": ""
+            },
+            "replaces": "ServiceDirectory: template"
+        }
+    }
+}

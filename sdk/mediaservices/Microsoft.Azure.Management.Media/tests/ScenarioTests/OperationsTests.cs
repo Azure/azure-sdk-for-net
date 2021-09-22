@@ -20,7 +20,7 @@ namespace Media.Tests.ScenarioTests
             {
                 // Do a basic verification that the operations are returned
                 var operations = MediaClient.Operations.List();
-                Assert.NotEmpty(operations);
+                Assert.NotEmpty(operations.Value);
             }
         }
     }

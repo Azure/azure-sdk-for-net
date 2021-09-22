@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
@@ -154,6 +155,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
@@ -164,6 +166,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
         /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
         /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// This operation requires the certificates/get and secrets/get permissions.
         /// </remarks>
         /// <param name="certificateName">The name of the certificate to download.</param>
         /// <param name="version">Optional version of a certificate to download.</param>
@@ -175,12 +178,39 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
-        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version, CancellationToken cancellationToken) =>
+            DownloadCertificate(certificateName, version, null, cancellationToken);
+
+        /// <summary>
+        /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
+        /// </summary>
+        /// <remarks>
+        /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
+        /// that contains the full certificate. If you do not have permissions to get the secret,
+        /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// This operation requires the certificates/get and secrets/get permissions.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to download.</param>
+        /// <param name="version">Optional version of a certificate to download.</param>
+        /// <param name="options">Additional options for downloading and creating an <see cref="X509Certificate2"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="InvalidDataException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
+        /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
+        /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, DownloadCertificateOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
             scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -196,16 +226,17 @@ namespace Azure.Security.KeyVault.Certificates
                     throw new InvalidDataException($"Secret {certificate.SecretId} contains no value");
                 }
 
+                options ??= new();
                 if (secret.ContentType is null || secret.ContentType == CertificateContentType.Pkcs12)
                 {
                     byte[] rawData = Convert.FromBase64String(value);
 
-                    X509Certificate2 x509 = new X509Certificate2(rawData);
+                    X509Certificate2 x509 = new(rawData, (string)null, options.KeyStorageFlags);
                     return Response.FromValue(x509, secretResponse.GetRawResponse());
                 }
                 else if (secret.ContentType == CertificateContentType.Pem)
                 {
-                    X509Certificate2 x509 = PemReader.LoadCertificate(value.AsSpan(), certificate.Cer, allowCertificateOnly: true);
+                    X509Certificate2 x509 = PemReader.LoadCertificate(value.AsSpan(), certificate.Cer, allowCertificateOnly: true, keyStorageFlags: options.KeyStorageFlags);
                     return Response.FromValue(x509, secretResponse.GetRawResponse());
                 }
 
@@ -227,6 +258,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
         /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
         /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// This operation requires the certificates/get and secrets/get permissions.
         /// </remarks>
         /// <param name="certificateName">The name of the certificate to download.</param>
         /// <param name="version">Optional version of a certificate to download.</param>
@@ -238,12 +270,39 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
-        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version, CancellationToken cancellationToken) =>
+            DownloadCertificateAsync(certificateName, version, null, cancellationToken);
+
+        /// <summary>
+        /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
+        /// </summary>
+        /// <remarks>
+        /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
+        /// that contains the full certificate. If you do not have permissions to get the secret,
+        /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// This operation requires the certificates/get and secrets/get permissions.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to download.</param>
+        /// <param name="version">Optional version of a certificate to download.</param>
+        /// <param name="options">Additional options for downloading and creating an <see cref="X509Certificate2"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="InvalidDataException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
+        /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
+        /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, DownloadCertificateOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
             scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -259,16 +318,17 @@ namespace Azure.Security.KeyVault.Certificates
                     throw new InvalidDataException($"Secret {certificate.SecretId} contains no value");
                 }
 
+                options ??= new();
                 if (secret.ContentType is null || secret.ContentType == CertificateContentType.Pkcs12)
                 {
                     byte[] rawData = Convert.FromBase64String(value);
 
-                    X509Certificate2 x509 = new X509Certificate2(rawData);
+                    X509Certificate2 x509 = new(rawData, (string)null, options.KeyStorageFlags);
                     return Response.FromValue(x509, secretResponse.GetRawResponse());
                 }
                 else if (secret.ContentType == CertificateContentType.Pem)
                 {
-                    X509Certificate2 x509 = PemReader.LoadCertificate(value.AsSpan(), certificate.Cer, allowCertificateOnly: true);
+                    X509Certificate2 x509 = PemReader.LoadCertificate(value.AsSpan(), certificate.Cer, allowCertificateOnly: true, keyStorageFlags: options.KeyStorageFlags);
                     return Response.FromValue(x509, secretResponse.GetRawResponse());
                 }
 
@@ -281,6 +341,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 #pragma warning restore AZC0015 // Unexpected client method return type.
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 
         /// <summary>
         /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with its <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
@@ -351,6 +412,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
             scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -380,6 +442,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
             scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -408,6 +471,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
             scope.AddAttribute("certificate", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try
@@ -436,6 +500,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
             scope.AddAttribute("certificate", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try
@@ -856,7 +921,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Lists the properties of all certificates in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificate(string, CancellationToken)"/>.
+        /// Lists the properties of all enabled and disabled certificates in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificate(string, CancellationToken)"/>.
         /// This operation requires the certificates/list permission.
         /// </summary>
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well.</param>
@@ -870,7 +935,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Lists the properties of all certificates in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificate(string, CancellationToken)"/>.
+        /// Lists the properties of all enabled and disabled certificates in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificate(string, CancellationToken)"/>.
         /// This operation requires the certificates/list permission.
         /// </summary>
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well.</param>
@@ -884,7 +949,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Lists the properties of all versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersion(string, string, CancellationToken)"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersion(string, string, CancellationToken)"/>.
         /// This operation requires the certificates/list permission.
         /// </summary>
         /// <param name="certificateName">The name of the certificate whose versions should be retrieved.</param>
@@ -902,7 +967,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Lists the properties of all versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersion(string, string, CancellationToken)"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified certificate in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificateVersion(string, string, CancellationToken)"/>.
         /// This operation requires the certificates/list permission.
         /// </summary>
         /// <param name="certificateName">The name of the certificate whose versions should be retrieved.</param>
