@@ -41,35 +41,12 @@ namespace Microsoft.Azure.Management.DataShare
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
       public static readonly String GithubCommidId = "3f3a82ed7731b6a212c0a62c7798259d44c99181";
-      public static readonly String CodeGenerationErrors = "Error: Unable to start AutoRest Core from C:\Users\faisalaltell\.autorest\@microsoft.azure_autorest-core@2.0.4421\node_modules\@microsoft.azure\autorest-core
-Error: Unable to start AutoRest Core from C:\Users\faisalaltell\.autorest\@microsoft.azure_autorest-core@2.0.4421\node_modules\@microsoft.azure\autorest-core
-    at main (C:\Users\faisalaltell\AppData\Roaming\npm\node_modules\autorest\dist\app.js:233:19)
-
-System.Management.Automation.RuntimeException: Cannot convert value to type System.String. ---> System.Management.Automation.PSInvalidCastException: Cannot convert value to type System.String. ---> System.InvalidOperationException: Process has exited, so the requested information is not available.
-   at System.Diagnostics.Process.EnsureState(State state)
-   at System.Diagnostics.Process.get_ProcessName()
-   at System.Diagnostics.Process.ToString()
-   at System.Management.Automation.PSObject.ToString(ExecutionContext context, Object obj, String separator, String format, IFormatProvider formatProvider, Boolean recurse, Boolean unravelEnumeratorOnRecurse)
-   --- End of inner exception stack trace ---
-   at System.Management.Automation.PSObject.ToStringParser(ExecutionContext context, Object obj)
-   at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
-   at System.Management.Automation.Interpreter.DynamicInstruction`3.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
-   --- End of inner exception stack trace ---
-   at System.Management.Automation.ExceptionHandlingOps.CheckActionPreference(FunctionContext funcContext, Exception exception)
-   at System.Management.Automation.Interpreter.ActionCallInstruction`2.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.Interpreter.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.LightLambda.RunVoid1[T0](T0 arg0)
-   at System.Management.Automation.PSScriptCmdlet.RunClause(Action`1 clause, Object dollarUnderbar, Object inputToProcess)
-   at System.Management.Automation.PSScriptCmdlet.DoEndProcessing()
-   at System.Management.Automation.CommandProcessorBase.Complete()
-AutoRest code generation for https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datashare/resource-manager/readme.md failed. Please try again"
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
+        public static readonly String CodeGenerationErrors = "WARNING: AutoRest has not been tested with Node versions greater than v14."
       // END: Code Generation Metadata Section
   }
 }
+
+
 
 
 
