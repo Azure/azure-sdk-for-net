@@ -13,6 +13,7 @@ namespace Azure.Identity
     internal abstract class ManagedIdentitySource
     {
         internal const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
+        internal const string UnexpectedResponse = "Managed Identity response was not in the expected format. See the inner exception for details.";
         private ManagedIdentityResponseClassifier _responseClassifier;
 
         protected ManagedIdentitySource(CredentialPipeline pipeline)
@@ -40,20 +41,33 @@ namespace Azure.Identity
             return await HandleResponseAsync(async, context, message.Response, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AccessToken> HandleResponseAsync(
+            bool async,
+            TokenRequestContext context,
+            Response response,
+            CancellationToken cancellationToken)
         {
-            using JsonDocument json = async
-                ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
-                : JsonDocument.Parse(response.ContentStream);
-            if (response.Status == 200)
+            try
             {
-                return GetTokenFromResponse(json.RootElement);
-            }
+                using JsonDocument json = async
+                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                    : JsonDocument.Parse(response.ContentStream);
+                if (response.Status == 200)
+                {
+                    return GetTokenFromResponse(json.RootElement);
+                }
 
-            string message = GetMessageFromResponse(json.RootElement);
-            throw async
-                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, message).ConfigureAwait(false)
-                : Pipeline.Diagnostics.CreateRequestFailedException(response, message);
+                var message = GetMessageFromResponse(json.RootElement);
+                throw async
+                    ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, message).ConfigureAwait(false)
+                    : Pipeline.Diagnostics.CreateRequestFailedException(response, message);
+            }
+            catch (Exception e)
+            {
+                throw async
+                    ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, UnexpectedResponse, innerException: e).ConfigureAwait(false)
+                    : Pipeline.Diagnostics.CreateRequestFailedException(response, UnexpectedResponse, innerException: e);
+            }
         }
 
         protected abstract Request CreateRequest(string[] scopes);
