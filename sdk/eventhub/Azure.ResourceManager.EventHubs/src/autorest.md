@@ -15,7 +15,6 @@ modelerfour:
 operation-group-to-resource-type:
     PrivateLinkResources: Microsoft.EventHub/namespaces/privateLinkResources
     Regions: Microsoft.EventHub/sku/regions
-    Configuration: Microsoft.EventHub/clusters/quotaConfiguration/default
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules
     NamespaceName: nonresourcetype1
     DisasterRecoveryConfigName: nonresourcetype2
@@ -28,7 +27,6 @@ operation-group-to-resource:
     DisasterRecoveryConfigName: NonResource
 operation-group-to-parent:
     Namespaces: resourceGroups
-    Configuration: Microsoft.EventHub/clusters
     ConsumerGroups: Microsoft.EventHub/namespaces/eventhubs
     NetworkRuleSets: Microsoft.EventHub/namespaces
     NamespaceAuthorizationRules: Microsoft.EventHub/namespaces
@@ -39,18 +37,6 @@ operation-group-to-parent:
 operation-group-is-extension: NamespaceAuthorizationRules;DisasterRecoveryConfigAuthorizationRules;EventHubAuthorizationRules
 directive:
     - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/virtualnetworkrules'].get.operationId
-      transform: return "VirtualNetworkRules_List"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/virtualnetworkrules/{virtualNetworkRuleName}'].put.operationId
-      transform: return "VirtualNetworkRules_CreateOrUpdate"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/virtualnetworkrules/{virtualNetworkRuleName}'].delete.operationId
-      transform: return "VirtualNetworkRules_Delete"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/virtualnetworkrules/{virtualNetworkRuleName}'].get.operationId
-      transform: return "VirtualNetworkRules_Get"
-    - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default'].put.operationId
       transform: return "NetworkRuleSets_CreateOrUpdate"
     - from: swagger-document
@@ -59,6 +45,9 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default'].get.operationId
       transform: return "NetworkRuleSets_Get"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets'].get.operationId
+      transform: return "NetworkRuleSets_List"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules'].get.operationId
       transform: return "NamespaceAuthorizationRules_List"
@@ -110,9 +99,6 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}/regenerateKeys'].post.operationId
       transform: return "EventHubAuthorizationRules_RegenerateKeys"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions'].get.operationId
-      transform: return "AvailableClusters_ListRegion"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/checkNameAvailability'].post.operationId
       transform: return "DisasterRecoveryConfigName_CheckAvailability"

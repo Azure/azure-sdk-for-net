@@ -82,14 +82,15 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             var storageAccountCreateParameters = new StorageAccountCreateParameters(
                     new ResourceManager.Storage.Models.Sku("Standard_LRS"),
                     Kind.StorageV2,
-                    "eastus2"
-                    )
+                    "eastus2")
             {
                 AccessTier = AccessTier.Hot
             };
             StorageAccount account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(accountName, storageAccountCreateParameters)).Value;
-
-            await Task.Delay(5000);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(5000);
+            }
 
             //create eventhub
             string eventhubName = Recording.GenerateAssetName("eventhub");
@@ -238,6 +239,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.NotNull(keys1.SecondaryConnectionString);
 
             AccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyParameters(KeyType.PrimaryKey));
+
+            //the recordings are sanitized therefore cannot be compared
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreNotEqual(keys1.PrimaryKey, keys2.PrimaryKey);
