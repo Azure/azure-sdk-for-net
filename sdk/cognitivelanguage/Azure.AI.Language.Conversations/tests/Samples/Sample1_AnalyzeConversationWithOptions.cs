@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 #if SNIPPET
             AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",
                 "production", "We'll have 2 plates of seared salmon nigiri.");
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
 #else
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(TestEnvironment.ProjectName,
                 TestEnvironment.DeploymentName, "We'll have 2 plates of seared salmon nigiri.");
