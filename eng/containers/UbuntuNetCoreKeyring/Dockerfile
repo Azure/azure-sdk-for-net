@@ -20,5 +20,5 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsof
     && apt-get update \
     && apt-get install -y powershell \
     && pwsh --version \
-    && apt-get install -y dotnet-runtime-2.1 \
+    && apt-get install -y dotnet-runtime-5.0 \
     && dotnet --list-runtimes
