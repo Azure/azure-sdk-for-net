@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal OriginUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Origin>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "OriginUpdateOperation");
+            _operation = new OperationInternals<Origin>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "OriginUpdateOperation");
             _operationBase = operationsBase;
         }
 

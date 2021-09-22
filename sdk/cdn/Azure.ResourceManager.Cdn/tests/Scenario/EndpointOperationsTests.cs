@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
             Profile profile = lro.Value;
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData(profile.Id, endpointName);
-            DeepCreatedOrigin origin = CreateDeepCreatedOrigin();
-            endpointData.Origins.Add(origin);
+            EndpointData endpointData = CreateEndpointData();
+            DeepCreatedOrigin deepCreatedOrigin = CreateDeepCreatedOrigin();
+            endpointData.Origins.Add(deepCreatedOrigin);
             var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
             Endpoint endpoint = lro2.Value;
             await endpoint.DeleteAsync();
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
             Profile profile = lro.Value;
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData(profile.Id, endpointName);
-            DeepCreatedOrigin origin = CreateDeepCreatedOrigin();
-            endpointData.Origins.Add(origin);
+            EndpointData endpointData = CreateEndpointData();
+            DeepCreatedOrigin deepCreatedOrigin = CreateDeepCreatedOrigin();
+            endpointData.Origins.Add(deepCreatedOrigin);
             var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
             Endpoint endpoint = lro2.Value;
             EndpointUpdateParameters updateParameters = new EndpointUpdateParameters
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
             Profile profile = lro.Value;
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData(profile.Id, endpointName);
-            DeepCreatedOrigin origin = CreateDeepCreatedOrigin();
-            endpointData.Origins.Add(origin);
+            EndpointData endpointData = CreateEndpointData();
+            DeepCreatedOrigin deepCreatedOrigin = CreateDeepCreatedOrigin();
+            endpointData.Origins.Add(deepCreatedOrigin);
             var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
             Endpoint endpoint = lro2.Value;
             Assert.AreEqual(endpoint.Data.ResourceState, EndpointResourceState.Running);
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
             Profile profile = lro.Value;
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData(profile.Id, endpointName);
-            DeepCreatedOrigin origin = new DeepCreatedOrigin("testOrigin")
+            EndpointData endpointData = CreateEndpointData();
+            DeepCreatedOrigin deepCreatedOrigin = new DeepCreatedOrigin("testOrigin")
             {
                 HostName = "testsa4dotnetsdk.blob.core.windows.net"
             };
-            endpointData.Origins.Add(origin);
+            endpointData.Origins.Add(deepCreatedOrigin);
             var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
             Endpoint endpoint = lro2.Value;
             PurgeParameters purgeParameters = new PurgeParameters(new List<string>
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
             Profile profile = lro.Value;
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData(profile.Id, endpointName);
-            DeepCreatedOrigin origin = CreateDeepCreatedOrigin();
-            endpointData.Origins.Add(origin);
+            EndpointData endpointData = CreateEndpointData();
+            DeepCreatedOrigin deepCreatedOrigin = CreateDeepCreatedOrigin();
+            endpointData.Origins.Add(deepCreatedOrigin);
             var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
             Endpoint endpoint = lro2.Value;
             int count = 0;

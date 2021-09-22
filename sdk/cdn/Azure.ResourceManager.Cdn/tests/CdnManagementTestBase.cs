@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         }
         protected static ProfileData CreateProfileData(SkuName skuName) => new ProfileData(Location.WestUS, new Sku { Name = skuName });
 
-        protected static EndpointData CreateEndpointData(string profileId, string endpointName) => new EndpointData(Location.WestUS)
+        protected static EndpointData CreateEndpointData() => new EndpointData(Location.WestUS)
         {
             IsHttpAllowed = true,
             IsHttpsAllowed = true,
@@ -55,15 +55,22 @@ namespace Azure.ResourceManager.Cdn.Tests
             Weight = 100
         };
 
-        //protected static DeepCreatedOriginGroup CreateDeepCreatedOriginGroup() => new DeepCreatedOriginGroup("testOriginGroup")
-        //{
-        //    HealthProbeSettings = new HealthProbeParameters
-        //    {
-        //        ProbePath = "/healthz",
-        //        ProbeRequestType = HealthProbeRequestType.Head,
-        //        ProbeProtocol = ProbeProtocol.Https,
-        //        ProbeIntervalInSeconds = 60
-        //    }
-        //};
+        protected static DeepCreatedOriginGroup CreateDeepCreatedOriginGroup() => new DeepCreatedOriginGroup("testOriginGroup")
+        {
+            HealthProbeSettings = new HealthProbeParameters
+            {
+                ProbePath = "/healthz",
+                ProbeRequestType = HealthProbeRequestType.Head,
+                ProbeProtocol = ProbeProtocol.Https,
+                ProbeIntervalInSeconds = 60
+            }
+        };
+
+        protected static OriginData CreateOriginData() => new OriginData()
+        {
+            HostName = "testsa4dotnetsdk.blob.core.windows.net",
+            Priority = 1,
+            Weight = 150
+        };
     }
 }
