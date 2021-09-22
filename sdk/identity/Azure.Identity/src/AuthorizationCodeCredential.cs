@@ -99,6 +99,7 @@ namespace Azure.Identity
                           tenantId,
                           clientId,
                           clientSecret,
+                          _redirectUri,
                           options as ITokenCacheOptions,
                           null,
                           options?.IsLoggingPIIEnabled ?? false);

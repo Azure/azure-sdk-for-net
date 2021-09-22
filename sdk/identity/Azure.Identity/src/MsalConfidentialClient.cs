@@ -15,7 +15,8 @@ namespace Azure.Identity
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _assertionCallback;
-        private string _redirectUri;
+
+        internal string RedirectUrl { get; }
 
         /// <summary>
         /// For mocking purposes only.
@@ -23,10 +24,11 @@ namespace Azure.Identity
         protected MsalConfidentialClient()
         { }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
             : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
         {
             _clientSecret = clientSecret;
+            RedirectUrl = redirectUrl;
             RegionalAuthority = regionalAuthority;
         }
 
@@ -75,9 +77,9 @@ namespace Azure.Identity
                 confClientBuilder.WithAzureRegion(RegionalAuthority.Value.ToString());
             }
 
-            if (!string.IsNullOrEmpty(_redirectUri))
+            if (!string.IsNullOrEmpty(RedirectUrl))
             {
-                confClientBuilder.WithRedirectUri(_redirectUri);
+                confClientBuilder.WithRedirectUri(RedirectUrl);
             }
 
             return confClientBuilder.Build();
@@ -132,7 +134,6 @@ namespace Azure.Identity
             bool async,
             CancellationToken cancellationToken)
         {
-            _redirectUri = redirectUri;
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenByAuthorizationCode(scopes, code);
