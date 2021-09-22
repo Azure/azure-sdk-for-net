@@ -35,9 +35,9 @@ namespace Azure.AI.TextAnalytics
             V3_1 = 2,
 
             /// <summary>
-            /// Version 3.2-preview.1
+            /// Version 3.2-preview.2
             /// </summary>
-            V3_2_Preview_1 = 3
+            V3_2_Preview_2 = 3
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
