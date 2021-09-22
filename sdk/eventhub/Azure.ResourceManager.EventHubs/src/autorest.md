@@ -16,6 +16,7 @@ operation-group-to-resource-type:
     PrivateLinkResources: Microsoft.EventHub/namespaces/privateLinkResources
     Regions: Microsoft.EventHub/sku/regions
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules
+    NetworkRuleSets: Microsoft.EventHub/namespaces/networkRuleSets
     NamespaceName: nonresourcetype1
     DisasterRecoveryConfigName: nonresourcetype2
 operation-group-to-resource:
@@ -34,6 +35,7 @@ operation-group-to-parent:
     EventHubAuthorizationRules: Microsoft.EventHub/namespaces/eventhubs
     NamespaceName: subscriptions
     DisasterRecoveryConfigName: Microsoft.EventHub/namespaces
+    Regions: subscriptions
 operation-group-is-extension: NamespaceAuthorizationRules;DisasterRecoveryConfigAuthorizationRules;EventHubAuthorizationRules
 directive:
     - from: swagger-document

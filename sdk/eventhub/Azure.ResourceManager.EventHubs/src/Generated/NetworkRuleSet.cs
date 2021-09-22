@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/networkRuleSets/default";
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/networkRuleSets";
 
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
