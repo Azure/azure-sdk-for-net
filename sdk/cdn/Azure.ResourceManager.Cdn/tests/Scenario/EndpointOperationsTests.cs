@@ -123,10 +123,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             //A CName mapping needs to be created in advance to validate custom domain.
             //In this test is "customdomainrecord.azuretest.net" maps to "testEndpoint4dotnetsdk.azureedge.net"
-
-            //The client from TestBase is not used in this test because its cleanup policy would conflict with the lock in the custom domain.
-            ArmClient tempClient = new ArmClient(new DefaultAzureCredential());
-            ResourceGroup rg = await tempClient.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
             Profile profile = await rg.GetProfiles().GetAsync("testProfile");
             Endpoint endpoint = await profile.GetEndpoints().GetAsync("testEndpoint4dotnetsdk");
             ValidateCustomDomainInput validateCustomDomainInput1 = new ValidateCustomDomainInput("customdomainrecord.azuretest.net");
