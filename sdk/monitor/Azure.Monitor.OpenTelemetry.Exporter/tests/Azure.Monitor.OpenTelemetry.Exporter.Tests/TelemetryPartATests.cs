@@ -359,6 +359,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
 
+        [Theory]
+        [InlineData("GET")]
+        [InlineData(null)]
+        public void RequestNameMatchesOperationName(string httpMethod)
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            activity.DisplayName = "displayname";
+            if (httpMethod != null)
+            {
+                activity.SetTag(SemanticConventions.AttributeHttpMethod, httpMethod);
+            }
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+            var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
+
+            Assert.Equal(requestData.Name, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
         /// <summary>
         /// If SERVICE.NAME is not defined, it will fall-back to "unknown_service".
         /// (https://github.com/open-telemetry/opentelemetry-specification/tree/main/specification/resource/semantic_conventions#semantic-attributes-with-sdk-provided-default-value).

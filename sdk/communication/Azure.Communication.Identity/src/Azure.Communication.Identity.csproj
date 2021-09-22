@@ -24,10 +24,10 @@
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="..\..\Shared\Properties\CommunicationAssembyInfo.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />    
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
+    <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
+    <Compile Include="..\..\Shared\Properties\CommunicationAssembyInfo.cs" LinkBase="Shared\Communication" />    
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared" />

@@ -90,7 +90,8 @@ namespace Azure.AI.Language.QuestionAnswering
             Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgeBase)}");
-            scope.AddAttribute("project", projectName);
+            scope.AddAttribute(nameof(projectName), projectName);
+            scope.AddAttribute(nameof(deploymentName), deploymentName);
             scope.Start();
 
             try
@@ -117,7 +118,8 @@ namespace Azure.AI.Language.QuestionAnswering
             Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgeBase)}");
-            scope.AddAttribute("project", projectName);
+            scope.AddAttribute(nameof(projectName), projectName);
+            scope.AddAttribute(nameof(deploymentName), deploymentName);
             scope.Start();
 
             try
