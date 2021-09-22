@@ -726,7 +726,9 @@ namespace Azure.AI.TextAnalytics
                 recognizeLinkedEntitiesActionsResults.ToList(),
                 analyzeSentimentActionsResults.ToList(),
                 new List<ExtractSummaryActionResult>(),
-                new List<SingleCategoryClassifyActionResult>());
+                new List<SingleCategoryClassifyActionResult>(),
+                new List<ClassifyCustomCategoriesActionResult>()
+                );
         }
 
         /// <summary>
@@ -757,7 +759,9 @@ namespace Azure.AI.TextAnalytics
                 recognizeLinkedEntitiesActionResults.ToList(),
                 analyzeSentimentActionResults.ToList(),
                 extractSummaryActionResults.ToList(),
-                singleCategoryClassifyActionResults.ToList());
+                singleCategoryClassifyActionResults.ToList(),
+                new List<ClassifyCustomCategoriesActionResult>()
+                );
         }
 
         /// <summary>
