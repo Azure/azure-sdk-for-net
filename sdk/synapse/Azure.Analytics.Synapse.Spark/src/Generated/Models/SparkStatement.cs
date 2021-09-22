@@ -34,7 +34,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public int Id { get; }
         /// <summary> Gets the code. </summary>
         public string Code { get; }
+        /// <summary> Gets the state. </summary>
         public LivyStatementStates? State { get; }
+        /// <summary> Gets the output. </summary>
         public SparkStatementOutput Output { get; }
     }
 }

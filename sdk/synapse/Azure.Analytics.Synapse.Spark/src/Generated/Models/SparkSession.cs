@@ -99,6 +99,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public IReadOnlyDictionary<string, string> AppInfo { get; }
         /// <summary> The session state. </summary>
         public LivyStates? State { get; }
+        /// <summary> Gets the log lines. </summary>
         public IReadOnlyList<string> LogLines { get; }
     }
 }
