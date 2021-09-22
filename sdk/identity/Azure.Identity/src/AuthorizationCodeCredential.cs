@@ -76,7 +76,7 @@ namespace Azure.Identity
             : this(tenantId, clientId, clientSecret, authorizationCode, options, null)
         { }
 
-        internal AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options, MsalConfidentialClient client)
+        internal AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options, MsalConfidentialClient client, CredentialPipeline pipeline = null)
         {
             Validations.ValidateTenantId(tenantId, nameof(tenantId));
             _tenantId = tenantId;
@@ -86,7 +86,7 @@ namespace Azure.Identity
             _clientId = clientId;
             _authCode = authorizationCode ;
             _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
-            _pipeline = CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
             _redirectUri = options switch
             {
                 AuthorizationCodeCredentialOptions o => o.RedirectUri?.AbsoluteUri,

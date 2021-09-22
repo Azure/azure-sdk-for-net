@@ -15,6 +15,7 @@ namespace Azure.Identity
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _assertionCallback;
+        private string _redirectUri;
 
         /// <summary>
         /// For mocking purposes only.
@@ -74,6 +75,11 @@ namespace Azure.Identity
                 confClientBuilder.WithAzureRegion(RegionalAuthority.Value.ToString());
             }
 
+            if (!string.IsNullOrEmpty(_redirectUri))
+            {
+                confClientBuilder.WithRedirectUri(_redirectUri);
+            }
+
             return confClientBuilder.Build();
         }
 
@@ -126,6 +132,7 @@ namespace Azure.Identity
             bool async,
             CancellationToken cancellationToken)
         {
+            _redirectUri = redirectUri;
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenByAuthorizationCode(scopes, code);
