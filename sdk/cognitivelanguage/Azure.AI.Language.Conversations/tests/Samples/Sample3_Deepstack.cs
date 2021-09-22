@@ -66,7 +66,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationDeepstackAsync
 
 #if SNIPPET
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
                 "Menu",
                 "production",
                 "We'll have 2 plates of seared salmon nigiri.");
