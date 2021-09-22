@@ -43,8 +43,6 @@ Here's a heirarchy of the LogsQueryResult response:
 
 - `MetricsQueryClient` - Client that provides methods to query metrics from Azure Monitor Metrics.
 
-Here's a heirarchy of the MetricsQueryResult response:
-
 ### Thread safety
 
 All client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
