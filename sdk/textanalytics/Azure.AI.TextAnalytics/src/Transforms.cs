@@ -350,6 +350,37 @@ namespace Azure.AI.TextAnalytics
         }
 
         #endregion
+        
+        #region Classify Custom Categories
+        internal static List<DocumentClassification> ConvertToDocumentClassificationList(List<ClassificationResult> classifications)
+            => classifications.Select((classification) => new DocumentClassification(classification)).ToList();
+
+        internal static DocumentClassificationCollection ConvertToDocumentClassificationCollection(MultiClassificationDocument extractedClassificationsDocuments)
+        {
+            return new DocumentClassificationCollection(ConvertToDocumentClassificationList(extractedClassificationsDocuments.Classifications.ToList()), ConvertToWarnings(extractedClassificationsDocuments.Warnings));
+        }
+
+        internal static ClassifyCustomCategoriesResultCollection ConvertToClassifyCustomCategoryResultCollection(CustomMultiClassificationResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var classifiedCustomCategoryResults = new List<ClassifyCustomCategoriesResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                classifiedCustomCategoryResults.Add(new ClassifyCustomCategoriesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read sentiments
+            foreach (MultiClassificationDocument classificationsDocument in results.Documents)
+            {
+                classifiedCustomCategoryResults.Add(new ClassifyCustomCategoriesResult(classificationsDocument.Id, classificationsDocument.Statistics ?? default, ConvertToDocumentClassificationCollection(classificationsDocument), ConvertToWarnings(classificationsDocument.Warnings)));
+            }
+
+            classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
+
+            return new ClassifyCustomCategoriesResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ProjectName, results.DeploymentName);
+        }
+        #endregion
 
         #region SingleCategoryClassifyResult
         internal static SingleCategoryClassifyResultCollection ConvertToSingleCategoryClassifyResultCollection(CustomSingleClassificationResult results, IDictionary<string, int> idToIndexMap)
@@ -610,6 +641,7 @@ namespace Azure.AI.TextAnalytics
             IDictionary<int, TextAnalyticsErrorInternal> analyzeSentimentErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> extractSummaryErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> singleCategoryClassifyErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+            IDictionary<int, TextAnalyticsErrorInternal> classifyCustomCategoriesErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
 
             if (jobState.Errors.Any())
             {
@@ -650,6 +682,10 @@ namespace Azure.AI.TextAnalytics
                     {
                         singleCategoryClassifyErrors.Add(taskIndex, error);
                     }
+                    else if ("customMultiClassificationTasks".Equals(taskName))
+                    {
+                        classifyCustomCategoriesErrors.Add(taskIndex, error);
+                    }
                     else
                     {
                         throw new InvalidOperationException($"Invalid task name in target reference - {taskName}. \n Additional information: Error code: {error.Code} Error message: {error.Message}");
@@ -664,7 +700,31 @@ namespace Azure.AI.TextAnalytics
                 ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
                 ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
                 ConvertToExtractSummaryActionsResults(jobState, map, extractSummaryErrors),
-                ConvertToSingleCategoryClassifyResults(jobState, map, singleCategoryClassifyErrors));
+                ConvertToSingleCategoryClassifyResults(jobState, map, singleCategoryClassifyErrors)
+                ConvertToClassifyCustomCategoriesActionsResults(jobState, map, extractSummaryErrors)
+                );
+        }
+
+        private static IReadOnlyCollection<ClassifyCustomCategoriesActionResult> ConvertToClassifyCustomCategoriesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
+        {
+            var collection = new List<ClassifyCustomCategoriesActionResult>();
+            int index = 0;
+            foreach (CustomMultiClassificationTasksItem task in jobState.Tasks.CustomMultiClassificationTasks)
+            {
+                tasksErrors.TryGetValue(index, out TextAnalyticsErrorInternal taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new ClassifyCustomCategoriesActionResult(task.LastUpdateDateTime, taskError));
+                }
+                else
+                {
+                    collection.Add(new ClassifyCustomCategoriesActionResult(ConvertToClassifyCustomCategoryResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
         }
 
         private static IReadOnlyCollection<SingleCategoryClassifyActionResult> ConvertToSingleCategoryClassifyResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)

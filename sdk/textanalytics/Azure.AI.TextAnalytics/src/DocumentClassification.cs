@@ -12,10 +12,16 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct DocumentClassification
     {
-        internal DocumentClassification(SingleClassificationDocument sentence)
+        internal DocumentClassification(SingleClassificationDocument classification)
         {
-            Category = sentence.Classification.Category;
-            ConfidenceScore = sentence.Classification.ConfidenceScore;
+            Category = classification.Classification.Category;
+            ConfidenceScore = classification.Classification.ConfidenceScore;
+        }
+
+        internal DocumentClassification(ClassificationResult classification)
+        {
+            Category = classification.Category;
+            ConfidenceScore = classification.ConfidenceScore;
         }
 
         /// <summary>
