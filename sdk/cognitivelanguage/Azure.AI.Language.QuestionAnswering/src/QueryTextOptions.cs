@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     [CodeGenModel("TextQueryOptions")]
     public partial class QueryTextOptions
