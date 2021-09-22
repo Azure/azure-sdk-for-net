@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "14469093771711807520"
+      "templateHash": "7080001263714194046"
     }
   },
   "parameters": {
@@ -34,19 +34,9 @@
   },
   "functions": [],
   "variables": {
-    "rbacOwnerRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635', subscription().subscriptionId)]",
     "adtOwnerRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/bcd981a7-7f74-457b-83e1-cceb9e632ffe', subscription().subscriptionId)]"
   },
   "resources": [
-    {
-      "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2018-09-01-preview",
-      "name": "[guid(resourceGroup().id)]",
-      "properties": {
-        "roleDefinitionId": "[variables('rbacOwnerRoleDefinitionId')]",
-        "principalId": "[parameters('testApplicationOid')]"
-      }
-    },
     {
       "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
       "apiVersion": "2020-03-01-preview",
