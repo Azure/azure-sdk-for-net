@@ -3,3 +3,4 @@
 !*common.test.assets.config.json
 *.etl
 params.*.json
+test-resources.json*
