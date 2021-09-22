@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(deepstackPrediction.TopIntent, Is.EqualTo("order"));
+            Assert.That(deepstackPrediction.TopIntent, Is.EqualTo("Order"));
         }
 
         [RecordedTest]
@@ -100,7 +100,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("order"));
+            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
         }
     }
 }
