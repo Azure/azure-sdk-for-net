@@ -31,7 +31,5 @@ namespace Azure.AI.TextAnalytics
         public IList<CustomEntitiesTask> CustomEntityRecognitionTasks { get; }
         /// <summary> Gets the custom single classification tasks. </summary>
         public IList<CustomSingleClassificationTask> CustomSingleClassificationTasks { get; }
-        /// <summary> Gets the custom multi classification tasks. </summary>
-        public IList<CustomMultiClassificationTask> CustomMultiClassificationTasks { get; }
     }
 }

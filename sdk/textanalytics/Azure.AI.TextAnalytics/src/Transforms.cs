@@ -473,6 +473,17 @@ namespace Azure.AI.TextAnalytics
                 }
             };
         }
+        
+        internal static CustomMultiClassificationTask ConvertToCustomMultiClassificationTask(ClassifyCustomCategoriesAction action)
+        {
+            return new CustomMultiClassificationTask()
+            {
+                Parameters = new CustomMultiClassificationTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                }
+            };
+        }
 
         internal static IList<EntityLinkingTask> ConvertFromRecognizeLinkedEntitiesActionsToTasks(IReadOnlyCollection<RecognizeLinkedEntitiesAction> recognizeLinkedEntitiesActions)
         {
@@ -541,6 +552,17 @@ namespace Azure.AI.TextAnalytics
             foreach (ExtractSummaryAction action in extractSummaryActions)
             {
                 list.Add(ConvertToExtractiveSummarizationTask(action));
+            }
+
+            return list;
+        }
+        internal static IList<CustomMultiClassificationTask> ConvertFromClassifyCustomCategoriesActionsToTasks(IReadOnlyCollection<ClassifyCustomCategoriesAction> ClassifyCustomCategoriesActions)
+        {
+            List<CustomMultiClassificationTask> list = new List<CustomMultiClassificationTask>();
+
+            foreach (ClassifyCustomCategoriesAction action in ClassifyCustomCategoriesActions)
+            {
+                list.Add(ConvertToCustomMultiClassificationTask(action));
             }
 
             return list;
