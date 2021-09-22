@@ -1,6 +1,6 @@
 # Azure Cognitive Language Services Conversations client library for .NET
 
-Conversations (aka LuisVNext) is a cloud-based conversational AI service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning, and pull out relevant, detailed information. The service utilizes state-of-the-art technology to create and utilize natively multilingual models, which means that users would be able to train their models in one language but predict in others. 
+Azure Conversations - the new version of Language Understanding (LUIS) - is a cloud-based conversational AI service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning; and pulls out relevant, detailed information. The service utilizes state-of-the-art technology to create and utilize natively multilingual models, which means that users would be able to train their models in one language but predict in others. 
 
 [Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Product documentation][conversationanalysis_docs] | [Samples][conversationanalysis_samples]
 
@@ -50,7 +50,7 @@ ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, cre
 
 ### ConversationAnalysisClient
 
-The [`ConversationAnalysisClient`][conversationanalysis_client_class] is the primary interface for making predictions using your deployed Conversation models. It provides both synchronous and asynchronous APIs to submit queries.
+The [`ConversationAnalysisClient`][conversationanalysis_client_class] is the primary interface for making predictions using your deployed Conversations models. It provides both synchronous and asynchronous APIs to submit queries.
 
 ### Thread safety
 
@@ -74,9 +74,9 @@ The Azure.AI.Language.Conversations client library provides both synchronous and
 
 The following examples show common scenarios using the `client` [created above](#Create a ConversationAnalysisClient).
 
-### Analyze a Conversation
+### Analyze a conversation
 
-To analyze a conversation, we can then simply call the `client.AnalyzeConversation()` method, which takes the project name, deployment name and query as parameters.
+To analyze a conversation, we can then call the `client.AnalyzeConversation()` method which takes the project name, deployment name, and query as parameters.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
@@ -87,7 +87,7 @@ Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
 
-To set additional properties such as language of the query and verbosity, you can initialise an `AnalyzeConversationOptions` instance with your chosen parameters. You can then call `AnalyzeConversation()` using the options as a parameter.
+To set additional properties such as language of the query and verbosity, you can initialize an `AnalyzeConversationOptions` instance with your chosen parameters. You can then call `AnalyzeConversation()` using the options as a parameter.
 
 ## Troubleshooting
 
@@ -113,6 +113,28 @@ catch (RequestFailedException ex)
 
 You will notice that additional information is logged, like the client request ID of the operation.
 
+```text
+Azure.RequestFailedException: Please verify azure search service is up, restart the WebApp and try again
+Status: 400 (Bad Request)
+ErrorCode: BadArgument
+
+Content:
+{
+    "error": {
+    "code": "BadArgument",
+    "message": "Please verify azure search service is up, restart the WebApp and try again"
+    }
+}
+
+Headers:
+x-envoy-upstream-service-time: 23
+apim-request-id: 76a83876-22d1-4977-a0b1-559a674f3605
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+Date: Wed, 30 Jun 2021 00:32:07 GMT
+Content-Length: 139
+Content-Type: application/json; charset=utf-8
+```
 ### Setting up console logging
 
 The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console use the `AzureEventSourceListener.CreateConsoleLogger` method.
@@ -153,7 +175,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [core_logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [nuget]: https://www.nuget.org/
 
-<!--References after mergin to main repo-->
 [conversationanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/ConversationAnalysisClient.cs
 [conversationanalysis_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/
 [conversationanalysis_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/
