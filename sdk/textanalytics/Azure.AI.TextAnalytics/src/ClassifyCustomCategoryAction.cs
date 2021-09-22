@@ -18,6 +18,8 @@ namespace Azure.AI.TextAnalytics
         /// a Classify Custom Category action on a set of documents.
         /// Sets the <see cref="ProjectName"/> and <see cref="DeploymentName"/> properties.
         /// </summary>
+        /// <param name = "projectName">The target project name used in the classify custom category action.</param>
+        /// <param name = "deploymentName">The deployment name used in the classify custom category action.</param>
         public ClassifyCustomCategoryAction(string projectName, string deploymentName)
         {
             DeploymentName = deploymentName;

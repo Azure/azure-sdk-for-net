@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_1)]
+    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class ExtractSummaryTests : TextAnalyticsClientLiveTestBase
     {
         public ExtractSummaryTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)

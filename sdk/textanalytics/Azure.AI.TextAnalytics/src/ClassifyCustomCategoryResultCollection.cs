@@ -83,7 +83,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            public string ModelVersion
+            public string DeploymentName
             {
                 get
                 {
