@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [RecordedTest]
         [SyncOnly]
-        public void QueryKnowledgeBase()
+        public void AnalyzeConversation()
         {
             ConversationAnalysisClient client = Client;
 
@@ -23,47 +23,46 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
                 "Menu",
                 "production",
-                "We'll have 2 plates of seared salmon nigiri.");
+                "buy a ticket from new york to london");
 #else
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
                 TestEnvironment.ProjectName,
                 TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
+                "buy a ticket from new york to london");
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
+            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("BookFlight"));
         }
 
         [RecordedTest]
         [AsyncOnly]
-        public async Task QueryKnowledgeBaseAsync()
+        public async Task AnalyzeConversationAsync()
         {
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationAsync
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions("We'll have 2 plates of seared salmon nigiri.");
 
 #if SNIPPET
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
                 "Menu",
                 "production",
-                "We'll have 2 plates of seared salmon nigiri.");
+                "buy a ticket from new york to london");
 #else
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
+                "buy a ticket from new york to london");
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
+            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("BookFlight"));
         }
     }
 }
