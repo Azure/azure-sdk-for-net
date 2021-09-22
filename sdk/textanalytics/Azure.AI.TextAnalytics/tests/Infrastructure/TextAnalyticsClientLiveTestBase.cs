@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics.Tests
     [ClientTestFixture(
     TextAnalyticsClientOptions.ServiceVersion.V3_0,
     TextAnalyticsClientOptions.ServiceVersion.V3_1,
-    TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_1)]
+    TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
         /// <summary>

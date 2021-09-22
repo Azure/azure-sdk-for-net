@@ -676,7 +676,8 @@ namespace Azure.AI.TextAnalytics
                 recognizePiiEntitiesActionResults.ToList(),
                 recognizeLinkedEntitiesActionsResults.ToList(),
                 analyzeSentimentActionsResults.ToList(),
-                new List<ExtractSummaryActionResult>());
+                new List<ExtractSummaryActionResult>(),
+                new List<ClassifyCustomCategoriesActionResult>());
         }
 
         /// <summary>
@@ -703,7 +704,8 @@ namespace Azure.AI.TextAnalytics
                 recognizePiiEntitiesActionResults.ToList(),
                 recognizeLinkedEntitiesActionResults.ToList(),
                 analyzeSentimentActionResults.ToList(),
-                extractSummaryActionResults.ToList());
+                extractSummaryActionResults.ToList(),
+                new List<ClassifyCustomCategoriesActionResult>());
         }
 
         /// <summary>
