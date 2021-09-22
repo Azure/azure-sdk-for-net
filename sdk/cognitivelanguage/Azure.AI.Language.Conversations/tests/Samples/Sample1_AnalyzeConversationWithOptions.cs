@@ -21,11 +21,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
 #if SNIPPET
             AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",
-                "production", "buy a ticket from new york to london.");
+                "production", "We'll have 2 plates of seared salmon nigiri.");
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 #else
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName, "buy a ticket from new york to london.");
+                TestEnvironment.DeploymentName, "We'll have 2 plates of seared salmon nigiri.");
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 #endif
 
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("BookFlight"));
+            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("order"));
         }
 
         [RecordedTest]
@@ -46,11 +46,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
 #if SNIPPET
             AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",
-                "production", "buy a ticket from new york to london.");
+                "production", "We'll have 2 plates of seared salmon nigiri.");
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 #else
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName, "buy a ticket from new york to london.");
+                TestEnvironment.DeploymentName, "We'll have 2 plates of seared salmon nigiri.");
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
 #endif
 
@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("BookFlight"));
+            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("order"));
         }
     }
 }

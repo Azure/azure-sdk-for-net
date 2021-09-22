@@ -21,14 +21,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
 #if SNIPPET
             AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",
-                "production", "comprar un boleto de nueva york a londres.")
+                "production", "Tendremos 2 platos de nigiri de salmón braseado.")
             {
                 Language = "es"
             };
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 #else
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName, "comprar un boleto de nueva york a londres.")
+                TestEnvironment.DeploymentName, "Tendremos 2 platos de nigiri de salmón braseado.")
             {
                 Language = "es"
             };
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("BookFlight"));
+            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("order"));
         }
 
         [RecordedTest]
@@ -52,14 +52,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
 #if SNIPPET
             AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",
-                "production", "comprar un boleto de nueva york a londres.")
+                "production", "Tendremos 2 platos de nigiri de salmón braseado.")
             {
                 Language = "es"
             };
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 #else
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName, "comprar un boleto de nueva york a londres.")
+                TestEnvironment.DeploymentName, "Tendremos 2 platos de nigiri de salmón braseado.")
             {
                 Language = "es"
             };
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("BookFlight"));
+            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("order"));
         }
     }
 }
