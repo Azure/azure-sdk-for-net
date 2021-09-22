@@ -22,7 +22,9 @@ namespace Azure.AI.Language.QuestionAnswering
             /// <summary>
             /// Service version "2021-05-01-preview".
             /// </summary>
+#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
             V2021_05_01_preview = 1,
+#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
