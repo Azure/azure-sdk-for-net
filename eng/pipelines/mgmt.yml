@@ -5,6 +5,7 @@ pr:
     - main
     - '*-preview'
     - 'feature/cplat*'
+    - Azure-Stack-MultiAPI
   paths:
     include:
     - Directory.Build.props
@@ -166,6 +167,7 @@ pr:
     - sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager
     - sdk/websites/Microsoft.Azure.Management.WebSites
     - sdk/workloadmonitor/Microsoft.Azure.Management.WorkloadMonitor
+    - sdk/profiles
 variables:
 - template: templates/variables/globals.yml
 - name: msBuildLogDir
@@ -180,3 +182,4 @@ jobs:
 - template: /eng/pipelines/templates/jobs/ci.mgmt.yml
   parameters:
     Scope: $(Scope)
+    
