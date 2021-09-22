@@ -313,6 +313,22 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task GetFileSystemsAsync_System()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+
+            // Act
+            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync(states: FileSystemStates.Deleted).ToListAsync();
+            FileSystemItem webFileSystemItem = fileSystems.Where(r => r.Name == "$web").FirstOrDefault();
+
+            // Assert
+            Assert.IsTrue(fileSystems.Count > 0);
+            Assert.IsNotNull(webFileSystemItem);
+        }
+
+        [RecordedTest]
         [AsyncOnly]
         public async Task GetFileSystemsAsync_Error()
         {
