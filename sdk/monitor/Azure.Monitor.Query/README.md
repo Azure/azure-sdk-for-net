@@ -41,42 +41,9 @@ For examples of Logs and Metrics queries, see the [Examples](#examples) section.
 - `LogsQueryClient` - Client that provides methods to query logs from Azure Monitor Logs.
 Here's a heirarchy of the LogsQueryResult response:
 
-```
-LogsQueryResult
-|---Error
-|---Status
-|---Table
-    |---Name
-    |---Columns (list of `LogsTableColumn` objects)
-        |---Name
-        |---Type
-    |---Rows (list of `LogsTableRows` objects)
-        |---Count
-|---AllTables (list of `LogsTable` objects)    
-```
-
 - `MetricsQueryClient` - Client that provides methods to query metrics from Azure Monitor Metrics.
 
 Here's a heirarchy of the MetricsQueryResult response:
-
-```
-MetricsQueryResult
-|---Cost
-|---Interval
-|---Namespace
-|---ResourceRegion
-|---TimeSpan
-|---Metrics (list of `MetricResult` objects)
-    |---Id
-    |---Type
-    |---Name
-    |---DisplayDescription
-    |---Error
-    |---Unit
-    |---TimeSeries (list of `MetricTimeSeriesElement` objects)
-        |---Metadatavalues
-        |---Values
-```
 
 ### Thread safety
 
@@ -97,6 +64,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 ## Examples
 
 - [Logs query](#logs-query)
+  - [Handle logs query response](#handle-logs-query-response)
   - [Map logs query results to a model](#map-logs-query-results-to-a-model)
   - [Map logs query results to a primitive](#map-logs-query-results-to-a-primitive)
   - [Print logs query results as a table](#print-logs-query-results-as-a-table)
@@ -105,6 +73,7 @@ All client instance methods are thread-safe and independent of each other ([guid
   - [Set logs query timeout](#set-logs-query-timeout)
   - [Query multiple workspaces](#query-multiple-workspaces)
 - [Metrics query](#metrics-query)
+  - [Handle metrics query response](#handle-metrics-query-response)
 
 ### Logs query
 
@@ -124,6 +93,25 @@ foreach (var row in table.Rows)
 {
     Console.WriteLine(row["OperationName"] + " " + row["ResourceGroup"]);
 }
+```
+
+#### Handle logs query response
+The `query` API returns the `LogsQueryResult`, while the queryBatch API returns the 
+`LogsBatchQueryResult`.
+Here's a hierarchy of the response:
+
+```
+LogsQueryResult
+|---Error
+|---Status
+|---Table
+    |---Name
+    |---Columns (list of `LogsTableColumn` objects)
+        |---Name
+        |---Type
+    |---Rows (list of `LogsTableRows` objects)
+        |---Count
+|---AllTables (list of `LogsTable` objects)    
 ```
 
 #### Map logs query results to a model
@@ -330,6 +318,34 @@ foreach (var metric in results.Value.Metrics)
         }
     }
 }
+```
+
+#### Handle metrics query response
+The metrics query API returns a `MetricsQueryResult` object. The `MetricsQueryResult` object contains 
+properties such as a list of `MetricResult`-typed objects, `Cost`, `Namespace`, `ResourceRegion`, `TimeSpan`, and `Interval`. The 
+`MetricResult` objects list can be accessed using the `metrics` param. Each `MetricResult` object in this list
+contains a list of `TimeSeries` objects. Each `TimeSeries` contains `Metadatavalues` and `Values`
+properties. 
+
+Here's a hierarchy of the response:
+
+```
+MetricsQueryResult
+|---Cost
+|---Interval
+|---Namespace
+|---ResourceRegion
+|---TimeSpan
+|---Metrics (list of `MetricResult` objects)
+    |---Id
+    |---Type
+    |---Name
+    |---DisplayDescription
+    |---Error
+    |---Unit
+    |---TimeSeries (list of `MetricTimeSeriesElement` objects)
+        |---Metadatavalues
+        |---Values
 ```
 
 ## Troubleshooting
