@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.Core.TestFramework;
@@ -92,12 +93,15 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardMicrosoft);
+            ProfileData profileData = CreateProfileData(SkuName.StandardVerizon);
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
             Profile profile = lro.Value;
             string endpointName = Recording.GenerateAssetName("endpoint-");
             EndpointData endpointData = CreateEndpointData(profile.Id, endpointName);
-            DeepCreatedOrigin origin = CreateDeepCreatedOrigin();
+            DeepCreatedOrigin origin = new DeepCreatedOrigin("testOrigin")
+            {
+                HostName = "testsa4dotnetsdk.blob.core.windows.net"
+            };
             endpointData.Origins.Add(origin);
             var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
             Endpoint endpoint = lro2.Value;
@@ -113,19 +117,48 @@ namespace Azure.ResourceManager.Cdn.Tests
             Assert.DoesNotThrowAsync(async () => await endpoint.LoadContentAsync(loadParameters));
         }
 
-        //[TestCase]
-        //[RecordedTest]
-        //public async Task ValidateCustomDomain()
-        //{
+        [TestCase]
+        [RecordedTest]
+        public async Task ValidateCustomDomain()
+        {
+            //A CName mapping needs to be created in advance to validate custom domain.
+            //In this test is "customdomainrecord.azuretest.net" maps to "testEndpoint4dotnetsdk.azureedge.net"
 
-        //}
+            //The client from TestBase is not used in this test because its cleanup policy would conflict with the lock in the custom domain.
+            ArmClient tempClient = new ArmClient(new DefaultAzureCredential());
+            ResourceGroup rg = await tempClient.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Profile profile = await rg.GetProfiles().GetAsync("testProfile");
+            Endpoint endpoint = await profile.GetEndpoints().GetAsync("testEndpoint4dotnetsdk");
+            ValidateCustomDomainInput validateCustomDomainInput1 = new ValidateCustomDomainInput("customdomainrecord.azuretest.net");
+            ValidateCustomDomainOutput validateResult = await endpoint.ValidateCustomDomainAsync(validateCustomDomainInput1);
+            Assert.True(validateResult.CustomDomainValidated);
+            ValidateCustomDomainInput validateCustomDomainInput2 = new ValidateCustomDomainInput("customdomainvirtual.azuretest.net");
+            validateResult = await endpoint.ValidateCustomDomainAsync(validateCustomDomainInput2);
+            Assert.False(validateResult.CustomDomainValidated);
+        }
 
-        //[TestCase]
-        //[RecordedTest]
-        //public async Task GetResourceUsage()
-        //{
-
-        //}
+        [TestCase]
+        [RecordedTest]
+        public async Task GetResourceUsage()
+        {
+            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            string profileName = Recording.GenerateAssetName("profile-");
+            ProfileData profileData = CreateProfileData(SkuName.StandardMicrosoft);
+            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
+            Profile profile = lro.Value;
+            string endpointName = Recording.GenerateAssetName("endpoint-");
+            EndpointData endpointData = CreateEndpointData(profile.Id, endpointName);
+            DeepCreatedOrigin origin = CreateDeepCreatedOrigin();
+            endpointData.Origins.Add(origin);
+            var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
+            Endpoint endpoint = lro2.Value;
+            int count = 0;
+            await foreach (var tempResourceUsage in endpoint.GetResourceUsageAsync())
+            {
+                count++;
+            }
+            Assert.AreEqual(count, 8);
+        }
 
         private static void AssertEndpointUpdate(Endpoint updatedEndpoint, EndpointUpdateParameters updateParameters)
         {

@@ -59,6 +59,9 @@ directive:
     where: $.definitions.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup
     transform: $['x-nullable'] = true
   - from: swagger-document
+    where: $.definitions.EndpointPropertiesUpdateParameters.properties.optimizationType
+    transform: $['x-nullable'] = true
+  - from: swagger-document
     where: $.definitions.EndpointPropertiesUpdateParameters.properties.urlSigningKeys
     transform: $['x-nullable'] = true
   - from: swagger-document
@@ -78,6 +81,12 @@ directive:
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.definitions.DeepCreatedOriginProperties.properties.httpsPort
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.DeepCreatedOriginProperties.properties.priority
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.DeepCreatedOriginProperties.properties.weight
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.paths['/providers/Microsoft.Cdn/checkNameAvailability'].post.operationId

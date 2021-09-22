@@ -55,13 +55,27 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
-                writer.WriteNumberValue(Priority.Value);
+                if (Priority != null)
+                {
+                    writer.WritePropertyName("priority");
+                    writer.WriteNumberValue(Priority.Value);
+                }
+                else
+                {
+                    writer.WriteNull("priority");
+                }
             }
             if (Optional.IsDefined(Weight))
             {
-                writer.WritePropertyName("weight");
-                writer.WriteNumberValue(Weight.Value);
+                if (Weight != null)
+                {
+                    writer.WritePropertyName("weight");
+                    writer.WriteNumberValue(Weight.Value);
+                }
+                else
+                {
+                    writer.WriteNull("weight");
+                }
             }
             if (Optional.IsDefined(Enabled))
             {
@@ -99,8 +113,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<int?> httpPort = default;
             Optional<int?> httpsPort = default;
             Optional<string> originHostHeader = default;
-            Optional<int> priority = default;
-            Optional<int> weight = default;
+            Optional<int?> priority = default;
+            Optional<int?> weight = default;
             Optional<bool> enabled = default;
             Optional<string> privateLinkAlias = default;
             Optional<string> privateLinkResourceId = default;
@@ -156,7 +170,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                priority = null;
                                 continue;
                             }
                             priority = property0.Value.GetInt32();
@@ -166,7 +180,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                weight = null;
                                 continue;
                             }
                             weight = property0.Value.GetInt32();

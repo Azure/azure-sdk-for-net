@@ -70,8 +70,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(OptimizationType))
             {
-                writer.WritePropertyName("optimizationType");
-                writer.WriteStringValue(OptimizationType.Value.ToString());
+                if (OptimizationType != null)
+                {
+                    writer.WritePropertyName("optimizationType");
+                    writer.WriteStringValue(OptimizationType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("optimizationType");
+                }
             }
             if (Optional.IsDefined(ProbePath))
             {

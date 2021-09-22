@@ -75,8 +75,15 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(OptimizationType))
             {
-                writer.WritePropertyName("optimizationType");
-                writer.WriteStringValue(OptimizationType.Value.ToString());
+                if (OptimizationType != null)
+                {
+                    writer.WritePropertyName("optimizationType");
+                    writer.WriteStringValue(OptimizationType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("optimizationType");
+                }
             }
             if (Optional.IsDefined(ProbePath))
             {
@@ -185,7 +192,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<bool> isHttpAllowed = default;
             Optional<bool> isHttpsAllowed = default;
             Optional<QueryStringCachingBehavior> queryStringCachingBehavior = default;
-            Optional<OptimizationType> optimizationType = default;
+            Optional<OptimizationType?> optimizationType = default;
             Optional<string> probePath = default;
             Optional<IList<GeoFilter>> geoFilters = default;
             Optional<ResourceReference> defaultOriginGroup = default;
@@ -322,7 +329,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                optimizationType = null;
                                 continue;
                             }
                             optimizationType = new OptimizationType(property0.Value.GetString());
