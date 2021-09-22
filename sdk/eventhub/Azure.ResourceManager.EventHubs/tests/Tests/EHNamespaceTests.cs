@@ -239,7 +239,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("resource type not match")]
         public async Task SetGetNetworkRuleSets()
         {
             //create namespace
@@ -247,6 +246,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
+            NetworkRuleSet netWorkRuleSet = eHNamespace.GetNetworkRuleSet();
 
             //prepare vnet
             string vnetName = Recording.GenerateAssetName("sdktestvnet");
@@ -297,16 +297,29 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                         new NWRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" }
                     }
             };
-            await eHNamespace.GetNetworkRuleSet().CreateOrUpdateAsync(parameter);
+            await netWorkRuleSet.CreateOrUpdateAsync(parameter);
 
             //get the network rule set
-            NetworkRuleSet networkRuleSet = await eHNamespace.GetNetworkRuleSet().GetAsync();
+            NetworkRuleSet networkRuleSet = await netWorkRuleSet.GetAsync();
             Assert.NotNull(networkRuleSet);
             Assert.NotNull(networkRuleSet.Data);
             Assert.NotNull(networkRuleSet.Data.IpRules);
             Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
             Assert.AreEqual(networkRuleSet.Data.VirtualNetworkRules, 3);
             Assert.AreEqual(networkRuleSet.Data.IpRules, 5);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task NamespaceGetMessagingPlan()
+        {
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
+
+            await eHNamespace.GetMessagingPlanAsync();
         }
     }
 }
