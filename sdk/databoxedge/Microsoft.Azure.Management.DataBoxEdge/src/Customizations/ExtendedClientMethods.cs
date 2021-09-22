@@ -1,55 +1,16 @@
 ﻿using Microsoft.Azure.Management.DataBoxEdge.Models;
 using Microsoft.Rest;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.DataBoxEdge
 {
     public static partial class ExtendedClientMethods
     {
-
-        /// <summary>
-        /// Use this method to encrypt the user secrets (Storage Account Access Key, Volume Container Encryption Key etc.) using activation key
-        /// </summary>
-        /// <param name="deviceName">
-        /// The resource name.
-        /// </param>
-        /// <param name="resourceGroupName">
-        /// The resource group name.
-        /// </param>
-        /// <param name="plainTextSecret">
-        /// The plain text secret.
-        /// </param>
-        /// <returns>
-        /// The <see cref="AsymmetricEncryptedSecret"/>.
-        /// </returns>
-        /// <exception cref="ValidationException">
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// </exception>
-        public static AsymmetricEncryptedSecret GetAsymmetricEncryptedSecretUsingActivationKey(
-            this IDevicesOperations operations,
-                string deviceName,
-            string resourceGroupName,
-
-            string plainTextSecret,
-            string activationKey)
-        {
-            if (string.IsNullOrWhiteSpace(activationKey))
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "activationKey");
-            }
-
-
-
-            string channelIntegrationKey = GetChannelIntegrityKey(activationKey);
-            return operations.GetAsymmetricEncryptedSecret(deviceName, resourceGroupName, plainTextSecret, channelIntegrationKey);
-        }
+        private const int StandardSizeOfCIK = 128;
 
         /// <summary>
         /// Use this method to encrypt the user secrets (Storage Account Access Key, Volume Container Encryption Key etc.) using CIK
@@ -118,6 +79,44 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             var jsondata = (JObject)JsonConvert.DeserializeObject(decodedString);
             string serviceDataIntegrityKey = jsondata["serviceDataIntegrityKey"].Value<string>();
             return serviceDataIntegrityKey;
+        }
+
+        /// <summary>
+        /// Use this method to generate the activation key for a device to register it with the ASE resource
+        /// </summary>
+        /// <param name="resourceGroupName">Name of the resource group</param>
+        /// <param name="resourceName">Name of the resource</param>
+        /// <param name="resourceLocation">Location of the resource</param>
+
+        /// <returns></returns>
+        public static string GenerateActivationKey(this IDevicesOperations operations,
+            string resourceGroupName,
+            string resourceName,
+            string cik)
+        {
+            var resourceLocation = operations.Get(resourceName, resourceGroupName).Location;
+            var subscriptionId = (operations as DevicesOperations).Client.SubscriptionId;
+            var generateCertResponse = ActivationKeyHelper.GenerateVaultCertificate(operations, resourceGroupName, resourceName);
+            var certPublicPart = ActivationKeyHelper.ImportCertificate(generateCertResponse.PublicKey);
+            var uploadCertificateResponse = ActivationKeyHelper.UploadVaultCertificate(operations, resourceGroupName, resourceName, certPublicPart);
+            var activationKeyToRegisterTheResource = ActivationKeyHelper.GetAadActivationKey(resourceGroupName, resourceName, resourceLocation,
+                generateCertResponse.PrivateKey, uploadCertificateResponse, subscriptionId, cik);
+
+            return activationKeyToRegisterTheResource;
+        }
+
+        /// <summary>
+        /// This method generates the CIK of length 128 chars
+        /// </summary>
+        /// <returns></returns>
+        public static string GenerateCIK(this IDevicesOperations operations)
+        {
+            var randomNumberGenerator = RandomNumberGenerator.Create();
+            var byteArr = new byte[128];
+            randomNumberGenerator.GetBytes(byteArr);
+            var cik = Convert.ToBase64String(byteArr).Substring(0, StandardSizeOfCIK);
+
+            return cik;
         }
     }
 }

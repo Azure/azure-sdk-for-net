@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "7074975851172708714"
+      "templateHash": "3831110767816828197"
     }
   },
   "parameters": {
@@ -98,21 +98,11 @@
   },
   "functions": [],
   "variables": {
-    "rbacOwnerRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635', subscription().subscriptionId)]",
     "storageAccountName": "[format('tsi{0}', uniqueString(resourceGroup().id))]",
     "eventSourceResourceId": "[resourceId(parameters('resourceGroup'), 'Microsoft.Devices/IotHubs', parameters('iotHubName'))]",
     "hubKeysId": "[resourceId('Microsoft.Devices/IotHubs/Iothubkeys', parameters('iotHubName'), 'iothubowner')]"
   },
   "resources": [
-    {
-      "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2018-09-01-preview",
-      "name": "[guid(resourceGroup().id)]",
-      "properties": {
-        "roleDefinitionId": "[variables('rbacOwnerRoleDefinitionId')]",
-        "principalId": "[parameters('testApplicationOid')]"
-      }
-    },
     {
       "type": "Microsoft.Devices/IotHubs",
       "apiVersion": "2020-03-01",

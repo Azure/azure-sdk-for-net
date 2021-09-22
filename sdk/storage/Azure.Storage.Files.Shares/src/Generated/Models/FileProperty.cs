@@ -40,11 +40,17 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties. </summary>
         public long ContentLength { get; }
+        /// <summary> Gets the creation time. </summary>
         public DateTimeOffset? CreationTime { get; }
+        /// <summary> Gets the last access time. </summary>
         public DateTimeOffset? LastAccessTime { get; }
+        /// <summary> Gets the last write time. </summary>
         public DateTimeOffset? LastWriteTime { get; }
+        /// <summary> Gets the change time. </summary>
         public DateTimeOffset? ChangeTime { get; }
+        /// <summary> Gets the last modified. </summary>
         public DateTimeOffset? LastModified { get; }
+        /// <summary> Gets the etag. </summary>
         public string Etag { get; }
     }
 }

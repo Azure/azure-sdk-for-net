@@ -43,9 +43,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="encryption">The account encryption properties.</param>
         /// <param name="keyDelivery">The Key Delivery properties for Media
         /// Services account.</param>
+        /// <param name="publicNetworkAccess">Whether or not public network
+        /// access is allowed for resources under the Media Services account.
+        /// Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="identity">The Managed Identity for the Media Services
         /// account.</param>
-        public MediaServiceUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid mediaServiceId = default(System.Guid), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), StorageAuthentication? storageAuthentication = default(StorageAuthentication?), AccountEncryption encryption = default(AccountEncryption), KeyDelivery keyDelivery = default(KeyDelivery), MediaServiceIdentity identity = default(MediaServiceIdentity))
+        public MediaServiceUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid mediaServiceId = default(System.Guid), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), StorageAuthentication? storageAuthentication = default(StorageAuthentication?), AccountEncryption encryption = default(AccountEncryption), KeyDelivery keyDelivery = default(KeyDelivery), PublicNetworkAccess? publicNetworkAccess = default(PublicNetworkAccess?), MediaServiceIdentity identity = default(MediaServiceIdentity))
         {
             Tags = tags;
             MediaServiceId = mediaServiceId;
@@ -53,6 +56,7 @@ namespace Microsoft.Azure.Management.Media.Models
             StorageAuthentication = storageAuthentication;
             Encryption = encryption;
             KeyDelivery = keyDelivery;
+            PublicNetworkAccess = publicNetworkAccess;
             Identity = identity;
             CustomInit();
         }
@@ -98,6 +102,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.keyDelivery")]
         public KeyDelivery KeyDelivery { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not public network access is allowed for
+        /// resources under the Media Services account. Possible values
+        /// include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets or sets the Managed Identity for the Media Services account.

@@ -15,16 +15,22 @@
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
-        },
-        "endpointSuffix": {
-            "type": "string",
-            "defaultValue": ".azurewebsites.net",
-            "metadata": {
-                "description": "The domain suffix for the associated app service."
-            }
         }
     },
     "variables": {},
     "resources": [],
-    "outputs": {}
+    "outputs": {
+        "CONVERSATIONS_KEY": {
+            "type": "string",
+            "value": ""
+        },
+        "CONVERSATIONS_PROJECT": {
+            "type": "string",
+            "value": ""
+        },
+        "CONVERSATIONS_URI": {
+            "type": "string",
+            "value": ""
+        }
+    }
 }

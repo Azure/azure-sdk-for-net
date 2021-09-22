@@ -33,22 +33,26 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// Initializes a new instance of the OrderStatus class.
         /// </summary>
         /// <param name="status">Status of the order as per the allowed status
-        /// types. Possible values include: 'Untracked', 'AwaitingFulfilment',
+        /// types. Possible values include: 'Untracked', 'AwaitingFulfillment',
         /// 'AwaitingPreparation', 'AwaitingShipment', 'Shipped', 'Arriving',
         /// 'Delivered', 'ReplacementRequested', 'LostDevice', 'Declined',
         /// 'ReturnInitiated', 'AwaitingReturnShipment', 'ShippedBack',
-        /// 'CollectedAtMicrosoft'</param>
+        /// 'CollectedAtMicrosoft', 'AwaitingPickup', 'PickupCompleted',
+        /// 'AwaitingDrop'</param>
         /// <param name="updateDateTime">Time of status update.</param>
         /// <param name="comments">Comments related to this status
         /// change.</param>
+        /// <param name="trackingInformation">Tracking information related to
+        /// the state in the ordering flow</param>
         /// <param name="additionalOrderDetails">Dictionary to hold generic
         /// information which is not stored
         /// by the already existing properties</param>
-        public OrderStatus(string status, System.DateTime? updateDateTime = default(System.DateTime?), string comments = default(string), IDictionary<string, string> additionalOrderDetails = default(IDictionary<string, string>))
+        public OrderStatus(string status, System.DateTime? updateDateTime = default(System.DateTime?), string comments = default(string), TrackingInfo trackingInformation = default(TrackingInfo), IDictionary<string, string> additionalOrderDetails = default(IDictionary<string, string>))
         {
             Status = status;
             UpdateDateTime = updateDateTime;
             Comments = comments;
+            TrackingInformation = trackingInformation;
             AdditionalOrderDetails = additionalOrderDetails;
             CustomInit();
         }
@@ -60,11 +64,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
 
         /// <summary>
         /// Gets or sets status of the order as per the allowed status types.
-        /// Possible values include: 'Untracked', 'AwaitingFulfilment',
+        /// Possible values include: 'Untracked', 'AwaitingFulfillment',
         /// 'AwaitingPreparation', 'AwaitingShipment', 'Shipped', 'Arriving',
         /// 'Delivered', 'ReplacementRequested', 'LostDevice', 'Declined',
         /// 'ReturnInitiated', 'AwaitingReturnShipment', 'ShippedBack',
-        /// 'CollectedAtMicrosoft'
+        /// 'CollectedAtMicrosoft', 'AwaitingPickup', 'PickupCompleted',
+        /// 'AwaitingDrop'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
@@ -80,6 +85,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         [JsonProperty(PropertyName = "comments")]
         public string Comments { get; set; }
+
+        /// <summary>
+        /// Gets tracking information related to the state in the ordering flow
+        /// </summary>
+        [JsonProperty(PropertyName = "trackingInformation")]
+        public TrackingInfo TrackingInformation { get; private set; }
 
         /// <summary>
         /// Gets dictionary to hold generic information which is not stored

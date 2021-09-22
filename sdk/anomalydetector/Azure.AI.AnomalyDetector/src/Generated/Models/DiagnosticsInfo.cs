@@ -28,7 +28,9 @@ namespace Azure.AI.AnomalyDetector.Models
             VariableStates = variableStates;
         }
 
+        /// <summary> Gets the model state. </summary>
         public ModelState ModelState { get; }
+        /// <summary> Gets the variable states. </summary>
         public IReadOnlyList<VariableState> VariableStates { get; }
     }
 }

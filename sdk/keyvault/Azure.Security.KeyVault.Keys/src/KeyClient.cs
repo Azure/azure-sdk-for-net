@@ -340,6 +340,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyProperties)}");
             scope.AddAttribute("key", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try
@@ -376,6 +377,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyProperties)}");
             scope.AddAttribute("key", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try
@@ -409,6 +411,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
             scope.AddAttribute("key", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -442,6 +445,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
             scope.AddAttribute("key", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -456,14 +460,19 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Lists the properties of all keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKey"/>.
+        /// Lists the properties of all enabled and disabled keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKey"/>.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// Retrieves a list of the keys in the Key Vault that contains the public part of a stored key.
         /// The list operation is applicable to all key types, however only the base key identifier,
         /// attributes, and tags are provided in the response. Individual versions of a
         /// key are not listed in the response. This operation requires the keys/list
         /// permission.
+        /// </para>
+        /// <para>
+        /// Managed keys may also be listed. They are the public key for certificates stored in Key Vault.
+        /// </para>
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -475,14 +484,19 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Lists the properties of all keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKeyAsync"/>.
+        /// Lists the properties of all enabled and disabled keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKeyAsync"/>.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// Retrieves a list of the keys in the Key Vault that contains the public part of a stored key.
         /// The list operation is applicable to all key types, however only the base key identifier,
         /// attributes, and tags are provided in the response. Individual versions of a
         /// key are not listed in the response. This operation requires the keys/list
         /// permission.
+        /// </para>
+        /// <para>
+        /// Managed keys may also be listed. They are the public key for certificates stored in Key Vault.
+        /// </para>
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual AsyncPageable<KeyProperties> GetPropertiesOfKeysAsync(CancellationToken cancellationToken = default)
@@ -493,7 +507,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Lists the properties of all versions of the specified key. You can use the returned <see cref="KeyProperties.Name"/> and <see cref="KeyProperties.Version"/> in subsequent calls to <see cref="GetKey"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified key. You can use the returned <see cref="KeyProperties.Name"/> and <see cref="KeyProperties.Version"/> in subsequent calls to <see cref="GetKey"/>.
         /// </summary>
         /// <remarks>
         /// The full key identifier, attributes, and tags are provided in the response.
@@ -514,7 +528,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Lists the properties of all versions of the specified key. You can use the returned <see cref="KeyProperties.Name"/> and <see cref="KeyProperties.Version"/> in subsequent calls to <see cref="GetKeyAsync"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified key. You can use the returned <see cref="KeyProperties.Name"/> and <see cref="KeyProperties.Version"/> in subsequent calls to <see cref="GetKeyAsync"/>.
         /// </summary>
         /// <remarks>
         /// The full key identifier, attributes, and tags are provided in the response.
@@ -1263,6 +1277,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
             scope.AddAttribute("key", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             options ??= new();
@@ -1320,6 +1335,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
             scope.AddAttribute("key", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             options ??= new();

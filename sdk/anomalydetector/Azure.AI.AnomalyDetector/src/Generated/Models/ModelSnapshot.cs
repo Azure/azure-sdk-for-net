@@ -52,6 +52,7 @@ namespace Azure.AI.AnomalyDetector.Models
         public DateTimeOffset LastUpdatedTime { get; }
         /// <summary> Model training status. </summary>
         public ModelStatus Status { get; }
+        /// <summary> Gets the display name. </summary>
         public string DisplayName { get; }
         /// <summary> Count of variables. </summary>
         public int VariablesCount { get; }
