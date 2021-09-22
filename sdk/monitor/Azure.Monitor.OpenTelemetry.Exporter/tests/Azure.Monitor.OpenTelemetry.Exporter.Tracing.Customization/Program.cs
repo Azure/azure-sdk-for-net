@@ -15,7 +15,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
         private static readonly ActivitySource DemoSource = new ActivitySource("OTel.AzureMonitor.Demo");
         public static void Main()
         {
-            var resourceAttributes = new Dictionary<string, object> { { "service.name", "my-service" }, { "service.namespace", "my-namespace" }, { "service.instance.id", "my-instance" } };
+            var resourceAttributes = new Dictionary<string, object> {
+                                        { "service.name", "my-service" },
+                                        { "service.namespace", "my-namespace" },
+                                        { "service.instance.id", "my-instance" }};
+
             var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
