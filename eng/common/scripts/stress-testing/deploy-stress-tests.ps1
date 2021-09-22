@@ -21,8 +21,8 @@ $ErrorActionPreference = 'Stop'
 $FailedCommands = New-Object Collections.Generic.List[hashtable]
 
 . (Join-Path $PSScriptRoot "../Helpers" PSModule-Helpers.ps1)
-Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
-Install-ModuleIfNotInstalled "az" "6.4.0" | Import-Module
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module -ErrorAction Continue
+Install-ModuleIfNotInstalled "az" "6.4.0" | Import-Module -ErrorAction Continue
 
 # Powershell does not (at time of writing) treat exit codes from external binaries
 # as cause for stopping execution, so do this via a wrapper function.
