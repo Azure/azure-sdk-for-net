@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.Shares.Tests
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
-        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion, })]
     public class FileTestBase : StorageTestBase<StorageTestEnvironment>
     {
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
@@ -123,15 +123,6 @@ namespace Azure.Storage.Files.Shares.Tests
                     new StorageSharedKeyCredential(
                         TestConfigOAuth.AccountName,
                         TestConfigOAuth.AccountKey),
-                    GetOptions()));
-
-        public ShareServiceClient GetServiceClient_Premium()
-            => InstrumentClient(
-                new ShareServiceClient(
-                    new Uri(TestConfigPremiumBlob.FileServiceEndpoint),
-                    new StorageSharedKeyCredential(
-                        TestConfigPremiumBlob.AccountName,
-                        TestConfigPremiumBlob.AccountKey),
                     GetOptions()));
 
         public ShareServiceClient GetServiceClient_SoftDelete()

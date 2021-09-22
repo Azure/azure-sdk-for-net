@@ -885,6 +885,7 @@ namespace Azure.Storage.Files.Shares.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public System.DateTimeOffset? NextAllowedQuotaDowngradeTime { get { throw null; } }
         public Azure.Storage.Files.Shares.Models.ShareProtocols? Protocols { get { throw null; } }
+        public int? ProvisionedBandwidthMiBps { get { throw null; } }
         public int? ProvisionedEgressMBps { get { throw null; } }
         public int? ProvisionedIngressMBps { get { throw null; } }
         public int? ProvisionedIops { get { throw null; } }

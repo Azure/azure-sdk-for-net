@@ -37,6 +37,12 @@ namespace Azure.Storage.Files.Shares.Models
         public int? ProvisionedEgressMBps { get; internal set; }
 
         /// <summary>
+        /// Provisioned bandwidth in metabits/second.
+        /// Only applicable to premium file accounts.
+        /// </summary>
+        public int? ProvisionedBandwidthMiBps { get; internal set;  }
+
+        /// <summary>
         /// NextAllowedQuotaDowngradeTime.
         /// </summary>
         public DateTimeOffset? NextAllowedQuotaDowngradeTime { get; internal set; }

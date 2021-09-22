@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="version"/>, or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
-        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-10-02", string fileRangeWriteFromUrl = "update")
+        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-02-12", string fileRangeWriteFromUrl = "update")
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
             this.version = version ?? throw new ArgumentNullException(nameof(version));
