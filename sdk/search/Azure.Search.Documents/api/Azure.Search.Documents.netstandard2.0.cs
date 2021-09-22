@@ -972,7 +972,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public KnowledgeStore(string storageConnectionString, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection> projections) { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection> Projections { get { throw null; } }
-        public void SetStorageConnectionString(string storageConnectionString) { }
+        public string StorageConnectionString { get { throw null; } set { } }
     }
     public partial class KnowledgeStoreFileProjectionSelector : Azure.Search.Documents.Indexes.Models.KnowledgeStoreStorageProjectionSelector
     {
