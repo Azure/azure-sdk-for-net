@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Core.Pipeline
 {
     /// <summary>
@@ -15,6 +17,17 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="response"></param>
         /// <returns></returns>
-        public static bool IsError(this Response response) => ((ClassifiedResponse)response).IsError;
+        public static bool IsError(this Response response)
+        {
+            var classifiedResponse = response as ClassifiedResponse;
+
+            if (classifiedResponse == null)
+            {
+                throw new InvalidOperationException("IsError was not set on the response. " +
+                    "Please ensure the pipeline includes ResponsePropertiesPolicy.");
+            }
+
+            return classifiedResponse.IsError;
+        }
     }
 }

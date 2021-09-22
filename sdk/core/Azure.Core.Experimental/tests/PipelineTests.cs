@@ -87,22 +87,5 @@ namespace Azure.Core.Tests
                 return IsRetriableResponse(message);
             }
         }
-
-        #region Helpers
-
-        private void SerializePet(ref Utf8JsonWriter writer, Pet pet)
-        {
-            writer.WriteStartObject();
-
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(pet.Name);
-
-            writer.WritePropertyName("species");
-            writer.WriteStringValue(pet.Species);
-
-            writer.WriteEndObject();
-        }
-
-        #endregion
     }
 }
