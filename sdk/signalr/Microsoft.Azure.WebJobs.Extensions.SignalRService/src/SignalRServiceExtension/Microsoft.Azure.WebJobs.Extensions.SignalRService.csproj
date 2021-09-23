@@ -3,26 +3,20 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.SignalRService</PackageId>
-    <PackageIcon>icon.png</PackageIcon>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.SignalR.Management" Version="$(MicrosoftAzureSignalRManagement)" />
-    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="$(MicrosoftAzureFunctionsExtensionsVersion)" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="$(SystemIdentityModelTokensJwtVersion)" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="$(MicrosoftAspNetCoreSignalRPackageVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Azure" Version="$(MicrosoftExtensionsAzureVersion)"/>
+    <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" />
+    <PackageReference Include="Microsoft.Azure.SignalR.Management" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="$(MicrosoftAspNetCoreSignalRProtocolsNewtonsoftJson3_1)" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson"/>
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.SignalR.Serverless.Protocols\Microsoft.Azure.SignalR.Serverless.Protocols.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="..\..\images\icon.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 </Project>

@@ -1,25 +1,10 @@
 ﻿<Project>
-  <Import Project="version.props" />
-  <Import Project="build\dependencies.props" />
   <Import Project="build\sources.props" />
 
   <PropertyGroup>
-    <Product>Azure Functions SignalR Service Extension</Product>
-    <Authors>Microsoft</Authors>
-    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
-    <Owners>microsoft,azure-sdk</Owners>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>https://github.com/Azure/azure-functions-signalrservice-extension</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Azure/azure-functions-signalrservice-extension</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryRoot>$(MSBuildThisFileDirectory)</RepositoryRoot>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)build\Key.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <!-- PublicSign only when not Windows and not macOS https://github.com/Microsoft/msbuild/issues/2468#issuecomment-324719212  -->
-    <PublicSign Condition="'$(OS)' != 'Windows_NT' and !$([System.IO.File]::Exists('/usr/lib/libc.dylib'))">true</PublicSign>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <LangVersion>latest</LangVersion>
-    <MicroBuildCorePackageVersion>0.3.0</MicroBuildCorePackageVersion>
+    <IsClientLibrary>true</IsClientLibrary>
   </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\, Directory.Build.props))\Directory.Build.props" />
+
 </Project>

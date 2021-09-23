@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Memory" Version="$(SystemMemoryPackageVersion)" />
+    <PackageReference Include="System.Memory" />
   </ItemGroup>
 
 </Project>
