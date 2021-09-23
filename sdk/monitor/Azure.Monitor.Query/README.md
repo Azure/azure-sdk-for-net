@@ -38,10 +38,20 @@ For examples of Logs and Metrics queries, see the [Examples](#examples) section.
 
 ## Key concepts
 
-- `LogsQueryClient` - Client that provides methods to query logs from Azure Monitor Logs.
-Here's a heirarchy of the LogsQueryResult response:
+### Logs query rate limits and throttling
 
-- `MetricsQueryClient` - Client that provides methods to query metrics from Azure Monitor Metrics.
+The Log Analytics service applies throttling when the request rate is too high. Limits, such as the maximum number of rows returned, are also applied on the Kusto queries. For more information, see [Rate and query limits](https://dev.loganalytics.io/documentation/Using-the-API/Limits).
+
+### Metrics data structure
+
+Each set of metric values is a time series with the following characteristics:
+
+- The time the value was collected
+- The resource associated with the value
+- A namespace that acts like a category for the metric
+- A metric name
+- The value itself
+- Some metrics may have multiple dimensions as described in multi-dimensional metrics. Custom metrics can have up to 10 dimensions.
 
 ### Thread safety
 
@@ -94,8 +104,7 @@ foreach (var row in table.Rows)
 ```
 
 #### Handle logs query response
-The `query` API returns the `LogsQueryResult`, while the queryBatch API returns the 
-`LogsBatchQueryResult`.
+The `Query` method returns the `LogsQueryResult`, while the `QueryBatch` method returns the `LogsBatchQueryResult`.
 Here's a hierarchy of the response:
 
 ```
@@ -319,11 +328,7 @@ foreach (var metric in results.Value.Metrics)
 ```
 
 #### Handle metrics query response
-The metrics query API returns a `MetricsQueryResult` object. The `MetricsQueryResult` object contains 
-properties such as a list of `MetricResult`-typed objects, `Cost`, `Namespace`, `ResourceRegion`, `TimeSpan`, and `Interval`. The 
-`MetricResult` objects list can be accessed using the `metrics` param. Each `MetricResult` object in this list
-contains a list of `TimeSeries` objects. Each `TimeSeries` contains `Metadatavalues` and `Values`
-properties. 
+The metrics query API returns a `MetricsQueryResult` object. The `MetricsQueryResult` object contains properties such as a list of `MetricResult`-typed objects, `Cost`, `Namespace`, `ResourceRegion`, `TimeSpan`, and `Interval`. The `MetricResult` objects list can be accessed using the `metrics` param. Each `MetricResult` object in this list contains a list of `TimeSeries` objects. Each `TimeSeries` contains `Metadatavalues` and `Values` properties. 
 
 Here's a hierarchy of the response:
 
@@ -342,7 +347,7 @@ MetricsQueryResult
     |---Error
     |---Unit
     |---TimeSeries (list of `MetricTimeSeriesElement` objects)
-        |---Metadatavalues
+        |---Metadata
         |---Values
 ```
 
