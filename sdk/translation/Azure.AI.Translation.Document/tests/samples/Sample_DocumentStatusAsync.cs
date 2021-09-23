@@ -10,20 +10,28 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
-    public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
+    public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
-        [Ignore("Samples not working yet")]
+        [AsyncOnly]
         public async Task DocumentStatusAsync()
         {
+#if SNIPPET
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-
+#if SNIPPET
             Uri sourceUri = new Uri("<source SAS URI>");
-            Uri targetUri = new Uri("<target SAS URI>");
+            Uri targetUri = new Uri("<target SAS URI>")
+#else
+            Uri sourceUri = await CreateSourceContainerAsync(oneTestDocuments);
+            Uri targetUri = await CreateTargetContainerAsync();
+#endif
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
@@ -36,8 +44,8 @@ namespace Azure.AI.Translation.Document.Samples
             {
                 await operation.UpdateStatusAsync();
 
-                AsyncPageable<DocumentStatus> documentsStatus = operation.GetAllDocumentStatusesAsync();
-                await foreach (DocumentStatus docStatus in documentsStatus)
+                AsyncPageable<DocumentStatusResult> documentsStatus = operation.GetDocumentStatusesAsync();
+                await foreach (DocumentStatusResult docStatus in documentsStatus)
                 {
                     if (documentscompleted.Contains(docStatus.Id))
                         continue;

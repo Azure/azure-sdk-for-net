@@ -17,20 +17,9 @@ namespace Azure.AI.TextAnalytics
             Error = error != null ? Transforms.ConvertToError(error) : default;
         }
 
-        /// <summary>
-        /// Intended for mocking purposes only.
-        /// </summary>
         internal TextAnalyticsActionResult(DateTimeOffset completedOn)
         {
             CompletedOn = completedOn;
-        }
-
-        /// <summary>
-        /// Intended for mocking purposes only.
-        /// </summary>
-        internal TextAnalyticsActionResult(TextAnalyticsErrorInternal error)
-        {
-            Error = Transforms.ConvertToError(error);
         }
 
         /// <summary>

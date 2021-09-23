@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     internal partial class ContainerItemInternal
     {
         /// <summary> Initializes a new instance of ContainerItemInternal. </summary>
-        /// <param name="name"> . </param>
+        /// <param name="name"></param>
         /// <param name="properties"> Properties of a container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal ContainerItemInternal(string name, ContainerPropertiesInternal properties)
@@ -35,9 +35,9 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of ContainerItemInternal. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="deleted"> . </param>
-        /// <param name="version"> . </param>
+        /// <param name="name"></param>
+        /// <param name="deleted"></param>
+        /// <param name="version"></param>
         /// <param name="properties"> Properties of a container. </param>
         /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
         internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata)
@@ -49,8 +49,11 @@ namespace Azure.Storage.Blobs.Models
             Metadata = metadata;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the deleted. </summary>
         public bool? Deleted { get; }
+        /// <summary> Gets the version. </summary>
         public string Version { get; }
         /// <summary> Properties of a container. </summary>
         public ContainerPropertiesInternal Properties { get; }

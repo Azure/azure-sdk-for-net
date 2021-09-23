@@ -21,7 +21,7 @@ Each of the application samples are intended to be self-contained and focused on
 
 ### Prerequisites
 
-- **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 
 - **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
 
@@ -39,7 +39,7 @@ To quickly create a basic set of Event Hubs resources in Azure and to receive a 
 
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Messaging.EventHubs
 ```
 
@@ -49,29 +49,32 @@ For the Event Hubs client library to interact with an Event Hub, it will need to
 
 ## Common samples
 
-- [Hello world](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample01_HelloWorld.md)  
+- [Hello world](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample01_HelloWorld.md)  
   An introduction to Event Hubs, illustrating the basic flow of events through an Event Hub, with the goal of quickly allowing you to view events being published and read from the Event Hubs service.  
   
-- [Event Hubs Clients](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample02_EventHubsClients.md)  
+- [Event Hubs Clients](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample02_EventHubsClients.md)  
   An overview of the Event Hubs clients, detailing the available client types, the scenarios they serve, and demonstrating options for customizing their configuration, such as specifying a proxy.  
 
-- [Event Hubs Metadata](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample03_EventHubMetadata.md)  
+- [Event Hubs Metadata](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample03_EventHubMetadata.md)  
   A discussion of the metadata available for an Event Hub instance and demonstration of how to query and inspect the information.  
   
-- [Publishing Events](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_PublishingEvents.md)  
+- [Publishing Events](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_PublishingEvents.md)  
   A deep dive into publishing events using the Event Hubs client library, detailing the different options available and illustrating common scenarios.  
   
-- [Reading Events](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_ReadingEvents.md)  
+- [Reading Events](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_ReadingEvents.md)  
   A deep dive into reading events using the Event Hubs client library, detailing the different options available and illustrating common scenarios.  
   
-- [Identity and Shared Access Credentials](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample06_IdentityAndSharedAccessCredentials.md)  
+- [Identity and Shared Access Credentials](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample06_IdentityAndSharedAccessCredentials.md)  
   A discussion of the different types of authorization supported, focusing on identity-based credentials for Azure Active Directory and use the of shared access signatures and keys.  
   
-- [Earlier Language Versions](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample07_EarlierLanguageVersions.md)  
+- [Earlier Language Versions](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample07_EarlierLanguageVersions.md)  
   A demonstration of how to interact with the client library using earlier versions of C#, where newer syntax for asynchronous enumeration and disposal are not available.
 
-- [Building a Custom Event Processor using EventProcessor&lt;TPartition&gt;](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample08_CustomEventProcessor.md)
-  An introduction to the `EventProcessor<TPartition>` base class which is used when building advanced processors which need full control over state management. 
+- [Building a Custom Event Processor using EventProcessor&lt;TPartition&gt;](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample08_CustomEventProcessor.md)  
+  An introduction to the `EventProcessor<TPartition>` base class which is used when building advanced processors which need full control over state management.
+
+- [Capturing Event Hubs logs using AzureEventSourceListener class](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_AzureEventSourceListener.md)  
+  A demonstration of how to use the [`AzureEventSourceListener`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) from the `Azure.Core` package to capture logs emitted by the Event Hubs client library.
 
 ## Contributing  
 
@@ -81,6 +84,6 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
+Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs/samples/%2FREADME.png)

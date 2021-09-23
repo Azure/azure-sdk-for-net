@@ -1,17 +1,44 @@
 # Release History
 
-## 12.1.0-beta.1 (Unreleased)
+## 12.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.2.0 (2021-09-07)
+
+### Bugs Fixed
+
+- Properly handle `GenerateSasUri` when the client is constructed with a connection string ([#23404](https://github.com/Azure/azure-sdk-for-net/issues/23404))
+- Fixed an exception when constructing the `TableClient` with a connection string where the table name is the same as the account name.
+
+## 12.2.0-beta.1 (2021-08-10)
+
+Thank you to our developer community members who helped to make Azure Tables better with their contributions to this release:
+
+- Yifan Bian _([yifanbian-msft](https://github.com/yifanbian-msft))_
+- David Gardiner _([flcdrg](https://github.com/flcdrg))_
+
+### Features Added
+
+- Added support for customization of how model properties are serialized. Decorating a model property with the `[IgnoreDataMember]` attribute will ignore it on serialization and the `[DataMember(Name = "some_new_name")]` will rename the property.
+- Added an extension method to the Builder extensions that accepts just the Table Uri. (A community contribution, courtesy of _[flcdrg](https://github.com/flcdrg))_.
+
+### Bugs Fixed
+
+- Fixed and issue with connection string parsing for Azure Storage Emulator connection strings. (A community contribution, courtesy of _[yifanbian-msft](https://github.com/yifanbian-msft))_.
+
+
+## 12.1.0 (2021-07-07)
 
 ### Features Added
 
 - Support for Azure Active Directory (AAD) authorization has been added to `TableServiceClient` and `TableClient`. This enables use of `TokenCredential` credentials. Note: Only Azure Storage API endpoints currently support AAD authorization.
-
-### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
-
 
 ## 12.0.1 (2021-06-10)
 
@@ -124,5 +151,5 @@ Thank you to our developer community members who helped to make Azure Tables bet
 
 This is the first beta of the `Azure.Data.Tables` client library. The Azure Tables client library can seamlessly target either Azure Table storage or Azure Cosmos DB table service endpoints with no code changes.
 
-This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/README.md) 
-and [samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/tables/Azure.Data.Tables/samples) demonstrate the new API.
+This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/README.md) 
+and [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/tables/Azure.Data.Tables/samples) demonstrate the new API.

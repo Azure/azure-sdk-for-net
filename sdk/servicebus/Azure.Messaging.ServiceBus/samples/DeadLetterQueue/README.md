@@ -40,7 +40,7 @@ The sample implements two scenarios:
 The sample code is further documented inline in the `Program.cs` C# file.
 
 ## Prerequisites
-In order to run the sample, you will need a Service Bus Namespace. For more information on getting setup see the [Getting Started](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus#getting-started) section of the Service Bus library Readme. Once you have a Service Bus Namespace, you will need to create a queue that can be used for the sample. 
+In order to run the sample, you will need a Service Bus Namespace. For more information on getting setup see the [Getting Started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus#getting-started) section of the Service Bus library Readme. Once you have a Service Bus Namespace, you will need to create a queue that can be used for the sample. 
 
 ## Building the Sample
 
@@ -50,7 +50,7 @@ To build the sample:
 
 2. Run in the project directory:
 
-   ```bash
+   ```dotnetcli
    dotnet build
    ```
 
@@ -63,13 +63,13 @@ You can use any of the [authentication mechanisms](https://docs.microsoft.com/do
 
 To run the sample using Azure Identity:
 
-```bash
+```dotnetcli
 dotnet run -- --namespace <fully qualified namespace> --queue <queue name>
 ```
 ### Use a Service Bus connection string
 The other way to run the sample is by specifying an environment variable that contains the connection string for the namespace you wish to use:
 
-```bash
+```dotnetcli
 dotnet run -- --connection-variable <environment variable name> --queue <queue name>
 ```
 

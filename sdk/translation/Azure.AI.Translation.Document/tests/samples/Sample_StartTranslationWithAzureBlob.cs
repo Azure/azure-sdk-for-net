@@ -9,16 +9,16 @@ using Azure.AI.Translation.Document.Tests;
 using Azure.Core.TestFramework;
 using Azure.Storage;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
-    public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
+    public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
-        [Ignore("Samples not working yet")]
+        [AsyncOnly]
         public async Task StartTranslationWithAzureBlob()
         {
             /**
@@ -34,37 +34,42 @@ namespace Azure.AI.Translation.Document.Samples
 
             USAGE:
                 Set the environment variables with your own values before running the sample:
-                1) AZURE_DOCUMENT_TRANSLATION_ENDPOINT - the endpoint to your Document Translation resource.
-                2) AZURE_DOCUMENT_TRANSLATION_KEY - your Document Translation API key.
-                3) AZURE_STORAGE_SOURCE_ENDPOINT - the endpoint to your Storage account
-                4) AZURE_STORAGE_ACCOUNT_NAME - the name of your storage account
-                5) AZURE_STORAGE_SOURCE_KEY - the shared access key to your storage account
-                Optional environment variables - if not set, they will be created for you
-                6) AZURE_STORAGE_SOURCE_CONTAINER_NAME - the name of your source container
-                7) AZURE_STORAGE_TARGET_CONTAINER_NAME - the name of your target container
-                8) AZURE_DOCUMENT_PATH - (optional) the path and file extension of your document in this directory
+                1) DOCUMENT_TRANSLATION_ENDPOINT - the endpoint to your Document Translation resource.
+                2) DOCUMENT_TRANSLATION_API_KEY - your Document Translation API key.
+                3) DOCUMENT_TRANSLATION_CONNECTION_STRING - the connection string to your Storage account
+                4) AZURE_DOCUMENT_PATH - (optional) the path and file extension of your document in this directory
                     e.g. "path/mydocument.txt"
+                Optionally, you can also set the following variables in code:
+                5) sourceContainerName - the name of your source container
+                6) targetContainerName - the name of your target container
             **/
+#if SNIPPET
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:StartTranslationWithAzureBlobAsync
-            Uri storageEndpoint = new Uri(Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_ENDPOINT"));
-            string storageAccountName = Environment.GetEnvironmentVariable("AZURE_STORAGE_ACCOUNT_NAME");
-            string storageAccountKey = Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_KEY");
-            string sourceContainerName = Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_CONTAINER_NAME");
-            string targetContainerName = Environment.GetEnvironmentVariable("AZURE_STORAGE_TARGET_CONTAINER_NAME");
+            var storageConnectionString = Environment.GetEnvironmentVariable("DOCUMENT_TRANSLATION_CONNECTION_STRING");
+#if SNIPPET
+            string sourceContainerName = "<Source Container Name>";
+            string targetContainerName = "<Target Container Name>";
+#else
+            string sourceContainerName = GenerateRandomName("source");
+            string targetContainerName = GenerateRandomName("target");
+#endif
             string documentPath = Environment.GetEnvironmentVariable("AZURE_DOCUMENT_PATH");
 
             // Create source and target storage containers
-            BlobServiceClient blobServiceClient = new BlobServiceClient(storageEndpoint, new StorageSharedKeyCredential(storageAccountName, storageAccountKey));
-            BlobContainerClient sourceContainerClient = await blobServiceClient.CreateBlobContainerAsync(sourceContainerName ?? "translation-source-container").ConfigureAwait(false);
-            BlobContainerClient targetContainerClient = await blobServiceClient.CreateBlobContainerAsync(targetContainerName ?? "translation-target-container").ConfigureAwait(false);
+            BlobServiceClient blobServiceClient = new BlobServiceClient(storageConnectionString);
+            BlobContainerClient sourceContainerClient = await blobServiceClient.CreateBlobContainerAsync(sourceContainerName ?? "translation-source-container", PublicAccessType.BlobContainer).ConfigureAwait(false);
+            BlobContainerClient targetContainerClient = await blobServiceClient.CreateBlobContainerAsync(targetContainerName ?? "translation-target-container", PublicAccessType.BlobContainer).ConfigureAwait(false);
 
             // Upload blob (file) to the source container
-            BlobClient srcBlobClient = sourceContainerClient.GetBlobClient(string.IsNullOrWhiteSpace(documentPath) ? Path.GetFileName(documentPath) : "example_source_document.txt");
+            BlobClient srcBlobClient = sourceContainerClient.GetBlobClient(!string.IsNullOrWhiteSpace(documentPath) ? Path.GetFileName(documentPath) : "example_source_document.txt");
 
             if (!string.IsNullOrWhiteSpace(documentPath))
             {
@@ -82,7 +87,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             // Generate SAS tokens for source & target
             Uri srcSasUri = sourceContainerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Read, DateTime.UtcNow.AddMinutes(30));
-            Uri tgtSasUri = targetContainerClient.GenerateSasUri(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write | BlobContainerSasPermissions.Delete, DateTime.UtcNow.AddMinutes(30));
+            Uri tgtSasUri = targetContainerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write | BlobContainerSasPermissions.Delete, DateTime.UtcNow.AddMinutes(30));
 
             // Submit the translation operation and wait for it to finish
             var operationRequest = new DocumentTranslationInput(srcSasUri, tgtSasUri, "es");
@@ -97,19 +102,17 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine($"{operationResult.DocumentsFailed} failed");
             Console.WriteLine($"{operationResult.DocumentsSucceeded} succeeded");
 
-            await foreach (DocumentStatus document in operationResult.GetAllDocumentStatusesAsync())
+            await foreach (DocumentStatusResult document in operationResult.GetDocumentStatusesAsync())
             {
                 if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
-                    Console.WriteLine($"Document at {document.SourceDocumentUri} was translated to {document.TranslatedTo} language.You can find translated document at {document.TranslatedDocumentUri}");
+                    Console.WriteLine($"Document at {document.SourceDocumentUri} was translated to {document.TranslatedToLanguageCode} language.You can find translated document at {document.TranslatedDocumentUri}");
                 }
                 else
                 {
                     Console.WriteLine($"Document ID: {document.Id}, Error Code: {document.Error.ErrorCode}, Message: {document.Error.Message}");
                 }
             }
-
-            #endregion
         }
     }
 }

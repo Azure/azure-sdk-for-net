@@ -13,9 +13,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AzureTableDataFeedPatch. </summary>
         public AzureTableDataFeedPatch()
         {
-            DataSourceType = DataFeedSourceType.AzureTable;
+            DataSourceType = DataFeedSourceKind.AzureTable;
         }
 
+        /// <summary> Gets or sets the data source parameter. </summary>
         public AzureTableParameterPatch DataSourceParameter { get; set; }
     }
 }

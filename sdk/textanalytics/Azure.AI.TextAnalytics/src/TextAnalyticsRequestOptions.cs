@@ -46,9 +46,13 @@ namespace Azure.AI.TextAnalytics
         /// The default value of this property is 'false', except for methods like 'StartAnalyzeHealthcareEntities' and 'RecognizePiiEntities'.
         /// This means, Text Analytics service logs your input text for 48 hours, solely to allow for troubleshooting issues.
         /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
+        /// <para>
+        /// Please see Cognitive Services Compliance and Privacy notes at <see href="https://aka.ms/cs-compliance"/> for additional details,
+        /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/ai/responsible-ai"/>.
+        /// </para>
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
         /// </remarks>
         public bool? DisableServiceLogs { get; set; }
     }

@@ -10,7 +10,9 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    [ClientTestFixture(KeyClientOptions.ServiceVersion.V7_2)]
+    [ClientTestFixture(
+        KeyClientOptions.ServiceVersion.V7_2,
+        KeyClientOptions.ServiceVersion.V7_3_Preview)]
     public class ManagedHsmCryptographyClientLiveTests : CryptographyClientLiveTests
     {
         private static readonly IEnumerable<KeyOperation> s_aesKeyOps = new[]

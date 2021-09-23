@@ -11,7 +11,7 @@ Install this package if you want to use Newtonsoft.Json to serialize and deseria
 
 Install this package from [NuGet] using the .NET CLI:
 
-```bash
+```dotnetcli
 dotnet add package Microsoft.Azure.Core.NewtonsoftJson
 ```
 
@@ -119,7 +119,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [azure_core_package]: https://www.nuget.org/packages/Azure.Core/
 [azure_search_documents_package]: https://www.nuget.org/packages/Azure.Search.Documents/
-[azure_search_documents_readme]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/README.md
+[azure_search_documents_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/README.md
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [newtonsoft_json_package]: https://www.nuget.org/packages/Newtonsoft.Json/

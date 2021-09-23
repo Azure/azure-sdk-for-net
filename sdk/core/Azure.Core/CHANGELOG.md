@@ -1,7 +1,45 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+## 1.20.0-beta.1 (Unreleased)
 
+### Features Added
+
+- Added `TokenCredential.Create` static method, which returns an instance of `TokenCredential` that uses the supplied delgates to produce an `AccessToken`. This would most typically be used when an token has previously been obtained from some other source and that token needs to be returned by a `TokenCredential` instance.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.19.0 (2021-09-07)
+
+- Added `HttpAuthorization` to represent authentication information in Authorization, ProxyAuthorization, WWW-Authenticate, and Proxy-Authenticate header values.
+
+## 1.18.0 (2021-08-18)
+
+
+### Bugs Fixed
+
+- Fixed a bug where a buffered error responses on .NET Framework were prematurely disposed
+- Fixed relative redirect support.
+
+## 1.17.0 (2021-08-10)
+
+### Features Added
+
+- Added `ClientOptions.Default` to configure defaults process-wide.
+- Added `HttpPipelinePosition.BeforeTransport` to be able to add policies at the end of the pipeline before the transport.
+
+### Fixed
+
+- Fixed `NotSupportedException` when running in Unity.
+
+## 1.16.0 (2021-06-30)
+
+### Changed
+
+- Added `TenantId` to the properties on `TokenRequestContext` to enable multi-tenant support in Azure.Identity.
 
 ## 1.15.0 (2021-06-08)
 

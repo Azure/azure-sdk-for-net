@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>
       This library provides base types for other Microsoft Azure Communication client libraries.
-      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Common/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Common/CHANGELOG.md.
+      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Common/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Common/CHANGELOG.md.
     </Description>
     <AssemblyTitle>Azure Communication Services Common</AssemblyTitle>
     <Version>1.1.0-beta.1</Version>
@@ -13,12 +13,15 @@
     <RootNamespace>Azure.Communication</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\README.md" Link="README.md" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

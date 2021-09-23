@@ -16,6 +16,7 @@ param (
 )
 
 $ErrorActionPreference = 'Stop'
+$Env:NODE_OPTIONS = "--max-old-space-size=8192"
 Set-StrictMode -Version 1
 
 [string[]] $errors = @()
@@ -103,9 +104,9 @@ try {
             $status = $status -replace "`n","`n    "
             LogError `
 "Generated code is not up to date.`
-    You may need to rebase on the latest master, `
-    run 'eng\scripts\Update-Snippets.ps1' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md#updating-sample-snippets), `
-    run 'eng\scripts\Export-API.ps1' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md#public-api-additions). `
+    You may need to rebase on the latest main, `
+    run 'eng\scripts\Update-Snippets.ps1' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets), `
+    run 'eng\scripts\Export-API.ps1' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#public-api-additions). `
     run 'dotnet build /t:GenerateCode' to update the generated code.`
     `
 To reproduce this error localy run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory'."

@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="KeyVaultDataAction"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultDataAction"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultDataAction(string value)
         {
@@ -32,6 +32,8 @@ namespace Azure.Security.KeyVault.Administration
         private const string GetRoleAssignmentValue = "Microsoft.KeyVault/managedHsm/roleAssignments/read/action";
         private const string WriteRoleAssignmentValue = "Microsoft.KeyVault/managedHsm/roleAssignments/write/action";
         private const string ReadRoleDefinitionValue = "Microsoft.KeyVault/managedHsm/roleDefinitions/read/action";
+        private const string WriteRoleDefinitionValue = "Microsoft.KeyVault/managedHsm/roleDefinitions/write/action";
+        private const string DeleteRoleDefinitionValue = "Microsoft.KeyVault/managedHsm/roleDefinitions/delete/action";
         private const string EncryptHsmKeyValue = "Microsoft.KeyVault/managedHsm/keys/encrypt/action";
         private const string DecryptHsmKeyValue = "Microsoft.KeyVault/managedHsm/keys/decrypt/action";
         private const string WrapHsmKeyValue = "Microsoft.KeyVault/managedHsm/keys/wrap/action";
@@ -41,9 +43,11 @@ namespace Azure.Security.KeyVault.Administration
         private const string CreateHsmKeyValue = "Microsoft.KeyVault/managedHsm/keys/create";
         private const string DeleteHsmKeyValue = "Microsoft.KeyVault/managedHsm/keys/delete";
         private const string ExportHsmKeyValue = "Microsoft.KeyVault/managedHsm/keys/export/action";
+        private const string ReleaseKeyValue = "Microsoft.KeyVault/managedHsm/keys/release/action";
         private const string ImportHsmKeyValue = "Microsoft.KeyVault/managedHsm/keys/import/action";
         private const string PurgeDeletedHsmKeyValue = "Microsoft.KeyVault/managedHsm/keys/deletedKeys/delete";
         private const string DownloadHsmSecurityDomainValue = "Microsoft.KeyVault/managedHsm/securitydomain/download/action";
+        private const string DownloadHsmSecurityDomainStatusValue = "Microsoft.KeyVault/managedHsm/securitydomain/download/read";
         private const string UploadHsmSecurityDomainValue = "Microsoft.KeyVault/managedHsm/securitydomain/upload/action";
         private const string ReadHsmSecurityDomainStatusValue = "Microsoft.KeyVault/managedHsm/securitydomain/upload/read";
         private const string ReadHsmSecurityDomainTransferKeyValue = "Microsoft.KeyVault/managedHsm/securitydomain/transferkey/read";
@@ -51,6 +55,7 @@ namespace Azure.Security.KeyVault.Administration
         private const string StartHsmRestoreValue = "Microsoft.KeyVault/managedHsm/restore/start/action";
         private const string ReadHsmBackupStatusValue = "Microsoft.KeyVault/managedHsm/backup/status/action";
         private const string ReadHsmRestoreStatusValue = "Microsoft.KeyVault/managedHsm/restore/status/action";
+        private const string RandomNumbersGenerateValue = "Microsoft.KeyVault/managedHsm/rng/action";
 
         /// <summary> Read HSM key metadata. </summary>
         public static KeyVaultDataAction ReadHsmKey { get; } = new KeyVaultDataAction(ReadHsmKeyValue);
@@ -72,6 +77,10 @@ namespace Azure.Security.KeyVault.Administration
         public static KeyVaultDataAction WriteRoleAssignment { get; } = new KeyVaultDataAction(WriteRoleAssignmentValue);
         /// <summary> Get role definition. </summary>
         public static KeyVaultDataAction ReadRoleDefinition { get; } = new KeyVaultDataAction(ReadRoleDefinitionValue);
+        /// <summary> Create or update role definition. </summary>
+        public static KeyVaultDataAction WriteRoleDefinition { get; } = new KeyVaultDataAction(WriteRoleDefinitionValue);
+        /// <summary> Delete role definition. </summary>
+        public static KeyVaultDataAction DeleteRoleDefinition { get; } = new KeyVaultDataAction(DeleteRoleDefinitionValue);
         /// <summary> Encrypt using an HSM key. </summary>
         public static KeyVaultDataAction EncryptHsmKey { get; } = new KeyVaultDataAction(EncryptHsmKeyValue);
         /// <summary> Decrypt using an HSM key. </summary>
@@ -90,12 +99,16 @@ namespace Azure.Security.KeyVault.Administration
         public static KeyVaultDataAction DeleteHsmKey { get; } = new KeyVaultDataAction(DeleteHsmKeyValue);
         /// <summary> Export an HSM key. </summary>
         public static KeyVaultDataAction ExportHsmKey { get; } = new KeyVaultDataAction(ExportHsmKeyValue);
+        /// <summary> Release an HSM key using Secure Key Release. </summary>
+        public static KeyVaultDataAction ReleaseKey { get; } = new KeyVaultDataAction(ReleaseKeyValue);
         /// <summary> Import an HSM key. </summary>
         public static KeyVaultDataAction ImportHsmKey { get; } = new KeyVaultDataAction(ImportHsmKeyValue);
         /// <summary> Purge a deleted HSM key. </summary>
         public static KeyVaultDataAction PurgeDeletedHsmKey { get; } = new KeyVaultDataAction(PurgeDeletedHsmKeyValue);
         /// <summary> Download an HSM security domain. </summary>
         public static KeyVaultDataAction DownloadHsmSecurityDomain { get; } = new KeyVaultDataAction(DownloadHsmSecurityDomainValue);
+        /// <summary> Check status of HSM security domain download. </summary>
+        public static KeyVaultDataAction DownloadHsmSecurityDomainStatus { get; } = new KeyVaultDataAction(DownloadHsmSecurityDomainStatusValue);
         /// <summary> Upload an HSM security domain. </summary>
         public static KeyVaultDataAction UploadHsmSecurityDomain { get; } = new KeyVaultDataAction(UploadHsmSecurityDomainValue);
         /// <summary> Check the status of the HSM security domain exchange file. </summary>
@@ -110,6 +123,8 @@ namespace Azure.Security.KeyVault.Administration
         public static KeyVaultDataAction ReadHsmBackupStatus { get; } = new KeyVaultDataAction(ReadHsmBackupStatusValue);
         /// <summary> Read an HSM restore status. </summary>
         public static KeyVaultDataAction ReadHsmRestoreStatus { get; } = new KeyVaultDataAction(ReadHsmRestoreStatusValue);
+        /// <summary> Generate random numbers. </summary>
+        public static KeyVaultDataAction RandomNumbersGenerate { get; } = new KeyVaultDataAction(RandomNumbersGenerateValue);
         /// <summary> Determines if two <see cref="KeyVaultDataAction"/> values are the same. </summary>
         public static bool operator ==(KeyVaultDataAction left, KeyVaultDataAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultDataAction"/> values are not the same. </summary>

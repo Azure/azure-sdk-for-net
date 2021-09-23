@@ -4,9 +4,32 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/9adc7d27401256b1c9baa6ab90dccb32e8ea255c/specification/storage/data-plane/Microsoft.FileStorage/preview/2020-10-02/file.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4a93ab078fba7f087116283c8ed169f9b8e30397/specification/storage/data-plane/Microsoft.FileStorage/preview/2020-10-02/file.json
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
+```
+
+### Don't include share name, directory, or file name in path - we have direct URIs.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    for (const property in $)
+    {
+        if (property.includes('/{shareName}/{directory}/{fileName}'))
+        {
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ShareName") && false == param['$ref'].endsWith("#/parameters/DirectoryPath") && false == param['$ref'].endsWith("#/parameters/FilePath"))});
+        } 
+        else if (property.includes('/{shareName}/{directory}'))
+        {
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ShareName") && false == param['$ref'].endsWith("#/parameters/DirectoryPath"))});
+        }
+        else if (property.includes('/{shareName}'))
+        {
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ShareName"))});
+        }
+    }
 ```
 
 ### Metrics

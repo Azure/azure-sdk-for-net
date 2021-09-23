@@ -13,8 +13,8 @@ namespace Azure.Storage.Blobs.Models
     internal partial class FilterBlobItem
     {
         /// <summary> Initializes a new instance of FilterBlobItem. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="containerName"> . </param>
+        /// <param name="name"></param>
+        /// <param name="containerName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="containerName"/> is null. </exception>
         internal FilterBlobItem(string name, string containerName)
         {
@@ -32,8 +32,8 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of FilterBlobItem. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="containerName"> . </param>
+        /// <param name="name"></param>
+        /// <param name="containerName"></param>
         /// <param name="tags"> Blob tags. </param>
         internal FilterBlobItem(string name, string containerName, BlobTags tags)
         {
@@ -42,7 +42,9 @@ namespace Azure.Storage.Blobs.Models
             Tags = tags;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the container name. </summary>
         public string ContainerName { get; }
         /// <summary> Blob tags. </summary>
         public BlobTags Tags { get; }

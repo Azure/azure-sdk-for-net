@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class LanguageBatchInput
     {
         /// <summary> Initializes a new instance of LanguageBatchInput. </summary>
-        /// <param name="documents"> . </param>
+        /// <param name="documents"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/> is null. </exception>
         public LanguageBatchInput(IEnumerable<LanguageInput> documents)
         {
@@ -27,6 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             Documents = documents.ToList();
         }
 
+        /// <summary> Gets the documents. </summary>
         public IList<LanguageInput> Documents { get; }
     }
 }

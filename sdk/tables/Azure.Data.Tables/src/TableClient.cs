@@ -168,6 +168,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="tableName"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="connectionString"/> is invalid.</exception>
         public TableClient(string connectionString, string tableName)
             : this(connectionString, tableName, default)
         { }
@@ -191,31 +192,33 @@ namespace Azure.Data.Tables
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="tableName"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="tableName"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="connectionString"/> is invalid.</exception>
         public TableClient(string connectionString, string tableName, TableClientOptions options = null)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
-            _accountName = connString._accountName;
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
             options ??= TableClientOptions.DefaultOptions;
-            var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
+            _endpoint = GetEndpointWithoutTableName(connString.TableStorageUri.PrimaryUri, tableName);
 
-            TableSharedKeyPipelinePolicy policy = connString.Credentials switch
+            TableSharedKeyPipelinePolicy policy = null;
+            if (connString.Credentials is TableSharedKeyCredential credential)
             {
-                TableSharedKeyCredential credential => new TableSharedKeyPipelinePolicy(credential),
-                _ => default
-            };
+                policy = new TableSharedKeyPipelinePolicy(credential);
+                // This is for SAS key generation.
+                _tableSharedKeyCredential = credential;
+            }
 
             _pipeline =
                 HttpPipelineBuilder.Build(options, perCallPolicies, new HttpPipelinePolicy[] { policy }, new ResponseClassifier());
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
+            _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
 
@@ -247,7 +250,7 @@ namespace Azure.Data.Tables
 
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
-            _endpoint = endpoint;
+            _endpoint = GetEndpointWithoutTableName(endpoint, tableName);
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
             options ??= TableClientOptions.DefaultOptions;
 
@@ -285,7 +288,7 @@ namespace Azure.Data.Tables
 
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
-            _endpoint = endpoint;
+            _endpoint = GetEndpointWithoutTableName(endpoint, tableName);
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
             options ??= TableClientOptions.DefaultOptions;
 
@@ -303,12 +306,13 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpoint.AbsoluteUri, _version);
+            _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
 
         internal TableClient(
             string table,
+            string accountName,
             TableRestClient tableOperations,
             string version,
             ClientDiagnostics diagnostics,
@@ -319,6 +323,7 @@ namespace Azure.Data.Tables
             _tableOperations = tableOperations;
             _version = version;
             Name = table;
+            _accountName = accountName;
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
             _endpoint = endpoint;
@@ -433,7 +438,7 @@ namespace Azure.Data.Tables
                     cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
             {
                 return default;
             }
@@ -464,7 +469,7 @@ namespace Azure.Data.Tables
                     .ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
             {
                 return default;
             }
@@ -1405,6 +1410,10 @@ namespace Azure.Data.Tables
         public virtual Uri GenerateSasUri(
             TableSasBuilder builder)
         {
+            if (SharedKeyCredential == null)
+            {
+                throw new InvalidOperationException($"{nameof(GenerateSasUri)} requires that this client be constructed with a credential type other than {nameof(TokenCredential)} in order to sign the SAS token.");
+            }
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
             if (!builder.TableName.Equals(Name, StringComparison.InvariantCulture))
             {
@@ -1593,6 +1602,22 @@ namespace Azure.Data.Tables
         {
             _batchGuid = batchGuid;
             _changesetGuid = changesetGuid;
+        }
+
+        private static Uri GetEndpointWithoutTableName(Uri endpoint, string tableName)
+        {
+            if (!endpoint.AbsolutePath.Contains(tableName))
+            {
+                return endpoint;
+            }
+            var endpointString = endpoint.AbsoluteUri;
+            var indexOfTableName = endpointString.LastIndexOf("/" + tableName, StringComparison.OrdinalIgnoreCase);
+            if (indexOfTableName <= 0)
+            {
+                return endpoint;
+            }
+            endpointString = endpointString.Remove(indexOfTableName, tableName.Length + 1);
+            return new Uri(endpointString);
         }
     }
 }

@@ -122,12 +122,12 @@ namespace Azure.Security.KeyVault
                 using Request request = CreateRequest(RequestMethod.Get, firstPageUri, false);
                 Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-                // read the respose
+                // read the response
                 KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
                 responseAsPage.Deserialize(response.ContentStream);
 
                 // convert from the Page<T> to PageResponse<T>
-                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
+                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.AbsoluteUri, response);
             }
             catch (Exception e)
             {
@@ -153,12 +153,12 @@ namespace Azure.Security.KeyVault
                 using Request request = CreateRequest(RequestMethod.Get, firstPageUri, false);
                 Response response = SendRequest(request, cancellationToken);
 
-                // read the respose
+                // read the response
                 KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
                 responseAsPage.Deserialize(response.ContentStream);
 
                 // convert from the Page<T> to PageResponse<T>
-                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
+                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.AbsoluteUri, response);
             }
             catch (Exception e)
             {

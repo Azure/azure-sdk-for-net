@@ -1,15 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/languages",
+      "RequestUri": "https://tacanaryjava.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/languages",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "96",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c06645728675104e96d835740c14079a-a41f941f61021848-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-d0b781ae4764d245a75cdbaa3ab35df3-05a91c486429224e-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210803.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "31841aab9edddcddb56c91e8fafcead5",
         "x-ms-return-client-request-id": "true"
       },
@@ -24,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ebc1fa95-469e-45de-a899-9868490f0454",
+        "apim-request-id": "5be764ba-29cf-46dc-9130-7afb7a4fac98",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Tue, 11 May 2021 16:09:12 GMT",
+        "Date": "Tue, 03 Aug 2021 18:40:01 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "8"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
         "documents": [
@@ -50,15 +56,21 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/languages",
+      "RequestUri": "https://tacanaryjava.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/languages",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "96",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c0c528060f9e2642a8ddc4273960cea1-472cde6db4ac0e4c-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-962f83f6ea4dea4f8ead2ca31357019a-a015d50668639f4a-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210803.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "13daa31269993bffe7f19e3dc94f204e",
         "x-ms-return-client-request-id": "true"
       },
@@ -73,21 +85,34 @@
       },
       "StatusCode": 401,
       "ResponseHeaders": {
+        "apim-request-id": "4fccbcc9-1454-445c-b252-3b7328825e70",
         "Content-Length": "224",
-        "Date": "Tue, 11 May 2021 16:09:12 GMT"
+        "Content-Type": "application/json",
+        "Date": "Tue, 03 Aug 2021 18:40:01 GMT"
       },
-      "ResponseBody": "eyJlcnJvciI6eyJjb2RlIjoiNDAxIiwibWVzc2FnZSI6IkFjY2VzcyBkZW5pZWQgZHVlIHRvIGludmFsaWQgc3Vic2NyaXB0aW9uIGtleSBvciB3cm9uZyBBUEkgZW5kcG9pbnQuIE1ha2Ugc3VyZSB0byBwcm92aWRlIGEgdmFsaWQga2V5IGZvciBhbiBhY3RpdmUgc3Vic2NyaXB0aW9uIGFuZCB1c2UgYSBjb3JyZWN0IHJlZ2lvbmFsIEFQSSBlbmRwb2ludCBmb3IgeW91ciByZXNvdXJjZS4ifX0="
+      "ResponseBody": {
+        "error": {
+          "code": "401",
+          "message": "Access denied due to invalid subscription key or wrong API endpoint. Make sure to provide a valid key for an active subscription and use a correct regional API endpoint for your resource."
+        }
+      }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/languages",
+      "RequestUri": "https://tacanaryjava.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/languages",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "96",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-9d3132bf36e42446a4807a7bf7fe5897-692884d8e0dffd4c-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-c5b196123ec3364299c0c4c6dcb88f90-276ba6b06340544e-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210803.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "d85ee288a420af625bce0d2748754fc8",
         "x-ms-return-client-request-id": "true"
       },
@@ -102,14 +127,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3af06240-da55-4e5f-a43d-6649eee0baf2",
+        "apim-request-id": "6a3a0314-1ed6-4d66-ac71-20cfc391bc45",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Tue, 11 May 2021 16:09:12 GMT",
+        "Date": "Tue, 03 Aug 2021 18:40:01 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "12"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "documents": [
@@ -131,6 +156,6 @@
   "Variables": {
     "RandomSeed": "1557994243",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://tacanaryjava.cognitiveservices.azure.com/"
   }
 }

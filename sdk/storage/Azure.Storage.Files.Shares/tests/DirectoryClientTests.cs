@@ -703,7 +703,8 @@ namespace Azure.Storage.Files.Shares.Tests
             IDictionary<string, string> metadata = BuildMetadata();
 
             // Act
-            await directory.SetMetadataAsync(metadata);
+            Response<ShareDirectoryInfo> setMetadataResponse = await directory.SetMetadataAsync(metadata);
+            Assert.AreNotEqual(DateTimeOffset.MinValue, setMetadataResponse.Value.LastModified);
 
             // Assert
             Response<ShareDirectoryProperties> response = await directory.GetPropertiesAsync();

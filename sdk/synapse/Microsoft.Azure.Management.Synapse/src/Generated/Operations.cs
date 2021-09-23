@@ -82,17 +82,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<CheckNameAvailabilityResponse>> CheckNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -108,6 +97,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "request");
             }
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -115,6 +105,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("request", request);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvailability", tracingParameters);
@@ -124,9 +115,9 @@ namespace Microsoft.Azure.Management.Synapse
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Synapse/checkNameAvailability").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -446,17 +437,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse> GetLocationHeaderResultWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -482,10 +462,6 @@ namespace Microsoft.Azure.Management.Synapse
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (workspaceName == null)
             {
@@ -495,6 +471,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
             }
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -502,6 +479,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("operationId", operationId);
@@ -516,9 +494,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{operationId}", System.Uri.EscapeDataString(operationId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -660,17 +638,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<OperationResource>> GetAzureAsyncHeaderResultWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -696,10 +663,6 @@ namespace Microsoft.Azure.Management.Synapse
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (workspaceName == null)
             {
@@ -709,6 +672,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
             }
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -716,6 +680,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("operationId", operationId);
@@ -730,9 +695,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{operationId}", System.Uri.EscapeDataString(operationId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

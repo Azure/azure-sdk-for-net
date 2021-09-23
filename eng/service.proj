@@ -20,7 +20,7 @@
     <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" />
     <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
-    <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\*.csproj" Exclude="@(TestProjects);@(SamplesProjects)"/>
+    <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" />
     <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true'" />
     <ProjectReference Include="@(SamplesProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamples)' == 'true'" />
     <ProjectReference Include="@(PerfProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludePerf)' == 'true'" />
@@ -62,5 +62,13 @@
   <Target Name="FinalBuildReferencesOutput" BeforeTargets="Build" Condition="'$(SDKType)' != 'all'">
     <Message Text="Final Build References:" Importance="high"/>
     <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
+  </Target>
+
+  <Target Name="GetPackageInfo">
+    <MSBuild Projects="@(ProjectReference)"
+            Targets="GetPackageInfo"
+            BuildInParallel="$(BuildInParallel)"
+            SkipNonexistentProjects="false"
+            SkipNonexistentTargets="true" />
   </Target>
 </Project>

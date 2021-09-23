@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class LogsQueryClientClientLiveTests : RecordedTestBase<MonitorQueryClientTestEnvironment>
+    public class LogsQueryClientClientLiveTests : RecordedTestBase<MonitorQueryTestEnvironment>
     {
         private LogsTestData _logsTestData;
 
@@ -46,13 +46,15 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} | distinct * |" +
                 $"project {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName}, {LogsTestData.BoolColumnName}, {LogsTestData.FloatColumnName} |" +
                 $"order by {LogsTestData.StringColumnName} asc",
                 _logsTestData.DataTimeRange);
 
-            var resultTable = results.Value.Tables.Single();
+            var resultTable = results.Value.Table;
             CollectionAssert.IsNotEmpty(resultTable.Columns);
+
+            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
 
             Assert.AreEqual("a", resultTable.Rows[0].GetString(0));
             Assert.AreEqual("a", resultTable.Rows[0].GetString(LogsTestData.StringColumnName));
@@ -73,10 +75,39 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
                 _logsTestData.DataTimeRange);
 
             CollectionAssert.AreEqual(new[] {"a", "b", "c"}, results.Value);
+        }
+
+        [RecordedTest]
+        public async Task CanQueryPartialSuccess()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryAsync(TestEnvironment.WorkspaceId,
+                $"set truncationmaxrecords=1; datatable (s: string) ['a', 'b']",
+                _logsTestData.DataTimeRange, new LogsQueryOptions()
+                {
+                    AllowPartialErrors = true
+                });
+
+            Assert.AreEqual(LogsQueryResultStatus.PartialFailure, results.Value.Status);
+            Assert.NotNull(results.Value.Error.Code);
+            Assert.NotNull(results.Value.Error.Message);
+        }
+
+        [RecordedTest]
+        public void ThrowsOnQueryPartialSuccess()
+        {
+            var client = CreateClient();
+
+            var exception = Assert.ThrowsAsync<RequestFailedException>(() => client.QueryAsync(TestEnvironment.WorkspaceId,
+                $"set truncationmaxrecords=1; datatable (s: string) ['a', 'b']",
+                _logsTestData.DataTimeRange));
+
+            StringAssert.StartsWith("The result was returned but contained a partial error", exception.Message);
         }
 
         [RecordedTest]
@@ -85,7 +116,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
                 _logsTestData.DataTimeRange, new LogsQueryOptions()
                 {
                     AdditionalWorkspaces = { TestEnvironment.SecondaryWorkspaceId }
@@ -99,7 +130,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync<int>(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | count",
+            var results = await client.QueryAsync<int>(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | count",
                 _logsTestData.DataTimeRange);
 
             Assert.AreEqual(_logsTestData.TableA.Count, results.Value[0]);
@@ -111,7 +142,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<TestModel>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} | distinct * |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"order by Name asc",
                 _logsTestData.DataTimeRange);
@@ -130,7 +161,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<Dictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} | distinct * |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"project Name, Age |" +
                 $"order by Name asc",
@@ -150,7 +181,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<IDictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} | distinct * |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"project Name, Age |" +
                 $"order by Name asc",
@@ -171,13 +202,38 @@ namespace Azure.Monitor.Query.Tests
             LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
             string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
-            Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
+            Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
             var result1 = response.Value.GetResult(id1);
             var result2 = response.Value.GetResult(id2);
 
-            CollectionAssert.IsNotEmpty(result1.Tables[0].Columns);
-            CollectionAssert.IsNotEmpty(result2.Tables[0].Columns);
+            CollectionAssert.IsNotEmpty(result1.AllTables[0].Columns);
+            CollectionAssert.IsNotEmpty(result2.AllTables[0].Columns);
+        }
+
+        [RecordedTest]
+        public async Task CanQueryBatchMixed()
+        {
+            var client = CreateClient();
+            LogsBatchQuery batch = new LogsBatchQuery();
+            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
+            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeats", _logsTestData.DataTimeRange);
+            string id3 = batch.AddQuery(TestEnvironment.WorkspaceId, "set truncationmaxrecords=1; datatable (s: string) ['a', 'b']", _logsTestData.DataTimeRange);
+
+            Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
+
+            Assert.AreEqual(LogsQueryResultStatus.Success, response.Value.Single(r => r.Id == id1).Status);
+
+            var failedResult = response.Value.Single(r => r.Id == id2);
+            Assert.AreEqual(LogsQueryResultStatus.Failure, failedResult.Status);
+            Assert.NotNull(failedResult.Error.Code);
+            Assert.NotNull(failedResult.Error.Message);
+
+            var partialResult = response.Value.Single(r => r.Id == id3);
+            Assert.AreEqual(LogsQueryResultStatus.PartialFailure, partialResult.Status);
+            CollectionAssert.IsNotEmpty(partialResult.Table.Rows);
+            Assert.NotNull(partialResult.Error.Code);
+            Assert.NotNull(partialResult.Error.Message);
         }
 
         [RecordedTest]
@@ -201,7 +257,7 @@ namespace Azure.Monitor.Query.Tests
                 "dynamic({\"a\":123, \"b\":\"hello\", \"c\":[1,2,3], \"d\":{}})" +
                 "]", _logsTestData.DataTimeRange);
 
-            LogsQueryResultRow row = results.Value.PrimaryTable.Rows[0];
+            LogsTableRow row = results.Value.Table.Rows[0];
 
             var expectedDate = DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00");
             Assert.AreEqual(expectedDate, row.GetDateTimeOffset("DateTime"));
@@ -231,8 +287,8 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual(0.10101m, row.GetDecimal("Decimal"));
             Assert.AreEqual(0.10101m, row.GetDecimal(8));
             Assert.AreEqual(0.10101m, row.GetObject("Decimal"));
-            Assert.True(row.IsNull("NullBool"));
-            Assert.True(row.IsNull(9));
+            Assert.Null(row.GetBoolean("NullBool"));
+            Assert.Null(row.GetBoolean(9));
             Assert.IsNull(row.GetObject("NullBool"));
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetDynamic(10).ToString());
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetDynamic("Dynamic").ToString());
@@ -393,7 +449,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
             var results = await client.QueryAsync<DateTimeOffset>(
                 TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}",
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
                 timespan);
 
             // We should get the second and the third events
@@ -412,9 +468,9 @@ namespace Azure.Monitor.Query.Tests
 
             var client = CreateClient();
             LogsBatchQuery batch = new LogsBatchQuery();
-            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", _logsTestData.DataTimeRange);
-            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", timespan);
-            Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
+            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", _logsTestData.DataTimeRange);
+            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", timespan);
+            Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
             var result1 = response.Value.GetResult<DateTimeOffset>(id1);
             var result2 = response.Value.GetResult<DateTimeOffset>(id2);
@@ -448,7 +504,22 @@ namespace Azure.Monitor.Query.Tests
             var exception = Assert.Throws<RequestFailedException>(() => batchResult.Value.GetResult(queryId));
 
             Assert.AreEqual("BadArgumentError", exception.ErrorCode);
-            StringAssert.StartsWith("The request had some invalid properties", exception.Message);
+            StringAssert.StartsWith("Batch query with id '0' failed.", exception.Message);
+        }
+
+        [RecordedTest]
+        public async Task ThrowsExceptionWhenPartialSuccess()
+        {
+            var client = CreateClient();
+
+            LogsBatchQuery batch = new LogsBatchQuery();
+            var queryId = batch.AddQuery(TestEnvironment.WorkspaceId, "set truncationmaxrecords=1; datatable (s: string) ['a', 'b']", _logsTestData.DataTimeRange);
+            var batchResult = await client.QueryBatchAsync(batch);
+
+            var exception = Assert.Throws<RequestFailedException>(() => batchResult.Value.GetResult(queryId));
+
+            Assert.AreEqual("PartialError", exception.ErrorCode);
+            StringAssert.StartsWith("The result was returned but contained a partial error", exception.Message);
         }
 
         [RecordedTest]
@@ -464,7 +535,7 @@ namespace Azure.Monitor.Query.Tests
             var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
 
             Assert.AreEqual("queryId", exception.ParamName);
-            StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of the LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
+            StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
         }
 
         [RecordedTest]
@@ -481,12 +552,12 @@ namespace Azure.Monitor.Query.Tests
 
             if (include)
             {
-                using JsonDocument document = JsonDocument.Parse(response.Value.Statistics);
+                using JsonDocument document = JsonDocument.Parse(response.Value.GetStatistics());
                 Assert.Greater(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
             }
             else
             {
-                Assert.AreEqual(default, response.Value.Statistics);
+                Assert.AreEqual(default, response.Value.GetStatistics());
             }
         }
 
@@ -504,12 +575,12 @@ namespace Azure.Monitor.Query.Tests
 
             if (include)
             {
-                using JsonDocument document = JsonDocument.Parse(response.Value.Visualization);
+                using JsonDocument document = JsonDocument.Parse(response.Value.GetVisualization());
                 Assert.AreNotEqual(JsonValueKind.Undefined, document.RootElement.GetProperty("visualization").ValueKind);
             }
             else
             {
-                Assert.AreEqual(default, response.Value.Visualization);
+                Assert.AreEqual(default, response.Value.GetVisualization());
             }
         }
 
@@ -530,12 +601,12 @@ namespace Azure.Monitor.Query.Tests
 
             if (include)
             {
-                using JsonDocument document = JsonDocument.Parse(result.Statistics);
+                using JsonDocument document = JsonDocument.Parse(result.GetStatistics());
                 Assert.Greater(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
             }
             else
             {
-                Assert.AreEqual(default, result.Statistics);
+                Assert.AreEqual(default, result.GetStatistics());
             }
         }
 
@@ -555,10 +626,11 @@ namespace Azure.Monitor.Query.Tests
                 {
                     await client.QueryAsync(TestEnvironment.WorkspaceId, $"range x from 1 to {cnt} step 1 | count", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
                     {
-                        ServerTimeout = TimeSpan.FromSeconds(1)
+                        ServerTimeout = TimeSpan.FromSeconds(1),
+                        AllowPartialErrors = false
                     });
                 }
-                catch (TaskCanceledException)
+                catch (AggregateException)
                 {
                     // The client cancelled, retry.
                     continue;

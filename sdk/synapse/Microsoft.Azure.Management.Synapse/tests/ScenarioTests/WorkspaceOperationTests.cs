@@ -64,22 +64,23 @@ namespace Microsoft.Azure.Management.Synapse.Tests
 
             Assert.True(isFound, string.Format("Workspace created earlier is not found when listing all in resource group {0}", CommonData.ResourceGroupName));
 
-            // list workspace from subscription
-            var workspaceFromSubscription = SynapseClient.Workspaces.List().ToList();
-            Assert.True(1 <= workspaceFromSubscription.Count);
-            isFound = false;
-            for (int i = 0; i < workspaceFromSubscription.Count; i++)
-            {
-                if (workspaceFromSubscription[i].Name.Equals(workspaceName))
-                {
-                    isFound = true;
-                    Assert.Equal(CommonTestFixture.WorkspaceType, workspaceFromSubscription[i].Type);
-                    Assert.Equal(CommonData.Location, workspaceFromSubscription[i].Location);
-                    break;
-                }
-            }
+            // Remove logic here because we have many workspaces in the subscriptions and we don't want to expose them all in session records
+            //// list workspace from subscription
+            //var workspaceFromSubscription = SynapseClient.Workspaces.List().ToList();
+            //Assert.True(1 <= workspaceFromSubscription.Count);
+            //isFound = false;
+            //for (int i = 0; i < workspaceFromSubscription.Count; i++)
+            //{
+            //    if (workspaceFromSubscription[i].Name.Equals(workspaceName))
+            //    {
+            //        isFound = true;
+            //        Assert.Equal(CommonTestFixture.WorkspaceType, workspaceFromSubscription[i].Type);
+            //        Assert.Equal(CommonData.Location, workspaceFromSubscription[i].Location);
+            //        break;
+            //    }
+            //}
 
-            Assert.True(isFound, string.Format("Workspace created earlier is not found when listing all in subscription {0}", CommonData.SubscriptionId));
+            //Assert.True(isFound, string.Format("Workspace created earlier is not found when listing all in subscription {0}", CommonData.SubscriptionId));
 
             try
             {

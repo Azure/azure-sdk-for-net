@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.EventGrid
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -127,12 +125,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerTopicName'>
             /// Name of the partner topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the partner topic.
+            /// <param name='partnerTopicUpdateParameters'>
+            /// PartnerTopic update information.
             /// </param>
-            public static PartnerTopic Update(this IPartnerTopicsOperations operations, string resourceGroupName, string partnerTopicName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static PartnerTopic Update(this IPartnerTopicsOperations operations, string resourceGroupName, string partnerTopicName, PartnerTopicUpdateParameters partnerTopicUpdateParameters)
             {
-                return operations.UpdateAsync(resourceGroupName, partnerTopicName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, partnerTopicName, partnerTopicUpdateParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -150,15 +148,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerTopicName'>
             /// Name of the partner topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the partner topic.
+            /// <param name='partnerTopicUpdateParameters'>
+            /// PartnerTopic update information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PartnerTopic> UpdateAsync(this IPartnerTopicsOperations operations, string resourceGroupName, string partnerTopicName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PartnerTopic> UpdateAsync(this IPartnerTopicsOperations operations, string resourceGroupName, string partnerTopicName, PartnerTopicUpdateParameters partnerTopicUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, partnerTopicName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, partnerTopicName, partnerTopicUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

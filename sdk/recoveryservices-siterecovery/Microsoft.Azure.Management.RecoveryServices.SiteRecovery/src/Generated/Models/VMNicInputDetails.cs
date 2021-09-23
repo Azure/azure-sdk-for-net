@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="tfoReuseExistingNic">A value indicating whether an
         /// existing NIC is allowed to be reused during test failover subject
         /// to availability.</param>
-        public VMNicInputDetails(string nicId = default(string), IList<IPConfigInputDetails> ipConfigs = default(IList<IPConfigInputDetails>), string selectionType = default(string), string recoveryNetworkSecurityGroupId = default(string), bool? enableAcceleratedNetworkingOnRecovery = default(bool?), string tfoNetworkSecurityGroupId = default(string), bool? enableAcceleratedNetworkingOnTfo = default(bool?), string recoveryNicName = default(string), string recoveryNicResourceGroupName = default(string), bool? reuseExistingNic = default(bool?), string tfoNicName = default(string), string tfoNicResourceGroupName = default(string), bool? tfoReuseExistingNic = default(bool?))
+        /// <param name="targetNicName">Target NIC name.</param>
+        public VMNicInputDetails(string nicId = default(string), IList<IPConfigInputDetails> ipConfigs = default(IList<IPConfigInputDetails>), string selectionType = default(string), string recoveryNetworkSecurityGroupId = default(string), bool? enableAcceleratedNetworkingOnRecovery = default(bool?), string tfoNetworkSecurityGroupId = default(string), bool? enableAcceleratedNetworkingOnTfo = default(bool?), string recoveryNicName = default(string), string recoveryNicResourceGroupName = default(string), bool? reuseExistingNic = default(bool?), string tfoNicName = default(string), string tfoNicResourceGroupName = default(string), bool? tfoReuseExistingNic = default(bool?), string targetNicName = default(string))
         {
             NicId = nicId;
             IpConfigs = ipConfigs;
@@ -72,6 +73,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TfoNicName = tfoNicName;
             TfoNicResourceGroupName = tfoNicResourceGroupName;
             TfoReuseExistingNic = tfoReuseExistingNic;
+            TargetNicName = targetNicName;
             CustomInit();
         }
 
@@ -165,6 +167,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "tfoReuseExistingNic")]
         public bool? TfoReuseExistingNic { get; set; }
+
+        /// <summary>
+        /// Gets or sets target NIC name.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetNicName")]
+        public string TargetNicName { get; set; }
 
     }
 }

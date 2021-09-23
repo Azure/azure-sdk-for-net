@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="terminatedAt"> the time that at which &quot;killed&quot; livy state was first seen. </param>
         /// <param name="recoveringAt"> the time that at which &quot;recovering&quot; livy state was first seen. </param>
         /// <param name="currentState"> the Spark job state. </param>
-        /// <param name="jobCreationRequest"> . </param>
+        /// <param name="jobCreationRequest"></param>
         internal SparkBatchJobState(DateTimeOffset? notStartedAt, DateTimeOffset? startingAt, DateTimeOffset? runningAt, DateTimeOffset? deadAt, DateTimeOffset? successAt, DateTimeOffset? terminatedAt, DateTimeOffset? recoveringAt, string currentState, SparkRequest jobCreationRequest)
         {
             NotStartedAt = notStartedAt;
@@ -56,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DateTimeOffset? RecoveringAt { get; }
         /// <summary> the Spark job state. </summary>
         public string CurrentState { get; }
+        /// <summary> Gets the job creation request. </summary>
         public SparkRequest JobCreationRequest { get; }
     }
 }

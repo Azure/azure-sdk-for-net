@@ -90,13 +90,17 @@ if ($rgExists -eq "False")
     az group create --name $ResourceGroup --location $Region --output none
 }
 
+Write-Host "`nGenerating the ARM template using the cli bicep extention."
+$bicepFilePath = Join-Path -Path $PSScriptRoot -ChildPath "../../../test-resources.bicep";
+az bicep build --f $bicepFilePath
+
 Write-Host "`nDeploying resources to $ResourceGroup in $Region`n"
 
 $armTemplateFile = Join-Path -Path $PSScriptRoot -ChildPath "../../../test-resources.json";
 
 if (-not (Test-Path $armTemplateFile -PathType leaf))
 {
-    throw "`nARM template was not found. Please make sure you have an ARM template file named test-resources.json in the root of the service directory`n"
+    throw "`nARM template was not found. Please make sure you have a bicep file called test-resources.bicep in the root of the service directory`n"
 }
 
 # Format the Id properties before deployment
@@ -171,5 +175,8 @@ $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
 $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
 Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
 Write-Host "`nTest environment settings stored into encrypted $outputFile`n"
+
+Write-Host "`nRemoving generated ARM template JSON file."
+rm -r $armTemplateFile
 
 Write-Host "Done!"

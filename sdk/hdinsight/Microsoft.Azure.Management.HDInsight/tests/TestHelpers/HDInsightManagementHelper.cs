@@ -245,7 +245,7 @@ namespace Management.HDInsight.Tests
         }
 
         /// <summary>
-        /// Get resouce id of the specific storage account
+        /// Get resource id of the specific storage account
         /// </summary>
         /// <param name="resourceGroupName"></param>
         /// <param name="storageAccountName"></param>
@@ -345,7 +345,7 @@ namespace Management.HDInsight.Tests
         }
 
         /// <summary>
-        /// Set vault permissions to some resouce by its object id.
+        /// Set vault permissions to some resource by its object id.
         /// </summary>
         /// <param name="vault"></param>
         /// <param name="resourceGroupName"></param>
@@ -463,7 +463,7 @@ namespace Management.HDInsight.Tests
         }
 
         /// <summary>
-        /// Throw expception if the given condition is satisfied
+        /// Throw exception if the given condition is satisfied
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="message"></param>

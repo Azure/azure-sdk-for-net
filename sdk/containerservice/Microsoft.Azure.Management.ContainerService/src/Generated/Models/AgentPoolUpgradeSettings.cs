@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <summary>
         /// Initializes a new instance of the AgentPoolUpgradeSettings class.
         /// </summary>
-        /// <param name="maxSurge">Count or percentage of additional nodes to
-        /// be added during upgrade. If empty uses AKS default</param>
+        /// <param name="maxSurge">The maximum number or percentage of nodes
+        /// that are surged during upgrade.</param>
         public AgentPoolUpgradeSettings(string maxSurge = default(string))
         {
             MaxSurge = maxSurge;
@@ -43,9 +43,17 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets count or percentage of additional nodes to be added
-        /// during upgrade. If empty uses AKS default
+        /// Gets or sets the maximum number or percentage of nodes that are
+        /// surged during upgrade.
         /// </summary>
+        /// <remarks>
+        /// This can either be set to an integer (e.g. '5') or a percentage
+        /// (e.g. '50%'). If a percentage is specified, it is the percentage of
+        /// the total agent pool size at the time of the upgrade. For
+        /// percentages, fractional nodes are rounded up. If not specified, the
+        /// default is 1. For more information, including best practices, see:
+        /// https://docs.microsoft.com/azure/aks/upgrade-cluster#customize-node-surge-upgrade
+        /// </remarks>
         [JsonProperty(PropertyName = "maxSurge")]
         public string MaxSurge { get; set; }
 

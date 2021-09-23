@@ -190,13 +190,13 @@ Console.WriteLine("");
 
 To see the full example source files, see:
 
-* [Synchronous ExtractKeyPhrases](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrases.cs)
-* [Asynchronous ExtractKeyPhrases](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesAsync.cs)
-* [ExtractKeyPhrases with warnings](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesWithWarnings.cs)
-* [Synchronous ExtractKeyPhrasesBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatch.cs)
-* [Asynchronous ExtractKeyPhrasesBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchAsync.cs)
-* [Synchronous ExtractKeyPhrasesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchConvenience.cs)
-* [Asynchronous ExtractKeyPhrasesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchConvenienceAsync.cs)
+* [Synchronous ExtractKeyPhrases](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrases.cs)
+* [Asynchronous ExtractKeyPhrases](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesAsync.cs)
+* [ExtractKeyPhrases with warnings](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesWithWarnings.cs)
+* [Synchronous ExtractKeyPhrasesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatch.cs)
+* [Asynchronous ExtractKeyPhrasesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchAsync.cs)
+* [Synchronous ExtractKeyPhrasesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchConvenience.cs)
+* [Asynchronous ExtractKeyPhrasesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchConvenienceAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

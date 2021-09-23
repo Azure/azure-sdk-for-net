@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,9 +13,18 @@ namespace Azure.Messaging.WebPubSub
     /// Azure Web PubSub Service Client.
     /// </summary>
     [CodeGenSuppress("WebPubSubServiceClient", typeof(string), typeof(Uri), typeof(WebPubSubServiceClientOptions))]
+    [CodeGenSuppress("SendToAll", typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToAllAsync", typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToConnection", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToConnectionAsync", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToGroup", typeof(string), typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToGroupAsync", typeof(string),  typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToUser", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToUserAsync", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
     public partial class WebPubSubServiceClient
     {
         private AzureKeyCredential _credential;
+        private TokenCredential _tokenCredential;
 
         /// <summary>
         /// The hub.
@@ -44,23 +51,65 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public WebPubSubServiceClient(Uri endpoint, string hub, AzureKeyCredential credential, WebPubSubServiceClientOptions options)
+            : this(endpoint, hub, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(hub, nameof(hub));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            this._credential = credential;
-            this.hub = hub;
-            this.endpoint = endpoint;
+            _credential = credential;
 
-            options ??= new WebPubSubServiceClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            apiVersion = options.Version;
+            HttpPipelinePolicy[] perCallPolicies;
+            if (options.ReverseProxyEndpoint != null)
+            {
+                perCallPolicies = new HttpPipelinePolicy[] { new ReverseProxyPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
+            }
+            else
+            {
+                perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
+            }
 
-            Pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
-                perCallPolicies: new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
+                perCallPolicies: perCallPolicies,
                 perRetryPolicies: new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
+                new ResponseClassifier()
+            );
+        }
+
+        /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="credential"> A token credential used to authenticate to an Azure Service. </param>
+        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential credential)
+            : this(endpoint, hub, credential, new WebPubSubServiceClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="credential"> A token credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public WebPubSubServiceClient(Uri endpoint, string hub, TokenCredential credential, WebPubSubServiceClientOptions options)
+            : this(endpoint, hub, options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            _tokenCredential = credential;
+
+            HttpPipelinePolicy[] perCallPolicies;
+            if (options.ReverseProxyEndpoint != null)
+            {
+                perCallPolicies = new HttpPipelinePolicy[] { new ReverseProxyPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
+            }
+            else
+            {
+                perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
+            }
+
+            _pipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: perCallPolicies,
+                perRetryPolicies: new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, WebPubSubServiceClientOptions.CredentialScopeName) },
                 new ResponseClassifier()
             );
         }
@@ -95,6 +144,19 @@ namespace Azure.Messaging.WebPubSub
         {
         }
 
+        private WebPubSubServiceClient(Uri endpoint, string hub, WebPubSubServiceClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(hub, nameof(hub));
+
+            this.hub = hub;
+            this.endpoint = endpoint;
+
+            options ??= new WebPubSubServiceClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            apiVersion = options.Version;
+        }
+
         /// <summary>Broadcast message to all the connected client connections.</summary>
         /// <param name="content"></param>
         /// <param name="contentType">Defaults to ContentType.PlainText.</param>
@@ -105,7 +167,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToAllAsync(contentType.ToString(), RequestContent.Create(content), default, options: default).ConfigureAwait(false);
+            return await SendToAllAsync(RequestContent.Create(content), contentType.ToString(), default, options: default).ConfigureAwait(false);
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
@@ -118,7 +180,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToAll(contentType.ToString(), RequestContent.Create(content), excluded: default, options: default);
+            return SendToAll(RequestContent.Create(content), contentType, excluded: default, options: default);
         }
 
         /// <summary>
@@ -135,7 +197,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToUserAsync(userId, contentType.ToString(), RequestContent.Create(content), options: default).ConfigureAwait(false);
+            return await SendToUserAsync(userId, RequestContent.Create(content), contentType, options: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -152,7 +214,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToUser(userId, contentType.ToString(), RequestContent.Create(content), options: default);
+            return SendToUser(userId, RequestContent.Create(content), contentType, options: default);
         }
 
         /// <summary>
@@ -169,7 +231,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToConnectionAsync(connectionId, contentType.ToString(), RequestContent.Create(content), options: default).ConfigureAwait(false);
+            return await SendToConnectionAsync(connectionId, RequestContent.Create(content), contentType, options: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,7 +248,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToConnection(connectionId, contentType.ToString(), RequestContent.Create(content), options: default);
+            return SendToConnection(connectionId, RequestContent.Create(content), contentType, options: default);
         }
 
         /// <summary>
@@ -203,7 +265,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToGroupAsync(group, contentType.ToString(), RequestContent.Create(content), excluded : default, options: default).ConfigureAwait(false);
+            return await SendToGroupAsync(group, RequestContent.Create(content), contentType, excluded : default, options: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -220,7 +282,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToGroup(group, contentType.ToString(), RequestContent.Create(content), excluded : default, options: default);
+            return SendToGroup(group, RequestContent.Create(content), contentType, excluded: default, options: default);
         }
 
         /// <summary> Check if there are any client connections inside the given group. </summary>

@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> the aggregation type of the metric. </summary>
+    /// <summary> The aggregation type of the metric. </summary>
     [CodeGenModel("AggregationType")]
     public enum MetricAggregationType
     {

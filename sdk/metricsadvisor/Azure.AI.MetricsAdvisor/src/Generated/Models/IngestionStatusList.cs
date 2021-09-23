@@ -20,15 +20,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of IngestionStatusList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
+        /// <param name="nextLink"></param>
+        /// <param name="value"></param>
         internal IngestionStatusList(string nextLink, IReadOnlyList<DataFeedIngestionStatus> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<DataFeedIngestionStatus> Value { get; }
     }
 }

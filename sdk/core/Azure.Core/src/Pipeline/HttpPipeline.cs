@@ -117,7 +117,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="IDisposable"/> instance that needs to be disposed when client request id shouldn't be sent anymore.</returns>
         /// <example>
         /// Sample usage:
-        /// <code snippet="Snippet:ClientRequestId">
+        /// <code snippet="Snippet:ClientRequestId" language="csharp">
         /// var secretClient = new SecretClient(new Uri(&quot;http://example.com&quot;), new DefaultAzureCredential());
         ///
         /// using (HttpPipeline.CreateClientRequestIdScope(&quot;&lt;custom-client-request-id&gt;&quot;))

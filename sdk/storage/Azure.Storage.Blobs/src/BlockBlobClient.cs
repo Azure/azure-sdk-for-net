@@ -832,7 +832,15 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             content = content?.WithNoDispose().WithProgress(progressHandler);
+            operationName ??= $"{nameof(BlockBlobClient)}.{nameof(Upload)}";
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
+            // All BlobRequestConditions are valid.
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions: BlobRequestConditionProperty.None,
+                operationName: nameof(BlockBlobClient.Upload),
+                parameterName: nameof(conditions));
+
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1135,6 +1143,16 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(StageBlock)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince
+                        | BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlockBlobClient.StageBlock),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -1236,16 +1254,16 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlockInfo> StageBlockFromUri(
             Uri sourceUri,
             string base64BlockId,
-            StageBlockFromUriOptions options,
+            StageBlockFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
-                options.SourceRange,
-                options.SourceContentHash,
-                options.SourceConditions,
-                options.DestinationConditions,
-                options.SourceAuthentication,
+                options?.SourceRange ?? default,
+                options?.SourceContentHash,
+                options?.SourceConditions,
+                options?.DestinationConditions,
+                options?.SourceAuthentication,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1292,16 +1310,16 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
             Uri sourceUri,
             string base64BlockId,
-            StageBlockFromUriOptions options,
+            StageBlockFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             await StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
-                options.SourceRange,
-                options.SourceContentHash,
-                options.SourceConditions,
-                options.DestinationConditions,
-                options.SourceAuthentication,
+                options?.SourceRange ?? default,
+                options?.SourceContentHash,
+                options?.SourceConditions,
+                options?.DestinationConditions,
+                options?.SourceAuthentication,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1367,14 +1385,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<BlockInfo> StageBlockFromUri(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             string base64BlockId,
-            HttpRange sourceRange = default,
-            byte[] sourceContentHash = default,
-            RequestConditions sourceConditions = default,
-            BlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            HttpRange sourceRange,
+            byte[] sourceContentHash,
+            RequestConditions sourceConditions,
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
@@ -1448,14 +1468,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             string base64BlockId,
-            HttpRange sourceRange = default,
-            byte[] sourceContentHash = default,
-            RequestConditions sourceConditions = default,
-            BlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            HttpRange sourceRange,
+            byte[] sourceContentHash,
+            RequestConditions sourceConditions,
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             await StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
@@ -1556,6 +1578,22 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(StageBlockFromUri)}");
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince
+                        | BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlockBlobClient.StageBlockFromUri),
+                    parameterName: nameof(conditions));
+
+                // All RequestConditions are valid for sourceConditions.
+                sourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlockBlobClient.StageBlockFromUri),
+                    parameterName: nameof(sourceConditions));
 
                 try
                 {
@@ -1976,6 +2014,12 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(CommitBlockList)}");
 
+                // All BlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlockBlobClient.CommitBlockList),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -2223,6 +2267,15 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(GetBlockList)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlockBlobClient.GetBlockList),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -2379,6 +2432,12 @@ namespace Azure.Storage.Blobs.Specialized
                 ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlockBlobClient), message: $"{nameof(Uri)}: {Uri}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(Query)}");
+
+                // All BlobRequestConditions are valid.
+                options?.Conditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlockBlobClient.Query),
+                    parameterName: nameof(BlobQueryOptions.Conditions));
 
                 try
                 {
@@ -2570,7 +2629,7 @@ namespace Azure.Storage.Blobs.Specialized
                     immutabilityPolicy: default,
                     legalHold: default,
                     progressHandler: default,
-                    operationName: operationName,
+                    operationName: default,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2827,6 +2886,17 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(SyncUploadFromUri)}");
 
+                // All BlobRequestConditions are valid for options.DestinationConditions.
+                options?.DestinationConditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlockBlobClient.SyncUploadFromUri),
+                    parameterName: nameof(BlobSyncUploadFromUriOptions.DestinationConditions));
+
+                options?.SourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.LeaseId,
+                    operationName: nameof(BlockBlobClient.SyncUploadFromUri),
+                    parameterName: nameof(BlobSyncUploadFromUriOptions.SourceConditions));
+
                 try
                 {
                     scope.Start();
@@ -2953,14 +3023,26 @@ namespace Azure.Storage.Blobs.Specialized
                         async,
                         cancellationToken).ConfigureAwait(false),
                 UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
-                    => await client.StageBlockInternal(
-                        Shared.StorageExtensions.GenerateBlockId(offset),
-                        stream,
-                        transactionalContentHash: default,
-                        args?.Conditions,
-                        progressHandler,
-                        async,
-                        cancellationToken).ConfigureAwait(false),
+                    =>
+                {
+                    // Stage Block only accepts LeaseId.
+                    BlobRequestConditions conditions = null;
+                    if (args?.Conditions != null)
+                    {
+                        conditions = new BlobRequestConditions
+                        {
+                            LeaseId = args.Conditions.LeaseId
+                        };
+                    }
+                    await client.StageBlockInternal(
+                            Shared.StorageExtensions.GenerateBlockId(offset),
+                            stream,
+                            transactionalContentHash: default,
+                            conditions,
+                            progressHandler,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                },
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
                         partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),

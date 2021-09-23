@@ -15,10 +15,10 @@ namespace Azure.Storage.Queues.Models
     internal partial class ListQueuesSegmentResponse
     {
         /// <summary> Initializes a new instance of ListQueuesSegmentResponse. </summary>
-        /// <param name="serviceEndpoint"> . </param>
-        /// <param name="prefix"> . </param>
-        /// <param name="maxResults"> . </param>
-        /// <param name="nextMarker"> . </param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="prefix"></param>
+        /// <param name="maxResults"></param>
+        /// <param name="nextMarker"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="prefix"/>, or <paramref name="nextMarker"/> is null. </exception>
         internal ListQueuesSegmentResponse(string serviceEndpoint, string prefix, int maxResults, string nextMarker)
         {
@@ -43,12 +43,12 @@ namespace Azure.Storage.Queues.Models
         }
 
         /// <summary> Initializes a new instance of ListQueuesSegmentResponse. </summary>
-        /// <param name="serviceEndpoint"> . </param>
-        /// <param name="prefix"> . </param>
-        /// <param name="marker"> . </param>
-        /// <param name="maxResults"> . </param>
-        /// <param name="queueItems"> . </param>
-        /// <param name="nextMarker"> . </param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="prefix"></param>
+        /// <param name="marker"></param>
+        /// <param name="maxResults"></param>
+        /// <param name="queueItems"></param>
+        /// <param name="nextMarker"></param>
         internal ListQueuesSegmentResponse(string serviceEndpoint, string prefix, string marker, int maxResults, IReadOnlyList<QueueItem> queueItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
@@ -59,11 +59,17 @@ namespace Azure.Storage.Queues.Models
             NextMarker = nextMarker;
         }
 
+        /// <summary> Gets the service endpoint. </summary>
         public string ServiceEndpoint { get; }
+        /// <summary> Gets the prefix. </summary>
         public string Prefix { get; }
+        /// <summary> Gets the marker. </summary>
         public string Marker { get; }
+        /// <summary> Gets the max results. </summary>
         public int MaxResults { get; }
+        /// <summary> Gets the queue items. </summary>
         public IReadOnlyList<QueueItem> QueueItems { get; }
+        /// <summary> Gets the next marker. </summary>
         public string NextMarker { get; }
     }
 }

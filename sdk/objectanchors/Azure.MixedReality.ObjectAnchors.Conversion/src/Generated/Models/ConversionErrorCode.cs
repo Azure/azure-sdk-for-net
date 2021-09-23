@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
+namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     /// <summary> The ConversionErrorCode. </summary>
     public readonly partial struct ConversionErrorCode : IEquatable<ConversionErrorCode>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ConversionErrorCode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversionErrorCode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConversionErrorCode(string value)
         {

@@ -16,12 +16,13 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="error"> . </param>
+        /// <param name="error"></param>
         internal ErrorResponse(Error error)
         {
             Error = error;
         }
 
+        /// <summary> Gets the error. </summary>
         public Error Error { get; }
     }
 }

@@ -34,6 +34,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     {
         // The service sends back a Retry-After header of 10s anyway.
         private static readonly TimeSpan DefaultCertificateOperationPollingInterval = TimeSpan.FromSeconds(10);
+        private static readonly TimeSpan DefaultCertificateOperationTimeout = TimeSpan.FromMinutes(5);
 
         private static MethodInfo s_clearCacheMethod;
 
@@ -113,6 +114,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
+            // Give the service time to process the start request.
+            await DelayAsync(TimeSpan.FromSeconds(2));
+
             OperationCanceledException ex = null;
             try
             {
@@ -150,6 +154,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
             RegisterForCleanup(certName);
+
+            // Give the service time to process the start request.
+            await DelayAsync(TimeSpan.FromSeconds(2));
 
             OperationCanceledException ex = null;
             try
@@ -260,12 +267,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 RegisterForCleanup(certName);
 
-                using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
-                TimeSpan pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : KeyVaultTestEnvironment.DefaultPollingInterval;
-
+                using CancellationTokenSource cts = new CancellationTokenSource(DefaultCertificateOperationTimeout);
                 while (!operation.HasCompleted)
                 {
-                    await Task.Delay(pollingInterval, cts.Token);
+                    await Task.Delay(PollingInterval, cts.Token);
                     await operation.UpdateStatusAsync(cts.Token);
                 }
 
@@ -353,10 +358,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = new CertificateOperation(Client, certName);
 
             // Need to call the real async wait method or the sync version of this test fails because it's using the instrumented Client directly.
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
-            TimeSpan pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : KeyVaultTestEnvironment.DefaultPollingInterval;
-
-            await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
+            using CancellationTokenSource cts = new CancellationTokenSource(DefaultCertificateOperationTimeout);
+            await operation.WaitForCompletionAsync(PollingInterval, cts.Token);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);

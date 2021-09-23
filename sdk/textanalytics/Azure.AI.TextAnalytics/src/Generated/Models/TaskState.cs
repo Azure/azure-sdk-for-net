@@ -14,8 +14,8 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class TaskState
     {
         /// <summary> Initializes a new instance of TaskState. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="status"> . </param>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         internal TaskState(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)
         {
             LastUpdateDateTime = lastUpdateDateTime;
@@ -23,18 +23,21 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of TaskState. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="status"> . </param>
-        internal TaskState(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status)
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="taskName"></param>
+        /// <param name="status"></param>
+        internal TaskState(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status)
         {
             LastUpdateDateTime = lastUpdateDateTime;
-            Name = name;
+            TaskName = taskName;
             Status = status;
         }
 
+        /// <summary> Gets the last update date time. </summary>
         public DateTimeOffset LastUpdateDateTime { get; }
-        public string Name { get; }
+        /// <summary> Gets the task name. </summary>
+        public string TaskName { get; }
+        /// <summary> Gets the status. </summary>
         public TextAnalyticsOperationStatus Status { get; }
     }
 }

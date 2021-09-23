@@ -11,6 +11,7 @@ namespace Azure.Identity
         where TClient : IClientApplicationBase
     {
         private readonly AsyncLockWithValue<TClient> _clientAsyncLock;
+        internal protected bool IsPiiLoggingEnabled { get; }
 
         /// <summary>
         /// For mocking purposes only.
@@ -19,23 +20,20 @@ namespace Azure.Identity
         {
         }
 
-        protected MsalClientBase(CredentialPipeline pipeline, string tenantId, string clientId, ITokenCacheOptions cacheOptions)
+        protected MsalClientBase(CredentialPipeline pipeline, string tenantId, string clientId, bool isPiiLoggingEnabled, ITokenCacheOptions cacheOptions)
         {
-            // This validation is preformed as a backstop. Validation in TokenCredentialOptions.AuthorityHost prevents users from explicitly
+            // This validation is performed as a backstop. Validation in TokenCredentialOptions.AuthorityHost prevents users from explicitly
             // setting AuthorityHost to a non TLS endpoint. However, the AuthorityHost can also be set by the AZURE_AUTHORITY_HOST environment
             // variable rather than in code. In this case we need to validate the endpoint before we use it. However, we can't validate in
             // CredentialPipeline as this is also used by the ManagedIdentityCredential which allows non TLS endpoints. For this reason
             // we validate here as all other credentials will create an MSAL client.
             Validations.ValidateAuthorityHost(pipeline.AuthorityHost);
 
+            IsPiiLoggingEnabled = isPiiLoggingEnabled;
             Pipeline = pipeline;
-
             TenantId = tenantId;
-
             ClientId = clientId;
-
             TokenCache = cacheOptions?.TokenCachePersistenceOptions == null ? null : new TokenCache(cacheOptions?.TokenCachePersistenceOptions);
-
             _clientAsyncLock = new AsyncLockWithValue<TClient>();
         }
 
@@ -45,7 +43,7 @@ namespace Azure.Identity
 
         internal TokenCache TokenCache { get; }
 
-        protected CredentialPipeline Pipeline { get; }
+        protected internal CredentialPipeline Pipeline { get; }
 
         protected abstract ValueTask<TClient> CreateClientAsync(bool async, CancellationToken cancellationToken);
 
@@ -71,6 +69,14 @@ namespace Azure.Identity
 
             asyncLock.SetValue(client);
             return client;
+        }
+
+        protected void LogMsal(LogLevel level, string message, bool isPii)
+        {
+            if (!isPii || IsPiiLoggingEnabled)
+            {
+                AzureIdentityEventSource.Singleton.LogMsal(level, message);
+            }
         }
     }
 }

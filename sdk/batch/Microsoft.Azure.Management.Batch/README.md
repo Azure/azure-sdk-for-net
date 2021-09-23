@@ -12,6 +12,6 @@
     * Unit tests are in-memory tests which never actually make a REST call.
     * **Note:** You should prefer to add unit tests over recording tests where possible -- recording tests should be reserved for ensuring that the Batch Service accepts the Swagger payload, and only cover the basic happy path scenarios.
 4. Update the `CHANGELOG.md` file and the `Version` tag in `src/Microsoft.Azure.Management.Batch.csproj`. Ensure that if you are making a breaking change, you update the major version of the version number.
-5. Re-record all of the recording tests against the new API version (see [here](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/dev/Using-Azure-TestFramework.md) for details on how to use the recording framework).
+5. Re-record all of the recording tests against the new API version (see [here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Using-Azure-TestFramework.md) for details on how to use the recording framework).
 6. Switch test mode back to `Playback` and ensure that all of the tests pass.
 7. Open a PR to https://github.com/Azure/azure-sdk-for-net.

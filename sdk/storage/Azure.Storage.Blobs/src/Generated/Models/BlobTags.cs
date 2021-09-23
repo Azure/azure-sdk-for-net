@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     internal partial class BlobTags
     {
         /// <summary> Initializes a new instance of BlobTags. </summary>
-        /// <param name="blobTagSet"> . </param>
+        /// <param name="blobTagSet"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobTagSet"/> is null. </exception>
         public BlobTags(IEnumerable<BlobTag> blobTagSet)
         {
@@ -28,12 +28,13 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of BlobTags. </summary>
-        /// <param name="blobTagSet"> . </param>
+        /// <param name="blobTagSet"></param>
         internal BlobTags(IList<BlobTag> blobTagSet)
         {
             BlobTagSet = blobTagSet;
         }
 
+        /// <summary> Gets the blob tag set. </summary>
         public IList<BlobTag> BlobTagSet { get; }
     }
 }
