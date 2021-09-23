@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <summary>
         /// Return the deserialized tenantId if accessible
         /// </summary>
-        /// /// <param name="accessToken">AccessToken to deserialize.</param>
+        /// <param name="accessToken">AccessToken to deserialize.</param>
         /// <returns></returns>
         public static string TenantIdInfo(string accessToken)
         {
