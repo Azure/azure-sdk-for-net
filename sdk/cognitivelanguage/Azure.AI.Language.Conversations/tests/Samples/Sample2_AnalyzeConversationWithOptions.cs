@@ -20,12 +20,16 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 
 #if SNIPPET
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",
-                "production", "We'll have 2 plates of seared salmon nigiri.");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+                "Menu",
+                "production",
+                "We'll have 2 plates of seared salmon nigiri.");
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName, "We'll have 2 plates of seared salmon nigiri.");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+                TestEnvironment.ProjectName,
+                TestEnvironment.DeploymentName,
+                "We'll have 2 plates of seared salmon nigiri.");
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 #endif
 
@@ -45,12 +49,16 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
 
 #if SNIPPET
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",
-                "production", "We'll have 2 plates of seared salmon nigiri.");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+                "Menu",
+                "production",
+                "We'll have 2 plates of seared salmon nigiri.");
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName, "We'll have 2 plates of seared salmon nigiri.");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+                TestEnvironment.ProjectName,
+                TestEnvironment.DeploymentName,
+                "We'll have 2 plates of seared salmon nigiri.");
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
 #endif
 

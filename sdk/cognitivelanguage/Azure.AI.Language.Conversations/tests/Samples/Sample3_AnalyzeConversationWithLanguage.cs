@@ -20,15 +20,19 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 
 #if SNIPPET
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",
-                "production", "Tendremos 2 platos de nigiri de salmón braseado.")
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+                "Menu",
+                "production", 
+                "Tendremos 2 platos de nigiri de salmón braseado.")
             {
                 Language = "es"
             };
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName, "Tendremos 2 platos de nigiri de salmón braseado.")
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+                TestEnvironment.ProjectName,
+                TestEnvironment.DeploymentName,
+                "Tendremos 2 platos de nigiri de salmón braseado.")
             {
                 Language = "es"
             };
@@ -51,15 +55,19 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
 
 #if SNIPPET
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions("Menu",
-                "production", "Tendremos 2 platos de nigiri de salmón braseado.")
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+                "Menu",
+                "production",
+                "Tendremos 2 platos de nigiri de salmón braseado.")
             {
                 Language = "es"
             };
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName, "Tendremos 2 platos de nigiri de salmón braseado.")
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+                TestEnvironment.ProjectName,
+                TestEnvironment.DeploymentName,
+                "Tendremos 2 platos de nigiri de salmón braseado.")
             {
                 Language = "es"
             };
