@@ -910,9 +910,10 @@ namespace Microsoft.Azure.Batch.Tests
             string testPrincipalId = "testPrincipalId";
             string testClientId = "testClientId";
             string testAccount = "testAccount";
+#pragma warning disable CS0618 // Type or member is obsolete
             BatchAccountIdentityUserAssignedIdentitiesValue testIdentity = new BatchAccountIdentityUserAssignedIdentitiesValue(testPrincipalId, testClientId);
             BatchAccountIdentity identity = new BatchAccountIdentity(ResourceIdentityType.UserAssigned, new Dictionary<string, BatchAccountIdentityUserAssignedIdentitiesValue> { { testAccount, testIdentity } });
-
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.True(testIdentity is UserAssignedIdentities);
             Assert.Equal(testPrincipalId, identity.UserAssignedIdentities[testAccount].PrincipalId);
             Assert.Equal(testClientId, identity.UserAssignedIdentities[testAccount].ClientId);
