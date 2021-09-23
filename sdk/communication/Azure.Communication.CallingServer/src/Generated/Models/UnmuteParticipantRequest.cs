@@ -10,13 +10,13 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The get participant by identifier request. </summary>
-    internal partial class GetParticipantByIdRequest
+    /// <summary> The request payload for unmuting any participant. </summary>
+    internal partial class UnmuteParticipantRequest
     {
-        /// <summary> Initializes a new instance of GetParticipantByIdRequest. </summary>
-        /// <param name="identifier"> The identifier of the participant. </param>
+        /// <summary> Initializes a new instance of UnmuteParticipantRequest. </summary>
+        /// <param name="identifier"> The identifier of the participant to be unmuted in the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public GetParticipantByIdRequest(CommunicationIdentifierModel identifier)
+        public UnmuteParticipantRequest(CommunicationIdentifierModel identifier)
         {
             if (identifier == null)
             {
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer
             Identifier = identifier;
         }
 
-        /// <summary> The identifier of the participant. </summary>
+        /// <summary> The identifier of the participant to be unmuted in the call. </summary>
         public CommunicationIdentifierModel Identifier { get; }
     }
 }

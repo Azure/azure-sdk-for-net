@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class RemoveParticipantByIdRequest : IUtf8JsonSerializable
+    public partial class GroupCallLocatorModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("identifier");
-            writer.WriteObjectValue(Identifier);
+            writer.WritePropertyName("groupId");
+            writer.WriteStringValue(GroupId);
             writer.WriteEndObject();
         }
     }

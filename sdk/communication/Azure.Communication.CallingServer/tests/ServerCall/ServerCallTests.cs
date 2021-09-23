@@ -337,39 +337,43 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public async Task RemoveParticipantsAsync_Return202Accepted(string participantId)
+        public async Task RemoveParticipantsAsync_Return202Accepted(string participantUserId)
         {
             var serverCall = CreateMockServerCall(202);
+            var participant = new CommunicationUserIdentifier(participantUserId);
 
-            var response = await serverCall.RemoveParticipantAsync(participantId).ConfigureAwait(false);
+            var response = await serverCall.RemoveParticipantAsync(participant).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void RemoveParticipants_Return202Accepted(string participantId)
+        public void RemoveParticipants_Return202Accepted(string participantUserId)
         {
             var serverCall = CreateMockServerCall(202);
+            var participant = new CommunicationUserIdentifier(participantUserId);
 
-            var response = serverCall.RemoveParticipant(participantId);
+            var response = serverCall.RemoveParticipant(participant);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void RemoveParticipantsAsync_Returns404NotFound(string participantId)
+        public void RemoveParticipantsAsync_Returns404NotFound(string participantUserId)
         {
             var serverCall = CreateMockServerCall(404);
+            var participant = new CommunicationUserIdentifier(participantUserId);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await serverCall.RemoveParticipantAsync(participantId).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await serverCall.RemoveParticipantAsync(participant).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void RemoveParticipants_Returns404NotFound(string participantId)
+        public void RemoveParticipants_Returns404NotFound(string participantUserId)
         {
             var serverCall = CreateMockServerCall(404);
+            var participant = new CommunicationUserIdentifier(participantUserId);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => serverCall.RemoveParticipant(participantId));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => serverCall.RemoveParticipant(participant));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -479,7 +483,12 @@ namespace Azure.Communication.CallingServer.Tests
 
         private ServerCall CreateMockServerCall(int responseCode, string? responseContent = null, string serverCallId = "sampleServerCallId")
         {
-            return CreateMockCallingServerClient(responseCode, responseContent).InitializeServerCall(serverCallId);
+            var callLocator = new CallLocatorModel()
+            {
+                ServerCallLocator = new ServerCallLocatorModel(serverCallId)
+            };
+
+            return CreateMockCallingServerClient(responseCode, responseContent).InitializeServerCall(callLocator);
         }
     }
 }

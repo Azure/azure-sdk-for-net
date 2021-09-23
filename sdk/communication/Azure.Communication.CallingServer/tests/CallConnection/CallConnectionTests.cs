@@ -295,39 +295,47 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public async Task RemoveParticipantsAsync_Passes(string callConnectionId, string participantId)
+        public async Task RemoveParticipantsAsync_Passes(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
 
-            var response = await callConnection.RemoveParticipantAsync(participantId).ConfigureAwait(false);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var response = await callConnection.RemoveParticipantAsync(participant).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void RemoveParticipants_Passes(string callConnectionId, string participantId)
+        public void RemoveParticipants_Passes(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
 
-            var response = callConnection.RemoveParticipant(participantId);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var response = callConnection.RemoveParticipant(participant);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void RemoveParticipantsAsync_Failed(string callConnectionId, string participantId)
+        public void RemoveParticipantsAsync_Failed(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.RemoveParticipantAsync(participantId).ConfigureAwait(false));
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.RemoveParticipantAsync(participant).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void RemoveParticipants_Failed(string callConnectionId, string participantId)
+        public void RemoveParticipants_Failed(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.RemoveParticipant(participantId));
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.RemoveParticipant(participant));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }

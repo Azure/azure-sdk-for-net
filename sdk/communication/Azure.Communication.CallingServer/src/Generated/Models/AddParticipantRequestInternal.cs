@@ -10,10 +10,10 @@ using Azure.Communication;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The add participant request. </summary>
-    internal partial class AddParticipantRequest
+    internal partial class AddParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantRequest. </summary>
-        public AddParticipantRequest()
+        /// <summary> Initializes a new instance of AddParticipantRequestInternal. </summary>
+        public AddParticipantRequestInternal()
         {
         }
 

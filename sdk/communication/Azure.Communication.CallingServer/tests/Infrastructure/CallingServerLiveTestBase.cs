@@ -131,7 +131,13 @@ namespace Azure.Communication.CallingServer.Tests
                     new Uri(callBackUri),
                     new MediaType[] { MediaType.Audio },
                     new EventSubscriptionType[] { EventSubscriptionType.ParticipantsUpdated });
-                fromCallConnection = await callingServerClient.JoinCallAsync(groupId, fromParticipant, fromCallOptions).ConfigureAwait(false);
+
+                var callLocator = new CallLocatorModel()
+                {
+                    GroupCallLocator = new GroupCallLocatorModel(groupId)
+                };
+
+                fromCallConnection = await callingServerClient.JoinCallAsync(callLocator, fromParticipant, fromCallOptions).ConfigureAwait(false);
                 SleepInTest(1000);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(fromCallConnection.CallConnectionId));
 
@@ -140,7 +146,7 @@ namespace Azure.Communication.CallingServer.Tests
                     new MediaType[] { MediaType.Audio },
                     new EventSubscriptionType[] { EventSubscriptionType.ParticipantsUpdated});
 
-                toCallConnection = await callingServerClient.JoinCallAsync(groupId, toParticipant, joinCallOptions).ConfigureAwait(false);
+                toCallConnection = await callingServerClient.JoinCallAsync(callLocator, toParticipant, joinCallOptions).ConfigureAwait(false);
                 SleepInTest(1000);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(toCallConnection.CallConnectionId));
 
@@ -308,20 +314,24 @@ namespace Azure.Communication.CallingServer.Tests
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_AddParticipantOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_RemoveParticipantOperation
-        internal async Task RemoveParticipantOperation(CallConnection callConnection, string participantId)
+        internal async Task RemoveParticipantOperation(CallConnection callConnection, string participantUserId)
         {
             Console.WriteLine("Performing remove participant operation to remove a participant");
 
-            var response = await callConnection.RemoveParticipantAsync(participantId).ConfigureAwait(false);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var response = await callConnection.RemoveParticipantAsync(participant).ConfigureAwait(false);
 
             Assert.AreEqual(202, response.Status);
         }
 
-        internal async Task RemoveParticipantOperation(ServerCall serverCall, string participantId)
+        internal async Task RemoveParticipantOperation(ServerCall serverCall, string participantUserId)
         {
             Console.WriteLine("Performing remove participant operation to remove a participant");
 
-            var response = await serverCall.RemoveParticipantAsync(participantId).ConfigureAwait(false);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var response = await serverCall.RemoveParticipantAsync(participant).ConfigureAwait(false);
 
             Assert.AreEqual(202, response.Status);
         }

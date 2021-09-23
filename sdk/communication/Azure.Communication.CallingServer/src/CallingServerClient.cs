@@ -175,26 +175,27 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// Join the call using server call id.
-        /// <param name="serverCallId"> The server call id. </param>
+        /// Join the call using a call locator
+        /// <param name="callLocator"> The callLocator. </param>
         /// <param name="source"> The source identity. </param>
         /// <param name="callOptions"> The call Options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="serverCallId"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="callLocator"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual async Task<Response<CallConnection>> JoinCallAsync(string serverCallId, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallConnection>> JoinCallAsync(CallLocatorModel callLocator, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(JoinCall)}");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(callLocator, nameof(callLocator));
                 Argument.AssertNotNull(source, nameof(source));
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
 
                 var joinCallResponse = await ServerCallRestClient.JoinCallAsync(
-                    serverCallId: serverCallId,
+                    callLocator: callLocator,
                     source: CommunicationIdentifierSerializer.Serialize(source),
                     callbackUri: callOptions.CallbackUri?.AbsoluteUri,
                     requestedMediaTypes: callOptions.RequestedMediaTypes,
@@ -214,26 +215,27 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// Join the call using server call id.
-        /// <param name="serverCallId"> The server call id. </param>
+        /// Join the call using a call locator
+        /// <param name="callLocator"> The callLocator. </param>
         /// <param name="source"> The source identity. </param>
         /// <param name="callOptions"> The call Options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="serverCallId"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="callLocator"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual Response<CallConnection> JoinCall(string serverCallId, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
+        public virtual Response<CallConnection> JoinCall(CallLocatorModel callLocator, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(JoinCall)}");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(callLocator, nameof(callLocator));
                 Argument.AssertNotNull(source, nameof(source));
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
 
                 var joinCallResponse = ServerCallRestClient.JoinCall(
-                    serverCallId: serverCallId,
+                    callLocator: callLocator,
                     source: CommunicationIdentifierSerializer.Serialize(source),
                     callbackUri: callOptions.CallbackUri?.AbsoluteUri,
                     requestedMediaTypes: callOptions.RequestedMediaTypes,
@@ -275,17 +277,17 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Initializes a server call.
         /// </summary>
-        /// <param name="serverCallId">The server call id. </param>
+        /// <param name="callLocator">The callLocator. </param>
         /// <returns></returns>
-        public virtual ServerCall InitializeServerCall(string serverCallId)
+        public virtual ServerCall InitializeServerCall(CallLocatorModel callLocator)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(InitializeServerCall)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(serverCallId, nameof(serverCallId));
+                Argument.AssertNotNull(callLocator, nameof(callLocator));
 
-                return new ServerCall(serverCallId, ServerCallRestClient, _clientDiagnostics);
+                return new ServerCall(callLocator, ServerCallRestClient, _clientDiagnostics);
             }
             catch (Exception ex)
             {

@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The request payload for stopping a media operation for a participant. </summary>
-    internal partial class CancelMediaOperationRequest
+    public partial class CancelMediaOperationRequest
     {
         /// <summary> Initializes a new instance of CancelMediaOperationRequest. </summary>
         /// <param name="mediaOperationId"> The operationId of the media operation to cancel. </param>

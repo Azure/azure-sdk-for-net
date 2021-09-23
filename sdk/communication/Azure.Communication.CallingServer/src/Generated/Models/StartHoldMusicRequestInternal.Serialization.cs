@@ -10,11 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class StartHoldMusicRequest : IUtf8JsonSerializable
+    internal partial class StartHoldMusicRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("identifier");
+            writer.WriteObjectValue(Identifier);
             if (Optional.IsDefined(AudioFileUri))
             {
                 writer.WritePropertyName("audioFileUri");
@@ -29,6 +31,11 @@ namespace Azure.Communication.CallingServer
             {
                 writer.WritePropertyName("callbackUri");
                 writer.WriteStringValue(CallbackUri);
+            }
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext");
+                writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
         }

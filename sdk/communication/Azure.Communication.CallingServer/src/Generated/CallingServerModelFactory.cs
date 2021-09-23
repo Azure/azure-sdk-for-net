@@ -48,6 +48,14 @@ namespace Azure.Communication.CallingServer
             return new CancelAllMediaOperationsResult(operationId, status, operationContext, resultInfo);
         }
 
+        /// <summary> Initializes a new instance of AnswerCallResult. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <returns> A new <see cref="CallingServer.AnswerCallResult"/> instance for mocking. </returns>
+        public static AnswerCallResult AnswerCallResult(string callConnectionId = null)
+        {
+            return new AnswerCallResult(callConnectionId);
+        }
+
         /// <summary> Initializes a new instance of AddParticipantResult. </summary>
         /// <param name="participantId"> The id of the added participant. </param>
         /// <returns> A new <see cref="CallingServer.AddParticipantResult"/> instance for mocking. </returns>
