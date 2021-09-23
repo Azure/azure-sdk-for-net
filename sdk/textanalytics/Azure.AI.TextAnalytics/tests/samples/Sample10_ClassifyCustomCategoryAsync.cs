@@ -18,6 +18,9 @@ namespace Azure.AI.TextAnalytics.Samples
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+            string projectName = TestEnvironment.SingleClassificationProjectName;
+            string deploymentName = TestEnvironment.SingleClassificationDeploymentName;
+
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Get input document.
@@ -33,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            var classifyCustomCategoryAction = new ClassifyCustomCategoryAction(TestEnvironment.ProjectName, TestEnvironment.DeploymentName);
+            var classifyCustomCategoryAction = new ClassifyCustomCategoryAction(projectName, deploymentName);
 
             TextAnalyticsActions actions = new TextAnalyticsActions()
             {

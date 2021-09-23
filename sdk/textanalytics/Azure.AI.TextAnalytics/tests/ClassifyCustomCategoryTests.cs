@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction>() { new ClassifyCustomCategoryAction(TestEnvironment.ProjectName, TestEnvironment.DeploymentName) { DisableServiceLogs = true } }
+                ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction>() { new ClassifyCustomCategoryAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName) { DisableServiceLogs = true } }
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_classifyCustomCategoryBatchConvenienceDocuments, batchActions);
@@ -78,7 +78,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction>()
                 {
-                    new ClassifyCustomCategoryAction(TestEnvironment.ProjectName, TestEnvironment.DeploymentName)
+                    new ClassifyCustomCategoryAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
                 }
             };
 
@@ -107,7 +107,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction>()
                 {
-                    new ClassifyCustomCategoryAction(TestEnvironment.ProjectName, TestEnvironment.DeploymentName)
+                    new ClassifyCustomCategoryAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
                 }
             };
 
@@ -133,7 +133,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction>()
                 {
-                    new ClassifyCustomCategoryAction(TestEnvironment.ProjectName, TestEnvironment.DeploymentName)
+                    new ClassifyCustomCategoryAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
                 }
             };
 
@@ -164,7 +164,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction>()
                 {
-                    new ClassifyCustomCategoryAction(TestEnvironment.ProjectName, TestEnvironment.DeploymentName)
+                    new ClassifyCustomCategoryAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
                 }
             };
 
@@ -190,7 +190,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction>()
                 {
-                    new ClassifyCustomCategoryAction(TestEnvironment.ProjectName, TestEnvironment.DeploymentName)
+                    new ClassifyCustomCategoryAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
                 }
             };
 
@@ -221,8 +221,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateSummaryBatchResult(ClassifyCustomCategoryResultCollection results, bool includeStatistics = false)
         {
-            Assert.AreEqual(results.ProjectName, TestEnvironment.ProjectName);
-            Assert.AreEqual(results.DeploymentName, TestEnvironment.DeploymentName);
+            Assert.AreEqual(results.ProjectName, TestEnvironment.SingleClassificationProjectName);
+            Assert.AreEqual(results.DeploymentName, TestEnvironment.SingleClassificationDeploymentName);
 
             if (includeStatistics)
             {
