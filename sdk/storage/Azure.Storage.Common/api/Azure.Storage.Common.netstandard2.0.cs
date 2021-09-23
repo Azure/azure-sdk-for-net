@@ -18,13 +18,14 @@ namespace Azure.Storage
         public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
         public bool DeferValidation { get { throw null; } set { } }
     }
-    public partial class StorageCrc64HashAlgorithm : System.Security.Cryptography.HashAlgorithm
+    public partial class StorageCrc64NonCryptographicHashAlgorithm
     {
-        internal StorageCrc64HashAlgorithm() { }
-        public static new Azure.Storage.StorageCrc64HashAlgorithm Create() { throw null; }
-        protected override void HashCore(byte[] array, int ibStart, int cbSize) { }
-        protected override byte[] HashFinal() { throw null; }
-        public override void Initialize() { }
+        internal StorageCrc64NonCryptographicHashAlgorithm() { }
+        public void Append(System.ReadOnlySpan<byte> source) { }
+        public static Azure.Storage.StorageCrc64NonCryptographicHashAlgorithm Create() { throw null; }
+        public byte[] GetCurrentHash() { throw null; }
+        protected void GetCurrentHashCore(System.Span<byte> destination) { }
+        public void Reset() { }
     }
     public static partial class StorageExtensions
     {
