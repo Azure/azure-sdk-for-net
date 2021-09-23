@@ -689,6 +689,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="recognizeLinkedEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/>.</param>
         /// <param name="analyzeSentimentActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/>.</param>
         /// <param name="extractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.ExtractSummaryActionResult"/>.</param>
+        /// <param name="classifyCustomCategoryActionResults">Sets the collection of <see cref="TextAnalytics.ClassifyCustomCategoryActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
         public static AnalyzeActionsResult AnalyzeActionsResult(
             IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
@@ -696,7 +697,9 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
             IEnumerable<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
             IEnumerable<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
-            IEnumerable<ExtractSummaryActionResult> extractSummaryActionResults)
+            IEnumerable<ExtractSummaryActionResult> extractSummaryActionResults,
+            IEnumerable<ClassifyCustomCategoryActionResult> classifyCustomCategoryActionResults
+            )
         {
             return new AnalyzeActionsResult(
                 extractKeyPhrasesActionResults.ToList(),
@@ -705,7 +708,7 @@ namespace Azure.AI.TextAnalytics
                 recognizeLinkedEntitiesActionResults.ToList(),
                 analyzeSentimentActionResults.ToList(),
                 extractSummaryActionResults.ToList(),
-                new List<ClassifyCustomCategoryActionResult>());
+                classifyCustomCategoryActionResults.ToList());
         }
 
         /// <summary>
