@@ -49,8 +49,11 @@ namespace Azure.Storage.Blobs.Models
             Metadata = metadata;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the deleted. </summary>
         public bool? Deleted { get; }
+        /// <summary> Gets the version. </summary>
         public string Version { get; }
         /// <summary> Properties of a container. </summary>
         public ContainerPropertiesInternal Properties { get; }

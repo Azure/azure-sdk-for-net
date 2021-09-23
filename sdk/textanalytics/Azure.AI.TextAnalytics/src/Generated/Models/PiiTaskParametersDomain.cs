@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PiiTaskParametersDomain"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiTaskParametersDomain"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PiiTaskParametersDomain(string value)
         {

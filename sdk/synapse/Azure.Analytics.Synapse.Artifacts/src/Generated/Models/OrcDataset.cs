@@ -47,6 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> The location of the ORC data storage. </summary>
         public DatasetLocation Location { get; set; }
+        /// <summary> Gets or sets the orc compression codec. </summary>
         public OrcCompressionCodec? OrcCompressionCodec { get; set; }
     }
 }

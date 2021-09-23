@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ObjectTrackingAccuracy"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ObjectTrackingAccuracy"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ObjectTrackingAccuracy(string value)
         {

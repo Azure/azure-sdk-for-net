@@ -41,6 +41,12 @@ namespace Azure.Storage.Blobs.Models
         public CopyStatus CopyStatus { get; internal set; }
 
         /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.
+        /// Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of BlobCopyInfo instances.
         /// You can use BlobsModelFactory.BlobCopyInfo instead.
         /// </summary>

@@ -26,6 +26,7 @@ namespace Azure.Storage.Files.DataLake.Models
             Paths = paths;
         }
 
+        /// <summary> Gets the paths. </summary>
         public IReadOnlyList<Path> Paths { get; }
     }
 }

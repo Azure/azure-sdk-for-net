@@ -38,7 +38,7 @@ To quickly create the needed resources in Azure and to receive connection string
 
 Install the Azure Event Hubs Event Processor client library for .NET using [NuGet](https://www.nuget.org/):
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Messaging.EventHubs.Processor
 ```
 

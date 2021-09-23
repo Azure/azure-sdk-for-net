@@ -33,13 +33,15 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// Initializes a new instance of the Operation class.
         /// </summary>
         /// <param name="name">Name of the operation.</param>
+        /// <param name="isDataAction">Is data action.</param>
         /// <param name="display">Properties displayed for the
         /// operation.</param>
         /// <param name="origin">Origin of the operation.</param>
         /// <param name="serviceSpecification">Service specification.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), ServiceSpecification serviceSpecification = default(ServiceSpecification))
+        public Operation(string name = default(string), bool? isDataAction = default(bool?), OperationDisplay display = default(OperationDisplay), string origin = default(string), ServiceSpecification serviceSpecification = default(ServiceSpecification))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
             Origin = origin;
             ServiceSpecification = serviceSpecification;
@@ -56,6 +58,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets is data action.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// Gets or sets properties displayed for the operation.

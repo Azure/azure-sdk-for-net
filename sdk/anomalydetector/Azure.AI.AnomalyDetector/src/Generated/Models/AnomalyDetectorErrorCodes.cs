@@ -15,7 +15,7 @@ namespace Azure.AI.AnomalyDetector.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AnomalyDetectorErrorCodes"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetectorErrorCodes"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnomalyDetectorErrorCodes(string value)
         {

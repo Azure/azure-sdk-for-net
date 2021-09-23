@@ -22,6 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
             DisplayName = displayName;
         }
 
+        /// <summary> Gets the display name. </summary>
         public string DisplayName { get; }
     }
 }

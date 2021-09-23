@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies3p1";
+            string tableName = "OfficeSupplies3p1" + _random.Next();
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
