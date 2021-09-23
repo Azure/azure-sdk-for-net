@@ -107,5 +107,36 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability'].post.operationId
       transform: return "NamespaceName_CheckAvailability"
+    - from: swagger-document
+      where: $
+      transform: >
+        $.parameters['NetworkRuleSetsName']= {
+                "name": "NetworkRuleSetsName",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "description": "The name of the NetworkRuleSet name. NetworkRuleSet Name must be 'default'",
+                "enum": [
+                "default"
+                ],
+                "x-ms-parameter-location": "method"
+                }
+    - from: swagger-document
+      where: $.paths
+      transform: >
+          for (var key in $) {
+              var newKey=key.replace('networkRuleSets/default','networkRuleSets/{NetworkRuleSetsName}');
+              if (newKey !== key){
+                  $[newKey] = $[key];
+                  for (var key1 in $[newKey]){
+                    $[newKey][key1]['parameters'].push(
+                      {
+                        "$ref": "#/parameters/NetworkRuleSetsName"
+                      }
+                    );
+                  }
+                  delete $[key];
+                }
+          }
 ```
 
