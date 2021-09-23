@@ -19,6 +19,8 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         private static readonly string s_endpoint = "https://contoso-textanalytics.cognitiveservices.azure.com/";
         private static readonly string s_apiKey = "FakeapiKey";
+        private static readonly string FakeProjectName = "FakeProjectName";
+        private static readonly string FakeDeploymentName = "FakeDeploymentname";
 
         public AnalyzeOperationMockTests(bool isAsync) : base(isAsync)
         {
@@ -774,6 +776,72 @@ namespace Azure.AI.TextAnalytics.Tests
 
         #endregion Extract summary
 
+        #region Classify Custom Categories
+
+        [Test]
+        public async Task AnalyzeOperationClassifyCustomCategoriesWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new ClassifyCustomCategoriesAction(FakeProjectName, FakeDeploymentName)
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ClassifyCustomCategoriesActions = new List<ClassifyCustomCategoriesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        [Test]
+        public void AnalyzeOperationClassifyCustomCategoryWithTwoActions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                ClassifyCustomCategoriesActions = new List<ClassifyCustomCategoriesAction>()
+                {
+                    new ClassifyCustomCategoriesAction(FakeProjectName, FakeDeploymentName),
+                    new ClassifyCustomCategoriesAction(FakeProjectName, FakeDeploymentName)
+                    {
+                        DisableServiceLogs = true
+                    }
+                },
+            };
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
+            Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
+        }
+        #endregion
+
         [Test]
         public async Task AnalyzeOperationWithActionsError()
         {
@@ -815,6 +883,11 @@ namespace Azure.AI.TextAnalytics.Tests
                         ""code"": ""InvalidRequest"",
                         ""message"": ""Some error"",
                         ""target"": ""#/tasks/extractiveSummarizationTasks/0""
+                      },
+                      {
+                        ""code"": ""InvalidRequest"",
+                        ""message"": ""Some error"",
+                        ""target"": ""#/tasks/customMultiClassificationTasks/0""
                       }
                     ],
                     ""tasks"": {
@@ -823,9 +896,9 @@ namespace Azure.AI.TextAnalytics.Tests
                         ""lastUpdateDateTime"": ""2021-03-03T22:39:37Z""
                       },
                       ""completed"": 0,
-                      ""failed"": 6,
+                      ""failed"": 7,
                       ""inProgress"": 0,
-                      ""total"": 6,
+                      ""total"": 7,
                       ""entityRecognitionTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
@@ -867,6 +940,13 @@ namespace Azure.AI.TextAnalytics.Tests
                           ""taskName"": ""something"",
                           ""state"": ""failed""
                         }
+                      ],
+                      ""customMultiClassificationTasks"": [
+                        {
+                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
+                          ""taskName"": ""something"",
+                          ""state"": ""failed""
+                        }
                       ]
                     }
                 }"));
@@ -890,16 +970,17 @@ namespace Azure.AI.TextAnalytics.Tests
                 RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
                 AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
                 ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() },
+                ClassifyCustomCategoriesActions = new List<ClassifyCustomCategoriesAction>() { new ClassifyCustomCategoriesAction(FakeProjectName, FakeDeploymentName) },
                 DisplayName = "AnalyzeOperationBatchWithErrorTest"
             };
 
             var operation = new AnalyzeActionsOperation("75d521bc-c2aa-4d8a-aabe-713e72d53a2d", client);
             await operation.UpdateStatusAsync();
 
-            Assert.AreEqual(6, operation.ActionsFailed);
+            Assert.AreEqual(7, operation.ActionsFailed);
             Assert.AreEqual(0, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(6, operation.ActionsTotal);
+            Assert.AreEqual(7, operation.ActionsTotal);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -910,6 +991,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults.FirstOrDefault();
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
             ExtractSummaryActionResult extractSummaryActionsResults = resultCollection.ExtractSummaryResults.FirstOrDefault();
+            ClassifyCustomCategoriesActionResult classifyCustomCategoriesActionResult = resultCollection.ClassifyCustomCategoriesResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
@@ -928,6 +1010,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(extractSummaryActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => extractSummaryActionsResults.DocumentsResults.GetType());
+
+            Assert.IsTrue(classifyCustomCategoriesActionResult.HasError);
+            Assert.Throws<InvalidOperationException>(() => classifyCustomCategoriesActionResult.DocumentsResults.GetType());
         }
 
         [Test]
