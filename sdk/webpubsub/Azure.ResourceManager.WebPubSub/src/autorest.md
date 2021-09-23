@@ -16,6 +16,7 @@ payload-flattening-threshold: 2
 operation-group-to-resource-type:
     Usages: Microsoft.SignalRService/locations/usages
     WebPubSubPrivateLinkResources: Microsoft.SignalRService/webPubSub/privateLinkResources
-operation-group-to-parent:
-  WebPubSubHubs: webPubSub
+operation-group-to-singleton-resource:
+    WebPubSubHubs: hubs/hubName
+    WebPubSubEventHandlers: eventHandlers/eventHandlerName
 ```
