@@ -14,8 +14,10 @@ namespace Azure.AI.TextAnalytics
         /// Initializes a new instance of the <see cref="RecognizeCustomEntitiesAction"/>
         /// class which allows callers to specify details about how to execute
         /// a Recognize Custom Entities action in a set of documents.
-        /// Sets the <see cref="ProjectName"/> and <see cref="DeploymentName"/> properties
+        /// Sets the <see cref="ProjectName"/> and <see cref="DeploymentName"/> properties.
         /// </summary>
+        /// <param name="projectName">Gets the value of the property corresponding to the name of the project.</param>
+        /// <param name="deploymentName">Gets the value of the property corresponding to the name of the deployment.</param>
         public RecognizeCustomEntitiesAction(string projectName, string deploymentName)
         {
             ProjectName = projectName;
@@ -23,13 +25,11 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the value of the property corresponding to the name of the
-        /// project for this action.
+        /// Gets the value of the property corresponding to the name of the proejct.
         /// </summary>
         public string ProjectName { get; }
         /// <summary>
-        /// Gets the value of the property corresponding to the name of the
-        /// deployment for this action.
+        /// Gets the value of the property corresponding to the name of the deployment.
         /// </summary>
         public string DeploymentName { get; }
         /// <summary>

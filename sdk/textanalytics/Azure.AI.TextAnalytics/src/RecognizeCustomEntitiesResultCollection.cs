@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="RecognizeCustomEntitiesActionResult"/> objects corresponding
+    /// Collection of <see cref="RecognizeEntitiesResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
     [DebuggerTypeProxy(typeof(RecognizeCustomEntitiesResultCollectionDebugView))]
@@ -30,19 +30,17 @@ namespace Azure.AI.TextAnalytics
         public TextDocumentBatchStatistics Statistics { get; }
 
         /// <summary>
-        /// Gets the value of the property corresponding to the name of the
-        /// deployment for this action.
+        /// Gets the value of the property corresponding to the name of the deployment.
         /// </summary>
         public string DeploymentName { get; }
 
         /// <summary>
-        /// Gets the value of the property corresponding to the name of the
-        /// project for this action.
+        /// Gets the value of the property corresponding to the name of the project.
         /// </summary>
         public string ProjectName { get; }
 
         /// <summary>
-        /// Debugger Proxy class for <see cref="RecognizeCustomEntitiesResultCollectionDebugView"/>.
+        /// Debugger Proxy class for <see cref="RecognizeCustomEntitiesResultCollection"/>.
         /// </summary>
         internal class RecognizeCustomEntitiesResultCollectionDebugView
         {

@@ -35,14 +35,9 @@ namespace Azure.AI.TextAnalytics
             V3_1 = 2,
 
             /// <summary>
-            /// Version 3.2-preview.1
-            /// </summary>
-            V3_2_Preview_1 = 3,
-
-            /// <summary>
             /// Version 3.2-preview.2
             /// </summary>
-            V3_2_Preview_2 = 4
+            V3_2_Preview_2 = 3
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -85,7 +80,6 @@ namespace Azure.AI.TextAnalytics
             {
                 ServiceVersion.V3_0 => "v3.0",
                 ServiceVersion.V3_1 => "v3.1",
-                ServiceVersion.V3_2_Preview_1 => "v3.2-preview.1",
                 ServiceVersion.V3_2_Preview_2 => "v3.2-preview.2",
 
                 _ => throw new ArgumentException($"Version {version} not supported."),
