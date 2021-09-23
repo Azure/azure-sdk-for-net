@@ -1,10 +1,20 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0.401-focal AS build
 
 ENV \
     NO_AT_BRIDGE=1 \
     DOCKER_CONTAINER_NAME="ubuntu_netcore_keyring" \
-    PSModuleAnalysisCachePath=/var/cache/microsoft/powershell/PSModuleAnalysisCache/ModuleAnalysisCache \
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Ubuntu-20.04
+     # Unset ASPNETCORE_URLS from aspnet base image
+    ASPNETCORE_URLS= \
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
+    # SDK version
+    DOTNET_SDK_VERSION=5.0.401 \
+    # Enable correct mode for dotnet watch (only mode supported in a container)
+    DOTNET_USE_POLLING_FILE_WATCHER=true \
+    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
+    NUGET_XMLDOC_MODE=skip \
+    # PowerShell telemetry for docker image usage
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Ubuntu-20.04
 
 # Install GNOME keyring
 RUN apt-get update \
@@ -14,11 +24,15 @@ RUN apt-get update \
         gnome-keyring \
         python
 
-# Install PowerShell && .net core runtime 2.1
-RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb \
-    && dpkg -i packages-microsoft-prod.deb \
-    && apt-get update \
-    && apt-get install -y powershell \
-    && pwsh --version \
-    && apt-get install -y dotnet-runtime-5.0 \
-    && dotnet --list-runtimes
+# Below taken from https://hub.docker.com/_/microsoft-dotnet-sdk
+# 5.0.401-focal-amd64, 5.0-focal-amd64, 5.0.401-focal, 5.0-focal	Dockerfile	Ubuntu 20.04	09/14/2021
+
+# Install .NET SDK
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
+    && dotnet_sha512='a444d44007709ceb68d8f72dec0531e17f85f800efc0007ace4fa66ba27f095066930e6c6defcd2f85cdedea2fec25e163f5da461c1c2b8563e5cd7cb47091e0' \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /usr/share/dotnet \
+    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm dotnet.tar.gz \
+    # Trigger first run experience by running arbitrary cmd
+    && dotnet help
