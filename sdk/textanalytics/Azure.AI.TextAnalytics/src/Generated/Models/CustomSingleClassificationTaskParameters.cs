@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The CustomSingleClassificationTaskParameters. </summary>
-    public partial class CustomSingleClassificationTaskParameters
+    internal partial class CustomSingleClassificationTaskParameters
     {
         /// <summary> Initializes a new instance of CustomSingleClassificationTaskParameters. </summary>
         /// <param name="projectName"></param>
