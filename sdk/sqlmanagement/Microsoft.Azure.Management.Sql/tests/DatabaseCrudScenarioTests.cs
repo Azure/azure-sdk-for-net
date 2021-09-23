@@ -483,7 +483,20 @@ namespace Sql.Tests
                     return e.Response.StatusCode == HttpStatusCode.Conflict;
                 });
 
-                Assert.Equal(TransparentDataEncryptionState.Disabled, config.State);
+                LogicalDatabaseTransparentDataEncryption newconfig = sqlClient.TransparentDataEncryptions.Get(resourceGroup.Name, server.Name, dbName);
+                SqlManagementTestUtilities.ConditionalExecuteWithRetry(() =>
+                {
+                    newconfig = sqlClient.TransparentDataEncryptions.Get(resourceGroup.Name, server.Name, dbName);
+                },
+                newconfig,
+                (c) => c.State == TransparentDataEncryptionState.Disabled,
+                TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(5),
+                (CloudException e) =>
+                {
+                    return e.Response.StatusCode == HttpStatusCode.Conflict;
+                });
+
+                Assert.Equal(TransparentDataEncryptionState.Disabled, newconfig.State);
             }
         }
     }
