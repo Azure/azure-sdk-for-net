@@ -14,10 +14,10 @@ namespace Azure.Storage.Blobs.Models
     {
         internal static BlobPrefix DeserializeBlobPrefix(XElement element)
         {
-            string name = default;
+            BlobName name = default;
             if (element.Element("Name") is XElement nameElement)
             {
-                name = (string)nameElement;
+                name = BlobName.DeserializeBlobName(nameElement);
             }
             return new BlobPrefix(name);
         }
