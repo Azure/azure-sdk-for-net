@@ -28,7 +28,7 @@ var batchInput = new List<string>
     document
 };
 
-var classifyCustomCategoryAction = new ClassifyCustomCategoryAction(TestEnvironment.ProjectName, TestEnvironment.DeploymentName);
+var classifyCustomCategoryAction = new ClassifyCustomCategoryAction(projectName, deploymentName);
 
 TextAnalyticsActions actions = new TextAnalyticsActions()
 {
