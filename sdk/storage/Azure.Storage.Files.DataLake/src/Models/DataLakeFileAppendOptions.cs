@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Threading;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Optional paratmers for appending data to a file.
+    /// Optional parameters for appending data to a file with
+    /// <see cref="DataLakeFileClient.AppendAsync(Stream, long, DataLakeFileAppendOptions, CancellationToken)"/>.
     /// </summary>
     public class DataLakeFileAppendOptions
     {

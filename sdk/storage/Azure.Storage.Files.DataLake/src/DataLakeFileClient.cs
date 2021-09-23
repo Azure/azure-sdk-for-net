@@ -2648,7 +2648,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileDownloadInfo> Read(
             DataLakeFileReadOptions options,
             CancellationToken cancellationToken = default)
@@ -2703,7 +2702,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync(
             DataLakeFileReadOptions options,
             CancellationToken cancellationToken = default)

@@ -1162,7 +1162,6 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobDownloadStreamingResult> DownloadStreaming(
             BlobBaseDownloadOptions options,
             CancellationToken cancellationToken = default)
@@ -1207,7 +1206,6 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingAsync(
             BlobBaseDownloadOptions options,
             CancellationToken cancellationToken = default)
@@ -1741,7 +1739,6 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobDownloadResult> DownloadContent(
             BlobBaseDownloadOptions options,
             CancellationToken cancellationToken = default) =>
@@ -1791,7 +1788,6 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync(
             BlobBaseDownloadOptions options,
             CancellationToken cancellationToken = default) =>

@@ -2,11 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Threading;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional paratmers for appending a block.
+    /// Optional parameters for appending a block with
+    /// <see cref="AppendBlobClient.AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/>.
     /// </summary>
     public class AppendBlobAppendBlockOptions
     {

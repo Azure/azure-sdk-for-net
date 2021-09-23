@@ -1213,18 +1213,16 @@ namespace Azure.Storage.Blobs.Specialized
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                options ??= new AppendBlobAppendBlockOptions();
-
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(options.Conditions)}: {options.Conditions}");
+                    $"{nameof(options.Conditions)}: {options?.Conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlock)}");
 
                 // All AppendBlobRequestConditions are valid.
-                options.Conditions.ValidateConditionsNotPresent(
+                options?.Conditions.ValidateConditionsNotPresent(
                     invalidConditions: BlobRequestConditionProperty.None,
                     operationName: nameof(AppendBlobClient.AppendBlock),
                     parameterName: nameof(options.Conditions));
@@ -1236,9 +1234,9 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, options.TransactionalHashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, options?.TransactionalHashingOptions);
 
-                    content = content?.WithNoDispose().WithProgress(options.ProgressHandler);
+                    content = content?.WithNoDispose().WithProgress(options?.ProgressHandler);
 
                     ResponseWithHeaders<AppendBlobAppendBlockHeaders> response;
 
@@ -1249,18 +1247,18 @@ namespace Azure.Storage.Blobs.Specialized
                             body: content,
                             transactionalContentCrc64: hashResult.StorageCrc64,
                             transactionalContentMD5: hashResult.MD5,
-                            leaseId: options.Conditions?.LeaseId,
-                            maxSize: options.Conditions?.IfMaxSizeLessThanOrEqual,
-                            appendPosition: options.Conditions?.IfAppendPositionEqual,
+                            leaseId: options?.Conditions?.LeaseId,
+                            maxSize: options?.Conditions?.IfMaxSizeLessThanOrEqual,
+                            appendPosition: options?.Conditions?.IfAppendPositionEqual,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifModifiedSince: options.Conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: options.Conditions?.IfUnmodifiedSince,
-                            ifMatch: options.Conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: options.Conditions?.IfNoneMatch?.ToString(),
-                            ifTags: options.Conditions?.TagConditions,
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                            ifTags: options?.Conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1271,18 +1269,18 @@ namespace Azure.Storage.Blobs.Specialized
                             body: content,
                             transactionalContentCrc64: hashResult.StorageCrc64,
                             transactionalContentMD5: hashResult.MD5,
-                            leaseId: options.Conditions?.LeaseId,
-                            maxSize: options.Conditions?.IfMaxSizeLessThanOrEqual,
-                            appendPosition: options.Conditions?.IfAppendPositionEqual,
+                            leaseId: options?.Conditions?.LeaseId,
+                            maxSize: options?.Conditions?.IfMaxSizeLessThanOrEqual,
+                            appendPosition: options?.Conditions?.IfAppendPositionEqual,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifModifiedSince: options.Conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: options.Conditions?.IfUnmodifiedSince,
-                            ifMatch: options.Conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: options.Conditions?.IfNoneMatch?.ToString(),
-                            ifTags: options.Conditions?.TagConditions,
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                            ifTags: options?.Conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
 

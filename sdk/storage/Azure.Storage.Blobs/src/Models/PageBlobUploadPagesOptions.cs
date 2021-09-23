@@ -6,7 +6,7 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional paratmers for uploading pages.
+    /// Optional parameters for uploading pages.
     /// </summary>
     public class PageBlobUploadPagesOptions
     {

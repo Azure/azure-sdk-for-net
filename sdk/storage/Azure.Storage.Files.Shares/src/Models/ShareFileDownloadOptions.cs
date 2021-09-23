@@ -1,10 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// Optional paratmers for downloading some range of a file.
+    /// Optional parameters for downloading a range of a file with
+    /// <see cref="ShareFileClient.DownloadAsync(ShareFileDownloadOptions, CancellationToken)"/>.
     /// </summary>
     public class ShareFileDownloadOptions
     {

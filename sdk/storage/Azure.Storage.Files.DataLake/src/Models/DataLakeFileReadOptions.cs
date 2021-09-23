@@ -1,10 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Optional paratmers for downloading some range of a file.
+    /// Optional parameters for downloading a range of a file with
+    /// <see cref="DataLakeFileClient.Read(DataLakeFileReadOptions, CancellationToken)"/>.
     /// </summary>
     public class DataLakeFileReadOptions
     {

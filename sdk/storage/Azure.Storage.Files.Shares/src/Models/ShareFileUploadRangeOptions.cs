@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Threading;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// Optional paratmers for uploading a file range.
+    /// Optional parameters for uploading a file range with
+    /// <see cref="ShareFileClient.UploadRange(HttpRange, Stream, ShareFileUploadRangeOptions, CancellationToken)"/>.
     /// </summary>
     public class ShareFileUploadRangeOptions
     {
