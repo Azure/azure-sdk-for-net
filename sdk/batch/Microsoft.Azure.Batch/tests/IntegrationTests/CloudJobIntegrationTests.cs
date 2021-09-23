@@ -889,6 +889,9 @@
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        [Trait("Flaky", "true")]
+        // https://docs.microsoft.com/en-us/azure/batch/batch-get-resource-counts:
+        // Note that at times, the numbers returned by these operations may not be up to date.
         public async Task Job_GetTaskCounts_ReturnsCorrectCount()
         {
             static async Task test()
@@ -927,10 +930,12 @@
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
-
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        [Trait("Flaky", "true")]
+        // https://docs.microsoft.com/en-us/azure/batch/batch-get-resource-counts:
+        // Note that at times, the numbers returned by these operations may not be up to date.
         public async Task Job_GetTaskCounts_ReturnsCorrectCountNonZeroTaskSlots()
         {
             static async Task test()
