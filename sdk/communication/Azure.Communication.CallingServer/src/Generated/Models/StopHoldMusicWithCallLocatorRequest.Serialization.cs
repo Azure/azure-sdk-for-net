@@ -17,11 +17,10 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator");
             writer.WriteObjectValue(CallLocator);
-            if (Optional.IsDefined(StopHoldMusicRequest))
-            {
-                writer.WritePropertyName("stopHoldMusicRequest");
-                writer.WriteObjectValue(StopHoldMusicRequest);
-            }
+            writer.WritePropertyName("identifier");
+            writer.WriteObjectValue(Identifier);
+            writer.WritePropertyName("startHoldMusicOperationId");
+            writer.WriteStringValue(StartHoldMusicOperationId);
             writer.WriteEndObject();
         }
     }

@@ -462,7 +462,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateStopHoldMusicRequest(CallLocatorModel callLocator, StopHoldMusicRequestInternal stopHoldMusicRequest)
+        internal HttpMessage CreateStopHoldMusicRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, string startHoldMusicOperationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -474,10 +474,7 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new StopHoldMusicWithCallLocatorRequest(callLocator)
-            {
-                StopHoldMusicRequest = stopHoldMusicRequest
-            };
+            var model = new StopHoldMusicWithCallLocatorRequest(callLocator, identifier, startHoldMusicOperationId);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -486,17 +483,26 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Stop hold music to a participant. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <param name="stopHoldMusicRequest"> The stop hold music request. </param>
+        /// <param name="identifier"> The identifier of the participant. </param>
+        /// <param name="startHoldMusicOperationId"> The operationId of the StartHoldMusicOperation to stop. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public async Task<Response<StopHoldMusicResult>> StopHoldMusicAsync(CallLocatorModel callLocator, StopHoldMusicRequestInternal stopHoldMusicRequest = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/>, <paramref name="identifier"/>, or <paramref name="startHoldMusicOperationId"/> is null. </exception>
+        public async Task<Response<StopHoldMusicResult>> StopHoldMusicAsync(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, string startHoldMusicOperationId, CancellationToken cancellationToken = default)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
+            if (identifier == null)
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
+            if (startHoldMusicOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(startHoldMusicOperationId));
+            }
 
-            using var message = CreateStopHoldMusicRequest(callLocator, stopHoldMusicRequest);
+            using var message = CreateStopHoldMusicRequest(callLocator, identifier, startHoldMusicOperationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -514,17 +520,26 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Stop hold music to a participant. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <param name="stopHoldMusicRequest"> The stop hold music request. </param>
+        /// <param name="identifier"> The identifier of the participant. </param>
+        /// <param name="startHoldMusicOperationId"> The operationId of the StartHoldMusicOperation to stop. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public Response<StopHoldMusicResult> StopHoldMusic(CallLocatorModel callLocator, StopHoldMusicRequestInternal stopHoldMusicRequest = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/>, <paramref name="identifier"/>, or <paramref name="startHoldMusicOperationId"/> is null. </exception>
+        public Response<StopHoldMusicResult> StopHoldMusic(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, string startHoldMusicOperationId, CancellationToken cancellationToken = default)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
+            if (identifier == null)
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
+            if (startHoldMusicOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(startHoldMusicOperationId));
+            }
 
-            using var message = CreateStopHoldMusicRequest(callLocator, stopHoldMusicRequest);
+            using var message = CreateStopHoldMusicRequest(callLocator, identifier, startHoldMusicOperationId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

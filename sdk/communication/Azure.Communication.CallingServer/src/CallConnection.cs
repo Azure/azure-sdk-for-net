@@ -579,7 +579,6 @@ namespace Azure.Communication.CallingServer
                 return await RestClient.StopHoldMusicAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
-                                        startHoldMusicOperationId: null,
                                         cancellationToken: cancellationToken
                                         ).ConfigureAwait(false);
             }
@@ -603,7 +602,6 @@ namespace Azure.Communication.CallingServer
                 return RestClient.StopHoldMusic(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
-                                        startHoldMusicOperationId: null,
                                         cancellationToken: cancellationToken);
             }
             catch (Exception ex)

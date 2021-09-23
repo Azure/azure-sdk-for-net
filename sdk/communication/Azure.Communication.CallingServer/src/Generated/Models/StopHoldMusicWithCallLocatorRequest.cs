@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
@@ -14,20 +15,34 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of StopHoldMusicWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public StopHoldMusicWithCallLocatorRequest(CallLocatorModel callLocator)
+        /// <param name="identifier"> The identifier of the participant. </param>
+        /// <param name="startHoldMusicOperationId"> The operationId of the StartHoldMusicOperation to stop. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/>, <paramref name="identifier"/>, or <paramref name="startHoldMusicOperationId"/> is null. </exception>
+        public StopHoldMusicWithCallLocatorRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, string startHoldMusicOperationId)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
+            if (identifier == null)
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
+            if (startHoldMusicOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(startHoldMusicOperationId));
+            }
 
             CallLocator = callLocator;
+            Identifier = identifier;
+            StartHoldMusicOperationId = startHoldMusicOperationId;
         }
 
         /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
-        /// <summary> The stop hold music request. </summary>
-        public StopHoldMusicRequestInternal StopHoldMusicRequest { get; set; }
+        /// <summary> The identifier of the participant. </summary>
+        public CommunicationIdentifierModel Identifier { get; }
+        /// <summary> The operationId of the StartHoldMusicOperation to stop. </summary>
+        public string StartHoldMusicOperationId { get; }
     }
 }

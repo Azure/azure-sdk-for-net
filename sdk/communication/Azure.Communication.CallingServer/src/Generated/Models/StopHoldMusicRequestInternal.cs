@@ -15,26 +15,18 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of StopHoldMusicRequestInternal. </summary>
         /// <param name="identifier"> The identifier of the participant. </param>
-        /// <param name="startHoldMusicOperationId"> The operationId of the StartHoldMusicOperation to stop. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> or <paramref name="startHoldMusicOperationId"/> is null. </exception>
-        public StopHoldMusicRequestInternal(CommunicationIdentifierModel identifier, string startHoldMusicOperationId)
+        /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
+        public StopHoldMusicRequestInternal(CommunicationIdentifierModel identifier)
         {
             if (identifier == null)
             {
                 throw new ArgumentNullException(nameof(identifier));
             }
-            if (startHoldMusicOperationId == null)
-            {
-                throw new ArgumentNullException(nameof(startHoldMusicOperationId));
-            }
 
             Identifier = identifier;
-            StartHoldMusicOperationId = startHoldMusicOperationId;
         }
 
         /// <summary> The identifier of the participant. </summary>
         public CommunicationIdentifierModel Identifier { get; }
-        /// <summary> The operationId of the StartHoldMusicOperation to stop. </summary>
-        public string StartHoldMusicOperationId { get; }
     }
 }

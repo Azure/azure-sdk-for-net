@@ -17,8 +17,6 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("identifier");
             writer.WriteObjectValue(Identifier);
-            writer.WritePropertyName("startHoldMusicOperationId");
-            writer.WriteStringValue(StartHoldMusicOperationId);
             writer.WriteEndObject();
         }
     }

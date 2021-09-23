@@ -646,23 +646,22 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Remove participant from the hold and stop playing audio. </summary>
         /// <param name="participant"> The identifier of the participant. </param>
-        /// <param name="startHoldMusicoperationId">The id of the start hold music operation. </param>
+        /// <param name="startHoldMusicOperationId">The id of the start hold music operation. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<StopHoldMusicResult>> StopHoldMusicAsync(CommunicationIdentifier participant, string startHoldMusicoperationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StopHoldMusicResult>> StopHoldMusicAsync(CommunicationIdentifier participant, string startHoldMusicOperationId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StopHoldMusicAsync)}");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(participant, nameof(startHoldMusicoperationId));
-
-                var stopHoldMusicRequestInternal = new StopHoldMusicRequestInternal(CommunicationIdentifierSerializer.Serialize(participant), startHoldMusicoperationId);
+                Argument.AssertNotNull(participant, nameof(startHoldMusicOperationId));
 
                 return await RestClient.StopHoldMusicAsync(
                                     callLocator: CallLocator,
-                                    stopHoldMusicRequest: stopHoldMusicRequestInternal,
+                                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                    startHoldMusicOperationId: startHoldMusicOperationId,
                                     cancellationToken: cancellationToken
                                     ).ConfigureAwait(false);
             }
@@ -675,23 +674,22 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Remove participant from the hold and stop playing audio. </summary>
         /// <param name="participant"> The identifier of the participant. </param>
-        /// <param name="startHoldMusicoperationId">The id of the start hold music operation. </param>
+        /// <param name="startHoldMusicOperationId">The id of the start hold music operation. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<StopHoldMusicResult> StopHoldMusic(CommunicationIdentifier participant, string startHoldMusicoperationId, CancellationToken cancellationToken = default)
+        public virtual Response<StopHoldMusicResult> StopHoldMusic(CommunicationIdentifier participant, string startHoldMusicOperationId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StopHoldMusic)}");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(participant, nameof(startHoldMusicoperationId));
-
-                var stopHoldMusicRequestInternal = new StopHoldMusicRequestInternal(CommunicationIdentifierSerializer.Serialize(participant), startHoldMusicoperationId);
+                Argument.AssertNotNull(participant, nameof(startHoldMusicOperationId));
 
                 return RestClient.StopHoldMusic(
                                     callLocator: CallLocator,
-                                    stopHoldMusicRequest: stopHoldMusicRequestInternal,
+                                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                    startHoldMusicOperationId: startHoldMusicOperationId,
                                     cancellationToken: cancellationToken
                                     );
             }
