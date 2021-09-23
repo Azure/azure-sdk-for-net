@@ -94,9 +94,12 @@ namespace Azure.Storage
         {
             return algorithmIdentifier switch
             {
-                TransactionalHashAlgorithm.StorageCrc64 => new GetHashResult() { StorageCrc64 = ComputeHash(content, StorageCrc64HashAlgorithm.Create()) },
+                TransactionalHashAlgorithm.StorageCrc64 => new GetHashResult()
+                {
+                    StorageCrc64 = ComputeHash(content, new NonCryptographicHashAlgorithmHasher(StorageCrc64NonCryptographicHashAlgorithm.Create()))
+                },
 #pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms; MD5 being used for content integrity check, not encryption
-                TransactionalHashAlgorithm.MD5 => new GetHashResult() { MD5 = ComputeHash(content, MD5.Create()) },
+                TransactionalHashAlgorithm.MD5 => new GetHashResult() { MD5 = ComputeHash(content, new HashAlgorithmHasher(MD5.Create())) },
 #pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
                 _ => new GetHashResult()
             };
@@ -112,9 +115,18 @@ namespace Azure.Storage
         /// <returns>Object containing the requested hash, or no hash, on its algorithm's respective property.</returns>
         public static GetHashResult GetHash(byte[] content, int offset, int count, TransactionalHashAlgorithm algorithmIdentifier)
         {
+            byte[] computeHash(StorageCrc64NonCryptographicHashAlgorithm nonCryptographicHashAlgorithm)
+            {
+                nonCryptographicHashAlgorithm.Append(new ReadOnlySpan<byte>(content, offset, count));
+                return nonCryptographicHashAlgorithm.GetCurrentHash();
+            }
+
             return algorithmIdentifier switch
             {
-                TransactionalHashAlgorithm.StorageCrc64 => new GetHashResult() { StorageCrc64 = StorageCrc64HashAlgorithm.Create().ComputeHash(content, offset, count) },
+                TransactionalHashAlgorithm.StorageCrc64 => new GetHashResult()
+                {
+                    StorageCrc64 = computeHash(StorageCrc64NonCryptographicHashAlgorithm.Create())
+                },
 #pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms; MD5 being used for content integrity check, not encryption
                 TransactionalHashAlgorithm.MD5 => new GetHashResult() { MD5 = MD5.Create().ComputeHash(content, offset, count) },
 #pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
@@ -126,12 +138,12 @@ namespace Azure.Storage
         /// Compute hash on a stream and reset stream to original position.
         /// </summary>
         /// <param name="content">Seekable stream to compute on.</param>
-        /// <param name="hashAlgorithm">HashAlgorithm to compute with.</param>
+        /// <param name="hasher">IHasher to compute with.</param>
         /// <returns></returns>
-        private static byte[] ComputeHash(Stream content, HashAlgorithm hashAlgorithm)
+        private static byte[] ComputeHash(Stream content, IHasher hasher)
         {
             long startPosition = content.Position;
-            byte[] hash = hashAlgorithm.ComputeHash(content);
+            byte[] hash = hasher.ComputeHash(content);
             content.Position = startPosition;
             return hash;
         }

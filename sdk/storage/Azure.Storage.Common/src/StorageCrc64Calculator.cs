@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers.Binary;
 
 namespace Azure.Storage
 {
@@ -780,13 +781,12 @@ namespace Azure.Storage
         /// Compute the CRC64 of the input data using the Azure Storage CRC64 polynomial.
         /// </summary>
         /// <param name="src">The source data on which to compute the CRC64.</param>
-        /// <param name="size"></param>
         /// <param name="uCrc"></param>
         /// <returns></returns>
-        public static UInt64 ComputeSlicedSafe(byte[] src, int size, ulong uCrc)
+        public static UInt64 ComputeSlicedSafe(ReadOnlySpan<byte> src, ulong uCrc)
         {
             int pData = 0;
-            ulong uSize = (ulong)size;
+            ulong uSize = (ulong)src.Length;
 
             ulong uBytes, uStop;
 
@@ -825,10 +825,10 @@ namespace Azure.Storage
                     UInt64 b2;
                     UInt64 b3;
 
-                    b0 = BitConverter.ToUInt64(src, pData + (0) + 8 * (0)) ^ uCrc0;
-                    b1 = BitConverter.ToUInt64(src, pData + (0) + 8 * (1)) ^ uCrc1;
-                    b2 = BitConverter.ToUInt64(src, pData + (0) + 8 * (2)) ^ uCrc2;
-                    b3 = BitConverter.ToUInt64(src, pData + (0) + 8 * (3)) ^ uCrc3;
+                    b0 = BinaryPrimitives.ReadUInt64LittleEndian(src.Slice(pData + (0) + 8 * (0))) ^ uCrc0;
+                    b1 = BinaryPrimitives.ReadUInt64LittleEndian(src.Slice(pData + (0) + 8 * (1))) ^ uCrc1;
+                    b2 = BinaryPrimitives.ReadUInt64LittleEndian(src.Slice(pData + (0) + 8 * (2))) ^ uCrc2;
+                    b3 = BinaryPrimitives.ReadUInt64LittleEndian(src.Slice(pData + (0) + 8 * (3))) ^ uCrc3;
                     uCrc0 = m_u32[(7) * 256 + ((b0) & (256 - 1))];
                     b0 >>= 8;
                     uCrc1 = m_u32[(7) * 256 + ((b1) & (256 - 1))];
@@ -892,7 +892,7 @@ namespace Azure.Storage
                 }
 
                 uCrc = 0;
-                uCrc ^= BitConverter.ToUInt64(src, pData + 8 * (0)) ^ uCrc0;
+                uCrc ^= BinaryPrimitives.ReadUInt64LittleEndian(src.Slice(pData + 8 * (0))) ^ uCrc0;
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
@@ -901,7 +901,7 @@ namespace Azure.Storage
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
-                uCrc ^= BitConverter.ToUInt64(src, pData + 8 * (1)) ^ uCrc1;
+                uCrc ^= BinaryPrimitives.ReadUInt64LittleEndian(src.Slice(pData + 8 * (1))) ^ uCrc1;
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
@@ -910,7 +910,7 @@ namespace Azure.Storage
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
-                uCrc ^= BitConverter.ToUInt64(src, pData + 8 * (2)) ^ uCrc2;
+                uCrc ^= BinaryPrimitives.ReadUInt64LittleEndian(src.Slice(pData + 8 * (2))) ^ uCrc2;
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
@@ -919,7 +919,7 @@ namespace Azure.Storage
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
-                uCrc ^= BitConverter.ToUInt64(src, pData + 8 * (3)) ^ uCrc3;
+                uCrc ^= BinaryPrimitives.ReadUInt64LittleEndian(src.Slice(pData + 8 * (3))) ^ uCrc3;
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
                 uCrc = (uCrc >> 8) ^ m_u1[((uCrc) & (256 - 1))];
