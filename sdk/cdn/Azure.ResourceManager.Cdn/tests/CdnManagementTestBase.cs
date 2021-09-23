@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -39,6 +38,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             return lro.Value;
         }
+
         protected static ProfileData CreateProfileData(SkuName skuName) => new ProfileData(Location.WestUS, new Sku { Name = skuName });
 
         protected static EndpointData CreateEndpointData() => new EndpointData(Location.WestUS)
@@ -66,11 +66,22 @@ namespace Azure.ResourceManager.Cdn.Tests
             }
         };
 
-        protected static OriginData CreateOriginData() => new OriginData()
+        protected static OriginData CreateOriginData() => new OriginData
         {
             HostName = "testsa4dotnetsdk.blob.core.windows.net",
             Priority = 1,
             Weight = 150
+        };
+
+        protected static OriginGroupData CreateOriginGroupData() => new OriginGroupData
+        {
+            HealthProbeSettings = new HealthProbeParameters
+            {
+                ProbePath = "/healthz",
+                ProbeRequestType = HealthProbeRequestType.Head,
+                ProbeProtocol = ProbeProtocol.Https,
+                ProbeIntervalInSeconds = 60
+            }
         };
     }
 }

@@ -22,8 +22,15 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HealthProbeSettings))
             {
-                writer.WritePropertyName("healthProbeSettings");
-                writer.WriteObjectValue(HealthProbeSettings);
+                if (HealthProbeSettings != null)
+                {
+                    writer.WritePropertyName("healthProbeSettings");
+                    writer.WriteObjectValue(HealthProbeSettings);
+                }
+                else
+                {
+                    writer.WriteNull("healthProbeSettings");
+                }
             }
             if (Optional.IsCollectionDefined(Origins))
             {
@@ -90,7 +97,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                healthProbeSettings = null;
                                 continue;
                             }
                             healthProbeSettings = HealthProbeParameters.DeserializeHealthProbeParameters(property0.Value);

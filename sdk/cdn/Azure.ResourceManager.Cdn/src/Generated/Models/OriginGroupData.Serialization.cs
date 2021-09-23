@@ -22,8 +22,15 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStartObject();
             if (Optional.IsDefined(HealthProbeSettings))
             {
-                writer.WritePropertyName("healthProbeSettings");
-                writer.WriteObjectValue(HealthProbeSettings);
+                if (HealthProbeSettings != null)
+                {
+                    writer.WritePropertyName("healthProbeSettings");
+                    writer.WriteObjectValue(HealthProbeSettings);
+                }
+                else
+                {
+                    writer.WriteNull("healthProbeSettings");
+                }
             }
             if (Optional.IsCollectionDefined(Origins))
             {
@@ -37,13 +44,27 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
             {
-                writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
-                writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
+                {
+                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                    writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                }
+                else
+                {
+                    writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                }
             }
             if (Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
             {
-                writer.WritePropertyName("responseBasedOriginErrorDetectionSettings");
-                writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings);
+                if (ResponseBasedOriginErrorDetectionSettings != null)
+                {
+                    writer.WritePropertyName("responseBasedOriginErrorDetectionSettings");
+                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings);
+                }
+                else
+                {
+                    writer.WriteNull("responseBasedOriginErrorDetectionSettings");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -57,7 +78,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceType type = default;
             Optional<HealthProbeParameters> healthProbeSettings = default;
             Optional<IList<ResourceReference>> origins = default;
-            Optional<int> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             Optional<ResponseBasedOriginErrorDetectionParameters> responseBasedOriginErrorDetectionSettings = default;
             Optional<OriginGroupResourceState> resourceState = default;
             Optional<string> provisioningState = default;
@@ -101,7 +122,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                healthProbeSettings = null;
                                 continue;
                             }
                             healthProbeSettings = HealthProbeParameters.DeserializeHealthProbeParameters(property0.Value);
@@ -126,7 +147,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                trafficRestorationTimeToHealedOrNewEndpointsInMinutes = null;
                                 continue;
                             }
                             trafficRestorationTimeToHealedOrNewEndpointsInMinutes = property0.Value.GetInt32();
@@ -136,7 +157,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                responseBasedOriginErrorDetectionSettings = null;
                                 continue;
                             }
                             responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionParameters.DeserializeResponseBasedOriginErrorDetectionParameters(property0.Value);

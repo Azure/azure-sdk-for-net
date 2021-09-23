@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             AssertOriginUpdate(updatedOrigin, originUpdateParameters);
         }
 
-        private static void AssertOriginUpdate(Origin updatedEndpoint, OriginUpdateParameters updateParameters)
+        private static void AssertOriginUpdate(Origin updatedOrigin, OriginUpdateParameters updateParameters)
         {
-            Assert.AreEqual(updatedEndpoint.Data.HttpPort, updateParameters.HttpPort);
-            Assert.AreEqual(updatedEndpoint.Data.HttpsPort, updateParameters.HttpsPort);
-            Assert.AreEqual(updatedEndpoint.Data.Priority, updateParameters.Priority);
-            Assert.AreEqual(updatedEndpoint.Data.Weight, updateParameters.Weight);
+            Assert.AreEqual(updatedOrigin.Data.HttpPort, updateParameters.HttpPort);
+            Assert.AreEqual(updatedOrigin.Data.HttpsPort, updateParameters.HttpsPort);
+            Assert.AreEqual(updatedOrigin.Data.Priority, updateParameters.Priority);
+            Assert.AreEqual(updatedOrigin.Data.Weight, updateParameters.Weight);
         }
     }
 }

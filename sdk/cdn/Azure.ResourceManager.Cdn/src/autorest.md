@@ -62,6 +62,12 @@ directive:
           "final-state-via": "original-uri"
       }
   - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}'].patch
+    transform: >
+      $['x-ms-long-running-operation-options'] = {
+          "final-state-via": "original-uri"
+      }
+  - from: swagger-document
     where: $.definitions.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup
     transform: $['x-nullable'] = true
   - from: swagger-document
@@ -76,11 +82,14 @@ directive:
   - from: swagger-document
     where: $.definitions.EndpointPropertiesUpdateParameters.properties.webApplicationFirewallPolicyLink
     transform: $['x-nullable'] = true
-  - from: swagger-document
-    where: $.definitions.DeepCreatedOriginGroupProperties.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
+  - from: cdn.json
+    where: $.definitions.*.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
     transform: $['x-nullable'] = true
-  - from: swagger-document
-    where: $.definitions.DeepCreatedOriginGroupProperties.properties.responseBasedOriginErrorDetectionSettings
+  - from: cdn.json
+    where: $.definitions.*.properties.responseBasedOriginErrorDetectionSettings
+    transform: $['x-nullable'] = true
+  - from: cdn.json
+    where: $.definitions.*.properties.healthProbeSettings
     transform: $['x-nullable'] = true
   - from: cdn.json
     where: $.definitions.*.properties.httpPort

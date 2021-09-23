@@ -19,8 +19,15 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HealthProbeSettings))
             {
-                writer.WritePropertyName("healthProbeSettings");
-                writer.WriteObjectValue(HealthProbeSettings);
+                if (HealthProbeSettings != null)
+                {
+                    writer.WritePropertyName("healthProbeSettings");
+                    writer.WriteObjectValue(HealthProbeSettings);
+                }
+                else
+                {
+                    writer.WriteNull("healthProbeSettings");
+                }
             }
             if (Optional.IsCollectionDefined(Origins))
             {
@@ -34,13 +41,27 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
             {
-                writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
-                writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
+                {
+                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                    writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                }
+                else
+                {
+                    writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                }
             }
             if (Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
             {
-                writer.WritePropertyName("responseBasedOriginErrorDetectionSettings");
-                writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings);
+                if (ResponseBasedOriginErrorDetectionSettings != null)
+                {
+                    writer.WritePropertyName("responseBasedOriginErrorDetectionSettings");
+                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings);
+                }
+                else
+                {
+                    writer.WriteNull("responseBasedOriginErrorDetectionSettings");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
