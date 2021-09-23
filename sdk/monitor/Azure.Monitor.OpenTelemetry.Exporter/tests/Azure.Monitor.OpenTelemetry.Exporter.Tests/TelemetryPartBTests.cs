@@ -160,30 +160,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             Assert.Equal("InProc", remoteDependencyDataTypeForChild);
         }
-
-        [Theory]
-        [InlineData("Get")]
-        [InlineData(null)]
-        public void RequestNameMatchesOperationName(string httpMethod)
-        {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
-            using var activity = activitySource.StartActivity(
-                ActivityName,
-                ActivityKind.Server,
-                null,
-                startTime: DateTime.UtcNow);
-
-            activity.DisplayName = "displayname";
-            if (httpMethod != null)
-            {
-                activity.SetTag(SemanticConventions.AttributeHttpMethod, httpMethod);
-            }
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
-
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, ResourceBuilder.CreateDefault().Build(), null);
-            var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
-
-            Assert.Equal(requestData.Name, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
-        }
     }
 }

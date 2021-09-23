@@ -14,24 +14,24 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
     using System.Linq;
 
     /// <summary>
-    /// The HTTP headers.
+    /// The HTTP header.
     /// </summary>
-    public partial class HttpHeaders
+    public partial class HttpHeader
     {
         /// <summary>
-        /// Initializes a new instance of the HttpHeaders class.
+        /// Initializes a new instance of the HttpHeader class.
         /// </summary>
-        public HttpHeaders()
+        public HttpHeader()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HttpHeaders class.
+        /// Initializes a new instance of the HttpHeader class.
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <param name="value">The header value.</param>
-        public HttpHeaders(string name = default(string), string value = default(string))
+        public HttpHeader(string name = default(string), string value = default(string))
         {
             Name = name;
             Value = value;

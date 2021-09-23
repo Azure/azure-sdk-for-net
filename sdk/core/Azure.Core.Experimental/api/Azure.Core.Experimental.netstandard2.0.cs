@@ -5,22 +5,11 @@ namespace Azure
         public RequestOptions() { }
         public RequestOptions(Azure.ResponseStatusOption statusOption) { }
         public RequestOptions(System.Action<Azure.Core.HttpMessage> perCall) { }
-        public RequestOptions(params int[] treatAsSuccess) { }
-        public RequestOptions(int[] statusCodes, Azure.ResponseClassification classification) { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? PerCallPolicy { get { throw null; } set { } }
         public Azure.ResponseStatusOption StatusOption { get { throw null; } set { } }
-        public void AddClassifier(System.Func<Azure.Core.HttpMessage, Azure.ResponseClassification?> classifier) { }
-        public void AddClassifier(int[] statusCodes, Azure.ResponseClassification classification) { }
         public static void Apply(Azure.RequestOptions requestOptions, Azure.Core.HttpMessage message) { }
         public static implicit operator Azure.RequestOptions (Azure.ResponseStatusOption option) { throw null; }
-    }
-    public enum ResponseClassification
-    {
-        Retry = 0,
-        DontRetry = 1,
-        Throw = 2,
-        Success = 3,
     }
     public enum ResponseStatusOption
     {
@@ -30,6 +19,21 @@ namespace Azure
 }
 namespace Azure.Core
 {
+    public partial class ClassifiedResponse : Azure.Response
+    {
+        public ClassifiedResponse(Azure.Response response) { }
+        public override string ClientRequestId { get { throw null; } set { } }
+        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
+        public bool IsError { get { throw null; } }
+        public override string ReasonPhrase { get { throw null; } }
+        public override int Status { get { throw null; } }
+        protected override bool ContainsHeader(string name) { throw null; }
+        public override void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
+        protected override bool TryGetHeader(string name, out string? value) { throw null; }
+        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentType : System.IEquatable<Azure.Core.ContentType>, System.IEquatable<string>
     {
@@ -182,5 +186,12 @@ namespace Azure.Core
     public partial class ProtocolClientOptions : Azure.Core.ClientOptions
     {
         public ProtocolClientOptions() { }
+    }
+}
+namespace Azure.Core.Pipeline
+{
+    public static partial class ResponseExtensions
+    {
+        public static bool IsError(this Azure.Response response) { throw null; }
     }
 }
