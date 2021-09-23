@@ -104,8 +104,7 @@ foreach (var row in table.Rows)
 ```
 
 #### Handle logs query response
-The `Query` method returns the `LogsQueryResult`, while the `QueryBatch` method returns the `LogsBatchQueryResult`.
-Here's a hierarchy of the response:
+The `Query` method returns the `LogsQueryResult`, while the `QueryBatch` method returns the `LogsBatchQueryResult`. Here's a hierarchy of the response:
 
 ```
 LogsQueryResult
@@ -328,7 +327,8 @@ foreach (var metric in results.Value.Metrics)
 ```
 
 #### Handle metrics query response
-The metrics query API returns a `MetricsQueryResult` object. The `MetricsQueryResult` object contains properties such as a list of `MetricResult`-typed objects, `Cost`, `Namespace`, `ResourceRegion`, `TimeSpan`, and `Interval`. The `MetricResult` objects list can be accessed using the `metrics` param. Each `MetricResult` object in this list contains a list of `TimeSeries` objects. Each `TimeSeries` contains `Metadatavalues` and `Values` properties. 
+	
+The metrics query API returns a `MetricsQueryResult` object. The `MetricsQueryResult` object contains properties such as a list of `MetricResult`-typed objects, `Cost`, `Namespace`, `ResourceRegion`, `TimeSpan`, and `Interval`. The `MetricResult` objects list can be accessed using the `metrics` param. Each `MetricResult` object in this list contains a list of `MetricTimeSeriesElement` objects. Each `MetricTimeSeriesElement` object contains `Metadata` and `Values` properties. 
 
 Here's a hierarchy of the response:
 
