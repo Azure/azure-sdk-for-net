@@ -518,6 +518,55 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Extract Summary
 
+        #region Classify Custom Category
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassifyCustomCategoryResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="documentClassification">Sets the of <see cref="ClassifyCustomCategoryResult.DocumentClassification"/>.</param>
+        /// <param name="warnings">Sets the collection of <see cref="ClassifyCustomCategoryResult.Warnings"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassifyCustomCategoryResult"/> for mocking purposes.</returns>
+        public static ClassifyCustomCategoryResult ClassifyCustomCategoryResult(string id, TextDocumentStatistics statistics, DocumentClassification documentClassification, IEnumerable<TextAnalyticsWarning> warnings = default)
+        {
+            return new ClassifyCustomCategoryResult(id, statistics, documentClassification, warnings.ToList());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassifyCustomCategoryResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.</returns>
+        public static ClassifyCustomCategoryResult ClassifyCustomCategoryResult(string id, TextAnalyticsError error)
+        {
+            return new ClassifyCustomCategoryResult(id, error);
+        }
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassifyCustomCategoryResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="list">Sets the collection of <see cref="TextAnalytics.ClassifyCustomCategoryResult"/>.</param>
+        /// <param name="statistics">Sets the <see cref="ClassifyCustomCategoryResultCollection.Statistics"/> property.</param>
+        /// <param name="projectName">Sets the <see cref="ClassifyCustomCategoryResultCollection.ProjectName"/> property.</param>
+        /// <param name="deploymentName">Sets the <see cref="ClassifyCustomCategoryResultCollection.DeploymentName"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassifyCustomCategoryResultCollection"/> for mocking purposes.</returns>
+        public static ClassifyCustomCategoryResultCollection ClassifyCustomCategoryResultCollection(IEnumerable<ClassifyCustomCategoryResult> list, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
+        {
+            return new ClassifyCustomCategoryResultCollection(list.ToList(), statistics, projectName, deploymentName);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.DocumentClassification"/> for mocking purposes.
+        /// </summary>
+        /// <param name="category">Sets the <see cref="DocumentClassification.Category"/> property.</param>
+        /// <param name="confidenceScore">Sets the <see cref="DocumentClassification.ConfidenceScore"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.DocumentClassification"/> for mocking purposes.</returns>
+        public static DocumentClassification DocumentClassification(string category, double confidenceScore)
+        {
+            return new DocumentClassification(new ClassificationResult(category, confidenceScore));
+        }
+        #endregion
+
         #region Linked Entities
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.
@@ -767,6 +816,33 @@ namespace Azure.AI.TextAnalytics
             return new ExtractSummaryActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassifyCustomCategoryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="ClassifyCustomCategoryActionResult.DocumentsResults"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassifyCustomCategoryActionResult"/> for mocking purposes.</returns>
+        public static ClassifyCustomCategoryActionResult ClassifyCustomCategoryActionResult(
+            ClassifyCustomCategoryResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new ClassifyCustomCategoryActionResult(result, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassifyCustomCategoryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassifyCustomCategoryActionResult"/> for mocking purposes.</returns>
+        public static ClassifyCustomCategoryActionResult ClassifyCustomCategoryActionResult(
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new ClassifyCustomCategoryActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.
         /// </summary>
