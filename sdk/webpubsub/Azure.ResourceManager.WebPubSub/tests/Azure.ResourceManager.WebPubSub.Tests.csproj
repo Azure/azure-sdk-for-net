@@ -1,8 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.WebPubSub.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
+    <Folder Include="TestData\" />
+    <Folder Include="Samples\" />
+    <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>
