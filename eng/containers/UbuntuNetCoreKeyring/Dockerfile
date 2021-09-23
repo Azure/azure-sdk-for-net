@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0.401-focal AS build
+FROM mcr.microsoft.com/powershell:7.1.4-ubuntu-focal AS build
 
 ENV \
     NO_AT_BRIDGE=1 \
@@ -22,7 +22,8 @@ RUN apt-get update \
         libsecret-1-dev \
         dbus-x11 \
         gnome-keyring \
-        python
+        python \
+        curl
 
 # Below taken from https://hub.docker.com/_/microsoft-dotnet-sdk
 # 5.0.401-focal-amd64, 5.0-focal-amd64, 5.0.401-focal, 5.0-focal	Dockerfile	Ubuntu 20.04	09/14/2021
@@ -32,21 +33,9 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && dotnet_sha512='a444d44007709ceb68d8f72dec0531e17f85f800efc0007ace4fa66ba27f095066930e6c6defcd2f85cdedea2fec25e163f5da461c1c2b8563e5cd7cb47091e0' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
-    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    #&& tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
     && rm dotnet.tar.gz \
+    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
-
-# Install PowerShell global tool
-RUN powershell_version=7.1.4 \
-    && curl -SL --output PowerShell.Linux.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='b163608ef7ceb5bae84cc8e841ff3dc1a6df129737444084dfeaaa7911c86e0084f5418926541aed97be5886bc4a14c9777741d15192b87c263c0b86b8391e0e' \
-    && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
-    && mkdir -p /usr/share/powershell \
-    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \
-    && dotnet nuget locals all --clear \
-    && rm PowerShell.Linux.x64.$powershell_version.nupkg \
-    && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
-    && chmod 755 /usr/share/powershell/pwsh \
-    # To reduce image size, remove the copy nupkg that nuget keeps.
-    && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm
