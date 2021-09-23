@@ -34,11 +34,8 @@ namespace Azure.Communication.CallingServer.Tests
             {
                 // Establish a Call
                 var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-                var callLocator = new CallLocatorModel()
-                {
-                    GroupCallLocator = new GroupCallLocatorModel(groupId)
-                };
-                var serverCall = callingServerClient.InitializeServerCall(callLocator);
+                var callLocator = new GroupCallLocator(groupId);
+                var serverCall = callingServerClient.InitializeCall(callLocator);
 
                 // Start Recording
                 StartCallRecordingResult startCallRecordingResult = await serverCall.StartRecordingAsync(new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
@@ -83,11 +80,8 @@ namespace Azure.Communication.CallingServer.Tests
             {
                 // Establish a Call
                 var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-                var callLocator = new CallLocatorModel()
-                {
-                    GroupCallLocator = new GroupCallLocatorModel(groupId)
-                };
-                var serverCall = callingServerClient.InitializeServerCall(callLocator);
+                var callLocator = new GroupCallLocator(groupId);
+                var serverCall = callingServerClient.InitializeCall(callLocator);
 
                 // Play Prompt Audio
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
@@ -124,11 +118,8 @@ namespace Azure.Communication.CallingServer.Tests
             {
                 // Establish a Call
                 var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-                var callLocator = new CallLocatorModel()
-                {
-                    GroupCallLocator = new GroupCallLocatorModel(groupId)
-                };
-                var serverCall = callingServerClient.InitializeServerCall(callLocator);
+                var callLocator = new GroupCallLocator(groupId);
+                var serverCall = callingServerClient.InitializeCall(callLocator);
 
                 // Add Participant
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);

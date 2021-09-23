@@ -184,7 +184,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="callLocator"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual async Task<Response<CallConnection>> JoinCallAsync(CallLocatorModel callLocator, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallConnection>> JoinCallAsync(CallLocator callLocator, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(JoinCall)}");
             scope.Start();
@@ -195,7 +195,7 @@ namespace Azure.Communication.CallingServer
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
 
                 var joinCallResponse = await ServerCallRestClient.JoinCallAsync(
-                    callLocator: callLocator,
+                    callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     source: CommunicationIdentifierSerializer.Serialize(source),
                     callbackUri: callOptions.CallbackUri?.AbsoluteUri,
                     requestedMediaTypes: callOptions.RequestedMediaTypes,
@@ -224,7 +224,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="callLocator"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual Response<CallConnection> JoinCall(CallLocatorModel callLocator, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
+        public virtual Response<CallConnection> JoinCall(CallLocator callLocator, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(JoinCall)}");
             scope.Start();
@@ -235,7 +235,7 @@ namespace Azure.Communication.CallingServer
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
 
                 var joinCallResponse = ServerCallRestClient.JoinCall(
-                    callLocator: callLocator,
+                    callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                     source: CommunicationIdentifierSerializer.Serialize(source),
                     callbackUri: callOptions.CallbackUri?.AbsoluteUri,
                     requestedMediaTypes: callOptions.RequestedMediaTypes,
@@ -279,9 +279,9 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="callLocator">The callLocator. </param>
         /// <returns></returns>
-        public virtual ServerCall InitializeServerCall(CallLocatorModel callLocator)
+        public virtual ServerCall InitializeCall (CallLocator callLocator)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(InitializeServerCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(InitializeCall)}");
             scope.Start();
             try
             {

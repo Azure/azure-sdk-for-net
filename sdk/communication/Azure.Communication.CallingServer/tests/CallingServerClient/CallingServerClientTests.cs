@@ -56,10 +56,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinCallPayload);
 
-            var callLocator = new CallLocatorModel()
-            {
-                ServerCallLocator = new ServerCallLocatorModel(serverCallId)
-            };
+            var callLocator = new ServerCallLocator(serverCallId);
 
             var response = await callingServerClient.JoinCallAsync(callLocator, source, joinCallOptions).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
@@ -71,10 +68,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinCallPayload);
 
-            var callLocator = new CallLocatorModel()
-            {
-                ServerCallLocator = new ServerCallLocatorModel(serverCallId)
-            };
+            var callLocator = new ServerCallLocator(serverCallId);
 
             var response = callingServerClient.JoinCall(callLocator, source, joinCallOptions);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
@@ -86,10 +80,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(404);
 
-            var callLocator = new CallLocatorModel()
-            {
-                ServerCallLocator = new ServerCallLocatorModel(serverCallId)
-            };
+            var callLocator = new ServerCallLocator(serverCallId);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callingServerClient.JoinCallAsync(callLocator, source, joinCallOptions).ConfigureAwait(false));
             Assert.NotNull(ex);
@@ -101,10 +92,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(404);
 
-            var callLocator = new CallLocatorModel()
-            {
-                ServerCallLocator = new ServerCallLocatorModel(serverCallId)
-            };
+            var callLocator = new ServerCallLocator(serverCallId);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.JoinCall(callLocator, source, joinCallOptions));
             Assert.NotNull(ex);

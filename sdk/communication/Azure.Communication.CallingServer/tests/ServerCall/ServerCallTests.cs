@@ -483,12 +483,9 @@ namespace Azure.Communication.CallingServer.Tests
 
         private ServerCall CreateMockServerCall(int responseCode, string? responseContent = null, string serverCallId = "sampleServerCallId")
         {
-            var callLocator = new CallLocatorModel()
-            {
-                ServerCallLocator = new ServerCallLocatorModel(serverCallId)
-            };
+            var callLocator = new ServerCallLocator(serverCallId);
 
-            return CreateMockCallingServerClient(responseCode, responseContent).InitializeServerCall(callLocator);
+            return CreateMockCallingServerClient(responseCode, responseContent).InitializeCall(callLocator);
         }
     }
 }

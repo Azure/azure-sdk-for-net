@@ -25,9 +25,9 @@ namespace Azure.Communication.CallingServer
         internal virtual CallLocatorModel CallLocator { get; set; }
 
         /// <summary>Initializes a new instance of <see cref="ServerCall"/>.</summary>
-        internal ServerCall(CallLocatorModel callLocator, ServerCallsRestClient serverCallRestClient, ClientDiagnostics clientDiagnostics)
+        internal ServerCall(CallLocator callLocator, ServerCallsRestClient serverCallRestClient, ClientDiagnostics clientDiagnostics)
         {
-            CallLocator = callLocator;
+            CallLocator = CallLocatorModelSerializer.Serialize(callLocator);
             RestClient = serverCallRestClient;
             _clientDiagnostics = clientDiagnostics;
         }

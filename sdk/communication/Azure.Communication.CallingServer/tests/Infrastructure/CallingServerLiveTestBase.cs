@@ -132,10 +132,7 @@ namespace Azure.Communication.CallingServer.Tests
                     new MediaType[] { MediaType.Audio },
                     new EventSubscriptionType[] { EventSubscriptionType.ParticipantsUpdated });
 
-                var callLocator = new CallLocatorModel()
-                {
-                    GroupCallLocator = new GroupCallLocatorModel(groupId)
-                };
+                var callLocator = new GroupCallLocator(groupId);
 
                 fromCallConnection = await callingServerClient.JoinCallAsync(callLocator, fromParticipant, fromCallOptions).ConfigureAwait(false);
                 SleepInTest(1000);
