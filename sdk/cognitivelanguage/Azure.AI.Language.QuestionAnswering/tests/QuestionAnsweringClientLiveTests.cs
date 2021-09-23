@@ -20,7 +20,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         [RecordedTest]
         public async Task AnswersKnowledgeBaseQuestion()
         {
-            QueryKnowledgeBaseOptions options = new("How long should my Surface battery last?")
+            QueryKnowledgeBaseOptions options = new(TestEnvironment.ProjectName, TestEnvironment.DeploymentName, "How long should my Surface battery last?")
             {
                 Top = 3,
                 UserId = "sd53lsY=",
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 IncludeUnstructuredSources = true,
             };
 
-            Response<KnowledgeBaseAnswers> response = await Client.QueryKnowledgeBaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
+            Response<KnowledgeBaseAnswers> response = await Client.QueryKnowledgeBaseAsync(options);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         [RecordedTest]
         public async Task AnswersFollowupKnowledgeBaseQuestion()
         {
-            QueryKnowledgeBaseOptions options = new("How long it takes to charge Surface?")
+            QueryKnowledgeBaseOptions options = new(TestEnvironment.ProjectName, TestEnvironment.DeploymentName, "How long it takes to charge Surface?")
             {
                 Top = 3,
                 UserId = "sd53lsY=",
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 IncludeUnstructuredSources = true,
             };
 
-            Response<KnowledgeBaseAnswers> response = await Client.QueryKnowledgeBaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
+            Response<KnowledgeBaseAnswers> response = await Client.QueryKnowledgeBaseAsync(options);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(2));
@@ -78,11 +78,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         [RecordedTest]
         public void QueryKnowledgeBaseBadArgument()
         {
-            QueryKnowledgeBaseOptions options = new(" ");
-
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await Client.QueryKnowledgeBaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
+                await Client.QueryKnowledgeBaseAsync(TestEnvironment.ProjectName, TestEnvironment.DeploymentName, " ");
             });
 
             Assert.That(ex.Status, Is.EqualTo(400));
@@ -92,9 +90,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         [RecordedTest]
         public async Task GetsKnowledgeBaseQuestion()
         {
-            QueryKnowledgeBaseOptions options = new(24);
+            QueryKnowledgeBaseOptions options = new(TestEnvironment.ProjectName, TestEnvironment.DeploymentName, 24);
 
-            Response<KnowledgeBaseAnswers> response = await Client.QueryKnowledgeBaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
+            Response<KnowledgeBaseAnswers> response = await Client.QueryKnowledgeBaseAsync(options);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(1));
