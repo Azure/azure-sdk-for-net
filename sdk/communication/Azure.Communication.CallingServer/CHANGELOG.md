@@ -4,6 +4,7 @@
 
 ### Features Added
 - Support for Audio Only Recording. User can provide with content Type e.g Audio/AudioVideo, user can also provide with channel type e.g Mixed/UnMixed, and user can also provide format type e.g mp4, mp3.
+- Delete recording apis
 
 ### Breaking Changes
 
