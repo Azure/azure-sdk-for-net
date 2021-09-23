@@ -2,11 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Threading;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional paratmers for staging a block for a block blob.
+    /// Optional parameters for staging a block for a block blob with
+    /// <see cref="BlockBlobClient.StageBlockAsync(string, Stream, BlockBlobStageBlockOptions, CancellationToken)"/>.
     /// </summary>
     public class BlockBlobStageBlockOptions
     {
