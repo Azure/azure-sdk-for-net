@@ -16,14 +16,16 @@ Once you have created a client and have a previous question-answer result, you c
 ## Synchronous
 
 ```C# Snippet:QuestionAnsweringClient_Chat
+string projectName = "FAQ";
+string deploymentName = "prod";
 // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
 KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should charging take?")
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should charging take?")
 {
     Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
 };
 
-Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
+Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
 
 foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
@@ -36,14 +38,16 @@ foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 ## Asynchronous
 
 ```C# Snippet:QuestionAnsweringClient_ChatAsync
+string projectName = "FAQ";
+string deploymentName = "prod";
 // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
 KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should charging take?")
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should charging take?")
 {
     Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
 };
 
-Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync("FAQ", options);
+Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(options);
 
 foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
