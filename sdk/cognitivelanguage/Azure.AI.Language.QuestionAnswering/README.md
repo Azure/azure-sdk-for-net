@@ -129,7 +129,7 @@ For example, if you submit a question to a non-existant knowledge base, a `400` 
 ```C# Snippet:QuestionAnsweringClient_BadRequest
 try
 {
-    Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebse", "test", "Does this knowledge base exist?");
+    Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebase", "test", "Does this knowledge base exist?");
 }
 catch (RequestFailedException ex)
 {

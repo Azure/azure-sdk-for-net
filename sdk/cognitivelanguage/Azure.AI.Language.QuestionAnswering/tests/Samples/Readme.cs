@@ -28,7 +28,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region Snippet:QuestionAnsweringClient_BadRequest
             try
             {
-                Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebse", "test", "Does this knowledge base exist?");
+                Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebase", "test", "Does this knowledge base exist?");
             }
             catch (RequestFailedException ex)
             {
