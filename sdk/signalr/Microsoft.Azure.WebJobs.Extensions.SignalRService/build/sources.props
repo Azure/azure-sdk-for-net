@@ -1,0 +1,16 @@
+﻿<Project>
+  <Import Project="$(DotNetRestoreSourcePropsPath)" Condition="'$(DotNetRestoreSourcePropsPath)' != ''"/>
+
+  <PropertyGroup Label="RestoreSources">
+    <RestoreSources>$(DotNetRestoreSources)</RestoreSources>
+    <RestoreSources Condition="'$(DotNetBuildOffline)' != 'true'">
+      $(RestoreSources);
+      https://api.nuget.org/v3/index.json;
+      https://www.myget.org/F/azure-signalr-dev/api/v3/index.json
+    </RestoreSources>
+    <RestoreSources Condition="'$(UseLocalFeed)' == 'true'">
+      $(LocalFeed);
+      https://api.nuget.org/v3/index.json;
+    </RestoreSources>
+  </PropertyGroup>
+</Project>
