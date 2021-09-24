@@ -31,7 +31,7 @@ namespace Azure.Identity.Tests
 
         public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
         public string TestTenantId => GetRecordedOptionalVariable("TENANT_ID") ?? GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
-        public string KeyvaultScope => GetRecordedOptionalVariable("AZURE_KEYVAULT_SCOPE") ?? "SANITIZED";
+        public string KeyvaultScope => GetRecordedOptionalVariable("AZURE_KEYVAULT_SCOPE") ?? "https://vault.azure.net/.default";
 
         public string ServicePrincipalClientId => GetRecordedVariable("IDENTITY_SP_CLIENT_ID");
         public string ServicePrincipalTenantId => GetRecordedVariable("IDENTITY_SP_TENANT_ID");
