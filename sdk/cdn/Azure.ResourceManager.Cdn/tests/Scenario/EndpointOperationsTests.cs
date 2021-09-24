@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Cdn.Tests.Helper;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -25,15 +24,9 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardMicrosoft);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
-            Profile profile = lro.Value;
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData();
-            DeepCreatedOrigin deepCreatedOrigin = CreateDeepCreatedOrigin();
-            endpointData.Origins.Add(deepCreatedOrigin);
-            var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
-            Endpoint endpoint = lro2.Value;
+            Endpoint endpoint = await CreateEndpoint(profile, endpointName);
             await endpoint.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await endpoint.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -45,24 +38,18 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardMicrosoft);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
-            Profile profile = lro.Value;
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData();
-            DeepCreatedOrigin deepCreatedOrigin = CreateDeepCreatedOrigin();
-            endpointData.Origins.Add(deepCreatedOrigin);
-            var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
-            Endpoint endpoint = lro2.Value;
+            Endpoint endpoint = await CreateEndpoint(profile, endpointName);
             EndpointUpdateParameters updateParameters = new EndpointUpdateParameters
             {
                 IsHttpAllowed = false,
                 OriginPath = "/path/valid",
                 OriginHostHeader = "www.bing.com"
             };
-            var lro3 = await endpoint.UpdateAsync(updateParameters);
-            Endpoint updatedEndpoint = lro3.Value;
-            AssertEndpointUpdate(updatedEndpoint, updateParameters);
+            var lro = await endpoint.UpdateAsync(updateParameters);
+            Endpoint updatedEndpoint = lro.Value;
+            ResourceDataHelper.AssertEndpointUpdate(updatedEndpoint, updateParameters);
         }
 
         [TestCase]
@@ -71,20 +58,14 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardMicrosoft);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
-            Profile profile = lro.Value;
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData();
-            DeepCreatedOrigin deepCreatedOrigin = CreateDeepCreatedOrigin();
-            endpointData.Origins.Add(deepCreatedOrigin);
-            var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
-            Endpoint endpoint = lro2.Value;
+            Endpoint endpoint = await CreateEndpoint(profile, endpointName);
             Assert.AreEqual(endpoint.Data.ResourceState, EndpointResourceState.Running);
-            var lro3 = await endpoint.StopAsync();
-            Assert.AreEqual(lro3.Value.ResourceState, EndpointResourceState.Stopped);
-            var lro4 = await endpoint.StartAsync();
-            Assert.AreEqual(lro4.Value.ResourceState, EndpointResourceState.Running);
+            var lro1 = await endpoint.StopAsync();
+            Assert.AreEqual(lro1.Value.ResourceState, EndpointResourceState.Stopped);
+            var lro2 = await endpoint.StartAsync();
+            Assert.AreEqual(lro2.Value.ResourceState, EndpointResourceState.Running);
         }
 
         [TestCase]
@@ -93,18 +74,16 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardVerizon);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
-            Profile profile = lro.Value;
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardVerizon);
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData();
+            EndpointData endpointData = ResourceDataHelper.CreateEndpointData();
             DeepCreatedOrigin deepCreatedOrigin = new DeepCreatedOrigin("testOrigin")
             {
                 HostName = "testsa4dotnetsdk.blob.core.windows.net"
             };
             endpointData.Origins.Add(deepCreatedOrigin);
-            var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
-            Endpoint endpoint = lro2.Value;
+            var lro = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
+            Endpoint endpoint = lro.Value;
             PurgeParameters purgeParameters = new PurgeParameters(new List<string>
             {
                 "/*"
@@ -140,28 +119,15 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardMicrosoft);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
-            Profile profile = lro.Value;
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData();
-            DeepCreatedOrigin deepCreatedOrigin = CreateDeepCreatedOrigin();
-            endpointData.Origins.Add(deepCreatedOrigin);
-            var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
-            Endpoint endpoint = lro2.Value;
+            Endpoint endpoint = await CreateEndpoint(profile, endpointName);
             int count = 0;
             await foreach (var tempResourceUsage in endpoint.GetResourceUsageAsync())
             {
                 count++;
             }
             Assert.AreEqual(count, 8);
-        }
-
-        private static void AssertEndpointUpdate(Endpoint updatedEndpoint, EndpointUpdateParameters updateParameters)
-        {
-            Assert.AreEqual(updatedEndpoint.Data.IsHttpAllowed, updateParameters.IsHttpAllowed);
-            Assert.AreEqual(updatedEndpoint.Data.OriginPath, updateParameters.OriginPath);
-            Assert.AreEqual(updatedEndpoint.Data.OriginHostHeader, updateParameters.OriginHostHeader);
         }
     }
 }

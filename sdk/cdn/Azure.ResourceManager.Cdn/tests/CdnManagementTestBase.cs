@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Cdn.Tests.Helper;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
@@ -39,54 +41,64 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
-        protected static ProfileData CreateProfileData(SkuName skuName) => new ProfileData(Location.WestUS, new Sku { Name = skuName });
-
-        protected static EndpointData CreateEndpointData() => new EndpointData(Location.WestUS)
+        protected async Task<Profile> CreateProfile(ResourceGroup rg, string profileName, SkuName skuName)
         {
-            IsHttpAllowed = true,
-            IsHttpsAllowed = true,
-            OptimizationType = OptimizationType.GeneralWebDelivery
-        };
+            ProfileData profileData = ResourceDataHelper.CreateProfileData(skuName);
+            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
+            return lro.Value;
+        }
 
-        protected static DeepCreatedOrigin CreateDeepCreatedOrigin() => new DeepCreatedOrigin("testOrigin")
+        protected async Task<Endpoint> CreateEndpoint(Profile profile, string endpointName)
         {
-            HostName = "testsa4dotnetsdk.blob.core.windows.net",
-            Priority = 3,
-            Weight = 100
-        };
+            EndpointData endpointData = ResourceDataHelper.CreateEndpointData();
+            DeepCreatedOrigin deepCreatedOrigin = ResourceDataHelper.CreateDeepCreatedOrigin();
+            endpointData.Origins.Add(deepCreatedOrigin);
+            var lro = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
+            return lro.Value;
+        }
 
-        protected static DeepCreatedOriginGroup CreateDeepCreatedOriginGroup() => new DeepCreatedOriginGroup("testOriginGroup")
+        protected async Task<Endpoint> CreateEndpointWithOriginGroup(Profile profile, string endpointName)
         {
-            HealthProbeSettings = new HealthProbeParameters
+            EndpointData endpointData = ResourceDataHelper.CreateEndpointData();
+            DeepCreatedOrigin deepCreatedOrigin = ResourceDataHelper.CreateDeepCreatedOrigin();
+            DeepCreatedOriginGroup deepCreatedOriginGroup = ResourceDataHelper.CreateDeepCreatedOriginGroup();
+            deepCreatedOriginGroup.Origins.Add(new ResourceReference
             {
-                ProbePath = "/healthz",
-                ProbeRequestType = HealthProbeRequestType.Head,
-                ProbeProtocol = ProbeProtocol.Https,
-                ProbeIntervalInSeconds = 60
-            }
-        };
-
-        protected static OriginData CreateOriginData() => new OriginData
-        {
-            HostName = "testsa4dotnetsdk.blob.core.windows.net",
-            Priority = 1,
-            Weight = 150
-        };
-
-        protected static OriginGroupData CreateOriginGroupData() => new OriginGroupData
-        {
-            HealthProbeSettings = new HealthProbeParameters
+                Id = $"{profile.Id}/endpoints/{endpointName}/origins/{deepCreatedOrigin.Name}"
+            });
+            endpointData.Origins.Add(deepCreatedOrigin);
+            endpointData.OriginGroups.Add(deepCreatedOriginGroup);
+            endpointData.DefaultOriginGroup = new ResourceReference
             {
-                ProbePath = "/healthz",
-                ProbeRequestType = HealthProbeRequestType.Head,
-                ProbeProtocol = ProbeProtocol.Https,
-                ProbeIntervalInSeconds = 60
-            }
-        };
+                Id = $"{profile.Id}/endpoints/{endpointName}/originGroups/{deepCreatedOriginGroup.Name}"
+            };
+            var lro = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
+            return lro.Value;
+        }
 
-        protected static CustomDomainParameters CreateCustomDomainParameters(string hostName) => new CustomDomainParameters
+        protected async Task<Origin> CreateOrigin(Endpoint endpoint, string originName)
         {
-            HostName = hostName
-        };
+            OriginData originData = ResourceDataHelper.CreateOriginData();
+            var lro = await endpoint.GetOrigins().CreateOrUpdateAsync(originName, originData);
+            return lro.Value;
+        }
+
+        protected async Task<OriginGroup> CreateOriginGroup(Endpoint endpoint, string originGroupName, string originName)
+        {
+            OriginGroupData originGroupData = new OriginGroupData();
+            originGroupData.Origins.Add(new ResourceReference
+            {
+                Id = $"{endpoint.Id}/origins/{originName}"
+            });
+            var lro = await endpoint.GetOriginGroups().CreateOrUpdateAsync(originGroupName, originGroupData);
+            return lro.Value;
+        }
+
+        protected async Task<CustomDomain> CreateCustomDomain(Endpoint endpoint, string customDomainName, string hostName)
+        {
+            CustomDomainParameters customDomainParameters = ResourceDataHelper.CreateCustomDomainParameters(hostName);
+            var lro = await endpoint.GetCustomDomains().CreateOrUpdateAsync(customDomainName, customDomainParameters);
+            return lro.Value;
+        }
     }
 }

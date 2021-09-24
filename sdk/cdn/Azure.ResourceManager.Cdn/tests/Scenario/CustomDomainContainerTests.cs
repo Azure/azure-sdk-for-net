@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Cdn.Tests.Helper;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -26,11 +26,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile profile = await rg.GetProfiles().GetAsync("testProfile");
             Endpoint endpoint = await profile.GetEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string customDomainName = Recording.GenerateAssetName("customDomain-");
-            CustomDomainParameters customDomainParameters = CreateCustomDomainParameters("customdomaintest-1.azuretest.net");
-            var lro = await endpoint.GetCustomDomains().CreateOrUpdateAsync(customDomainName, customDomainParameters);
-            CustomDomain customDomain = lro.Value;
+            string hostName = "customdomaintest-1.azuretest.net";
+            CustomDomain customDomain = await CreateCustomDomain(endpoint, customDomainName, hostName);
             Assert.AreEqual(customDomainName, customDomain.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await endpoint.GetCustomDomains().CreateOrUpdateAsync(null, customDomainParameters));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await endpoint.GetCustomDomains().CreateOrUpdateAsync(customDomainName, null));
         }
 
@@ -43,9 +41,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile profile = await rg.GetProfiles().GetAsync("testProfile");
             Endpoint endpoint = await profile.GetEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string customDomainName = Recording.GenerateAssetName("customDomain-");
-            CustomDomainParameters customDomainParameters = CreateCustomDomainParameters("customdomaintest-2.azuretest.net");
-            var lro = await endpoint.GetCustomDomains().CreateOrUpdateAsync(customDomainName, customDomainParameters);
-            _ = lro.Value;
+            string hostName = "customdomaintest-2.azuretest.net";
+            _ = await CreateCustomDomain(endpoint, customDomainName, hostName);
             int count = 0;
             await foreach (var tempCustomDomain in endpoint.GetCustomDomains().GetAllAsync())
             {
@@ -64,25 +61,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile profile = await rg.GetProfiles().GetAsync("testProfile");
             Endpoint endpoint = await profile.GetEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string customDomainName = Recording.GenerateAssetName("customDomain-");
-            CustomDomainParameters customDomainParameters = CreateCustomDomainParameters("customdomaintest-3.azuretest.net");
-            var lro = await endpoint.GetCustomDomains().CreateOrUpdateAsync(customDomainName, customDomainParameters);
-            CustomDomain customDomain = lro.Value;
+            string hostName = "customdomaintest-3.azuretest.net";
+            CustomDomain customDomain = await CreateCustomDomain(endpoint, customDomainName, hostName);
             CustomDomain getCustomDomain = await endpoint.GetCustomDomains().GetAsync(customDomainName);
-            AssertValidCustomDomain(customDomain, getCustomDomain);
+            ResourceDataHelper.AssertValidCustomDomain(customDomain, getCustomDomain);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await endpoint.GetCustomDomains().GetAsync(null));
-        }
-
-        private static void AssertValidCustomDomain(CustomDomain model, CustomDomain getResult)
-        {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
-            Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
-            Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
-            Assert.AreEqual(model.Data.CustomHttpsProvisioningState, getResult.Data.CustomHttpsProvisioningState);
-            Assert.AreEqual(model.Data.CustomHttpsProvisioningSubstate, getResult.Data.CustomHttpsProvisioningSubstate);
-            Assert.AreEqual(model.Data.ValidationData, getResult.Data.ValidationData);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
         }
     }
 }

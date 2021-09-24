@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Cdn.Tests.Helper;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -25,29 +23,11 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardMicrosoft);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
-            Profile profile = lro.Value;
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData();
-            DeepCreatedOrigin deepCreatedOrigin = CreateDeepCreatedOrigin();
-            DeepCreatedOriginGroup deepCreatedOriginGroup = CreateDeepCreatedOriginGroup();
-            deepCreatedOriginGroup.Origins.Add(new ResourceReference
-            {
-                Id = $"{profile.Id}/endpoints/{endpointName}/origins/{deepCreatedOrigin.Name}"
-            });
-            endpointData.Origins.Add(deepCreatedOrigin);
-            endpointData.OriginGroups.Add(deepCreatedOriginGroup);
-            endpointData.DefaultOriginGroup = new ResourceReference
-            {
-                Id = $"{profile.Id}/endpoints/{endpointName}/originGroups/{deepCreatedOriginGroup.Name}"
-            };
-            var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
-            Endpoint endpoint = lro2.Value;
+            Endpoint endpoint = await CreateEndpointWithOriginGroup(profile, endpointName);
             string originName = Recording.GenerateAssetName("origin-");
-            OriginData originData = CreateOriginData();
-            var lro3 = await endpoint.GetOrigins().CreateOrUpdateAsync(originName, originData);
-            Origin origin = lro3.Value;
+            Origin origin = await CreateOrigin(endpoint, originName);
             await origin.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await origin.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -59,29 +39,11 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardMicrosoft);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
-            Profile profile = lro.Value;
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            EndpointData endpointData = CreateEndpointData();
-            DeepCreatedOrigin deepCreatedOrigin = CreateDeepCreatedOrigin();
-            DeepCreatedOriginGroup deepCreatedOriginGroup = CreateDeepCreatedOriginGroup();
-            deepCreatedOriginGroup.Origins.Add(new ResourceReference
-            {
-                Id = $"{profile.Id}/endpoints/{endpointName}/origins/{deepCreatedOrigin.Name}"
-            });
-            endpointData.Origins.Add(deepCreatedOrigin);
-            endpointData.OriginGroups.Add(deepCreatedOriginGroup);
-            endpointData.DefaultOriginGroup = new ResourceReference
-            {
-                Id = $"{profile.Id}/endpoints/{endpointName}/originGroups/{deepCreatedOriginGroup.Name}"
-            };
-            var lro2 = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, endpointData);
-            Endpoint endpoint = lro2.Value;
+            Endpoint endpoint = await CreateEndpointWithOriginGroup(profile, endpointName);
             string originName = Recording.GenerateAssetName("origin-");
-            OriginData originData = CreateOriginData();
-            var lro3 = await endpoint.GetOrigins().CreateOrUpdateAsync(originName, originData);
-            Origin origin = lro3.Value;
+            Origin origin = await CreateOrigin(endpoint, originName);
             OriginUpdateParameters originUpdateParameters = new OriginUpdateParameters()
             {
                 HttpPort = 81,
@@ -89,17 +51,9 @@ namespace Azure.ResourceManager.Cdn.Tests
                 Priority = 1,
                 Weight = 150
             };
-            var lro4 = await origin.UpdateAsync(originUpdateParameters);
-            Origin updatedOrigin = lro4.Value;
-            AssertOriginUpdate(updatedOrigin, originUpdateParameters);
-        }
-
-        private static void AssertOriginUpdate(Origin updatedOrigin, OriginUpdateParameters updateParameters)
-        {
-            Assert.AreEqual(updatedOrigin.Data.HttpPort, updateParameters.HttpPort);
-            Assert.AreEqual(updatedOrigin.Data.HttpsPort, updateParameters.HttpsPort);
-            Assert.AreEqual(updatedOrigin.Data.Priority, updateParameters.Priority);
-            Assert.AreEqual(updatedOrigin.Data.Weight, updateParameters.Weight);
+            var lro = await origin.UpdateAsync(originUpdateParameters);
+            Origin updatedOrigin = lro.Value;
+            ResourceDataHelper.AssertOriginUpdate(updatedOrigin, originUpdateParameters);
         }
     }
 }

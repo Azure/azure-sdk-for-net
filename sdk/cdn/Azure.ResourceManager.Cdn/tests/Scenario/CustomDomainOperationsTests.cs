@@ -42,9 +42,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile profile = await rg.GetProfiles().GetAsync("testProfile");
             Endpoint endpoint = await profile.GetEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string customDomainName = Recording.GenerateAssetName("customDomain-");
-            CustomDomainParameters customDomainParameters = CreateCustomDomainParameters("customdomaintest-5.azuretest.net");
-            var lro = await endpoint.GetCustomDomains().CreateOrUpdateAsync(customDomainName, customDomainParameters);
-            CustomDomain customDomain = lro.Value;
+            string hostName = "customdomaintest-5.azuretest.net";
+            CustomDomain customDomain = await CreateCustomDomain(endpoint, customDomainName, hostName);
             Assert.ThrowsAsync<RequestFailedException>(async () => await customDomain.DisableCustomHttpsAsync());
             CdnManagedHttpsParameters customDomainHttpsParameters = new CdnManagedHttpsParameters(ProtocolType.ServerNameIndication, new CdnCertificateSourceParameters(CertificateType.Dedicated));
             Assert.DoesNotThrowAsync(async () => await customDomain.EnableCustomHttpsAsync(customDomainHttpsParameters));

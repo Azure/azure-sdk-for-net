@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Cdn.Tests.Helper;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -23,11 +24,9 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardAkamai);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
-            Profile profile = lro.Value;
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             Assert.AreEqual(profileName, profile.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(null, profileData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(null, profile.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(profileName, null));
         }
 
@@ -37,9 +36,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardAkamai);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
-            _ = lro.Value;
+            _ = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             int count = 0;
             await foreach (var tempProfile in rg.GetProfiles().GetAllAsync())
             {
@@ -54,9 +51,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardAkamai);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
-            Profile profile = lro.Value;
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             int count = 0;
             await foreach (var tempProfile in Client.DefaultSubscription.GetProfilesAsync())
             {
@@ -74,23 +69,10 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            ProfileData profileData = CreateProfileData(SkuName.StandardAkamai);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
-            Profile profile = lro.Value;
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             Profile getProfile = await rg.GetProfiles().GetAsync(profileName);
-            AssertValidProfile(profile, getProfile);
+            ResourceDataHelper.AssertValidProfile(profile, getProfile);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().GetAsync(null));
-        }
-
-        private static void AssertValidProfile(Profile model, Profile getResult)
-        {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
-            Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
-            Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.FrontdoorId, getResult.Data.FrontdoorId);
         }
     }
 }
