@@ -335,7 +335,7 @@ Here's a hierarchy of the response:
 ```
 MetricsQueryResult
 |---Cost
-|---Interval
+|---Granularity
 |---Namespace
 |---ResourceRegion
 |---TimeSpan
@@ -343,7 +343,7 @@ MetricsQueryResult
     |---Id
     |---Type
     |---Name
-    |---DisplayDescription
+    |---Description
     |---Error
     |---Unit
     |---TimeSeries (list of `MetricTimeSeriesElement` objects)

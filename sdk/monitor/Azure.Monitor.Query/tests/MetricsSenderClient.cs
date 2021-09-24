@@ -36,7 +36,7 @@ namespace Azure.Monitor.Query.Tests
             var request = _pipeline.CreateRequest();
             request.Uri.Reset(new Uri($"https://{_location}.{_ingestEndpointPrefix}{_resourceName}/metrics?api-version=2018-09-01-preview"));
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Content-ResourceType", "application/json");
             request.Content = RequestContent.Create(dataBytes);
 
             var response = await _pipeline.SendRequestAsync(request, default);

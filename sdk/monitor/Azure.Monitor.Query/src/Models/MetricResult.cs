@@ -30,5 +30,12 @@ namespace Azure.Monitor.Query.Models
         /// Gets the error that occurred while querying the metric.
         /// </summary>
         public ResponseError Error => ErrorCode == SuccessErrorCode ? null : new ResponseError(ErrorCode, ErrorMessage);
+
+        /// <summary> Detailed description of this metric. </summary>
+        [CodeGenMember("DisplayDescription")]
+        public string Description { get; }
+
+        /// <summary> The type of the resource. </summary>
+        public string ResourceType { get; }
     }
 }

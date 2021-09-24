@@ -45,8 +45,8 @@ namespace Azure.Monitor.Query.Tests
             var request = _pipeline.CreateRequest();
             request.Uri.Reset(new Uri($"https://{_workspaceId}.{_ingestEndpointSuffix}/api/logs?api-version=2016-04-01"));
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Log-Type", tableName);
+            request.Headers.SetValue("Content-ResourceType", "application/json");
+            request.Headers.SetValue("Log-ResourceType", tableName);
             request.Headers.SetValue("time-generated-field", "EventTimeGenerated");
             request.Content = RequestContent.Create(data);
 
@@ -83,7 +83,7 @@ namespace Azure.Monitor.Query.Tests
                     stringToSign.Append(length.ToString()).Append("\n");
                 }
 
-                if (message.Request.Headers.TryGetValue("Content-Type", out var contentType))
+                if (message.Request.Headers.TryGetValue("Content-ResourceType", out var contentType))
                 {
                     stringToSign.Append(contentType).Append("\n");
                 }

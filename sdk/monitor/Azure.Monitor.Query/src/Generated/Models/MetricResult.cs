@@ -51,17 +51,17 @@ namespace Azure.Monitor.Query.Models
         /// <param name="id"> the metric Id. </param>
         /// <param name="type"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
-        /// <param name="displayDescription"> Detailed description of this metric. </param>
+        /// <param name="description"> Detailed description of this metric. </param>
         /// <param name="errorCode"> &apos;Success&apos; or the error details on query failures for this metric. </param>
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
-        internal MetricResult(string id, string type, LocalizableString localizedName, string displayDescription, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<MetricTimeSeriesElement> timeSeries)
+        internal MetricResult(string id, string type, LocalizableString localizedName, string description, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<MetricTimeSeriesElement> timeSeries)
         {
             Id = id;
             Type = type;
             LocalizedName = localizedName;
-            DisplayDescription = displayDescription;
+            Description = description;
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
             Unit = unit;
@@ -72,8 +72,6 @@ namespace Azure.Monitor.Query.Models
         public string Id { get; }
         /// <summary> the resource type of the metric resource. </summary>
         public string Type { get; }
-        /// <summary> Detailed description of this metric. </summary>
-        public string DisplayDescription { get; }
         /// <summary> The unit of the metric. </summary>
         public MetricUnit Unit { get; }
     }

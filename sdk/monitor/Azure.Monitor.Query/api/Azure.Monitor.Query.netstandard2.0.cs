@@ -314,10 +314,11 @@ namespace Azure.Monitor.Query.Models
     public partial class MetricResult
     {
         internal MetricResult() { }
-        public string DisplayDescription { get { throw null; } }
+        public string Description { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
+        public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricTimeSeriesElement> TimeSeries { get { throw null; } }
         public string Type { get { throw null; } }
         public Azure.Monitor.Query.Models.MetricUnit Unit { get { throw null; } }
@@ -326,7 +327,7 @@ namespace Azure.Monitor.Query.Models
     {
         internal MetricsQueryResult() { }
         public int? Cost { get { throw null; } }
-        public System.TimeSpan? Interval { get { throw null; } }
+        public System.TimeSpan? Granularity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricResult> Metrics { get { throw null; } }
         public string Namespace { get { throw null; } }
         public string ResourceRegion { get { throw null; } }
