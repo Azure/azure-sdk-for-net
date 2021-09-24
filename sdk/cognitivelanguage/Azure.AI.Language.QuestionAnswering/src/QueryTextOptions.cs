@@ -14,18 +14,6 @@ namespace Azure.AI.Language.QuestionAnswering
     public partial class QueryTextOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="QueryTextOptions"/> class from another instance using a shallow clone.
-        /// </summary>
-        /// <param name="options">The <see cref="QueryTextOptions"/> to copy.</param>
-        internal QueryTextOptions(QueryTextOptions options)
-        {
-            Question = options.Question;
-            Records = options.Records;
-            Language = options.Language;
-            StringIndexType = options.StringIndexType;
-        }
-
-        /// <summary>
         /// The language of the text records. This is the BCP-47 representation of a language.
         /// For example, use "en" for English, "es" for Spanish, etc.
         /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default, which uses "en" for English.
@@ -33,10 +21,11 @@ namespace Azure.AI.Language.QuestionAnswering
         public string Language { get; set; }
 
         /// <summary>
-        /// Gets or sets the method used to interpret string offsets.
-        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultStringIndexType"/> as the default, which uses <see cref="StringIndexType.Utf16CodeUnit"/> for .NET.
+        /// Gets the method used to interpret string offsets, which always returns <see cref="QuestionAnsweringClientOptions.DefaultStringIndexType"/> for .NET.
         /// </summary>
-        public StringIndexType? StringIndexType { get; set; }
+#pragma warning disable CA1822 // Mark members as static
+        internal StringIndexType? StringIndexType => QuestionAnsweringClientOptions.DefaultStringIndexType;
+#pragma warning restore CA1822 // Mark members as static
 
         /// <summary>
         /// Creates a new instance of the <see cref="QueryTextOptions"/> from the given parameters.
@@ -77,6 +66,17 @@ namespace Azure.AI.Language.QuestionAnswering
             new(question, records)
             {
                 Language = language,
+            };
+
+        /// <summary>
+        /// Clones the <see cref="QueryTextOptions"/> using the given <paramref name="language"/> if <see cref="Language"/> is not already set.
+        /// </summary>
+        /// <param name="language">The language to use if <see cref="Language"/> is not already set.</param>
+        /// <returns>A shallow clone of the <see cref="QueryTextOptions"/>.</returns>
+        internal QueryTextOptions Clone(string language) =>
+            new(Question, Records)
+            {
+                Language = Language ?? language,
             };
     }
 }

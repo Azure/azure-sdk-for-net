@@ -164,7 +164,8 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="language">
         /// The language of the text records. This is the BCP-47 representation of a language.
         /// For example, use "en" for English, "es" for Spanish, etc.
-        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default, which uses "en" for English.
+        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
+        /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
@@ -179,7 +180,8 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="language">
         /// The language of the text records. This is the BCP-47 representation of a language.
         /// For example, use "en" for English, "es" for Spanish, etc.
-        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default, which uses "en" for English.
+        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
+        /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
@@ -194,7 +196,8 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="language">
         /// The language of the text records. This is the BCP-47 representation of a language.
         /// For example, use "en" for English, "es" for Spanish, etc.
-        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default, which uses "en" for English.
+        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
+        /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
@@ -209,7 +212,8 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="language">
         /// The language of the text records. This is the BCP-47 representation of a language.
         /// For example, use "en" for English, "es" for Spanish, etc.
-        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default, which uses "en" for English.
+        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
+        /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
@@ -233,12 +237,7 @@ namespace Azure.AI.Language.QuestionAnswering
 
             try
             {
-                QueryTextOptions clone = new(options)
-                {
-                    Language = options.Language ?? Options.DefaultLanguage,
-                    StringIndexType = options.StringIndexType ?? Options.DefaultStringIndexType,
-                };
-
+                QueryTextOptions clone = options.Clone(Options.DefaultLanguage);
                 return await _textRestClient.QueryAsync(options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -263,12 +262,7 @@ namespace Azure.AI.Language.QuestionAnswering
 
             try
             {
-                QueryTextOptions clone = new(options)
-                {
-                    Language = options.Language ?? Options.DefaultLanguage,
-                    StringIndexType = options.StringIndexType ?? Options.DefaultStringIndexType,
-                };
-
+                QueryTextOptions clone = options.Clone(Options.DefaultLanguage);
                 return _textRestClient.Query(options, cancellationToken);
             }
             catch (Exception ex)

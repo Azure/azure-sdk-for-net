@@ -35,17 +35,16 @@ namespace Azure.AI.Language.QuestionAnswering
         }
 
         /// <summary>
-        /// Gets or sets the default language to use in some client methods.
-        /// This is the BCP-47 representation of a language. For example, use "en" for English, "es" for Spanish, etc.
-        /// The default is "en" for English.
+        /// Gets the method used to interpret string offsets, which is always <see cref="StringIndexType.Utf16CodeUnit"/> for .NET.
         /// </summary>
-        public string DefaultLanguage { get; set; } = "en";
+        internal static StringIndexType DefaultStringIndexType { get; } = StringIndexType.Utf16CodeUnit;
 
         /// <summary>
-        /// Gets or sets the method used to interpret string offsets.
-        /// The default is <see cref="Models.StringIndexType.Utf16CodeUnit"/> for .NET.
+        /// Gets or sets the default language to use in some client methods.
+        /// This is the BCP-47 representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// If not set, the service default, "en" for English, is used.
         /// </summary>
-        public StringIndexType? DefaultStringIndexType { get; set; } = StringIndexType.Utf16CodeUnit;
+        public string DefaultLanguage { get; set; } = "en";
 
         internal string Version { get; }
 
