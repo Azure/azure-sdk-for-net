@@ -25,7 +25,7 @@ namespace EventHub.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location = "West US";
+                var location = "South Central US";
 
                 var resourceGroup = string.Empty;
 
@@ -33,8 +33,8 @@ namespace EventHub.Tests.ScenarioTests
 
                 var testClusterName = EventHubManagementHelper.TestClusterName;
 
-                var keyVaultName = "SDKTestingKey";
-                var KeyName = "sdktestingkey1";
+                var keyVaultName = "SDKTestingKey1";
+                var KeyName = "sdktestingkey11";
 
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
@@ -47,9 +47,10 @@ namespace EventHub.Tests.ScenarioTests
                 try
                 {
 
+                    var getClusterResponse1 = EventHubManagementClient.Clusters.ListByResourceGroup(resourceGroupCluster);
                     Cluster getClusterResponse = EventHubManagementClient.Clusters.Get(resourceGroupCluster, testClusterName);
 
-                    var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(new CheckNameAvailabilityParameter() { Name = namespaceName });                    
+                    var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(namespaceName);
 
                     var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroupCluster, namespaceName,
                         new EHNamespace()
@@ -68,7 +69,7 @@ namespace EventHub.Tests.ScenarioTests
                             IsAutoInflateEnabled = false,
                             MaximumThroughputUnits = 0,
                             ClusterArmId = getClusterResponse.Id,
-                            Identity = new Identity() { Type = IdentityType.SystemAssigned}
+                            Identity = new Identity() { Type = ManagedServiceIdentityType.SystemAssigned}
                         });
                     
                     Assert.NotNull(createNamespaceResponse);

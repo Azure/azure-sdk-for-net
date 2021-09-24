@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.EventHub.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,14 +33,17 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         /// <param name="principalId">ObjectId from the KeyVault</param>
         /// <param name="tenantId">TenantId from the KeyVault</param>
-        /// <param name="type">Enumerates the possible value Identity type,
-        /// which currently supports only 'SystemAssigned'. Possible values
-        /// include: 'SystemAssigned'</param>
-        public Identity(string principalId = default(string), string tenantId = default(string), IdentityType? type = default(IdentityType?))
+        /// <param name="type">Type of managed service identity. Possible
+        /// values include: 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
+        /// UserAssigned', 'None'</param>
+        /// <param name="userAssignedIdentities">Properties for User Assigned
+        /// Identities</param>
+        public Identity(string principalId = default(string), string tenantId = default(string), ManagedServiceIdentityType? type = default(ManagedServiceIdentityType?), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -48,24 +53,30 @@ namespace Microsoft.Azure.Management.EventHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets objectId from the KeyVault
+        /// Gets objectId from the KeyVault
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
-        public string PrincipalId { get; set; }
+        public string PrincipalId { get; private set; }
 
         /// <summary>
-        /// Gets or sets tenantId from the KeyVault
+        /// Gets tenantId from the KeyVault
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
-        public string TenantId { get; set; }
+        public string TenantId { get; private set; }
 
         /// <summary>
-        /// Gets or sets enumerates the possible value Identity type, which
-        /// currently supports only 'SystemAssigned'. Possible values include:
-        /// 'SystemAssigned'
+        /// Gets or sets type of managed service identity. Possible values
+        /// include: 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
+        /// UserAssigned', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public IdentityType? Type { get; set; }
+        public ManagedServiceIdentityType? Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties for User Assigned Identities
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; set; }
 
     }
 }

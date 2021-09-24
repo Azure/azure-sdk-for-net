@@ -7,11 +7,9 @@ namespace EventHub.Tests.TestHelper
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Azure.Management.EventHub;
-    using Microsoft.Azure.Management.EventHub.Models;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
     using Microsoft.Azure.Management.KeyVault;
-    using Microsoft.Azure.Management.KeyVault.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json;
     using System.Security.Cryptography;
@@ -31,7 +29,7 @@ namespace EventHub.Tests.TestHelper
         internal const string DisasterRecoveryPrefix = "sdk-DisasterRecovery-";
         internal const string KeyVaultePrefix = "sdk-KeyVault-";
 
-        internal const string ResourceGroupCluster = "prod-by3-533-rg";
+        internal const string ResourceGroupCluster = "v-ajnavtest";
         internal const string TestClusterName = "PMTestCluster";
 
 

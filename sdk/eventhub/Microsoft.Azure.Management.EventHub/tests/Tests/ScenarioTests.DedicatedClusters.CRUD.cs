@@ -39,7 +39,7 @@ namespace EventHub.Tests.ScenarioTests
                 {
                     Cluster getClusterResponse = EventHubManagementClient.Clusters.Get(resourceGroupCluster, testClusterName);
 
-                    var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(new CheckNameAvailabilityParameter() { Name = namespaceName });
+                    var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(namespaceName);
 
                     var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroupCluster, namespaceName,
                         new EHNamespace()
@@ -58,7 +58,7 @@ namespace EventHub.Tests.ScenarioTests
                             IsAutoInflateEnabled = false,
                             MaximumThroughputUnits = 0,
                             ClusterArmId = getClusterResponse.Id,
-                            Identity = new Identity() { Type = IdentityType.SystemAssigned}
+                            Identity = new Identity() { Type = ManagedServiceIdentityType.SystemAssigned}
                         });
 
                     Assert.NotNull(createNamespaceResponse);
