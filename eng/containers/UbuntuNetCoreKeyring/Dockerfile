@@ -8,8 +8,8 @@ ENV \
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
     # SDK version
-    DOTNET_SDK_VERSION=5.0.401 \
-    DOTNET_SDK_VERSION2=3.1.413 \
+    DOTNET_SDK_VERSION_5.0=5.0.401 \
+    DOTNET_SDK_VERSION_3_1=3.1.413 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -33,7 +33,7 @@ RUN apt-get update \
 # 5.0.401-focal-amd64, 5.0-focal-amd64, 5.0.401-focal, 5.0-focal	Dockerfile	Ubuntu 20.04	09/14/2021
 
 # Install .NET SDK
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION_5.0/dotnet-sdk-$DOTNET_SDK_VERSION_5.0-linux-x64.tar.gz \
     && dotnet_sha512='a444d44007709ceb68d8f72dec0531e17f85f800efc0007ace4fa66ba27f095066930e6c6defcd2f85cdedea2fec25e163f5da461c1c2b8563e5cd7cb47091e0' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
@@ -43,7 +43,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION2/dotnet-sdk-$DOTNET_SDK_VERSION2-linux-x64.tar.gz \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION_3_1/dotnet-sdk-$DOTNET_SDK_VERSION_3_1-linux-x64.tar.gz \
     && dotnet_sha512='2a0824f11aba0b79d3f9a36af0395649bc9b4137e61b240a48dccb671df0a5b8c2086054f8e495430b7ed6c344bb3f27ac3dfda5967d863718a6dadeca951a83' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     #&& mkdir -p /usr/share/dotnet31 \
