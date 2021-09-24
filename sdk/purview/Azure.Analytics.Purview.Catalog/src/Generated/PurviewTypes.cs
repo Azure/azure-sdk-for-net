@@ -108,6 +108,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
         /// <param name="options"> The request options. </param>
@@ -223,6 +231,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
         /// <param name="options"> The request options. </param>
@@ -267,7 +283,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/classificationdef/guid/", false);
             uri.AppendPath(guid, true);
             request.Uri = uri;
@@ -350,6 +366,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   entityTypes: [string],
         ///   subTypes: [string],
         ///   superTypes: [string]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -468,6 +492,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="name"> The name of the classification. </param>
         /// <param name="options"> The request options. </param>
@@ -512,7 +544,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/classificationdef/name/", false);
             uri.AppendPath(name, true);
             request.Uri = uri;
@@ -613,6 +645,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       relationshipTypeName: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -749,6 +789,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="options"> The request options. </param>
@@ -793,7 +841,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/entitydef/guid/", false);
             uri.AppendPath(guid, true);
             request.Uri = uri;
@@ -894,6 +942,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       relationshipTypeName: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1030,6 +1086,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="name"> The name of the entity. </param>
         /// <param name="options"> The request options. </param>
@@ -1074,7 +1138,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/entitydef/name/", false);
             uri.AppendPath(name, true);
             request.Uri = uri;
@@ -1140,6 +1204,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       value: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1241,6 +1313,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
         /// <param name="options"> The request options. </param>
@@ -1285,7 +1365,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/enumdef/guid/", false);
             uri.AppendPath(guid, true);
             request.Uri = uri;
@@ -1351,6 +1431,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       value: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1452,6 +1540,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="name"> The name of the enum. </param>
         /// <param name="options"> The request options. </param>
@@ -1496,7 +1592,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/enumdef/name/", false);
             uri.AppendPath(name, true);
             request.Uri = uri;
@@ -1587,6 +1683,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   endDef2: AtlasRelationshipEndDef,
         ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
         ///   relationshipLabel: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1713,6 +1817,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="options"> The request options. </param>
@@ -1757,7 +1869,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/relationshipdef/guid/", false);
             uri.AppendPath(guid, true);
             request.Uri = uri;
@@ -1848,6 +1960,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   endDef2: AtlasRelationshipEndDef,
         ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
         ///   relationshipLabel: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1974,6 +2094,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="name"> The name of the relationship. </param>
         /// <param name="options"> The request options. </param>
@@ -2018,7 +2146,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/relationshipdef/name/", false);
             uri.AppendPath(name, true);
             request.Uri = uri;
@@ -2098,6 +2226,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       valuesMinCount: number
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2213,6 +2349,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
         /// <param name="options"> The request options. </param>
@@ -2257,7 +2401,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/structdef/guid/", false);
             uri.AppendPath(guid, true);
             request.Uri = uri;
@@ -2337,6 +2481,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       valuesMinCount: number
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2452,6 +2604,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="name"> The name of the struct. </param>
         /// <param name="options"> The request options. </param>
@@ -2496,7 +2656,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/structdef/name/", false);
             uri.AppendPath(name, true);
             request.Uri = uri;
@@ -2617,6 +2777,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       valuesMinCount: number
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2773,6 +2941,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the type. </param>
         /// <param name="options"> The request options. </param>
@@ -2817,7 +2993,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/typedef/guid/", false);
             uri.AppendPath(guid, true);
             request.Uri = uri;
@@ -2938,6 +3114,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       valuesMinCount: number
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -3094,6 +3278,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="name"> The name of the type. </param>
         /// <param name="options"> The request options. </param>
@@ -3138,7 +3330,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/typedef/name/", false);
             uri.AppendPath(name, true);
             request.Uri = uri;
@@ -3147,6 +3339,16 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete API for type identified by its name. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the type. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -3184,6 +3386,16 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete API for type identified by its name. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the type. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -3227,10 +3439,11 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/typedef/name/", false);
             uri.AppendPath(name, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -3447,6 +3660,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       lastModifiedTS: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -3707,6 +3928,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
@@ -3755,7 +3984,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/typedefs", false);
             if (includeTermTemplate != null)
             {
@@ -4200,6 +4429,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       lastModifiedTS: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -4673,6 +4910,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -4717,7 +4962,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/typedefs", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -5153,6 +5398,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       lastModifiedTS: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -5623,6 +5876,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -5667,7 +5928,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/typedefs", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -5889,6 +6150,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       lastModifiedTS: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -6145,6 +6414,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -6189,9 +6466,10 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/typedefs", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -6204,6 +6482,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
         ///   guid: string,
         ///   name: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -6258,6 +6544,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
@@ -6306,7 +6600,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/types/typedefs/headers", false);
             if (includeTermTemplate != null)
             {
@@ -6393,6 +6687,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string,
         ///   version: number,
         ///   lastModifiedTS: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -6508,6 +6810,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
         /// <param name="options"> The request options. </param>
@@ -6552,7 +6862,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/types/termtemplatedef/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -6633,6 +6943,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string,
         ///   version: number,
         ///   lastModifiedTS: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -6748,6 +7066,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="name"> The name of the term template. </param>
         /// <param name="options"> The request options. </param>
@@ -6792,7 +7118,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/types/termtemplatedef/name/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", apiVersion, true);

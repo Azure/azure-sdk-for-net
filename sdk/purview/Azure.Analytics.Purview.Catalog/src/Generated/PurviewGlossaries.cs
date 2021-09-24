@@ -85,17 +85,26 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort);
+            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, ignoreTermsAndCategories);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
@@ -179,17 +188,26 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort);
+            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, ignoreTermsAndCategories);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
@@ -218,14 +236,14 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetGlossariesRequest(int? limit, int? offset, string sort)
+        private HttpMessage CreateGetGlossariesRequest(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary", false);
             if (limit != null)
             {
@@ -238,6 +256,10 @@ namespace Azure.Analytics.Purview.Catalog
             if (sort != null)
             {
                 uri.AppendQuery("sort", sort, true);
+            }
+            if (ignoreTermsAndCategories != null)
+            {
+                uri.AppendQuery("ignoreTermsAndCategories", ignoreTermsAndCategories.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -349,6 +371,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///     }
         ///   ],
         ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -497,6 +527,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -541,7 +579,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -663,6 +701,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -819,6 +865,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -863,7 +917,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/categories", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -985,6 +1039,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1141,6 +1203,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -1185,7 +1255,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/category", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1250,6 +1320,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1349,6 +1427,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="options"> The request options. </param>
@@ -1393,7 +1479,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/category/", false);
             uri.AppendPath(categoryGuid, true);
             request.Uri = uri;
@@ -1514,6 +1600,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1671,6 +1765,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -1716,7 +1818,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/category/", false);
             uri.AppendPath(categoryGuid, true);
             request.Uri = uri;
@@ -1727,6 +1829,16 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete a glossary category. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1764,6 +1876,16 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete a glossary category. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1807,10 +1929,11 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/category/", false);
             uri.AppendPath(categoryGuid, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1870,6 +1993,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1970,6 +2101,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2015,7 +2154,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/category/", false);
             uri.AppendPath(categoryGuid, true);
             uri.AppendPath("/partial", false);
@@ -2035,6 +2174,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   displayText: string,
         ///   parentCategoryGuid: string,
         ///   relationGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2090,6 +2237,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -2137,7 +2292,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/category/", false);
             uri.AppendPath(categoryGuid, true);
             uri.AppendPath("/related", false);
@@ -2170,6 +2325,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
         ///   steward: string,
         ///   termGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2228,6 +2391,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -2275,7 +2446,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/category/", false);
             uri.AppendPath(categoryGuid, true);
             uri.AppendPath("/terms", false);
@@ -2499,6 +2670,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string,
         ///   validValues: [AtlasRelatedTermHeader],
         ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2746,6 +2925,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -2791,7 +2978,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/term", false);
             if (includeTermHierarchy != null)
             {
@@ -2905,6 +3092,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string,
         ///   validValues: [AtlasRelatedTermHeader],
         ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -3050,6 +3245,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -3095,7 +3298,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termGuid, true);
             if (includeTermHierarchy != null)
@@ -3310,6 +3513,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string,
         ///   validValues: [AtlasRelatedTermHeader],
         ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -3557,6 +3768,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -3602,7 +3821,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termGuid, true);
             request.Uri = uri;
@@ -3613,6 +3832,16 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete a glossary term. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -3650,6 +3879,16 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete a glossary term. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -3693,10 +3932,11 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termGuid, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -3801,6 +4041,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string,
         ///   validValues: [AtlasRelatedTermHeader],
         ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -3947,6 +4195,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -3993,7 +4249,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termGuid, true);
             uri.AppendPath("/partial", false);
@@ -4211,6 +4467,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string,
         ///   validValues: [AtlasRelatedTermHeader],
         ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -4458,6 +4722,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -4503,7 +4775,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/terms", false);
             if (includeTermHierarchy != null)
             {
@@ -4533,6 +4805,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   },
         ///   relationshipGuid: string,
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -4596,6 +4876,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -4643,7 +4931,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/terms/", false);
             uri.AppendPath(termGuid, true);
             uri.AppendPath("/assignedEntities", false);
@@ -4681,6 +4969,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   },
         ///   relationshipGuid: string,
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -4742,6 +5038,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -4787,11 +5091,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/terms/", false);
             uri.AppendPath(termGuid, true);
             uri.AppendPath("/assignedEntities", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -4814,6 +5119,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   },
         ///   relationshipGuid: string,
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -4875,6 +5188,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -4920,11 +5241,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/terms/", false);
             uri.AppendPath(termGuid, true);
             uri.AppendPath("/assignedEntities", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -4947,6 +5269,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   },
         ///   relationshipGuid: string,
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -5008,6 +5338,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -5053,11 +5391,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/terms/", false);
             uri.AppendPath(termGuid, true);
             uri.AppendPath("/assignedEntities", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5075,6 +5414,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
         ///   steward: string,
         ///   termGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -5133,6 +5480,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -5180,7 +5535,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/terms/", false);
             uri.AppendPath(termGuid, true);
             uri.AppendPath("/related", false);
@@ -5253,6 +5608,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///     }
         ///   ],
         ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -5348,6 +5711,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="options"> The request options. </param>
@@ -5392,7 +5763,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             request.Uri = uri;
@@ -5505,6 +5876,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///     }
         ///   ],
         ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -5654,6 +6033,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -5699,7 +6086,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             request.Uri = uri;
@@ -5710,6 +6097,16 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete a glossary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -5747,6 +6144,16 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete a glossary. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -5790,10 +6197,11 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -5853,6 +6261,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -5955,6 +6371,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -6002,7 +6426,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/categories", false);
@@ -6032,6 +6456,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   displayText: string,
         ///   parentCategoryGuid: string,
         ///   relationGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -6087,6 +6519,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -6134,7 +6574,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/categories/headers", false);
@@ -6209,6 +6649,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   guid: string,
         ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;,
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -6307,6 +6755,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -6352,7 +6808,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/detailed", false);
@@ -6417,6 +6873,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///     }
         ///   ],
         ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -6514,6 +6978,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -6560,7 +7032,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/partial", false);
@@ -6676,6 +7148,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string,
         ///   validValues: [AtlasRelatedTermHeader],
         ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -6824,6 +7304,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -6872,7 +7360,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/terms", false);
@@ -6909,6 +7397,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
         ///   steward: string,
         ///   termGuid: string
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -6967,6 +7463,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -7014,7 +7518,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/terms/headers", false);
@@ -7051,6 +7555,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///     errorCode: number,
         ///     errorMessage: string
         ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -7112,6 +7624,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -7158,7 +7678,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/terms/import", false);
@@ -7190,6 +7710,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///     errorCode: number,
         ///     errorMessage: string
         ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -7251,6 +7779,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -7297,7 +7833,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/glossary/name/", false);
             uri.AppendPath(glossaryName, true);
             uri.AppendPath("/terms/import", false);
@@ -7329,6 +7865,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///     errorCode: number,
         ///     errorMessage: string
         ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -7388,6 +7932,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="options"> The request options. </param>
@@ -7432,7 +7984,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/glossary/terms/import/", false);
             uri.AppendPath(operationGuid, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -7526,7 +8078,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/terms/export", false);
@@ -7643,6 +8195,14 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string,
         ///   validValues: [AtlasRelatedTermHeader],
         ///   validValuesFor: [AtlasRelatedTermHeader]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -7790,6 +8350,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// }
         /// </code>
         /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -7837,7 +8405,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/glossary/name/", false);
             uri.AppendPath(glossaryName, true);
             uri.AppendPath("/terms", false);
