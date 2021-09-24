@@ -13,6 +13,11 @@ namespace Azure.Identity.Tests
 {
     public class IdentityRecordedTestSanitizer : RecordedTestSanitizer
     {
+        public IdentityRecordedTestSanitizer()
+        {
+            SanitizedHeaders.Add("secret");
+        }
+
         public override void Sanitize(RecordEntry entry)
         {
             if (entry.RequestUri.Split('?')[0].EndsWith("/token"))
