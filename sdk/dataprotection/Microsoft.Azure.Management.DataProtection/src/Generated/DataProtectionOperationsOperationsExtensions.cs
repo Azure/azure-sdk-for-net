@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for Operations.
+    /// Extension methods for DataProtectionOperationsOperations.
     /// </summary>
-    public static partial class OperationsExtensions
+    public static partial class DataProtectionOperationsOperationsExtensions
     {
             /// <summary>
             /// Returns the list of available operations.
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<ClientDiscoveryValueForSingleApi> List(this IOperations operations)
+            public static IPage<ClientDiscoveryValueForSingleApi> List(this IDataProtectionOperationsOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ClientDiscoveryValueForSingleApi>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ClientDiscoveryValueForSingleApi>> ListAsync(this IDataProtectionOperationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ClientDiscoveryValueForSingleApi> ListNext(this IOperations operations, string nextPageLink)
+            public static IPage<ClientDiscoveryValueForSingleApi> ListNext(this IDataProtectionOperationsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ClientDiscoveryValueForSingleApi>> ListNextAsync(this IOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ClientDiscoveryValueForSingleApi>> ListNextAsync(this IDataProtectionOperationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

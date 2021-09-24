@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// DataProtectionOperationsOperations operations.
     /// </summary>
-    public partial interface IOperations
+    public partial interface IDataProtectionOperationsOperations
     {
         /// <summary>
         /// Returns the list of available operations.
