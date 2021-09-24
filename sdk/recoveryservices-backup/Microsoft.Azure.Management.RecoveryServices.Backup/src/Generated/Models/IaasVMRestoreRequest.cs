@@ -84,7 +84,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// be restored.</param>
         /// <param name="identityInfo">Managed Identity information required to
         /// access customer storage account.</param>
-        public IaasVMRestoreRequest(string recoveryPointId = default(string), string recoveryType = default(string), string sourceResourceId = default(string), string targetVirtualMachineId = default(string), string targetResourceGroupId = default(string), string storageAccountId = default(string), string virtualNetworkId = default(string), string subnetId = default(string), string targetDomainNameId = default(string), string region = default(string), string affinityGroup = default(string), bool? createNewCloudService = default(bool?), bool? originalStorageAccountOption = default(bool?), EncryptionDetails encryptionDetails = default(EncryptionDetails), IList<int?> restoreDiskLunList = default(IList<int?>), bool? restoreWithManagedDisks = default(bool?), string diskEncryptionSetId = default(string), IList<string> zones = default(IList<string>), IdentityInfo identityInfo = default(IdentityInfo))
+        /// <param name="identityBasedRestoreDetails">IaaS VM workload specific
+        /// restore details for restores using managed identity.</param>
+        public IaasVMRestoreRequest(string recoveryPointId = default(string), string recoveryType = default(string), string sourceResourceId = default(string), string targetVirtualMachineId = default(string), string targetResourceGroupId = default(string), string storageAccountId = default(string), string virtualNetworkId = default(string), string subnetId = default(string), string targetDomainNameId = default(string), string region = default(string), string affinityGroup = default(string), bool? createNewCloudService = default(bool?), bool? originalStorageAccountOption = default(bool?), EncryptionDetails encryptionDetails = default(EncryptionDetails), IList<int?> restoreDiskLunList = default(IList<int?>), bool? restoreWithManagedDisks = default(bool?), string diskEncryptionSetId = default(string), IList<string> zones = default(IList<string>), IdentityInfo identityInfo = default(IdentityInfo), IdentityBasedRestoreDetails identityBasedRestoreDetails = default(IdentityBasedRestoreDetails))
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -105,6 +107,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             DiskEncryptionSetId = diskEncryptionSetId;
             Zones = zones;
             IdentityInfo = identityInfo;
+            IdentityBasedRestoreDetails = identityBasedRestoreDetails;
             CustomInit();
         }
 
@@ -252,6 +255,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "identityInfo")]
         public IdentityInfo IdentityInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets iaaS VM workload specific restore details for restores
+        /// using managed identity.
+        /// </summary>
+        [JsonProperty(PropertyName = "identityBasedRestoreDetails")]
+        public IdentityBasedRestoreDetails IdentityBasedRestoreDetails { get; set; }
 
     }
 }
