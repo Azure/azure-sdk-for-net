@@ -21,14 +21,16 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription => Client.DefaultSubscription;
         protected ArmClient Client { get; private set; }
-        protected EventHubTestBase(bool isAsync) : base(isAsync,RecordedTestMode.Live)
+        protected EventHubTestBase(bool isAsync) : base(isAsync,RecordedTestMode.Playback)
         {
             Sanitizer = new EventHubRecordedTestSanitizer();
         }
-        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, RecordedTestMode.Live)
+
+        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, RecordedTestMode.Playback)
         {
             Sanitizer = new EventHubRecordedTestSanitizer();
         }
+
         [SetUp]
         public void CreateCommonClient()
         {
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
                 });
             return operation.Value;
         }
+
         public async Task<string> CreateValidNamespaceName(string prefix)
         {
             string namespaceName = "";
@@ -62,6 +65,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             }
             return namespaceName;
         }
+
         public static void VerifyNamespaceProperties(EHNamespace eHNamespace, bool useDefaults)
         {
             Assert.NotNull(eHNamespace);

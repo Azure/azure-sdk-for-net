@@ -239,7 +239,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("singleton issue")]
         public async Task SetGetNetworkRuleSets()
         {
             //create namespace
@@ -247,7 +246,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
-            NetworkRuleSet netWorkRuleSet = eHNamespace.GetNetworkRuleSet();
+            //NetworkRuleSet netWorkRuleSet = eHNamespace.GetNetworkRuleSet();
 
             //prepare vnet
             string vnetName = Recording.GenerateAssetName("sdktestvnet");
@@ -276,18 +275,18 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 },
                 Location = "eastus2"
             };
-            await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, parameters);
+            VirtualNetwork virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, parameters)).Value;
 
             //set network rule set
             string subscriptionId = DefaultSubscription.Id.ToString();
-            NetworkRuleSetData parameter = new NetworkRuleSetData()
+            NetworkRuleSet parameter = new NetworkRuleSet()
             {
                 DefaultAction = DefaultAction.Deny,
                 VirtualNetworkRules =
                 {
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet("/subscriptions/" + subscriptionId + "/resourcegroups/"+ _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default1") },
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet("/subscriptions/" + subscriptionId + "/resourcegroups/"+  _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default2") },
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet("/subscriptions/" + subscriptionId + "/resourcegroups/"+  _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default3") }
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet( subscriptionId + "/resourcegroups/"+ _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default1") },
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet( subscriptionId + "/resourcegroups/"+  _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default2") },
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new ResourceManager.EventHubs.Models.Subnet( subscriptionId + "/resourcegroups/"+  _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/"+ vnetName + "/subnets/default3") }
                 },
                 IpRules =
                     {
@@ -298,16 +297,18 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                         new NWRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" }
                     }
             };
-            await netWorkRuleSet.CreateOrUpdateAsync(parameter);
+            await eHNamespace.CreateOrUpdateNetworkRuleSetAsync(parameter);
 
             //get the network rule set
-            NetworkRuleSet networkRuleSet = await netWorkRuleSet.GetAsync();
+            NetworkRuleSet networkRuleSet = await eHNamespace.GetNetworkRuleSetAsync();
             Assert.NotNull(networkRuleSet);
-            Assert.NotNull(networkRuleSet.Data);
-            Assert.NotNull(networkRuleSet.Data.IpRules);
-            Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
-            Assert.AreEqual(networkRuleSet.Data.VirtualNetworkRules, 3);
-            Assert.AreEqual(networkRuleSet.Data.IpRules, 5);
+            Assert.NotNull(networkRuleSet.IpRules);
+            Assert.NotNull(networkRuleSet.VirtualNetworkRules);
+            Assert.AreEqual(networkRuleSet.VirtualNetworkRules.Count, 3);
+            Assert.AreEqual(networkRuleSet.IpRules.Count, 5);
+
+            //delete virtual network
+            await virtualNetwork.DeleteAsync();
         }
 
         [Test]
@@ -321,6 +322,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
 
+            //get messaging plan
             await eHNamespace.GetMessagingPlanAsync();
         }
 
@@ -328,7 +330,15 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         [RecordedTest]
         public async Task ListRegionsBySku()
         {
+            //list regions of sku basic
             List<MessagingRegions> messagingRegions= await DefaultSubscription.GetRegionsBySkuAsync("Basic").ToEnumerableAsync();
+            Assert.NotNull(messagingRegions);
+            Assert.IsTrue(messagingRegions.Count > 0);
+
+            //list regions of sku standard
+            messagingRegions = await DefaultSubscription.GetRegionsBySkuAsync("Standard").ToEnumerableAsync();
+            Assert.NotNull(messagingRegions);
+            Assert.IsTrue(messagingRegions.Count > 0);
         }
     }
 }

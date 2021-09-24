@@ -16,7 +16,6 @@ operation-group-to-resource-type:
     PrivateLinkResources: Microsoft.EventHub/namespaces/privateLinkResources
     Regions: Microsoft.EventHub/sku/regions
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules
-    NetworkRuleSets: Microsoft.EventHub/namespaces/networkRuleSets
     NamespaceName: nonresourcetype1
     DisasterRecoveryConfigName: nonresourcetype2
 operation-group-to-resource:
@@ -29,7 +28,6 @@ operation-group-to-resource:
 operation-group-to-parent:
     Namespaces: resourceGroups
     ConsumerGroups: Microsoft.EventHub/namespaces/eventhubs
-    NetworkRuleSets: Microsoft.EventHub/namespaces
     NamespaceAuthorizationRules: Microsoft.EventHub/namespaces
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs
     EventHubAuthorizationRules: Microsoft.EventHub/namespaces/eventhubs
@@ -38,18 +36,6 @@ operation-group-to-parent:
     Regions: subscriptions
 operation-group-is-extension: NamespaceAuthorizationRules;DisasterRecoveryConfigAuthorizationRules;EventHubAuthorizationRules
 directive:
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default'].put.operationId
-      transform: return "NetworkRuleSets_CreateOrUpdate"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default'].delete.operationId
-      transform: return "NetworkRuleSets_Delete"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default'].get.operationId
-      transform: return "NetworkRuleSets_Get"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets'].get.operationId
-      transform: return "NetworkRuleSets_List"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules'].get.operationId
       transform: return "NamespaceAuthorizationRules_List"
@@ -107,36 +93,5 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability'].post.operationId
       transform: return "NamespaceName_CheckAvailability"
-    - from: swagger-document
-      where: $
-      transform: >
-        $.parameters['NetworkRuleSetsName']= {
-                "name": "NetworkRuleSetsName",
-                "in": "path",
-                "required": true,
-                "type": "string",
-                "description": "The name of the NetworkRuleSet name. NetworkRuleSet Name must be 'default'",
-                "enum": [
-                "default"
-                ],
-                "x-ms-parameter-location": "method"
-                }
-    - from: swagger-document
-      where: $.paths
-      transform: >
-          for (var key in $) {
-              var newKey=key.replace('networkRuleSets/default','networkRuleSets/{NetworkRuleSetsName}');
-              if (newKey !== key){
-                  $[newKey] = $[key];
-                  for (var key1 in $[newKey]){
-                    $[newKey][key1]['parameters'].push(
-                      {
-                        "$ref": "#/parameters/NetworkRuleSetsName"
-                      }
-                    );
-                  }
-                  delete $[key];
-                }
-          }
 ```
 

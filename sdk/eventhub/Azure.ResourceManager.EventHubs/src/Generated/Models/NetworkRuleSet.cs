@@ -8,29 +8,28 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EventHubs
+namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> A class representing the NetworkRuleSet data model. </summary>
-    public partial class NetworkRuleSetData : Resource
+    /// <summary> Description of NetworkRuleSet resource. </summary>
+    public partial class NetworkRuleSet : Resource
     {
-        /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
-        public NetworkRuleSetData()
+        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        public NetworkRuleSet()
         {
             VirtualNetworkRules = new ChangeTrackingList<NWRuleSetVirtualNetworkRules>();
             IpRules = new ChangeTrackingList<NWRuleSetIpRules>();
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
         /// <param name="ipRules"> List of IpRules. </param>
-        internal NetworkRuleSetData(ResourceIdentifier id, string name, ResourceType type, DefaultAction? defaultAction, IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NWRuleSetIpRules> ipRules) : base(id, name, type)
+        internal NetworkRuleSet(ResourceIdentifier id, string name, ResourceType type, DefaultAction? defaultAction, IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NWRuleSetIpRules> ipRules) : base(id, name, type)
         {
             DefaultAction = defaultAction;
             VirtualNetworkRules = virtualNetworkRules;

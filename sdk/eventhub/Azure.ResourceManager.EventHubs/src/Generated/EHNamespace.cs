@@ -445,6 +445,167 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// <summary> Create or update NetworkRuleSet for a Namespace. </summary>
+        /// <param name="parameters"> The Namespace IpFilterRule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<NetworkRuleSet>> CreateOrUpdateNetworkRuleSetAsync(NetworkRuleSet parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.CreateOrUpdateNetworkRuleSet");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.CreateOrUpdateNetworkRuleSetAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create or update NetworkRuleSet for a Namespace. </summary>
+        /// <param name="parameters"> The Namespace IpFilterRule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<NetworkRuleSet> CreateOrUpdateNetworkRuleSet(NetworkRuleSet parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.CreateOrUpdateNetworkRuleSet");
+            scope.Start();
+            try
+            {
+                var response = _restClient.CreateOrUpdateNetworkRuleSet(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets NetworkRuleSet for a Namespace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<NetworkRuleSet>> GetNetworkRuleSetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSet");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetNetworkRuleSetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets NetworkRuleSet for a Namespace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<NetworkRuleSet> GetNetworkRuleSet(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSet");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetNetworkRuleSet(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets list of NetworkRuleSet for a Namespace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkRuleSet" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkRuleSet> GetNetworkRuleSets(CancellationToken cancellationToken = default)
+        {
+            Page<NetworkRuleSet> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.GetNetworkRuleSets(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<NetworkRuleSet> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.GetNetworkRuleSetsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets list of NetworkRuleSet for a Namespace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkRuleSet" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkRuleSet> GetNetworkRuleSetsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<NetworkRuleSet>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.GetNetworkRuleSetsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<NetworkRuleSet>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.GetNetworkRuleSetsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
         /// <summary> Check the give Namespace name availability. </summary>
         /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -514,13 +675,6 @@ namespace Azure.ResourceManager.EventHubs
         public EventhubContainer GetEventhubs()
         {
             return new EventhubContainer(this);
-        }
-
-        /// <summary> Gets an object representing a NetworkRuleSet along with the instance operations that can be performed on it. </summary>
-        /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
-        public NetworkRuleSet GetNetworkRuleSet()
-        {
-            return new NetworkRuleSet(this, Id + "/networkRuleSets/default");
         }
     }
 }

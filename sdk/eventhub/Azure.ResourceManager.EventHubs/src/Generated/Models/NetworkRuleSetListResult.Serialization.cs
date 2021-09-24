@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static NetworkRuleSetListResult DeserializeNetworkRuleSetListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkRuleSetData>> value = default;
+            Optional<IReadOnlyList<NetworkRuleSet>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkRuleSetData> array = new List<NetworkRuleSetData>();
+                    List<NetworkRuleSet> array = new List<NetworkRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkRuleSetData.DeserializeNetworkRuleSetData(item));
+                        array.Add(NetworkRuleSet.DeserializeNetworkRuleSet(item));
                     }
                     value = array;
                     continue;
