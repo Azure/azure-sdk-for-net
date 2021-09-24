@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
     {
         public static ProfileData CreateProfileData(SkuName skuName) => new ProfileData(Location.WestUS, new Sku { Name = skuName });
 
+        public static ProfileData CreateAFDProfileData(SkuName skuName) => new ProfileData("Global", new Sku { Name = skuName });
+
         public static EndpointData CreateEndpointData() => new EndpointData(Location.WestUS)
         {
             IsHttpAllowed = true,

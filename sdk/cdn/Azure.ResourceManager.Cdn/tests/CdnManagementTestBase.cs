@@ -48,6 +48,13 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
+        protected async Task<Profile> CreateAFDProfile(ResourceGroup rg, string profileName, SkuName skuName)
+        {
+            ProfileData profileData = ResourceDataHelper.CreateAFDProfileData(skuName);
+            var lro = await rg.GetProfiles().CreateOrUpdateAsync(profileName, profileData);
+            return lro.Value;
+        }
+
         protected async Task<Endpoint> CreateEndpoint(Profile profile, string endpointName)
         {
             EndpointData endpointData = ResourceDataHelper.CreateEndpointData();
