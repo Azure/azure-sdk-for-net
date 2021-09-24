@@ -120,8 +120,8 @@ function DeployStressPackage(
     Run helm dependency update $pkg.Directory
     if ($LASTEXITCODE) { return }
 
-    if (Test-Path "$($pkg.Directory)/test-resources.bicep") {
-        Run az bicep build -f "$($pkg.Directory)/test-resources.bicep"
+    if (Test-Path "$($pkg.Directory)/stress-test-resources.bicep") {
+        Run az bicep build -f "$($pkg.Directory)/stress-test-resources.bicep"
         if ($LASTEXITCODE) { return }
     }
 
