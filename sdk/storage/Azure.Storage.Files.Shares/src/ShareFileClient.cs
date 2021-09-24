@@ -4779,69 +4779,19 @@ namespace Azure.Storage.Files.Shares
                 throw Errors.PrecalculatedHashNotSupportedOnSplit();
             }
 
-            // Try to upload the file as a single range
-            Debug.Assert(singleRangeThreshold <= Constants.File.MaxFileUpdateRange);
-            var length = content?.Length - content?.Position;
-            if (length <= singleRangeThreshold)
-            {
-                return await UploadRangeInternal(
-                    new HttpRange(0, length),
-                    content,
-                    new ShareFileUploadRangeOptions
-                    {
-                        TransactionalHashingOptions = hashingOptions,
-                        ProgressHandler = progressHandler,
-                        Conditions = conditions
-                    },
-                    async,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-
-            // Otherwise naively split the file into ranges and upload them individually
-            var response = default(Response<ShareFileUploadInfo>);
-            var pool = default(MemoryPool<byte>);
-            // erase potential precalculated hash now that we're splitting; we'll have to recalculate.
-            hashingOptions = hashingOptions == default
-                ? default
-                : new UploadTransactionalHashingOptions
-                {
-                    Algorithm = hashingOptions.Algorithm
-                };
-
-            long initalPosition = content.Position;
-
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(Upload)}");
             try
             {
-                pool = (singleRangeThreshold < MemoryPool<byte>.Shared.MaxBufferSize) ?
-                    MemoryPool<byte>.Shared :
-                    new StorageMemoryPool(singleRangeThreshold, 1);
-                for (; ; )
+                scope.Start();
+
+                // Try to upload the file as a single range
+                Debug.Assert(singleRangeThreshold <= Constants.File.MaxFileUpdateRange);
+                var length = content?.Length - content?.Position;
+                if (length <= singleRangeThreshold)
                 {
-                    // Get the next chunk of content
-                    var parentPosition = content.Position;
-                    IMemoryOwner<byte> buffer = pool.Rent(singleRangeThreshold);
-                    if (!MemoryMarshal.TryGetArray<byte>(buffer.Memory, out ArraySegment<byte> segment))
-                    {
-                        throw Errors.UnableAccessArray();
-                    }
-                    var count = async ?
-                        await content.ReadAsync(segment.Array, 0, singleRangeThreshold, cancellationToken).ConfigureAwait(false) :
-                        content.Read(segment.Array, 0, singleRangeThreshold);
-
-                    // Stop when we've exhausted the content
-                    if (count <= 0) { break; }
-
-                    // Upload the chunk
-                    var partition = new StreamPartition(
-                        buffer.Memory,
-                        parentPosition,
-                        count,
-                        () => buffer.Dispose(),
-                        cancellationToken);
-                    response = await UploadRangeInternal(
-                        new HttpRange(partition.ParentPosition - initalPosition, partition.Length),
-                        partition,
+                    return await UploadRangeInternal(
+                        new HttpRange(0, length),
+                        content,
                         new ShareFileUploadRangeOptions
                         {
                             TransactionalHashingOptions = hashingOptions,
@@ -4852,15 +4802,82 @@ namespace Azure.Storage.Files.Shares
                         cancellationToken)
                         .ConfigureAwait(false);
                 }
+
+                // Otherwise naively split the file into ranges and upload them individually
+                var response = default(Response<ShareFileUploadInfo>);
+                var pool = default(MemoryPool<byte>);
+                // erase potential precalculated hash now that we're splitting; we'll have to recalculate.
+                hashingOptions = hashingOptions == default
+                    ? default
+                    : new UploadTransactionalHashingOptions
+                    {
+                        Algorithm = hashingOptions.Algorithm
+                    };
+
+                long initalPosition = content.Position;
+
+                try
+                {
+                    pool = (singleRangeThreshold < MemoryPool<byte>.Shared.MaxBufferSize) ?
+                        MemoryPool<byte>.Shared :
+                        new StorageMemoryPool(singleRangeThreshold, 1);
+                    for (; ; )
+                    {
+                        // Get the next chunk of content
+                        var parentPosition = content.Position;
+                        IMemoryOwner<byte> buffer = pool.Rent(singleRangeThreshold);
+                        if (!MemoryMarshal.TryGetArray<byte>(buffer.Memory, out ArraySegment<byte> segment))
+                        {
+                            throw Errors.UnableAccessArray();
+                        }
+                        var count = async ?
+                            await content.ReadAsync(segment.Array, 0, singleRangeThreshold, cancellationToken).ConfigureAwait(false) :
+                            content.Read(segment.Array, 0, singleRangeThreshold);
+
+                        // Stop when we've exhausted the content
+                        if (count <= 0)
+                        { break; }
+
+                        // Upload the chunk
+                        var partition = new StreamPartition(
+                            buffer.Memory,
+                            parentPosition,
+                            count,
+                            () => buffer.Dispose(),
+                            cancellationToken);
+                        response = await UploadRangeInternal(
+                            new HttpRange(partition.ParentPosition - initalPosition, partition.Length),
+                            partition,
+                            new ShareFileUploadRangeOptions
+                            {
+                                TransactionalHashingOptions = hashingOptions,
+                                ProgressHandler = progressHandler,
+                                Conditions = conditions
+                            },
+                            async,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                }
+                finally
+                {
+                    if (pool is StorageMemoryPool)
+                    {
+                        pool.Dispose();
+                    }
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                ClientConfiguration.Pipeline.LogException(ex);
+                scope.Failed(ex);
+                throw;
             }
             finally
             {
-                if (pool is StorageMemoryPool)
-                {
-                    pool.Dispose();
-                }
+                scope.Dispose();
             }
-            return response;
         }
         #endregion Upload
 
