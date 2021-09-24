@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public async Task<IValueProvider> BindAsync(BindingContext context)
         {
             var attrResolved = Cloner.ResolveFromBindingData(context);
-            return await BuildAsync(attrResolved, context.BindingData);
+            return await BuildAsync(attrResolved, context.BindingData).ConfigureAwait(false);
         }
 
         public Task<IValueProvider> BindAsync(object value, ValueBindingContext context)

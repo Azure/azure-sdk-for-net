@@ -21,21 +21,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 // .Net Core 2.x is always Newtonsoft.Json.
                 throw new InvalidOperationException(HubProtocolError);
             }
-            
+#if NETCOREAPP3_1
             //indicates Newtonsoft, camcelCase
             if (configuration.GetValue(Constants.AzureSignalRNewtonsoftCamelCase, false))
             {
                 // The default options is camelCase.
                 return services.AddNewtonsoftHubProtocol(o => { });
             }
-            
+
             if (!DotnetRuntime(configuration) || Enum.TryParse<HubProtocol>(hubProtocolConfig, out var result) && result == HubProtocol.NewtonsoftJson)
             {
                 // Reset the options to keep backward compatibility.
                 return services.AddNewtonsoftHubProtocol(o => o.PayloadSerializerSettings = JsonConvert.DefaultSettings.Invoke());
             }
-            
+
             //If hubProtocolConfig is SystemTextJson for .Net Core 3.1, do nothing, as transient mode doesn't accept it and persisent mode is already System.Text.Json by default.
+#endif
             return services;
         }
 

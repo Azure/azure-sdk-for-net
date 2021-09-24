@@ -22,10 +22,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 //TODO: More detailed exception
                 throw new SignalRTriggerException();
             }
-            var (message, _) = await Resolver.GetMessageAsync<CloseConnectionMessage>(request);
+            var (message, _) = await Resolver.GetMessageAsync<CloseConnectionMessage>(request).ConfigureAwait(false);
             context.Error = message.Error;
 
-            await ExecuteWithAuthAsync(request, ExecutionContext, context);
+            await ExecuteWithAuthAsync(request, ExecutionContext, context).ConfigureAwait(false);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }

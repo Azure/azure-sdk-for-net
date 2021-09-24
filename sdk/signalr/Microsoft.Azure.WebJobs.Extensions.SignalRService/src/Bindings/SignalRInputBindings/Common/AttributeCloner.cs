@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         private readonly Dictionary<PropertyInfo, AutoResolveAttribute> _autoResolves = new Dictionary<PropertyInfo, AutoResolveAttribute>();
 
-        private static readonly BindingFlags Flags = BindingFlags.Instance | BindingFlags.Public;
+        private const BindingFlags Flags = BindingFlags.Instance | BindingFlags.Public;
         private readonly IConfiguration _configuration;
 
         internal AttributeCloner(
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         // When there's only 1 resolvable property
         internal TAttribute New(string invokeString)
         {
-            if (_autoResolves.Count() != 1)
+            if (_autoResolves.Count != 1)
             {
                 throw new InvalidOperationException("Invalid invoke string format for attribute.");
             }
@@ -471,7 +471,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             {
                 if (invokeString == null)
                 {
-                    throw new ArgumentNullException("invokeString");
+                    throw new ArgumentNullException(nameof(invokeString));
                 }
 
                 // Instantiating new attributes can be tricky since sometimes the arg is to the ctor and sometimes

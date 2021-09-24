@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 //TODO: More detailed exception
                 throw new SignalRTriggerException();
             }
-            var (message, protocol) = await Resolver.GetMessageAsync<InvocationMessage>(request);
+            var (message, protocol) = await Resolver.GetMessageAsync<InvocationMessage>(request).ConfigureAwait(false);
             AssertConsistency(context, message);
             context.Arguments = message.Arguments;
 
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             HttpResponseMessage response;
             CompletionMessage completionMessage = null;
 
-            var functionResult = await ExecuteWithAuthAsync(request, ExecutionContext, context, tcs);
+            var functionResult = await ExecuteWithAuthAsync(request, ExecutionContext, context, tcs).ConfigureAwait(false);
             if (tcs != null)
             {
                 if (!functionResult.Succeeded)
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 }
                 else
                 {
-                    var result = await tcs.Task;
+                    var result = await tcs.Task.ConfigureAwait(false);
                     completionMessage = CompletionMessage.WithResult(message.InvocationId, result);
                     response = new HttpResponseMessage(HttpStatusCode.OK);
                 }

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public async Task<ServiceEndpoint[]> ConvertAsync(SignalREndpointsAttribute input, CancellationToken cancellationToken)
         {
-            var hubContext = await _serviceManagerStore.GetOrAddByConnectionStringKey(input.ConnectionStringSetting).ServiceManager.CreateHubContextAsync(input.HubName, cancellationToken: cancellationToken) as IInternalServiceHubContext;
+            var hubContext = await _serviceManagerStore.GetOrAddByConnectionStringKey(input.ConnectionStringSetting).ServiceManager.CreateHubContextAsync(input.HubName, cancellationToken: cancellationToken).ConfigureAwait(false) as IInternalServiceHubContext;
             return hubContext.GetServiceEndpoints().ToArray();
         }
     }

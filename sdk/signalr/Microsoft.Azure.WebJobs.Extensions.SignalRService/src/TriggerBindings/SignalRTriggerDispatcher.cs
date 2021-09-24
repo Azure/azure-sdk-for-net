@@ -70,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             {
                 try
                 {
-                    return await executor.ExecuteAsync(req);
+                    return await executor.ExecuteAsync(req).ConfigureAwait(false);
                 }
                 //TODO: Different response for more details exceptions
                 catch (SignalRTriggerAuthorizeFailedException ex)

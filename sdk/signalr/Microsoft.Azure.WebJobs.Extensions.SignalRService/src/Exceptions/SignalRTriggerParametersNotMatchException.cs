@@ -9,5 +9,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             $"The function accept {excepted} arguments but message provided {actual}.")
         {
         }
+
+        public SignalRTriggerParametersNotMatchException()
+        {
+        }
+
+        public SignalRTriggerParametersNotMatchException(string message) : base(message)
+        {
+        }
+
+        public SignalRTriggerParametersNotMatchException(string message, System.Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

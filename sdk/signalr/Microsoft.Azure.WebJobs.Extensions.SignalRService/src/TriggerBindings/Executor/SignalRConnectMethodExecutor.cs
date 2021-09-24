@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 throw new SignalRTriggerException();
             }
 
-            var result = await ExecuteWithAuthAsync(request, ExecutionContext, context);
+            var result = await ExecuteWithAuthAsync(request, ExecutionContext, context).ConfigureAwait(false);
             if (!result.Succeeded)
             {
                 return new HttpResponseMessage(HttpStatusCode.Forbidden);

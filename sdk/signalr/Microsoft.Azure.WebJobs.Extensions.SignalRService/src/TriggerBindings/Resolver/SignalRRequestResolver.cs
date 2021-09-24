@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public async Task<(T, IHubProtocol)> GetMessageAsync<T>(HttpRequestMessage request) where T : ServerlessMessage, new()
         {
-            var payload = new ReadOnlySequence<byte>(await request.Content.ReadAsByteArrayAsync());
+            var payload = new ReadOnlySequence<byte>(await request.Content.ReadAsByteArrayAsync().ConfigureAwait(false));
             var messageParser = MessageParser.GetParser(request.Content.Headers.ContentType.MediaType);
             if (!messageParser.TryParseMessage(ref payload, out var message))
             {

@@ -8,7 +8,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public const string AzureSignalRConnectionStringName = "AzureSignalRConnectionString";
         public const string AzureSignalREndpoints = "Azure:SignalR:Endpoints";
         public const string AzureSignalRHubProtocol = "Azure:SignalR:HubProtocol";
-        public static string AzureSignalRNewtonsoftCamelCase = $"{AzureSignalRHubProtocol}:{HubProtocol.NewtonsoftJson}:CamelCase";
+        public static string AzureSignalRNewtonsoftCamelCase = $"{AzureSignalRHubProtocol}:NewtonsoftJson:CamelCase";
         public const string ServiceTransportTypeName = "AzureSignalRServiceTransportType";
         public const string AsrsHeaderPrefix = "X-ASRS-";
         public const string AsrsConnectionIdHeader = AsrsHeaderPrefix + "Connection-Id";

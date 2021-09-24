@@ -8,11 +8,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal class Utils
     {
-        public async static Task<AzureSignalRClient> GetAzureSignalRClientAsync(string connectionStringKey, string attributeHubName, IServiceManagerStore serviceManagerStore)
+        public static async Task<AzureSignalRClient> GetAzureSignalRClientAsync(string connectionStringKey, string attributeHubName, IServiceManagerStore serviceManagerStore)
         {
             var serviceHubContext = await serviceManagerStore
                 .GetOrAddByConnectionStringKey(connectionStringKey)
-                .GetAsync(attributeHubName) as ServiceHubContext;
+                .GetAsync(attributeHubName).ConfigureAwait(false) as ServiceHubContext;
             return new AzureSignalRClient(serviceHubContext);
         }
     }

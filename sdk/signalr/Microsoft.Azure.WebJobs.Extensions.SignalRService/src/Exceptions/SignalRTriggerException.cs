@@ -5,13 +5,17 @@ using System;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
-    internal class SignalRTriggerException : Exception
+    public class SignalRTriggerException : Exception
     {
         public SignalRTriggerException() : base()
         {
         }
 
         public SignalRTriggerException(string message) : base(message)
+        {
+        }
+
+        public SignalRTriggerException(string message, Exception innerException) : base(message, innerException)
         {
         }
     }

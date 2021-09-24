@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             StaticServiceHubContextStore.ServiceManagerStore = serviceManagerStore;

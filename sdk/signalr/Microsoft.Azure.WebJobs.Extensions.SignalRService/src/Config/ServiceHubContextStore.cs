@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             try
             {
-                var value = await pair.lazy.Value;
+                var value = await pair.lazy.Value.ConfigureAwait(false);
                 store.TryUpdate(hubName, (null, value), pair);
                 return value;
             }

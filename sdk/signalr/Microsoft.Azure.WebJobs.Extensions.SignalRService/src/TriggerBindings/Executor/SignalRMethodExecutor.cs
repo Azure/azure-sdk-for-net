@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 new TriggeredFunctionData
                 {
                     TriggerValue = signalRTriggerEvent
-                }, CancellationToken.None);
+                }, CancellationToken.None).ConfigureAwait(false);
 
             // If there's exception in invocation, tcs may not be set.
             // And SetException seems not necessary. Exception can be get from FunctionResult.

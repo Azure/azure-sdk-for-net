@@ -29,6 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         private static readonly Lazy<JwtSecurityTokenHandler> JwtSecurityTokenHandler = new Lazy<JwtSecurityTokenHandler>(() => new JwtSecurityTokenHandler());
         private bool _disposed;
+
         /// <summary>
         /// Might be converted from <see cref="IServiceHubContext"/>, don't forget to test null before use it.
         /// </summary>
@@ -112,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             if (_hubContext != null)
             {
-                var negotiateResponse = await _hubContext.NegotiateAsync(options);
+                var negotiateResponse = await _hubContext.NegotiateAsync(options).ConfigureAwait(false);
                 return new SignalRConnectionInfo
                 {
                     Url = negotiateResponse.Url,
@@ -142,25 +143,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             return JwtSecurityTokenHandler.Value.ReadJwtToken(jwt).Claims.ToList();
         }
 
-        /// <summary>
-        /// Releases all resources currently used by this <see cref="ServerlessHub" /> instance.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> if this method is being invoked by the <see cref="M:Microsoft.Azure.WebJobs.Extensions.SignalRService.Serverless.Dispose" /> method,
-        /// otherwise <c>false</c>.</param>
         protected virtual void Dispose(bool disposing)
         {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                _disposed = true;
+            }
         }
 
-        /// <inheritdoc />
         public void Dispose()
         {
-            if (_disposed)
-            {
-                return;
-            }
-
-            Dispose(true);
-            _disposed = true;
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

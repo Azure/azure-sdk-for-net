@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 UserId = userId,
                 Claims = BuildJwtClaims(claims, AzureSignalRUserPrefix).ToList(),
                 HttpContext = httpContext
-            });
+            }).ConfigureAwait(false);
             return new SignalRConnectionInfo
             {
                 Url = negotiateResponse.Url,
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         private async Task InvokeAsync(ServiceEndpoint[] endpoints, Func<ServiceHubContext, Task> func)
         {
             var targetHubContext = endpoints == null ? _serviceHubContext : (_serviceHubContext as IInternalServiceHubContext).WithEndpoints(endpoints);
-            await func.Invoke(targetHubContext);
+            await func.Invoke(targetHubContext).ConfigureAwait(false);
         }
     }
 }

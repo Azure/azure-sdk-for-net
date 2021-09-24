@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             if (item == null)
             {
-                throw new ArgumentNullException("Binding Object");
+                throw new ArgumentNullException(nameof(item));
             }
 
             var convertItem = converter.ConvertToSignalROutput(item);

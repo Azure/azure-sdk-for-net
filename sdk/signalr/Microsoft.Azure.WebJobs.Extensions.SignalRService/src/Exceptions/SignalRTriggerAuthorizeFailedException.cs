@@ -8,5 +8,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public SignalRTriggerAuthorizeFailedException() : base("The request is unauthorized, please check the Signature.")
         {
         }
+
+        public SignalRTriggerAuthorizeFailedException(string message) : base(message)
+        {
+        }
+
+        public SignalRTriggerAuthorizeFailedException(string message, System.Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

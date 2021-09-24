@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         protected async override Task<IValueProvider> BuildAsync(SignalRConnectionInfoAttribute attrResolved,
             IReadOnlyDictionary<string, object> bindingData)
         {
-            var azureSignalRClient = await Utils.GetAzureSignalRClientAsync(attrResolved.ConnectionStringSetting, attrResolved.HubName, managerStore);
+            var azureSignalRClient = await Utils.GetAzureSignalRClientAsync(attrResolved.ConnectionStringSetting, attrResolved.HubName, managerStore).ConfigureAwait(false);
             bindingData.TryGetValue(HttpRequestName, out var requestObj);
             var request = requestObj as HttpRequest;
             var httpContext = request?.HttpContext;
@@ -55,12 +55,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 };
                 signalRConnectionInfoConfigurer?.Configure(tokenResult, request, signalRConnectionDetail);
                 var customizedInfo = await azureSignalRClient.GetClientConnectionInfoAsync(signalRConnectionDetail.UserId,
-                    signalRConnectionDetail.Claims, httpContext);
+                    signalRConnectionDetail.Claims, httpContext).ConfigureAwait(false);
                 return new SignalRConnectionInfoValueProvider(customizedInfo, userType, "");
             }
 
             var info = await azureSignalRClient.GetClientConnectionInfoAsync(attrResolved.UserId, attrResolved.IdToken,
-                attrResolved.ClaimTypeList, httpContext);
+                attrResolved.ClaimTypeList, httpContext).ConfigureAwait(false);
             return new SignalRConnectionInfoValueProvider(info, userType, "");
         }
     }
