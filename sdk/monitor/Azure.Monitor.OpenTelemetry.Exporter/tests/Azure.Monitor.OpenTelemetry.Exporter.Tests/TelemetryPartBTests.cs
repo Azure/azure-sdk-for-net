@@ -48,6 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             var httpUrl = "https://www.foo.bar/search";
             activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpRoute, "/search");
             activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in HttpHelperTests.
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
 
@@ -55,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
 
-            Assert.Equal($"GET {activity.DisplayName}", requestData.Name);
+            Assert.Equal("GET /search", requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
             Assert.Equal(httpUrl, requestData.Url);
             Assert.Equal("0", requestData.ResponseCode);
