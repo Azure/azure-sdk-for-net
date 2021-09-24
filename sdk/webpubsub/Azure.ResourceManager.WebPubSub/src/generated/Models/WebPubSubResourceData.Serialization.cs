@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WritePropertyName("liveTraceConfiguration");
                 writer.WriteObjectValue(LiveTraceConfiguration);
             }
-            if (Optional.IsDefined(ResourceLogConfiguration))
+            if (Optional.IsDefined(EventHandler))
             {
-                writer.WritePropertyName("resourceLogConfiguration");
-                writer.WriteObjectValue(ResourceLogConfiguration);
+                writer.WritePropertyName("eventHandler");
+                writer.WriteObjectValue(EventHandler);
             }
             if (Optional.IsDefined(NetworkACLs))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.WebPubSub
             Optional<IReadOnlyList<SharedPrivateLinkResourceData>> sharedPrivateLinkResources = default;
             Optional<WebPubSubTlsSettings> tls = default;
             Optional<LiveTraceConfiguration> liveTraceConfiguration = default;
-            Optional<ResourceLogConfiguration> resourceLogConfiguration = default;
+            Optional<EventHandlerSettings> eventHandler = default;
             Optional<WebPubSubNetworkACLs> networkACLs = default;
             Optional<string> publicNetworkAccess = default;
             Optional<bool> disableLocalAuth = default;
@@ -272,14 +272,14 @@ namespace Azure.ResourceManager.WebPubSub
                             liveTraceConfiguration = LiveTraceConfiguration.DeserializeLiveTraceConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("resourceLogConfiguration"))
+                        if (property0.NameEquals("eventHandler"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resourceLogConfiguration = ResourceLogConfiguration.DeserializeResourceLogConfiguration(property0.Value);
+                            eventHandler = EventHandlerSettings.DeserializeEventHandlerSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkACLs"))
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.WebPubSub
                     continue;
                 }
             }
-            return new WebPubSubResourceData(id, name, type, tags, location, sku.Value, identity.Value, systemData, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkACLs.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth));
+            return new WebPubSubResourceData(id, name, type, tags, location, sku.Value, identity.Value, systemData, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, liveTraceConfiguration.Value, eventHandler.Value, networkACLs.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth));
         }
     }
 }

@@ -23,28 +23,6 @@ namespace Azure.ResourceManager.WebPubSub
         }
         #endregion
 
-        #region WebPubSubHub
-        /// <summary> Gets an object representing a WebPubSubHub along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebPubSubHub" /> object. </returns>
-        public static WebPubSubHub GetWebPubSubHub(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WebPubSubHub(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region EventHandler
-        /// <summary> Gets an object representing a EventHandler along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHandler" /> object. </returns>
-        public static EventHandler GetEventHandler(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new EventHandler(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
         #region PrivateEndpointConnection
         /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>

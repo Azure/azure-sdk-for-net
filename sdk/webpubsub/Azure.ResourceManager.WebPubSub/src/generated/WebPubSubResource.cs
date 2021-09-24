@@ -715,13 +715,6 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Gets an object representing a WebPubSubHub along with the instance operations that can be performed on it. </summary>
-        /// <returns> Returns a <see cref="WebPubSubHub" /> object. </returns>
-        public WebPubSubHub GetWebPubSubHub()
-        {
-            return new WebPubSubHub(this, Id + "/hubs/hubName");
-        }
-
         /// <summary> Gets a list of PrivateEndpointConnections in the WebPubSubResource. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a WebPubSubResource. </returns>
         public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Live trace category configuration of a Microsoft.SignalRService resource. </summary>
+    /// <summary> live trace category configuration of a Microsoft.SignalRService resource. </summary>
     public partial class LiveTraceCategory
     {
         /// <summary> Initializes a new instance of LiveTraceCategory. </summary>
@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Initializes a new instance of LiveTraceCategory. </summary>
         /// <param name="name">
-        /// Gets or sets the live trace category&apos;s name.
+        /// Gets or sets the log category&apos;s name.
         /// Available values: ConnectivityLogs, MessagingLogs.
         /// Case insensitive.
         /// </param>
         /// <param name="enabled">
-        /// Indicates whether or the live trace category is enabled.
+        /// Indicates whether or the log category is enabled.
         /// Available values: true, false.
         /// Case insensitive.
         /// </param>
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary>
-        /// Gets or sets the live trace category&apos;s name.
+        /// Gets or sets the log category&apos;s name.
         /// Available values: ConnectivityLogs, MessagingLogs.
         /// Case insensitive.
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Indicates whether or the live trace category is enabled.
+        /// Indicates whether or the log category is enabled.
         /// Available values: true, false.
         /// Case insensitive.
         /// </summary>
