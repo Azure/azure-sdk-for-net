@@ -237,7 +237,7 @@ namespace Azure.AI.Language.QuestionAnswering
 
             try
             {
-                QueryTextOptions clone = options.Clone(Options.DefaultLanguage);
+                options = options.Clone(Options.DefaultLanguage);
                 return await _textRestClient.QueryAsync(options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -262,7 +262,7 @@ namespace Azure.AI.Language.QuestionAnswering
 
             try
             {
-                QueryTextOptions clone = options.Clone(Options.DefaultLanguage);
+                options = options.Clone(Options.DefaultLanguage);
                 return _textRestClient.Query(options, cancellationToken);
             }
             catch (Exception ex)
