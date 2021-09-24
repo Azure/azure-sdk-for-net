@@ -39,7 +39,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
     && rm dotnet.tar.gz \
-    #&& ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
+    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
@@ -49,6 +49,5 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     #&& mkdir -p /usr/share/dotnet31 \
     && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
     && rm dotnet.tar.gz \
-    #&& ln -s /usr/share/dotnet31/dotnet /usr/bin/dotnet31 \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
