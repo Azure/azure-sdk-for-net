@@ -70,7 +70,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var httpMethod = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpMethod)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpMethod))
             {
-                return $"{httpMethod} {activity.DisplayName}";
+                var httpRoute = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpRoute)?.ToString();
+                if (!string.IsNullOrEmpty(httpRoute) && !httpRoute.StartsWith("{controller}", StringComparison.OrdinalIgnoreCase))
+                {
+                    return $"{httpMethod} {httpRoute}";
+                }
+                var httpUrl = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpUrl)?.ToString();
+                if (!string.IsNullOrEmpty(httpUrl) && Uri.TryCreate(httpUrl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
+                {
+                    return $"{httpMethod} {uri.AbsolutePath}";
+                }
             }
 
             return activity.DisplayName;
