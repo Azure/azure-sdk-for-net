@@ -1,0 +1,48 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://feng-purview.purview.azure.com/catalog/api/search/query?api-version=2021-09-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "24",
+        "Content-Type": "application/json",
+        "traceparent": "00-def0df60b5356842bd1e35fc3018207b-dc0f091393895f4f-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Catalog/1.0.0-alpha.20210924.1",
+          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "fb92c2e8d38355771a429f38566ab50c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "keywords": "myPurview"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Headers": "authorization,content-type,x-xsrf-header,x-ms-client-request-id,lastmodifiedts",
+        "Access-Control-Allow-Methods": "GET,OPTIONS,HEAD,PUT,POST,DELETE,PATCH",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,lastmodifiedts",
+        "Content-Type": "application/json",
+        "Date": "Fri, 24 Sep 2021 07:39:39 GMT",
+        "Server": "AzurePurview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "e8f12668-24c7-4b43-a18a-23edb15c2c6c",
+        "x-ms-request-id": "fb92c2e8d38355771a429f38566ab50c"
+      },
+      "ResponseBody": {
+        "@search.count": 0,
+        "value": [],
+        "@search.facets": null
+      }
+    }
+  ],
+  "Variables": {
+    "PURVIEW_ACCOUNT_URL": "https://feng-purview.purview.azure.com",
+    "RandomSeed": "244402808"
+  }
+}
