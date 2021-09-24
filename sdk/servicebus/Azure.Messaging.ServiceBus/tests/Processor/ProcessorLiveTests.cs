@@ -989,9 +989,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                             tcs.TrySetException(ex);
                         }
 
-                        int ct = Interlocked.Increment(ref receivedCount);
+                        int count = Interlocked.Increment(ref receivedCount);
                         received = true;
-                        if (first || ct == messageCount)
+                        if (first || count == messageCount)
                         {
                             tcs.TrySetResult(true);
                         }

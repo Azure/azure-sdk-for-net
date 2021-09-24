@@ -205,7 +205,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     receiveMode: receiveMode,
                     sessionId: SessionId,
                     isSessionReceiver: _isSessionReceiver,
-                    isProcessor: _isProcessor,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (_isSessionReceiver)
                 {
