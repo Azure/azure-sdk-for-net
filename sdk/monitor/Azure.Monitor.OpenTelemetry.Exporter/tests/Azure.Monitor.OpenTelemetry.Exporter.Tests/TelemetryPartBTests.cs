@@ -205,7 +205,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeDbSystem, "mssql");
-            activity.SetTag(SemanticConventions.AttributePeerService, "localhost"); // only adding test via http.url. all possible combinations are covered in HttpHelperTests.
+            activity.SetTag(SemanticConventions.AttributePeerService, "localhost"); // only adding test via peer.service. all possible combinations are covered in HttpHelperTests.
             activity.SetTag(SemanticConventions.AttributeDbStatement, "Select * from table");
 
             var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
