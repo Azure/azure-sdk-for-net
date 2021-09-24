@@ -19,5 +19,19 @@ namespace Azure.Communication.CallingServer
             writer.WriteStringValue(GroupId);
             writer.WriteEndObject();
         }
+
+        internal static GroupCallLocatorModel DeserializeGroupCallLocatorModel(JsonElement element)
+        {
+            string groupId = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("groupId"))
+                {
+                    groupId = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new GroupCallLocatorModel(groupId);
+        }
     }
 }

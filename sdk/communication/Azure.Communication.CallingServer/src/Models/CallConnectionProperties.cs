@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
             CallbackUri = new Uri(callConnectionPropertiesInternal.CallbackUri);
             RequestedMediaTypes = callConnectionPropertiesInternal.RequestedMediaTypes;
             RequestedCallEvents = callConnectionPropertiesInternal.RequestedCallEvents;
-            ServerCallId = callConnectionPropertiesInternal.ServerCallId;
+            CallLocator = CallLocatorModelSerializer.Deserialize(callConnectionPropertiesInternal.CallLocator);
         }
 
         /// <summary> The call connection id. </summary>
@@ -45,6 +45,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> The requested call events to subscribe to. </summary>
         public IEnumerable<EventSubscriptionType> RequestedCallEvents { get; }
         /// <summary> The server call id. </summary>
-        public string ServerCallId { get; }
+        public CallLocator CallLocator { get; }
     }
 }

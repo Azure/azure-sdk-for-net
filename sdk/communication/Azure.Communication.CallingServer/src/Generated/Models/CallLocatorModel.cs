@@ -15,6 +15,17 @@ namespace Azure.Communication.CallingServer
         {
         }
 
+        /// <summary> Initializes a new instance of CallLocatorModel. </summary>
+        /// <param name="groupCallLocator"> The group call locator. </param>
+        /// <param name="serverCallLocator"> The server call locator. </param>
+        /// <param name="type"> The call locator type. </param>
+        internal CallLocatorModel(GroupCallLocatorModel groupCallLocator, ServerCallLocatorModel serverCallLocator, CallLocatorTypeModel? type)
+        {
+            GroupCallLocator = groupCallLocator;
+            ServerCallLocator = serverCallLocator;
+            Type = type;
+        }
+
         /// <summary> The group call locator. </summary>
         public GroupCallLocatorModel GroupCallLocator { get; set; }
         /// <summary> The server call locator. </summary>

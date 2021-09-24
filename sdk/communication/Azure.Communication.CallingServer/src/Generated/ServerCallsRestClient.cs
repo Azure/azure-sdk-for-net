@@ -706,7 +706,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateMuteParticipantRequest(string callConnectionId, CallLocatorModel callLocator, CommunicationIdentifierModel identifier)
+        internal HttpMessage CreateMuteParticipantRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -714,7 +714,6 @@ namespace Azure.Communication.CallingServer
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/participants/:mute", false);
-            uri.AppendQuery("callConnectionId", callConnectionId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -727,17 +726,12 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Mute participant in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="identifier"> The identifier of the participant to be muted in the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="callLocator"/>, or <paramref name="identifier"/> is null. </exception>
-        public async Task<Response> MuteParticipantAsync(string callConnectionId, CallLocatorModel callLocator, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="identifier"/> is null. </exception>
+        public async Task<Response> MuteParticipantAsync(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
         {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
@@ -747,7 +741,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateMuteParticipantRequest(callConnectionId, callLocator, identifier);
+            using var message = CreateMuteParticipantRequest(callLocator, identifier);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -759,17 +753,12 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Mute participant in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="identifier"> The identifier of the participant to be muted in the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="callLocator"/>, or <paramref name="identifier"/> is null. </exception>
-        public Response MuteParticipant(string callConnectionId, CallLocatorModel callLocator, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="identifier"/> is null. </exception>
+        public Response MuteParticipant(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
         {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
@@ -779,7 +768,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateMuteParticipantRequest(callConnectionId, callLocator, identifier);
+            using var message = CreateMuteParticipantRequest(callLocator, identifier);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -790,7 +779,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateUnmuteParticipantRequest(string callConnectionId, CallLocatorModel callLocator, CommunicationIdentifierModel identifier)
+        internal HttpMessage CreateUnmuteParticipantRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -798,7 +787,6 @@ namespace Azure.Communication.CallingServer
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/participants/:unmute", false);
-            uri.AppendQuery("callConnectionId", callConnectionId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -811,17 +799,12 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Unmute participant in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="identifier"> The identifier of the participant to be unmuted in the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="callLocator"/>, or <paramref name="identifier"/> is null. </exception>
-        public async Task<Response> UnmuteParticipantAsync(string callConnectionId, CallLocatorModel callLocator, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="identifier"/> is null. </exception>
+        public async Task<Response> UnmuteParticipantAsync(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
         {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
@@ -831,7 +814,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateUnmuteParticipantRequest(callConnectionId, callLocator, identifier);
+            using var message = CreateUnmuteParticipantRequest(callLocator, identifier);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -843,17 +826,12 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Unmute participant in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="identifier"> The identifier of the participant to be unmuted in the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="callLocator"/>, or <paramref name="identifier"/> is null. </exception>
-        public Response UnmuteParticipant(string callConnectionId, CallLocatorModel callLocator, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="identifier"/> is null. </exception>
+        public Response UnmuteParticipant(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
         {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
@@ -863,7 +841,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateUnmuteParticipantRequest(callConnectionId, callLocator, identifier);
+            using var message = CreateUnmuteParticipantRequest(callLocator, identifier);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

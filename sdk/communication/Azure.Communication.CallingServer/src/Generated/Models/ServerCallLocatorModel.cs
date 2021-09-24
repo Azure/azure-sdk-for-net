@@ -26,6 +26,6 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> The server call id. </summary>
-        public string ServerCallId { get; }
+        public string ServerCallId { get; set; }
     }
 }

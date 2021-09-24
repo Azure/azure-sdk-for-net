@@ -19,5 +19,19 @@ namespace Azure.Communication.CallingServer
             writer.WriteStringValue(ServerCallId);
             writer.WriteEndObject();
         }
+
+        internal static ServerCallLocatorModel DeserializeServerCallLocatorModel(JsonElement element)
+        {
+            string serverCallId = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("serverCallId"))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new ServerCallLocatorModel(serverCallId);
+        }
     }
 }

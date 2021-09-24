@@ -32,5 +32,46 @@ namespace Azure.Communication.CallingServer
             }
             writer.WriteEndObject();
         }
+
+        internal static CallLocatorModel DeserializeCallLocatorModel(JsonElement element)
+        {
+            Optional<GroupCallLocatorModel> groupCallLocator = default;
+            Optional<ServerCallLocatorModel> serverCallLocator = default;
+            Optional<CallLocatorTypeModel> type = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("groupCallLocator"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    groupCallLocator = GroupCallLocatorModel.DeserializeGroupCallLocatorModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("serverCallLocator"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    serverCallLocator = ServerCallLocatorModel.DeserializeServerCallLocatorModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new CallLocatorTypeModel(property.Value.GetString());
+                    continue;
+                }
+            }
+            return new CallLocatorModel(groupCallLocator.Value, serverCallLocator.Value, Optional.ToNullable(type));
+        }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.Communication.CallingServer
         public IList<CommunicationIdentifierModel> Targets { get; }
         /// <summary> The callback url. </summary>
         public string CallbackUrl { get; }
-        /// <summary> The timeout for the redirect. </summary>
+        /// <summary> The timeout for the redirect in seconds. </summary>
         public int? Timeout { get; set; }
     }
 }

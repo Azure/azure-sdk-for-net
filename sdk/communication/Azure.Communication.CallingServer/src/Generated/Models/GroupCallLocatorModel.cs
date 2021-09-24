@@ -26,6 +26,6 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> The guid representing the group call to join. </summary>
-        public string GroupId { get; }
+        public string GroupId { get; set; }
     }
 }

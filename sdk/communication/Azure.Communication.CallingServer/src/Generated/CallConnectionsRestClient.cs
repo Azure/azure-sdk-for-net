@@ -914,7 +914,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="targets"> The target identity to redirect the call to. </param>
         /// <param name="callbackUrl"> The callback url. </param>
-        /// <param name="timeout"> The timeout for the redirect. </param>
+        /// <param name="timeout"> The timeout for the redirect in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="incomingCallContext"/>, <paramref name="targets"/>, or <paramref name="callbackUrl"/> is null. </exception>
         public async Task<Response> RedirectAsync(string callConnectionId, string incomingCallContext, IEnumerable<CommunicationIdentifierModel> targets, string callbackUrl, int? timeout = null, CancellationToken cancellationToken = default)
@@ -952,7 +952,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="targets"> The target identity to redirect the call to. </param>
         /// <param name="callbackUrl"> The callback url. </param>
-        /// <param name="timeout"> The timeout for the redirect. </param>
+        /// <param name="timeout"> The timeout for the redirect in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="incomingCallContext"/>, <paramref name="targets"/>, or <paramref name="callbackUrl"/> is null. </exception>
         public Response Redirect(string callConnectionId, string incomingCallContext, IEnumerable<CommunicationIdentifierModel> targets, string callbackUrl, int? timeout = null, CancellationToken cancellationToken = default)
