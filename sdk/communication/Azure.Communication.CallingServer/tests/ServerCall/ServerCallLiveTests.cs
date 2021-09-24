@@ -35,26 +35,25 @@ namespace Azure.Communication.CallingServer.Tests
                 // Establish a Call
                 var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
                 var callLocator = new GroupCallLocator(groupId);
-                var serverCall = callingServerClient.InitializeCall(callLocator);
 
                 // Start Recording
-                StartCallRecordingResult startCallRecordingResult = await serverCall.StartRecordingAsync(new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
+                StartCallRecordingResult startCallRecordingResult = await callingServerClient.StartRecordingAsync(callLocator, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
                 var recordingId = startCallRecordingResult.RecordingId;
-                await ValidateCallRecordingStateAsync(serverCall, recordingId, CallRecordingState.Active).ConfigureAwait(false);
+                await ValidateCallRecordingStateAsync(callingServerClient, recordingId, CallRecordingState.Active).ConfigureAwait(false);
 
                 // Pause Recording
-                await serverCall.PauseRecordingAsync(recordingId).ConfigureAwait(false);
-                await ValidateCallRecordingStateAsync(serverCall, recordingId, CallRecordingState.Inactive).ConfigureAwait(false);
+                await callingServerClient.PauseRecordingAsync(recordingId).ConfigureAwait(false);
+                await ValidateCallRecordingStateAsync(callingServerClient, recordingId, CallRecordingState.Inactive).ConfigureAwait(false);
 
                 // Resume Recording
-                await serverCall.ResumeRecordingAsync(recordingId).ConfigureAwait(false);
-                await ValidateCallRecordingStateAsync(serverCall, recordingId, CallRecordingState.Active).ConfigureAwait(false);
+                await callingServerClient.ResumeRecordingAsync(recordingId).ConfigureAwait(false);
+                await ValidateCallRecordingStateAsync(callingServerClient, recordingId, CallRecordingState.Active).ConfigureAwait(false);
 
                 // Stop Recording
-                await serverCall.StopRecordingAsync(recordingId).ConfigureAwait(false);
+                await callingServerClient.StopRecordingAsync(recordingId).ConfigureAwait(false);
 
                 // Get Recording StateAsync
-                Assert.ThrowsAsync<RequestFailedException>(async () => await serverCall.GetRecordingStateAsync(recordingId).ConfigureAwait(false));
+                Assert.ThrowsAsync<RequestFailedException>(async () => await callingServerClient.GetRecordingStateAsync(recordingId).ConfigureAwait(false));
 
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
@@ -81,11 +80,10 @@ namespace Azure.Communication.CallingServer.Tests
                 // Establish a Call
                 var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
                 var callLocator = new GroupCallLocator(groupId);
-                var serverCall = callingServerClient.InitializeCall(callLocator);
 
                 // Play Prompt Audio
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                await PlayAudioOperation(serverCall).ConfigureAwait(false);
+                await PlayAudioOperation(callingServerClient, callLocator).ConfigureAwait(false);
 
                 // Cancel Prompt Audio
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
@@ -119,15 +117,14 @@ namespace Azure.Communication.CallingServer.Tests
                 // Establish a Call
                 var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
                 var callLocator = new GroupCallLocator(groupId);
-                var serverCall = callingServerClient.InitializeCall(callLocator);
 
                 // Add Participant
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                var participantId = await AddParticipantOperation(serverCall).ConfigureAwait(false);
+                var participantId = await AddParticipantOperation(callingServerClient, callLocator).ConfigureAwait(false);
 
                 // Remove Participant
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                await RemoveParticipantOperation(serverCall, participantId).ConfigureAwait(false);
+                await RemoveParticipantOperation(callingServerClient, callLocator, participantId).ConfigureAwait(false);
 
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);

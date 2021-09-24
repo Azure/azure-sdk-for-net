@@ -214,11 +214,12 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual(response.Value.Status, OperationStatus.Running);
         }
 
-        internal async Task PlayAudioOperation(ServerCall serverCall)
+        internal async Task PlayAudioOperation(CallingServerClient callingServerClient, CallLocator callLocator)
         {
             Console.WriteLine("Performing PlayAudio operation");
 
-            var response = await serverCall.PlayAudioAsync(
+            var response = await callingServerClient.PlayAudioAsync(
+                callLocator,
                 new Uri(TestEnvironment.AudioFileUrl),
                 new PlayAudioOptions()
                 {
@@ -293,13 +294,14 @@ namespace Azure.Communication.CallingServer.Tests
             return response.Value.ParticipantId;
         }
 
-        internal async Task<string> AddParticipantOperation(ServerCall serverCall)
+        internal async Task<string> AddParticipantOperation(CallingServerClient callingServerClient, CallLocator callLocator)
         {
             Console.WriteLine("Performing add participant operation to add a participant");
 
             string invitedUser = GetFixedUserId("0000000a-b200-7a0d-570c-113a0d00288d");
 
-            var response = await serverCall.AddParticipantAsync(
+            var response = await callingServerClient.AddParticipantAsync(
+                callLocator,
                 new CommunicationUserIdentifier(invitedUser),
                 callbackUri: new Uri(TestEnvironment.AppCallbackUrl)
                 ).ConfigureAwait(false);
@@ -322,13 +324,13 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual(202, response.Status);
         }
 
-        internal async Task RemoveParticipantOperation(ServerCall serverCall, string participantUserId)
+        internal async Task RemoveParticipantOperation(CallingServerClient callingServerClient, CallLocator callLocator, string participantUserId)
         {
             Console.WriteLine("Performing remove participant operation to remove a participant");
 
             var participant = new CommunicationUserIdentifier(participantUserId);
 
-            var response = await serverCall.RemoveParticipantAsync(participant).ConfigureAwait(false);
+            var response = await callingServerClient.RemoveParticipantAsync(callLocator, participant).ConfigureAwait(false);
 
             Assert.AreEqual(202, response.Status);
         }
@@ -383,11 +385,11 @@ namespace Azure.Communication.CallingServer.Tests
             Thread.Sleep(milliSeconds);
         }
 
-        protected async Task ValidateCallRecordingStateAsync(ServerCall serverCall,
+        protected async Task ValidateCallRecordingStateAsync(CallingServerClient callingServerClient,
             string recordingId,
             CallRecordingState expectedCallRecordingState)
         {
-            Assert.NotNull(serverCall);
+            Assert.NotNull(callingServerClient);
             Assert.NotNull(recordingId);
 
             // There is a delay between the action and when the state is available.
@@ -395,7 +397,7 @@ namespace Azure.Communication.CallingServer.Tests
             // against a live service.
             SleepInTest(6000);
 
-            CallRecordingProperties callRecordingProperties = await serverCall.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
+            CallRecordingProperties callRecordingProperties = await callingServerClient.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
             Assert.NotNull(callRecordingProperties);
             Assert.AreEqual(callRecordingProperties.RecordingState, expectedCallRecordingState);
         }
