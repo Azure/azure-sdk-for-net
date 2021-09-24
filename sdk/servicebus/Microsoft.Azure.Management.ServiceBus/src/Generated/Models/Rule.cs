@@ -44,13 +44,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="sqlFilter">Properties of sqlFilter</param>
         /// <param name="correlationFilter">Properties of
         /// correlationFilter</param>
-        public Rule(string id = default(string), string name = default(string), string type = default(string), Action action = default(Action), FilterType? filterType = default(FilterType?), SqlFilter sqlFilter = default(SqlFilter), CorrelationFilter correlationFilter = default(CorrelationFilter))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public Rule(string id = default(string), string name = default(string), string type = default(string), Action action = default(Action), FilterType? filterType = default(FilterType?), SqlFilter sqlFilter = default(SqlFilter), CorrelationFilter correlationFilter = default(CorrelationFilter), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Action = action;
             FilterType = filterType;
             SqlFilter = sqlFilter;
             CorrelationFilter = correlationFilter;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -86,6 +89,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.correlationFilter")]
         public CorrelationFilter CorrelationFilter { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

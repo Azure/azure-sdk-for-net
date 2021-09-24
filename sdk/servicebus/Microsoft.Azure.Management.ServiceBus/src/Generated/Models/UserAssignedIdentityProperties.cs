@@ -13,27 +13,26 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class PremiumMessagingRegionsProperties
+    public partial class UserAssignedIdentityProperties
     {
         /// <summary>
-        /// Initializes a new instance of the PremiumMessagingRegionsProperties
+        /// Initializes a new instance of the UserAssignedIdentityProperties
         /// class.
         /// </summary>
-        public PremiumMessagingRegionsProperties()
+        public UserAssignedIdentityProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PremiumMessagingRegionsProperties
+        /// Initializes a new instance of the UserAssignedIdentityProperties
         /// class.
         /// </summary>
-        /// <param name="code">Region code</param>
-        /// <param name="fullName">Full name of the region</param>
-        public PremiumMessagingRegionsProperties(string code = default(string), string fullName = default(string))
+        /// <param name="userAssignedIdentity">ARM ID of user Identity selected
+        /// for encryption</param>
+        public UserAssignedIdentityProperties(string userAssignedIdentity = default(string))
         {
-            Code = code;
-            FullName = fullName;
+            UserAssignedIdentity = userAssignedIdentity;
             CustomInit();
         }
 
@@ -43,16 +42,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets region code
+        /// Gets or sets ARM ID of user Identity selected for encryption
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; private set; }
-
-        /// <summary>
-        /// Gets full name of the region
-        /// </summary>
-        [JsonProperty(PropertyName = "fullName")]
-        public string FullName { get; private set; }
+        [JsonProperty(PropertyName = "userAssignedIdentity")]
+        public string UserAssignedIdentity { get; set; }
 
     }
 }
