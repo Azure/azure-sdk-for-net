@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Added support for API version 2021-07-15-preview.
+
 ### Breaking Changes
+
+- Made `projectName` and `deploymentName` parameters required for `QuestionAnsweringClient` methods.
+- Moved `QueryKnowledgeBaseOptions`, `QueryTextOptions`, and `TextRecord` to `Azure.AI.Language.QuestionAnswering` namespace.
 
 ### Bugs Fixed
 

@@ -3,10 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Language.QuestionAnswering.Models;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Tests.Models
+namespace Azure.AI.Language.QuestionAnswering.Tests
 {
     public class QueryTextOptionsTests
     {
