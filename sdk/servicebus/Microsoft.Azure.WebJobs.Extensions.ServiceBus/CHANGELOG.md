@@ -3,6 +3,7 @@
 ## 5.0.0-beta.7 (Unreleased)
 
 ### Features Added
+- Adding DynamicConcurrency support
 
 ### Breaking Changes
 

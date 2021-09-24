@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Language.QuestionAnswering.Models;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> The question and text record parameters to answer. </summary>
     public partial class QueryTextOptions

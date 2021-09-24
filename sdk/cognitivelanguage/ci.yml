@@ -26,5 +26,7 @@ extends:
     ServiceDirectory: cognitivelanguage
     ArtifactName: packages
     Artifacts:
+    - name: Azure.AI.Language.Conversations
+      safeName: AzureAILanguageConversations
     - name: Azure.AI.Language.QuestionAnswering
       safeName: AzureAILanguageQuestionAnswering

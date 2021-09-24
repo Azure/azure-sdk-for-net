@@ -246,5 +246,84 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
             Assert.False(immutabilityPolicy.AllowProtectedAppendWrites.Value);
         }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateGetDeleteObjectReplicationPolicy()
+        {
+            //create 2 storage accounts
+            string accountName1 = await CreateValidAccountNameAsync("teststoragemgmt");
+            string accountName2 = await CreateValidAccountNameAsync("teststoragemgmt");
+            StorageAccountCreateParameters createParameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2);
+            StorageAccount sourceAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(accountName1, createParameters)).Value;
+            StorageAccount destAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(accountName2, createParameters)).Value;
+
+            //update 2 accounts properties
+            var updateparameter = new StorageAccountUpdateParameters
+            {
+                AllowCrossTenantReplication = true,
+                EnableHttpsTrafficOnly = true
+            };
+            destAccount = await destAccount.UpdateAsync(updateparameter);
+            sourceAccount = await sourceAccount.UpdateAsync(updateparameter);
+
+            BlobService blobService1 = await destAccount.GetBlobServices().GetAsync("default");
+            BlobContainerContainer blobContainerContainer1 = blobService1.GetBlobContainers();
+            BlobService blobService2 = await destAccount.GetBlobServices().GetAsync("default");
+            BlobContainerContainer blobContainerContainer2 = blobService2.GetBlobContainers();
+
+            //enable changefeed and versoning
+            blobService1.Data.IsVersioningEnabled = true;
+            await blobService1.SetServicePropertiesAsync(blobService1.Data);
+
+            //create 2 pairs of source and dest blob containers
+            string containerName1 = Recording.GenerateAssetName("testblob1");
+            string containerName2 = Recording.GenerateAssetName("testblob2");
+            string containerName3 = Recording.GenerateAssetName("testblob3");
+            string containerName4 = Recording.GenerateAssetName("testblob4");
+            BlobContainer container1 = (await blobContainerContainer1.CreateOrUpdateAsync(containerName1, new BlobContainerData())).Value;
+            BlobContainer container2 = (await blobContainerContainer2.CreateOrUpdateAsync(containerName2, new BlobContainerData())).Value;
+            BlobContainer container3 = (await blobContainerContainer1.CreateOrUpdateAsync(containerName3, new BlobContainerData())).Value;
+            BlobContainer container4 = (await blobContainerContainer2.CreateOrUpdateAsync(containerName4, new BlobContainerData())).Value;
+
+            //prepare rules and policy
+            ObjectReplicationPolicyData parameter = new ObjectReplicationPolicyData()
+            {
+                SourceAccount = sourceAccount.Id.Name,
+                DestinationAccount = destAccount.Id.Name
+            };
+            List<string> prefix = new List<string>();
+            prefix.Add("aa");
+            prefix.Add("bc d");
+            prefix.Add("123");
+            string minCreationTime = "2021-03-19T16:06:00Z";
+            List<ObjectReplicationPolicyRule> rules = new List<ObjectReplicationPolicyRule>();
+            parameter.Rules.Add(
+                new ObjectReplicationPolicyRule(containerName1, containerName2)
+                {
+                    Filters = new ObjectReplicationPolicyFilter(prefix, minCreationTime),
+                }
+            );
+            parameter.Rules.Add(
+                new ObjectReplicationPolicyRule(containerName3, containerName4)
+            );
+
+            //create policy
+            ObjectReplicationPolicyContainer objectReplicationPolicyContainer = destAccount.GetObjectReplicationPolicies();
+            ObjectReplicationPolicy objectReplicationPolicy = (await objectReplicationPolicyContainer.CreateOrUpdateAsync("default", parameter)).Value;
+            Assert.NotNull(objectReplicationPolicy);
+            Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
+            Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
+
+            //get policy
+            List<ObjectReplicationPolicy> policies = await objectReplicationPolicyContainer.GetAllAsync().ToEnumerableAsync();
+            objectReplicationPolicy = policies[0];
+            Assert.NotNull(objectReplicationPolicy);
+            Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
+            Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
+
+            //delete policy
+            await objectReplicationPolicy.DeleteAsync();
+        }
     }
 }

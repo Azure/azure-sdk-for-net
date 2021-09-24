@@ -44,11 +44,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     break;
             }
 
+            var requestName = TelemetryPartA.GetOperationName(activity, ref monitorTags.PartBTags);
             var statusCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
             var success = activity.GetStatus().StatusCode != StatusCode.Error;
             var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
             {
-                Name = activity.DisplayName,
+                Name = requestName,
                 Url = url,
             };
 

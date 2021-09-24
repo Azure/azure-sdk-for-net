@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The name of the environment variable used to specify an override for the Event Hub instance to use for all tests.</summary>
         private const string EventHubNameOverrideEnvironmentVariable = "EVENTHUB_OVERRIDE_EVENT_HUB_NAME";
 
-        /// <summary>The default value for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.</summary>
+        /// <summary>The default value for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk of not responding.</summary>
         private const int DefaultPerTestExecutionLimitMinutes = 5;
 
         /// <summary>The singleton instance of the <see cref="EventHubsTestEnvironment" />, lazily created.</summary>
@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The active Event Hubs namespace for this test run, lazily created.</summary>
         private readonly Lazy<NamespaceProperties> ActiveEventHubsNamespace;
 
-        /// <summary> The environment variable value, or default, for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung, lazily evaluated.</summary>
+        /// <summary>The environment variable value, or default, for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk of not responding, lazily evaluated.</summary>
         private readonly Lazy<TimeSpan> ActivePerTestExecutionLimit;
 
         /// <summary>The connection string for the active Event Hubs namespace for this test run, lazily created.</summary>
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   The environment variable value, or default, for the maximum duration, in minutes,
-        ///   that a single test is permitted to run before it is considered at-risk for being hung.
+        ///   that a single test is permitted to run before it is considered at-risk of not responding.
         /// </summary>
         ///
         public TimeSpan TestExecutionTimeLimit => ActivePerTestExecutionLimit.Value;

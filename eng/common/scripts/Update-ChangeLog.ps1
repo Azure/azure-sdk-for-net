@@ -4,8 +4,8 @@
 # Version : Version to add or replace in change log
 # Unreleased: Default is true. If it is set to false, then today's date will be set in verion title. If it is True then title will show "Unreleased"
 # ReplaceLatestEntryTitle: Replaces the latest changelog entry title.
-# SanitizeEntry: Removes all empty section in the entry that is updated
 
+[CmdletBinding()]
 param (
   [Parameter(Mandatory = $true)]
   [String]$Version,
@@ -14,8 +14,7 @@ param (
   [Boolean]$Unreleased = $true,
   [Boolean]$ReplaceLatestEntryTitle = $false,
   [String]$ChangelogPath,
-  [String]$ReleaseDate,
-  [Boolean]$SanitizeEntry = $false
+  [String]$ReleaseDate
 )
 Set-StrictMode -Version 3
 
@@ -76,13 +75,13 @@ if ($ChangeLogEntries.Contains($Version))
 {
     if ($ChangeLogEntries[$Version].ReleaseStatus -eq $ReleaseStatus)
     {
-        LogWarning "Version [$Version] is already present in change log with specificed ReleaseStatus [$ReleaseStatus]. No Change made."
+        LogDebug "Version [$Version] is already present in change log with specificed ReleaseStatus [$ReleaseStatus]. No Change made."
         exit(0)
     }
 
     if ($Unreleased -and ($ChangeLogEntries[$Version].ReleaseStatus -ne $ReleaseStatus))
     {
-        LogWarning "Version [$Version] is already present in change log with a release date. Please review [$ChangelogPath]. No Change made."
+        LogDebug "Version [$Version] is already present in change log with a release date. Please review [$ChangelogPath]. No Change made."
         exit(0)
     }
 
@@ -90,7 +89,7 @@ if ($ChangeLogEntries.Contains($Version))
     {
         if ((Get-Date ($ChangeLogEntries[$Version].ReleaseStatus).Trim("()")) -gt (Get-Date $ReleaseStatus.Trim("()")))
         {
-            LogWarning "New ReleaseDate for version [$Version] is older than existing release date in changelog. Please review [$ChangelogPath]. No Change made."
+            LogDebug "New ReleaseDate for version [$Version] is older than existing release date in changelog. Please review [$ChangelogPath]. No Change made."
             exit(0)
         }
     }
@@ -108,12 +107,7 @@ if ($LatestsSorted[0] -ne $Version) {
 
 if ($ReplaceLatestEntryTitle)
 {
-    $entryToBeUpdated = $ChangeLogEntries[$LatestVersion]
-    if ($SanitizeEntry)
-    {
-        $entryToBeUpdated = Remove-EmptySections -ChangeLogEntry $entryToBeUpdated
-    }
-    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -InitialAtxHeader $ChangeLogEntries.InitialAtxHeader -Content $entryToBeUpdated
+    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -InitialAtxHeader $ChangeLogEntries.InitialAtxHeader -Content $ChangeLogEntries[$LatestVersion].ReleaseContent
     LogDebug "Resetting latest entry title to [$($newChangeLogEntry.ReleaseTitle)]"
     $ChangeLogEntries.Remove($LatestVersion)
     if ($newChangeLogEntry) {
@@ -129,10 +123,6 @@ elseif ($ChangeLogEntries.Contains($Version))
     LogDebug "Updating ReleaseStatus for Version [$Version] to [$($ReleaseStatus)]"
     $ChangeLogEntries[$Version].ReleaseStatus = $ReleaseStatus
     $ChangeLogEntries[$Version].ReleaseTitle = "$($ChangeLogEntries.InitialAtxHeader)# $Version $ReleaseStatus"
-    if ($SanitizeEntry)
-    {
-        $ChangeLogEntries[$Version] = Remove-EmptySections -ChangeLogEntry $ChangeLogEntries[$Version]
-    }
 }
 else
 {

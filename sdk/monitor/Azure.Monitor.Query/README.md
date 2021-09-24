@@ -40,13 +40,7 @@ For examples of Logs and Metrics queries, see the [Examples](#examples) section.
 
 ### Logs query rate limits and throttling
 
-Each Azure Active Directory user is able to make up to 200 requests per 30 seconds, with no cap on the total calls per day. If requests are made at a rate higher than this, these requests will receive HTTP status code 429 (Too Many Requests) along with the `Retry-After: <delta-seconds>` header. The header indicates the number of seconds until requests to this app are likely to be accepted.
-
-In addition to call rate limits and daily quota caps, there are limits on queries themselves. Queries cannot:
-
-- Return more than 500,000 rows.
-- Return more than 64,000,000 bytes (~61 MiB total data).
-- Run longer than 10 minutes by default. See this for details.
+The Log Analytics service applies throttling when the request rate is too high. Limits, such as the maximum number of rows returned, are also applied on the Kusto queries. For more information, see [Rate and query limits](https://dev.loganalytics.io/documentation/Using-the-API/Limits).
 
 ### Metrics data structure
 
@@ -78,6 +72,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 ## Examples
 
 - [Logs query](#logs-query)
+  - [Handle logs query response](#handle-logs-query-response)
   - [Map logs query results to a model](#map-logs-query-results-to-a-model)
   - [Map logs query results to a primitive](#map-logs-query-results-to-a-primitive)
   - [Print logs query results as a table](#print-logs-query-results-as-a-table)
@@ -86,6 +81,7 @@ All client instance methods are thread-safe and independent of each other ([guid
   - [Set logs query timeout](#set-logs-query-timeout)
   - [Query multiple workspaces](#query-multiple-workspaces)
 - [Metrics query](#metrics-query)
+  - [Handle metrics query response](#handle-metrics-query-response)
 
 ### Logs query
 
@@ -105,6 +101,23 @@ foreach (var row in table.Rows)
 {
     Console.WriteLine(row["OperationName"] + " " + row["ResourceGroup"]);
 }
+```
+
+#### Handle logs query response
+The `Query` method returns the `LogsQueryResult`, while the `QueryBatch` method returns the `LogsBatchQueryResult`. Here's a hierarchy of the response:
+
+```
+LogsQueryResult
+|---Error
+|---Status
+|---Table
+    |---Name
+    |---Columns (list of `LogsTableColumn` objects)
+        |---Name
+        |---Type
+    |---Rows (list of `LogsTableRows` objects)
+        |---Count
+|---AllTables (list of `LogsTable` objects)    
 ```
 
 #### Map logs query results to a model
@@ -311,6 +324,31 @@ foreach (var metric in results.Value.Metrics)
         }
     }
 }
+```
+
+#### Handle metrics query response
+	
+The metrics query API returns a `MetricsQueryResult` object. The `MetricsQueryResult` object contains properties such as a list of `MetricResult`-typed objects, `Cost`, `Namespace`, `ResourceRegion`, `TimeSpan`, and `Interval`. The `MetricResult` objects list can be accessed using the `metrics` param. Each `MetricResult` object in this list contains a list of `MetricTimeSeriesElement` objects. Each `MetricTimeSeriesElement` object contains `Metadata` and `Values` properties. 
+
+Here's a hierarchy of the response:
+
+```
+MetricsQueryResult
+|---Cost
+|---Interval
+|---Namespace
+|---ResourceRegion
+|---TimeSpan
+|---Metrics (list of `MetricResult` objects)
+    |---Id
+    |---Type
+    |---Name
+    |---DisplayDescription
+    |---Error
+    |---Unit
+    |---TimeSeries (list of `MetricTimeSeriesElement` objects)
+        |---Metadata
+        |---Values
 ```
 
 ## Troubleshooting

@@ -79,23 +79,34 @@ namespace Azure.AI.Language.QuestionAnswering
 
         /// <summary>Answers the specified question using your knowledge base.</summary>
         /// <param name="projectName">The name of the project to use.</param>
-        /// <param name="options">The question to ask along with other options to query for answers.</param>
-        /// <param name="deploymentName">The optional deployment name of the project to use, such as "test" or "prod". If not specified, the "prod" knowledge base will be queried.</param>
+        /// <param name="deploymentName">The deployment name of the project to use, such as "test" or "prod".</param>
+        /// <param name="question">The question to answer.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="projectName"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="question"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="question"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual async Task<Response<KnowledgeBaseAnswers>> QueryKnowledgeBaseAsync(string projectName, QueryKnowledgeBaseOptions options, string deploymentName = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<KnowledgeBaseAnswers>> QueryKnowledgeBaseAsync(string projectName, string deploymentName, string question, CancellationToken cancellationToken = default) =>
+            QueryKnowledgeBaseAsync(new QueryKnowledgeBaseOptions(projectName, deploymentName, question), cancellationToken);
+
+        /// <summary>Answers the specified question using your knowledge base.</summary>
+        /// <param name="options">
+        /// An <see cref="QueryKnowledgeBaseOptions"/> containing the <see cref="QueryKnowledgeBaseOptions.ProjectName"/>,
+        /// <see cref="QueryKnowledgeBaseOptions.DeploymentName"/>, <see cref="QueryKnowledgeBaseOptions.Question"/>, and other options to answer a question.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual async Task<Response<KnowledgeBaseAnswers>> QueryKnowledgeBaseAsync(QueryKnowledgeBaseOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgeBase)}");
-            scope.AddAttribute("project", projectName);
+            scope.AddAttribute("projectName", options.ProjectName);
+            scope.AddAttribute("deploymentName", options.DeploymentName);
             scope.Start();
 
             try
             {
-                return await _knowledgebaseRestClient.QueryAsync(projectName, options, deploymentName, cancellationToken).ConfigureAwait(false);
+                return await _knowledgebaseRestClient.QueryAsync(options.ProjectName, options.DeploymentName, options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -106,23 +117,34 @@ namespace Azure.AI.Language.QuestionAnswering
 
         /// <summary>Answers the specified question using your knowledge base.</summary>
         /// <param name="projectName">The name of the project to use.</param>
-        /// <param name="options">The question to ask along with other options to query for answers.</param>
-        /// <param name="deploymentName">The optional deployment name of the project to use, such as "test" or "prod". If not specified, the "prod" knowledge base will be queried.</param>
+        /// <param name="deploymentName">The deployment name of the project to use, such as "test" or "prod".</param>
+        /// <param name="question">The question to answer.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="projectName"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="question"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="question"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<KnowledgeBaseAnswers> QueryKnowledgeBase(string projectName, QueryKnowledgeBaseOptions options, string deploymentName = null, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeBaseAnswers> QueryKnowledgeBase(string projectName, string deploymentName, string question, CancellationToken cancellationToken = default) =>
+            QueryKnowledgeBase(new QueryKnowledgeBaseOptions(projectName, deploymentName, question), cancellationToken);
+
+        /// <summary>Answers the specified question using your knowledge base.</summary>
+        /// <param name="options">
+        /// An <see cref="QueryKnowledgeBaseOptions"/> containing the <see cref="QueryKnowledgeBaseOptions.ProjectName"/>,
+        /// <see cref="QueryKnowledgeBaseOptions.DeploymentName"/>, <see cref="QueryKnowledgeBaseOptions.Question"/>, and other options to answer a question.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual Response<KnowledgeBaseAnswers> QueryKnowledgeBase(QueryKnowledgeBaseOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgeBase)}");
-            scope.AddAttribute("project", projectName);
+            scope.AddAttribute("projectName", options.ProjectName);
+            scope.AddAttribute("deploymentName", options.DeploymentName);
             scope.Start();
 
             try
             {
-                return _knowledgebaseRestClient.Query(projectName, options, deploymentName, cancellationToken);
+                return _knowledgebaseRestClient.Query(options.ProjectName, options.DeploymentName, options, cancellationToken);
             }
             catch (Exception ex)
             {
