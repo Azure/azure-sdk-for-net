@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <summary>
     /// Restore target info for Item level restore operation
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ItemLevelRestoreTargetInfo")]
     public partial class ItemLevelRestoreTargetInfo : RestoreTargetInfoBase
     {
         /// <summary>
@@ -37,15 +38,12 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="restoreLocation">Target Restore region</param>
         /// <param name="datasourceSetInfo">Information of target DS
         /// Set</param>
-        /// <param name="datasourceAuthCredentials">Credentials to use to
-        /// authenticate with data source provider.</param>
-        public ItemLevelRestoreTargetInfo(IList<ItemLevelRestoreCriteria> restoreCriteria, Datasource datasourceInfo, string restoreLocation = default(string), DatasourceSet datasourceSetInfo = default(DatasourceSet), AuthCredentials datasourceAuthCredentials = default(AuthCredentials))
+        public ItemLevelRestoreTargetInfo(IList<ItemLevelRestoreCriteria> restoreCriteria, Datasource datasourceInfo, string restoreLocation = default(string), DatasourceSet datasourceSetInfo = default(DatasourceSet))
             : base(restoreLocation)
         {
             RestoreCriteria = restoreCriteria;
             DatasourceInfo = datasourceInfo;
             DatasourceSetInfo = datasourceSetInfo;
-            DatasourceAuthCredentials = datasourceAuthCredentials;
             CustomInit();
         }
 
@@ -71,13 +69,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         [JsonProperty(PropertyName = "datasourceSetInfo")]
         public DatasourceSet DatasourceSetInfo { get; set; }
-
-        /// <summary>
-        /// Gets or sets credentials to use to authenticate with data source
-        /// provider.
-        /// </summary>
-        [JsonProperty(PropertyName = "datasourceAuthCredentials")]
-        public AuthCredentials DatasourceAuthCredentials { get; set; }
 
         /// <summary>
         /// Validate the object.

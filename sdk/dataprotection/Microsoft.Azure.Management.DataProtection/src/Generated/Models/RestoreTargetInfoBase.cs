@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <summary>
     /// Base class common to RestoreTargetInfo and RestoreFilesTargetInfo
     /// </summary>
+    [Newtonsoft.Json.JsonObject("RestoreTargetInfoBase")]
     public partial class RestoreTargetInfoBase
     {
         /// <summary>

@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <summary>
     /// Base class for feature object
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FeatureValidationRequest")]
     public partial class FeatureValidationRequest : FeatureValidationRequestBase
     {
         /// <summary>

@@ -36,10 +36,10 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// source data store. Possible values include: 'OperationalStore',
         /// 'VaultStore', 'ArchiveStore'</param>
         /// <param name="startTime">Start time for the List Restore Ranges
-        /// request. ISO 8601 format.</param>
-        /// <param name="endTime">End time for the List Restore Ranges request.
-        /// ISO 8601 format.</param>
-        public AzureBackupFindRestorableTimeRangesRequest(string sourceDataStoreType, string startTime = default(string), string endTime = default(string))
+        /// request</param>
+        /// <param name="endTime">End time for the List Restore Ranges
+        /// request</param>
+        public AzureBackupFindRestorableTimeRangesRequest(string sourceDataStoreType, string startTime, string endTime)
         {
             SourceDataStoreType = sourceDataStoreType;
             StartTime = startTime;
@@ -60,15 +60,13 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         public string SourceDataStoreType { get; set; }
 
         /// <summary>
-        /// Gets or sets start time for the List Restore Ranges request. ISO
-        /// 8601 format.
+        /// Gets or sets start time for the List Restore Ranges request
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public string StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets end time for the List Restore Ranges request. ISO 8601
-        /// format.
+        /// Gets or sets end time for the List Restore Ranges request
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public string EndTime { get; set; }
@@ -84,6 +82,14 @@ namespace Microsoft.Azure.Management.DataProtection.Models
             if (SourceDataStoreType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SourceDataStoreType");
+            }
+            if (StartTime == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StartTime");
+            }
+            if (EndTime == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EndTime");
             }
         }
     }

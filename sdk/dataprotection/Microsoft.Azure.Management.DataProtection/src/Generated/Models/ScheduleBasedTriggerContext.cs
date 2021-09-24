@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Schedule based trigger context
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("ScheduleBasedTriggerContext")]
     public partial class ScheduleBasedTriggerContext : TriggerContext
     {
         /// <summary>

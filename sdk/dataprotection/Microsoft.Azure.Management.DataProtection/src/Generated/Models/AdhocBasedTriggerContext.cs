@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Adhoc trigger context
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("AdhocBasedTriggerContext")]
     public partial class AdhocBasedTriggerContext : TriggerContext
     {
         /// <summary>

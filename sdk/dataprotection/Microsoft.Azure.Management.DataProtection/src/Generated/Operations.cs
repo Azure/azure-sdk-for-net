@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DataProtectionOperationsOperations operations.
+    /// Operations operations.
     /// </summary>
-    internal partial class DataProtectionOperationsOperations : IServiceOperations<DataProtectionClient>, IDataProtectionOperationsOperations
+    internal partial class Operations : IServiceOperations<DataProtectionClient>, IOperations
     {
         /// <summary>
-        /// Initializes a new instance of the DataProtectionOperationsOperations class.
+        /// Initializes a new instance of the Operations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DataProtectionOperationsOperations(DataProtectionClient client)
+        internal Operations(DataProtectionClient client)
         {
             if (client == null)
             {

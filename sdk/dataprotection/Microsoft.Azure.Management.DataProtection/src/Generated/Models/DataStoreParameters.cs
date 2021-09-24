@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <summary>
     /// Parameters for DataStore
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DataStoreParameters")]
     public partial class DataStoreParameters
     {
         /// <summary>

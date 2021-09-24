@@ -32,9 +32,13 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <summary>
         /// Initializes a new instance of the OperationJobExtendedInfo class.
         /// </summary>
+        /// <param name="objectType">This property will be used as the
+        /// discriminator for deciding the specific types in the polymorphic
+        /// chain of types.</param>
         /// <param name="jobId">Arm Id of the job created for this
         /// operation.</param>
-        public OperationJobExtendedInfo(string jobId = default(string))
+        public OperationJobExtendedInfo(string objectType = default(string), string jobId = default(string))
+            : base(objectType)
         {
             JobId = jobId;
             CustomInit();

@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// BasePolicy Rule
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("BasePolicyRule")]
     public partial class BasePolicyRule
     {
         /// <summary>

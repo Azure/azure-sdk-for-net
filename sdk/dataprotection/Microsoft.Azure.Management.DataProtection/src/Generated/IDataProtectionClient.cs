@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.DataProtection
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Open API 2.0 Specs for Azure Data Protection service
@@ -80,24 +84,9 @@ namespace Microsoft.Azure.Management.DataProtection
         IOperationResultOperations OperationResult { get; }
 
         /// <summary>
-        /// Gets the IOperationStatusOperations.
+        /// Gets the IOperations.
         /// </summary>
-        IOperationStatusOperations OperationStatus { get; }
-
-        /// <summary>
-        /// Gets the IBackupVaultOperationResultsOperations.
-        /// </summary>
-        IBackupVaultOperationResultsOperations BackupVaultOperationResults { get; }
-
-        /// <summary>
-        /// Gets the IDataProtectionOperations.
-        /// </summary>
-        IDataProtectionOperations DataProtection { get; }
-
-        /// <summary>
-        /// Gets the IDataProtectionOperationsOperations.
-        /// </summary>
-        IDataProtectionOperationsOperations DataProtectionOperations { get; }
+        IOperations Operations { get; }
 
         /// <summary>
         /// Gets the IBackupPoliciesOperations.
@@ -115,14 +104,24 @@ namespace Microsoft.Azure.Management.DataProtection
         IRecoveryPointsOperations RecoveryPoints { get; }
 
         /// <summary>
+        /// Gets the IRecoveryPointOperations.
+        /// </summary>
+        IRecoveryPointOperations RecoveryPoint { get; }
+
+        /// <summary>
         /// Gets the IJobsOperations.
         /// </summary>
         IJobsOperations Jobs { get; }
 
         /// <summary>
-        /// Gets the IRestorableTimeRangesOperations.
+        /// Gets the IFindRestorableTimeRangesOperations.
         /// </summary>
-        IRestorableTimeRangesOperations RestorableTimeRanges { get; }
+        IFindRestorableTimeRangesOperations FindRestorableTimeRanges { get; }
+
+        /// <summary>
+        /// Gets the IJobOperations.
+        /// </summary>
+        IJobOperations Job { get; }
 
         /// <summary>
         /// Gets the IExportJobsOperations.
@@ -135,9 +134,51 @@ namespace Microsoft.Azure.Management.DataProtection
         IExportJobsOperationResultOperations ExportJobsOperationResult { get; }
 
         /// <summary>
-        /// Gets the IResourceGuardsOperations.
+        /// Gets the operation status for a resource.
         /// </summary>
-        IResourceGuardsOperations ResourceGuards { get; }
+        /// <param name='location'>
+        /// </param>
+        /// <param name='operationId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<OperationResource>> GetOperationStatusWithHttpMessagesAsync(string location, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='operationId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<BackupVaultResource>> GetOperationResultPatchWithHttpMessagesAsync(string vaultName, string resourceGroupName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Validates if a feature is supported
+        /// </summary>
+        /// <param name='location'>
+        /// </param>
+        /// <param name='parameters'>
+        /// Feature support request object
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<FeatureValidationResponseBase>> CheckFeatureSupportWithHttpMessagesAsync(string location, FeatureValidationRequestBase parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

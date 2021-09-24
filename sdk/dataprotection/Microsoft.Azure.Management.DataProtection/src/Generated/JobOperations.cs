@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// OperationStatusOperations operations.
+    /// JobOperations operations.
     /// </summary>
-    internal partial class OperationStatusOperations : IServiceOperations<DataProtectionClient>, IOperationStatusOperations
+    internal partial class JobOperations : IServiceOperations<DataProtectionClient>, IJobOperations
     {
         /// <summary>
-        /// Initializes a new instance of the OperationStatusOperations class.
+        /// Initializes a new instance of the JobOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal OperationStatusOperations(DataProtectionClient client)
+        internal JobOperations(DataProtectionClient client)
         {
             if (client == null)
             {
@@ -51,11 +51,17 @@ namespace Microsoft.Azure.Management.DataProtection
         public DataProtectionClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the operation status for a resource.
+        /// Gets a job with id in a backup vault
         /// </summary>
-        /// <param name='location'>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
         /// </param>
-        /// <param name='operationId'>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='jobId'>
+        /// The Job ID. This is a GUID-formatted string (e.g.
+        /// 00000000-0000-0000-0000-000000000000).
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -78,7 +84,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<OperationResource>> GetWithHttpMessagesAsync(string location, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AzureBackupJobResource>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -88,13 +94,17 @@ namespace Microsoft.Azure.Management.DataProtection
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (location == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (operationId == null)
+            if (vaultName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultName");
+            }
+            if (jobId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "jobId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -103,17 +113,19 @@ namespace Microsoft.Azure.Management.DataProtection
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("location", location);
-                tracingParameters.Add("operationId", operationId);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("vaultName", vaultName);
+                tracingParameters.Add("jobId", jobId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/operationStatus/{operationId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupJobs/{jobId}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
-            _url = _url.Replace("{operationId}", System.Uri.EscapeDataString(operationId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
+            _url = _url.Replace("{jobId}", System.Uri.EscapeDataString(jobId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -212,7 +224,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<OperationResource>();
+            var _result = new AzureOperationResponse<AzureBackupJobResource>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -225,7 +237,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AzureBackupJobResource>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

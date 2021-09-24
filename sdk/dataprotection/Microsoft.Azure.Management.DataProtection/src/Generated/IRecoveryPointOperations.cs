@@ -19,17 +19,23 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BackupVaultOperationResultsOperations operations.
+    /// RecoveryPointOperations operations.
     /// </summary>
-    public partial interface IBackupVaultOperationResultsOperations
+    public partial interface IRecoveryPointOperations
     {
+        /// <summary>
+        /// Gets a Recovery Point using recoveryPointId for a Datasource.
+        /// </summary>
         /// <param name='vaultName'>
         /// The name of the backup vault.
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
         /// </param>
-        /// <param name='operationId'>
+        /// <param name='backupInstanceName'>
+        /// The name of the backup instance
+        /// </param>
+        /// <param name='recoveryPointId'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -46,6 +52,6 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackupVaultResource,BackupVaultOperationResultsGetHeaders>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AzureBackupRecoveryPointResource>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, string recoveryPointId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

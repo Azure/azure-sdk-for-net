@@ -51,9 +51,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// of the resource</param>
         /// <param name="provisioningState">Specifies the provisioning state of
         /// the resource i.e. provisioning/updating/Succeeded/Failed</param>
-        /// <param name="datasourceAuthCredentials">Credentials to use to
-        /// authenticate with data source provider.</param>
-        public BackupInstance(Datasource dataSourceInfo, PolicyInfo policyInfo, string objectType, string friendlyName = default(string), DatasourceSet dataSourceSetInfo = default(DatasourceSet), ProtectionStatusDetails protectionStatus = default(ProtectionStatusDetails), string currentProtectionState = default(string), UserFacingError protectionErrorDetails = default(UserFacingError), string provisioningState = default(string), AuthCredentials datasourceAuthCredentials = default(AuthCredentials))
+        public BackupInstance(Datasource dataSourceInfo, PolicyInfo policyInfo, string objectType, string friendlyName = default(string), DatasourceSet dataSourceSetInfo = default(DatasourceSet), ProtectionStatusDetails protectionStatus = default(ProtectionStatusDetails), string currentProtectionState = default(string), UserFacingError protectionErrorDetails = default(UserFacingError), string provisioningState = default(string))
         {
             FriendlyName = friendlyName;
             DataSourceInfo = dataSourceInfo;
@@ -63,7 +61,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
             CurrentProtectionState = currentProtectionState;
             ProtectionErrorDetails = protectionErrorDetails;
             ProvisioningState = provisioningState;
-            DatasourceAuthCredentials = datasourceAuthCredentials;
             ObjectType = objectType;
             CustomInit();
         }
@@ -127,13 +124,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets or sets credentials to use to authenticate with data source
-        /// provider.
-        /// </summary>
-        [JsonProperty(PropertyName = "datasourceAuthCredentials")]
-        public AuthCredentials DatasourceAuthCredentials { get; set; }
 
         /// <summary>
         /// </summary>

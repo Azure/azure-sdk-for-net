@@ -37,12 +37,9 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         /// <param name="repeatingTimeIntervals">ISO 8601 repeating time
         /// interval format</param>
-        /// <param name="timeZone">Time zone for a schedule. Example: Pacific
-        /// Standard Time</param>
-        public BackupSchedule(IList<string> repeatingTimeIntervals, string timeZone = default(string))
+        public BackupSchedule(IList<string> repeatingTimeIntervals)
         {
             RepeatingTimeIntervals = repeatingTimeIntervals;
-            TimeZone = timeZone;
             CustomInit();
         }
 
@@ -56,13 +53,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         [JsonProperty(PropertyName = "repeatingTimeIntervals")]
         public IList<string> RepeatingTimeIntervals { get; set; }
-
-        /// <summary>
-        /// Gets or sets time zone for a schedule. Example: Pacific Standard
-        /// Time
-        /// </summary>
-        [JsonProperty(PropertyName = "timeZone")]
-        public string TimeZone { get; set; }
 
         /// <summary>
         /// Validate the object.
