@@ -773,5 +773,103 @@ namespace Azure.Communication.CallingServer
                 throw;
             }
         }
+
+        /// <summary> Mute Participant Operation. </summary>
+        /// <param name="participant"> The identifier of the participant. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> MuteParticipantOperationAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperationAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return await RestClient.MuteParticipantAsync(
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken
+                                        ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Mute Participant Operation. </summary>
+        /// <param name="participant"> The identifier of the participant. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response MuteParticipantOperation(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperation)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return RestClient.MuteParticipant(
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Unmute Participant Operation. </summary>
+        /// <param name="participant"> The identifier of the participant. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> UnmuteParticipantOperationAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperationAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return await RestClient.UnmuteParticipantAsync(
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken
+                                        ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Unmute Participant Operation. </summary>
+        /// <param name="participant"> The identifier of the participant. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response UnmuteParticipantOperation(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperation)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return RestClient.UnmuteParticipant(
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }
