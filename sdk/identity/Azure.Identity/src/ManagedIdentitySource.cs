@@ -47,6 +47,8 @@ namespace Azure.Identity
             Response response,
             CancellationToken cancellationToken)
         {
+            string message;
+            Exception exception = null;
             try
             {
                 using JsonDocument json = async
@@ -57,17 +59,17 @@ namespace Azure.Identity
                     return GetTokenFromResponse(json.RootElement);
                 }
 
-                var message = GetMessageFromResponse(json.RootElement);
-                throw async
-                    ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, message).ConfigureAwait(false)
-                    : Pipeline.Diagnostics.CreateRequestFailedException(response, message);
+                message = GetMessageFromResponse(json.RootElement);
             }
             catch (Exception e)
             {
-                throw async
-                    ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, UnexpectedResponse, innerException: e).ConfigureAwait(false)
-                    : Pipeline.Diagnostics.CreateRequestFailedException(response, UnexpectedResponse, innerException: e);
+                exception = e;
+                message = UnexpectedResponse;
             }
+
+            throw async
+                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, message, innerException: exception).ConfigureAwait(false)
+                : Pipeline.Diagnostics.CreateRequestFailedException(response, message, innerException: exception);
         }
 
         protected abstract Request CreateRequest(string[] scopes);

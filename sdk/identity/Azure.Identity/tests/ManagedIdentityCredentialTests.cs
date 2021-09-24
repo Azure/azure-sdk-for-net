@@ -406,19 +406,17 @@ namespace Azure.Identity.Tests
                     { "IDENTITY_HEADER", null },
                     { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
                 });
-            var mockTransport = new MockTransport(request => CreateErrorMockResponse(404, "error"));
-            var options = new TokenCredentialOptions() { Transport = mockTransport};
+            var errorMessage = "Some error happened";
+            var mockTransport = new MockTransport(request => CreateErrorMockResponse(404, errorMessage));
+            var options = new TokenCredentialOptions { Transport = mockTransport};
             options.Retry.MaxDelay = TimeSpan.Zero;
             var pipeline = CredentialPipeline.GetInstance(options);
 
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", pipeline));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            // if (status == 200)
-            // {
             Assert.IsInstanceOf(typeof(RequestFailedException), ex.InnerException);
-            Assert.That(ex.Message, Does.Contain(ManagedIdentitySource.UnexpectedResponse));
-            // }
+            Assert.That(ex.Message, Does.Contain(errorMessage));
 
             await Task.CompletedTask;
         }
