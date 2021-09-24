@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.Cdn
         }
         #endregion
 
-        #region NameCheckWithSubscription
-        private static NameCheckWithSubscriptionRestOperations GetNameCheckWithSubscriptionRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        #region NameAvailabilityWithSubscription
+        private static NameAvailabilityWithSubscriptionRestOperations GetNameAvailabilityWithSubscriptionRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new NameCheckWithSubscriptionRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+            return new NameAvailabilityWithSubscriptionRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckNameCheckWithSubscriptionAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithSubscriptionAsync(this Subscription subscription, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityInput == null)
             {
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.Cdn
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNameCheckWithSubscriptionRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameCheckWithSubscriptionAvailability");
+                var restOperations = GetNameAvailabilityWithSubscriptionRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityWithSubscription");
                 scope.Start();
                 try
                 {
-                    var response = await restOperations.CheckAvailabilityAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.CheckAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
                 catch (Exception e)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckNameCheckWithSubscriptionAvailability(this Subscription subscription, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityOutput> CheckNameAvailabilityWithSubscription(this Subscription subscription, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityInput == null)
             {
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.Cdn
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNameCheckWithSubscriptionRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameCheckWithSubscriptionAvailability");
+                var restOperations = GetNameAvailabilityWithSubscriptionRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityWithSubscription");
                 scope.Start();
                 try
                 {
-                    var response = restOperations.CheckAvailability(checkNameAvailabilityInput, cancellationToken);
+                    var response = restOperations.Check(checkNameAvailabilityInput, cancellationToken);
                     return response;
                 }
                 catch (Exception e)

@@ -14,16 +14,16 @@ output-folder: Generated/
 modelerfour:
   lenient-model-deduplication: true
 operation-group-to-resource-type:
-  NameCheckWithTenant: Microsoft.Cdn/checkNameAvailability
-  NameCheckWithSubscription: Microsoft.Cdn/checkNameAvailability
+  NameAvailabilityWithTenant: Microsoft.Cdn/checkNameAvailability
+  NameAvailabilityWithSubscription: Microsoft.Cdn/checkNameAvailability
   Probe: Microsoft.Cdn/validateProbe
   ResourceUsage: Microsoft.Cdn/checkResourceUsage
   EdgeNodes: Microsoft.Cdn/edgenodes
   Secret: Microsoft.Cdn/validateSecret
   ManagedRuleSets: Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets
 operation-group-to-resource:
-  NameCheckWithTenant: NonResource
-  NameCheckWithSubscription: NonResource
+  NameAvailabilityWithTenant: NonResource
+  NameAvailabilityWithSubscription: NonResource
   Probe: NonResource
   ResourceUsage: NonResource
   EdgeNodes: NonResource
@@ -32,8 +32,8 @@ operation-group-to-resource:
   RuleSets: RuleSet
   CustomDomains: CustomDomain
 operation-group-to-parent:
-  NameCheckWithTenant: tenant
-  NameCheckWithSubscription: subscriptions
+  NameAvailabilityWithTenant: tenant
+  NameAvailabilityWithSubscription: subscriptions
   Probe: subscriptions
   ResourceUsage: subscriptions
   EdgeNodes: tenant
@@ -108,10 +108,10 @@ directive:
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.paths['/providers/Microsoft.Cdn/checkNameAvailability'].post.operationId
-    transform: return 'NameCheckWithTenant_CheckAvailability'
+    transform: return 'NameAvailabilityWithTenant_Check'
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability'].post.operationId
-    transform: return 'NameCheckWithSubscription_CheckAvailability'
+    transform: return 'NameAvailabilityWithSubscription_Check'
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe'].post.operationId
     transform: return 'Probe_Validate'

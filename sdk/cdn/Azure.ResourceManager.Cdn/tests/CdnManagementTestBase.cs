@@ -83,5 +83,10 @@ namespace Azure.ResourceManager.Cdn.Tests
                 ProbeIntervalInSeconds = 60
             }
         };
+
+        protected static CustomDomainParameters CreateCustomDomainParameters(string hostName) => new CustomDomainParameters
+        {
+            HostName = hostName
+        };
     }
 }

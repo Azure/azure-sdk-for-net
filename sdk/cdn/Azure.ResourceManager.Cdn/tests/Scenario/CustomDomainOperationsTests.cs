@@ -1,0 +1,54 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Threading.Tasks;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Cdn.Models;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+
+namespace Azure.ResourceManager.Cdn.Tests
+{
+    public class CustomDomainOperationsTests : CdnManagementTestBase
+    {
+        public CustomDomainOperationsTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
+        {
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Delete()
+        {
+            //In this test, the CName mapping from custom domain "customdomaintest-4.azuretest.net" to endpoint "testEndpoint4dotnetsdk.azureedge.net" is created in advance.
+            //The CName mapping needs to be deleted before deleting the custom domain.
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Profile profile = await rg.GetProfiles().GetAsync("testProfile");
+            Endpoint endpoint = await profile.GetEndpoints().GetAsync("testEndpoint4dotnetsdk");
+            string customDomainName = "customDomain-811";
+            var lro = await endpoint.GetCustomDomains().GetAsync(customDomainName);
+            CustomDomain customDomain = lro.Value;
+            await customDomain.DeleteAsync();
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await customDomain.GetAsync());
+            Assert.AreEqual(404, ex.Status);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task EnableAndDisable()
+        {
+            //In this test, the CName mapping from custom domain "customdomaintest-5.azuretest.net" to endpoint "testEndpoint4dotnetsdk.azureedge.net" is created in advance.
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Profile profile = await rg.GetProfiles().GetAsync("testProfile");
+            Endpoint endpoint = await profile.GetEndpoints().GetAsync("testEndpoint4dotnetsdk");
+            string customDomainName = Recording.GenerateAssetName("customDomain-");
+            CustomDomainParameters customDomainParameters = CreateCustomDomainParameters("customdomaintest-5.azuretest.net");
+            var lro = await endpoint.GetCustomDomains().CreateOrUpdateAsync(customDomainName, customDomainParameters);
+            CustomDomain customDomain = lro.Value;
+            Assert.ThrowsAsync<RequestFailedException>(async () => await customDomain.DisableCustomHttpsAsync());
+            CdnManagedHttpsParameters customDomainHttpsParameters = new CdnManagedHttpsParameters(ProtocolType.ServerNameIndication, new CdnCertificateSourceParameters(CertificateType.Dedicated));
+            Assert.DoesNotThrowAsync(async () => await customDomain.EnableCustomHttpsAsync(customDomainHttpsParameters));
+            Assert.DoesNotThrowAsync(async () => await customDomain.DisableCustomHttpsAsync());
+        }
+    }
+}
