@@ -524,7 +524,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var cancellationTokenSource = new CancellationTokenSource();
-                cancellationTokenSource.CancelAfter(TimeSpan.FromMilliseconds(100));
+                cancellationTokenSource.CancelAfter(TimeSpan.FromMilliseconds(20));
                 Assert.That(
                     async () => await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(300), cancellationTokenSource.Token),
                     Throws.InstanceOf<TaskCanceledException>());
