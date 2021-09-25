@@ -38,9 +38,15 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             byte[] hash = sha.ComputeHash(data);
 
             #region Snippet:CertificatesSample4DownloadCertificate
+            X509KeyStorageFlags keyStorageFlags = X509KeyStorageFlags.MachineKeySet;
+            if (Environment.OSVersion.Platform != PlatformID.MacOSX)
+            {
+                keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
+            }
+
             DownloadCertificateOptions options = new DownloadCertificateOptions
             {
-                KeyStorageFlags = X509KeyStorageFlags.EphemeralKeySet | X509KeyStorageFlags.MachineKeySet
+                KeyStorageFlags = keyStorageFlags
             };
 
             using X509Certificate2 certificate = client.DownloadCertificate(certificateName, options: options);
