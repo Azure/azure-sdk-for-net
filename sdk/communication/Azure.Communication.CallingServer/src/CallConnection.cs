@@ -778,7 +778,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> MuteParticipantOperationAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> MuteParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperationAsync)}");
             scope.Start();
@@ -803,7 +803,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response MuteParticipantOperation(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual Response MuteParticipant(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperation)}");
             scope.Start();
@@ -827,7 +827,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> UnmuteParticipantOperationAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UnmuteParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperationAsync)}");
             scope.Start();
@@ -852,7 +852,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response UnmuteParticipantOperation(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual Response UnmuteParticipant(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperation)}");
             scope.Start();

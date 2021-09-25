@@ -384,6 +384,147 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual(ex?.Status, 404);
         }
 
+        [TestCaseSource(nameof(TestData_ParticipantPlayAudio))]
+        public async Task PlayAudioToParticipantAsync_Return202Accepted(string participantUserId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202, responseContent: DummyPlayAudioResponse);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            Response<PlayAudioResult> result = await serverCallRestClient.PlayAudioToParticipantAsync(
+                CallLocator,
+                participant,
+                sampleAudioFileUri,
+                new PlayAudioOptions()
+                {
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                });
+
+            VerifyPlayAudioResult(result);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantPlayAudio))]
+        public void PlayAudioToParticipant_Return202Accepted(string participantUserId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202, responseContent: DummyPlayAudioResponse);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            PlayAudioResult result = serverCallRestClient.PlayAudioToParticipant(
+                CallLocator,
+                participant,
+                sampleAudioFileUri,
+                new PlayAudioOptions()
+                {
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                });
+
+            VerifyPlayAudioResult(result);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantPlayAudio))]
+        public void PlayAudioToParticipantAsync_Returns404NotFound(string participantUserId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await serverCallRestClient.PlayAudioToParticipantAsync(
+                CallLocator,
+                participant,
+                sampleAudioFileUri,
+                new PlayAudioOptions()
+                {
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                }).ConfigureAwait(false));
+
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantPlayAudio))]
+        public void PlayAudioToParticipant_Returns404NotFound(string participantUserId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => serverCallRestClient.PlayAudioToParticipant(
+                CallLocator,
+                participant,
+                sampleAudioFileUri,
+                new PlayAudioOptions()
+                {
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                }));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelParticipantMediaOperation))]
+        public async Task CancelParticipantMediaOperationAsync_Return200OK(string participantUserId, string mediaOperationId)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200, responseContent: DummyPlayAudioResponse);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var result = await serverCallRestClient.CancelParticipantMediaOperationAsync(
+                CallLocator,
+                participant,
+                mediaOperationId);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelParticipantMediaOperation))]
+        public void CancelParticipantMediaOperation_Return200OK(string participantUserId, string mediaOperationId)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200, responseContent: DummyPlayAudioResponse);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var result = serverCallRestClient.CancelParticipantMediaOperation(
+                CallLocator,
+                participant,
+                mediaOperationId);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelParticipantMediaOperation))]
+        public void CancelParticipantMediaOperationAsync_Returns404NotFound(string participantUserId, string mediaOperationId)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await serverCallRestClient.CancelParticipantMediaOperationAsync(
+                CallLocator,
+                participant,
+                mediaOperationId).ConfigureAwait(false));
+
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelParticipantMediaOperation))]
+        public void CancelParticipantMediaOperation_Returns404NotFound(string participantUserId, string mediaOperationId)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => serverCallRestClient.CancelParticipantMediaOperation(
+                CallLocator,
+                participant,
+                mediaOperationId));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
         private void VerifyPlayAudioResult(PlayAudioResult response)
         {
             Assert.AreEqual("dummyId", response.OperationId);
@@ -458,6 +599,33 @@ namespace Azure.Communication.CallingServer.Tests
                     "sampleAudioFileId",
                     new Uri("https://av.ngrok.io/someCallbackUri"),
                     "sampleOperationContext",
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_ParticipantPlayAudio()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    "66c76529-3e58-45bf-9592-84eadd52bc81",
+                    new Uri("https://av.ngrok.io/audio/sample-message.wav"),
+                    "sampleAudioFileId",
+                    new Uri("https://av.ngrok.io/someCallbackUri"),
+                    "sampleOperationContext",
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_CancelParticipantMediaOperation()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    "66c76529-3e58-45bf-9592-84eadd52bc81",
+                    "3631b8cb-4a65-45b5-98ae-339fc78b0aed",
                 }
             };
         }
