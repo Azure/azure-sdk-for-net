@@ -182,7 +182,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var remoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity, ref monitorTags);
 
-            Assert.Equal($"GET /search", remoteDependencyData.Name);
+            Assert.Equal("GET /search", remoteDependencyData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), remoteDependencyData.Id);
             Assert.Equal(httpUrl, remoteDependencyData.Data);
             Assert.Equal("0", remoteDependencyData.ResultCode);
