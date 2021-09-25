@@ -222,6 +222,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
         }
 
         [Fact]
+        public void HttpMethodAndHttpUrlPathIsUsedForHttpRequestOperationName()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/path?id=1");
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal("GET /path", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
         public void ActivityNameIsUsedByDefaultForRequestOperationName()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
