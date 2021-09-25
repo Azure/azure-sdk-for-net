@@ -23,7 +23,6 @@ namespace Azure.AI.Language.QuestionAnswering
         public string Language { get { throw null; } set { } }
         public string Question { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Language.QuestionAnswering.TextRecord> Records { get { throw null; } }
-        public Azure.AI.Language.QuestionAnswering.Models.StringIndexType? StringIndexType { get { throw null; } set { } }
     }
     public partial class QuestionAnsweringClient
     {
@@ -45,6 +44,7 @@ namespace Azure.AI.Language.QuestionAnswering
     public partial class QuestionAnsweringClientOptions : Azure.Core.ClientOptions
     {
         public QuestionAnsweringClientOptions(Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion version = Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion.V2021_07_15_Preview) { }
+        public string DefaultLanguage { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2021_05_01_preview = 1,

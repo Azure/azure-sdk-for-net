@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.Language.QuestionAnswering.Models;
 using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
@@ -32,6 +33,18 @@ namespace Azure.AI.Language.QuestionAnswering
             V2021_07_15_Preview = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
+
+        /// <summary>
+        /// Gets the method used to interpret string offsets, which is always <see cref="StringIndexType.Utf16CodeUnit"/> for .NET.
+        /// </summary>
+        internal static StringIndexType DefaultStringIndexType { get; } = StringIndexType.Utf16CodeUnit;
+
+        /// <summary>
+        /// Gets or sets the default language to use in some client methods.
+        /// This is the BCP-47 representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// If not set, the service default, "en" for English, is used.
+        /// </summary>
+        public string DefaultLanguage { get; set; } = "en";
 
         internal string Version { get; }
 

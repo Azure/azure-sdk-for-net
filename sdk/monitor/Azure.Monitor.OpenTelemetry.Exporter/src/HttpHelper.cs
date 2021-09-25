@@ -229,7 +229,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             bool isDbNameEmpty = string.IsNullOrEmpty(dbName);
             if (!isTargetEmpty && !isDbNameEmpty)
             {
-                target = $"{target}/{dbName}";
+                target = $"{target} | {dbName}";
             }
             else if (isTargetEmpty && !isDbNameEmpty)
             {
@@ -310,6 +310,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return target;
+        }
+
+        internal static string GetHttpDependencyName(this AzMonList tagObjects, string httpUrl)
+        {
+            if (string.IsNullOrEmpty(httpUrl))
+            {
+                return null;
+            }
+
+            var httpMethod = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpMethod)?.ToString();
+            if (!string.IsNullOrEmpty(httpMethod))
+            {
+                if (Uri.TryCreate(httpUrl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
+                {
+                    return $"{httpMethod} {uri.AbsolutePath}";
+                }
+            }
+
+            return null;
         }
     }
 }

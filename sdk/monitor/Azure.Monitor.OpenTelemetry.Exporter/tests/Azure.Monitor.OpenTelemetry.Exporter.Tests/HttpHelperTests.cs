@@ -570,7 +570,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 hostName = $"{netPeerIp}:{netPeerPort}";
             }
-            string expectedTarget = $"{hostName}/DbName";
+            string expectedTarget = $"{hostName} | DbName";
             string target = PartBTags.GetDbDependencyTarget();
             Assert.Equal(expectedTarget, target);
         }

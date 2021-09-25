@@ -5,11 +5,13 @@
 ### Features Added
 
 - Added support for API version 2021-07-15-preview.
+- Added `QuestionAnsweringClientOptions.DefaultLanguage` to specify a client default, and the `language` parameters of `QueryTextOptions` optional.
 
 ### Breaking Changes
 
 - Made `projectName` and `deploymentName` parameters required for `QuestionAnsweringClient` methods.
 - Moved `QueryKnowledgeBaseOptions`, `QueryTextOptions`, and `TextRecord` to `Azure.AI.Language.QuestionAnswering` namespace.
+- Removed `QueryTextOptions.StringIndexType` property and will always pass `StringIndexType.Utf16CodeUnit` for .NET.
 
 ### Bugs Fixed
 

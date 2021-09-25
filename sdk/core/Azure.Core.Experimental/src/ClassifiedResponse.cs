@@ -55,7 +55,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Frees resources held by the <see cref="DynamicResponse"/> object.
+        /// Frees resources held by the <see cref="ClassifiedResponse"/> object.
         /// </summary>
         public override void Dispose()
         {
@@ -64,7 +64,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Frees resources held by the <see cref="DynamicResponse"/> object.
+        /// Frees resources held by the <see cref="ClassifiedResponse"/> object.
         /// </summary>
         /// <param name="disposing">true if we should dispose, otherwise false</param>
         protected virtual void Dispose(bool disposing)
