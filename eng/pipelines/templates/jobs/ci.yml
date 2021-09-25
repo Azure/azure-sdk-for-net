@@ -167,6 +167,11 @@ jobs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
+      - template: /eng/common/pipelines/templates/steps/policheck.yml
+        parameters:
+          ExclusionDataBaseFileName: "DotNetPoliCheckExclusion"
+          TargetDirectory: "${{ parameters.ServiceDirectory }}"
+          PublishAnalysisLogs: true
 
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:

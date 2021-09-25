@@ -147,6 +147,11 @@ stages:
       - job: ComplianceTools
         timeoutInMinutes: 120
         steps:
+          - template: /eng/common/pipelines/templates/steps/policheck.yml
+            parameters:
+              ExclusionDataBaseFileName: "DotNetPoliCheckExclusion"
+              PublishAnalysisLogs: false
+
           - pwsh: |
               azcopy copy "https://azuresdkartifacts.blob.core.windows.net/policheck/DotNetPoliCheckExclusion.mdb?$(azuresdk-policheck-blob-SAS)" `
               "$(Build.BinariesDirectory)"
