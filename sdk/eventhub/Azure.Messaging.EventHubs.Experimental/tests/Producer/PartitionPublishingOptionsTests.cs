@@ -4,10 +4,10 @@
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.EventHubs.Experimental.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="PartitionPublishingOptionsInternal" />
+    ///   The suite of tests for the <see cref="PartitionPublishingOptions" />
     ///   class.
     /// </summary>
     ///
@@ -15,21 +15,21 @@ namespace Azure.Messaging.EventHubs.Tests
     public class PartitionPublishingOptionsTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClientOptions.Clone" />
+        ///   Verifies functionality of the <see cref="PartitionPublishingOptions.ToCoreOptions" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void CloneProducesACopy()
+        public void ToCoreOptionsProducesACopy()
         {
-            var options = new PartitionPublishingOptionsInternal
+            var options = new PartitionPublishingOptions
             {
                 OwnerLevel = 3,
                 ProducerGroupId = 99,
                 StartingSequenceNumber = 42
             };
 
-            var clone = options.Clone();
+            var clone = options.ToCoreOptions();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
             Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The owner level should have been copied.");

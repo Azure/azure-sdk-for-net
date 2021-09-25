@@ -4,16 +4,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Producer
 {
     /// <summary>
-    ///   The set of options that can be specified when creating an <see cref="EventHubProducerClient" />
+    ///   The set of options that can be specified when creating an <see cref="IdempotentProducer" />
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class EventHubProducerClientOptions
+    public class IdempotentProducerOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
@@ -36,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <value><c>true</c> if the producer should enable idempotent partition publishing; otherwise, <c>false</c>.</value>
         ///
-        internal bool EnableIdempotentPartitions { get; set; }
+        public bool EnableIdempotentPartitions { get; set; }
 
         /// <summary>
         ///   The set of options that can be specified to influence publishing behavior specific to the configured Event Hub partition.  These
@@ -51,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   These options are ignored when publishing to the Event Hubs gateway for automatic routing or when using a partition key.
         /// </remarks>
         ///
-        internal Dictionary<string, PartitionPublishingOptionsInternal> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptionsInternal>();
+        public Dictionary<string, PartitionPublishingOptions> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptions>();
 
         /// <summary>
         ///   The options used for configuring the connection to the Event Hubs service.
@@ -118,61 +117,22 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>A new copy of <see cref="EventHubProducerClientOptions" />.</returns>
         ///
-        internal EventHubProducerClientOptions Clone()
+        internal EventHubProducerClientOptions ToCoreOptions()
         {
             var copiedOptions = new EventHubProducerClientOptions
             {
                 Identifier = Identifier,
                 EnableIdempotentPartitions = EnableIdempotentPartitions,
-                _connectionOptions = ConnectionOptions.Clone(),
-                _retryOptions = RetryOptions.Clone()
+                ConnectionOptions = ConnectionOptions,
+                RetryOptions = RetryOptions,
             };
 
             foreach (var pair in PartitionOptions)
             {
-                copiedOptions.PartitionOptions.Add(pair.Key, pair.Value.Clone());
+                copiedOptions.PartitionOptions.Add(pair.Key, pair.Value.ToCoreOptions());
             }
 
             return copiedOptions;
-        }
-
-        /// <summary>
-        ///   Creates the set of flags that represents the features requested by these options.
-        /// </summary>
-        ///
-        /// <returns>The set of features that were requested for the <see cref="EventHubProducerClient" />.</returns>
-        ///
-        internal TransportProducerFeatures CreateFeatureFlags()
-        {
-            var features = TransportProducerFeatures.None;
-
-            if (EnableIdempotentPartitions)
-            {
-                features |= TransportProducerFeatures.IdempotentPublishing;
-            }
-
-            return features;
-        }
-
-        /// <summary>
-        ///   Attempts to retrieve the publishing options for a given partition, returning a
-        ///   default in the case that no partition was specified or there were no available options
-        ///   for that partition.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The identifier of the partition for which options are requested.</param>
-        ///
-        /// <returns><c>null</c> in the event that there was no partition specified or no options for the partition; otherwise, the publishing options.</returns>
-        ///
-        internal PartitionPublishingOptionsInternal GetPublishingOptionsOrDefaultForPartition(string partitionId)
-        {
-            if (string.IsNullOrEmpty(partitionId))
-            {
-                return default;
-            }
-
-            PartitionOptions.TryGetValue(partitionId, out var options);
-            return options;
         }
     }
 }
