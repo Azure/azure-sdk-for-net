@@ -8,7 +8,7 @@ namespace EventHub.Tests.ScenarioTests
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Threading;    
+    using System.Threading;
     using Microsoft.Azure.Management.EventHub;
     using Microsoft.Azure.Management.EventHub.Models;
     using Microsoft.Azure.Management.KeyVault;
@@ -25,7 +25,7 @@ namespace EventHub.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location = "South Central US";
+                var location = "West US";
 
                 var resourceGroup = string.Empty;
 
@@ -33,8 +33,8 @@ namespace EventHub.Tests.ScenarioTests
 
                 var testClusterName = EventHubManagementHelper.TestClusterName;
 
-                var keyVaultName = "SDKTestingKey1";
-                var KeyName = "sdktestingkey11";
+                var keyVaultName = "SDKTestingKey";
+                var KeyName = "sdktestingkey1";
 
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
@@ -47,7 +47,6 @@ namespace EventHub.Tests.ScenarioTests
                 try
                 {
 
-                    var getClusterResponse1 = EventHubManagementClient.Clusters.ListByResourceGroup(resourceGroupCluster);
                     Cluster getClusterResponse = EventHubManagementClient.Clusters.Get(resourceGroupCluster, testClusterName);
 
                     var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(namespaceName);
@@ -69,9 +68,9 @@ namespace EventHub.Tests.ScenarioTests
                             IsAutoInflateEnabled = false,
                             MaximumThroughputUnits = 0,
                             ClusterArmId = getClusterResponse.Id,
-                            Identity = new Identity() { Type = ManagedServiceIdentityType.SystemAssigned}
+                            Identity = new Identity() { Type = ManagedServiceIdentityType.SystemAssigned }
                         });
-                    
+
                     Assert.NotNull(createNamespaceResponse);
                     Assert.Equal(namespaceName, createNamespaceResponse.Name);
                     Assert.Equal(getClusterResponse.Id, createNamespaceResponse.ClusterArmId);
@@ -88,9 +87,9 @@ namespace EventHub.Tests.ScenarioTests
                         TenantId = Guid.Parse(createNamespaceResponse.Identity.TenantId),
                         Permissions = new Microsoft.Azure.Management.KeyVault.Models.Permissions()
                         {
-                            Keys = new List<string> { "get", "wrapKey", "unwrapKey"}
+                            Keys = new List<string> { "get", "wrapKey", "unwrapKey" }
                         }
-                    };                   
+                    };
 
 
                     Vault getVaultRsponse = KeyVaultManagementClient.Vaults.Get(resourceGroupCluster, keyVaultName);
@@ -100,14 +99,15 @@ namespace EventHub.Tests.ScenarioTests
                     vaultparams.Properties.AccessPolicies.Add(accesPolicies);
 
                     var updateVault = KeyVaultManagementClient.Vaults.CreateOrUpdate(resourceGroupCluster, keyVaultName, vaultparams);
-                    
+
                     TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                     // Encrypt data in Event Hub namespace Customer managed key from keyvault
 
                     var getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroupCluster, namespaceName);
 
-                    getNamespaceResponse.Encryption = new Encryption() {
+                    getNamespaceResponse.Encryption = new Encryption()
+                    {
                         KeySource = KeySource.MicrosoftKeyVault,
                         KeyVaultProperties = new[] {
                             new KeyVaultProperties()
