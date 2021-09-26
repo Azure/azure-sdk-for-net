@@ -9,10 +9,10 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
-    public partial class ConversationDeepstackSamples
+    public partial class ConversationAnalysisClientDeepstackSamples
     {
-        [RecordedTest]
         [SyncOnly]
+        [RecordedTest]
         public void AnalyzeConversationDeepstack()
         {
             ConversationAnalysisClient client = Client;
@@ -52,13 +52,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine();
             }
             #endregion
-
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(deepstackPrediction.TopIntent, Is.EqualTo("Order"));
         }
 
-        [RecordedTest]
         [AsyncOnly]
+        [RecordedTest]
         public async Task AnalyzeConversationDeepstackAsync()
         {
             ConversationAnalysisClient client = Client;
@@ -98,9 +95,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine();
             }
             #endregion
-
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
         }
     }
 }

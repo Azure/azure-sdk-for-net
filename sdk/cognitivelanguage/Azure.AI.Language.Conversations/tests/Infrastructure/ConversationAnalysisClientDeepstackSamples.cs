@@ -5,9 +5,9 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
-    public partial class ConversationAnalysisWithLanguageSamples : ConversationAnalysisTestBase<ConversationAnalysisClient>
+    public partial class ConversationAnalysisClientDeepstackSamples : ConversationAnalysisTestBase<ConversationAnalysisClient>
     {
-        public ConversationAnalysisWithLanguageSamples(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion)
+        public ConversationAnalysisClientDeepstackSamples(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
