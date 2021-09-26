@@ -12,6 +12,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     public partial class ConversationAnalysisClientSamples
     {
         [SyncOnly]
+        [RecordedTest]
         public void AnalyzeConversation()
         {
             ConversationAnalysisClient client = Client;
@@ -35,6 +36,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         }
 
         [AsyncOnly]
+        [RecordedTest]
         public async Task AnalyzeConversationAsync()
         {
             ConversationAnalysisClient client = Client;

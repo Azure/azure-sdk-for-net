@@ -8,12 +8,8 @@
         "Content-Length": "61",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-0018163a2a335f4f895ce24271253302-642346fb36061843-00",
-        "User-Agent": [
-          "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20210915.1",
-          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "4c29e5fe1d9885a814e7a3facddb1277",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20210926.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "835022b04f4a90447d4f47f8d74613b7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,16 +17,22 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ec6e472a-742d-4eaa-a89d-59521c4a6640",
-        "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
+        "apim-request-id": "597924ea-a265-41d3-97d9-4bd7c0cdb1ee",
+        "Cache-Control": [
+          "no-store",
+          "proxy-revalidate",
+          "no-cache",
+          "max-age=0",
+          "private"
+        ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Sep 2021 23:21:34 GMT",
-        "Pragma": "no-cache",
-        "request-id": "ec6e472a-742d-4eaa-a89d-59521c4a6640",
+        "Date": "Sun, 26 Sep 2021 13:21:15 GMT",
+        "pragma": "no-cache",
+        "request-id": "597924ea-a265-41d3-97d9-4bd7c0cdb1ee",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "179"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "49"
       },
       "ResponseBody": [
         "{\n",
@@ -69,6 +71,6 @@
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_PROJECT": "antischOne",
     "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
-    "RandomSeed": "1452147873"
+    "RandomSeed": "1793312835"
   }
 }

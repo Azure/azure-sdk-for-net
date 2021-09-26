@@ -9,9 +9,10 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
-    public partial class ConversationAnalysisClientSamples
+    public partial class ConversationAnalysisClientWithOptionsSamples
     {
         [SyncOnly]
+        [RecordedTest]
         public void AnalyzeConversationWithOptions()
         {
             ConversationAnalysisClient client = Client;
@@ -37,6 +38,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         }
 
         [AsyncOnly]
+        [RecordedTest]
         public async Task AnalyzeConversationWithOptionsAsync()
         {
             ConversationAnalysisClient client = Client;
