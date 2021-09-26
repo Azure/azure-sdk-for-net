@@ -5,22 +5,23 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppConfiguration.Models
+namespace Azure.ResourceManager.AppConfiguration
 {
-    public partial class PrivateEndpointConnectionReference
+    public partial class PrivateLinkResourceData
     {
-        internal static PrivateEndpointConnectionReference DeserializePrivateEndpointConnectionReference(JsonElement element)
+        internal static PrivateLinkResourceData DeserializePrivateLinkResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<PrivateEndpoint> privateEndpoint = default;
-            Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<string> groupId = default;
+            Optional<IReadOnlyList<string>> requiredMembers = default;
+            Optional<IReadOnlyList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -47,41 +48,46 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("groupId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            groupId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpoint"))
+                        if (property0.NameEquals("requiredMembers"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            requiredMembers = array;
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"))
+                        if (property0.NameEquals("requiredZoneNames"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            requiredZoneNames = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionReference(id, name, type, Optional.ToNullable(provisioningState), privateEndpoint.Value, privateLinkServiceConnectionState.Value);
+            return new PrivateLinkResourceData(id, name, type, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of ResourceIdentity. </summary>
         public ResourceIdentity()
         {
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserIdentity>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of ResourceIdentity. </summary>
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="userAssignedIdentities"> The list of user-assigned identities associated with the resource. The user-assigned identity dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </param>
         /// <param name="principalId"> The principal id of the identity. This property will only be provided for a system-assigned identity. </param>
         /// <param name="tenantId"> The tenant id associated with the resource&apos;s identity. This property will only be provided for a system-assigned identity. </param>
-        internal ResourceIdentity(IdentityType? type, IDictionary<string, UserIdentity> userAssignedIdentities, string principalId, string tenantId)
+        internal ResourceIdentity(IdentityType? type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, string principalId, string tenantId)
         {
             Type = type;
             UserAssignedIdentities = userAssignedIdentities;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> The type of managed identity used. The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user-assigned identities. The type &apos;None&apos; will remove any identities. </summary>
         public IdentityType? Type { get; set; }
         /// <summary> The list of user-assigned identities associated with the resource. The user-assigned identity dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </summary>
-        public IDictionary<string, UserIdentity> UserAssignedIdentities { get; }
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
         /// <summary> The principal id of the identity. This property will only be provided for a system-assigned identity. </summary>
         public string PrincipalId { get; }
         /// <summary> The tenant id associated with the resource&apos;s identity. This property will only be provided for a system-assigned identity. </summary>

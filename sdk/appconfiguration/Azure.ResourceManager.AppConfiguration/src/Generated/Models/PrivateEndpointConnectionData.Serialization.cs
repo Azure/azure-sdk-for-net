@@ -8,12 +8,32 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppConfiguration.Models;
 
-namespace Azure.ResourceManager.AppConfiguration.Models
+namespace Azure.ResourceManager.AppConfiguration
 {
-    public partial class PrivateEndpointConnectionReference
+    public partial class PrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        internal static PrivateEndpointConnectionReference DeserializePrivateEndpointConnectionReference(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrivateEndpoint))
+            {
+                writer.WritePropertyName("privateEndpoint");
+                writer.WriteObjectValue(PrivateEndpoint);
+            }
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            {
+                writer.WritePropertyName("privateLinkServiceConnectionState");
+                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+
+        internal static PrivateEndpointConnectionData DeserializePrivateEndpointConnectionData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -81,7 +101,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionReference(id, name, type, Optional.ToNullable(provisioningState), privateEndpoint.Value, privateLinkServiceConnectionState.Value);
+            return new PrivateEndpointConnectionData(id, name, type, Optional.ToNullable(provisioningState), privateEndpoint.Value, privateLinkServiceConnectionState.Value);
         }
     }
 }

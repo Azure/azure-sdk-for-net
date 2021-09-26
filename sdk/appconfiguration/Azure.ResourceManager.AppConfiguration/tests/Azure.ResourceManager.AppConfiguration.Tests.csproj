@@ -1,14 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <UseNewMgmtFramework>false</UseNewMgmtFramework>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
-  </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.AppConfiguration.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Network" VersionOverride="1.0.0-beta.2" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Resources" />
-    <PackageReference Include="Azure.ResourceManager.Network" />
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.AppConfiguration.csproj" />
   </ItemGroup>
 </Project>

@@ -6,26 +6,27 @@
 #nullable disable
 
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppConfiguration.Models
+namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> A reference to a related private endpoint connection. </summary>
-    public partial class PrivateEndpointConnectionReference : Resource
+    /// <summary> A class representing the PrivateEndpointConnection data model. </summary>
+    public partial class PrivateEndpointConnectionData : Resource
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionReference. </summary>
-        internal PrivateEndpointConnectionReference()
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
+        public PrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionReference. </summary>
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="provisioningState"> The provisioning status of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        internal PrivateEndpointConnectionReference(ResourceIdentifier id, string name, ResourceType type, ProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id, name, type)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, ProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id, name, type)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
@@ -35,8 +36,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> The provisioning status of the private endpoint connection. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resource of private endpoint. </summary>
-        public PrivateEndpoint PrivateEndpoint { get; }
+        public PrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
     }
 }

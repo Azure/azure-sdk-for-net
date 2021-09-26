@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         internal static ResourceIdentity DeserializeResourceIdentity(JsonElement element)
         {
             Optional<IdentityType> type = default;
-            Optional<IDictionary<string, UserIdentity>> userAssignedIdentities = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             Optional<string> principalId = default;
             Optional<string> tenantId = default;
             foreach (var property in element.EnumerateObject())
@@ -60,10 +61,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, UserIdentity> dictionary = new Dictionary<string, UserIdentity>();
+                    Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, UserIdentity.DeserializeUserIdentity(property0.Value));
+                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.ToString()));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
