@@ -11,7 +11,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationDeepstackSamples
     {
-        [RecordedTest]
         [SyncOnly]
         public void AnalyzeConversationDeepstack()
         {
@@ -52,12 +51,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine();
             }
             #endregion
-
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(deepstackPrediction.TopIntent, Is.EqualTo("Order"));
         }
 
-        [RecordedTest]
         [AsyncOnly]
         public async Task AnalyzeConversationDeepstackAsync()
         {
@@ -98,9 +93,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine();
             }
             #endregion
-
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationAnalysisClientSamples
     {
-        [RecordedTest]
         [SyncOnly]
         public void AnalyzeConversationWithOptions()
         {
@@ -35,12 +34,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
             #endregion
-
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
         }
 
-        [RecordedTest]
         [AsyncOnly]
         public async Task AnalyzeConversationWithOptionsAsync()
         {
@@ -64,9 +59,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
             #endregion
-
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
         }
     }
 }
