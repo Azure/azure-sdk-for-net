@@ -802,5 +802,16 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("InvalidAmqpMessageDictionaryTypeMask", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to This handler cannot be changed after an event has been enqueued; closing or disposing the producer will unregister any current hander..
+        /// </summary>
+        internal static string CannotChangeHandlersWhenPublishing
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotChangeHandlersWhenPublishing", resourceCulture);
+            }
+        }
     }
 }

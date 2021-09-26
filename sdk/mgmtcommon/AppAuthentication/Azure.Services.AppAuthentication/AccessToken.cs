@@ -100,6 +100,24 @@ namespace Microsoft.Azure.Services.AppAuthentication
         }
 
         /// <summary>
+        /// Return the deserialized tenantId if accessible
+        /// </summary>
+        /// <param name="accessToken">AccessToken to deserialize.</param>
+        /// <returns></returns>
+        public static string TenantIdInfo(string accessToken)
+        {
+            // From some scenarios, cannot access the tenantId, but valid token ie. encrypted tokens
+            try
+            {
+                return AccessToken.Parse(accessToken).TenantId;
+            }
+            catch (FormatException)
+            {
+                return "Hidden";
+            }
+        }
+
+        /// <summary>
         /// Check if the token is about to expire
         /// </summary>
         /// <returns></returns>
