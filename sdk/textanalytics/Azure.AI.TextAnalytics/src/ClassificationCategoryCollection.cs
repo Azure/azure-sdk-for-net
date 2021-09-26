@@ -9,14 +9,14 @@ using System.Linq;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="DocumentClassification"/> objects in a document,
+    /// Collection of <see cref="ClassificationCategory"/> objects in a document,
     /// and warnings encountered while processing the document.
     /// </summary>
-    [DebuggerTypeProxy(typeof(DocumentClassificationCollectionDebugView))]
-    public class DocumentClassificationCollection : ReadOnlyCollection<DocumentClassification>
+    [DebuggerTypeProxy(typeof(ClassificationCategoryCollectionDebugView))]
+    public class ClassificationCategoryCollection : ReadOnlyCollection<ClassificationCategory>
     {
-        internal DocumentClassificationCollection(IList<DocumentClassification> documentClassifications, IList<TextAnalyticsWarning> warnings)
-            : base(documentClassifications)
+        internal ClassificationCategoryCollection(IList<ClassificationCategory> classificationCategories, IList<TextAnalyticsWarning> warnings)
+            : base(classificationCategories)
         {
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
@@ -27,19 +27,19 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
 
         /// <summary>
-        /// Debugger Proxy class for <see cref="DocumentClassificationCollection"/>.
+        /// Debugger Proxy class for <see cref="ClassificationCategoryCollection"/>.
         /// </summary>
-        internal class DocumentClassificationCollectionDebugView
+        internal class ClassificationCategoryCollectionDebugView
         {
-            private DocumentClassificationCollection BaseCollection { get; }
+            private ClassificationCategoryCollection BaseCollection { get; }
 
-            public DocumentClassificationCollectionDebugView(DocumentClassificationCollection collection)
+            public ClassificationCategoryCollectionDebugView(ClassificationCategoryCollection collection)
             {
                 BaseCollection = collection;
             }
 
             [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-            public List<DocumentClassification> Items
+            public List<ClassificationCategory> Items
             {
                 get
                 {

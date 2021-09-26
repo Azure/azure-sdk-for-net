@@ -776,10 +776,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
         #endregion Extract summary
 
-        #region Classify Custom Categories
+        #region Multi Category Classify
 
         [Test]
-        public async Task AnalyzeOperationClassifyCustomCategoriesWithDisableServiceLogs()
+        public async Task AnalyzeOperationMultiCategoryClassifyWithDisableServiceLogs()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
@@ -792,14 +792,14 @@ namespace Azure.AI.TextAnalytics.Tests
                 "Elon Musk is the CEO of SpaceX and Tesla."
             };
 
-            var actions = new ClassifyCustomCategoriesAction(FakeProjectName, FakeDeploymentName)
+            var actions = new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName)
             {
                 DisableServiceLogs = true
             };
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ClassifyCustomCategoriesActions = new List<ClassifyCustomCategoriesAction>() { actions },
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>() { actions },
             };
 
             await client.StartAnalyzeActionsAsync(documents, batchActions);
@@ -812,7 +812,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public void AnalyzeOperationClassifyCustomCategoryWithTwoActions()
+        public void AnalyzeOperationMultiCategoryClassifyWithTwoActions()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
@@ -827,10 +827,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new()
             {
-                ClassifyCustomCategoriesActions = new List<ClassifyCustomCategoriesAction>()
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>()
                 {
-                    new ClassifyCustomCategoriesAction(FakeProjectName, FakeDeploymentName),
-                    new ClassifyCustomCategoriesAction(FakeProjectName, FakeDeploymentName)
+                    new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName),
+                    new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName)
                     {
                         DisableServiceLogs = true
                     }
@@ -1049,7 +1049,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
                 ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() },
                 SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction> { new SingleCategoryClassifyAction(FakeProjectName, FakeDeploymentName)},
-                ClassifyCustomCategoriesActions = new List<ClassifyCustomCategoriesAction>() { new ClassifyCustomCategoriesAction(FakeProjectName, FakeDeploymentName) },
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>() { new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName) },
                 DisplayName = "AnalyzeOperationBatchWithErrorTest"
             };
 
@@ -1071,7 +1071,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
             ExtractSummaryActionResult extractSummaryActionsResults = resultCollection.ExtractSummaryResults.FirstOrDefault();
             SingleCategoryClassifyActionResult singleCategoryClassifyActionResult = resultCollection.SingleCategoryClassifyResults.FirstOrDefault();
-            ClassifyCustomCategoriesActionResult classifyCustomCategoriesActionResult = resultCollection.ClassifyCustomCategoriesResults.FirstOrDefault();
+            MultiCategoryClassifyActionResult multiCategoryClassifyActionResult = resultCollection.MultiCategoryClassifyResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
@@ -1094,8 +1094,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(singleCategoryClassifyActionResult.HasError);
             Assert.Throws<InvalidOperationException>(() => singleCategoryClassifyActionResult.DocumentsResults.GetType());
             
-            Assert.IsTrue(classifyCustomCategoriesActionResult.HasError);
-            Assert.Throws<InvalidOperationException>(() => classifyCustomCategoriesActionResult.DocumentsResults.GetType());
+            Assert.IsTrue(multiCategoryClassifyActionResult.HasError);
+            Assert.Throws<InvalidOperationException>(() => multiCategoryClassifyActionResult.DocumentsResults.GetType());
         }
 
         [Test]

@@ -350,35 +350,35 @@ namespace Azure.AI.TextAnalytics
         }
 
         #endregion
-        
-        #region Classify Custom Categories
-        internal static List<DocumentClassification> ConvertToDocumentClassificationList(List<ClassificationResult> classifications)
-            => classifications.Select((classification) => new DocumentClassification(classification)).ToList();
 
-        internal static DocumentClassificationCollection ConvertToDocumentClassificationCollection(MultiClassificationDocument extractedClassificationsDocuments)
+        #region Multi Category Classify
+        internal static List<ClassificationCategory> ConvertToClassificationCategoryList(List<ClassificationResult> classifications)
+            => classifications.Select((classification) => new ClassificationCategory(classification)).ToList();
+
+        internal static ClassificationCategoryCollection ConvertToClassificationCategoryCollection(MultiClassificationDocument extractedClassificationsDocuments)
         {
-            return new DocumentClassificationCollection(ConvertToDocumentClassificationList(extractedClassificationsDocuments.Classifications.ToList()), ConvertToWarnings(extractedClassificationsDocuments.Warnings));
+            return new ClassificationCategoryCollection(ConvertToClassificationCategoryList(extractedClassificationsDocuments.Classifications.ToList()), ConvertToWarnings(extractedClassificationsDocuments.Warnings));
         }
 
-        internal static ClassifyCustomCategoriesResultCollection ConvertToClassifyCustomCategoryResultCollection(CustomMultiClassificationResult results, IDictionary<string, int> idToIndexMap)
+        internal static MultiCategoryClassifyResultCollection ConvertToMultiCategoryClassifyResultCollection(CustomMultiClassificationResult results, IDictionary<string, int> idToIndexMap)
         {
-            var classifiedCustomCategoryResults = new List<ClassifyCustomCategoriesResult>();
+            var classifiedCustomCategoryResults = new List<MultiCategoryClassifyResult>();
 
             //Read errors
             foreach (DocumentError error in results.Errors)
             {
-                classifiedCustomCategoryResults.Add(new ClassifyCustomCategoriesResult(error.Id, ConvertToError(error.Error)));
+                classifiedCustomCategoryResults.Add(new MultiCategoryClassifyResult(error.Id, ConvertToError(error.Error)));
             }
 
             //Read sentiments
             foreach (MultiClassificationDocument classificationsDocument in results.Documents)
             {
-                classifiedCustomCategoryResults.Add(new ClassifyCustomCategoriesResult(classificationsDocument.Id, classificationsDocument.Statistics ?? default, ConvertToDocumentClassificationCollection(classificationsDocument), ConvertToWarnings(classificationsDocument.Warnings)));
+                classifiedCustomCategoryResults.Add(new MultiCategoryClassifyResult(classificationsDocument.Id, classificationsDocument.Statistics ?? default, ConvertToClassificationCategoryCollection(classificationsDocument), ConvertToWarnings(classificationsDocument.Warnings)));
             }
 
             classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
 
-            return new ClassifyCustomCategoriesResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ProjectName, results.DeploymentName);
+            return new MultiCategoryClassifyResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ProjectName, results.DeploymentName);
         }
         #endregion
 
@@ -494,6 +494,7 @@ namespace Azure.AI.TextAnalytics
                 }
             };
         }
+        
         internal static CustomSingleClassificationTask ConvertToCustomSingleClassificationTask(SingleCategoryClassifyAction action)
         {
             return new CustomSingleClassificationTask()
@@ -505,7 +506,7 @@ namespace Azure.AI.TextAnalytics
             };
         }
         
-        internal static CustomMultiClassificationTask ConvertToCustomMultiClassificationTask(ClassifyCustomCategoriesAction action)
+        internal static CustomMultiClassificationTask ConvertToCustomMultiClassificationTask(MultiCategoryClassifyAction action)
         {
             return new CustomMultiClassificationTask()
             {
@@ -587,11 +588,11 @@ namespace Azure.AI.TextAnalytics
 
             return list;
         }
-        internal static IList<CustomMultiClassificationTask> ConvertFromClassifyCustomCategoriesActionsToTasks(IReadOnlyCollection<ClassifyCustomCategoriesAction> ClassifyCustomCategoriesActions)
+        internal static IList<CustomMultiClassificationTask> ConvertFromMultiCategoryClassifyActionsToTasks(IReadOnlyCollection<MultiCategoryClassifyAction> MultiCategoryClassifyActions)
         {
             List<CustomMultiClassificationTask> list = new List<CustomMultiClassificationTask>();
 
-            foreach (ClassifyCustomCategoriesAction action in ClassifyCustomCategoriesActions)
+            foreach (MultiCategoryClassifyAction action in MultiCategoryClassifyActions)
             {
                 list.Add(ConvertToCustomMultiClassificationTask(action));
             }
@@ -641,7 +642,7 @@ namespace Azure.AI.TextAnalytics
             IDictionary<int, TextAnalyticsErrorInternal> analyzeSentimentErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> extractSummaryErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> singleCategoryClassifyErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
-            IDictionary<int, TextAnalyticsErrorInternal> classifyCustomCategoriesErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+            IDictionary<int, TextAnalyticsErrorInternal> multiCategoryClassifyErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
 
             if (jobState.Errors.Any())
             {
@@ -684,7 +685,7 @@ namespace Azure.AI.TextAnalytics
                     }
                     else if ("customMultiClassificationTasks".Equals(taskName))
                     {
-                        classifyCustomCategoriesErrors.Add(taskIndex, error);
+                        multiCategoryClassifyErrors.Add(taskIndex, error);
                     }
                     else
                     {
@@ -701,13 +702,13 @@ namespace Azure.AI.TextAnalytics
                 ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
                 ConvertToExtractSummaryActionsResults(jobState, map, extractSummaryErrors),
                 ConvertToSingleCategoryClassifyResults(jobState, map, singleCategoryClassifyErrors)
-                ConvertToClassifyCustomCategoriesActionsResults(jobState, map, extractSummaryErrors)
+                ConvertToMultiCategoryClassifyActionsResults(jobState, map, multiCategoryClassifyErrors));
                 );
         }
 
-        private static IReadOnlyCollection<ClassifyCustomCategoriesActionResult> ConvertToClassifyCustomCategoriesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
+        private static IReadOnlyCollection<MultiCategoryClassifyActionResult> ConvertToMultiCategoryClassifyActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
-            var collection = new List<ClassifyCustomCategoriesActionResult>();
+            var collection = new List<MultiCategoryClassifyActionResult>();
             int index = 0;
             foreach (CustomMultiClassificationTasksItem task in jobState.Tasks.CustomMultiClassificationTasks)
             {
@@ -715,11 +716,11 @@ namespace Azure.AI.TextAnalytics
 
                 if (taskError != null)
                 {
-                    collection.Add(new ClassifyCustomCategoriesActionResult(task.LastUpdateDateTime, taskError));
+                    collection.Add(new MultiCategoryClassifyActionResult(task.LastUpdateDateTime, taskError));
                 }
                 else
                 {
-                    collection.Add(new ClassifyCustomCategoriesActionResult(ConvertToClassifyCustomCategoryResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
+                    collection.Add(new MultiCategoryClassifyActionResult(ConvertToMultiCategoryClassifyResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
                 }
                 index++;
             }

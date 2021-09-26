@@ -13,41 +13,41 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task ClassifyCustomCategoriesAsync()
+        public async Task MultiCategoryClassifyConvenienceAsync()
         {
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string projectName = TestEnvironment.MultiCategoriesProjectName;
-            string deploymentName = TestEnvironment.MultiCategoriesDeploymentName;
+            string projectName = TestEnvironment.MultiClassificationProjectName;
+            string deploymentName = TestEnvironment.MultiClassificationDeploymentName;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            #region Snippet:TextAnalyticsMultiCategoryClassifyAsync
             // Get input document.
             string document = @"I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and add it to my playlist.";
 
             // Prepare analyze operation input. You can add multiple documents to this list and perform the same
             // operation to all of them.
-            var batchDocuments = new List<TextDocumentInput>
+            var batchInput = new List<string>
             {
-                new TextDocumentInput("1", document)
-                {
-                     Language = "en",
-                }
+                document
             };
 
-            var classifyCustomCategoriesAction = new ClassifyCustomCategoriesAction(projectName, deploymentName);
+            var multiCategoryClassifyAction = new MultiCategoryClassifyAction(projectName, deploymentName);
 
             TextAnalyticsActions actions = new TextAnalyticsActions()
             {
-                ClassifyCustomCategoriesActions = new List<ClassifyCustomCategoriesAction>() { classifyCustomCategoriesAction }
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>() { multiCategoryClassifyAction }
             };
 
             // Start analysis process.
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchInput, actions);
 
             await operation.WaitForCompletionAsync();
+            #endregion Snippet:TextAnalyticsMultiCategoryClassifyAsync
 
+            #region Snippet:TextAnalyticsMultiCategoryClassifyOperationStatus
             // View operation status.
             Console.WriteLine($"AnalyzeActions operation has completed");
             Console.WriteLine();
@@ -58,13 +58,15 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Status       : {operation.Status}");
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
+            #endregion Snippet:TextAnalyticsMultiCategoryClassifyOperationStatus
 
+            #region Snippet:TextAnalyticsMultiCategoryClassifyAsyncViewResults
             // View operation results.
             await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
-                IReadOnlyCollection<ClassifyCustomCategoriesActionResult> classificationResultsCollection = documentsInPage.ClassifyCustomCategoriesResults;
+                IReadOnlyCollection<MultiCategoryClassifyActionResult> classificationResultsCollection = documentsInPage.MultiCategoryClassifyResults;
 
-                foreach (ClassifyCustomCategoriesActionResult classificationActionResults in classificationResultsCollection)
+                foreach (MultiCategoryClassifyActionResult classificationActionResults in classificationResultsCollection)
                 {
                     if (classificationActionResults.HasError)
                     {
@@ -74,7 +76,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         continue;
                     }
 
-                    foreach (ClassifyCustomCategoriesResult documentResults in classificationActionResults.DocumentsResults)
+                    foreach (MultiCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
                         if (documentResults.HasError)
                         {
@@ -84,11 +86,11 @@ namespace Azure.AI.TextAnalytics.Samples
                             continue;
                         }
 
-                        if (documentResults.DocumentClassifications.Count > 0)
+                        if (documentResults.ClassificationCategories.Count > 0)
                         {
                             Console.WriteLine($"  The following classes were predicted for this document:");
 
-                            foreach (DocumentClassification classification in documentResults.DocumentClassifications)
+                            foreach (ClassificationCategory classification in documentResults.ClassificationCategories)
                             {
                                 Console.WriteLine($"  Class category \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
                             }
@@ -98,6 +100,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
                 }
             }
+            #endregion Snippet:TextAnalyticsMultiCategoryClassifyAsyncViewResults
         }
     }
 }

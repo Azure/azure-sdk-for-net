@@ -13,13 +13,13 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public void ClassifyCustomCategories()
+        public void MultiCategoryClassifyConvenience()
         {
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string projectName = TestEnvironment.MultiCategoriesProjectName;
-            string deploymentName = TestEnvironment.MultiCategoriesDeploymentName;
+            string projectName = TestEnvironment.MultiClassificationProjectName;
+            string deploymentName = TestEnvironment.MultiClassificationDeploymentName;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -28,23 +28,20 @@ namespace Azure.AI.TextAnalytics.Samples
 
             // Prepare analyze operation input. You can add multiple documents to this list and perform the same
             // operation to all of them.
-            var batchDocuments = new List<TextDocumentInput>
+            var batchInput = new List<string>
             {
-                new TextDocumentInput("1", document)
-                {
-                     Language = "en",
-                }
+                document
             };
 
-            var classifyCustomCategoriesAction = new ClassifyCustomCategoriesAction(projectName, deploymentName);
+            var multiCategoryClassifyAction = new MultiCategoryClassifyAction(projectName, deploymentName);
 
             TextAnalyticsActions actions = new TextAnalyticsActions()
             {
-                ClassifyCustomCategoriesActions = new List<ClassifyCustomCategoriesAction>() { classifyCustomCategoriesAction }
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>() { multiCategoryClassifyAction }
             };
 
             // Start analysis process.
-            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchDocuments, actions);
+            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchInput, actions);
 
             // Wait for completion with manual polling.
             TimeSpan pollingInterval = new TimeSpan(1000);
@@ -75,9 +72,9 @@ namespace Azure.AI.TextAnalytics.Samples
             // View operation results.
             foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {
-                IReadOnlyCollection<ClassifyCustomCategoriesActionResult> classificationResultsCollection = documentsInPage.ClassifyCustomCategoriesResults;
+                IReadOnlyCollection<MultiCategoryClassifyActionResult> classificationResultsCollection = documentsInPage.MultiCategoryClassifyResults;
 
-                foreach (ClassifyCustomCategoriesActionResult classificationActionResults in classificationResultsCollection)
+                foreach (MultiCategoryClassifyActionResult classificationActionResults in classificationResultsCollection)
                 {
                     if (classificationActionResults.HasError)
                     {
@@ -87,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         continue;
                     }
 
-                    foreach (ClassifyCustomCategoriesResult documentResults in classificationActionResults.DocumentsResults)
+                    foreach (MultiCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
                         if (documentResults.HasError)
                         {
@@ -97,11 +94,11 @@ namespace Azure.AI.TextAnalytics.Samples
                             continue;
                         }
 
-                        if (documentResults.DocumentClassifications.Count > 0)
+                        if (documentResults.ClassificationCategories.Count > 0)
                         {
                             Console.WriteLine($"  The following classes were predicted for this document:");
 
-                            foreach (DocumentClassification classification in documentResults.DocumentClassifications)
+                            foreach (ClassificationCategory classification in documentResults.ClassificationCategories)
                             {
                                 Console.WriteLine($"  Class category \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
                             }

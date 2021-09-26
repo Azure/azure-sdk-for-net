@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
             IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults,
             IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyActionResults
-            IReadOnlyCollection<ClassifyCustomCategoriesActionResult> classifyCustomCategoriesActionResults
+            IReadOnlyCollection<MultiCategoryClassifyActionResult> multiCategoryClassifyActionResults
             )
         {
             ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics
             AnalyzeSentimentResults = analyzeSentimentActionResults;
             ExtractSummaryResults = extractSummaryActionResults;
             SingleCategoryClassifyResults = singleCategoryClassifyActionResults;
-            ClassifyCustomCategoriesResults = classifyCustomCategoriesActionResults;
+            MultiCategoryClassifyResults = multiCategoryClassifyActionResults;
         }
 
         /// <summary>
@@ -69,6 +69,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Determines the collection of <see cref="ExtractSummaryActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<ClassifyCustomCategoriesActionResult> ClassifyCustomCategoriesResults { get; }
+        public IReadOnlyCollection<MultiCategoryClassifyActionResult> MultiCategoryClassifyResults { get; }
     }
 }
