@@ -9,13 +9,13 @@ using System.Linq;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="ClassifyCustomCategoryResult"/> objects corresponding
+    /// Collection of <see cref="SingleCategoryClassifyResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
-    [DebuggerTypeProxy(typeof(ClassifyCustomCategoryResultCollectionDebugView))]
-    public class ClassifyCustomCategoryResultCollection : ReadOnlyCollection<ClassifyCustomCategoryResult>
+    [DebuggerTypeProxy(typeof(SingleCategoryClassifyResultCollectionDebugView))]
+    public class SingleCategoryClassifyResultCollection : ReadOnlyCollection<SingleCategoryClassifyResult>
     {
-        internal ClassifyCustomCategoryResultCollection(IList<ClassifyCustomCategoryResult> list, TextDocumentBatchStatistics statistics,
+        internal SingleCategoryClassifyResultCollection(IList<SingleCategoryClassifyResult> list, TextDocumentBatchStatistics statistics,
             string projectName, string deploymentName) : base(list)
         {
             Statistics = statistics;
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the value of the property corresponding to the name of the
         /// target project that produced these results. This should be the same
-        /// as the project name set when creating the <see cref="ClassifyCustomCategoryAction"/>
+        /// as the project name set when creating the <see cref="SingleCategoryClassifyAction"/>
         /// object used to start the operation.
         /// </summary>
         public string ProjectName { get; }
@@ -41,25 +41,25 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the value of the property corresponding to the deployment name
         /// of the project that produced these results. This should be the same
-        /// as the deployment name set when creating the <see cref="ClassifyCustomCategoryAction"/>
+        /// as the deployment name set when creating the <see cref="SingleCategoryClassifyAction"/>
         /// object used to start the operation.
         /// </summary>
         public string DeploymentName { get; }
 
         /// <summary>
-        /// Debugger Proxy class for <see cref="ClassifyCustomCategoryResultCollection"/>.
+        /// Debugger Proxy class for <see cref="SingleCategoryClassifyResultCollection"/>.
         /// </summary>
-        internal class ClassifyCustomCategoryResultCollectionDebugView
+        internal class SingleCategoryClassifyResultCollectionDebugView
         {
-            private ClassifyCustomCategoryResultCollection BaseCollection { get; }
+            private SingleCategoryClassifyResultCollection BaseCollection { get; }
 
-            public ClassifyCustomCategoryResultCollectionDebugView(ClassifyCustomCategoryResultCollection collection)
+            public SingleCategoryClassifyResultCollectionDebugView(SingleCategoryClassifyResultCollection collection)
             {
                 BaseCollection = collection;
             }
 
             [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-            public List<ClassifyCustomCategoryResult> Items
+            public List<SingleCategoryClassifyResult> Items
             {
                 get
                 {

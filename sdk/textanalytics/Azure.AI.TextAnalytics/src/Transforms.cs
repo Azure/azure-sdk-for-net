@@ -351,26 +351,26 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region ClassifyCustomCategoryResult
-        internal static ClassifyCustomCategoryResultCollection ConvertToClassifyCustomCategoryResultCollection(CustomSingleClassificationResult results, IDictionary<string, int> idToIndexMap)
+        #region SingleCategoryClassifyResult
+        internal static SingleCategoryClassifyResultCollection ConvertToSingleCategoryClassifyResultCollection(CustomSingleClassificationResult results, IDictionary<string, int> idToIndexMap)
         {
-            var classifiedCustomCategoryResults = new List<ClassifyCustomCategoryResult>();
+            var classifiedCustomCategoryResults = new List<SingleCategoryClassifyResult>();
 
             //Read errors
             foreach (DocumentError error in results.Errors)
             {
-                classifiedCustomCategoryResults.Add(new ClassifyCustomCategoryResult(error.Id, ConvertToError(error.Error)));
+                classifiedCustomCategoryResults.Add(new SingleCategoryClassifyResult(error.Id, ConvertToError(error.Error)));
             }
 
             //Read sentiments
             foreach (SingleClassificationDocument classificationDocument in results.Documents)
             {
-                classifiedCustomCategoryResults.Add(new ClassifyCustomCategoryResult(classificationDocument.Id, classificationDocument.Statistics ?? default, new DocumentClassification(classificationDocument), ConvertToWarnings(classificationDocument.Warnings)));
+                classifiedCustomCategoryResults.Add(new SingleCategoryClassifyResult(classificationDocument.Id, classificationDocument.Statistics ?? default, new ClassificationCategory(classificationDocument), ConvertToWarnings(classificationDocument.Warnings)));
             }
 
             classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
 
-            return new ClassifyCustomCategoryResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ProjectName, results.DeploymentName);
+            return new SingleCategoryClassifyResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ProjectName, results.DeploymentName);
         }
         #endregion
 
@@ -463,7 +463,7 @@ namespace Azure.AI.TextAnalytics
                 }
             };
         }
-        internal static CustomSingleClassificationTask ConvertToCustomSingleClassificationTask(ClassifyCustomCategoryAction action)
+        internal static CustomSingleClassificationTask ConvertToCustomSingleClassificationTask(SingleCategoryClassifyAction action)
         {
             return new CustomSingleClassificationTask()
             {
@@ -546,11 +546,11 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
-        internal static IList<CustomSingleClassificationTask> ConvertFromClassifyCustomCategoryActionsToTasks(IReadOnlyCollection<ClassifyCustomCategoryAction> classifyCustomCategoryActions)
+        internal static IList<CustomSingleClassificationTask> ConvertFromSingleCategoryClassifyActionsToTasks(IReadOnlyCollection<SingleCategoryClassifyAction> singleCategoryClassifyActions)
         {
             List<CustomSingleClassificationTask> list = new List<CustomSingleClassificationTask>();
 
-            foreach (ClassifyCustomCategoryAction action in classifyCustomCategoryActions)
+            foreach (SingleCategoryClassifyAction action in singleCategoryClassifyActions)
             {
                 list.Add(ConvertToCustomSingleClassificationTask(action));
             }
@@ -587,7 +587,7 @@ namespace Azure.AI.TextAnalytics
             IDictionary<int, TextAnalyticsErrorInternal> entitiesLinkingRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> analyzeSentimentErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> extractSummaryErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
-            IDictionary<int, TextAnalyticsErrorInternal> classifyCustomCategoryErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+            IDictionary<int, TextAnalyticsErrorInternal> singleCategoryClassifyErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
 
             if (jobState.Errors.Any())
             {
@@ -626,7 +626,7 @@ namespace Azure.AI.TextAnalytics
                     }
                     else if ("customSingleClassificationTasks".Equals(taskName))
                     {
-                        classifyCustomCategoryErrors.Add(taskIndex, error);
+                        singleCategoryClassifyErrors.Add(taskIndex, error);
                     }
                     else
                     {
@@ -642,12 +642,12 @@ namespace Azure.AI.TextAnalytics
                 ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
                 ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
                 ConvertToExtractSummaryActionsResults(jobState, map, extractSummaryErrors),
-                ConvertToClassifyCustomCategoryResults(jobState, map, classifyCustomCategoryErrors));
+                ConvertToSingleCategoryClassifyResults(jobState, map, singleCategoryClassifyErrors));
         }
 
-        private static IReadOnlyCollection<ClassifyCustomCategoryActionResult> ConvertToClassifyCustomCategoryResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
+        private static IReadOnlyCollection<SingleCategoryClassifyActionResult> ConvertToSingleCategoryClassifyResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
-            var collection = new List<ClassifyCustomCategoryActionResult>();
+            var collection = new List<SingleCategoryClassifyActionResult>();
             int index = 0;
             foreach (CustomSingleClassificationTasksItem task in jobState.Tasks.CustomSingleClassificationTasks)
             {
@@ -655,11 +655,11 @@ namespace Azure.AI.TextAnalytics
 
                 if (taskError != null)
                 {
-                    collection.Add(new ClassifyCustomCategoryActionResult(task.LastUpdateDateTime, taskError));
+                    collection.Add(new SingleCategoryClassifyActionResult(task.LastUpdateDateTime, taskError));
                 }
                 else
                 {
-                    collection.Add(new ClassifyCustomCategoryActionResult(ConvertToClassifyCustomCategoryResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
+                    collection.Add(new SingleCategoryClassifyActionResult(ConvertToSingleCategoryClassifyResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
                 }
                 index++;
             }

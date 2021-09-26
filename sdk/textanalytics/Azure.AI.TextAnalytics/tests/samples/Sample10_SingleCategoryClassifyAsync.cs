@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public void ClassifyCustomCategoryConvenience()
+        public async Task SingleCategoryClassifyAsync()
         {
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
@@ -28,35 +28,25 @@ namespace Azure.AI.TextAnalytics.Samples
 
             // Prepare analyze operation input. You can add multiple documents to this list and perform the same
             // operation to all of them.
-            var batchInput = new List<string>
+            var batchDocuments = new List<TextDocumentInput>
             {
-                document
+                new TextDocumentInput("1", document)
+                {
+                     Language = "en",
+                }
             };
 
-            var classifyCustomCategoryAction = new ClassifyCustomCategoryAction(projectName, deploymentName);
+            var singleCategoryClassifyAction = new SingleCategoryClassifyAction(projectName, deploymentName);
 
             TextAnalyticsActions actions = new TextAnalyticsActions()
             {
-                ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction>() { classifyCustomCategoryAction }
+                SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction>() { singleCategoryClassifyAction }
             };
 
             // Start analysis process.
-            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchInput, actions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
 
-            // Wait for completion with manual polling.
-            TimeSpan pollingInterval = new TimeSpan(1000);
-
-            while (true)
-            {
-                Console.WriteLine($"Status: {operation.Status}");
-                operation.UpdateStatus();
-                if (operation.HasCompleted)
-                {
-                    break;
-                }
-
-                Thread.Sleep(pollingInterval);
-            }
+            await operation.WaitForCompletionAsync();
 
             // View operation status.
             Console.WriteLine($"AnalyzeActions operation has completed");
@@ -70,11 +60,11 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // View operation results.
-            foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
+            await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
-                IReadOnlyCollection<ClassifyCustomCategoryActionResult> classificationResultsCollection = documentsInPage.ClassifyCustomCategoryResults;
+                IReadOnlyCollection<SingleCategoryClassifyActionResult> classificationResultsCollection = documentsInPage.SingleCategoryClassifyResults;
 
-                foreach (ClassifyCustomCategoryActionResult classificationActionResults in classificationResultsCollection)
+                foreach (SingleCategoryClassifyActionResult classificationActionResults in classificationResultsCollection)
                 {
                     if (classificationActionResults.HasError)
                     {
@@ -84,7 +74,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         continue;
                     }
 
-                    foreach (ClassifyCustomCategoryResult documentResults in classificationActionResults.DocumentsResults)
+                    foreach (SingleCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
                         if (documentResults.HasError)
                         {
@@ -94,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Samples
                             continue;
                         }
 
-                        Console.WriteLine($"  Class category \"{documentResults.DocumentClassification.Category}\" predicted with a confidence score of {documentResults.DocumentClassification.ConfidenceScore}.");
+                        Console.WriteLine($"  Class category \"{documentResults.ClassificationCategory.Category}\" predicted with a confidence score of {documentResults.ClassificationCategory.ConfidenceScore}.");
                         Console.WriteLine();
                     }
                 }

@@ -2474,9 +2474,9 @@ namespace Azure.AI.TextAnalytics
             {
                 tasks.ExtractiveSummarizationTasks = Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions);
             }
-            if (actions.ClassifyCustomCategoryActions != null)
+            if (actions.SingleCategoryClassifyActions != null)
             {
-                tasks.CustomSingleClassificationTasks = Transforms.ConvertFromClassifyCustomCategoryActionsToTasks(actions.ClassifyCustomCategoryActions);
+                tasks.CustomSingleClassificationTasks = Transforms.ConvertFromSingleCategoryClassifyActionsToTasks(actions.SingleCategoryClassifyActions);
             }
             return tasks;
         }
@@ -2489,7 +2489,7 @@ namespace Azure.AI.TextAnalytics
                 actions.ExtractKeyPhrasesActions?.Count > 1 ||
                 actions.AnalyzeSentimentActions?.Count > 1 ||
                 actions.ExtractSummaryActions?.Count > 1 ||
-                actions.ClassifyCustomCategoryActions?.Count > 1)
+                actions.SingleCategoryClassifyActions?.Count > 1)
             {
                 throw new ArgumentException("Multiple of the same action is not currently supported.");
             }

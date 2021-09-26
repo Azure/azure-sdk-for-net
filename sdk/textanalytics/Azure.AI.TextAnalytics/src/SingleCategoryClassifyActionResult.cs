@@ -7,16 +7,16 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the execution of an <see cref="ClassifyCustomCategoryAction"/> on the input documents.
+    /// The result of the execution of an <see cref="SingleCategoryClassifyAction"/> on the input documents.
     /// </summary>
-    public class ClassifyCustomCategoryActionResult : TextAnalyticsActionResult
+    public class SingleCategoryClassifyActionResult : TextAnalyticsActionResult
     {
-        private readonly ClassifyCustomCategoryResultCollection _documentsResults;
+        private readonly SingleCategoryClassifyResultCollection _documentsResults;
 
         /// <summary>
         /// Successful action.
         /// </summary>
-        internal ClassifyCustomCategoryActionResult(ClassifyCustomCategoryResultCollection result, DateTimeOffset completedOn)
+        internal SingleCategoryClassifyActionResult(SingleCategoryClassifyResultCollection result, DateTimeOffset completedOn)
             : base(completedOn)
         {
             _documentsResults = result;
@@ -25,13 +25,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Action with an error.
         /// </summary>
-        internal ClassifyCustomCategoryActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+        internal SingleCategoryClassifyActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
             : base(completedOn, error) { }
 
         /// <summary>
-        /// Gets the result of the execution of an <see cref="ClassifyCustomCategoryAction"/> per each input document.
+        /// Gets the result of the execution of an <see cref="SingleCategoryClassifyAction"/> per each input document.
         /// </summary>
-        public ClassifyCustomCategoryResultCollection DocumentsResults
+        public SingleCategoryClassifyResultCollection DocumentsResults
         {
             get
             {

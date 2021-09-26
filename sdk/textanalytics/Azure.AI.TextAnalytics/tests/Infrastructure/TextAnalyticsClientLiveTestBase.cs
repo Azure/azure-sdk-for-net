@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Tests
         private readonly TextAnalyticsClientOptions.ServiceVersion _serviceVersion;
 
         public TextAnalyticsClientLiveTestBase(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync)
+            : base(isAsync, RecordedTestMode.Record)
         {
             _serviceVersion = serviceVersion;
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();

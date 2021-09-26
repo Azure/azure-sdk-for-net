@@ -136,10 +136,10 @@ namespace Azure.AI.TextAnalytics.Tests
                 TextAnalyticsModelFactory.AnalyzeSentimentActionResult(default, default)
             };
 
-            var classifyCustomCategoryActionResults = new List<ClassifyCustomCategoryActionResult>()
+            var singleCategoryClassifyActionResults = new List<SingleCategoryClassifyActionResult>()
             {
-                TextAnalyticsModelFactory.ClassifyCustomCategoryActionResult(default, default),
-                TextAnalyticsModelFactory.ClassifyCustomCategoryActionResult(default, default)
+                TextAnalyticsModelFactory.SingleCategoryClassifyActionResult(default, default),
+                TextAnalyticsModelFactory.SingleCategoryClassifyActionResult(default, default)
             };
 
             var actionsResult = TextAnalyticsModelFactory.AnalyzeActionsResult(
@@ -169,7 +169,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 recognizeLinkedEntitiesActionResults,
                 analyzeSentimentActionResults,
                 extractSummaryActionResults,
-                classifyCustomCategoryActionResults);
+                singleCategoryClassifyActionResults);
 
             CollectionAssert.AreEquivalent(extractKeyPhrasesActionResults, actionsResult.ExtractKeyPhrasesResults);
             CollectionAssert.AreEquivalent(recognizeEntitiesActionResults, actionsResult.RecognizeEntitiesResults);
@@ -177,7 +177,7 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(recognizeLinkedEntitiesActionResults, actionsResult.RecognizeLinkedEntitiesResults);
             CollectionAssert.AreEquivalent(analyzeSentimentActionResults, actionsResult.AnalyzeSentimentResults);
             CollectionAssert.AreEquivalent(extractSummaryActionResults, actionsResult.ExtractSummaryResults);
-            CollectionAssert.AreEquivalent(classifyCustomCategoryActionResults, actionsResult.ClassifyCustomCategoryResults);
+            CollectionAssert.AreEquivalent(singleCategoryClassifyActionResults, actionsResult.SingleCategoryClassifyResults);
         }
 
         [Test]

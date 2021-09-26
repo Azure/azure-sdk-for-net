@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task ClassifyCustomCategoryAsync()
+        public async Task SingleCategoryClassifyConvenienceAsync()
         {
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
@@ -23,31 +23,31 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            #region Snippet:TextAnalyticsSingleCategoryClassifyAsync
             // Get input document.
             string document = @"I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and add it to my playlist.";
 
             // Prepare analyze operation input. You can add multiple documents to this list and perform the same
             // operation to all of them.
-            var batchDocuments = new List<TextDocumentInput>
+            var batchInput = new List<string>
             {
-                new TextDocumentInput("1", document)
-                {
-                     Language = "en",
-                }
+                document
             };
 
-            var classifyCustomCategoryAction = new ClassifyCustomCategoryAction(projectName, deploymentName);
+            var singleCategoryClassifyAction = new SingleCategoryClassifyAction(projectName, deploymentName);
 
             TextAnalyticsActions actions = new TextAnalyticsActions()
             {
-                ClassifyCustomCategoryActions = new List<ClassifyCustomCategoryAction>() { classifyCustomCategoryAction }
+                SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction>() { singleCategoryClassifyAction }
             };
 
             // Start analysis process.
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchInput, actions);
 
             await operation.WaitForCompletionAsync();
+            #endregion Snippet:TextAnalyticsSingleCategoryClassifyAsync
 
+            #region Snippet:TextAnalyticsSingleCategoryClassifyOperationStatus
             // View operation status.
             Console.WriteLine($"AnalyzeActions operation has completed");
             Console.WriteLine();
@@ -58,13 +58,15 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Status       : {operation.Status}");
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
+            #endregion Snippet:TextAnalyticsSingleCategoryClassifyOperationStatus
 
+            #region Snippet:TextAnalyticsSingleCategoryClassifyAsyncViewResults
             // View operation results.
             await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
-                IReadOnlyCollection<ClassifyCustomCategoryActionResult> classificationResultsCollection = documentsInPage.ClassifyCustomCategoryResults;
+                IReadOnlyCollection<SingleCategoryClassifyActionResult> classificationResultsCollection = documentsInPage.SingleCategoryClassifyResults;
 
-                foreach (ClassifyCustomCategoryActionResult classificationActionResults in classificationResultsCollection)
+                foreach (SingleCategoryClassifyActionResult classificationActionResults in classificationResultsCollection)
                 {
                     if (classificationActionResults.HasError)
                     {
@@ -74,7 +76,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         continue;
                     }
 
-                    foreach (ClassifyCustomCategoryResult documentResults in classificationActionResults.DocumentsResults)
+                    foreach (SingleCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
                         if (documentResults.HasError)
                         {
@@ -84,11 +86,12 @@ namespace Azure.AI.TextAnalytics.Samples
                             continue;
                         }
 
-                        Console.WriteLine($"  Class category \"{documentResults.DocumentClassification.Category}\" predicted with a confidence score of {documentResults.DocumentClassification.ConfidenceScore}.");
+                        Console.WriteLine($"  Class category \"{documentResults.ClassificationCategory.Category}\" predicted with a confidence score of {documentResults.ClassificationCategory.ConfidenceScore}.");
                         Console.WriteLine();
                     }
                 }
             }
+            #endregion Snippet:TextAnalyticsSingleCategoryClassifyAsyncViewResults
         }
     }
 }
