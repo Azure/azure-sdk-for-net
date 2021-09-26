@@ -83,6 +83,13 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
+        protected async Task<AFDEndpoint> CreateAFDEndpoint(Profile profile, string endpointName)
+        {
+            AFDEndpointData AFDEndpointInput = ResourceDataHelper.CreateAFDEndpointData();
+            var lro = await profile.GetAFDEndpoints().CreateOrUpdateAsync(endpointName, AFDEndpointInput);
+            return lro.Value;
+        }
+
         protected async Task<Origin> CreateOrigin(Endpoint endpoint, string originName)
         {
             OriginData originData = ResourceDataHelper.CreateOriginData();
@@ -92,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         protected async Task<OriginGroup> CreateOriginGroup(Endpoint endpoint, string originGroupName, string originName)
         {
-            OriginGroupData originGroupData = new OriginGroupData();
+            OriginGroupData originGroupData = ResourceDataHelper.CreateOriginGroupData();
             originGroupData.Origins.Add(new ResourceReference
             {
                 Id = $"{endpoint.Id}/origins/{originName}"
@@ -101,10 +108,24 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
+        protected async Task<AFDOriginGroup> CreateAFDOriginGroup(Profile profile, string originGroupName)
+        {
+            AFDOriginGroupData AFDOriginGroupInput = ResourceDataHelper.CreateAFDOriginGroupData();
+            var lro = await profile.GetAFDOriginGroups().CreateOrUpdateAsync(originGroupName, AFDOriginGroupInput);
+            return lro.Value;
+        }
+
         protected async Task<CustomDomain> CreateCustomDomain(Endpoint endpoint, string customDomainName, string hostName)
         {
             CustomDomainParameters customDomainParameters = ResourceDataHelper.CreateCustomDomainParameters(hostName);
             var lro = await endpoint.GetCustomDomains().CreateOrUpdateAsync(customDomainName, customDomainParameters);
+            return lro.Value;
+        }
+
+        protected async Task<AFDDomain> CreateAFDCustomDomain(Profile profile, string customDomainName, string hostName)
+        {
+            AFDDomainData AFDCustomDomainData = ResourceDataHelper.CreateAFDCustomDomainData(hostName);
+            var lro = await profile.GetAFDDomains().CreateOrUpdateAsync(customDomainName, AFDCustomDomainData);
             return lro.Value;
         }
     }

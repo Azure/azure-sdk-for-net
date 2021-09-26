@@ -68,6 +68,24 @@ directive:
           "final-state-via": "original-uri"
       }
   - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}'].patch
+    transform: >
+      $['x-ms-long-running-operation-options'] = {
+          "final-state-via": "original-uri"
+      }
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].patch
+    transform: >
+      $['x-ms-long-running-operation-options'] = {
+          "final-state-via": "original-uri"
+      }
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}'].patch
+    transform: >
+      $['x-ms-long-running-operation-options'] = {
+          "final-state-via": "original-uri"
+      }
+  - from: swagger-document
     where: $.definitions.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup
     transform: $['x-nullable'] = true
   - from: swagger-document
@@ -82,11 +100,14 @@ directive:
   - from: swagger-document
     where: $.definitions.EndpointPropertiesUpdateParameters.properties.webApplicationFirewallPolicyLink
     transform: $['x-nullable'] = true
-  - from: cdn.json
+  - from: swagger-document
     where: $.definitions.*.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
     transform: $['x-nullable'] = true
   - from: cdn.json
     where: $.definitions.*.properties.responseBasedOriginErrorDetectionSettings
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.AFDOriginGroupUpdatePropertiesParameters.properties.responseBasedAfdOriginErrorDetectionSettings
     transform: $['x-nullable'] = true
   - from: cdn.json
     where: $.definitions.*.properties.healthProbeSettings
@@ -105,6 +126,12 @@ directive:
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.definitions.OriginProperties.properties.privateEndpointStatus
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.WafMetricsResponse.properties.series.items.properties.groups
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.AFDDomainHttpsParameters.properties.secret
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.paths['/providers/Microsoft.Cdn/checkNameAvailability'].post.operationId

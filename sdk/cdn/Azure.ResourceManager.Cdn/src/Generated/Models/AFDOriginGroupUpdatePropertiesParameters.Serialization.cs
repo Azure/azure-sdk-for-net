@@ -27,13 +27,27 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
             {
-                writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
-                writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
+                {
+                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                    writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                }
+                else
+                {
+                    writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                }
             }
             if (Optional.IsDefined(ResponseBasedAfdOriginErrorDetectionSettings))
             {
-                writer.WritePropertyName("responseBasedAfdOriginErrorDetectionSettings");
-                writer.WriteObjectValue(ResponseBasedAfdOriginErrorDetectionSettings);
+                if (ResponseBasedAfdOriginErrorDetectionSettings != null)
+                {
+                    writer.WritePropertyName("responseBasedAfdOriginErrorDetectionSettings");
+                    writer.WriteObjectValue(ResponseBasedAfdOriginErrorDetectionSettings);
+                }
+                else
+                {
+                    writer.WriteNull("responseBasedAfdOriginErrorDetectionSettings");
+                }
             }
             if (Optional.IsDefined(SessionAffinityState))
             {

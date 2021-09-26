@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal AFDCustomDomainUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<AFDDomain>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AFDCustomDomainUpdateOperation");
+            _operation = new OperationInternals<AFDDomain>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "AFDCustomDomainUpdateOperation");
             _operationBase = operationsBase;
         }
 

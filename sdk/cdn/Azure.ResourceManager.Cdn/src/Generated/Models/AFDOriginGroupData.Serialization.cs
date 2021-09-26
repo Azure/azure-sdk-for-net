@@ -31,13 +31,27 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
             {
-                writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
-                writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
+                {
+                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                    writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                }
+                else
+                {
+                    writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                }
             }
             if (Optional.IsDefined(ResponseBasedAfdOriginErrorDetectionSettings))
             {
-                writer.WritePropertyName("responseBasedAfdOriginErrorDetectionSettings");
-                writer.WriteObjectValue(ResponseBasedAfdOriginErrorDetectionSettings);
+                if (ResponseBasedAfdOriginErrorDetectionSettings != null)
+                {
+                    writer.WritePropertyName("responseBasedAfdOriginErrorDetectionSettings");
+                    writer.WriteObjectValue(ResponseBasedAfdOriginErrorDetectionSettings);
+                }
+                else
+                {
+                    writer.WriteNull("responseBasedAfdOriginErrorDetectionSettings");
+                }
             }
             if (Optional.IsDefined(SessionAffinityState))
             {
@@ -56,7 +70,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceType type = default;
             Optional<LoadBalancingSettingsParameters> loadBalancingSettings = default;
             Optional<HealthProbeParameters> healthProbeSettings = default;
-            Optional<int> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             Optional<ResponseBasedOriginErrorDetectionParameters> responseBasedAfdOriginErrorDetectionSettings = default;
             Optional<EnabledState> sessionAffinityState = default;
             Optional<AfdProvisioningState> provisioningState = default;
@@ -121,7 +135,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                trafficRestorationTimeToHealedOrNewEndpointsInMinutes = null;
                                 continue;
                             }
                             trafficRestorationTimeToHealedOrNewEndpointsInMinutes = property0.Value.GetInt32();
@@ -131,7 +145,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                responseBasedAfdOriginErrorDetectionSettings = null;
                                 continue;
                             }
                             responseBasedAfdOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionParameters.DeserializeResponseBasedOriginErrorDetectionParameters(property0.Value);

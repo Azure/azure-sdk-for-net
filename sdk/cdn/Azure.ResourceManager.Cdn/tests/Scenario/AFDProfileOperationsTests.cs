@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileUpdateParameters updateParameters = new ProfileUpdateParameters();
             updateParameters.Tags.Add("newTag", "newValue");
             var lro = await AFDProfile.UpdateAsync(updateParameters);
-            Profile updatedProfile = lro.Value;
-            ResourceDataHelper.AssertProfileUpdate(updatedProfile, updateParameters);
+            Profile updatedAFDProfile = lro.Value;
+            ResourceDataHelper.AssertProfileUpdate(updatedAFDProfile, updateParameters);
         }
 
         [TestCase]
@@ -94,13 +94,77 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task GetLogAnalyticsMetrics()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
-            string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Profile AFDProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             List<LogMetric> metric = new List<LogMetric>() { LogMetric.ClientRequestCount };
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
             DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
-            MetricsResponse mtricsResponse = await AFDProfile.GetLogAnalyticsMetricsAsync(metric, dateTimeBegin, dateTimeEnd, LogMetricsGranularity.PT5M, new List<string>(), new List<string>());
+            List<string> customDomain = new List<string>() { "customdomain4afd.azuretest.net" };
+            List<string> protocols = new List<string>() { "https" };
+            MetricsResponse mtricsResponse = await AFDProfile.GetLogAnalyticsMetricsAsync(metric, dateTimeBegin, dateTimeEnd, LogMetricsGranularity.PT5M, customDomain, protocols);
+            Assert.AreEqual(mtricsResponse.Granularity, MetricsResponseGranularity.PT5M);
+            Assert.AreEqual(mtricsResponse.Series.Count, 0);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetLogAnalyticsRankings()
+        {
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Profile AFDProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
+            List<LogRanking> rankings = new List<LogRanking>() { LogRanking.Url };
+            List<LogRankingMetric> metric = new List<LogRankingMetric>() { LogRankingMetric.ClientRequestCount };
+            int maxRankings = 5;
+            DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
+            RankingsResponse rankingsResponse = await AFDProfile.GetLogAnalyticsRankingsAsync(rankings, metric, maxRankings, dateTimeBegin, dateTimeEnd);
+            Assert.AreEqual(rankingsResponse.Tables.Count, 1);
+            Assert.AreEqual(rankingsResponse.Tables[0].Ranking, LogRanking.Url.ToString());
+            Assert.AreEqual(rankingsResponse.Tables[0].Data.Count, 0);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        [Ignore("The id of ResourcesResponseEndpointsItem and also ResourcesResponseCustomDomainsItem inherits from subResource")]
+        public async Task GetLogAnalyticsResources()
+        {
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Profile AFDProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
+            ResourcesResponse resourcesResponse = await AFDProfile.GetLogAnalyticsResourcesAsync();
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetWafLogAnalyticsMetrics()
+        {
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Profile AFDProfile = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
+            List<WafMetric> metric = new List<WafMetric>() { WafMetric.ClientRequestCount };
+            DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
+            WafMetricsResponse wafMtricsResponse = await AFDProfile.GetWafLogAnalyticsMetricsAsync(metric, dateTimeBegin, dateTimeEnd, WafGranularity.PT5M);
+            Assert.AreEqual(wafMtricsResponse.Granularity, WafMetricsResponseGranularity.PT5M);
+            Assert.AreEqual(wafMtricsResponse.Series.Count, 1);
+            Assert.AreEqual(wafMtricsResponse.Series[0].Metric, WafMetric.ClientRequestCount.ToString());
+            Assert.AreEqual(wafMtricsResponse.Series[0].Unit, "count");
+            Assert.AreEqual(wafMtricsResponse.Series[0].Data.Count, 0);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetWafLogAnalyticsRankings()
+        {
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Profile AFDProfile = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
+            List<WafMetric> metric = new List<WafMetric>() { WafMetric.ClientRequestCount };
+            DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
+            int maxRankings = 5;
+            List<WafRankingType> rankings = new List<WafRankingType>() { WafRankingType.UserAgent };
+            WafRankingsResponse wafRankingsResponse = await AFDProfile.GetWafLogAnalyticsRankingsAsync(metric, dateTimeBegin, dateTimeEnd, maxRankings, rankings);
+            Assert.AreEqual(wafRankingsResponse.Groups.Count, 1);
+            Assert.AreEqual(wafRankingsResponse.Groups[0], WafRankingType.UserAgent.ToString());
+            Assert.AreEqual(wafRankingsResponse.Data.Count, 0);
         }
     }
 }

@@ -24,8 +24,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(Secret))
             {
-                writer.WritePropertyName("secret");
-                writer.WriteObjectValue(Secret);
+                if (Secret != null)
+                {
+                    writer.WritePropertyName("secret");
+                    writer.WriteObjectValue(Secret);
+                }
+                else
+                {
+                    writer.WriteNull("secret");
+                }
             }
             writer.WriteEndObject();
         }
@@ -56,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        secret = null;
                         continue;
                     }
                     secret = ResourceReference.DeserializeResourceReference(property.Value);
