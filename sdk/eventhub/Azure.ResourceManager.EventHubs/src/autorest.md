@@ -21,7 +21,6 @@ operation-group-to-resource-type:
 operation-group-to-resource:
     PrivateLinkResources: NonResource
     Regions: NonResource
-    Configuration: ClusterQuotaConfigurationProperties
     DisasterRecoveryConfigAuthorizationRules: AuthorizationRule
     NamespaceName: NonResource
     DisasterRecoveryConfigName: NonResource
