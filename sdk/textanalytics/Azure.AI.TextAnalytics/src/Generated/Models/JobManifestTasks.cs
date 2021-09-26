@@ -27,9 +27,7 @@ namespace Azure.AI.TextAnalytics
             CustomSingleClassificationTasks = new ChangeTrackingList<CustomSingleClassificationTask>();
             CustomMultiClassificationTasks = new ChangeTrackingList<CustomMultiClassificationTask>();
         }
-        /// <summary> Gets the custom entity recognition tasks. </summary>
         public IList<CustomEntitiesTask> CustomEntityRecognitionTasks { get; }
-        /// <summary> Gets the custom single classification tasks. </summary>
         public IList<CustomSingleClassificationTask> CustomSingleClassificationTasks { get; }
     }
 }
