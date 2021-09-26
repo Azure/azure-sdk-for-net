@@ -23,11 +23,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         [JsonPropertyName("requestHosts")]
         internal List<string> RequestHosts { get; }
 
-        /// <summary>
-        /// Name of the request type.
-        /// </summary>
-        public override string Name => nameof(ValidationRequest);
-
         internal ValidationRequest(bool valid, List<string> requestHosts)
             :base(null)
         {

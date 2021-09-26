@@ -10,6 +10,5 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     public abstract class ServiceResponse
     {
-        internal Dictionary<string, object> States { get; set; } = new Dictionary<string, object>();
     }
 }

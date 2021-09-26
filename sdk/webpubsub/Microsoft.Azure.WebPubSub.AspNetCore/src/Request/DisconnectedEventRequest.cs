@@ -19,11 +19,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         [JsonPropertyName(ReasonProperty)]
         public string Reason { get; }
 
-        /// <summary>
-        /// Name of the request.
-        /// </summary>
-        public override string Name => nameof(DisconnectedEventRequest);
-
         internal DisconnectedEventRequest(string reason) : base(null)
         {
             Reason = reason;

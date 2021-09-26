@@ -43,11 +43,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         [JsonPropertyName(ClientCertificatesProperty)]
         public ClientCertificateInfo[] ClientCertificates { get; }
 
-        /// <summary>
-        /// The name of the request.
-        /// </summary>
-        public override string Name => nameof(ConnectEventRequest);
-
         internal ConnectEventRequest(
             IDictionary<string, string[]> claims,
             IDictionary<string, string[]> query,

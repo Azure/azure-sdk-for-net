@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
@@ -11,6 +12,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     public class MessageResponse : ServiceResponse
     {
+        internal Dictionary<string, object> States = new();
+
         /// <summary>
         /// Message.
         /// </summary>
@@ -48,5 +51,28 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// </summary>
         public MessageResponse()
         { }
+
+        /// <summary>
+        /// Set connection states.
+        /// </summary>
+        /// <param name="key">State key.</param>
+        /// <param name="value">State value.</param>
+        public void SetState(string key, object value)
+        {
+            // In case user cleared states.
+            if (States == null)
+            {
+                States = new Dictionary<string, object>();
+            }
+            States[key] = value;
+        }
+
+        /// <summary>
+        /// Clear all states.
+        /// </summary>
+        public void ClearStates()
+        {
+            States = null;
+        }
     }
 }

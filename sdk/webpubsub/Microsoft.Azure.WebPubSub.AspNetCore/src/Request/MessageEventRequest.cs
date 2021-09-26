@@ -23,11 +23,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         [JsonPropertyName("dataType"), JsonConverter(typeof(JsonStringEnumConverter))]
         public MessageDataType DataType { get; }
 
-        /// <summary>
-        /// Name of the request.
-        /// </summary>
-        public override string Name => nameof(MessageEventRequest);
-
         internal MessageEventRequest(ConnectionContext connectionContext, BinaryData message, MessageDataType dataType)
             : base(connectionContext)
         {

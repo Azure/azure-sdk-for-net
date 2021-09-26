@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -18,35 +19,27 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
     public class ServiceRequestHandlerTests
     {
         private const string TestEndpoint = "https://my-host.webpubsub.net";
-        private readonly WebPubSubValidationOptions _options;
-        private readonly ServiceRequestHandler _handler;
-        private readonly string _testHost;
-
-        public ServiceRequestHandlerTests()
-        {
-            _options = new WebPubSubValidationOptions($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
-            _handler = new ServiceRequestHandlerAdapter(_options);
-            _testHost = new Uri(TestEndpoint).Host;
-        }
 
         [Test]
         public async Task TestHandleAbuseProtection()
         {
             var context = PrepareHttpContext(httpMethod: HttpMethods.Options);
+            var handler = new ServiceRequestHandlerAdapter(new WebPubSubValidationOptions($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"), new TestHub(), null);
 
-            await _handler.HandleRequest(context, new TestHub());
+            await handler.HandleRequest(context);
 
             context.Response.Headers.TryGetValue(Constants.Headers.WebHookAllowedOrigin, out var allowedOrigin);
             Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
-            Assert.AreEqual(_testHost, allowedOrigin);
+            Assert.AreEqual("*", allowedOrigin.SingleOrDefault());
         }
 
         [Test]
         public async Task TestHandleAbuseProtection_Invalid()
         {
             var context = PrepareHttpContext(httpMethod: HttpMethods.Options, uriStr: "https://attacker.com");
+            var handler = new ServiceRequestHandlerAdapter(new WebPubSubValidationOptions($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"), new TestHub(), null);
 
-            await _handler.HandleRequest(context, new TestHub());
+            await handler.HandleRequest(context);
 
             Assert.AreEqual(StatusCodes.Status400BadRequest, context.Response.StatusCode);
         }
@@ -56,8 +49,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         {
             var connectBody = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\", \"protocol2\"],\"clientCertificates\":[]}";
             var context = PrepareHttpContext(httpMethod: HttpMethods.Post, eventName: "connect", body: connectBody);
+            var handler = new ServiceRequestHandlerAdapter(new WebPubSubValidationOptions($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"), new TestHub(), null);
 
-            await _handler.HandleRequest(context, new TestHub());
+            await handler.HandleRequest(context);
 
             Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
             context.Response.Body.Seek(0, SeekOrigin.Begin);
@@ -70,8 +64,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         public async Task TestHandleMessage()
         {
             var context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world");
+            var handler = new ServiceRequestHandlerAdapter(new WebPubSubValidationOptions($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"), new TestHub(), null);
 
-            await _handler.HandleRequest(context, new TestHub());
+            await handler.HandleRequest(context);
 
             Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
             context.Response.Body.Seek(0, SeekOrigin.Begin);
@@ -83,12 +78,15 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public async Task TestStateChanges()
         {
-            var initState = new Dictionary<string, object>();
-            initState.Add("counter", 2);
+            var initState = new Dictionary<string, object>
+            {
+                { "counter", 2 }
+            };
             var context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world", connectionState: initState);
+            var handler = new ServiceRequestHandlerAdapter(new WebPubSubValidationOptions($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"), new TestHub(1), null);
 
             // 1 to update counter to 10.
-            await _handler.HandleRequest(context, new TestHub(1));
+            await handler.HandleRequest(context);
 
             context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out var states);
             Assert.NotNull(states);
@@ -98,7 +96,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             // 2 to add a new state.
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world", connectionState: initState);
-            await _handler.HandleRequest(context, new TestHub(2));
+            handler = new ServiceRequestHandlerAdapter(new WebPubSubValidationOptions($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"), new TestHub(2), null);
+            await handler.HandleRequest(context);
 
             context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out states);
             Assert.NotNull(states);
@@ -108,14 +107,16 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             // 3 to clear states
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world", connectionState: initState);
-            await _handler.HandleRequest(context, new TestHub(3));
+            handler = new ServiceRequestHandlerAdapter(new WebPubSubValidationOptions($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"), new TestHub(3), null);
+            await handler.HandleRequest(context);
 
-            var exist = context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out states);
+            var exist = context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out _);
             Assert.False(exist);
 
             // 4 clar and add
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "hello world", connectionState: initState);
-            await _handler.HandleRequest(context, new TestHub(4));
+            handler = new ServiceRequestHandlerAdapter(new WebPubSubValidationOptions($"Endpoint={TestEndpoint};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"), new TestHub(4), null);
+            await handler.HandleRequest(context);
 
             context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out states);
             Assert.NotNull(states);

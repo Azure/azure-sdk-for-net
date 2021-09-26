@@ -21,12 +21,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public ConnectionContext ConnectionContext { get; internal set;}
 
         /// <summary>
-        /// Request name indicate request type.
-        /// </summary>
-        [JsonPropertyName(NameProperty)]
-        public abstract string Name { get; }
-
-        /// <summary>
         /// Create instance of <see cref="ServiceRequest"/>
         /// </summary>
         /// <param name="context">Parameter connection context.</param>

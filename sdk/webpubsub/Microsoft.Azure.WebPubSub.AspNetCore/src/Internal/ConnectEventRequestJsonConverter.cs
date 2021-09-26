@@ -24,8 +24,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public override void Write(Utf8JsonWriter writer, ConnectEventRequest value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName(ServiceRequest.NameProperty);
-            JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName(ConnectEventRequest.ClaimsProperty);
             JsonSerializer.Serialize(writer, value.Claims, options);
             writer.WritePropertyName(ConnectEventRequest.QueryProperty);

@@ -20,8 +20,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public override void Write(Utf8JsonWriter writer, DisconnectedEventRequest value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName(ServiceRequest.NameProperty);
-            JsonSerializer.Serialize(writer, value.Name, options);
             writer.WritePropertyName(DisconnectedEventRequest.ReasonProperty);
             JsonSerializer.Serialize(writer, value.Reason, options);
             if (value.ConnectionContext != null)

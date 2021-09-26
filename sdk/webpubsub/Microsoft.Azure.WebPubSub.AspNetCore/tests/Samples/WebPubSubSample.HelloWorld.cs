@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.AspNetCore.Builder;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
 {
@@ -10,40 +9,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
     {
         public void Configure(IApplicationBuilder app)
         {
-            #region Snippet:WebPubSubValidationOptions
-            var wpsHandler = new WebPubSubRequestHandlerBuilder()
-                .AddValidationOptions(new WebPubSubValidationOptions("<connection-string>"))
-                .Build();
-            #endregion
-
-            app.UseEndpoints(endpoints =>
+            app.UseWebPubSub(builder =>
             {
-                endpoints.Map("/eventhandler", async context =>
-                {
-                    var testHub = new SampleHub();
-                    await wpsHandler.HandleRequest(context, testHub);
-                });
+                builder.MapHub("/eventhander", new SampleHub());
+            },
+            options =>
+            {
+                options = new WebPubSubValidationOptions("<connection-string1>", "<connection-string2");
             });
-        }
-
-        private sealed class SampleHub : ServiceHub
-        {
-            #region Snippet:WebPubSubConnectMethods
-            public override Task<ServiceResponse> Connect(ConnectEventRequest request)
-            {
-                var response = new ConnectResponse
-                {
-                    UserId = request.ConnectionContext.UserId
-                };
-                return Task.FromResult<ServiceResponse>(response);
-            }
-            #endregion
-
-            public override Task<ServiceResponse> Message(MessageEventRequest request)
-            {
-                var response = new MessageResponse("ack");
-                return Task.FromResult<ServiceResponse>(response);
-            }
         }
     }
 }

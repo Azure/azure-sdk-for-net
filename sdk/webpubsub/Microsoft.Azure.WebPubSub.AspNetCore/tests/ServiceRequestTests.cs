@@ -17,16 +17,19 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
     [TestFixture]
     public class ServiceRequestTests
     {
-        private static Uri TestUri = new Uri("https://my-host.com");
+        private static readonly Uri TestUri = new Uri("https://my-host.com");
 
         [Test]
         public void TestUpdateConnectionState()
         {
-            var exist = new Dictionary<string, object>();
-            exist.Add("aaa", "aaa");
-            exist.Add("bbb", "bbb");
+            var exist = new Dictionary<string, object>
+            {
+                { "aaa", "aaa" },
+                { "bbb", "bbb" }
+            };
             var connectionContext = new ConnectionContext();
-            connectionContext.States = exist;
+
+            connectionContext.InitStates(exist);
 
             var response = new ConnectResponse
             {
@@ -34,7 +37,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             };
             response.SetState("test", "ddd");
             response.SetState("bbb", "bbb1");
-            var updated = connectionContext.UpdateStates(response);
+            var updated = connectionContext.UpdateStates(response.States);
 
             // new
             Assert.AreEqual("ddd", updated["test"]);
@@ -44,7 +47,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.AreEqual("bbb1", updated["bbb"]);
 
             response.ClearStates();
-            updated = connectionContext.UpdateStates(response);
+            updated = connectionContext.UpdateStates(response.States);
 
             // After clear is null.
             Assert.IsNull(updated);
@@ -53,9 +56,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestEncodeAndDecodeState()
         {
-            var state = new Dictionary<string, object>();
-            state.Add("aaa", "aaa");
-            state.Add("bbb", "bbb");
+            var state = new Dictionary<string, object>
+            {
+                { "aaa", "aaa" },
+                { "bbb", "bbb" }
+            };
 
             var encoded = state.EncodeConnectionStates();
 
@@ -95,7 +100,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var body = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\", \"protocol2\"],\"clientCertificates\":[]}";
             var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectEvent, body: body);
 
-            var request = await context.Request.ToServiceRequest();
+            var request = await context.Request.ParseServiceRequest(null);
 
             Assert.AreEqual(typeof(ConnectEventRequest), request.GetType());
 
@@ -110,7 +115,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         {
             var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectedEvent);
 
-            var request = await context.Request.ToServiceRequest();
+            var request = await context.Request.ParseServiceRequest(null);
 
             Assert.AreEqual(typeof(ConnectedEventRequest), request.GetType());
 
@@ -126,7 +131,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var text = "hello world";
             var context = PrepareHttpContext(TestUri, WebPubSubEventType.User, "message", body: text);
 
-            var request = await context.Request.ToServiceRequest();
+            var request = await context.Request.ParseServiceRequest(null);
 
             Assert.AreEqual(typeof(MessageEventRequest), request.GetType());
 
@@ -174,7 +179,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 Signature = "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 Origin = TestUri.Host
             };
-            var options = new WebPubSubValidationOptions();
             var result = connectionContext.IsValidSignature(null);
             Assert.True(result);
         }

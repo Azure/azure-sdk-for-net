@@ -40,6 +40,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 public const string EventName = Prefix + "eventName";
                 public const string UserId = Prefix + "userId";
                 public const string State = Prefix + "connectionState";
+                public const string WebPubSubVersion = Prefix + "awpsversion";
 
                 public const string TypeSystemPrefix = "azure.webpubsub.sys.";
                 public const string TypeUserPrefix = "azure.webpubsub.user.";
