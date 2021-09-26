@@ -30,17 +30,17 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <summary>
         /// Initializes a new instance of the ReplicationObject class.
         /// </summary>
-        /// <param name="replicationSchedule">Schedule. Possible values
-        /// include: '_10minutely', 'hourly', 'daily'</param>
         /// <param name="remoteVolumeResourceId">The resource ID of the remote
         /// volume.</param>
         /// <param name="replicationId">Id</param>
         /// <param name="endpointType">Indicates whether the local volume is
         /// the source or destination for the Volume Replication. Possible
         /// values include: 'src', 'dst'</param>
+        /// <param name="replicationSchedule">Schedule. Possible values
+        /// include: '_10minutely', 'hourly', 'daily'</param>
         /// <param name="remoteVolumeRegion">The remote region for the other
         /// end of the Volume Replication.</param>
-        public ReplicationObject(string replicationSchedule, string remoteVolumeResourceId, string replicationId = default(string), string endpointType = default(string), string remoteVolumeRegion = default(string))
+        public ReplicationObject(string remoteVolumeResourceId, string replicationId = default(string), string endpointType = default(string), string replicationSchedule = default(string), string remoteVolumeRegion = default(string))
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
@@ -97,10 +97,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ReplicationSchedule == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ReplicationSchedule");
-            }
             if (RemoteVolumeResourceId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RemoteVolumeResourceId");

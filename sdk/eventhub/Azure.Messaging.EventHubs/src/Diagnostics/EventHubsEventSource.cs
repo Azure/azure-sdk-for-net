@@ -1385,6 +1385,132 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is about to begin processing events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        ///
+        [Event(70, Level = EventLevel.Informational, Message = "Starting background processing for the buffered producer instance with identifier '{0}' for Event Hub: {1}..")]
+        public virtual void BufferedProducerBackgroundProcessingStart(string identifier,
+                                                                      string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(70, identifier ?? string.Empty, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is about to begin processing events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the producer is associated with.</param>
+        ///
+        [Event(71, Level = EventLevel.Informational, Message = "Background processing for the buffered producer instance with identifier '{0}' for Event Hub: {1} has completed starting.")]
+        public virtual void BufferedProducerBackgroundProcessingStartComplete(string identifier,
+                                                                              string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(71, identifier ?? string.Empty, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception while starting to process events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the producer is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(72, Level = EventLevel.Error, Message = "An exception occurred while starting background processing for the buffered producer instance with identifier '{0}' for Event Hub: {1}.  Error Message: '{3}'")]
+        public virtual void BufferedProducerBackgroundProcessingStartError(string identifier,
+                                                                           string eventHubName,
+                                                                           string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(72, identifier ?? string.Empty, eventHubName ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is beginning to stop processing events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        ///
+        [Event(73, Level = EventLevel.Informational, Message = "The buffered producer instance with identifier '{0}' for Event Hub: {1} is beginning to stop processing.")]
+        public virtual void BufferedProducerBackgroundProcessingStop(string identifier,
+                                                                     string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(73, identifier ?? string.Empty, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has been stopped and is no longer processing events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        ///
+        [Event(74, Level = EventLevel.Informational, Message = "The buffered producer instance with identifier '{0}' for Event Hub: {1} has completed stopping processing.")]
+        public virtual void BufferedProducerBackgroundProcessingStopComplete(string identifier,
+                                                                             string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(74, identifier ?? string.Empty, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception while stopping.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(75, Level = EventLevel.Error, Message = "An exception occurred while stopping processing for the buffered producer instance with identifier '{0}' for Event Hub: {1}.  Error Message: '{2}'")]
+        public virtual void BufferedProducerBackgroundProcessingStopError(string identifier,
+                                                                          string eventHubName,
+                                                                          string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(75, identifier ?? string.Empty, eventHubName ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in its
+        ///   background management task.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(76, Level = EventLevel.Error, Message = "An exception occurred in the management task for the buffered producer instance with identifier '{0}' for Event Hub: {1}.  The task will be restarted; this is normally non-fatal.  If happening consistently, it may indicate a problem with the health of the producer.  Error Message: '{2}'")]
+        public virtual void BufferedProducerManagementTaskError(string identifier,
+                                                                string eventHubName,
+                                                                string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(76, identifier ?? string.Empty, eventHubName ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Indicates that an exception was encountered in an unexpected code path, not directly associated with
         ///   an Event Hubs operation.
         /// </summary>

@@ -50,7 +50,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. Possible
         /// values include: 'Primary', 'PrimaryNotReplicating',
         /// 'Secondary'</param>
-        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), long? pendingReplicationOperationsCount = default(long?), string partnerNamespace = default(string), string alternateName = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), long? pendingReplicationOperationsCount = default(long?), string partnerNamespace = default(string), string alternateName = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
@@ -58,6 +60,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             PartnerNamespace = partnerNamespace;
             AlternateName = alternateName;
             Role = role;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -102,6 +105,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.role")]
         public RoleDisasterRecovery? Role { get; private set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

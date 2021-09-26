@@ -25,10 +25,10 @@ namespace Azure.AI.Language.Conversations
     }
     public partial class ConversationAnalysisClientOptions : Azure.Core.ClientOptions
     {
-        public ConversationAnalysisClientOptions(Azure.AI.Language.Conversations.ConversationAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationAnalysisClientOptions.ServiceVersion.V2021_07_15_preview) { }
+        public ConversationAnalysisClientOptions(Azure.AI.Language.Conversations.ConversationAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationAnalysisClientOptions.ServiceVersion.V2021_07_15_Preview) { }
         public enum ServiceVersion
         {
-            V2021_07_15_preview = 1,
+            V2021_07_15_Preview = 1,
         }
     }
 }

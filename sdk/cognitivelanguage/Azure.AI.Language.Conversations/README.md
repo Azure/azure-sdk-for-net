@@ -98,7 +98,6 @@ Response<AnalyzeConversationResult> response = client.AnalyzeConversation(option
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
-
 ### Analyze a conversation in a different language
 
 The language property in the `AnalyzeConversationOptions` can be used to specify the language of the conversation. 
