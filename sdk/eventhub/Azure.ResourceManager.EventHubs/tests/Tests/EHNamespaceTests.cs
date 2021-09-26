@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("tags is null")]
+        [Ignore("tags are null")]
         public async Task NamespaceGetMessagingPlan()
         {
             //create namespace
@@ -328,6 +328,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("tags are null")]
         public async Task ListRegionsBySku()
         {
             //list regions of sku basic
