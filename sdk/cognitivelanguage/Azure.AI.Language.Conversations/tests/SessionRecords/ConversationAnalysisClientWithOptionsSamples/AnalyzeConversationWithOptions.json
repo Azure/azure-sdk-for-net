@@ -9,7 +9,7 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20210926.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "835022b04f4a90447d4f47f8d74613b7",
+        "x-ms-client-request-id": "dd9711fa140ceb63d3a70adaa395fa63",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -17,7 +17,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "597924ea-a265-41d3-97d9-4bd7c0cdb1ee",
+        "apim-request-id": "4d5c967d-fc49-487f-bcac-b7a9889b9173",
         "Cache-Control": [
           "no-store",
           "proxy-revalidate",
@@ -26,13 +26,13 @@
           "private"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 26 Sep 2021 13:21:15 GMT",
+        "Date": "Sun, 26 Sep 2021 15:41:22 GMT",
         "pragma": "no-cache",
-        "request-id": "597924ea-a265-41d3-97d9-4bd7c0cdb1ee",
+        "request-id": "4d5c967d-fc49-487f-bcac-b7a9889b9173",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "49"
+        "x-envoy-upstream-service-time": "55"
       },
       "ResponseBody": [
         "{\n",
@@ -71,6 +71,6 @@
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_PROJECT": "antischOne",
     "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
-    "RandomSeed": "1793312835"
+    "RandomSeed": "1051478437"
   }
 }

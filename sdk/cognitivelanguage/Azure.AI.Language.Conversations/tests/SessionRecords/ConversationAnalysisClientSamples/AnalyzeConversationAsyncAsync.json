@@ -8,9 +8,9 @@
         "Content-Length": "61",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-74ef55c2975aac4caadf6a9ac288f4fa-833e6004e5298640-00",
+        "traceparent": "00-5eb190cb179509488b2b22676462c72c-94a6cf2740dca649-00",
         "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20210926.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "ee8807dc0b9bb789b313489ea9e6b53c",
+        "x-ms-client-request-id": "f5a0aa56f4391be6a0e91ba910057d15",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,7 +18,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "409e471f-dda3-42d4-9d7b-2520b06e4e0e",
+        "apim-request-id": "f6448014-95ea-4c94-93ee-8da25d87b34e",
         "Cache-Control": [
           "no-store",
           "proxy-revalidate",
@@ -27,13 +27,13 @@
           "private"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 26 Sep 2021 13:21:13 GMT",
+        "Date": "Sun, 26 Sep 2021 15:41:20 GMT",
         "pragma": "no-cache",
-        "request-id": "409e471f-dda3-42d4-9d7b-2520b06e4e0e",
+        "request-id": "f6448014-95ea-4c94-93ee-8da25d87b34e",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "50"
+        "x-envoy-upstream-service-time": "101"
       },
       "ResponseBody": [
         "{\n",
@@ -72,6 +72,6 @@
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_PROJECT": "antischOne",
     "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
-    "RandomSeed": "804914377"
+    "RandomSeed": "1177888865"
   }
 }
