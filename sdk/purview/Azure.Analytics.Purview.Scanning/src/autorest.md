@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 title: PurviewScanningService
-input-file: https://github.com/Azure/azure-rest-api-specs/blob/8478d2280c54d0065ac6271e39321849c090c659/specification/purview/data-plane/Azure.Data.Purview.Scanning/preview/2018-12-01-preview/scanningService.json
+input-file: https://github.com/Azure/azure-rest-api-specs/blob/1c7df99f6a84335cfd7bf5be8c800d72c1dddbc2/specification/purview/data-plane/Azure.Analytics.Purview.Scanning/preview/2018-12-01-preview/scanningService.json
 namespace: Azure.Analytics.Purview.Scanning
 low-level-client: true
 security: AADToken
@@ -77,10 +77,10 @@ directive:
     where: $..[?(@.operationId !== undefined)]
     transform: >
       const mappingTable = {
-        "AzureKeyVaults_GetAzureKeyVault": "GetKeyVaultReference",
-        "AzureKeyVaults_CreateAzureKeyVault": "CreateOrUpdateKeyVaultReference",
-        "AzureKeyVaults_DeleteAzureKeyVault": "DeleteKeyVaultReference",
-        "AzureKeyVaults_ListByAccount": "GetKeyVaultReferences",
+        "KeyVaultConnections_Get": "GetKeyVaultReference",
+        "KeyVaultConnections_Create": "CreateOrUpdateKeyVaultReference",
+        "KeyVaultConnections_Delete": "DeleteKeyVaultReference",
+        "KeyVaultConnections_ListAll": "GetKeyVaultReferences",
         "ClassificationRules_Get": "PurviewClassificationRule_GetProperties",
         "ClassificationRules_CreateOrUpdate": "PurviewClassificationRule_CreateOrUpdate",
         "ClassificationRules_Delete": "PurviewClassificationRule_Delete",
@@ -90,26 +90,24 @@ directive:
         "DataSources_CreateOrUpdate": "PurviewDataSource_CreateOrUpdate",
         "DataSources_Get": "PurviewDataSource_GetProperties",
         "DataSources_Delete": "PurviewDataSource_Delete",
-        "DataSources_ListByAccount": "GetDataSources",
-        "DataSources_ListChildrenByCollection": "PurviewDataSource_GetChildren",
-        "DataSource_ListUnparentedDataSourcesByAccount": "GetUnparentedDataSources",
+        "DataSources_ListAll": "GetDataSources",
         "Filters_Get": "PurviewScan_GetFilter",
         "Filters_CreateOrUpdate": "PurviewScan_CreateOrUpdateFilter",
         "Scans_CreateOrUpdate": "PurviewScan_CreateOrUpdate",
         "Scans_Get": "PurviewScan_GetProperties",
         "Scans_Delete": "PurviewScan_Delete",
         "Scans_ListByDataSource": "PurviewDataSource_GetScans",
-        "Scans_RunScan": "PurviewScan_RunScan",
-        "Scans_CancelScan": "PurviewScan_CancelScan",
-        "Scans_ListScanHistory": "PurviewScan_GetRuns",
+        "ScanResult_RunScan": "PurviewScan_RunScan",
+        "ScanResult_CancelScan": "PurviewScan_CancelScan",
+        "ScanResult_ListScanHistory": "PurviewScan_GetRuns",
         "ScanRulesets_Get": "GetScanRuleset",
-        "ScanRulesets_CreateOrUpdate": "CreateOrUpdateScanRuelset",
+        "ScanRulesets_CreateOrUpdate": "CreateOrUpdateScanRuleset",
         "ScanRulesets_Delete": "DeleteScanRuleset",
         "ScanRulesets_ListAll": "GetScanRulesets",
         "SystemScanRulesets_ListAll": "GetSystemRulesets",
         "SystemScanRulesets_Get": "GetSystemRulesetsForDataSource",
         "SystemScanRulesets_GetByVersion": "GetSystemRulesetsForVersion",
-        "SystemScanRulesets_GetLatest": "GetLatestSystemRulestes",
+        "SystemScanRulesets_GetLatest": "GetLatestSystemRulesets",
         "SystemScanRulesets_ListVersionsByDataSource": "GetSystemRulesetsVersions",
         "Triggers_GetTrigger": "PurviewScan_GetTrigger",
         "Triggers_CreateTrigger": "PurviewScan_CreateOrUpdateTrigger",
