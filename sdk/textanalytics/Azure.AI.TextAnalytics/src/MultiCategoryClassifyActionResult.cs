@@ -7,16 +7,16 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the execution of an <see cref="ClassifyCustomCategoriesAction"/> on the input documents.
+    /// The result of the execution of an <see cref="MultiCategoryClassifyAction"/> on the input documents.
     /// </summary>
-    public class ClassifyCustomCategoriesActionResult : TextAnalyticsActionResult
+    public class MultiCategoryClassifyActionResult : TextAnalyticsActionResult
     {
-        private readonly ClassifyCustomCategoriesResultCollection _documentsResults;
+        private readonly MultiCategoryClassifyResultCollection _documentsResults;
 
         /// <summary>
         /// Successful action.
         /// </summary>
-        internal ClassifyCustomCategoriesActionResult(ClassifyCustomCategoriesResultCollection result, DateTimeOffset completedOn)
+        internal MultiCategoryClassifyActionResult(MultiCategoryClassifyResultCollection result, DateTimeOffset completedOn)
             : base(completedOn)
         {
             _documentsResults = result;
@@ -25,13 +25,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Action with an error.
         /// </summary>
-        internal ClassifyCustomCategoriesActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+        internal MultiCategoryClassifyActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
             : base(completedOn, error) { }
 
         /// <summary>
-        /// Gets the result of the execution of an <see cref="ClassifyCustomCategoriesAction"/> per each input document.
+        /// Gets the result of the execution of an <see cref="MultiCategoryClassifyAction"/> per each input document.
         /// </summary>
-        public ClassifyCustomCategoriesResultCollection DocumentsResults
+        public MultiCategoryClassifyResultCollection DocumentsResults
         {
             get
             {

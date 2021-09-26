@@ -62,12 +62,12 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<ExtractSummaryAction> ExtractSummaryActions { get; set; }
 
         /// <summary>
-        /// The set of <see cref="ClassifyCustomCategoriesAction"/> that will get executed on the input documents.
-        /// Note that currently only one <see cref="ClassifyCustomCategoriesAction"/> is supported.
+        /// The set of <see cref="MultiCategoryClassifyAction"/> that will get executed on the input documents.
+        /// Note that currently only one <see cref="MultiCategoryClassifyAction"/> is supported.
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
         /// </remarks>
-        public IReadOnlyCollection<ClassifyCustomCategoriesAction> ClassifyCustomCategoriesActions { get; set; }
+        public IReadOnlyCollection<MultiCategoryClassifyAction> MultiCategoryClassifyActions { get; set; }
     }
 }

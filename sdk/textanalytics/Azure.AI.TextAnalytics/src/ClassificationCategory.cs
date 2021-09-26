@@ -6,19 +6,19 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A classification of an input document extracted by the classify custom category
+    /// A classification of an input document extracted by the single category classify category
     /// operation. The service attributes a confidence score to the predicted category
     /// for measuring how confident the model is in the returned prediction.
     /// </summary>
-    public readonly struct DocumentClassification
+    public readonly struct ClassificationCategory
     {
-        internal DocumentClassification(SingleClassificationDocument classification)
+        internal ClassificationCategory(SingleClassificationDocument classification)
         {
             Category = classification.Classification.Category;
             ConfidenceScore = classification.Classification.ConfidenceScore;
         }
 
-        internal DocumentClassification(ClassificationResult classification)
+        internal ClassificationCategory(ClassificationResult classification)
         {
             Category = classification.Category;
             ConfidenceScore = classification.ConfidenceScore;
