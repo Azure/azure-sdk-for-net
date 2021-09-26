@@ -19,16 +19,15 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             _handler = handler;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public Task Invoke(HttpContext context)
         {
             if (!context.Request.Path.StartsWithSegments(_handler.Path) ||
                 !context.Request.Headers.ContainsKey(Constants.Headers.CloudEvents.WebPubSubVersion))
             {
-                await _next(context).ConfigureAwait(false);
-                return;
+                return _next(context);
             }
 
-            await _handler.HandleRequest(context).ConfigureAwait(false);
+            return _handler.HandleRequest(context);
         }
     }
 }
