@@ -55,6 +55,13 @@ namespace Azure
         }
 
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message, HTTP status code, error code, and a reference to the inner exception that is the cause of this exception.</summary>
+        /// <param name="response">The response to get error details from.</param>
+        public RequestFailedException(Response response)
+            : this(response.Status, response.ResponseClassifier!.GetExceptionMessage(response), response.ResponseClassifier!.GetErrorCode(response), null)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message, HTTP status code, error code, and a reference to the inner exception that is the cause of this exception.</summary>
         /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="errorCode">The service specific error code.</param>
