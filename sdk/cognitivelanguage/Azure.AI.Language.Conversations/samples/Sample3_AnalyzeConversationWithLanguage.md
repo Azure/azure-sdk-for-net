@@ -33,7 +33,7 @@ Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(
     "Menu",
-    "production", 
+    "production",
     "Tendremos 2 platos de nigiri de salmón braseado.")
 {
     Language = "es"
