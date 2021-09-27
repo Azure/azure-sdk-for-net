@@ -94,7 +94,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.Throws<InvalidDataException>(() => PemReader.LoadCertificate(RSACertificate.AsSpan(), keyType: PemReader.KeyType.ECDsa));
 #else
             // Compatible with the previous release. Goes through RSA.ImportPKcs8PrivateKey().
-            Assert.That(() => PemReader.LoadCertificate(RSACertificate.AsSpan(), keyType: PemReader.KeyType.ECDsa), Throws.InstanceOf<CryptographicException>());
+            Assert.That<X509Certificate2>(() => PemReader.LoadCertificate(RSACertificate.AsSpan(), keyType: PemReader.KeyType.ECDsa), Throws.InstanceOf<CryptographicException>());
 #endif
         }
 

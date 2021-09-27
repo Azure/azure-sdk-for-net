@@ -31,6 +31,18 @@
         "CONVERSATIONS_URI": {
             "type": "string",
             "value": ""
+        },
+        "QUESTIONANSWERING_ENDPOINT": {
+            "type": "string",
+            "value": ""
+        },
+        "QUESTIONANSWERING_KEY": {
+            "type": "string",
+            "value": ""
+        },
+        "QUESTIONANSWERING_PROJECT": {
+            "type": "string",
+            "value": ""
         }
     }
 }

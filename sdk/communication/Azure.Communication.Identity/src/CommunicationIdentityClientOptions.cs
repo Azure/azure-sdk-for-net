@@ -44,7 +44,9 @@ namespace Azure.Communication.Identity
             /// <summary>
             /// The V2021_03_31_preview1 of the identity service.
             /// </summary>
+#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
             V2021_03_31_preview1 = 2,
+#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

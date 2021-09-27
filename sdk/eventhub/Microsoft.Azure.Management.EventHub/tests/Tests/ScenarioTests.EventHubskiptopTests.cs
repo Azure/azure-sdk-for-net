@@ -83,7 +83,7 @@ namespace EventHub.Tests.ScenarioTests
                     for (int consumergroupCount = 0; consumergroupCount < 10; consumergroupCount++)
                     {
                         var consumergroupNameLoop = consumergroupName + "_" + consumergroupCount.ToString();
-                        var createConsumerGroupResponseForLoop = this.EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, createEventHubResponseList.ElementAt<Eventhub>(0).Name, consumergroupNameLoop, new ConsumerGroup());
+                        var createConsumerGroupResponseForLoop = this.EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, createEventHubResponseList.ElementAt<Eventhub>(0).Name, consumergroupNameLoop, null);
 
                         Assert.NotNull(createConsumerGroupResponseForLoop);
                         Assert.Equal(createConsumerGroupResponseForLoop.Name, consumergroupNameLoop);
