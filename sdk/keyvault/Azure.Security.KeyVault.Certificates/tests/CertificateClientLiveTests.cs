@@ -114,9 +114,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
-            // Give the service time to process the start request.
-            await DelayAsync(TimeSpan.FromSeconds(2));
-
             OperationCanceledException ex = null;
             try
             {
@@ -130,6 +127,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             catch (RequestFailedException e) when (e.Status == 403)
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
+            }
+            catch (RequestFailedException e) when (e.Status == 409)
+            {
+                Assert.Inconclusive("There was a service timing issue when attempting to cancel the operation.");
             }
 
             if (operation.HasCompleted && !operation.Properties.CancellationRequested)
@@ -155,9 +156,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
-            // Give the service time to process the start request.
-            await DelayAsync(TimeSpan.FromSeconds(2));
-
             OperationCanceledException ex = null;
             try
             {
@@ -173,6 +171,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             catch (RequestFailedException e) when (e.Status == 403)
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
+            }
+            catch (RequestFailedException e) when (e.Status == 409)
+            {
+                Assert.Inconclusive("There was a service timing issue when attempting to cancel the operation.");
             }
 
             if (operation.HasCompleted && !operation.Properties.CancellationRequested)
