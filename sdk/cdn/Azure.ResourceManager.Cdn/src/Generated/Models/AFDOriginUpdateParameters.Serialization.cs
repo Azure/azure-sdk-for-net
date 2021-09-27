@@ -44,18 +44,39 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
-                writer.WriteNumberValue(Priority.Value);
+                if (Priority != null)
+                {
+                    writer.WritePropertyName("priority");
+                    writer.WriteNumberValue(Priority.Value);
+                }
+                else
+                {
+                    writer.WriteNull("priority");
+                }
             }
             if (Optional.IsDefined(Weight))
             {
-                writer.WritePropertyName("weight");
-                writer.WriteNumberValue(Weight.Value);
+                if (Weight != null)
+                {
+                    writer.WritePropertyName("weight");
+                    writer.WriteNumberValue(Weight.Value);
+                }
+                else
+                {
+                    writer.WriteNull("weight");
+                }
             }
             if (Optional.IsDefined(SharedPrivateLinkResource))
             {
-                writer.WritePropertyName("sharedPrivateLinkResource");
-                writer.WriteObjectValue(SharedPrivateLinkResource);
+                if (SharedPrivateLinkResource != null)
+                {
+                    writer.WritePropertyName("sharedPrivateLinkResource");
+                    writer.WriteObjectValue(SharedPrivateLinkResource);
+                }
+                else
+                {
+                    writer.WriteNull("sharedPrivateLinkResource");
+                }
             }
             if (Optional.IsDefined(EnabledState))
             {

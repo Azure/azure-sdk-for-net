@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal RouteUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Route>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteUpdateOperation");
+            _operation = new OperationInternals<Route>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "RouteUpdateOperation");
             _operationBase = operationsBase;
         }
 

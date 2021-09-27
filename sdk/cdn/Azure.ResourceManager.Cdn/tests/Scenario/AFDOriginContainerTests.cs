@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Cdn.Models;
@@ -10,67 +11,62 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
-    public class AFDOriginGroupOperationsTests : CdnManagementTestBase
+    public class AFDOriginContainerTests : CdnManagementTestBase
     {
-        public AFDOriginGroupOperationsTests(bool isAsync)
+        public AFDOriginContainerTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task Delete()
+        public async Task CreateOrUpdate()
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
             string AFDOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
             AFDOriginGroup AFDOriginGroupInstance = await CreateAFDOriginGroup(AFDProfile, AFDOriginGroupName);
-            await AFDOriginGroupInstance.DeleteAsync();
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await AFDOriginGroupInstance.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            string AFDOriginName = Recording.GenerateAssetName("AFDOrigin-");
+            AFDOrigin AFDOriginInstance = await CreateAFDOrigin(AFDOriginGroupInstance, AFDOriginName);
+            Assert.AreEqual(AFDOriginName, AFDOriginInstance.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDOriginGroupInstance.GetAFDOrigins().CreateOrUpdateAsync(null, AFDOriginInstance.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDOriginGroupInstance.GetAFDOrigins().CreateOrUpdateAsync(AFDOriginName, null));
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task Update()
+        public async Task List()
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
             string AFDOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
             AFDOriginGroup AFDOriginGroupInstance = await CreateAFDOriginGroup(AFDProfile, AFDOriginGroupName);
-            AFDOriginGroupUpdateParameters updateParameters = new AFDOriginGroupUpdateParameters
-            {
-                LoadBalancingSettings = new LoadBalancingSettingsParameters
-                {
-                    SampleSize = 10,
-                    SuccessfulSamplesRequired = 5,
-                    AdditionalLatencyInMilliseconds = 500
-                }
-            };
-            var lro = await AFDOriginGroupInstance.UpdateAsync(updateParameters);
-            AFDOriginGroup updatedAFDOriginGroupInstance = lro.Value;
-            ResourceDataHelper.AssertAFDOriginGroupUpdate(updatedAFDOriginGroupInstance, updateParameters);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task GetResourceUsage()
-        {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
-            string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            string AFDOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
-            AFDOriginGroup AFDOriginGroupInstance = await CreateAFDOriginGroup(AFDProfile, AFDOriginGroupName);
+            string AFDOriginName = Recording.GenerateAssetName("AFDOrigin-");
+            _ = await CreateAFDOrigin(AFDOriginGroupInstance, AFDOriginName);
             int count = 0;
-            await foreach (var tempUsage in AFDOriginGroupInstance.GetResourceUsageAsync())
+            await foreach (var tempAFDOrigin in AFDOriginGroupInstance.GetAFDOrigins().GetAllAsync())
             {
                 count++;
-                Assert.AreEqual(tempUsage.Unit, UsageUnit.Count);
-                Assert.AreEqual(tempUsage.CurrentValue, 0);
             }
             Assert.AreEqual(count, 1);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Get()
+        {
+            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
+            Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
+            string AFDOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
+            AFDOriginGroup AFDOriginGroupInstance = await CreateAFDOriginGroup(AFDProfile, AFDOriginGroupName);
+            string AFDOriginName = Recording.GenerateAssetName("AFDOrigin-");
+            AFDOrigin AFDOriginInstance = await CreateAFDOrigin(AFDOriginGroupInstance, AFDOriginName);
+            AFDOrigin getAFDOriginInstance = await AFDOriginGroupInstance.GetAFDOrigins().GetAsync(AFDOriginName);
+            ResourceDataHelper.AssertValidAFDOrigin(AFDOriginInstance, getAFDOriginInstance);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDOriginGroupInstance.GetAFDOrigins().GetAsync(null));
         }
     }
 }

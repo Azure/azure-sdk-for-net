@@ -46,18 +46,39 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
-                writer.WriteNumberValue(Priority.Value);
+                if (Priority != null)
+                {
+                    writer.WritePropertyName("priority");
+                    writer.WriteNumberValue(Priority.Value);
+                }
+                else
+                {
+                    writer.WriteNull("priority");
+                }
             }
             if (Optional.IsDefined(Weight))
             {
-                writer.WritePropertyName("weight");
-                writer.WriteNumberValue(Weight.Value);
+                if (Weight != null)
+                {
+                    writer.WritePropertyName("weight");
+                    writer.WriteNumberValue(Weight.Value);
+                }
+                else
+                {
+                    writer.WriteNull("weight");
+                }
             }
             if (Optional.IsDefined(SharedPrivateLinkResource))
             {
-                writer.WritePropertyName("sharedPrivateLinkResource");
-                writer.WriteObjectValue(SharedPrivateLinkResource);
+                if (SharedPrivateLinkResource != null)
+                {
+                    writer.WritePropertyName("sharedPrivateLinkResource");
+                    writer.WriteObjectValue(SharedPrivateLinkResource);
+                }
+                else
+                {
+                    writer.WriteNull("sharedPrivateLinkResource");
+                }
             }
             if (Optional.IsDefined(EnabledState))
             {
@@ -79,8 +100,8 @@ namespace Azure.ResourceManager.Cdn
             Optional<int> httpPort = default;
             Optional<int> httpsPort = default;
             Optional<string> originHostHeader = default;
-            Optional<int> priority = default;
-            Optional<int> weight = default;
+            Optional<int?> priority = default;
+            Optional<int?> weight = default;
             Optional<object> sharedPrivateLinkResource = default;
             Optional<EnabledState> enabledState = default;
             Optional<AfdProvisioningState> provisioningState = default;
@@ -165,7 +186,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                priority = null;
                                 continue;
                             }
                             priority = property0.Value.GetInt32();
@@ -175,7 +196,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                weight = null;
                                 continue;
                             }
                             weight = property0.Value.GetInt32();
@@ -185,7 +206,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                sharedPrivateLinkResource = null;
                                 continue;
                             }
                             sharedPrivateLinkResource = property0.Value.GetObject();

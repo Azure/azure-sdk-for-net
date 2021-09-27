@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Weight = 150
         };
 
+        public static AFDOriginData CreateAFDOriginData() => new AFDOriginData
+        {
+            HostName = "testsa4dotnetsdk.blob.core.windows.net"
+        };
+
         public static OriginGroupData CreateOriginGroupData() => new OriginGroupData
         {
             HealthProbeSettings = new HealthProbeParameters
@@ -94,6 +99,30 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             {
                 Id = "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/cdntest/providers/Microsoft.Network/dnszones/azuretest.net"
             }
+        };
+
+        public static RuleData CreateRuleData() => new RuleData
+        {
+            Order = 1
+        };
+
+        public static DeliveryRuleCondition CreateDeliveryRuleCondition() => new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriOperator.Any));
+
+        public static DeliveryRuleOperation CreateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheBehavior.Override, CacheType.All)
+        {
+            CacheDuration = "00:00:20"
+        });
+
+        public static DeliveryRuleOperation UpdateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheBehavior.Override, CacheType.All)
+        {
+            CacheDuration = "00:00:30"
+        });
+
+        public static RouteData CreateRouteData(AFDOriginGroup originGroup) => new RouteData
+        {
+            OriginGroup = new ResourceReference(originGroup.Id),
+            LinkToDefaultDomain = LinkToDefaultDomain.Enabled,
+            EnabledState = EnabledState.Enabled
         };
 
         public static void AssertValidProfile(Profile model, Profile getResult)
@@ -193,6 +222,35 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(updatedOrigin.Data.HttpsPort, updateParameters.HttpsPort);
             Assert.AreEqual(updatedOrigin.Data.Priority, updateParameters.Priority);
             Assert.AreEqual(updatedOrigin.Data.Weight, updateParameters.Weight);
+        }
+
+        public static void AssertValidAFDOrigin(AFDOrigin model, AFDOrigin getResult)
+        {
+            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
+            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
+            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            if (model.Data.AzureOrigin != null || getResult.Data.AzureOrigin != null)
+            {
+                Assert.NotNull(model.Data.AzureOrigin);
+                Assert.NotNull(getResult.Data.AzureOrigin);
+                Assert.AreEqual(model.Data.AzureOrigin.Id, getResult.Data.AzureOrigin.Id);
+            }
+            Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
+            Assert.AreEqual(model.Data.HttpPort, getResult.Data.HttpPort);
+            Assert.AreEqual(model.Data.HttpsPort, getResult.Data.HttpsPort);
+            Assert.AreEqual(model.Data.OriginHostHeader, getResult.Data.OriginHostHeader);
+            Assert.AreEqual(model.Data.Priority, getResult.Data.Priority);
+            Assert.AreEqual(model.Data.Weight, getResult.Data.Weight);
+            Assert.AreEqual(model.Data.EnabledState, getResult.Data.EnabledState);
+            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
+            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
+            //Todo:SharedPrivateLinkResource
+        }
+
+        public static void AssertAFDOriginUpdate(AFDOrigin updatedAFDOrigin, AFDOriginUpdateParameters updateParameters)
+        {
+            Assert.AreEqual(updatedAFDOrigin.Data.Priority, updateParameters.Priority);
+            Assert.AreEqual(updatedAFDOrigin.Data.Weight, updateParameters.Weight);
         }
 
         public static void AssertValidOriginGroup(OriginGroup model, OriginGroup getResult)
@@ -313,6 +371,82 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(updatedAFDDomain.Data.TlsSettings.CertificateType, updateParameters.TlsSettings.CertificateType);
             Assert.AreEqual(updatedAFDDomain.Data.TlsSettings.MinimumTlsVersion, updateParameters.TlsSettings.MinimumTlsVersion);
+        }
+
+        public static void AssertValidRuleSet(RuleSet model, RuleSet getResult)
+        {
+            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
+            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
+            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
+            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
+        }
+
+        public static void AssertValidRule(Rule model, Rule getResult)
+        {
+            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
+            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
+            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.Order, getResult.Data.Order);
+            Assert.AreEqual(model.Data.Conditions.Count, getResult.Data.Conditions.Count);
+            for (int i = 0; i < model.Data.Conditions.Count; ++i)
+            {
+                Assert.AreEqual(model.Data.Conditions[i].Name, getResult.Data.Conditions[i].Name);
+            }
+            Assert.AreEqual(model.Data.Actions.Count, getResult.Data.Actions.Count);
+            for (int i = 0; i < model.Data.Actions.Count; ++i)
+            {
+                Assert.AreEqual(model.Data.Actions[i].Name, getResult.Data.Actions[i].Name);
+            }
+            Assert.AreEqual(model.Data.MatchProcessingBehavior, getResult.Data.MatchProcessingBehavior);
+            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
+            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
+        }
+
+        public static void AssertRuleUpdate(Rule updatedRule, RuleUpdateParameters updateParameters)
+        {
+            Assert.AreEqual(updatedRule.Data.Order, updateParameters.Order);
+        }
+
+        public static void AssertValidRoute(Route model, Route getResult)
+        {
+            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
+            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
+            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.CustomDomains.Count, getResult.Data.CustomDomains.Count);
+            for (int i = 0; i < model.Data.CustomDomains.Count; ++i)
+            {
+                Assert.AreEqual(model.Data.CustomDomains[i].Id, getResult.Data.CustomDomains[i].Id);
+            }
+            Assert.AreEqual(model.Data.OriginGroup.Id, getResult.Data.OriginGroup.Id);
+            Assert.AreEqual(model.Data.OriginPath, getResult.Data.OriginPath);
+            Assert.AreEqual(model.Data.RuleSets.Count, getResult.Data.RuleSets.Count);
+            for (int i = 0; i < model.Data.RuleSets.Count; ++i)
+            {
+                Assert.AreEqual(model.Data.RuleSets[i].Id, getResult.Data.RuleSets[i].Id);
+            }
+            Assert.AreEqual(model.Data.SupportedProtocols.Count, getResult.Data.SupportedProtocols.Count);
+            for (int i = 0; i < model.Data.SupportedProtocols.Count; ++i)
+            {
+                Assert.AreEqual(model.Data.SupportedProtocols[i], getResult.Data.SupportedProtocols[i]);
+            }
+            Assert.AreEqual(model.Data.PatternsToMatch.Count, getResult.Data.PatternsToMatch.Count);
+            for (int i = 0; i < model.Data.PatternsToMatch.Count; ++i)
+            {
+                Assert.AreEqual(model.Data.PatternsToMatch[i], getResult.Data.PatternsToMatch[i]);
+            }
+            Assert.AreEqual(model.Data.QueryStringCachingBehavior, getResult.Data.QueryStringCachingBehavior);
+            Assert.AreEqual(model.Data.ForwardingProtocol, getResult.Data.ForwardingProtocol);
+            Assert.AreEqual(model.Data.LinkToDefaultDomain, getResult.Data.LinkToDefaultDomain);
+            Assert.AreEqual(model.Data.HttpsRedirect, getResult.Data.HttpsRedirect);
+            Assert.AreEqual(model.Data.EnabledState, getResult.Data.EnabledState);
+            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
+            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
+        }
+
+        public static void AssertRouteUpdate(Route updatedRoute, RouteUpdateParameters updateParameters)
+        {
+            Assert.AreEqual(updatedRoute.Data.EnabledState, updateParameters.EnabledState);
         }
     }
 }

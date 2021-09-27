@@ -86,6 +86,18 @@ directive:
           "final-state-via": "original-uri"
       }
   - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}'].patch
+    transform: >
+      $['x-ms-long-running-operation-options'] = {
+          "final-state-via": "original-uri"
+      }
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}'].patch
+    transform: >
+      $['x-ms-long-running-operation-options'] = {
+          "final-state-via": "original-uri"
+      }
+  - from: swagger-document
     where: $.definitions.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup
     transform: $['x-nullable'] = true
   - from: swagger-document
@@ -132,6 +144,15 @@ directive:
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.definitions.AFDDomainHttpsParameters.properties.secret
+    transform: $['x-nullable'] = true
+  - from: afdx.json
+    where: $.definitions.*.properties.priority
+    transform: $['x-nullable'] = true
+  - from: afdx.json
+    where: $.definitions.*.properties.weight
+    transform: $['x-nullable'] = true
+  - from: afdx.json
+    where: $.definitions.AFDOriginUpdatePropertiesParameters.properties.sharedPrivateLinkResource
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.paths['/providers/Microsoft.Cdn/checkNameAvailability'].post.operationId
