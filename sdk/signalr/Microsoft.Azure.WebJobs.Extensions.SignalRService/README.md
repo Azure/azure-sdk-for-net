@@ -1,4 +1,4 @@
-# Azure WebJobs SignalR bindings library for .NET
+# Azure WebJobs SignalR Service client library for .NET
 
 This extension provides functionality for accessing [Azure SignalR Service](https://aka.ms/signalr_service) from an Azure Function.
 
@@ -6,7 +6,7 @@ This extension provides functionality for accessing [Azure SignalR Service](http
 
 ### Install the package
 
-Install the SignalR extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.SignalRService/):
+Install the SignalR Service client with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.SignalRService/):
 
 ```dotnetcli
 dotnet add package Microsoft.Azure.WebJobs.Extensions.SignalRService
@@ -16,16 +16,16 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.SignalRService
 
 - **Azure Subscription:**  To use Azure services, including Azure SignalR Service, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 
-- **Azure SignalR resource:** To use SignalR bindings library you'll also need a Azure SignalR resource. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for creating a SignalR resource using the Azure portal. There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create a SignalR resource.
+- **Azure SignalR resource:** To use SignalR Service client library you'll also need a Azure SignalR resource. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for creating a SignalR resource using the Azure portal. There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create a SignalR resource.
 
 To quickly create the needed SignalR resource in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2fquickstarts%2fmicrosoft.signalrservice%2fsignalr%2fazuredeploy.json)
 
 
-### Authenticate the bindings
+### Authenticate the client
 
-In order for the bindings to access SignalR resource, it will need to understand how to authenticate and authorize with it. The easiest means for doing so is to use a connection string which can be found in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://docs.microsoft.com/cli/azure) / [Azure PowerShell](https://docs.microsoft.com/powershell/azure/) snippet below.
+In order for SignalR Service client to access SignalR resource, it will need to understand how to authenticate with it. The easiest means for doing so is to use a connection string which can be found in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://docs.microsoft.com/cli/azure) / [Azure PowerShell](https://docs.microsoft.com/powershell/azure/) snippet below.
 
 Azure CLI snippet:
 ```bash
@@ -51,24 +51,20 @@ For local development, use the `local.settings.json` file to store the connectio
 
 When deployed, use the [application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings) to set the connection string.
 
-#### Identity-based
-
-<!--TODO-->
-
-## Supported scenarios
-- Negotiate for a SignalR client.
-- Broadcast messages to all clients connected to a SignalR Service hub.
-- Send messages to a single user, or all the users in a group.
-- Manage group users like add/remove a single user in a group.
-<!-- TODO: Add this point in next PR
-Use multiple Azure SignalR Service instances for resiliency and disaster recovery in Azure Functions. See details in [Multiple SignalR service endpoint support](./docs/sharding.md).
--->
+<!--TODO#### Identity-based Will reference a ms doc link once it is ready-->
 
 ## Key concepts
 
+### SignalR **Service** client vs SignalR client
+SignalR **Service** client
+: It means this library. It provides *SignalR server* functionalities in a serverless style.
+
+SignalR client
+: An opposite concept of *SignalR server*. See [ASP.NET Core SignalR clients](https://docs.microsoft.com/aspnet/core/signalr/client-features) for more information.
+
 ### SignalR connection info input binding
 
-`SignalRConnectionInfo` input binding makes it easy to generate the token required for clients to initiate a connection to Azure SignalR Service.
+`SignalRConnectionInfo` input binding makes it easy to generate the token required for SignalR clients to initiate a connection to Azure SignalR Service.
 
 Please follow the [Azure SignalR Connection Info input binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-signalr-service-input?tabs=csharp) to learn more about SignalR Connection Info input binding.
 
@@ -86,11 +82,20 @@ The SignalR trigger allows a function to be executed when a message is sent to A
 
 Please follow the [Azure SignalR trigger](https://docs.microsoft.com/azure/azure-functions/functions-bindings-signalr-service-trigger?tabs=csharp) to learn more about SignalR trigger.
 
+## Supported scenarios
+- Negotiate for a SignalR client.
+- Broadcast messages to all SignalR clients connected to a SignalR Service hub.
+- Send messages to a single user, or all the users in a group.
+- Manage group users like add/remove a single user in a group.
+<!-- TODO: Add this point in next PR
+Use multiple Azure SignalR Service instances for resiliency and disaster recovery in Azure Functions. See details in [Multiple SignalR service endpoint support](./docs/sharding.md).
+-->
+
 ## Examples
 
 ### Negotiation for SignalR client
 
-In order for a client to connect to SignalR, it needs to obtain the SignalR Service client hub URL and an access token. We call the process as "negotiation".
+In order for a client to connect to SignalR, it needs to obtain the SignalR client hub URL and an access token. We call the process as "negotiation".
 
 ```C# Snippet:Negotiate
 [FunctionName("Negotiate")]
