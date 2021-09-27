@@ -30,7 +30,7 @@ namespace EventHub.Tests.TestHelper
         internal const string KeyVaultePrefix = "sdk-KeyVault-";
 
         internal const string ResourceGroupCluster = "v-ajnavtest";
-        internal const string TestClusterName = "PMTestCluster";
+        internal const string TestClusterName = "PMTestCluster1";
 
 
         public static EventHubManagementClient GetEventHubManagementClient(MockContext context, RecordedDelegatingHandler handler)

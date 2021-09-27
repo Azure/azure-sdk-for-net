@@ -25,7 +25,7 @@ namespace EventHub.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location = "West US";
+                var location = "West US 2";
 
                 var resourceGroupCluster = EventHubManagementHelper.ResourceGroupCluster;
 
