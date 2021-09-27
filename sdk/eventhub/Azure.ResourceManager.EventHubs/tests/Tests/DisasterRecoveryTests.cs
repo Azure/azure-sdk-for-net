@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             ArmDisasterRecovery armDisasterRecoverySec = await eHNamespace2.GetArmDisasterRecoveries().GetAsync(disaterRecoveryName);
             Assert.AreEqual(armDisasterRecoverySec.Data.Role, RoleDisasterRecovery.Secondary);
 
-            //wait for completion
+            //wait for completion, this may take several minutes in live and record mode
             armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disaterRecoveryName);
             int i = 0;
             while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded || i > 100)
@@ -97,6 +97,11 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
             List<AuthorizationRuleDisasterRecoveryConfig> rules = await armDisasterRecovery.GetAuthorizationRuleDisasterRecoveryConfigs().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(rules.Count > 0);
+
+            //get access keys of the authorization rule
+            AuthorizationRuleDisasterRecoveryConfig rule = rules.First();
+            AccessKeys keys=await rule.GetKeysAsync();
+            Assert.NotNull(keys);
 
             //break pairing and wait for competion
             await armDisasterRecovery.BreakPairingAsync();

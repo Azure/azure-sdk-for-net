@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         [RecordedTest]
         public async Task CreateDeleteNamespace()
         {
-            //create namespace
+            //create namespace and wait for completion
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             _resourceGroup = await CreateResourceGroupAsync();
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
@@ -84,6 +84,9 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.AreEqual(eHNamespace.Data.Tags.Count, 2);
             Assert.AreEqual("value1", eHNamespace.Data.Tags["key1"]);
             Assert.AreEqual("value2", eHNamespace.Data.Tags["key2"]);
+
+            //wait until provision state is succeeded
+            await GetSucceededNamespace(eHNamespace);
         }
 
         [Test]
@@ -313,6 +316,35 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
+        public async Task AddSetRemoveTag()
+        {
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
+
+            //add a tag
+            eHNamespace = await eHNamespace.AddTagAsync("key", "value");
+            Assert.AreEqual(eHNamespace.Data.Tags.Count, 1);
+            Assert.AreEqual(eHNamespace.Data.Tags["key"], "value");
+
+            //set the tag
+            eHNamespace.Data.Tags.Add("key1", "value1");
+            eHNamespace = await eHNamespace.SetTagsAsync(eHNamespace.Data.Tags);
+            Assert.AreEqual(eHNamespace.Data.Tags.Count, 2);
+            Assert.AreEqual(eHNamespace.Data.Tags["key1"], "value1");
+
+            //remove a tag
+            eHNamespace = await eHNamespace.RemoveTagAsync("key");
+            Assert.AreEqual(eHNamespace.Data.Tags.Count, 1);
+
+            //wait until provision state is succeeded
+            await GetSucceededNamespace(eHNamespace);
+        }
+
+        [Test]
+        [RecordedTest]
         [Ignore("tags are null")]
         public async Task NamespaceGetMessagingPlan()
         {
@@ -340,6 +372,21 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             messagingRegions = await DefaultSubscription.GetRegionsBySkuAsync("Standard").ToEnumerableAsync();
             Assert.NotNull(messagingRegions);
             Assert.IsTrue(messagingRegions.Count > 0);
+        }
+
+        public async Task<EHNamespace> GetSucceededNamespace(EHNamespace eHNamespace)
+        {
+            int i = 0;
+            while (!eHNamespace.Data.ProvisioningState.Equals("Succeeded") && i < 10)
+            {
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(10000);
+                }
+                eHNamespace = await eHNamespace.GetAsync();
+                i++;
+            }
+            return eHNamespace;
         }
     }
 }
