@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
+            StopSessionRecording();
         }
 
         [OneTimeTearDown]

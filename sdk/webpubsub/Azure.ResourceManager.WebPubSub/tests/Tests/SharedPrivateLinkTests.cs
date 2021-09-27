@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
             // Create WebPubSub
             _webPubSub = await (await rg.GetWebPubSubResources().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
+            StopSessionRecording();
         }
 
         [OneTimeTearDown]

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.WebPubSub.Tests.Tests
+namespace Azure.ResourceManager.WebPubSub.Tests
 {
     public class PrivateEndpointConnectionTests : WebPubHubServiceClientTestBase
     {
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Tests
 
             // Create WebPubSub
             _webPubSub = await (await rg.GetWebPubSubResources().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
+            StopSessionRecording();
         }
 
         [OneTimeTearDown]
