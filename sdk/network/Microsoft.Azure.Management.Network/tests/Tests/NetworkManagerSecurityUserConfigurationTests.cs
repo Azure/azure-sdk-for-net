@@ -17,7 +17,7 @@ namespace Networks.Tests
 {
     public class NetworkManagerSecurityUserConfigurationTests
     {
-        [Fact(Skip = "Disable tests")]
+        [Fact]
         public void NetworkManagerSecurityUserConfigurationTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

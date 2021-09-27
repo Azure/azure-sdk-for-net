@@ -10,12 +10,14 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>20.6.1-Beta</Version>
+		<Version>20.6.1-Beta.1</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
 			- Added new api version 2021-02-01-preview
 			- Added new service NetworkManager
+            - Updated network services(except networkmanager) api version to 2021-03-01
+            - Used for networkmanager public preview
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
