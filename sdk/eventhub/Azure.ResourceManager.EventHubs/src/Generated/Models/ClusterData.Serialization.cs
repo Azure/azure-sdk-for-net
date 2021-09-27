@@ -5,20 +5,25 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHubs
 {
-    public partial class MessagingPlan : IUtf8JsonSerializable
+    public partial class ClusterData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku");
+                writer.WriteObjectValue(Sku);
+            }
             writer.WritePropertyName("tags");
             writer.WriteStartObject();
             foreach (var item in Tags)
@@ -35,19 +40,30 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteEndObject();
         }
 
-        internal static MessagingPlan DeserializeMessagingPlan(JsonElement element)
+        internal static ClusterData DeserializeClusterData(JsonElement element)
         {
+            Optional<ClusterSku> sku = default;
             IDictionary<string, string> tags = default;
             Location location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<int> sku = default;
-            Optional<int> selectedEventHubUnit = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<long> revision = default;
+            Optional<string> createdAt = default;
+            Optional<string> updatedAt = default;
+            Optional<string> metricId = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sku = ClusterSku.DeserializeClusterSku(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("tags"))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -87,51 +103,31 @@ namespace Azure.ResourceManager.EventHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sku"))
+                        if (property0.NameEquals("createdAt"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            sku = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("selectedEventHubUnit"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            selectedEventHubUnit = property0.Value.GetInt32();
+                            createdAt = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("updatedAt"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            updatedAt = property0.Value.GetDateTimeOffset("O");
+                            updatedAt = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("revision"))
+                        if (property0.NameEquals("metricId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            revision = property0.Value.GetInt64();
+                            metricId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("status"))
+                        {
+                            status = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new MessagingPlan(id, name, type, tags, location, Optional.ToNullable(sku), Optional.ToNullable(selectedEventHubUnit), Optional.ToNullable(updatedAt), Optional.ToNullable(revision));
+            return new ClusterData(id, name, type, tags, location, sku.Value, createdAt.Value, updatedAt.Value, metricId.Value, status.Value);
         }
     }
 }

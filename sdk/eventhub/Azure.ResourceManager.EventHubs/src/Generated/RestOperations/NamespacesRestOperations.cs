@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public NamespacesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2017-04-01")
+        public NamespacesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2018-01-01-preview")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateGetMessagingPlanRequest(string resourceGroupName, string namespaceName)
+        internal HttpMessage CreateGetVirtualNetworkRulesRequest(string resourceGroupName, string namespaceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/messagingplan", false);
+            uri.AppendPath("/virtualnetworkrules", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -559,12 +559,12 @@ namespace Azure.ResourceManager.EventHubs
             return message;
         }
 
-        /// <summary> Gets messaging plan for specified namespace. </summary>
+        /// <summary> Gets a list of VirtualNetwork rules for a Namespace. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<MessagingPlan>> GetMessagingPlanAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkRuleListResult>> GetVirtualNetworkRulesAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -575,15 +575,15 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateGetMessagingPlanRequest(resourceGroupName, namespaceName);
+            using var message = CreateGetVirtualNetworkRulesRequest(resourceGroupName, namespaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MessagingPlan value = default;
+                        VirtualNetworkRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MessagingPlan.DeserializeMessagingPlan(document.RootElement);
+                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -591,12 +591,12 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets messaging plan for specified namespace. </summary>
+        /// <summary> Gets a list of VirtualNetwork rules for a Namespace. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public Response<MessagingPlan> GetMessagingPlan(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<VirtualNetworkRuleListResult> GetVirtualNetworkRules(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -607,15 +607,309 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateGetMessagingPlanRequest(resourceGroupName, namespaceName);
+            using var message = CreateGetVirtualNetworkRulesRequest(resourceGroupName, namespaceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MessagingPlan value = default;
+                        VirtualNetworkRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MessagingPlan.DeserializeMessagingPlan(document.RootElement);
+                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateOrUpdateVirtualNetworkRuleRequest(string resourceGroupName, string namespaceName, string virtualNetworkRuleName, VirtualNetworkRule parameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/virtualnetworkrules/", false);
+            uri.AppendPath(virtualNetworkRuleName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(parameters);
+            request.Content = content;
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Creates or updates an VirtualNetworkRule for a Namespace. </summary>
+        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="virtualNetworkRuleName"> The Virtual Network Rule name. </param>
+        /// <param name="parameters"> The Namespace VirtualNetworkRule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="virtualNetworkRuleName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<VirtualNetworkRule>> CreateOrUpdateVirtualNetworkRuleAsync(string resourceGroupName, string namespaceName, string virtualNetworkRuleName, VirtualNetworkRule parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateCreateOrUpdateVirtualNetworkRuleRequest(resourceGroupName, namespaceName, virtualNetworkRuleName, parameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        VirtualNetworkRule value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Creates or updates an VirtualNetworkRule for a Namespace. </summary>
+        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="virtualNetworkRuleName"> The Virtual Network Rule name. </param>
+        /// <param name="parameters"> The Namespace VirtualNetworkRule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="virtualNetworkRuleName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<VirtualNetworkRule> CreateOrUpdateVirtualNetworkRule(string resourceGroupName, string namespaceName, string virtualNetworkRuleName, VirtualNetworkRule parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateCreateOrUpdateVirtualNetworkRuleRequest(resourceGroupName, namespaceName, virtualNetworkRuleName, parameters);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        VirtualNetworkRule value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteVirtualNetworkRuleRequest(string resourceGroupName, string namespaceName, string virtualNetworkRuleName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/virtualnetworkrules/", false);
+            uri.AppendPath(virtualNetworkRuleName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Deletes an VirtualNetworkRule for a Namespace. </summary>
+        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="virtualNetworkRuleName"> The Virtual Network Rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        public async Task<Response> DeleteVirtualNetworkRuleAsync(string resourceGroupName, string namespaceName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+
+            using var message = CreateDeleteVirtualNetworkRuleRequest(resourceGroupName, namespaceName, virtualNetworkRuleName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Deletes an VirtualNetworkRule for a Namespace. </summary>
+        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="virtualNetworkRuleName"> The Virtual Network Rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        public Response DeleteVirtualNetworkRule(string resourceGroupName, string namespaceName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+
+            using var message = CreateDeleteVirtualNetworkRuleRequest(resourceGroupName, namespaceName, virtualNetworkRuleName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetVirtualNetworkRuleRequest(string resourceGroupName, string namespaceName, string virtualNetworkRuleName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/virtualnetworkrules/", false);
+            uri.AppendPath(virtualNetworkRuleName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Gets an VirtualNetworkRule for a Namespace by rule name. </summary>
+        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="virtualNetworkRuleName"> The Virtual Network Rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        public async Task<Response<VirtualNetworkRule>> GetVirtualNetworkRuleAsync(string resourceGroupName, string namespaceName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+
+            using var message = CreateGetVirtualNetworkRuleRequest(resourceGroupName, namespaceName, virtualNetworkRuleName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        VirtualNetworkRule value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets an VirtualNetworkRule for a Namespace by rule name. </summary>
+        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="virtualNetworkRuleName"> The Virtual Network Rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        public Response<VirtualNetworkRule> GetVirtualNetworkRule(string resourceGroupName, string namespaceName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+
+            using var message = CreateGetVirtualNetworkRuleRequest(resourceGroupName, namespaceName, virtualNetworkRuleName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        VirtualNetworkRule value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -807,91 +1101,6 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateGetNetworkRuleSetsRequest(string resourceGroupName, string namespaceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/networkRuleSets", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Gets list of NetworkRuleSet for a Namespace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<NetworkRuleSetListResult>> GetNetworkRuleSetsAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-
-            using var message = CreateGetNetworkRuleSetsRequest(resourceGroupName, namespaceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkRuleSetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets list of NetworkRuleSet for a Namespace. </summary>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public Response<NetworkRuleSetListResult> GetNetworkRuleSets(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-
-            using var message = CreateGetNetworkRuleSetsRequest(resourceGroupName, namespaceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkRuleSetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateGetAllNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
@@ -1038,7 +1247,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateGetNetworkRuleSetsNextPageRequest(string nextLink, string resourceGroupName, string namespaceName)
+        internal HttpMessage CreateGetVirtualNetworkRulesNextPageRequest(string nextLink, string resourceGroupName, string namespaceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1052,13 +1261,13 @@ namespace Azure.ResourceManager.EventHubs
             return message;
         }
 
-        /// <summary> Gets list of NetworkRuleSet for a Namespace. </summary>
+        /// <summary> Gets a list of VirtualNetwork rules for a Namespace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<NetworkRuleSetListResult>> GetNetworkRuleSetsNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkRuleListResult>> GetVirtualNetworkRulesNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1073,15 +1282,15 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateGetNetworkRuleSetsNextPageRequest(nextLink, resourceGroupName, namespaceName);
+            using var message = CreateGetVirtualNetworkRulesNextPageRequest(nextLink, resourceGroupName, namespaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NetworkRuleSetListResult value = default;
+                        VirtualNetworkRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
+                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1089,13 +1298,13 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets list of NetworkRuleSet for a Namespace. </summary>
+        /// <summary> Gets a list of VirtualNetwork rules for a Namespace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public Response<NetworkRuleSetListResult> GetNetworkRuleSetsNextPage(string nextLink, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<VirtualNetworkRuleListResult> GetVirtualNetworkRulesNextPage(string nextLink, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1110,15 +1319,15 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateGetNetworkRuleSetsNextPageRequest(nextLink, resourceGroupName, namespaceName);
+            using var message = CreateGetVirtualNetworkRulesNextPageRequest(nextLink, resourceGroupName, namespaceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NetworkRuleSetListResult value = default;
+                        VirtualNetworkRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
+                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

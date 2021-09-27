@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(TrustedServiceAccessEnabled))
+            {
+                writer.WritePropertyName("trustedServiceAccessEnabled");
+                writer.WriteBooleanValue(TrustedServiceAccessEnabled.Value);
+            }
             if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction");
@@ -53,6 +58,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            Optional<bool> trustedServiceAccessEnabled = default;
             Optional<DefaultAction> defaultAction = default;
             Optional<IList<NWRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
             Optional<IList<NWRuleSetIpRules>> ipRules = default;
@@ -82,6 +88,16 @@ namespace Azure.ResourceManager.EventHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("trustedServiceAccessEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            trustedServiceAccessEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("defaultAction"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -126,7 +142,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new NetworkRuleSet(id, name, type, Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules));
+            return new NetworkRuleSet(id, name, type, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules));
         }
     }
 }

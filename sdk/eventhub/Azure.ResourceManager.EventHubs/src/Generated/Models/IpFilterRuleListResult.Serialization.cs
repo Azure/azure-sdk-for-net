@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal partial class NetworkRuleSetListResult
+    internal partial class IpFilterRuleListResult
     {
-        internal static NetworkRuleSetListResult DeserializeNetworkRuleSetListResult(JsonElement element)
+        internal static IpFilterRuleListResult DeserializeIpFilterRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkRuleSet>> value = default;
+            Optional<IReadOnlyList<IpFilterRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkRuleSet> array = new List<NetworkRuleSet>();
+                    List<IpFilterRuleData> array = new List<IpFilterRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkRuleSet.DeserializeNetworkRuleSet(item));
+                        array.Add(IpFilterRuleData.DeserializeIpFilterRuleData(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new NetworkRuleSetListResult(Optional.ToList(value), nextLink.Value);
+            return new IpFilterRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -12,6 +12,61 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
+        #region Cluster
+        /// <summary> Gets an object representing a Cluster along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="Cluster" /> object. </returns>
+        public static Cluster GetCluster(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Cluster(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region IpFilterRule
+        /// <summary> Gets an object representing a IpFilterRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IpFilterRule" /> object. </returns>
+        public static IpFilterRule GetIpFilterRule(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new IpFilterRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region EHNamespace
+        /// <summary> Gets an object representing a EHNamespace along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EHNamespace" /> object. </returns>
+        public static EHNamespace GetEHNamespace(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new EHNamespace(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region PrivateEndpointConnection
+        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
+        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region ClusterQuotaConfigurationProperties
+        /// <summary> Gets an object representing a ClusterQuotaConfigurationProperties along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterQuotaConfigurationProperties" /> object. </returns>
+        public static ClusterQuotaConfigurationProperties GetClusterQuotaConfigurationProperties(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ClusterQuotaConfigurationProperties(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region AuthorizationRuleNamespace
         /// <summary> Gets an object representing a AuthorizationRuleNamespace along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -75,17 +130,6 @@ namespace Azure.ResourceManager.EventHubs
         public static Eventhub GetEventhub(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Eventhub(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region EHNamespace
-        /// <summary> Gets an object representing a EHNamespace along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EHNamespace" /> object. </returns>
-        public static EHNamespace GetEHNamespace(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new EHNamespace(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
     }

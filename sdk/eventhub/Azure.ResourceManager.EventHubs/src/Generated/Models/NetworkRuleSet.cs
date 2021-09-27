@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> Description of NetworkRuleSet resource. </summary>
+    /// <summary> Description of topic resource. </summary>
     public partial class NetworkRuleSet : Resource
     {
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
@@ -26,16 +26,20 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="trustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
         /// <param name="ipRules"> List of IpRules. </param>
-        internal NetworkRuleSet(ResourceIdentifier id, string name, ResourceType type, DefaultAction? defaultAction, IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NWRuleSetIpRules> ipRules) : base(id, name, type)
+        internal NetworkRuleSet(ResourceIdentifier id, string name, ResourceType type, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NWRuleSetIpRules> ipRules) : base(id, name, type)
         {
+            TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
             DefaultAction = defaultAction;
             VirtualNetworkRules = virtualNetworkRules;
             IpRules = ipRules;
         }
 
+        /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
+        public bool? TrustedServiceAccessEnabled { get; set; }
         /// <summary> Default Action for Network Rule Set. </summary>
         public DefaultAction? DefaultAction { get; set; }
         /// <summary> List VirtualNetwork Rules. </summary>

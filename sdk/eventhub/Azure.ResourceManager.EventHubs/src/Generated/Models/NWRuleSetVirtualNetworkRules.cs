@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> Description of VirtualNetworkRules - NetworkRules resource. </summary>
+    /// <summary> The response from the List namespace operation. </summary>
     public partial class NWRuleSetVirtualNetworkRules
     {
         /// <summary> Initializes a new instance of NWRuleSetVirtualNetworkRules. </summary>
@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Initializes a new instance of NWRuleSetVirtualNetworkRules. </summary>
         /// <param name="subnet"> Subnet properties. </param>
-        /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing VNet Service Endpoint. </param>
+        /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing Vnet Service Endpoint. </param>
         internal NWRuleSetVirtualNetworkRules(Subnet subnet, bool? ignoreMissingVnetServiceEndpoint)
         {
             Subnet = subnet;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Subnet properties. </summary>
         public Subnet Subnet { get; set; }
-        /// <summary> Value that indicates whether to ignore missing VNet Service Endpoint. </summary>
+        /// <summary> Value that indicates whether to ignore missing Vnet Service Endpoint. </summary>
         public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
     }
 }

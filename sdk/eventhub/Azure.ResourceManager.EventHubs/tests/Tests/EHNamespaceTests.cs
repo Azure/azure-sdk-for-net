@@ -346,21 +346,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         [Test]
         [RecordedTest]
         [Ignore("tags are null")]
-        public async Task NamespaceGetMessagingPlan()
-        {
-            //create namespace
-            _resourceGroup = await CreateResourceGroupAsync();
-            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
-            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
-
-            //get messaging plan
-            await eHNamespace.GetMessagingPlanAsync();
-        }
-
-        [Test]
-        [RecordedTest]
-        [Ignore("tags are null")]
         public async Task ListRegionsBySku()
         {
             //list regions of sku basic
@@ -387,6 +372,21 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 i++;
             }
             return eHNamespace;
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task GetPrivateLinkResources()
+        {
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
+
+            //get private link resource
+            IReadOnlyList<PrivateLinkResource> privateLinkResources = (await eHNamespace.GetPrivateLinkResourcesAsync()).Value;
+            Assert.NotNull(privateLinkResources);
         }
     }
 }

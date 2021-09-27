@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.EventHubs
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespacesRestOperations _restClient;
         private readonly EHNamespaceData _data;
+        private PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient { get; }
         private DisasterRecoveryConfigNameRestOperations _disasterRecoveryConfigNameRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="EHNamespace"/> class for mocking. </summary>
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.EventHubs
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
@@ -64,6 +67,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
             _disasterRecoveryConfigNameRestClient = new DisasterRecoveryConfigNameRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
@@ -409,15 +413,22 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets messaging plan for specified namespace. </summary>
+        /// <summary> Creates or updates an VirtualNetworkRule for a Namespace. </summary>
+        /// <param name="parameters"> The Namespace VirtualNetworkRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MessagingPlan>> GetMessagingPlanAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetworkRule>> CreateOrUpdateVirtualNetworkRuleAsync(VirtualNetworkRule parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetMessagingPlan");
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.CreateOrUpdateVirtualNetworkRule");
             scope.Start();
             try
             {
-                var response = await _restClient.GetMessagingPlanAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CreateOrUpdateVirtualNetworkRuleAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -427,15 +438,94 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets messaging plan for specified namespace. </summary>
+        /// <summary> Creates or updates an VirtualNetworkRule for a Namespace. </summary>
+        /// <param name="parameters"> The Namespace VirtualNetworkRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MessagingPlan> GetMessagingPlan(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<VirtualNetworkRule> CreateOrUpdateVirtualNetworkRule(VirtualNetworkRule parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetMessagingPlan");
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.CreateOrUpdateVirtualNetworkRule");
             scope.Start();
             try
             {
-                var response = _restClient.GetMessagingPlan(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _restClient.CreateOrUpdateVirtualNetworkRule(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes an VirtualNetworkRule for a Namespace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteVirtualNetworkRuleAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.DeleteVirtualNetworkRule");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.DeleteVirtualNetworkRuleAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes an VirtualNetworkRule for a Namespace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteVirtualNetworkRule(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.DeleteVirtualNetworkRule");
+            scope.Start();
+            try
+            {
+                var response = _restClient.DeleteVirtualNetworkRule(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets an VirtualNetworkRule for a Namespace by rule name. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<VirtualNetworkRule>> GetVirtualNetworkRuleAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetVirtualNetworkRule");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetVirtualNetworkRuleAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets an VirtualNetworkRule for a Namespace by rule name. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VirtualNetworkRule> GetVirtualNetworkRule(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetVirtualNetworkRule");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetVirtualNetworkRule(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -531,18 +621,18 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets list of NetworkRuleSet for a Namespace. </summary>
+        /// <summary> Gets a list of VirtualNetwork rules for a Namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkRuleSet" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkRuleSet> GetNetworkRuleSets(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualNetworkRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualNetworkRule> GetVirtualNetworkRules(CancellationToken cancellationToken = default)
         {
-            Page<NetworkRuleSet> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualNetworkRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetVirtualNetworkRules");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetNetworkRuleSets(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetVirtualNetworkRules(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -551,13 +641,13 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            Page<NetworkRuleSet> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualNetworkRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetVirtualNetworkRules");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetNetworkRuleSetsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetVirtualNetworkRulesNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -569,18 +659,18 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets list of NetworkRuleSet for a Namespace. </summary>
+        /// <summary> Gets a list of VirtualNetwork rules for a Namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkRuleSet" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkRuleSet> GetNetworkRuleSetsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualNetworkRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualNetworkRule> GetVirtualNetworkRulesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkRuleSet>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualNetworkRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetVirtualNetworkRules");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetNetworkRuleSetsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetVirtualNetworkRulesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -589,13 +679,13 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            async Task<Page<NetworkRuleSet>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualNetworkRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetNetworkRuleSets");
+                using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetVirtualNetworkRules");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetNetworkRuleSetsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetVirtualNetworkRulesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -606,6 +696,42 @@ namespace Azure.ResourceManager.EventHubs
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
+        /// <summary> Gets lists of resources that supports Privatelinks. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<IReadOnlyList<PrivateLinkResource>>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetPrivateLinkResources");
+            scope.Start();
+            try
+            {
+                var response = await _privateLinkResourcesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets lists of resources that supports Privatelinks. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("EHNamespace.GetPrivateLinkResources");
+            scope.Start();
+            try
+            {
+                var response = _privateLinkResourcesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Check the give Namespace name availability. </summary>
         /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -654,6 +780,20 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a list of IpFilterRules in the EHNamespace. </summary>
+        /// <returns> An object representing collection of IpFilterRules and their operations over a EHNamespace. </returns>
+        public IpFilterRuleContainer GetIpFilterRules()
+        {
+            return new IpFilterRuleContainer(this);
+        }
+
+        /// <summary> Gets a list of PrivateEndpointConnections in the EHNamespace. </summary>
+        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a EHNamespace. </returns>
+        public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()
+        {
+            return new PrivateEndpointConnectionContainer(this);
         }
 
         /// <summary> Gets a list of AuthorizationRuleNamespaces in the EHNamespace. </summary>

@@ -5,23 +5,20 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Properties supplied for Subnet. </summary>
     public partial class Subnet
     {
         /// <summary> Initializes a new instance of Subnet. </summary>
-        /// <param name="id"> Resource ID of Virtual Network Subnet. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Subnet(string id)
+        public Subnet()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+        }
 
+        /// <summary> Initializes a new instance of Subnet. </summary>
+        /// <param name="id"> Resource ID of Virtual Network Subnet. </param>
+        internal Subnet(string id)
+        {
             Id = id;
         }
 

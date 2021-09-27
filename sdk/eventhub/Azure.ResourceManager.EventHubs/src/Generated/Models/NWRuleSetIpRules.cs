@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> Description of NetWorkRuleSet - IpRules resource. </summary>
+    /// <summary> The response from the List namespace operation. </summary>
     public partial class NWRuleSetIpRules
     {
         /// <summary> Initializes a new instance of NWRuleSetIpRules. </summary>
