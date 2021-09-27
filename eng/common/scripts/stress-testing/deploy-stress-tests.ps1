@@ -21,13 +21,12 @@ $ErrorActionPreference = 'Stop'
 $FailedCommands = New-Object Collections.Generic.List[hashtable]
 
 . (Join-Path $PSScriptRoot "../Helpers" PSModule-Helpers.ps1)
-Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
-Install-ModuleIfNotInstalled "az" "6.4.0" | Import-Module
 
 # Powershell does not (at time of writing) treat exit codes from external binaries
 # as cause for stopping execution, so do this via a wrapper function.
 # See https://github.com/PowerShell/PowerShell-RFC/pull/277
-function Run() {
+function Run()
+{
     Write-Host "`n==> $args`n" -ForegroundColor Green
     $command, $arguments = $args
     & $command $arguments
@@ -37,14 +36,16 @@ function Run() {
     }
 }
 
-function RunOrExitOnFailure() {
+function RunOrExitOnFailure()
+{
     run @args
     if ($LASTEXITCODE) {
         exit $LASTEXITCODE
     }
 }
 
-function Login([string]$subscription, [string]$clusterGroup, [boolean]$pushImages) {
+function Login([string]$subscription, [string]$clusterGroup, [boolean]$pushImages)
+{
     Write-Host "Logging in to subscription, cluster and container registry"
     az account show *> $null
     if ($LASTEXITCODE) {
@@ -165,7 +166,7 @@ function DeployStressPackage(
         Write-Warning "The issue may be fixable by first running 'helm rollback -n $($pkg.Namespace) $($pkg.ReleaseName)'"
         return
     }
-    
+
     # Helm 3 stores release information in kubernetes secrets. The only way to add extra labels around
     # specific releases (thereby enabling filtering on `helm list`) is to label the underlying secret resources.
     # There is not currently support for setting these labels via the helm cli.
@@ -177,7 +178,45 @@ function DeployStressPackage(
     Run kubectl label secret -n $pkg.Namespace --overwrite $helmReleaseConfig deployId=$deployId
 }
 
+function CheckDependencies()
+{
+    $deps = @(
+        @{
+            Command = "docker";
+            Help = "Docker must be installed: https://docs.docker.com/get-docker/";
+        }
+        @{
+            Command = "kubectl";
+            Help = "kubectl must be installed: https://kubernetes.io/docs/tasks/tools/#kubectl";
+        },
+        @{
+            Command = "helm";
+            Help = "helm must be installed: https://helm.sh/docs/intro/install/";
+        },
+        @{
+            Command = "az";
+            Help = "Azure CLI must be installed: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli";
+        }
+    )
+
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+
+    $shouldError = $false
+    foreach ($dep in $deps) {
+        if (!(Get-Command $dep.Command -ErrorAction SilentlyContinue)) {
+            $shouldError = $true
+            Write-Error $dep.Help
+        }
+    }
+
+    if ($shouldError) {
+        exit 1
+    }
+
+}
+
 # Don't call functions when the script is being dot sourced
 if ($MyInvocation.InvocationName -ne ".") {
+    CheckDependencies
     DeployStressTests @PSBoundParameters
 }

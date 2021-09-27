@@ -35,11 +35,10 @@ namespace Azure.Core.Experimental.Tests.Models
         {
             // [X] TODO: Add in HLC error semantics
             // [X] TODO: Use response.IsError
-            // [X] TODO: Use throw new ResponseFailedException(response);
+            // [ ] TODO: Use throw new ResponseFailedException(response);
             if (response.IsError())
             {
-				// NOTE: This is the cool part! :D
-                throw new RequestFailedException(response);
+                throw new RequestFailedException("Received a non-success status code.");
             }
 
             return DeserializePet(JsonDocument.Parse(response.Content.ToMemory()));
