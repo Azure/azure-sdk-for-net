@@ -1,6 +1,4 @@
 ﻿<Project>
-  <Import Project="build\sources.props" />
-
   <PropertyGroup>
     <IsClientLibrary>true</IsClientLibrary>
   </PropertyGroup>
