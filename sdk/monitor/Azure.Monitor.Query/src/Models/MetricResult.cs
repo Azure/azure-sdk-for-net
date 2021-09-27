@@ -35,7 +35,8 @@ namespace Azure.Monitor.Query.Models
         [CodeGenMember("DisplayDescription")]
         public string Description { get; }
 
-        /// <summary> The type of the resource. </summary>
+        /// <summary> the resource type of the metric resource. </summary>
+        [CodeGenMember("Type")]
         public string ResourceType { get; }
     }
 }
