@@ -25,16 +25,16 @@ namespace EventHub.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location = "West US";
+                var location = "West US 2";
 
                 var resourceGroup = string.Empty;
 
                 var resourceGroupCluster = EventHubManagementHelper.ResourceGroupCluster;
 
-                var testClusterName = EventHubManagementHelper.TestClusterName;
+                var testClusterName = "PMTestCluster1";
 
-                var keyVaultName = "SDKTestingKey";
-                var KeyName = "sdktestingkey1";
+                var keyVaultName = "SDKTestingKey1";
+                var KeyName = "sdktestingkey11";
 
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
