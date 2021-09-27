@@ -1,123 +1,209 @@
-# Azure Functions Bindings for Azure SignalR Service
+# Azure WebJobs SignalR bindings library for .NET
 
-## Build Status
+This extension provides functionality for accessing [Azure SignalR Service](https://aka.ms/signalr_service) from an Azure Function.
 
-Travis: [![travis](https://travis-ci.org/Azure/azure-functions-signalrservice-extension.svg?branch=dev)](https://travis-ci.org/Azure/azure-functions-signalrservice-extension)
+# Getting started
 
-## NuGet Packages
+### Install the package
 
-Package Name | Target Framework | NuGet
----|---|---
-Microsoft.Azure.WebJobs.Extensions.SignalRService | .NET Core App 2.1 <br/> .NET Core App 3.1 | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.WebJobs.Extensions.SignalRService.svg)](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.SignalRService)
+Install the SignalR extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.SignalRService/):
+
+```dotnetcli
+dotnet add package Microsoft.Azure.WebJobs.Extensions.SignalRService
+```
+
+### Prerequisites
+
+- **Azure Subscription:**  To use Azure services, including Azure SignalR Service, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+
+- **Azure SignalR resource:** To use SignalR bindings library you'll also need a Azure SignalR resource. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for creating a SignalR resource using the Azure portal. There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create a SignalR resource.
+
+To quickly create the needed SignalR resource in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
+
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2fquickstarts%2fmicrosoft.signalrservice%2fsignalr%2fazuredeploy.json)
 
 
-## Intro
+### Authenticate the bindings
 
-These bindings allow Azure Functions to integrate with [Azure SignalR Service](http://aka.ms/signalr_service).
+In order for the bindings to access SignalR resource, it will need to understand how to authenticate and authorize with it. The easiest means for doing so is to use a connection string which can be found in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://docs.microsoft.com/cli/azure) / [Azure PowerShell](https://docs.microsoft.com/powershell/azure/) snippet below.
 
-### Supported scenarios
+Azure CLI snippet:
+```bash
+az signalr key list -n <your-resource-name> -g <your-resource-group-name> --query primaryKey -o tsv
+```
 
-- Allow clients to serverlessly connect to a SignalR Service hub without requiring an ASP.NET Core backend
-- Use Azure Functions (any language supported by V2) to broadcast messages to all clients connected to a SignalR Service hub.
-- Use Azure Functions (any language supported by V2) to send messages to a single user, or all the users in a group.
-- Use Azure Functions (any language supported by V2) to manage group users like add/remove a single user in a group.
-- Example scenarios include: broadcast messages to a SignalR Service hub on HTTP requests and events from Cosmos DB change feed, Event Hub, Event Grid, etc
-- Use multiple Azure SignalR Service instances for resiliency and disaster recovery in Azure Functions. See details in [Multiple SignalR service endpoint support](./docs/sharding.md).
+Azure PowerShell snippet:
+```Powershell
+Get-AzSignalRKey -ResourceGroupName <your-resource-name> -Name <your-resource-name>
+```
 
-### Bindings
+The `ConnectionStringSetting` property of SignalR bindings (including `SignalRAttribute`, `SignalRConnectionInfoAttribute`, `SignalRTriggerAttribute` etc.) is used to specify the configuration property that stores the connection string. If not specified, the property `AzureSignalRConnectionString` is expected to contain the connection string.
+
+For local development, use the `local.settings.json` file to store the connection string:
+
+```json
+{
+  "Values": {
+    "<connection_name>": "<connection string>"
+  }
+}
+```
+
+When deployed, use the [application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings) to set the connection string.
+
+#### Identity-based
+
+<!--TODO-->
+
+## Supported scenarios
+- Negotiate for a SignalR client.
+- Broadcast messages to all clients connected to a SignalR Service hub.
+- Send messages to a single user, or all the users in a group.
+- Manage group users like add/remove a single user in a group.
+<!-- TODO: Add this point in next PR
+Use multiple Azure SignalR Service instances for resiliency and disaster recovery in Azure Functions. See details in [Multiple SignalR service endpoint support](./docs/sharding.md).
+-->
+
+## Key concepts
+
+### SignalR connection info input binding
 
 `SignalRConnectionInfo` input binding makes it easy to generate the token required for clients to initiate a connection to Azure SignalR Service.
 
-`SignalR` output binding allows messages to be broadcast to an Azure SignalR Service hub.
+Please follow the [Azure SignalR Connection Info input binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-signalr-service-input?tabs=csharp) to learn more about SignalR Connection Info input binding.
 
-## Prerequisites
+### SignalR output binding
 
-- [Azure Functions Core Tools](https://github.com/Azure/azure-functions-core-tools) (V2 or V3)
+`SignalR` output binding allows :
+* send messages to all connections, to a connection, to a user, to a group.
+* add/remove connections/users in a group.
 
-## Usage
+Please follow the [Azure SignalR output binding](https://docs.microsoft.com/azure/azure-functions/functions-bindings-signalr-service-output?tabs=csharp) to learn more about SignalR output binding.
 
-### Create Azure SignalR Service instance
+### SignalR trigger
 
-1. Create Azure SignalR Service instances in the Azure Portal. Note the connection strings, you'll need them later.
+The SignalR trigger allows a function to be executed when a message is sent to Azure SignalR Service.
 
-### Create Function App with extension
+Please follow the [Azure SignalR trigger](https://docs.microsoft.com/azure/azure-functions/functions-bindings-signalr-service-trigger?tabs=csharp) to learn more about SignalR trigger.
 
-1. In a new folder, create a new Azure Functions app.
-    - `func init`
-1. Install this Functions extension.
-    - `func extensions install -p Microsoft.Azure.WebJobs.Extensions.SignalRService -v 1.0.0`
+## Examples
 
-### Add application setting for SignalR connection string
+### Negotiation for SignalR client
 
-1. Create an app setting called `AzureSignalRConnectionString` with the SignalR connection string.
-    - On localhost, use `local.settings.json`
-    - In Azure, use App Settings
+In order for a client to connect to SignalR, it needs to obtain the SignalR Service client hub URL and an access token. We call the process as "negotiation".
 
-### Using the SignalRConnectionInfo input binding
-
-In order for a client to connect to SignalR, it needs to obtain the SignalR Service client hub URL and an access token.
-
-1. Create a new function named `negotiate` and use the `SignalRConnectionInfo` input binding to obtain the connection information and return it. Take a look at this [sample](samples/simple-chat/js/functionapp/negotiate/).
-1. Client connects to the `negotiate` function as it's a normal SignalR hub. See [this file](samples/simple-chat/content/index.html) for a sample usage.
-
-Binding schema:
-
-```javascript
+```C# Snippet:Negotiate
+[FunctionName("Negotiate")]
+public static SignalRConnectionInfo Negotiate(
+    [HttpTrigger(AuthorizationLevel.Anonymous)] HttpRequest req,
+    [SignalRConnectionInfo(HubName = "simplechat", UserId = "{headers.x-ms-signalr-userid}")] SignalRConnectionInfo connectionInfo)
 {
-  "type": "signalRConnectionInfo",
-  "name": "connectionInfo",
-  "hubName": "<hub_name>",
-  "connectionStringSetting": "<setting_name>", // Defaults to AzureSignalRConnectionString
-  "direction": "in"
+    return connectionInfo;
 }
 ```
 
-### Using the SignalR output binding
+### Broadcast individual messages
 
-The `SignalR` output binding can be used to broadcast messages to all clients connected a hub. Take a look at this sample:
+To broadcast messages to all the connections in a hub from a single Azure Function invocation you can apply the `SignalR` attribute to the function return value. The return value should be of type `Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRMessage`.
 
-- [HttpTrigger function to send messages](samples/simple-chat/js/functionapp/messages/)
-- [Simple chat app](samples/simple-chat/content/index.html)
-    - Calls negotiate endpoint to fetch connection information
-    - Connects to SignalR Service
-    - Sends messages to HttpTrigger function, which then broadcasts the messages to all clients
-
-Binding schema:
-
-```javascript
+```C# Snippet:SignalRBindingToReturnValue
+[FunctionName("messages")]
+[return: SignalR(HubName = "simplechat")]
+public static SignalRMessage SendMessage(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post")]HttpRequest req)
 {
-  "type": "signalR",
-  "name": "signalRMessages", // name of the output binding
-  "hubName": "<hub_name>",
-  "connectionStringSetting": "<setting_name>", // Defaults to AzureSignalRConnectionString
-  "direction": "out"
+    return new SignalRMessage
+    {
+        Target = "newMessage",
+        Arguments = new[] { message }
+    };
 }
 ```
 
-To send one or more messages, set the output binding to an array of objects:
-
-```javascript
-module.exports = function (context, req) {
-  context.bindings.signalRMessages = [{
-    "target": "newMessage", // name of the client method to invoke
-    "arguments": [
-      req.body // arguments to pass to client method
-    ]
-  }];
-  context.done();
-};
+You can also use an `out` parameter of type `Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRMessage`.
+```C# Snippet:SignalRBindingToOutputParameter
+[FunctionName("messages")]
+public static void SendMessage(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post")]HttpRequest req, [SignalR(HubName = "simplechat")]out SignalRMessage message)
+{
+    message = new SignalRMessage
+    {
+        Target = "newMessage",
+        Arguments = new[] { message }
+    };
+}
 ```
+### Broadcast multiple messages
+
+To broadcast multiple messages to all the connections in a hub from a single Azure Function invocation you can apply the `SignalR` attribute to the `IAsyncCollector<SignalRMessage>` parameter.
+
+```C# Snippet:SignalRBindingToAsyncCollector
+[FunctionName("messages")]
+public static Task SendMessage(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post")]HttpRequest req,
+    [SignalR(HubName = "simplechat")]IAsyncCollector<SignalRMessage> signalRMessages)
+{
+        return signalRMessages.AddAsync(
+        new SignalRMessage
+        {
+            Target = "newMessage",
+            Arguments = new[] { new object() }
+        });
+}
+```
+
+### Sending messages to a connection, user or group
+
+To send messages to a connection, user or group, the function is similar to broadcasting messages above, except that you specify `ConnectionId`, `UserId` or `GroupName` in the properties of `SignalRMessage`.
+
+Here is an example to send messages to a user using return value binding.
+
+```C# Snippet:SignalRBindingToReturnValue
+[FunctionName("messages")]
+[return: SignalR(HubName = "simplechat")]
+public static SignalRMessage SendMessage(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post")]HttpRequest req)
+{
+    return new SignalRMessage
+    {
+        UserId = "TestUser1",
+        Target = "newMessage",
+        Arguments = new[] { message }
+    };
+}
+```
+<!--TODO serverless hub, trigger-->
+## Troubleshooting
+
+* Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for function troubleshooting guidance.
+* [Troubleshooting guide for Azure SignalR Service](https://docs.microsoft.com/azure/azure-signalr/signalr-howto-troubleshoot-guide)
+
+## Next steps
+
+Read the [introduction to Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://docs.microsoft.com/azure/azure-functions/functions-create-first-azure-function)
 
 ## Contributing
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
+See our [CONTRIBUTING.md][contrib] for details on building,
+testing, and contributing to this library.
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+This project welcomes contributions and suggestions.  Most contributions require
+you to agree to a Contributor License Agreement (CLA) declaring that you have
+the right to, and actually do, grant us the rights to use your contribution. For
+details, visit [cla.microsoft.com][cla].
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][coc].
+For more information see the [Code of Conduct FAQ][coc_faq]
+or contact [opencode@microsoft.com][coc_contact] with any
+additional questions or comments.
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsignalr%2FMicrosoft.Azure.WebJobs.Extensions.SignalRService%2FREADME.png)
+
+<!-- LINKS -->
+[nuget]: https://www.nuget.org/
+
+[contrib]: https://github.com/Azure/azure-sdk-for-net/tree/main/CONTRIBUTING.md
+[cla]: https://cla.microsoft.com
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[coc_contact]: mailto:opencode@microsoft.com
