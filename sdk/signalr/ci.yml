@@ -10,7 +10,6 @@ trigger:
     include:
     - sdk/signalr/ci.yml
     - sdk/signalr/service.projects
-    - sdk/signalr/Microsoft.Azure.Management.SignalR
     - sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService
 
 pr:
@@ -24,7 +23,6 @@ pr:
     include:
     - sdk/signalr/ci.yml
     - sdk/signalr/service.projects
-    - sdk/signalr/Microsoft.Azure.Management.SignalR
     - sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService
 
 extends:
@@ -34,7 +32,5 @@ extends:
     ServiceDirectory: signalr
     ArtifactName: packages
     Artifacts:
-    - name: Microsoft.Azure.Management.SignalR
-      safeName: MicrosoftAzureManagementSignalR
     - name: Microsoft.Azure.WebJobs.Extensions.SignalRService
       safeName: MicrosoftAzureWebJobsExtensionsSignalRService
