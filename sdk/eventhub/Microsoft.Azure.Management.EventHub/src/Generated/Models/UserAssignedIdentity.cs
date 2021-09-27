@@ -14,27 +14,28 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of Messaging Region
+    /// Recognized Dictionary value.
     /// </summary>
-    public partial class MessagingRegionsProperties
+    public partial class UserAssignedIdentity
     {
         /// <summary>
-        /// Initializes a new instance of the MessagingRegionsProperties class.
+        /// Initializes a new instance of the UserAssignedIdentity class.
         /// </summary>
-        public MessagingRegionsProperties()
+        public UserAssignedIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MessagingRegionsProperties class.
+        /// Initializes a new instance of the UserAssignedIdentity class.
         /// </summary>
-        /// <param name="code">Region code</param>
-        /// <param name="fullName">Full name of the region</param>
-        public MessagingRegionsProperties(string code = default(string), string fullName = default(string))
+        /// <param name="principalId">Principal Id of user assigned
+        /// identity</param>
+        /// <param name="clientId">Client Id of user assigned identity</param>
+        public UserAssignedIdentity(string principalId = default(string), string clientId = default(string))
         {
-            Code = code;
-            FullName = fullName;
+            PrincipalId = principalId;
+            ClientId = clientId;
             CustomInit();
         }
 
@@ -44,16 +45,16 @@ namespace Microsoft.Azure.Management.EventHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets region code
+        /// Gets principal Id of user assigned identity
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; private set; }
+        [JsonProperty(PropertyName = "principalId")]
+        public string PrincipalId { get; private set; }
 
         /// <summary>
-        /// Gets full name of the region
+        /// Gets client Id of user assigned identity
         /// </summary>
-        [JsonProperty(PropertyName = "fullName")]
-        public string FullName { get; private set; }
+        [JsonProperty(PropertyName = "clientId")]
+        public string ClientId { get; private set; }
 
     }
 }
