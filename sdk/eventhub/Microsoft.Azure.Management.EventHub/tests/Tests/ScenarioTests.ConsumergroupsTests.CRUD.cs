@@ -75,7 +75,7 @@ namespace EventHub.Tests.ScenarioTests
                     // Create ConsumerGroup.
                     var consumergroupName = TestUtilities.GenerateName(EventHubManagementHelper.ConsumerGroupPrefix);
                     string UserMetadata = "Newly Created";
-                    var createConsumergroupResponse = EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, consumergroupName, new ConsumerGroup { UserMetadata = UserMetadata });
+                    var createConsumergroupResponse = EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, consumergroupName,UserMetadata);
                     Assert.NotNull(createConsumergroupResponse);
                     Assert.Equal(createConsumergroupResponse.Name, consumergroupName);
 
@@ -91,7 +91,7 @@ namespace EventHub.Tests.ScenarioTests
 
                     //Update the Created consumergroup
                     createConsumergroupResponse.UserMetadata = "Updated the user meta data";
-                    var updateconsumergroupResponse = EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, consumergroupName, createConsumergroupResponse);
+                    var updateconsumergroupResponse = EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, consumergroupName, createConsumergroupResponse.UserMetadata);
                     Assert.NotNull(updateconsumergroupResponse);
                     Assert.Equal(updateconsumergroupResponse.Name, createConsumergroupResponse.Name);
                     Assert.Equal("Updated the user meta data", updateconsumergroupResponse.UserMetadata);

@@ -42,11 +42,14 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         {
             base.StartTestRecording();
 
-            Client = CreateClient<TClient>(
+            Client = CreateClient();
+        }
+
+        protected TClient CreateClient(QuestionAnsweringClientOptions options = null) =>
+            CreateClient<TClient>(
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
                 InstrumentClientOptions(
-                    new QuestionAnsweringClientOptions(ServiceVersion)));
-        }
+                    options ?? new QuestionAnsweringClientOptions(ServiceVersion)));
     }
 }
