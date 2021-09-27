@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);netcoreapp3.1</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.SignalRService</PackageId>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>

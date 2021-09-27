@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Azure;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace SignalRServiceExtension.Tests

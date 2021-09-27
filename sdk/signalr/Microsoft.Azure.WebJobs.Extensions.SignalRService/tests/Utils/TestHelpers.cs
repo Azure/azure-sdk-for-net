@@ -74,7 +74,7 @@ namespace SignalRServiceExtension.Tests.Utils
             context.Request.Headers.Add(Constants.AsrsConnectionIdHeader, connectionId);
             if (signatures != null)
             {
-                context.Request.Headers.Add(Constants.AsrsSignature, string.Join(',', signatures));
+                context.Request.Headers.Add(Constants.AsrsSignature, string.Join(",", signatures));
             }
             context.Request.Body = content == null ? Stream.Null : new MemoryStream(content);
 

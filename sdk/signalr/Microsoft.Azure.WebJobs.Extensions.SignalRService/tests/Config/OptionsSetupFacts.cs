@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.SignalR.Management;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions;

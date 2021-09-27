@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             if (!DotnetRuntime(configuration) || Enum.TryParse<HubProtocol>(hubProtocolConfig, out var result) && result == HubProtocol.NewtonsoftJson)
             {
                 // Reset the options to keep backward compatibility.
-                return services.AddNewtonsoftHubProtocol(o => o.PayloadSerializerSettings = JsonConvert.DefaultSettings.Invoke());
+                return services.AddNewtonsoftHubProtocol(o => o.PayloadSerializerSettings = new JsonSerializerSettings());
             }
 
             //If hubProtocolConfig is SystemTextJson for .Net Core 3.1, do nothing, as transient mode doesn't accept it and persisent mode is already System.Text.Json by default.

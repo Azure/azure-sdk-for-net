@@ -6,6 +6,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     internal static class ErrorMessages
     {
         public const string EmptyConnectionStringErrorMessageFormat =
-            $"The SignalR Service connection string or endpoints are not set.";
+            "The SignalR Service connection string or endpoints are not set.";
     }
 }
