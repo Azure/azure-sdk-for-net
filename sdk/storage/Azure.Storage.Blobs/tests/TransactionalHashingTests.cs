@@ -52,8 +52,11 @@ namespace Azure.Storage.Blobs.Tests
             var blobName = GetNewBlobName();
             await TransactionalHashingTestSkeletons.TestDownloadSuccessfulHashVerificationAsync(
                 Recording.Random, algorithm, () => GetOptions(), test.Container,
+                // tell test how to stage data for download
                 async data => await StageData(data, test.Container, blobName),
+                // tell test how to get a blob client to the staged data given some client options
                 (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                // tell test how to perform a download with some hashing options
                 async (blob, hashingOptions) => (await blob.DownloadContentAsync(new BlobBaseDownloadOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
@@ -71,8 +74,11 @@ namespace Azure.Storage.Blobs.Tests
             var blobName = GetNewBlobName();
             await TransactionalHashingTestSkeletons.TestDownloadHashMismatchThrowsAsync(
                 Recording.Random, algorithm, () => GetOptions(), test.Container,
+                // tell test how to stage data for download
                 async data => await StageData(data, test.Container, blobName),
+                // tell test how to get a blob client to the staged data given some client options
                 (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                // tell test how to perform a download with some hashing options
                 async (blob, hashingOptions, range) => (await blob.DownloadContentAsync(new BlobBaseDownloadOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
@@ -83,6 +89,9 @@ namespace Azure.Storage.Blobs.Tests
         #endregion
 
         #region DownloadStreaming
+        /// <summary>
+        /// Stages some data where a preset blob name is needed.
+        /// </summary>
         private async Task StageData(byte[] data, BlobContainerClient container, string blobName)
         {
             BlobClient blob = InstrumentClient(container.GetBlobClient(blobName));
@@ -102,8 +111,11 @@ namespace Azure.Storage.Blobs.Tests
             var blobName = GetNewBlobName();
             await TransactionalHashingTestSkeletons.TestDownloadSuccessfulHashVerificationAsync(
                 Recording.Random, algorithm, () => GetOptions(), test.Container,
+                // tell test how to stage data for download
                 async data => await StageData(data, test.Container, blobName),
+                // tell test how to get a blob client to the staged data given some client options
                 (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                // tell test how to perform a download with some hashing options
                 async (blob, hashingOptions) =>
                 {
                     var response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
@@ -126,8 +138,11 @@ namespace Azure.Storage.Blobs.Tests
             var blobName = GetNewBlobName();
             await TransactionalHashingTestSkeletons.TestDownloadHashMismatchThrowsAsync(
                 Recording.Random, algorithm, () => GetOptions(), test.Container,
+                // tell test how to stage data for download
                 async data => await StageData(data, test.Container, blobName),
+                // tell test how to get a blob client to the staged data given some client options
                 (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                // tell test how to perform a download with some hashing options
                 async (blob, hashingOptions, range) =>
                 {
                     var response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
@@ -197,15 +212,11 @@ namespace Azure.Storage.Blobs.Tests
                 storageStreamDefinitions.DataSize,
                 () => GetOptions(),
                 test.Container,
-                async data =>
-                {
-                    BlobClient blob = InstrumentClient(test.Container.GetBlobClient(blobName));
-                    using (var stream = new MemoryStream(data))
-                    {
-                        await blob.UploadAsync(stream);
-                    }
-                },
+                // tell test how to stage data for download
+                async data => await StageData(data, test.Container, blobName),
+                // tell test how to get a blob client to the staged data given some client options
                 (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                // tell test how to perform the operation (this skeleton performs the stream reads after calling this open)
                 async (blob, hashingOptions) =>
                 {
                     return await blob.OpenReadAsync(new BlobOpenReadOptions(false)
@@ -228,15 +239,11 @@ namespace Azure.Storage.Blobs.Tests
             var blobName = GetNewBlobName();
             await TransactionalHashingTestSkeletons.TestParallelDownloadSuccessfulHashVerificationAsync(
                 Recording.Random, algorithm, chunkSize, () => GetOptions(), test.Container,
-                async data =>
-                {
-                    BlobClient blob = InstrumentClient(test.Container.GetBlobClient(blobName));
-                    using (var stream = new MemoryStream(data))
-                    {
-                        await blob.UploadAsync(stream);
-                    }
-                },
+                // tell test how to stage data for download
+                async data => await StageData(data, test.Container, blobName),
+                // tell test how to get a blob client to the staged data given some client options
                 (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
+                // tell test how to perform a parallel download with some hashing options
                 (blob, hashingOptions) => blob.DownloadToAsync(new BlobBaseDownloadToOptions(Stream.Null)
                 {
                     TransactionalHashingOptions = hashingOptions,
