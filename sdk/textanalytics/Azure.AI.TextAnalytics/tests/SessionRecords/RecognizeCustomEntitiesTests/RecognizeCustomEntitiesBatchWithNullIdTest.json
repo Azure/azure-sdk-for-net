@@ -5,60 +5,62 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
-        "Content-Length": "258",
+        "Content-Length": "253",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2f56ac2e49f301438ed6163ec32ab925-7353f01a810d3443-00",
+        "traceparent": "00-d037f34354fdde4b9d868490ecbc9947-de9b3742ca70bf4e-00",
         "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210927.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "ac619f24e6117d0afaa59ef96ef473c7",
+        "x-ms-client-request-id": "701610698e4e2836b2896021426da6ec",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "documents": [
             {
-              "id": "0",
-              "text": "Subject is taking 100mg of ibuprofen twice daily",
+              "id": null,
+              "text": "Hello world",
               "language": "en"
             }
           ]
         },
         "tasks": {
-          "keyPhraseExtractionTasks": [
+          "customEntityRecognitionTasks": [
             {
               "parameters": {
-                "model-version": "InvalidVersion"
+                "project-name": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+                "deployment-name": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
               }
             }
           ]
-        },
-        "displayName": "AnalyzeOperationBatchWithErrorTest"
+        }
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "993ced8f-c8cb-49e8-b0fd-cda952e61ac7",
+        "apim-request-id": "09532e8b-3490-49b1-afea-497759472b83",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 27 Sep 2021 11:44:15 GMT",
+        "Date": "Mon, 27 Sep 2021 11:26:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "19"
+        "x-envoy-upstream-service-time": "12"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidRequest",
-          "message": "Invalid parameter in request",
+          "message": "Invalid document in request.",
           "innererror": {
-            "code": "InvalidParameterValue",
-            "message": "Job task parameter value InvalidVersion is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest,2019-10-01,2020-07-01,2021-05-01."
+            "code": "InvalidDocument",
+            "message": "At least one document is missing an Id attribute."
           }
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1285200460",
+    "RandomSeed": "1937417632",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveweppe.azure-api.net"
+    "TEXT_ANALYTICS_DEPLOYMENT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveweppe.azure-api.net",
+    "TEXT_ANALYTICS_PROJECT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
   }
 }
