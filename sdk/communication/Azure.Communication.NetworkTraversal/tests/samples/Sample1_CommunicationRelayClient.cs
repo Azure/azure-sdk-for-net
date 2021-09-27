@@ -59,6 +59,36 @@ namespace Azure.Communication.NetworkTraversal.Samples
         }
 
         [Test]
+        [AsyncOnly]
+        public async Task GetRelayConfigurationAsyncWithoutIdentity()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+
+            #region Snippet:CreateCommunicationRelayClientAsync
+            // Get a connection string to our Azure Communication resource.
+            //@@var connectionString = "<connection_string>";
+            var client = new CommunicationRelayClient(connectionString);
+            #endregion Snippet:CreateCommunicationRelayClientAsync
+            client = CreateClientWithConnectionString();
+
+            #region Snippet:GetRelayConfigurationAsync
+            Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync();
+            DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+            IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
+            Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
+            foreach (CommunicationIceServer iceServer in iceServers)
+            {
+                foreach (string url in iceServer.Urls)
+                {
+                    Console.WriteLine($"ICE Server Url: {url}");
+                }
+                Console.WriteLine($"ICE Server Username: {iceServer.Username}");
+                Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
+            }
+            #endregion Snippet:GetRelayConfigurationAsync
+        }
+
+        [Test]
         [SyncOnly]
         public void GetRelayConfiguration()
         {
@@ -77,6 +107,36 @@ namespace Azure.Communication.NetworkTraversal.Samples
 
             #region Snippet:GetRelayConfiguration
             Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(user);
+            DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+            IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
+            Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
+            foreach (CommunicationIceServer iceServer in iceServers)
+            {
+                foreach (string url in iceServer.Urls)
+                {
+                    Console.WriteLine($"ICE Server Url: {url}");
+                }
+                Console.WriteLine($"ICE Server Username: {iceServer.Username}");
+                Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
+            }
+            #endregion Snippet:GetRelayConfiguration
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetRelayConfigurationWithoutIdentity()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+
+            #region Snippet:CreateCommunicationRelayClient
+            // Get a connection string to our Azure Communication resource.
+            //@@var connectionString = "<connection_string>";
+            var client = new CommunicationRelayClient(connectionString);
+            #endregion Snippet:CreateCommunicationRelayClient
+            client = CreateClientWithConnectionString();
+
+            #region Snippet:GetRelayConfiguration
+            Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration();
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
@@ -118,6 +178,28 @@ namespace Azure.Communication.NetworkTraversal.Samples
         }
 
         [Test]
+        public async Task CreateCommunicationRelayWithTokenWithoutIdentity()
+        {
+            #region Snippet:CreateCommunicationRelayFromToken
+            var endpoint = new Uri("https://my-resource.communication.azure.com");
+            /*@@*/
+            endpoint = TestEnvironment.LiveTestDynamicEndpoint;
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+            var client = new CommunicationRelayClient(endpoint, tokenCredential);
+            #endregion Snippet:CreateCommunicationRelayFromToken
+
+            client = CreateClientWithTokenCredential();
+            try
+            {
+                Response<CommunicationRelayConfiguration> relayConfigurationResponse = await client.GetRelayConfigurationAsync();
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
         public async Task CreateCommunicationRelayWithAccessKey()
         {
             #region Snippet:CreateCommunicationRelayFromAccessKey
@@ -136,6 +218,30 @@ namespace Azure.Communication.NetworkTraversal.Samples
             try
             {
                 Response<CommunicationRelayConfiguration> relayConfigurationResponse = await client.GetRelayConfigurationAsync(user);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
+        public async Task CreateCommunicationRelayWithAccessKeyWithoutIdentity()
+        {
+            #region Snippet:CreateCommunicationRelayFromAccessKey
+            var endpoint = new Uri("https://my-resource.communication.azure.com");
+            var accessKey = "<access_key>";
+            /*@@*/
+            endpoint = TestEnvironment.LiveTestDynamicEndpoint;
+            /*@@*/
+            accessKey = TestEnvironment.LiveTestDynamicAccessKey;
+            var client = new CommunicationRelayClient(endpoint, new AzureKeyCredential(accessKey));
+            #endregion Snippet:CreateCommunicationRelayFromAccessKey
+
+            client = CreateClientWithAzureKeyCredential();
+            try
+            {
+                Response<CommunicationRelayConfiguration> relayConfigurationResponse = await client.GetRelayConfigurationAsync();
             }
             catch (Exception ex)
             {
