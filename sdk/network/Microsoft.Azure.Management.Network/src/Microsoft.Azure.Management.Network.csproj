@@ -16,8 +16,8 @@
 		<![CDATA[
 			- Added new api version 2021-02-01-preview
 			- Added new service NetworkManager
-            - Updated network services(except networkmanager) api version to 2021-03-01
-            - Used for networkmanager public preview
+			- Updated network services(except networkmanager) api version to 2021-03-01
+			- Used for networkmanager public preview
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
