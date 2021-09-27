@@ -4,6 +4,7 @@
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -32,7 +33,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             #region Snippet:CertificatesSample4DownloadCertificateAsync
             X509KeyStorageFlags keyStorageFlags = X509KeyStorageFlags.MachineKeySet;
-            if (Environment.OSVersion.Platform != PlatformID.MacOSX)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
             }
