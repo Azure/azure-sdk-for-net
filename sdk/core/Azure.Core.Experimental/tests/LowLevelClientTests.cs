@@ -77,18 +77,18 @@ namespace Azure.Core.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetPetAsync("pet1"));
         }
 
-		// Note: these two tests *currently* test different code paths:
-		// 1) In the ResponseStatusOptions.Default case, we're going through code paths in 
-		//    ClientDiagnostics that we'll later migrate to ResponseClassifier (see https://github.com/azure/azure-sdk-for-net/issues/24031)
+        // Note: these two tests *currently* test different code paths:
+        // 1) In the ResponseStatusOptions.Default case, we're going through code paths in
+        //    ClientDiagnostics that we'll later migrate to ResponseClassifier (see https://github.com/azure/azure-sdk-for-net/issues/24031)
         //
-		//    Because this one is thrown from client's `GetPetAsync()` method, where it calls
-		//    _clientDiagnostics.CreateRFException() -- this happens via different constructors (Note: does it have to?  Could we refactor this?)
-		// 
-		// 2) In the ResponseStatusOptions.NoThrow case, we're going through code paths in
-		//    ResponseClassifier, which will become the only path after resolution of #24031
-		// 
-		// Importantly, having these two tests validates our premise:
-		//   ** The Grow-Up Story/HLC Helper approach has the same semantics
+        //    Because this one is thrown from client's `GetPetAsync()` method, where it calls
+        //    _clientDiagnostics.CreateRFException() -- this happens via different constructors (Note: does it have to?  Could we refactor this?)
+        //
+        // 2) In the ResponseStatusOptions.NoThrow case, we're going through code paths in
+        //    ResponseClassifier, which will become the only path after resolution of #24031
+        //
+        // Importantly, having these two tests validates our premise:
+        //   ** The Grow-Up Story/HLC Helper approach has the same semantics
 
         [Test]
         public async Task GetRequestFailedException_StatusOptionDefault()
@@ -124,8 +124,8 @@ namespace Azure.Core.Tests
 
             try
             {
-				// NOTE: is it weird that we're saying NoThrow here and it throws?
-				// This looks confusing to me as someone reading this code.
+                // NOTE: is it weird that we're saying NoThrow here and it throws?
+                // This looks confusing to me as someone reading this code.
                 Pet pet = await client.GetPetAsync("pet1", ResponseStatusOption.NoThrow);
             }
             catch (RequestFailedException e)
