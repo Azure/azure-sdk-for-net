@@ -341,7 +341,7 @@ MetricsQueryResult
 |---TimeSpan
 |---Metrics (list of `MetricResult` objects)
     |---Id
-    |---Type
+    |---ResourceType
     |---Name
     |---Description
     |---Error
