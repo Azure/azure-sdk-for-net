@@ -184,8 +184,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Equal(activity.ParentSpanId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
         }
 
-        [Fact]
-        public void HttpMethodAndActivityNameIsUsedForHttpRequestOperationName()
+        [Theory]
+        [InlineData("/route")]
+        [InlineData("{controller}/{action}/{id}")]
+        [InlineData(null)]
+        public void HttpMethodAndHttpRouteIsUsedForHttpRequestOperationName(string route)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -198,12 +201,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             activity.DisplayName = "/getaction";
 
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpRoute, route);
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
+
+            string expectedOperationName;
+            if (route == "{controller}/{action}/{id}" || route == null)
+            {
+                expectedOperationName = "GET /search";
+            }
+            else
+            {
+                expectedOperationName = $"GET {route}";
+            }
 
             var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
 
             var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
-            Assert.Equal("GET /getaction", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+            Assert.Equal(expectedOperationName, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void HttpMethodAndHttpUrlPathIsUsedForHttpRequestOperationName()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/path?id=1");
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal("GET /path", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
 
         [Fact]

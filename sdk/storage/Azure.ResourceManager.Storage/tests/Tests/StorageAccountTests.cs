@@ -838,5 +838,40 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Response<IReadOnlyList<PrivateLinkResource>> privateLinkResources = await account.GetPrivateLinkResourcesAsync();
             Assert.NotNull(privateLinkResources.Value);
         }
+
+        [Test]
+        [RecordedTest]
+        public async Task ListStorageAccountsInSubscription()
+        {
+            //create 2 resource groups and 2 storage accounts
+            string accountName1 = await CreateValidAccountNameAsync(namePrefix);
+            ResourceGroup resourceGroup1 = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup1.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
+            await storageAccountContainer.CreateOrUpdateAsync(accountName1, parameters);
+
+            string accountName2 = await CreateValidAccountNameAsync(namePrefix);
+            ResourceGroup resourceGroup2 = await CreateResourceGroupAsync();
+            storageAccountContainer = resourceGroup2.GetStorageAccounts();
+            await storageAccountContainer.CreateOrUpdateAsync(accountName2, parameters);
+
+            //validate two storage accounts
+            StorageAccount account1 = null;
+            StorageAccount account2 = null;
+            await foreach (StorageAccount account in DefaultSubscription.GetStorageAccountsAsync())
+            {
+                if (account.Id.Name == accountName1)
+                    account1 = account;
+                if (account.Id.Name == accountName2)
+                    account2 = account;
+            }
+            VerifyAccountProperties(account1, true);
+            VerifyAccountProperties(account2, true);
+            Assert.AreEqual(account1.Id.ResourceGroupName, resourceGroup1.Id.Name);
+            Assert.AreEqual(account2.Id.ResourceGroupName, resourceGroup2.Id.Name);
+
+            await account1.DeleteAsync();
+            await account2.DeleteAsync();
+        }
     }
 }
