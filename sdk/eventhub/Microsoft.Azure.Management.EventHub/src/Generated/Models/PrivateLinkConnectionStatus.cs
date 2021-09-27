@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.EventHub.Models
 {
 
     /// <summary>
-    /// Defines values for IPAction.
+    /// Defines values for PrivateLinkConnectionStatus.
     /// </summary>
-    public static class IPAction
+    public static class PrivateLinkConnectionStatus
     {
-        public const string Accept = "Accept";
-        public const string Reject = "Reject";
+        public const string Pending = "Pending";
+        public const string Approved = "Approved";
+        public const string Rejected = "Rejected";
+        public const string Disconnected = "Disconnected";
     }
 }
