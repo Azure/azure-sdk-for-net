@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.4 (2021-10-05)
 
+### Features Added
+
+- Added Feature Registration APIs.
+
 ## 1.0.0-beta.2 (2021-09-14)
 
 ### Features Added
