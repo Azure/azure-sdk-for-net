@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         /// <param name="locations">An array that contains the georeplication
         /// locations enabled for the Cosmos DB account.</param>
+        /// <param name="createMode">Enum to indicate the mode of account
+        /// creation. Possible values include: 'Default', 'Restore'</param>
         /// <param name="id">The unique resource identifier of the ARM
         /// resource.</param>
         /// <param name="name">The name of the ARM resource.</param>
@@ -105,7 +107,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// authentication.</param>
         /// <param name="restoreParameters">Parameters to indicate the
         /// information about the restore.</param>
-        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string kind = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string defaultIdentity = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), AnalyticalStorageConfiguration analyticalStorageConfiguration = default(AnalyticalStorageConfiguration), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>), DiagnosticLogSettings diagnosticLogSettings = default(DiagnosticLogSettings), bool? disableLocalAuth = default(bool?), RestoreParameters restoreParameters = default(RestoreParameters))
+        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string createMode, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string kind = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string defaultIdentity = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), AnalyticalStorageConfiguration analyticalStorageConfiguration = default(AnalyticalStorageConfiguration), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>), DiagnosticLogSettings diagnosticLogSettings = default(DiagnosticLogSettings), bool? disableLocalAuth = default(bool?), RestoreParameters restoreParameters = default(RestoreParameters))
             : base(id, name, type, location, tags, identity)
         {
             Kind = kind;
@@ -127,6 +129,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             ApiProperties = apiProperties;
             EnableAnalyticalStorage = enableAnalyticalStorage;
             AnalyticalStorageConfiguration = analyticalStorageConfiguration;
+            CreateMode = createMode;
             BackupPolicy = backupPolicy;
             Cors = cors;
             NetworkAclBypass = networkAclBypass;
@@ -281,6 +284,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets enum to indicate the mode of account creation.
+        /// Possible values include: 'Default', 'Restore'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createMode")]
+        public string CreateMode { get; set; }
+
+        /// <summary>
         /// Gets or sets the object representing the policy for taking backups
         /// on an account.
         /// </summary>
@@ -345,6 +355,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             if (Locations == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Locations");
+            }
+            if (CreateMode == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CreateMode");
             }
             if (ConsistencyPolicy != null)
             {

@@ -180,7 +180,13 @@ namespace CosmosDB.Tests.ScenarioTests
                     cosmosDBManagementClient.CassandraResources.DeleteCassandraViewWithHttpMessagesAsync(resourceGroupName, viewdatabaseAccountName, viewkeyspaceName, cassandraView.Name);
                 }
 
-                cosmosDBManagementClient.CassandraResources.DeleteCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, viewdatabaseAccountName, viewkeyspaceName);
+                cassandraKeyspaces = cosmosDBManagementClient.CassandraResources.ListCassandraKeyspacesWithHttpMessagesAsync(resourceGroupName, viewdatabaseAccountName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(cassandraKeyspaces);
+
+                foreach (CassandraKeyspaceGetResults cassandraKeyspace in cassandraKeyspaces)
+                {
+                    cosmosDBManagementClient.CassandraResources.DeleteCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, viewdatabaseAccountName, cassandraKeyspace.Name);
+                }
             }
         }
 
