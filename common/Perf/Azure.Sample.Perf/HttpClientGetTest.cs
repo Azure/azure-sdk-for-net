@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Azure.Sample.Perf
 {
-    public class HttpClientGetTest : PerfTest<UriOptions>
+    public class HttpClientGetTest : PerfTest<HttpClientGetTest.HttpClientGetOptions>
     {
         private static HttpClient _httpClient;
 
-        public HttpClientGetTest(UriOptions options) : base(options)
+        public HttpClientGetTest(HttpClientGetOptions options) : base(options)
         {
         }
 
@@ -35,12 +35,18 @@ namespace Azure.Sample.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-            _httpClient.GetStringAsync(Options.Uri).Wait();
+            _httpClient.GetStringAsync(Options.Url).Wait();
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await _httpClient.GetStringAsync(Options.Uri);
+            await _httpClient.GetStringAsync(Options.Url);
+        }
+
+        public class HttpClientGetOptions : PerfOptions
+        {
+            [Option('u', "url", Required = true)]
+            public string Url { get; set; }
         }
     }
 }
