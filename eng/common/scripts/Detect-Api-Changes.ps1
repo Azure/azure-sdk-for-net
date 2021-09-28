@@ -112,5 +112,5 @@ foreach ($artifact in $ArtifactList)
 
 foreach($pkg in $responses.keys)
 {
-    Write-Host "API detectiopn request status for $pkg: $($responses[$pkg])"
+    Write-Host "API detectiopn request status for $($pkg) : $($responses[$pkg])"
 }
