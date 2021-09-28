@@ -16,7 +16,7 @@ Param (
 )
 
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
-function Submit-Request($filePath)
+function Submit-Request($filePath, $packageName)
 {
     $repoName = $RepoFullName
     if (!$repoName) {
@@ -29,6 +29,7 @@ function Submit-Request($filePath)
     $query.Add('commitSha', $CommitSha)
     $query.Add('repoName', $repoName)
     $query.Add('pullRequestNumber', $PullRequestNumber)
+    $query.Add('packageName', $packageName)
     $uri = [System.UriBuilder]$APIViewUri
     $uri.query = $query.toString()
     Write-Host "Request URI: $($uri.Uri.OriginalString)"
@@ -71,6 +72,7 @@ function Log-Input-Params()
     Write-Host "Language: $($Language)"
     Write-Host "Commit SHA: $($CommitSha)"
     Write-Host "Repo Name: $($RepoFullName)"
+    Write-Host "Package Name: $($PackageName)"
 }
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -95,7 +97,7 @@ foreach ($artifact in $ArtifactList)
         if (Should-Process-Package -pkgPath $pkgPath -packageName $artifact.name)
         {
             $filePath = $pkgPath.Replace($ArtifactPath , "").Replace("\", "/")
-            $respCode = Submit-Request -filePath $filePath
+            $respCode = Submit-Request -filePath $filePath -packageName $artifact.name
             if ($respCode -ne '200')
             {
                 $responses[$artifact.name] = $respCode
@@ -108,12 +110,7 @@ foreach ($artifact in $ArtifactList)
     }
 }
 
-if ($responses)
+foreach($pkg in $responses.keys)
 {
-    # Will update this with a link to wiki on how to resolve
-    Write-Warning "API change detection failed for following packages. Please check above for package level error details."
-    foreach($pkg in $responses.keys)
-    {
-        Write-Host "$pkg failed with $($responses[$pkg]) code"
-    }
+    Write-Host "API detectiopn request status for $pkg: $($responses[$pkg])"
 }
