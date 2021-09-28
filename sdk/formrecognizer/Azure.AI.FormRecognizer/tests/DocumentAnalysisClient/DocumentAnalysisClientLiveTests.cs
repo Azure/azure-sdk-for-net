@@ -539,7 +539,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
             using var stream = new MemoryStream(damagedFile);
 
-            // TODO: originally, error code was '1000'.
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync(modelId, stream));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
@@ -554,7 +553,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            // TODO: originally, error code was '2001'.
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentFromUriAsync(modelId, invalidUri));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
@@ -1457,7 +1455,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
             using var stream = new MemoryStream(damagedFile);
 
-            // TODO: error code changed for prebuilt ('BadRequest'), and for content ('InvalidImage').
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync(modelId, stream));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
@@ -1474,7 +1471,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentAnalysisClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            // TODO: originally, error code was clearer ('FailedToDownloadImage').
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentFromUriAsync(modelId, invalidUri));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
@@ -1499,7 +1495,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync(modelId, stream, options));
             }
 
-            // TODO: originally, error code was clearer ('UnsupportedLocale').
             Assert.AreEqual("InvalidArgument", ex.ErrorCode);
         }
 
@@ -1507,8 +1502,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         private void ValidateAnalyzeResult(AnalyzeResult result, string modelId, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
-            // TODO: some tests return prebuilt ModelId, while others don't.
-            //Assert.Null(result.ModelId);
+            Assert.AreEqual(modelId, result.ModelId);
 
             // Check Analyzed Documents.
 
