@@ -3,9 +3,12 @@
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
     <ProjectReference Include="..\src\Azure.ResourceManager.WebPubSub.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="SessionRecords\PrivateEndpointConnectionTests\" />
+    <Folder Include="SessionRecords\SharedPrivateLinkTests\" />
     <Folder Include="TestData\" />
     <Folder Include="Samples\" />
     <Folder Include="SessionRecords\" />
