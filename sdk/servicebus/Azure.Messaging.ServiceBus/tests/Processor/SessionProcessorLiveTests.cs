@@ -1670,9 +1670,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 });
                 var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
+                int messageCount = 0;
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
-                    tcs.TrySetResult(true);
+                    var count = Interlocked.Increment(ref messageCount);
+                    if (count == 10)
+                    {
+                        tcs.TrySetResult(true);
+                    }
+
                     await Task.Delay(TimeSpan.FromSeconds(10));
                     await args.CompleteMessageAsync(args.Message);
                 }
@@ -1683,7 +1689,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 // call stop processing as soon as the callback is invoked but before it is done processing
                 await processor.StopProcessingAsync();
-
                 var receiver = client.CreateReceiver(scope.QueueName);
                 // poll for the lock duration to make sure that messages are actually gone rather than just locked
                 var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(30));

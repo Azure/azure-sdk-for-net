@@ -182,7 +182,7 @@
 
 # PRLabel: %Communication
 /sdk/communication/                              @acsdevx-msft
-/sdk/communication/Azure.Communication.Identity/ @petrsvihlik @martinbarnas-ms
+/sdk/communication/Azure.Communication.Identity/ @Azure/acs-identity-sdk
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute
