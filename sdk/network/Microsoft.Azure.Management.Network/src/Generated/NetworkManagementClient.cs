@@ -79,6 +79,101 @@ namespace Microsoft.Azure.Management.Network
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the INetworkManagersOperations.
+        /// </summary>
+        public virtual INetworkManagersOperations NetworkManagers { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkManagerCommitsOperations.
+        /// </summary>
+        public virtual INetworkManagerCommitsOperations NetworkManagerCommits { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkManagerDeploymentStatusOperations.
+        /// </summary>
+        public virtual INetworkManagerDeploymentStatusOperations NetworkManagerDeploymentStatus { get; private set; }
+
+        /// <summary>
+        /// Gets the IEffectiveVirtualNetworksOperations.
+        /// </summary>
+        public virtual IEffectiveVirtualNetworksOperations EffectiveVirtualNetworks { get; private set; }
+
+        /// <summary>
+        /// Gets the IActiveConnectivityConfigurationsOperations.
+        /// </summary>
+        public virtual IActiveConnectivityConfigurationsOperations ActiveConnectivityConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IActiveSecurityAdminRulesOperations.
+        /// </summary>
+        public virtual IActiveSecurityAdminRulesOperations ActiveSecurityAdminRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IActiveSecurityUserRulesOperations.
+        /// </summary>
+        public virtual IActiveSecurityUserRulesOperations ActiveSecurityUserRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IConnectivityConfigurationsOperations.
+        /// </summary>
+        public virtual IConnectivityConfigurationsOperations ConnectivityConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IEffectiveConnectivityConfigurationsOperations.
+        /// </summary>
+        public virtual IEffectiveConnectivityConfigurationsOperations EffectiveConnectivityConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkManagerEffectiveSecurityAdminRulesOperations.
+        /// </summary>
+        public virtual INetworkManagerEffectiveSecurityAdminRulesOperations NetworkManagerEffectiveSecurityAdminRules { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkGroupsOperations.
+        /// </summary>
+        public virtual INetworkGroupsOperations NetworkGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityUserConfigurationsOperations.
+        /// </summary>
+        public virtual ISecurityUserConfigurationsOperations SecurityUserConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IUserRuleCollectionsOperations.
+        /// </summary>
+        public virtual IUserRuleCollectionsOperations UserRuleCollections { get; private set; }
+
+        /// <summary>
+        /// Gets the IUserRulesOperations.
+        /// </summary>
+        public virtual IUserRulesOperations UserRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityAdminConfigurationsOperations.
+        /// </summary>
+        public virtual ISecurityAdminConfigurationsOperations SecurityAdminConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IAdminRuleCollectionsOperations.
+        /// </summary>
+        public virtual IAdminRuleCollectionsOperations AdminRuleCollections { get; private set; }
+
+        /// <summary>
+        /// Gets the IAdminRulesOperations.
+        /// </summary>
+        public virtual IAdminRulesOperations AdminRules { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkSecurityPerimetersOperations.
+        /// </summary>
+        public virtual INetworkSecurityPerimetersOperations NetworkSecurityPerimeters { get; private set; }
+
+        /// <summary>
+        /// Gets the IPerimeterAssociableResourceTypesOperations.
+        /// </summary>
+        public virtual IPerimeterAssociableResourceTypesOperations PerimeterAssociableResourceTypes { get; private set; }
+
+        /// <summary>
         /// Gets the IApplicationGatewaysOperations.
         /// </summary>
         public virtual IApplicationGatewaysOperations ApplicationGateways { get; private set; }
@@ -304,101 +399,6 @@ namespace Microsoft.Azure.Management.Network
         public virtual INetworkInterfaceTapConfigurationsOperations NetworkInterfaceTapConfigurations { get; private set; }
 
         /// <summary>
-        /// Gets the INetworkManagersOperations.
-        /// </summary>
-        public virtual INetworkManagersOperations NetworkManagers { get; private set; }
-
-        /// <summary>
-        /// Gets the INetworkManagerCommitsOperations.
-        /// </summary>
-        public virtual INetworkManagerCommitsOperations NetworkManagerCommits { get; private set; }
-
-        /// <summary>
-        /// Gets the INetworkManagerDeploymentStatusOperations.
-        /// </summary>
-        public virtual INetworkManagerDeploymentStatusOperations NetworkManagerDeploymentStatus { get; private set; }
-
-        /// <summary>
-        /// Gets the IEffectiveVirtualNetworksOperations.
-        /// </summary>
-        public virtual IEffectiveVirtualNetworksOperations EffectiveVirtualNetworks { get; private set; }
-
-        /// <summary>
-        /// Gets the IActiveConnectivityConfigurationsOperations.
-        /// </summary>
-        public virtual IActiveConnectivityConfigurationsOperations ActiveConnectivityConfigurations { get; private set; }
-
-        /// <summary>
-        /// Gets the IActiveSecurityAdminRulesOperations.
-        /// </summary>
-        public virtual IActiveSecurityAdminRulesOperations ActiveSecurityAdminRules { get; private set; }
-
-        /// <summary>
-        /// Gets the IActiveSecurityUserRulesOperations.
-        /// </summary>
-        public virtual IActiveSecurityUserRulesOperations ActiveSecurityUserRules { get; private set; }
-
-        /// <summary>
-        /// Gets the IConnectivityConfigurationsOperations.
-        /// </summary>
-        public virtual IConnectivityConfigurationsOperations ConnectivityConfigurations { get; private set; }
-
-        /// <summary>
-        /// Gets the IEffectiveConnectivityConfigurationsOperations.
-        /// </summary>
-        public virtual IEffectiveConnectivityConfigurationsOperations EffectiveConnectivityConfigurations { get; private set; }
-
-        /// <summary>
-        /// Gets the INetworkManagerEffectiveSecurityAdminRulesOperations.
-        /// </summary>
-        public virtual INetworkManagerEffectiveSecurityAdminRulesOperations NetworkManagerEffectiveSecurityAdminRules { get; private set; }
-
-        /// <summary>
-        /// Gets the INetworkGroupsOperations.
-        /// </summary>
-        public virtual INetworkGroupsOperations NetworkGroups { get; private set; }
-
-        /// <summary>
-        /// Gets the ISecurityUserConfigurationsOperations.
-        /// </summary>
-        public virtual ISecurityUserConfigurationsOperations SecurityUserConfigurations { get; private set; }
-
-        /// <summary>
-        /// Gets the IUserRuleCollectionsOperations.
-        /// </summary>
-        public virtual IUserRuleCollectionsOperations UserRuleCollections { get; private set; }
-
-        /// <summary>
-        /// Gets the IUserRulesOperations.
-        /// </summary>
-        public virtual IUserRulesOperations UserRules { get; private set; }
-
-        /// <summary>
-        /// Gets the ISecurityAdminConfigurationsOperations.
-        /// </summary>
-        public virtual ISecurityAdminConfigurationsOperations SecurityAdminConfigurations { get; private set; }
-
-        /// <summary>
-        /// Gets the IAdminRuleCollectionsOperations.
-        /// </summary>
-        public virtual IAdminRuleCollectionsOperations AdminRuleCollections { get; private set; }
-
-        /// <summary>
-        /// Gets the IAdminRulesOperations.
-        /// </summary>
-        public virtual IAdminRulesOperations AdminRules { get; private set; }
-
-        /// <summary>
-        /// Gets the INetworkSecurityPerimetersOperations.
-        /// </summary>
-        public virtual INetworkSecurityPerimetersOperations NetworkSecurityPerimeters { get; private set; }
-
-        /// <summary>
-        /// Gets the IPerimeterAssociableResourceTypesOperations.
-        /// </summary>
-        public virtual IPerimeterAssociableResourceTypesOperations PerimeterAssociableResourceTypes { get; private set; }
-
-        /// <summary>
         /// Gets the INetworkProfilesOperations.
         /// </summary>
         public virtual INetworkProfilesOperations NetworkProfiles { get; private set; }
@@ -534,6 +534,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IServiceTagsOperations ServiceTags { get; private set; }
 
         /// <summary>
+        /// Gets the IServiceTagInformationOperations.
+        /// </summary>
+        public virtual IServiceTagInformationOperations ServiceTagInformation { get; private set; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         public virtual IUsagesOperations Usages { get; private set; }
@@ -577,6 +582,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILocalNetworkGatewaysOperations.
         /// </summary>
         public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewayNatRulesOperations.
+        /// </summary>
+        public virtual IVirtualNetworkGatewayNatRulesOperations VirtualNetworkGatewayNatRules { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualNetworkTapsOperations.
@@ -944,6 +954,25 @@ namespace Microsoft.Azure.Management.Network
         /// </summary>
         private void Initialize()
         {
+            NetworkManagers = new NetworkManagersOperations(this);
+            NetworkManagerCommits = new NetworkManagerCommitsOperations(this);
+            NetworkManagerDeploymentStatus = new NetworkManagerDeploymentStatusOperations(this);
+            EffectiveVirtualNetworks = new EffectiveVirtualNetworksOperations(this);
+            ActiveConnectivityConfigurations = new ActiveConnectivityConfigurationsOperations(this);
+            ActiveSecurityAdminRules = new ActiveSecurityAdminRulesOperations(this);
+            ActiveSecurityUserRules = new ActiveSecurityUserRulesOperations(this);
+            ConnectivityConfigurations = new ConnectivityConfigurationsOperations(this);
+            EffectiveConnectivityConfigurations = new EffectiveConnectivityConfigurationsOperations(this);
+            NetworkManagerEffectiveSecurityAdminRules = new NetworkManagerEffectiveSecurityAdminRulesOperations(this);
+            NetworkGroups = new NetworkGroupsOperations(this);
+            SecurityUserConfigurations = new SecurityUserConfigurationsOperations(this);
+            UserRuleCollections = new UserRuleCollectionsOperations(this);
+            UserRules = new UserRulesOperations(this);
+            SecurityAdminConfigurations = new SecurityAdminConfigurationsOperations(this);
+            AdminRuleCollections = new AdminRuleCollectionsOperations(this);
+            AdminRules = new AdminRulesOperations(this);
+            NetworkSecurityPerimeters = new NetworkSecurityPerimetersOperations(this);
+            PerimeterAssociableResourceTypes = new PerimeterAssociableResourceTypesOperations(this);
             ApplicationGateways = new ApplicationGatewaysOperations(this);
             ApplicationGatewayPrivateLinkResources = new ApplicationGatewayPrivateLinkResourcesOperations(this);
             ApplicationGatewayPrivateEndpointConnections = new ApplicationGatewayPrivateEndpointConnectionsOperations(this);
@@ -989,25 +1018,6 @@ namespace Microsoft.Azure.Management.Network
             NetworkInterfaceIPConfigurations = new NetworkInterfaceIPConfigurationsOperations(this);
             NetworkInterfaceLoadBalancers = new NetworkInterfaceLoadBalancersOperations(this);
             NetworkInterfaceTapConfigurations = new NetworkInterfaceTapConfigurationsOperations(this);
-            NetworkManagers = new NetworkManagersOperations(this);
-            NetworkManagerCommits = new NetworkManagerCommitsOperations(this);
-            NetworkManagerDeploymentStatus = new NetworkManagerDeploymentStatusOperations(this);
-            EffectiveVirtualNetworks = new EffectiveVirtualNetworksOperations(this);
-            ActiveConnectivityConfigurations = new ActiveConnectivityConfigurationsOperations(this);
-            ActiveSecurityAdminRules = new ActiveSecurityAdminRulesOperations(this);
-            ActiveSecurityUserRules = new ActiveSecurityUserRulesOperations(this);
-            ConnectivityConfigurations = new ConnectivityConfigurationsOperations(this);
-            EffectiveConnectivityConfigurations = new EffectiveConnectivityConfigurationsOperations(this);
-            NetworkManagerEffectiveSecurityAdminRules = new NetworkManagerEffectiveSecurityAdminRulesOperations(this);
-            NetworkGroups = new NetworkGroupsOperations(this);
-            SecurityUserConfigurations = new SecurityUserConfigurationsOperations(this);
-            UserRuleCollections = new UserRuleCollectionsOperations(this);
-            UserRules = new UserRulesOperations(this);
-            SecurityAdminConfigurations = new SecurityAdminConfigurationsOperations(this);
-            AdminRuleCollections = new AdminRuleCollectionsOperations(this);
-            AdminRules = new AdminRulesOperations(this);
-            NetworkSecurityPerimeters = new NetworkSecurityPerimetersOperations(this);
-            PerimeterAssociableResourceTypes = new PerimeterAssociableResourceTypesOperations(this);
             NetworkProfiles = new NetworkProfilesOperations(this);
             NetworkSecurityGroups = new NetworkSecurityGroupsOperations(this);
             SecurityRules = new SecurityRulesOperations(this);
@@ -1035,6 +1045,7 @@ namespace Microsoft.Azure.Management.Network
             ServiceEndpointPolicies = new ServiceEndpointPoliciesOperations(this);
             ServiceEndpointPolicyDefinitions = new ServiceEndpointPolicyDefinitionsOperations(this);
             ServiceTags = new ServiceTagsOperations(this);
+            ServiceTagInformation = new ServiceTagInformationOperations(this);
             Usages = new UsagesOperations(this);
             VirtualNetworks = new VirtualNetworksOperations(this);
             Subnets = new SubnetsOperations(this);
@@ -1044,6 +1055,7 @@ namespace Microsoft.Azure.Management.Network
             VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
             VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
             LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
+            VirtualNetworkGatewayNatRules = new VirtualNetworkGatewayNatRulesOperations(this);
             VirtualNetworkTaps = new VirtualNetworkTapsOperations(this);
             VirtualRouters = new VirtualRoutersOperations(this);
             VirtualRouterPeerings = new VirtualRouterPeeringsOperations(this);
@@ -1099,10 +1111,6 @@ namespace Microsoft.Azure.Management.Network
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FirewallPolicyRuleCollection>("ruleCollectionType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FirewallPolicyRuleCollection>("ruleCollectionType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FirewallPolicyRule>("ruleType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FirewallPolicyRule>("ruleType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ActiveBaseSecurityAdminRule>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ActiveBaseSecurityAdminRule>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ActiveBaseSecurityUserRule>("kind"));
@@ -1113,6 +1121,10 @@ namespace Microsoft.Azure.Management.Network
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BaseUserRule>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BaseAdminRule>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BaseAdminRule>("kind"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FirewallPolicyRuleCollection>("ruleCollectionType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FirewallPolicyRuleCollection>("ruleCollectionType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FirewallPolicyRule>("ruleType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FirewallPolicyRule>("ruleType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
@@ -1220,7 +1232,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bslRequest");
             }
-            string apiVersion = "2020-11-01";
+            string apiVersion = "2021-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1450,7 +1462,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "sessionIds");
             }
-            string apiVersion = "2020-11-01";
+            string apiVersion = "2021-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1653,7 +1665,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2020-11-01";
+            string apiVersion = "2021-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1851,7 +1863,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualWANName");
             }
-            string apiVersion = "2020-11-01";
+            string apiVersion = "2021-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2081,7 +2093,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bslRequest");
             }
-            string apiVersion = "2020-11-01";
+            string apiVersion = "2021-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2287,7 +2299,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bslRequest");
             }
-            string apiVersion = "2020-11-01";
+            string apiVersion = "2021-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2470,7 +2482,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2020-11-01";
+            string apiVersion = "2021-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2675,7 +2687,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vpnClientParams");
             }
-            string apiVersion = "2020-11-01";
+            string apiVersion = "2021-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="data">Certificate public data.</param>
+        /// <param name="validatedCertData">Validated certificate data.</param>
+        /// <param name="clientCertIssuerDN">Distinguished name of client
+        /// certificate issuer.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// trusted client certificate resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -44,10 +47,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayTrustedClientCertificate(string id = default(string), string data = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayTrustedClientCertificate(string id = default(string), string data = default(string), string validatedCertData = default(string), string clientCertIssuerDN = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Data = data;
+            ValidatedCertData = validatedCertData;
+            ClientCertIssuerDN = clientCertIssuerDN;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -65,6 +70,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.data")]
         public string Data { get; set; }
+
+        /// <summary>
+        /// Gets validated certificate data.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.validatedCertData")]
+        public string ValidatedCertData { get; private set; }
+
+        /// <summary>
+        /// Gets distinguished name of client certificate issuer.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientCertIssuerDN")]
+        public string ClientCertIssuerDN { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the trusted client certificate

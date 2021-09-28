@@ -43,6 +43,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// IP prefix.</param>
         /// <param name="cidr">The prefix range in CIDR notation. Should
         /// include the start address and the prefix length.</param>
+        /// <param name="signedMessage">Signed message for WAN
+        /// validation.</param>
+        /// <param name="authorizationMessage">Authorization message for WAN
+        /// validation.</param>
+        /// <param name="customIpPrefixParent">The Parent CustomIpPrefix for
+        /// IPv6 /64 CustomIpPrefix.</param>
+        /// <param name="childCustomIpPrefixes">The list of all Children for
+        /// IPv6 /48 CustomIpPrefix.</param>
         /// <param name="commissionedState">The commissioned state of the
         /// Custom IP Prefix. Possible values include: 'Provisioning',
         /// 'Provisioned', 'Commissioning', 'Commissioned', 'Decommissioning',
@@ -51,6 +59,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// PublicIpPrefixes.</param>
         /// <param name="resourceGuid">The resource GUID property of the custom
         /// IP prefix resource.</param>
+        /// <param name="failedReason">The reason why resource is in failed
+        /// state.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// custom IP prefix resource. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
@@ -58,14 +68,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the resource is updated.</param>
         /// <param name="zones">A list of availability zones denoting the IP
         /// allocated for the resource needs to come from.</param>
-        public CustomIpPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), string cidr = default(string), string commissionedState = default(string), IList<SubResource> publicIpPrefixes = default(IList<SubResource>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
+        public CustomIpPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), string cidr = default(string), string signedMessage = default(string), string authorizationMessage = default(string), CustomIpPrefix customIpPrefixParent = default(CustomIpPrefix), IList<CustomIpPrefix> childCustomIpPrefixes = default(IList<CustomIpPrefix>), string commissionedState = default(string), IList<SubResource> publicIpPrefixes = default(IList<SubResource>), string resourceGuid = default(string), string failedReason = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
             : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Cidr = cidr;
+            SignedMessage = signedMessage;
+            AuthorizationMessage = authorizationMessage;
+            CustomIpPrefixParent = customIpPrefixParent;
+            ChildCustomIpPrefixes = childCustomIpPrefixes;
             CommissionedState = commissionedState;
             PublicIpPrefixes = publicIpPrefixes;
             ResourceGuid = resourceGuid;
+            FailedReason = failedReason;
             ProvisioningState = provisioningState;
             Etag = etag;
             Zones = zones;
@@ -91,6 +106,30 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Cidr { get; set; }
 
         /// <summary>
+        /// Gets or sets signed message for WAN validation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.signedMessage")]
+        public string SignedMessage { get; set; }
+
+        /// <summary>
+        /// Gets or sets authorization message for WAN validation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.authorizationMessage")]
+        public string AuthorizationMessage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customIpPrefixParent")]
+        public CustomIpPrefix CustomIpPrefixParent { get; set; }
+
+        /// <summary>
+        /// Gets the list of all Children for IPv6 /48 CustomIpPrefix.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.childCustomIpPrefixes")]
+        public IList<CustomIpPrefix> ChildCustomIpPrefixes { get; private set; }
+
+        /// <summary>
         /// Gets or sets the commissioned state of the Custom IP Prefix.
         /// Possible values include: 'Provisioning', 'Provisioned',
         /// 'Commissioning', 'Commissioned', 'Decommissioning',
@@ -110,6 +149,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; private set; }
+
+        /// <summary>
+        /// Gets the reason why resource is in failed state.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.failedReason")]
+        public string FailedReason { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the custom IP prefix resource.
@@ -133,18 +178,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "zones")]
         public IList<string> Zones { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ExtendedLocation != null)
-            {
-                ExtendedLocation.Validate();
-            }
-        }
     }
 }
