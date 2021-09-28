@@ -38,7 +38,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             /// The version 2021-09-30-preview of the service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable AZC0016 // All parts of ServiceVersion members' names must begin with a number or uppercase letter and cannot have consecutive underscores
             V2021_09_30_preview = 1,
+#pragma warning restore AZC0016 // All parts of ServiceVersion members' names must begin with a number or uppercase letter and cannot have consecutive underscores
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
