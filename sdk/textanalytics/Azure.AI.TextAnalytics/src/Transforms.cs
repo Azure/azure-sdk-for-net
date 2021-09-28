@@ -362,7 +362,7 @@ namespace Azure.AI.TextAnalytics
                 classifiedCustomCategoryResults.Add(new SingleCategoryClassifyResult(error.Id, ConvertToError(error.Error)));
             }
 
-            //Read sentiments
+            //Read classifications
             foreach (SingleClassificationDocument classificationDocument in results.Documents)
             {
                 classifiedCustomCategoryResults.Add(new SingleCategoryClassifyResult(classificationDocument.Id, classificationDocument.Statistics ?? default, new ClassificationCategory(classificationDocument), ConvertToWarnings(classificationDocument.Warnings)));

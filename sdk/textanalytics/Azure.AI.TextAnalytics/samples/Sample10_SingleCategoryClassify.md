@@ -15,7 +15,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 ## Performing Single Category Classify on one or multiple documents
 
-To perform Custom Category Classification in one or multiple documents, set up an `SingleCategoryClassifyAction` and call `StartAnalyzeActionsAsync` on the documents. The result is a Long Running operation of type `AnalyzeActionsOperation` which polls for the results from the API.
+To perform Custom Single Category Classification in one or multiple documents, set up a `SingleCategoryClassifyAction` and call `StartAnalyzeActionsAsync` on the documents. The result is a Long Running Operation of type `AnalyzeActionsOperation` which polls for the results from the API.
 
 ```C# Snippet:TextAnalyticsSingleCategoryClassifyAsync
 // Get input document.
@@ -27,6 +27,10 @@ var batchInput = new List<string>
 {
     document
 };
+
+//Set project and deployment names of the target model
+string projectName = "<projectName>";
+string deploymentName = "<deploymentName>";
 
 var singleCategoryClassifyAction = new SingleCategoryClassifyAction(projectName, deploymentName);
 
@@ -66,24 +70,8 @@ await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
 
     foreach (SingleCategoryClassifyActionResult classificationActionResults in classificationResultsCollection)
     {
-        if (classificationActionResults.HasError)
-        {
-            Console.WriteLine($"  Error!");
-            Console.WriteLine($"  Action error code: {classificationActionResults.Error.ErrorCode}.");
-            Console.WriteLine($"  Message: {classificationActionResults.Error.Message}");
-            continue;
-        }
-
         foreach (SingleCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
         {
-            if (documentResults.HasError)
-            {
-                Console.WriteLine($"  Error!");
-                Console.WriteLine($"  Document error code: {documentResults.Error.ErrorCode}.");
-                Console.WriteLine($"  Message: {documentResults.Error.Message}");
-                continue;
-            }
-
             Console.WriteLine($"  Class category \"{documentResults.ClassificationCategory.Category}\" predicted with a confidence score of {documentResults.ClassificationCategory.ConfidenceScore}.");
             Console.WriteLine();
         }

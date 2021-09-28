@@ -15,11 +15,9 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task SingleCategoryClassifyAsync()
         {
-            // Create a text analytics client.
+            // Create a Text Analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string projectName = TestEnvironment.SingleClassificationProjectName;
-            string deploymentName = TestEnvironment.SingleClassificationDeploymentName;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -35,6 +33,15 @@ namespace Azure.AI.TextAnalytics.Samples
                      Language = "en",
                 }
             };
+
+            //declare project and deployment names of the target model
+#if SNIPPET
+            string projectName = "<projectName>";
+            string deploymentName = "<deploymentName>";
+#else
+            string projectName = TestEnvironment.SingleClassificationProjectName;
+            string deploymentName = TestEnvironment.SingleClassificationDeploymentName;
+#endif
 
             var singleCategoryClassifyAction = new SingleCategoryClassifyAction(projectName, deploymentName);
 
@@ -66,24 +73,8 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 foreach (SingleCategoryClassifyActionResult classificationActionResults in classificationResultsCollection)
                 {
-                    if (classificationActionResults.HasError)
-                    {
-                        Console.WriteLine($"  Error!");
-                        Console.WriteLine($"  Action error code: {classificationActionResults.Error.ErrorCode}.");
-                        Console.WriteLine($"  Message: {classificationActionResults.Error.Message}");
-                        continue;
-                    }
-
                     foreach (SingleCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
-                        if (documentResults.HasError)
-                        {
-                            Console.WriteLine($"  Error!");
-                            Console.WriteLine($"  Document error code: {documentResults.Error.ErrorCode}.");
-                            Console.WriteLine($"  Message: {documentResults.Error.Message}");
-                            continue;
-                        }
-
                         Console.WriteLine($"  Class category \"{documentResults.ClassificationCategory.Category}\" predicted with a confidence score of {documentResults.ClassificationCategory.ConfidenceScore}.");
                         Console.WriteLine();
                     }

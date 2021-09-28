@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary>
-    /// ExtractiveSummarizationTasksItem.
+    /// CustomSingleClassificationTasksItem.
     /// </summary>
     [CodeGenModel("TasksStateTasksCustomSingleClassificationTasksItem")]
     internal partial class CustomSingleClassificationTasksItem { }

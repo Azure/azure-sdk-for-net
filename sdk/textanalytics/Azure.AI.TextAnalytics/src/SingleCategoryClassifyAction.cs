@@ -5,8 +5,8 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Configurations that allow callers to specify details about how to execute
-    /// a Single Category Classify action on a set of documents. This corresponds
-    /// to a Single Category Classification task in the text analytics service.
+    /// a Single Category Classification action on a set of documents. This corresponds
+    /// to a Single Category Classification task in the Text Analytics service.
     /// For example, the target project and deployment names are required
     /// for a successful custom classification action.
     /// </summary>
@@ -15,11 +15,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="SingleCategoryClassifyAction"/>
         /// class which allows callers to specify details about how to execute
-        /// a Single Category Classify action on a set of documents.
+        /// a Single Category Classification action on a set of documents.
         /// Sets the <see cref="ProjectName"/> and <see cref="DeploymentName"/> properties.
         /// </summary>
-        /// <param name = "projectName">The target project name used in the Single Category Classify action.</param>
-        /// <param name = "deploymentName">The deployment name used in the Single Category Classify action.</param>
+        /// <param name = "projectName">The target project name used in the Single Category Classification action.</param>
+        /// <param name = "deploymentName">The deployment name used in the Single Category Classification action.</param>
         public SingleCategoryClassifyAction(string projectName, string deploymentName)
         {
             DeploymentName = deploymentName;
@@ -27,16 +27,12 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the value of the property corresponding to the name of the
-        /// target project for this action. This property is set when calling
-        /// the <see cref="SingleCategoryClassifyAction"/> constructor.
+        /// Gets the value of the property corresponding to the name of the target project.
         /// </summary>
         public string ProjectName { get; }
 
         /// <summary>
-        /// Gets the value of the property corresponding to the name of the
-        /// deployment for this action. This property is set when calling
-        /// the <see cref="SingleCategoryClassifyAction"/> constructor.
+        /// Gets the value of the property corresponding to the name of the target deployment.
         /// </summary>
         public string DeploymentName { get; }
 
