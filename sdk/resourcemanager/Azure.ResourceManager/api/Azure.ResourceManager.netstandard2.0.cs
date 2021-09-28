@@ -1424,7 +1424,6 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class SubResource
     {
         public SubResource() { }
-        protected SubResource(string id) { }
         public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
     }
     public partial class SubscriptionPolicies
@@ -1532,7 +1531,6 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class WritableSubResource
     {
         public WritableSubResource() { }
-        protected internal WritableSubResource(string id) { }
         public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } set { } }
     }
 }
