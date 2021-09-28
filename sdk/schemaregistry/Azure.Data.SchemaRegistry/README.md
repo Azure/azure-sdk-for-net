@@ -45,7 +45,7 @@ Once you have the Azure resource credentials and the Event Hubs namespace hostna
 // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
-var client = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+var client = new SchemaRegistryClient(fullyQualifiedNamespace: fullyQualifiedNamespace, credential: new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -90,7 +90,7 @@ Register a schema to be stored in the Azure Schema Registry. When registering a 
 
 ```C# Snippet:SchemaRegistryRegisterSchema
 string name = "employeeSample";
-SerializationType type = SerializationType.Avro;
+SchemaFormat format = SchemaFormat.Avro;
 // Example schema's content
 string content = @"
 {
@@ -103,7 +103,7 @@ string content = @"
     ]
 }";
 
-Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, content, type);
+Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, content, format);
 ```
 
 ### Retrieve a schema ID
@@ -112,7 +112,7 @@ Retrieve a previously registered schema ID from the Azure Schema Registry. When 
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaId
 string name = "employeeSample";
-SerializationType type = SerializationType.Avro;
+SchemaFormat format = SchemaFormat.Avro;
 // Example schema's content
 string content = @"
 {
@@ -125,7 +125,7 @@ string content = @"
     ]
 }";
 
-SchemaProperties schemaProperties = client.GetSchemaProperties(groupName, name, content, type);
+SchemaProperties schemaProperties = client.GetSchemaProperties(groupName, name, content, format);
 string schemaId = schemaProperties.Id;
 ```
 
