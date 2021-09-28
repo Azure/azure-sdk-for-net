@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("operation not supported for subscription or tenant")]
         public async Task CreateGetUpdateDeleteCluster()
         {
             //create a cluster
