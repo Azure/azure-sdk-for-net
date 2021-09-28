@@ -28,6 +28,7 @@ namespace Azure.Template.Models
         public bool? Managed { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string Value { get { throw null; } }
+        public string Value1 { get { throw null; } }
     }
     public static partial class TemplateModelFactory
     {
