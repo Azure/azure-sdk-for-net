@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
-    public partial class ConversationAnalysisClientWithLanguageSamples
+    public partial class ConversationAnalysisClientSamples
     {
         [SyncOnly]
         [RecordedTest]
