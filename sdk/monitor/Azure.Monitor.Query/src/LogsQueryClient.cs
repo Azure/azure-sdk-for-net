@@ -96,7 +96,7 @@ namespace Azure.Monitor.Query
         /// Example of querying a model:
         /// <example snippet="Snippet:QueryLogsAsModelCall">
         /// <code language="csharp">
-        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
+        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryWorkspaceAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -106,7 +106,7 @@ namespace Azure.Monitor.Query
         /// Example of querying a primitive:
         /// <example snippet="Snippet:QueryLogsAsPrimitiveCall">
         /// <code language="csharp">
-        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
+        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryWorkspaceAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -132,7 +132,7 @@ namespace Azure.Monitor.Query
         /// Example of querying a model:
         /// <example snippet="Snippet:QueryLogsAsModelCall">
         /// <code language="csharp">
-        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
+        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryWorkspaceAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -142,7 +142,7 @@ namespace Azure.Monitor.Query
         /// Example of querying a primitive:
         /// <example snippet="Snippet:QueryLogsAsPrimitiveCall">
         /// <code language="csharp">
-        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
+        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryWorkspaceAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
