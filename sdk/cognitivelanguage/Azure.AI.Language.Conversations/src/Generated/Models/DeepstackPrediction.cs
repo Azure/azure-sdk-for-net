@@ -31,7 +31,6 @@ namespace Azure.AI.Language.Conversations.Models
 
             Intents = intents.ToList();
             Entities = entities.ToList();
-            ProjectKind = ProjectKind.Conversation;
         }
 
         /// <summary> Initializes a new instance of DeepstackPrediction. </summary>
@@ -39,11 +38,10 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="intents"> The intent classification results. </param>
         /// <param name="entities"> The entity extraction results. </param>
-        internal DeepstackPrediction(ProjectKind projectKind, string topIntent, IReadOnlyList<DeepstackIntent> intents, IReadOnlyList<DeepstackEntity> entities) : base(projectKind, topIntent)
+        internal DeepstackPrediction(ProjectKind? projectKind, string topIntent, IReadOnlyList<DeepstackIntent> intents, IReadOnlyList<DeepstackEntity> entities) : base(projectKind, topIntent)
         {
             Intents = intents;
             Entities = entities;
-            ProjectKind = projectKind;
         }
 
         /// <summary> The intent classification results. </summary>

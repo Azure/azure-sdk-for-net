@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
-    public partial class ConversationAnalysisClientWithOptionsSamples
+    public partial class ConversationAnalysisClientSamples
     {
         [SyncOnly]
         [RecordedTest]
@@ -34,7 +34,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+
             #endregion
+
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
         }
 
         [AsyncOnly]
@@ -61,6 +65,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
             #endregion
+
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
         }
     }
 }

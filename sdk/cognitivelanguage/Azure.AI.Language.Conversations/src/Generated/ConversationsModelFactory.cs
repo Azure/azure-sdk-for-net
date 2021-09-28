@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <returns> A new <see cref="Models.BasePrediction"/> instance for mocking. </returns>
-        public static BasePrediction BasePrediction(ProjectKind projectKind = default, string topIntent = null)
+        public static BasePrediction BasePrediction(ProjectKind? projectKind = null, string topIntent = null)
         {
             return new BasePrediction(projectKind, topIntent);
         }
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent&apos;s value also contains the actual response from the target project. </param>
         /// <returns> A new <see cref="Models.WorkflowPrediction"/> instance for mocking. </returns>
-        public static WorkflowPrediction WorkflowPrediction(ProjectKind projectKind = default, string topIntent = null, IReadOnlyDictionary<string, TargetIntentResult> intents = null)
+        public static WorkflowPrediction WorkflowPrediction(ProjectKind? projectKind = null, string topIntent = null, IReadOnlyDictionary<string, TargetIntentResult> intents = null)
         {
             intents ??= new Dictionary<string, TargetIntentResult>();
 
@@ -81,7 +81,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="intents"> The intent classification results. </param>
         /// <param name="entities"> The entity extraction results. </param>
         /// <returns> A new <see cref="Models.DeepstackPrediction"/> instance for mocking. </returns>
-        public static DeepstackPrediction DeepstackPrediction(ProjectKind projectKind = default, string topIntent = null, IEnumerable<DeepstackIntent> intents = null, IEnumerable<DeepstackEntity> entities = null)
+        public static DeepstackPrediction DeepstackPrediction(ProjectKind? projectKind = null, string topIntent = null, IEnumerable<DeepstackIntent> intents = null, IEnumerable<DeepstackEntity> entities = null)
         {
             intents ??= new List<DeepstackIntent>();
             entities ??= new List<DeepstackEntity>();

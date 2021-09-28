@@ -45,6 +45,16 @@ directive:
         }
     ];
 
+- from: swagger-document
+  where: $.definitions.BasePrediction
+  transform: |
+    $.discriminator = "projectType";
+    $.required = [ "projectType" ];
+    $.projectType = $.projectKind;
+    delete $.projectKind;
+
+
+
 # Temporary until common.json#/parameters/DeploymentNameQueryParameter is updated.
 - from: swagger-document
   where: $.parameters
