@@ -77,6 +77,7 @@ namespace Azure.Security.KeyVault.Keys
         public string Name { get { throw null; } }
         public Azure.Security.KeyVault.Keys.KeyProperties Properties { get { throw null; } }
     }
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(Azure.Security.KeyVault.Keys.JsonWebKeyConverter))]
     public partial class JsonWebKey
     {
         public JsonWebKey(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Keys.KeyOperation> keyOps) { }
@@ -102,6 +103,12 @@ namespace Azure.Security.KeyVault.Keys
         public System.Security.Cryptography.Aes ToAes() { throw null; }
         public System.Security.Cryptography.ECDsa ToECDsa(bool includePrivateParameters = false) { throw null; }
         public System.Security.Cryptography.RSA ToRSA(bool includePrivateParameters = false) { throw null; }
+    }
+    public partial class JsonWebKeyConverter : System.Text.Json.Serialization.JsonConverter<Azure.Security.KeyVault.Keys.JsonWebKey>
+    {
+        public JsonWebKeyConverter() { }
+        public override Azure.Security.KeyVault.Keys.JsonWebKey Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Security.KeyVault.Keys.JsonWebKey value, System.Text.Json.JsonSerializerOptions options) { }
     }
     public partial class KeyClient
     {
