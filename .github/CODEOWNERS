@@ -274,7 +274,7 @@
 
 # PRLabel: %Digital Twins
 # ServiceLabel: %Digital Twins %Service Attention
-/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @jamdavi
+/sdk/digitaltwins/                              @drwill-ms @azabbasi @johngallardo
 
 # PRLabel: %IoT Models Repository
 # ServiceLabel: %IoT Models Repository %Service Attention
