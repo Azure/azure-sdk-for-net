@@ -33,8 +33,8 @@ namespace Azure.Identity
         private const int UsernamePasswordCredentialAcquireTokenSilentFailedEvent = 16;
         private const int TenantIdDiscoveredAndNotUsedEvent = 17;
         private const int TenantIdDiscoveredAndUsedEvent = 18;
-        internal const string TenantIdDiscoveredAndNotUsedEventMessage = "The service provided an alternate tenantId from what was configured on the credential, but the configured value was used authorization. Configured TenantId: {0}, Alternate TenantId {1}";
-        internal const string TenantIdDiscoveredAndUsedEventMessage = "The service provided an alternate tenantId from what was configured on the credential, and the alternate value was used for authorization. Configured TenantId: {0}, Alternate TenantId {1}";
+        internal const string TenantIdDiscoveredAndNotUsedEventMessage = "A token was request for a different tenant than was configured on the credential, but the configured value was used since multi tenant authentication has been disabled. Configured TenantId: {0}, Requested TenantId {1}";
+        internal const string TenantIdDiscoveredAndUsedEventMessage = "A token was requested for a different tenant than was configured on the credential, and the requested tenant id was used to authenticate. Configured TenantId: {0}, Requested TenantId {1}";
 
         private AzureIdentityEventSource() : base(EventSourceName) { }
 
