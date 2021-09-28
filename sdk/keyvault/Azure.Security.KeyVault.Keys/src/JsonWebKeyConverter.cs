@@ -11,8 +11,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// Converts a <see cref="JsonWebKey"/> to or from JSON.
     /// </summary>
-#pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class JsonWebKeyConverter : JsonConverter<JsonWebKey>
+    internal sealed class JsonWebKeyConverter : JsonConverter<JsonWebKey>
     {
         /// <inheritdoc/>
         public override JsonWebKey Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -36,5 +35,4 @@ namespace Azure.Security.KeyVault.Keys
             writer.WriteEndObject();
         }
     }
-#pragma warning restore AZC0014 // Avoid using banned types in public API
 }
