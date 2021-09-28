@@ -29,5 +29,26 @@ namespace Azure.Core.Pipeline
 
             return classifiedResponse.IsError;
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        public static RequestFailedException CreateExceptionAsync(this Response response)
+        {
+            var classifiedResponse = response as ClassifiedResponse;
+
+            if (classifiedResponse == null)
+            {
+                throw new InvalidOperationException("ResponseClassifier was not set on the response. " +
+                    "Please ensure the pipeline includes ResponsePropertiesPolicy.");
+            }
+
+            return new RequestFailedException(
+                response.Status,
+                classifiedResponse.ResponseClassifier.GetExceptionMessage(response),
+                classifiedResponse.ResponseClassifier.GetErrorCode(response),
+                null);
+        }
     }
 }

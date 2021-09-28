@@ -42,7 +42,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The error message.</param>
         /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
-        protected virtual void ExtractFailureContent(
+        protected internal virtual void ExtractFailureContent(
             string? content,
             ResponseHeaders responseHeaders,
             ref string? message,
@@ -184,7 +184,7 @@ namespace Azure.Core.Pipeline
             return messageBuilder.ToString();
         }
 
-        private static async ValueTask<string?> ReadContentAsync(Response response, bool async)
+        internal static async ValueTask<string?> ReadContentAsync(Response response, bool async)
         {
             string? content = null;
 

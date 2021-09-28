@@ -144,8 +144,5 @@ namespace Azure
                 stream = null;
             }
         }
-
-		// TODO: Are we happy with this internal property on Response?
-        internal ResponseClassifier? ResponseClassifier { get; set; }
     }
 }

@@ -66,14 +66,11 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        public async ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
+        public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
-
-			// TODO: We need to discuss possible performance implications of this
-            await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
-            message.Response.ResponseClassifier = ResponseClassifier;
+            return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
         }
 
         /// <summary>
@@ -86,7 +83,6 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
             _pipeline.Span[0].Process(message, _pipeline.Slice(1));
-            message.Response.ResponseClassifier = ResponseClassifier;
         }
         /// <summary>
         /// Invokes the pipeline asynchronously with the provided request.
