@@ -18,8 +18,4 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.AI.FormRecognizer.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="samples\V4\" />
-  </ItemGroup>
 </Project>
