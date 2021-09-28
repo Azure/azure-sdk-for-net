@@ -115,12 +115,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             // TODO: Add validation here (should we store _resuldId and _modelId as GUIDs?)
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
 
-            string[] substrs = operationLocation.Split('/');
+            string[] substrs = operationLocation.Split('/', '?');
 
-            _resultId = substrs[substrs.Length - 1];
-            _modelId = substrs[substrs.Length - 3];
+            _resultId = substrs[substrs.Length - 2];
+            _modelId = substrs[substrs.Length - 4];
 
-            Id = string.Join("/", substrs, substrs.Length - 3, 3);
+            Id = string.Join("/", substrs, substrs.Length - 4, 3);
         }
 
         /// <summary>

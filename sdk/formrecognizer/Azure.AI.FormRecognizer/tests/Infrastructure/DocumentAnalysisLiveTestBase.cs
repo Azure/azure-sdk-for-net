@@ -26,13 +26,38 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         /// <summary>
+        /// Creates a <see cref="DocumentAnalysisClient" /> with the endpoint and API key provided via environment
+        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
+        /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="DocumentAnalysisTestEnvironment.ApiKey"/>.</param>
+        /// <returns>The instrumented <see cref="DocumentAnalysisClient" />.</returns>
+        protected DocumentAnalysisClient CreateDocumentAnalysisClient(bool useTokenCredential = false, string apiKey = default)
+        {
+            var endpoint = new Uri(TestEnvironment.Endpoint);
+            var options = InstrumentClientOptions(new DocumentAnalysisClientOptions(_serviceVersion));
+
+            DocumentAnalysisClient nonInstrumentedClient;
+
+            if (useTokenCredential)
+            {
+                nonInstrumentedClient = new DocumentAnalysisClient(endpoint, TestEnvironment.Credential, options);
+            }
+            else
+            {
+                var credential = new AzureKeyCredential(apiKey ?? TestEnvironment.ApiKey);
+                nonInstrumentedClient = new DocumentAnalysisClient(endpoint, credential, options);
+            }
+
+            return InstrumentClient(nonInstrumentedClient);
+        }
+
+        /// <summary>
         /// Creates a <see cref="DocumentModelAdministrationClient" /> with the endpoint and API key provided via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
-        /// <param name="nonInstrumentedClient">The non-instrumented version of the client to be used to resume LROs.</param>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="DocumentAnalysisTestEnvironment.ApiKey"/>.</param>
-        /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="DocumentModelAdministrationClient" />.</returns>
         protected DocumentModelAdministrationClient CreateDocumentModelAdministrationClient(bool useTokenCredential = false, string apiKey = default) => CreateDocumentModelAdministrationClient(out _, useTokenCredential, apiKey);
 
@@ -43,7 +68,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <param name="nonInstrumentedClient">The non-instrumented version of the client to be used to resume LROs.</param>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="DocumentAnalysisTestEnvironment.ApiKey"/>.</param>
-        /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="DocumentModelAdministrationClient" />.</returns>
         protected DocumentModelAdministrationClient CreateDocumentModelAdministrationClient(out DocumentModelAdministrationClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {

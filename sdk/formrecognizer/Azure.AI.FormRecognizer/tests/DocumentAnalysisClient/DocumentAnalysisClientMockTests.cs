@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-using Constants = Azure.AI.FormRecognizer.Constants;
 using TestFile = Azure.AI.FormRecognizer.Tests.TestFile;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
@@ -23,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     {
         private const string FakeGuid = "00000000000000000000000000000000";
 
-        private const string OperationId = "00000000000000000000000000000000/analyzeResults/00000000000000000000000000000000";
+        private const string OperationId = "00000000000000000000000000000000/analyzeResults/00000000000000000000000000000000?api-version=2021-09-30-preview";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DocumentAnalysisClientMockTests"/> class.
@@ -111,6 +110,94 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"locale={locale}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartAnalyzeDocumentSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var analyzeOptions = new AnalyzeDocumentOptions { Pages = { pages } };
+            await client.StartAnalyzeDocumentAsync(FakeGuid, stream, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartAnalyzeDocumentFromUriSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var analyzeOptions = new AnalyzeDocumentOptions { Pages = { pages } };
+            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, uri, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartAnalyzeDocumentSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var analyzeOptions = new AnalyzeDocumentOptions { Pages = { page1, page2 } };
+            await client.StartAnalyzeDocumentAsync(FakeGuid, stream, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartAnalyzeDocumentFromUriSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var analyzeOptions = new AnalyzeDocumentOptions { Pages = { page1, page2 } };
+            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, uri, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
 
             Assert.True(requestUriQuery.Contains(expectedSubstring));
         }
