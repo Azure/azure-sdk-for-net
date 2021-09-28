@@ -107,6 +107,6 @@ Using `FormField<T>` to make your fields strongly-typed, and populating a custom
 
 To see the full example source files, see:
 
-* [Strongly typing a recognized form](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample4_StronglyTypingARecognizedForm.cs)
+* [Strongly typing a recognized form](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3/Sample4_StronglyTypingARecognizedForm.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

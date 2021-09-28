@@ -83,5 +83,5 @@ Assert.IsTrue(result);
 ```
 
 [moq]: https://github.com/Moq/moq4/
-[moq_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_MockClient.cs
+[moq_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3/Sample_MockClient.cs
 [lros]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#long-running-operations
