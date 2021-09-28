@@ -5,6 +5,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Core.Pipeline;
 
 namespace Azure.Core.Experimental.Tests.Models
 {
@@ -33,15 +34,14 @@ namespace Azure.Core.Experimental.Tests.Models
         public static implicit operator Pet(Response response)
         {
             // [X] TODO: Add in HLC error semantics
-            // [ ] TODO: Use response.IsError
+            // [X] TODO: Use response.IsError
             // [ ] TODO: Use throw new ResponseFailedException(response);
-            switch (response.Status)
+            if (response.IsError())
             {
-                case 200:
-                    return DeserializePet(JsonDocument.Parse(response.Content.ToMemory()));
-                default:
-                    throw new RequestFailedException("Received a non-success status code.");
+                throw new RequestFailedException("Received a non-success status code.");
             }
+
+            return DeserializePet(JsonDocument.Parse(response.Content.ToMemory()));
         }
 
         private static Pet DeserializePet(JsonDocument document)

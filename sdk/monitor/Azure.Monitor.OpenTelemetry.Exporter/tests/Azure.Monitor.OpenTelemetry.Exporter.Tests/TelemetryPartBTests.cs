@@ -63,7 +63,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
             Assert.Equal(activity.GetStatus() != Status.Error, requestData.Success);
             Assert.Null(requestData.Source);
-            Assert.True(requestData.Properties.Count == 1); //Because of otel_statuscode attribute for activity status. todo: do not add all tags to PartC
+            Assert.True(requestData.Properties.Count == 0);
             Assert.True(requestData.Measurements.Count == 0);
         }
 
@@ -189,7 +189,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Equal("0", remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
-            Assert.True(remoteDependencyData.Properties.Count == 1); //Because of otel_statuscode attribute for activity status. todo: do not add all tags to PartC
+            Assert.True(remoteDependencyData.Properties.Count == 0);
             Assert.True(remoteDependencyData.Measurements.Count == 0);
         }
 
@@ -219,7 +219,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Null(remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
-            Assert.True(remoteDependencyData.Properties.Count == 1); //Because of otel_statuscode attribute for activity status. todo: do not add all tags to PartC
+            Assert.True(remoteDependencyData.Properties.Count == 0);
             Assert.True(remoteDependencyData.Measurements.Count == 0);
         }
 

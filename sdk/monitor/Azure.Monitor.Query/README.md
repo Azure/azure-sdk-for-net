@@ -335,15 +335,15 @@ Here's a hierarchy of the response:
 ```
 MetricsQueryResult
 |---Cost
-|---Interval
+|---Granularity
 |---Namespace
 |---ResourceRegion
 |---TimeSpan
 |---Metrics (list of `MetricResult` objects)
     |---Id
-    |---Type
+    |---ResourceType
     |---Name
-    |---DisplayDescription
+    |---Description
     |---Error
     |---Unit
     |---TimeSeries (list of `MetricTimeSeriesElement` objects)
