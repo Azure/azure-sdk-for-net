@@ -251,9 +251,9 @@ namespace Azure.Search.Documents
         /// It populates <see cref="CaptionResult.Highlights"/>.
         /// <para>The default value is <c>true</c>.</para>
         /// </summary>
-        public bool? QueryCaptionHighlight { get; set; }
+        public bool? QueryCaptionHighlightEnabled { get; set; }
 
-        /// <summary> Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlight"/>.</summary>
+        /// <summary> Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlightEnabled"/>.</summary>
         [CodeGenMember("captions")]
         internal string QueryCaptionRaw
         {
@@ -263,7 +263,7 @@ namespace Azure.Search.Documents
 
                 if (QueryCaption.HasValue)
                 {
-                    queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlight.GetValueOrDefault(true)}";
+                    queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
                 }
 
                 return queryCaptionStringValue;
@@ -274,7 +274,7 @@ namespace Azure.Search.Documents
                 if (string.IsNullOrEmpty(value))
                 {
                     QueryCaption = null;
-                    QueryCaptionHighlight = null;
+                    QueryCaptionHighlightEnabled = null;
                 }
                 else
                 {
@@ -285,12 +285,12 @@ namespace Azure.Search.Documents
                         var highlightPart = value.Substring(splitIndex + QueryCaptionRawSplitter.Length);
 
                         QueryCaption = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaption(queryCaptionPart);
-                        QueryCaptionHighlight = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
+                        QueryCaptionHighlightEnabled = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
                     }
                     else
                     {
                         QueryCaption = new QueryCaption(value);
-                        QueryCaptionHighlight = null;
+                        QueryCaptionHighlightEnabled = null;
                     }
                 }
             }
@@ -317,7 +317,7 @@ namespace Azure.Search.Documents
             destination.QueryAnswer = source.QueryAnswer;
             destination.QueryAnswerCount = source.QueryAnswerCount;
             destination.QueryCaption = source.QueryCaption;
-            destination.QueryCaptionHighlight = source.QueryCaptionHighlight;
+            destination.QueryCaptionHighlightEnabled = source.QueryCaptionHighlightEnabled;
             destination.QueryLanguage = source.QueryLanguage;
             destination.QuerySpeller = source.QuerySpeller;
             destination.QueryType = source.QueryType;

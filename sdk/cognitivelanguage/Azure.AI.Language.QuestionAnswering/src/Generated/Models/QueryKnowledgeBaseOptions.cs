@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+using Azure.AI.Language.QuestionAnswering.Models;
+
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> The question parameters to answer using a knowledge base. </summary>
     public partial class QueryKnowledgeBaseOptions

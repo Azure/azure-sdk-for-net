@@ -29,7 +29,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public QuestionAnsweringKnowledgeBaseRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2021-05-01-preview")
+        public QuestionAnsweringKnowledgeBaseRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2021-07-15-preview")
         {
             this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.QuestionAnswering
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateQueryRequest(string projectName, QueryKnowledgeBaseOptions knowledgeBaseQueryOptions, string deploymentName)
+        internal HttpMessage CreateQueryRequest(string projectName, string deploymentName, QueryKnowledgeBaseOptions knowledgeBaseQueryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -47,10 +47,7 @@ namespace Azure.AI.Language.QuestionAnswering
             uri.AppendRaw("/language", false);
             uri.AppendPath("/:query-knowledgebases", false);
             uri.AppendQuery("projectName", projectName, true);
-            if (deploymentName != null)
-            {
-                uri.AppendQuery("deploymentName", deploymentName, true);
-            }
+            uri.AppendQuery("deploymentName", deploymentName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -63,22 +60,26 @@ namespace Azure.AI.Language.QuestionAnswering
 
         /// <summary> Answers the specified question using your knowledge base. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
-        public async Task<Response<KnowledgeBaseAnswers>> QueryAsync(string projectName, QueryKnowledgeBaseOptions knowledgeBaseQueryOptions, string deploymentName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
+        public async Task<Response<KnowledgeBaseAnswers>> QueryAsync(string projectName, string deploymentName, QueryKnowledgeBaseOptions knowledgeBaseQueryOptions, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
             {
                 throw new ArgumentNullException(nameof(projectName));
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
             }
             if (knowledgeBaseQueryOptions == null)
             {
                 throw new ArgumentNullException(nameof(knowledgeBaseQueryOptions));
             }
 
-            using var message = CreateQueryRequest(projectName, knowledgeBaseQueryOptions, deploymentName);
+            using var message = CreateQueryRequest(projectName, deploymentName, knowledgeBaseQueryOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -96,22 +97,26 @@ namespace Azure.AI.Language.QuestionAnswering
 
         /// <summary> Answers the specified question using your knowledge base. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
-        public Response<KnowledgeBaseAnswers> Query(string projectName, QueryKnowledgeBaseOptions knowledgeBaseQueryOptions, string deploymentName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
+        public Response<KnowledgeBaseAnswers> Query(string projectName, string deploymentName, QueryKnowledgeBaseOptions knowledgeBaseQueryOptions, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
             {
                 throw new ArgumentNullException(nameof(projectName));
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
             }
             if (knowledgeBaseQueryOptions == null)
             {
                 throw new ArgumentNullException(nameof(knowledgeBaseQueryOptions));
             }
 
-            using var message = CreateQueryRequest(projectName, knowledgeBaseQueryOptions, deploymentName);
+            using var message = CreateQueryRequest(projectName, deploymentName, knowledgeBaseQueryOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

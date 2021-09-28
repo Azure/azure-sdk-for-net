@@ -67,6 +67,20 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task ModelCastThrowsOnErrorCodeAsync()
+        {
+            var mockResponse = new MockResponse(404);
+
+            // Send the response through the pipeline so IsError is set.
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            Response response = await client.GetPetAsync("pet1", ResponseStatusOption.NoThrow);
+
+            Assert.Throws<RequestFailedException>(() => { Pet pet = response; });
+        }
+
+        [Test]
         public void CannotGetOutputModelOnFailureCodeAsync()
         {
             var mockResponse = new MockResponse(404);
