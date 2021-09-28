@@ -23,6 +23,9 @@ AnalyzeConversationOptions options = new AnalyzeConversationOptions(
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+
+Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
 ```
 
 ## Asynchronous

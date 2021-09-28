@@ -97,6 +97,9 @@ AnalyzeConversationOptions options = new AnalyzeConversationOptions(
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+
+Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
 ```
 
 ### Analyze a conversation in a different language
@@ -114,6 +117,9 @@ AnalyzeConversationOptions options = new AnalyzeConversationOptions(
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+
+Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
 ```
 Other optional properties can be set such as verbosity and whether service logging is enabled.
 
