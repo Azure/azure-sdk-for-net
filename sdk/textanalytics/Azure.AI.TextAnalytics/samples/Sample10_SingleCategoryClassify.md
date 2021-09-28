@@ -1,5 +1,5 @@
 # Perform Custom Single Category Classification on Documents
-This sample demonstrates how to run a single category classify action in one or more documents. To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
+This sample demonstrates how to run a single category classification action in one or more documents. To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
