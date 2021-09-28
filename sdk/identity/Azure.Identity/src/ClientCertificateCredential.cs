@@ -35,7 +35,6 @@ namespace Azure.Identity
         internal MsalConfidentialClient Client { get; }
 
         private readonly CredentialPipeline _pipeline;
-        private readonly bool _allowMultiTenantAuthentication;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -148,14 +147,9 @@ namespace Azure.Identity
             MsalConfidentialClient client)
         {
             TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
-
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
-
             ClientCertificateProvider = certificateProvider;
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
-
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-
             ClientCertificateCredentialOptions certCredOptions = (options as ClientCertificateCredentialOptions);
 
             Client = client ??
@@ -182,7 +176,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _allowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
@@ -205,7 +199,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _allowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
                 AuthenticationResult result = await Client
                     .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken)
                     .ConfigureAwait(false);

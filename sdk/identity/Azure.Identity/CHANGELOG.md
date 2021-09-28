@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- The `AllowMultiTenantAuthentication` option has been removed and the default behavior is now as if it were true. The multi-tenant discovery feature can be totally disabled by either setting an `AppContext` switch named "Azure.Identity.DisableTenantDiscovery" to `true` or by setting the environment variable "AZURE_IDENTITY_DISABLE_TENANTDISCOVERY" to "true".
 
 ### Bugs Fixed
 

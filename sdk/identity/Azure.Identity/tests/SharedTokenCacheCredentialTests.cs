@@ -575,9 +575,9 @@ namespace Azure.Identity.Tests
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            var options = new SharedTokenCacheCredentialOptions { AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
+            var options = new SharedTokenCacheCredentialOptions();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
             mockPublicMsalClient.Accounts = new List<IAccount>
             {
                 new MockAccount(expectedUsername, expectedTenantId)

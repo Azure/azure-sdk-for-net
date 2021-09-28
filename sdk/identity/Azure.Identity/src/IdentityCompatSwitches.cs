@@ -13,6 +13,8 @@ namespace Azure.Identity
         internal const string DisableInteractiveThreadpoolExecutionEnvVar = "AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION";
         internal const string DisableCP1ExecutionSwitchName = "Azure.Identity.DisableCP1";
         internal const string DisableCP1ExecutionEnvVar = "AZURE_IDENTITY_DISABLE_CP1";
+        internal const string DisableTenantDiscoverySwitchName = "Azure.Identity.DisableTenantDiscovery";
+        internal const string DisableTenantDiscoveryEnvVar = "AZURE_IDENTITY_DISABLE_TENANTDISCOVERY";
 
         public static bool DisableInteractiveBrowserThreadpoolExecution
             => AppContextSwitchHelper.GetConfigValue(DisableInteractiveThreadpoolExecutionSwitchName, DisableInteractiveThreadpoolExecutionEnvVar);
@@ -20,7 +22,7 @@ namespace Azure.Identity
         public static bool DisableCP1
             => AppContextSwitchHelper.GetConfigValue(DisableCP1ExecutionSwitchName, DisableCP1ExecutionEnvVar);
 
-        public static bool EnableLegacyTenantSelection
-            => AppContextSwitchHelper.GetConfigValue(EnableLegacyTenantSelectionSwitchName, EnableLegacyTenantSelectionEnvVar);
+        public static bool DisableTenantDiscovery
+            => AppContextSwitchHelper.GetConfigValue(DisableTenantDiscoverySwitchName, DisableTenantDiscoveryEnvVar);
     }
 }
