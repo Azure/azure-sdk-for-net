@@ -141,26 +141,32 @@ catch (RequestFailedException ex)
 You will notice that additional information is logged, like the client request ID of the operation.
 
 ```text
-Azure.RequestFailedException: Please verify azure search service is up, restart the WebApp and try again
-Status: 400 (Bad Request)
-ErrorCode: BadArgument
+Azure.RequestFailedException: One or more authorization parameter is invalid or missing.
+Status: 401 (Unauthorized)
+ErrorCode: Unauthorized
 
 Content:
 {
-    "error": {
-    "code": "BadArgument",
-    "message": "Please verify azure search service is up, restart the WebApp and try again"
+  "error": {
+    "code": "Unauthorized",
+    "message": "One or more authorization parameter is invalid or missing.",
+    "innerError": {
+      "code": "Forbidden",
+      "message": "The provided authorization parameters cannot access the requested resource."
     }
+  }
 }
 
 Headers:
-x-envoy-upstream-service-time: 23
-apim-request-id: 76a83876-22d1-4977-a0b1-559a674f3605
+Transfer-Encoding: chunked
+pragma: no-cache
+request-id: 0303b4d0-0954-459f-8a3d-1be6819745b5
+apim-request-id: 0303b4d0-0954-459f-8a3d-1be6819745b5
+x-envoy-upstream-service-time: 17
 Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-X-Content-Type-Options: nosniff
-Date: Wed, 30 Jun 2021 00:32:07 GMT
-Content-Length: 139
-Content-Type: application/json; charset=utf-8
+x-content-type-options: nosniff
+Cache-Control: no-store, proxy-revalidate, no-cache, max-age=0, private
+Content-Type: application/json
 ```
 ### Setting up console logging
 
