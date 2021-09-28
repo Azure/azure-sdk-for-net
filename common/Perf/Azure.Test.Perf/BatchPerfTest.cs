@@ -96,6 +96,16 @@ namespace Azure.Test.Perf
         {
             if (_testProxyPolicy != null)
             {
+                // Make one call to Run() before starting recording, to avoid capturing one-time setup like authorization requests.
+                if (Options.Sync)
+                {
+                    Run(CancellationToken.None);
+                }
+                else
+                {
+                    await RunAsync(CancellationToken.None);
+                }
+
                 await StartRecording();
 
                 _testProxyPolicy.RecordingId = _recordingId;
