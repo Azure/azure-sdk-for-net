@@ -4,14 +4,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.AppConfiguration.Models;
-
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
