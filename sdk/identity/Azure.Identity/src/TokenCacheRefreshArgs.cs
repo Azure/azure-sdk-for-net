@@ -8,7 +8,7 @@ namespace Azure.Identity
     /// <summary>
     /// Args setnt to TokenCache OnBefore and OnAfter events.
     /// </summary>
-    public class TokenCacheNotificationDetails
+    public class TokenCacheRefreshArgs
     {
         /// <summary>
         /// A suggested token cache key, which can be used with general purpose storage mechanisms that allow
@@ -26,7 +26,7 @@ namespace Azure.Identity
         /// </summary>
         public string SuggestedCacheKey { get; }
 
-        internal TokenCacheNotificationDetails(TokenCacheNotificationArgs args)
+        internal TokenCacheRefreshArgs(TokenCacheNotificationArgs args)
         {
             SuggestedCacheKey = args.SuggestedCacheKey;
         }
