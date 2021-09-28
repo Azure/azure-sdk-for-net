@@ -79,8 +79,25 @@ namespace Azure.Identity.Tests
         [Test]
         public void EnvironmentCredentialUnavailableException()
         {
-            var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null)));
-            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            using (new TestEnvVar(new()
+            {
+                {"AZURE_CLIENT_ID", null},
+                {"AZURE_TENANT_ID", null},
+                {"AZURE_CLIENT_CERTIFICATE_PATH", null},
+                {"AZURE_PASSWORD", null},
+                {"AZURE_CLIENT_SECRET", null},
+                {"IDENTITY_ENDPOINT", null},
+                {"IDENTITY_HEADER", null},
+                {"MSI_ENDPOINT", null},
+                {"MSI_SECRET", null},
+                {"IMDS_ENDPOINT", null},
+                {"IDENTITY_SERVER_THUMBPRINT", null}
+            }))
+            {
+                var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null)));
+                Assert.ThrowsAsync<CredentialUnavailableException>(async () =>
+                    await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            }
         }
 
         [Test]

@@ -8,7 +8,7 @@ namespace Azure.Identity
     /// <summary>
     /// Details related to a <see cref="UnsafeTokenCacheOptions"/> cache delegate.
     /// </summary>
-    public struct TokenCacheDetails
+    public struct TokenCacheData
     {
         /// <summary>
         /// The bytes representing the state of the token cache.
