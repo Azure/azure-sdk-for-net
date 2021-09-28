@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Post request for all the Bastion Shareable Link endpoints. </summary>
-    public partial class BastionShareableLinkListRequest
+    internal partial class BastionShareableLinkListRequest
     {
         /// <summary> Initializes a new instance of BastionShareableLinkListRequest. </summary>
-        public BastionShareableLinkListRequest()
+        internal BastionShareableLinkListRequest()
         {
             Vms = new ChangeTrackingList<BastionShareableLink>();
         }
 
         /// <summary> List of VM references. </summary>
-        public IList<BastionShareableLink> Vms { get; }
+        public IReadOnlyList<BastionShareableLink> Vms { get; }
     }
 }

@@ -30,17 +30,27 @@ namespace Azure.Core.TestFramework
             // We don't want to instrument generated rest clients.
             if ((type.Name.EndsWith("Client") && !type.Name.EndsWith("RestClient")) ||
                 // Generated ARM clients will have a property containing the sub-client that ends with Operations.
+                //TODO: remove after all track2 .net mgmt libraries are updated to the new generation
                 (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")))
             {
-                invocation.Proceed();
-
-                var result = invocation.ReturnValue;
-                if (result == null)
-                {
+                if (IsNullResult(invocation))
                     return;
-                }
 
-                invocation.ReturnValue = _testBase.InstrumentClient(type, result, Array.Empty<IInterceptor>());
+                invocation.ReturnValue = _testBase.InstrumentClient(type, invocation.ReturnValue, Array.Empty<IInterceptor>());
+                return;
+            }
+
+            if (
+                // Generated ARM clients will have a property containing the sub-client that ends with Operations.
+                (invocation.Method.Name.StartsWith("get_") && ManagementInterceptor.InheritsFromArmResource(type)) ||
+                // Instrument the container construction methods inside Operations objects
+                // Instrument the operations construction methods inside Operations objects
+                (invocation.Method.Name.StartsWith("Get") && ManagementInterceptor.InheritsFromArmResource(type)))
+            {
+                if (IsNullResult(invocation))
+                    return;
+
+                invocation.ReturnValue = _testBase.InstrumentClient(type, invocation.ReturnValue, new IInterceptor[] { new ManagementInterceptor(_testBase) });
                 return;
             }
 
@@ -58,6 +68,12 @@ namespace Azure.Core.TestFramework
         internal async ValueTask<T> InstrumentOperationInterceptor<T>(IInvocation invocation, Func<ValueTask<T>> innerTask)
         {
             return (T) _testBase.InstrumentOperation(typeof(T), await innerTask());
+        }
+
+        private bool IsNullResult(IInvocation invocation)
+        {
+            invocation.Proceed();
+            return invocation.ReturnValue == null;
         }
     }
 }

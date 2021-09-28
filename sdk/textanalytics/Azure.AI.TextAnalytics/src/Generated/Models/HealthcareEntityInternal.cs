@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        /// <param name="assertion"> . </param>
+        /// <param name="assertion"></param>
         /// <param name="name"> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </param>
         /// <param name="links"> Entity references in known data sources. </param>
         internal HealthcareEntityInternal(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareEntityAssertion assertion, string name, IReadOnlyList<EntityDataSource> links) : base(text, category, subcategory, offset, length, confidenceScore)
@@ -49,6 +49,7 @@ namespace Azure.AI.TextAnalytics.Models
             Links = links;
         }
 
+        /// <summary> Gets the assertion. </summary>
         public HealthcareEntityAssertion Assertion { get; }
         /// <summary> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </summary>
         public string Name { get; }

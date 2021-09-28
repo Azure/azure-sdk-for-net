@@ -69,7 +69,7 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual("mockclientid", cred.ClientId);
                 Assert.AreEqual("mocktenantid", cred.TenantId);
 
-                var certProvider = cred.ClientCertificateProvider as ClientCertificateCredential.X509Certificate2FromFileProvider;
+                var certProvider = cred.ClientCertificateProvider as X509Certificate2FromFileProvider;
 
                 Assert.NotNull(certProvider);
                 Assert.AreEqual("mockcertificatepath", certProvider.CertificatePath);
@@ -79,7 +79,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void EnvironmentCredentialUnavailableException()
         {
-            var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), null));
+            var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null)));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
         }
 

@@ -15,7 +15,7 @@ namespace Azure.IoT.Hub.Service.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AuthenticationMechanismType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationMechanismType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuthenticationMechanismType(string value)
         {

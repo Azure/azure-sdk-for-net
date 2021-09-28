@@ -7,10 +7,10 @@ using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query
 {
-    internal class RowBinder: TypeBinder<LogsQueryResultRow>
+    internal class RowBinder: TypeBinder<LogsTableRow>
     {
         internal static RowBinder Shared = new();
-        internal IReadOnlyList<T> BindResults<T>(IReadOnlyList<LogsQueryResultTable> tables)
+        internal IReadOnlyList<T> BindResults<T>(IReadOnlyList<LogsTable> tables)
         {
             List<T> results = new List<T>();
             if (typeof(IDictionary<string, object>).IsAssignableFrom(typeof(T)))
@@ -45,12 +45,12 @@ namespace Azure.Monitor.Query
             return results;
         }
 
-        protected override void Set<T>(LogsQueryResultRow destination, T value, BoundMemberInfo memberInfo)
+        protected override void Set<T>(LogsTableRow destination, T value, BoundMemberInfo memberInfo)
         {
             throw new NotSupportedException();
         }
 
-        protected override bool TryGet<T>(BoundMemberInfo memberInfo, LogsQueryResultRow source, out T value)
+        protected override bool TryGet<T>(BoundMemberInfo memberInfo, LogsTableRow source, out T value)
         {
             int column;
 
@@ -65,15 +65,6 @@ namespace Azure.Monitor.Query
                 return false;
             }
 
-            if (source.IsNull(column) &&
-                (!typeof(T).IsValueType ||
-                typeof(T).IsGenericType &&
-                typeof(T).GetGenericTypeDefinition() == typeof(Nullable<>)))
-            {
-                value = default;
-                return true;
-            }
-
             if (typeof(T) == typeof(int)) value = (T)(object)source.GetInt32(column);
             else if (typeof(T) == typeof(string)) value = (T)(object)source.GetString(column);
             else if (typeof(T) == typeof(bool)) value = (T)(object)source.GetBoolean(column);
@@ -86,19 +77,19 @@ namespace Azure.Monitor.Query
             else if (typeof(T) == typeof(TimeSpan)) value = (T)(object)source.GetTimeSpan(column);
             else if (typeof(T) == typeof(BinaryData)) value = (T)(object)source.GetDynamic(column);
 
-            else if (typeof(T) == typeof(int?)) value = (T)(object)(int?)source.GetInt32(column);
-            else if (typeof(T) == typeof(bool?)) value = (T)(object)(bool?)source.GetBoolean(column);
-            else if (typeof(T) == typeof(long?)) value = (T)(object)(long?)source.GetInt64(column);
-            else if (typeof(T) == typeof(decimal?)) value = (T)(object)(decimal?)source.GetDecimal(column);
-            else if (typeof(T) == typeof(double?)) value = (T)(object)(double?)source.GetDouble(column);
-            else if (typeof(T) == typeof(Guid?)) value = (T)(object)(Guid?)source.GetGuid(column);
-            else if (typeof(T) == typeof(DateTimeOffset?)) value = (T)(object)(DateTimeOffset?)source.GetDateTimeOffset(column);
-            else if (typeof(T) == typeof(TimeSpan?)) value = (T)(object)(TimeSpan?)source.GetTimeSpan(column);
+            else if (typeof(T) == typeof(int?)) value = (T)(object)source.GetInt32(column);
+            else if (typeof(T) == typeof(bool?)) value = (T)(object)source.GetBoolean(column);
+            else if (typeof(T) == typeof(long?)) value = (T)(object)source.GetInt64(column);
+            else if (typeof(T) == typeof(decimal?)) value = (T)(object)source.GetDecimal(column);
+            else if (typeof(T) == typeof(double?)) value = (T)(object)source.GetDouble(column);
+            else if (typeof(T) == typeof(Guid?)) value = (T)(object)source.GetGuid(column);
+            else if (typeof(T) == typeof(DateTimeOffset?)) value = (T)(object)source.GetDateTimeOffset(column);
+            else if (typeof(T) == typeof(TimeSpan?)) value = (T)(object)source.GetTimeSpan(column);
 
             else
             {
                 throw new NotSupportedException($"The {typeof(T)} type is not supported as a deserialization target. " +
-                                                "Supported types are string, bool, long, decimal, double, object, Guid, DateTimeOffset, TimeSpan, BinaryData.");
+                                                "Supported types are string, bool, long, decimal, double, object, Guid, DateTimeOffset, TimeRange, BinaryData.");
             }
 
             return true;

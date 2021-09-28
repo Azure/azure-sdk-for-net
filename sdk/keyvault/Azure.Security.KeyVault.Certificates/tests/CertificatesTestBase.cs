@@ -5,7 +5,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
@@ -16,11 +15,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     [ClientTestFixture(
         CertificateClientOptions.ServiceVersion.V7_0,
         CertificateClientOptions.ServiceVersion.V7_1,
-        CertificateClientOptions.ServiceVersion.V7_2)]
+        CertificateClientOptions.ServiceVersion.V7_2,
+        CertificateClientOptions.ServiceVersion.V7_3_Preview)]
     [NonParallelizable]
     public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        protected readonly TimeSpan PollingInterval = KeyVaultTestEnvironment.DefaultPollingInterval;
+        protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
+            ? TimeSpan.Zero
+            : KeyVaultTestEnvironment.DefaultPollingInterval;
+
         private readonly CertificateClientOptions.ServiceVersion _serviceVersion;
 
         public CertificateClient Client { get; set; }
@@ -211,7 +214,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedCertificateAsync(name), delay: PollingInterval);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await Client.GetDeletedCertificateAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for certificate '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
 
@@ -250,6 +262,17 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 return TestRetryHelper.RetryAsync(async () => await Client.GetCertificateAsync(name), delay: PollingInterval);
             }
+        }
+
+        protected Task DelayAsync(TimeSpan? delay = null)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return Task.CompletedTask;
+            }
+
+            delay ??= PollingInterval;
+            return Task.Delay(delay.Value);
         }
 
         protected void RegisterForCleanup(string certificateName)

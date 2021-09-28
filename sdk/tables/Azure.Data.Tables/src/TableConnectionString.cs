@@ -346,7 +346,7 @@ namespace Azure.Data.Tables
             if (!string.IsNullOrEmpty(accountName))
             {
                 // We've been provided the accountName, so just insert the '-secondary' suffix after it
-                var secondaryUri = primaryUri.ToString().Replace(accountName, accountName + TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix);
+                var secondaryUri = primaryUri.AbsoluteUri.Replace(accountName, accountName + TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix);
                 return new Uri(secondaryUri);
             }
 
@@ -409,9 +409,10 @@ namespace Azure.Data.Tables
             account.Settings.Add(TableConstants.ConnectionStrings.UseDevelopmentSetting, "true");
             if (proxyUri != null)
             {
-                account.Settings.Add(TableConstants.ConnectionStrings.DevelopmentProxyUriSetting, proxyUri.ToString());
+                account.Settings.Add(TableConstants.ConnectionStrings.DevelopmentProxyUriSetting, proxyUri.AbsoluteUri);
             }
 
+            account._accountName = credentials.AccountName;
             account.IsDevStoreAccount = true;
 
             return account;

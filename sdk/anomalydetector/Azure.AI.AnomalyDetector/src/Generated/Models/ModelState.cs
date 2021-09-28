@@ -24,9 +24,9 @@ namespace Azure.AI.AnomalyDetector.Models
 
         /// <summary> Initializes a new instance of ModelState. </summary>
         /// <param name="epochIds"> Epoch id. </param>
-        /// <param name="trainLosses"> . </param>
-        /// <param name="validationLosses"> . </param>
-        /// <param name="latenciesInSeconds"> . </param>
+        /// <param name="trainLosses"></param>
+        /// <param name="validationLosses"></param>
+        /// <param name="latenciesInSeconds"></param>
         internal ModelState(IReadOnlyList<int> epochIds, IReadOnlyList<float> trainLosses, IReadOnlyList<float> validationLosses, IReadOnlyList<float> latenciesInSeconds)
         {
             EpochIds = epochIds;
@@ -37,8 +37,11 @@ namespace Azure.AI.AnomalyDetector.Models
 
         /// <summary> Epoch id. </summary>
         public IReadOnlyList<int> EpochIds { get; }
+        /// <summary> Gets the train losses. </summary>
         public IReadOnlyList<float> TrainLosses { get; }
+        /// <summary> Gets the validation losses. </summary>
         public IReadOnlyList<float> ValidationLosses { get; }
+        /// <summary> Gets the latencies in seconds. </summary>
         public IReadOnlyList<float> LatenciesInSeconds { get; }
     }
 }

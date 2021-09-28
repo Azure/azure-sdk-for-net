@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkStatementOutput
     {
         /// <summary> Initializes a new instance of SparkStatementOutput. </summary>
-        /// <param name="executionCount"> . </param>
+        /// <param name="executionCount"></param>
         internal SparkStatementOutput(int executionCount)
         {
             ExecutionCount = executionCount;
@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
         }
 
         /// <summary> Initializes a new instance of SparkStatementOutput. </summary>
-        /// <param name="status"> . </param>
-        /// <param name="executionCount"> . </param>
+        /// <param name="status"></param>
+        /// <param name="executionCount"></param>
         /// <param name="data"> Any object. </param>
-        /// <param name="errorName"> . </param>
-        /// <param name="errorValue"> . </param>
-        /// <param name="traceback"> . </param>
+        /// <param name="errorName"></param>
+        /// <param name="errorValue"></param>
+        /// <param name="traceback"></param>
         internal SparkStatementOutput(string status, int executionCount, object data, string errorName, string errorValue, IReadOnlyList<string> traceback)
         {
             Status = status;
@@ -38,12 +38,17 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Traceback = traceback;
         }
 
+        /// <summary> Gets the status. </summary>
         public string Status { get; }
+        /// <summary> Gets the execution count. </summary>
         public int ExecutionCount { get; }
         /// <summary> Any object. </summary>
         public object Data { get; }
+        /// <summary> Gets the error name. </summary>
         public string ErrorName { get; }
+        /// <summary> Gets the error value. </summary>
         public string ErrorValue { get; }
+        /// <summary> Gets the traceback. </summary>
         public IReadOnlyList<string> Traceback { get; }
     }
 }

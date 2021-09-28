@@ -20,15 +20,17 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of DiagnosticsInfo. </summary>
-        /// <param name="modelState"> . </param>
-        /// <param name="variableStates"> . </param>
+        /// <param name="modelState"></param>
+        /// <param name="variableStates"></param>
         internal DiagnosticsInfo(ModelState modelState, IReadOnlyList<VariableState> variableStates)
         {
             ModelState = modelState;
             VariableStates = variableStates;
         }
 
+        /// <summary> Gets the model state. </summary>
         public ModelState ModelState { get; }
+        /// <summary> Gets the variable states. </summary>
         public IReadOnlyList<VariableState> VariableStates { get; }
     }
 }

@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -60,11 +58,6 @@ namespace Azure.Messaging.ServiceBus
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
         /// </summary>
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
-
-        /// <summary>
-        /// The list of plugins for the client.
-        /// </summary>
-        internal IList<ServiceBusPlugin> Plugins { get; set; } = new List<ServiceBusPlugin>();
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusClient" />,
@@ -150,7 +143,6 @@ namespace Azure.Messaging.ServiceBus
             Connection = new ServiceBusConnection(connectionString, _options);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
-            Plugins = _options.Plugins;
             TransportType = _options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
@@ -235,7 +227,6 @@ namespace Azure.Messaging.ServiceBus
                 fullyQualifiedNamespace,
                 credential,
                 _options);
-            Plugins = _options.Plugins;
             TransportType = _options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
@@ -259,28 +250,7 @@ namespace Azure.Messaging.ServiceBus
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
-                options: new ServiceBusSenderOptions(),
-                connection: Connection,
-                plugins: Plugins);
-        }
-
-        /// <summary>
-        /// Creates a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
-        /// queue or topic.
-        /// </summary>
-        ///
-        /// <param name="queueOrTopicName">The queue or topic to create a <see cref="ServiceBusSender"/> for.</param>
-        /// <param name="options">The set of <see cref="ServiceBusSenderOptions"/> to use for configuring
-        /// this <see cref="ServiceBusSender"/>.</param>
-        ///
-        /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
-        internal virtual ServiceBusSender CreateSender(string queueOrTopicName, ServiceBusSenderOptions options)
-        {
-            return new ServiceBusSender(
-                entityPath: queueOrTopicName,
-                options: options,
-                connection: Connection,
-                plugins: Plugins);
+                connection: Connection);
         }
 
         /// <summary>
@@ -304,7 +274,6 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: queueName,
                 isSessionEntity: false,
-                plugins: Plugins,
                 options: new ServiceBusReceiverOptions());
         }
 
@@ -333,7 +302,6 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: queueName,
                 isSessionEntity: false,
-                plugins: Plugins,
                 options: options);
         }
 
@@ -364,7 +332,6 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 isSessionEntity: false,
-                plugins: Plugins,
                 options: new ServiceBusReceiverOptions());
         }
 
@@ -396,7 +363,6 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 isSessionEntity: false,
-                plugins: Plugins,
                 options: options);
         }
 
@@ -407,7 +373,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
-        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -431,7 +397,6 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: queueName,
                 connection: Connection,
-                plugins: Plugins,
                 options: options,
                 sessionId: default,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -445,7 +410,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="subscriptionName">The session-enabled subscription to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
-        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -470,7 +435,6 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                plugins: Plugins,
                 options: options,
                 sessionId: default,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -484,7 +448,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="sessionId">Gets or sets a session ID to scope the <see cref="ServiceBusSessionReceiver"/> to.</param>
-        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -510,7 +474,6 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: queueName,
                 connection: Connection,
-                plugins: Plugins,
                 options: options,
                 sessionId: sessionId,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -525,7 +488,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="subscriptionName">The session-enabled subscription to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="sessionId">Gets or sets a session ID to scope the <see cref="ServiceBusSessionReceiver"/> to.</param>
-        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -552,7 +515,6 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                plugins: Plugins,
                 options: options,
                 sessionId: sessionId,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -581,7 +543,6 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
-                plugins: Plugins,
                 options: new ServiceBusProcessorOptions());
         }
 
@@ -610,7 +571,6 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
-                plugins: Plugins,
                 options: options);
         }
 
@@ -640,7 +600,6 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
-                plugins: Plugins,
                 options: new ServiceBusProcessorOptions());
         }
 
@@ -667,7 +626,6 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
-                plugins: Plugins,
                 options: options);
         }
 
@@ -678,7 +636,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="queueName">The queue to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
-        /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionProcessorOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         /// <returns>A <see cref="ServiceBusSessionProcessor"/> scoped to the specified queue.</returns>
         public virtual ServiceBusSessionProcessor CreateSessionProcessor(
@@ -690,8 +648,7 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusSessionProcessor(
                 entityPath: queueName,
                 connection: Connection,
-                plugins: Plugins,
-                options: options ?? new ServiceBusSessionProcessorOptions());
+                options: options);
         }
 
         /// <summary>
@@ -702,7 +659,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
         /// <param name="subscriptionName">The subscription to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
-        /// <param name="options">The set of <see cref="ServiceBusSessionProcessor"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionProcessorOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
@@ -716,7 +673,6 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusSessionProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                plugins: Plugins,
                 options: options ?? new ServiceBusSessionProcessorOptions());
         }
 

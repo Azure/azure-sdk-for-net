@@ -18,9 +18,14 @@
         },
         "testApplicationOid": {
             "type": "string",
-            "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
             "metadata": {
                 "description": "The client OID to grant access to test resources."
+            }
+        },
+        "provisionerApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The provisioner OID to grant access to test resources."
             }
         },
         "location": {
@@ -65,6 +70,13 @@
             "defaultValue": "premium",
             "metadata": {
                 "description": "Key Vault SKU to deploy. The default is 'premium'"
+            }
+        },
+        "attestationUrl": {
+            "type": "string",
+            "defaultValue": "https://skrattestation.azurewebsites.net/",
+            "metadata": {
+                "description": "Test attestation service for Secure Key Release"
             }
         }
     },
@@ -160,7 +172,8 @@
                 "enabledForDeployment": false,
                 "enabledForDiskEncryption": false,
                 "enabledForTemplateDeployment": false,
-                "enableSoftDelete": true
+                "enableSoftDelete": true,
+                "softDeleteRetentionInDays": 7
             }
         },
         {
@@ -175,11 +188,10 @@
             },
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
-                "initialAdminObjectIds": [
-                    "[parameters('testApplicationOid')]"
-                ],
+                "initialAdminObjectIds": "[union(array(parameters('testApplicationOid')), array(parameters('provisionerApplicationOid')))]",
                 "enablePurgeProtection": false,
                 "enableSoftDelete": true,
+                "softDeleteRetentionInDays": 7,
                 "publicNetworkAccess": "Enabled",
                 "networkAcls": "[variables('networkAcls')]"
             }
@@ -263,6 +275,10 @@
         "BLOB_CONTAINER_NAME" : {
             "type": "string",
             "value": "[variables('blobContainerName')]"
+        },
+        "AZURE_KEYVAULT_ATTESTATION_URL": {
+            "type": "string",
+            "value": "[parameters('attestationUrl')]"
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Azure.Search.Documents
     /// allow specifying filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>
+    /// <seealso href="https://docs.microsoft.com/rest/api/searchservice/search-documents#query-parameters">Query Parameters.</seealso>
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
@@ -43,6 +44,7 @@ namespace Azure.Search.Documents
         /// use <see cref="SearchFilter.Create(FormattableString)"/> to help
         /// construct the filter expression.
         /// </summary>
+        /// <seealso href="https://docs.microsoft.com/azure/search/search-filters">Filters in Azure Cognitive Search</seealso>
         [CodeGenMember("filter")]
         public string Filter { get; set; }
 
@@ -157,6 +159,7 @@ namespace Azure.Search.Documents
         /// facet expression contains a field name, optionally followed by a
         /// comma-separated list of name:value pairs.
         /// </summary>
+        /// <seealso href="https://docs.microsoft.com/azure/search/search-filters-facets">How to build a facet filter in Azure Cognitive Search.</seealso>
         [CodeGenMember("facets")]
         public IList<string> Facets { get; internal set; } = new List<string>();
 
@@ -248,9 +251,9 @@ namespace Azure.Search.Documents
         /// It populates <see cref="CaptionResult.Highlights"/>.
         /// <para>The default value is <c>true</c>.</para>
         /// </summary>
-        public bool? QueryCaptionHighlight { get; set; }
+        public bool? QueryCaptionHighlightEnabled { get; set; }
 
-        /// <summary> Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlight"/>.</summary>
+        /// <summary> Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlightEnabled"/>.</summary>
         [CodeGenMember("captions")]
         internal string QueryCaptionRaw
         {
@@ -260,7 +263,7 @@ namespace Azure.Search.Documents
 
                 if (QueryCaption.HasValue)
                 {
-                    queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlight.GetValueOrDefault(true)}";
+                    queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
                 }
 
                 return queryCaptionStringValue;
@@ -271,7 +274,7 @@ namespace Azure.Search.Documents
                 if (string.IsNullOrEmpty(value))
                 {
                     QueryCaption = null;
-                    QueryCaptionHighlight = null;
+                    QueryCaptionHighlightEnabled = null;
                 }
                 else
                 {
@@ -282,12 +285,12 @@ namespace Azure.Search.Documents
                         var highlightPart = value.Substring(splitIndex + QueryCaptionRawSplitter.Length);
 
                         QueryCaption = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaption(queryCaptionPart);
-                        QueryCaptionHighlight = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
+                        QueryCaptionHighlightEnabled = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
                     }
                     else
                     {
                         QueryCaption = new QueryCaption(value);
-                        QueryCaptionHighlight = null;
+                        QueryCaptionHighlightEnabled = null;
                     }
                 }
             }
@@ -313,15 +316,19 @@ namespace Azure.Search.Documents
             destination.OrderBy = source.OrderBy;
             destination.QueryAnswer = source.QueryAnswer;
             destination.QueryAnswerCount = source.QueryAnswerCount;
+            destination.QueryCaption = source.QueryCaption;
+            destination.QueryCaptionHighlightEnabled = source.QueryCaptionHighlightEnabled;
             destination.QueryLanguage = source.QueryLanguage;
             destination.QuerySpeller = source.QuerySpeller;
             destination.QueryType = source.QueryType;
             destination.ScoringParameters = source.ScoringParameters;
             destination.ScoringProfile = source.ScoringProfile;
+            destination.ScoringStatistics = source.ScoringStatistics;
             destination.SearchFields = source.SearchFields;
             destination.SearchMode = source.SearchMode;
             destination.SearchText = source.SearchText;
             destination.Select = source.Select;
+            destination.SemanticFields = source.SemanticFields;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
         }

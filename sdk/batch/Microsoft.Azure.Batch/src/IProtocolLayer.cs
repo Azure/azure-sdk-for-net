@@ -70,6 +70,7 @@ namespace Microsoft.Azure.Batch
         Task<AzureOperationHeaderResponse<Models.JobPatchHeaders>> PatchJob(
             string jobId, 
             int? priority,
+            int? maxParallelTasks,
             Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo, 
             Models.JobConstraints constraints, 
@@ -234,6 +235,7 @@ namespace Microsoft.Azure.Batch
             string containerUrl,
             DateTime startTime,
             DateTime? endTime,
+            ComputeNodeIdentityReference identityReference,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken);
 
@@ -249,6 +251,10 @@ namespace Microsoft.Azure.Batch
             Common.DisableComputeNodeSchedulingOption? disableComputeNodeSchedulingOption, 
             BehaviorManager bhMgr, 
             CancellationToken cancellationToken);
+
+        Task<AzureOperationResponse<Models.NodeVMExtension, Models.ComputeNodeExtensionGetHeaders>> GetComputeNodeExtension(string poolId, string nodeId, string extensionName, BehaviorManager bhMgr, CancellationToken cancellationToken);
+
+        Task<AzureOperationResponse<IPage<Models.NodeVMExtension>, Models.ComputeNodeExtensionListHeaders>> ListComputeNodeExtensions(string poolId, string nodeId, string skipToken, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationHeaderResponse<Models.TaskUpdateHeaders>> UpdateTask(string jobId, string taskId, Models.TaskConstraints constraints, BehaviorManager bhMgr, CancellationToken cancellationToken);
 

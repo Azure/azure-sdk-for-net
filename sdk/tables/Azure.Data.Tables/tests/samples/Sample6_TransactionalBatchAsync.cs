@@ -12,7 +12,6 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables.Samples
 {
-    [LiveOnly]
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
@@ -21,7 +20,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSuppliesBatch";
+            string tableName = "OfficeSuppliesBatch" + _random.Next();
             string partitionKey = "BatchInsertSample";
 
             var serviceClient = new TableServiceClient(

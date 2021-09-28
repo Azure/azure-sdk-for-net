@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -73,6 +73,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("networkProfile");
                 writer.WriteObjectValue(NetworkProfile);
             }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile");
+                writer.WriteObjectValue(SecurityProfile);
+            }
             if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile");
@@ -113,10 +118,35 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("host");
                 writer.WriteObjectValue(Host);
             }
+            if (Optional.IsDefined(HostGroup))
+            {
+                writer.WritePropertyName("hostGroup");
+                writer.WriteObjectValue(HostGroup);
+            }
             if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType);
+            }
+            if (Optional.IsDefined(ExtensionsTimeBudget))
+            {
+                writer.WritePropertyName("extensionsTimeBudget");
+                writer.WriteStringValue(ExtensionsTimeBudget);
+            }
+            if (Optional.IsDefined(PlatformFaultDomain))
+            {
+                writer.WritePropertyName("platformFaultDomain");
+                writer.WriteNumberValue(PlatformFaultDomain.Value);
+            }
+            if (Optional.IsDefined(ScheduledEventsProfile))
+            {
+                writer.WritePropertyName("scheduledEventsProfile");
+                writer.WriteObjectValue(ScheduledEventsProfile);
+            }
+            if (Optional.IsDefined(UserData))
+            {
+                writer.WritePropertyName("userData");
+                writer.WriteStringValue(UserData);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

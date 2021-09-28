@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.Security.Models
     /// <summary>
     /// Represents a data export setting
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DataExportSettings")]
     [Rest.Serialization.JsonTransformation]
     public partial class DataExportSettings : Setting
     {
@@ -33,7 +32,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the DataExportSettings class.
         /// </summary>
-        /// <param name="enabled">Is the data export setting is enabled</param>
+        /// <param name="enabled">Is the data export setting enabled</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
@@ -50,7 +49,7 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets is the data export setting is enabled
+        /// Gets or sets is the data export setting enabled
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
         public bool Enabled { get; set; }

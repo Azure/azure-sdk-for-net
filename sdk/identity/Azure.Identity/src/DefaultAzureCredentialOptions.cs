@@ -52,6 +52,11 @@ namespace Azure.Identity
         public string SharedTokenCacheUsername { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.Username);
 
         /// <summary>
+        /// Specifies the client id of the selected credential
+        /// </summary>
+        public string InteractiveBrowserCredentialClientId { get; set; }
+
+        /// <summary>
         /// Specifies the client id of the azure ManagedIdentity in the case of user assigned identity.
         /// </summary>
         public string ManagedIdentityClientId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.ClientId);
@@ -71,12 +76,14 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies whether the <see cref="SharedTokenCacheCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Setting to true disables single sign on authentication with development tools which write to the shared token cache.
+        /// The default is <c>true</c>.
         /// </summary>
         public bool ExcludeSharedTokenCacheCredential { get; set; } = true;
 
         /// <summary>
         /// Specifies whether the <see cref="InteractiveBrowserCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Setting to true disables launching the default system browser to authenticate in development environments.
+        /// The default is <c>true</c>.
         /// </summary>
         public bool ExcludeInteractiveBrowserCredential { get; set; } = true;
 

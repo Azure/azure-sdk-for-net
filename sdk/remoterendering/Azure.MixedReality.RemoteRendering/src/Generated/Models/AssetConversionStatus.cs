@@ -15,7 +15,7 @@ namespace Azure.MixedReality.RemoteRendering
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AssetConversionStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetConversionStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AssetConversionStatus(string value)
         {

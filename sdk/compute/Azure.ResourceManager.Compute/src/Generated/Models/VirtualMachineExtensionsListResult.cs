@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineExtensionsListResult. </summary>
         internal VirtualMachineExtensionsListResult()
         {
-            Value = new ChangeTrackingList<VirtualMachineExtension>();
+            Value = new ChangeTrackingList<VirtualMachineExtensionData>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionsListResult. </summary>
         /// <param name="value"> The list of extensions. </param>
-        internal VirtualMachineExtensionsListResult(IReadOnlyList<VirtualMachineExtension> value)
+        internal VirtualMachineExtensionsListResult(IReadOnlyList<VirtualMachineExtensionData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of extensions. </summary>
-        public IReadOnlyList<VirtualMachineExtension> Value { get; }
+        public IReadOnlyList<VirtualMachineExtensionData> Value { get; }
     }
 }

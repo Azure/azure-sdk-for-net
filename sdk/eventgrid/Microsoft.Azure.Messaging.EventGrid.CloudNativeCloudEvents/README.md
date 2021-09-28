@@ -8,8 +8,8 @@ This library can be used to enable publishing CloudNative CloudEvents using the 
 
 Install the client library from [NuGet](https://www.nuget.org/):
 
-```PowerShell
-dotnet add package Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents --prerelease
+```dotnetcli
+dotnet add package Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
 ```
 
 ### Prerequisites
@@ -60,7 +60,7 @@ var cloudEvent =
         Source = new Uri("http://www.contoso.com"),
         Data = "data"
     };
-await client.SendCloudEventAsync(cloudEvent);
+await client.SendCloudNativeCloudEventAsync(cloudEvent);
 ```
 
 ## Troubleshooting

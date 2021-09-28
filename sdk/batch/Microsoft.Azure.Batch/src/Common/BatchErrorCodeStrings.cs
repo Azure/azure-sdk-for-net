@@ -612,7 +612,7 @@ namespace Microsoft.Azure.Batch.Common
         /// <summary>
         /// Desired number of nodes could not be allocated as the resize timeout was reached
         /// </summary>
-        public const string AllocationTimedOut = "AllocationTimedOut";
+        public const string AllocationTimedOut = "AllocationTimedout";
         
         /// <summary>
         /// Desired number of nodes could not be allocated
@@ -640,7 +640,7 @@ namespace Microsoft.Azure.Batch.Common
         public const string OverconstrainedAllocationRequestError = "OverconstrainedAllocationRequestError";
         
         /// <summary>
-        /// Commmunication enabled pool has reached the maximum VM count
+        /// Communication enabled pool has reached the maximum VM count
         /// </summary>
         public const string CommunicationEnabledPoolReachedMaxVMCount = "CommunicationEnabledPoolReachedMaxVMCount";
         

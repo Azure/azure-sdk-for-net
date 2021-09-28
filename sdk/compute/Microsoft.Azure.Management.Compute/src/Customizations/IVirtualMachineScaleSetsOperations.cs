@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute
       /// <exception cref="Microsoft.Rest.ValidationException">
       /// Thrown when a required parameter is null
       /// </exception>
-      Task<AzureOperationResponse<VirtualMachineScaleSet>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+      Task<AzureOperationResponse<VirtualMachineScaleSet>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken);
       
       /// <summary>
       /// Display information about a virtual machine scale set.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Compute
       /// <exception cref="Microsoft.Rest.ValidationException">
       /// Thrown when a required parameter is null
       /// </exception>
-      Task<AzureOperationResponse<VirtualMachineScaleSet>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, Dictionary<string, List<string>> customHeaders = null);
+      Task<AzureOperationResponse<VirtualMachineScaleSet>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, Dictionary<string, List<string>> customHeaders);
       
       /// <summary>
       /// Display information about a virtual machine scale set.

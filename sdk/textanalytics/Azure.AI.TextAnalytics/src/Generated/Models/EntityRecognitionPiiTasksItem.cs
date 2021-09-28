@@ -14,22 +14,23 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class EntityRecognitionPiiTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="status"> . </param>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="taskName"> . </param>
-        /// <param name="status"> . </param>
-        /// <param name="results"> . </param>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="taskName"></param>
+        /// <param name="status"></param>
+        /// <param name="results"></param>
         internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, PiiEntitiesResult results) : base(lastUpdateDateTime, taskName, status)
         {
             Results = results;
         }
 
+        /// <summary> Gets the results. </summary>
         public PiiEntitiesResult Results { get; }
     }
 }

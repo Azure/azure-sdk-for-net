@@ -18,10 +18,19 @@ packages which have not released to a central package manager.
 .PARAMETER DocRepoLocation
 Location of the docs.microsoft.com reference docs repo.
 
+.PARAMETER PackageSourceOverride
+Optional parameter to supply a different package source (useful for daily dev
+docs generation from pacakges which are not published to the default feed). This
+variable is meant to be used in the domain-specific business logic in
+&$UpdateDocsMsPackagesFn
+
 #>
 param (
   [Parameter(Mandatory = $true)]
-  $DocRepoLocation # the location of the cloned doc repo
+  [string] $DocRepoLocation, # the location of the cloned doc repo
+
+  [Parameter(Mandatory = $false)]
+  [string] $PackageSourceOverride
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -133,3 +142,7 @@ if ($UpdateDocsMsPackagesFn -and (Test-Path "Function:$UpdateDocsMsPackagesFn"))
   See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
   exit 1
 }
+
+# Exit 0 so DevOps doesn't fail the build when the last command called by the
+# domain-specific function exited with a non-zero exit code.
+exit 0

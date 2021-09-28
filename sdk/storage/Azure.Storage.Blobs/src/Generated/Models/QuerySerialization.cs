@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
     internal partial class QuerySerialization
     {
         /// <summary> Initializes a new instance of QuerySerialization. </summary>
-        /// <param name="format"> . </param>
+        /// <param name="format"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         public QuerySerialization(QueryFormat format)
         {
@@ -25,6 +25,7 @@ namespace Azure.Storage.Blobs.Models
             Format = format;
         }
 
+        /// <summary> Gets the format. </summary>
         public QueryFormat Format { get; }
     }
 }

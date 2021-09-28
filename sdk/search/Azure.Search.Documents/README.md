@@ -34,7 +34,7 @@ Use the Azure.Search.Documents client library to:
 * Create and manage analyzers for advanced text analysis or multi-lingual content.
 * Optimize results through scoring profiles to factor in business logic or freshness.
 
-[Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs] | [Samples][samples]
 
 ## Getting started
 
@@ -42,8 +42,8 @@ Use the Azure.Search.Documents client library to:
 
 Install the Azure Cognitive Search client library for .NET with [NuGet][nuget]:
 
-```Powershell
-dotnet add package Azure.Search.Documents --version 11.2.0-beta.1
+```dotnetcli
+dotnet add package Azure.Search.Documents
 ```
 
 ### Prerequisites
@@ -189,7 +189,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-The following examples all use a simple [Hotel data set](https://docs.microsoft.com/samples/azure-samples/azure-search-sample-data/azure-search-sample-data/)
+The following examples all use a simple [Hotel data set](https://github.com/Azure-Samples/azure-search-sample-data)
 that you can [import into your own index from the Azure portal.](https://docs.microsoft.com/azure/search/search-get-started-portal#step-1---start-the-import-data-wizard-and-create-a-data-source)
 These are just a few of the basics - please [check out our Samples][samples] for
 much more.

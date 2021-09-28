@@ -270,15 +270,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Outcome outcome = await link.SendMessageAsync(
                         batchMessage,
                         deliveryTag,
-                    transactionId, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                        transactionId,
+                        cancellationToken).ConfigureAwait(false);
 
                     if (outcome.DescriptorCode != Accepted.Code)
                     {
                         throw (outcome as Rejected)?.Error.ToMessagingContractException();
                     }
-
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 }
             }
             catch (Exception exception)

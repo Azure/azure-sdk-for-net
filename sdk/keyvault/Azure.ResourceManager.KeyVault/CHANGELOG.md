@@ -1,15 +1,26 @@
 # Release History
 
-## 1.0.0-preview.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
-- Accept header added to all requests.
-- Collections are now always initialized and collection properties are readonly by default.
+### Features Added
 
-## 1.0.0-preview.1
+### Breaking Changes
 
-This package follows the new Azure SDK guidelines which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+### Bugs Fixed
 
-This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
+### Other Changes
+
+## 1.0.0-beta.2 (2021-09-14)
+
+### Features Added
+
+- Added ArmClient extension methods to support [start from the middle scenario](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#managing-existing-resources-by-id).
+
+## 1.0.0-beta.1 (2021-08-31)
+
+### Breaking Changes
+
+Guidance to migrate from previous version of Azure Management SDK
 
 ### General New Features
 
@@ -20,8 +31,6 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
     - Support uniform telemetry across all languages
 
 > NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
-
-### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
 The package name has been changed from `Microsoft.Azure.Management.KeyVault` to `Azure.ResourceManager.KeyVault`
@@ -52,18 +61,13 @@ using Azure.Identity;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 
-var keyVaultManagementClient = new KeyVaultManagementClient(
-            subscriptionId,
-            new DefaultAzureCredential(),
-            new KeyVaultManagementClientOptions());
-var vaultsOperations = keyVaultManagementClient.Vaults;
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceGroup resourceGroup = await armClient.DefaultSubscription.GetResourceGroups().GetAsync("myRgName");
 
-var vault = await vaultsOperations.StartCreateOrUpdateAsync(
-            resourceGroupName,
-            vaultName,
-            parameters
-            );
-var vaultValue = (await vault.WaitForCompletionAsync()).Value;
+VaultContainer vaultContainer = resourceGroup.GetVaults();
+
+VaultCreateOrUpdateOperation lro = await vaultsOperations.CreateOrUpdateAsync(vaultName, parameters);
+Vault vault = lro.Value;
 
 ```
 

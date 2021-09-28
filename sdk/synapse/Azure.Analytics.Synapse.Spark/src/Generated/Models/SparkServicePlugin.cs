@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
         }
 
         /// <summary> Initializes a new instance of SparkServicePlugin. </summary>
-        /// <param name="preparationStartedAt"> . </param>
-        /// <param name="resourceAcquisitionStartedAt"> . </param>
-        /// <param name="submissionStartedAt"> . </param>
-        /// <param name="monitoringStartedAt"> . </param>
-        /// <param name="cleanupStartedAt"> . </param>
-        /// <param name="currentState"> . </param>
+        /// <param name="preparationStartedAt"></param>
+        /// <param name="resourceAcquisitionStartedAt"></param>
+        /// <param name="submissionStartedAt"></param>
+        /// <param name="monitoringStartedAt"></param>
+        /// <param name="cleanupStartedAt"></param>
+        /// <param name="currentState"></param>
         internal SparkServicePlugin(DateTimeOffset? preparationStartedAt, DateTimeOffset? resourceAcquisitionStartedAt, DateTimeOffset? submissionStartedAt, DateTimeOffset? monitoringStartedAt, DateTimeOffset? cleanupStartedAt, PluginCurrentState? currentState)
         {
             PreparationStartedAt = preparationStartedAt;
@@ -34,11 +34,17 @@ namespace Azure.Analytics.Synapse.Spark.Models
             CurrentState = currentState;
         }
 
+        /// <summary> Gets the preparation started at. </summary>
         public DateTimeOffset? PreparationStartedAt { get; }
+        /// <summary> Gets the resource acquisition started at. </summary>
         public DateTimeOffset? ResourceAcquisitionStartedAt { get; }
+        /// <summary> Gets the submission started at. </summary>
         public DateTimeOffset? SubmissionStartedAt { get; }
+        /// <summary> Gets the monitoring started at. </summary>
         public DateTimeOffset? MonitoringStartedAt { get; }
+        /// <summary> Gets the cleanup started at. </summary>
         public DateTimeOffset? CleanupStartedAt { get; }
+        /// <summary> Gets the current state. </summary>
         public PluginCurrentState? CurrentState { get; }
     }
 }

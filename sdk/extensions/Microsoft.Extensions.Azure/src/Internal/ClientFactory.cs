@@ -80,7 +80,7 @@ namespace Microsoft.Extensions.Azure
                 return constructor.Invoke(arguments.ToArray());
             }
 
-            throw new InvalidOperationException(BuildErrorMessage(clientType, optionsType));
+            throw new InvalidOperationException(BuildErrorMessage(configuration, clientType, optionsType));
         }
 
         internal static TokenCredential CreateCredential(IConfiguration configuration, TokenCredentialOptions identityClientOptions = null)
@@ -217,10 +217,20 @@ namespace Microsoft.Extensions.Azure
                    parameter.Position == ((ConstructorInfo)parameter.Member).GetParameters().Length - 1;
         }
 
-        private static string BuildErrorMessage(Type clientType, Type optionsType)
+        private static string BuildErrorMessage(IConfiguration configuration, Type clientType, Type optionsType)
         {
             var builder = new StringBuilder();
-            builder.AppendLine("Unable to find matching constructor. Define one of the follow sets of configuration parameters:");
+
+            void TrimTrailingDelimiter()
+            {
+                while (builder[builder.Length - 1] is '/' or ',' or ' ')
+                {
+                    builder.Length--;
+                }
+            }
+
+            builder.Append("Unable to find matching constructor while trying to create an instance of ").Append(clientType.Name).AppendLine(".");
+            builder.AppendLine("Expected one of the follow sets of configuration parameters:");
 
             int counter = 1;
 
@@ -233,8 +243,6 @@ namespace Microsoft.Extensions.Azure
 
                 builder.Append(counter).Append(". ");
 
-                bool first = true;
-
                 foreach (var parameter in constructor.GetParameters())
                 {
                     if (IsOptionsParameter(parameter, optionsType))
@@ -242,21 +250,50 @@ namespace Microsoft.Extensions.Azure
                         break;
                     }
 
-                    if (first)
+                    if (parameter.ParameterType is { IsClass: true } parameterType &&
+                        parameterType != typeof(string) &&
+                        parameterType != typeof(Uri))
                     {
-                        first = false;
+                        foreach (var parameterConstructor in GetApplicableParameterConstructors(parameterType))
+                        {
+                            foreach (var parameterConstructorParameter in parameterConstructor.GetParameters())
+                            {
+                                builder
+                                    .Append(parameter.Name)
+                                    .Append(':')
+                                    .Append(parameterConstructorParameter.Name)
+                                    .Append(", ");
+                            }
+
+                            TrimTrailingDelimiter();
+                            builder.Append('/');
+                        }
+
+                        TrimTrailingDelimiter();
                     }
                     else
                     {
-                        builder.Append(", ");
+                        builder.Append(parameter.Name);
                     }
 
-                    builder.Append(parameter.Name);
+                    builder.Append(", ");
                 }
+
+                TrimTrailingDelimiter();
 
                 builder.AppendLine();
                 counter++;
             }
+
+            builder.AppendLine();
+            builder.Append("Found the following configuration keys: ");
+
+            foreach (var child in configuration.AsEnumerable(true))
+            {
+                builder.Append(child.Key).Append(", ");
+            }
+
+            TrimTrailingDelimiter();
 
             return builder.ToString();
         }
@@ -280,11 +317,6 @@ namespace Microsoft.Extensions.Azure
             if (parameterType == typeof(Uri))
             {
                 return TryConvertFromString(configuration, parameterName, s => new Uri(s), out value);
-            }
-
-            if (configuration[parameterName] != null)
-            {
-                throw new InvalidOperationException($"Unable to convert value '{configuration[parameterName]}' to parameter type {parameterType.FullName}");
             }
 
             return TryCreateObject(parameterType, configuration.GetSection(parameterName), out value);
@@ -312,7 +344,7 @@ namespace Microsoft.Extensions.Azure
             }
 
             List<object> arguments = new List<object>();
-            foreach (var constructor in type.GetConstructors().OrderByDescending(c => c.GetParameters().Length))
+            foreach (var constructor in GetApplicableParameterConstructors(type))
             {
                 arguments.Clear();
 
@@ -337,7 +369,13 @@ namespace Microsoft.Extensions.Azure
                 return true;
             }
 
-            throw new InvalidOperationException($"Unable to convert section '{configuration.Path}' to parameter type '{type}', unable to find matching constructor.");
+            value = null;
+            return false;
+        }
+
+        private static IOrderedEnumerable<ConstructorInfo> GetApplicableParameterConstructors(Type type)
+        {
+            return type.GetConstructors(BindingFlags.Public | BindingFlags.Instance).OrderByDescending(c => c.GetParameters().Length);
         }
     }
 }

@@ -147,8 +147,7 @@ More on handling responses in [response samples](https://github.com/Azure/azure-
 
 ### Consuming Service Methods Returning ```AsyncPageable<T>```
 
-If a service call returns multiple values in pages it would return `Pageable<T>/AsyncPageable<T>` as a result.
-You can iterate over `AsyncPageable` directly or in pages.
+If a service call returns multiple values in pages, it would return `Pageable<T>/AsyncPageable<T>` as a result. You can iterate over `AsyncPageable` directly or in pages.
 
 ```C# Snippet:AsyncPageable
 // call a service method, which returns AsyncPageable<T>
@@ -160,7 +159,7 @@ await foreach (SecretProperties secretProperties in allSecretProperties)
 }
 ```
 
-More on paged responses in [response samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Response.md)
+For more information on paged responses, see [Pagination with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/pagination).
 
 ### Consuming Long-Running Operations Using ```Operation<T>```
 
@@ -221,7 +220,7 @@ More on mocking in [mocking samples](https://github.com/Azure/azure-sdk-for-net/
 
 Application Insights, a feature of Azure Monitor, is an extensible Application Performance Management (APM) service for developers and DevOps professionals. Use it to monitor your live applications. It will automatically detect performance anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually do with your app
 
-If you application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`.
+If your application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`.
 
 To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
 

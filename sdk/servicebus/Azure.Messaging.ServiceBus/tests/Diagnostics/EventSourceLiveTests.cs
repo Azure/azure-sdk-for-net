@@ -11,7 +11,6 @@ using System.Transactions;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Tests.Plugins;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
@@ -49,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
@@ -70,6 +69,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 var messageEnum = messages.GetEnumerator();
                 var remainingMessages = messageCount;
+                List<string> lockTokens = new();
                 while (remainingMessages > 0)
                 {
                     foreach (var item in await receiver.ReceiveMessagesAsync(remainingMessages))
@@ -78,6 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         Assert.AreEqual(item.DeliveryCount, 1);
+                        lockTokens.Add(item.LockToken);
                     }
                 }
                 _listener.SingleEventById(ServiceBusEventSource.CreateReceiveLinkStartEvent, e => e.Payload.Contains(receiver.Identifier));
@@ -86,6 +87,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateReceiveLinkCompleteEvent, e => e.Payload.Contains(receiver.Identifier));
                 Assert.IsTrue(_listener.EventsById(ServiceBusEventSource.ReceiveMessageStartEvent).Any());
                 Assert.IsTrue(_listener.EventsById(ServiceBusEventSource.ReceiveMessageCompleteEvent).Any());
+
+                var receiveCompleteEvents = _listener.EventsById(ServiceBusEventSource.ReceiveMessageCompleteEvent);
+                foreach (string lockToken in lockTokens)
+                {
+                    bool found = false;
+                    foreach (var evt in receiveCompleteEvents)
+                    {
+                        if (evt.Payload.Any(m => m.ToString().Contains(lockToken)))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    Assert.IsTrue(found, $"Locktoken {lockToken} not found in event logs");
+                }
+
                 Assert.AreEqual(0, remainingMessages);
                 messageEnum.Reset();
 
@@ -146,7 +163,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, "sessionId").AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
@@ -176,6 +193,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 var msg = await sessionReceiver.ReceiveMessageAsync();
                 _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageStartEvent, e => e.Payload.Contains(sessionReceiver.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageCompleteEvent, e => e.Payload.Contains(sessionReceiver.Identifier) && e.Payload.Contains($"<LockToken>{msg.LockToken}</LockToken>"));
 
                 msg = await sessionReceiver.PeekMessageAsync();
                 _listener.SingleEventById(ServiceBusEventSource.CreateManagementLinkStartEvent, e => e.Payload.Contains(sessionReceiver.Identifier));
@@ -212,7 +230,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                ServiceBusMessage message = GetMessage();
+                ServiceBusMessage message = ServiceBusTestUtilities.GetMessage();
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
@@ -227,71 +245,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         }
 
         [Test]
-        public async Task LogsPluginEvents()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
-            {
-                var options = new ServiceBusClientOptions();
-                options.AddPlugin(new PluginLiveTests.SendReceivePlugin());
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
-                ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                ServiceBusMessage message = GetMessage();
-                await sender.SendMessageAsync(message);
-                _listener.SingleEventById(ServiceBusEventSource.PluginStartEvent);
-                _listener.SingleEventById(ServiceBusEventSource.PluginCompleteEvent);
-                var receiver = client.CreateReceiver(scope.QueueName);
-                await receiver.ReceiveMessageAsync();
-                Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginStartEvent).Count());
-                Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginCompleteEvent).Count());
-            };
-        }
-
-        [Test]
-        public async Task LogsPluginExceptionEvents()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
-            {
-                var options = new ServiceBusClientOptions();
-                options.AddPlugin(new PluginLiveTests.SendExceptionPlugin());
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
-                ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                ServiceBusMessage message = GetMessage();
-                Assert.That(
-                    async () => await sender.SendMessageAsync(message),
-                    Throws.InstanceOf<NotImplementedException>());
-                _listener.SingleEventById(ServiceBusEventSource.PluginStartEvent);
-                _listener.SingleEventById(ServiceBusEventSource.PluginExceptionEvent);
-
-                options = new ServiceBusClientOptions();
-                options.AddPlugin(new PluginLiveTests.ReceiveExceptionPlugin());
-                client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
-                sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(message);
-                Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginStartEvent).Count());
-                Assert.AreEqual(1, _listener.EventsById(ServiceBusEventSource.PluginExceptionEvent).Count());
-
-                var receiver = client.CreateReceiver(scope.QueueName);
-                Assert.That(
-                    async () => await receiver.ReceiveMessageAsync(),
-                    Throws.InstanceOf<NotImplementedException>());
-                Assert.AreEqual(3, _listener.EventsById(ServiceBusEventSource.PluginStartEvent).Count());
-                Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginExceptionEvent).Count());
-            };
-        }
-
-        [Test]
         public async Task LogsProcessorEvents()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName);
                 var tcs = new TaskCompletionSource<bool>();
-
+                string lockToken = null;
                 Task ProcessMessage(ProcessMessageEventArgs args)
                 {
+                    lockToken = args.Message.LockToken;
                     tcs.SetResult(true);
                     return Task.CompletedTask;
                 }
@@ -307,8 +273,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
-                _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerStartEvent);
-                _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerCompleteEvent);
+                _listener.SingleEventById(
+                    ServiceBusEventSource.ReceiveMessageCompleteEvent,
+                    e => e.Payload.Contains($"<LockToken>{lockToken}</LockToken>"));
+                _listener.SingleEventById(
+                    ServiceBusEventSource.ProcessorMessageHandlerStartEvent,
+                    e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
+                _listener.SingleEventById(
+                    ServiceBusEventSource.ProcessorMessageHandlerCompleteEvent,
+                    e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
             }
         }
 
@@ -319,7 +292,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName);
                 var tcs = new TaskCompletionSource<bool>();
 

@@ -9,7 +9,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
     /// Base class for live client tests using different service versions.
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
-    [ClientTestFixture(QuestionAnsweringClientOptions.ServiceVersion.V2021_05_01_preview)]
+    [ClientTestFixture(
+        QuestionAnsweringClientOptions.ServiceVersion.V2021_07_15_Preview,
+        QuestionAnsweringClientOptions.ServiceVersion.V2021_05_01_preview
+    )]
     public abstract class QuestionAnsweringTestBase<TClient> : RecordedTestBase<QuestionAnsweringTestEnvironment> where TClient : class
     {
         protected QuestionAnsweringTestBase(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
@@ -39,11 +42,14 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         {
             base.StartTestRecording();
 
-            Client = CreateClient<TClient>(
+            Client = CreateClient();
+        }
+
+        protected TClient CreateClient(QuestionAnsweringClientOptions options = null) =>
+            CreateClient<TClient>(
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
                 InstrumentClientOptions(
-                    new QuestionAnsweringClientOptions(ServiceVersion)));
-        }
+                    options ?? new QuestionAnsweringClientOptions(ServiceVersion)));
     }
 }

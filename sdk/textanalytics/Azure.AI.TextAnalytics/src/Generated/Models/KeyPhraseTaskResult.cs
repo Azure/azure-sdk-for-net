@@ -16,12 +16,13 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of KeyPhraseTaskResult. </summary>
-        /// <param name="results"> . </param>
+        /// <param name="results"></param>
         internal KeyPhraseTaskResult(KeyPhraseResult results)
         {
             Results = results;
         }
 
+        /// <summary> Gets the results. </summary>
         public KeyPhraseResult Results { get; }
     }
 }

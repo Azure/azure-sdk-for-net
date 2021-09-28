@@ -35,27 +35,27 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
         /// <param name="client">The <see cref="EventGridPublisherClient"/> instance to extend.</param>
         /// <param name="cloudEvent"> The event to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public static Response SendCloudEvent(
+        public static Response SendCloudNativeCloudEvent(
             this EventGridPublisherClient client,
             CloudEvent cloudEvent,
             CancellationToken cancellationToken = default) =>
-            SendCloudEvents(client, new CloudEvent[] { cloudEvent }, cancellationToken);
+            SendCloudNativeCloudEvents(client, new CloudEvent[] { cloudEvent }, cancellationToken);
 
         /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
         /// <param name="client">The <see cref="EventGridPublisherClient"/> instance to extend.</param>
         /// <param name="cloudEvent"> The event to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public static async Task<Response> SendCloudEventAsync(
+        public static async Task<Response> SendCloudNativeCloudEventAsync(
             this EventGridPublisherClient client,
             CloudEvent cloudEvent,
             CancellationToken cancellationToken = default) =>
-            await SendCloudEventsAsync(client, new CloudEvent[] { cloudEvent }, cancellationToken).ConfigureAwait(false);
+            await SendCloudNativeCloudEventsAsync(client, new CloudEvent[] { cloudEvent }, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
         /// <param name="client">The <see cref="EventGridPublisherClient"/> instance to extend.</param>
         /// <param name="cloudEvents"> The set of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public static Response SendCloudEvents(
+        public static Response SendCloudNativeCloudEvents(
             this EventGridPublisherClient client,
             IEnumerable<CloudEvent> cloudEvents,
             CancellationToken cancellationToken = default) =>
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
         /// <param name="client">The <see cref="EventGridPublisherClient"/> instance to extend.</param>
         /// <param name="cloudEvents"> The set of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public static async Task<Response> SendCloudEventsAsync(
+        public static async Task<Response> SendCloudNativeCloudEventsAsync(
             this EventGridPublisherClient client,
             IEnumerable<CloudEvent> cloudEvents,
             CancellationToken cancellationToken = default) =>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
             if (currentActivity != null && currentActivity.IsW3CFormat())
             {
                 activityId = currentActivity.Id;
-                currentActivity.TryGetTraceState(out traceState);
+                traceState = currentActivity.GetTraceState();
             }
 
             using var stream = new MemoryStream();

@@ -89,11 +89,19 @@ namespace Azure.Identity
             _pipeline = CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
             _redirectUri = options switch
             {
-                AuthorizationCodeCredentialOptions o => o.RedirectUri?.ToString(),
+                AuthorizationCodeCredentialOptions o => o.RedirectUri?.AbsoluteUri,
                 _ => null
             };
 
-            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions, null);
+            _client = client ??
+                      new MsalConfidentialClient(
+                          _pipeline,
+                          tenantId,
+                          clientId,
+                          clientSecret,
+                          options as ITokenCacheOptions,
+                          null,
+                          options?.IsLoggingPIIEnabled ?? false);
         }
 
         /// <summary>

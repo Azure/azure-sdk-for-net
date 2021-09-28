@@ -16,9 +16,9 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of AclFailedEntry. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="type"> . </param>
-        /// <param name="errorMessage"> . </param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="errorMessage"></param>
         internal AclFailedEntry(string name, string type, string errorMessage)
         {
             Name = name;

@@ -44,9 +44,13 @@ namespace Microsoft.Azure.Management.ContainerInstance
             /// The number of lines to show from the tail of the container instance log. If
             /// not provided, all available logs are shown up to 4mb.
             /// </param>
-            public static Logs ListLogs(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?))
+            /// <param name='timestamps'>
+            /// If true, adds a timestamp at the beginning of every line of log output. If
+            /// not provided, defaults to false.
+            /// </param>
+            public static Logs ListLogs(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), bool? timestamps = default(bool?))
             {
-                return operations.ListLogsAsync(resourceGroupName, containerGroupName, containerName, tail).GetAwaiter().GetResult();
+                return operations.ListLogsAsync(resourceGroupName, containerGroupName, containerName, tail, timestamps).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -72,12 +76,16 @@ namespace Microsoft.Azure.Management.ContainerInstance
             /// The number of lines to show from the tail of the container instance log. If
             /// not provided, all available logs are shown up to 4mb.
             /// </param>
+            /// <param name='timestamps'>
+            /// If true, adds a timestamp at the beginning of every line of log output. If
+            /// not provided, defaults to false.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Logs> ListLogsAsync(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Logs> ListLogsAsync(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), bool? timestamps = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListLogsWithHttpMessagesAsync(resourceGroupName, containerGroupName, containerName, tail, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListLogsWithHttpMessagesAsync(resourceGroupName, containerGroupName, containerName, tail, timestamps, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -138,6 +146,60 @@ namespace Microsoft.Azure.Management.ContainerInstance
             public static async Task<ContainerExecResponse> ExecuteCommandAsync(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, ContainerExecRequest containerExecRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ExecuteCommandWithHttpMessagesAsync(resourceGroupName, containerGroupName, containerName, containerExecRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Attach to the output of a specific container instance.
+            /// </summary>
+            /// <remarks>
+            /// Attach to the output stream of a specific container instance in a specified
+            /// resource group and container group.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            /// <param name='containerName'>
+            /// The name of the container instance.
+            /// </param>
+            public static ContainerAttachResponse Attach(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName)
+            {
+                return operations.AttachAsync(resourceGroupName, containerGroupName, containerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Attach to the output of a specific container instance.
+            /// </summary>
+            /// <remarks>
+            /// Attach to the output stream of a specific container instance in a specified
+            /// resource group and container group.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            /// <param name='containerName'>
+            /// The name of the container instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ContainerAttachResponse> AttachAsync(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AttachWithHttpMessagesAsync(resourceGroupName, containerGroupName, containerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

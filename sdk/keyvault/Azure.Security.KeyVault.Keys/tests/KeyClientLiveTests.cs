@@ -12,9 +12,11 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    public class KeyClientLiveTests : KeysTestBase
+    public partial class KeyClientLiveTests : KeysTestBase
     {
         private const int PagedKeyCount = 2;
+
+        private readonly KeyClientOptions.ServiceVersion _serviceVersion;
 
         public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
             : this(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
@@ -24,9 +26,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
         protected KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, serviceVersion, mode)
         {
+            _serviceVersion = serviceVersion;
+
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
             Matcher = new RecordMatcher(compareBodies: false);
         }
+
+        /// <summary>
+        /// Gets whether the current text fixture is running against Managed HSM.
+        /// </summary>
+        protected virtual bool IsManagedHSM => false;
 
         [SetUp]
         public void ClearChallengeCacheforRecord()
@@ -648,8 +657,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = operation.Value;
 
-            // Wait a little longer since live tests are failing with only a 2s delay.
-            await WaitForDeletedKey(keyName, KeyVaultTestEnvironment.DefaultPollingInterval);
+            await WaitForDeletedKey(keyName);
 
             DeletedKey polledSecret = await Client.GetDeletedKeyAsync(keyName);
 
@@ -909,8 +917,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             foreach (KeyVaultKey deletedKey in createdKeys)
             {
                 // WaitForDeletedKey disables recording, so we can wait concurrently.
-                // Wait a little longer for deleting keys since tests occasionally fail after max attempts.
-                deletingKeys.Add(WaitForDeletedKey(deletedKey.Name, delay: KeyVaultTestEnvironment.DefaultPollingInterval));
+                deletingKeys.Add(WaitForDeletedKey(deletedKey.Name));
             }
 
             await Task.WhenAll(deletingKeys);

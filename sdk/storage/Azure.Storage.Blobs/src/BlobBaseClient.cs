@@ -946,6 +946,13 @@ namespace Azure.Storage.Blobs.Specialized
                 $"{nameof(BlobBaseClient)}.{nameof(Download)}",
                 async,
                 cancellationToken).ConfigureAwait(false);
+
+            // Return an exploding Response on 304
+            if (response.IsUnavailable())
+            {
+                return response.GetRawResponse().AsNoBodyResponse<BlobDownloadInfo>();
+            }
+
             BlobDownloadStreamingResult blobDownloadStreamingResult = response.Value;
             BlobDownloadDetails blobDownloadDetails = blobDownloadStreamingResult.Details;
             return Response.FromValue(
@@ -1573,6 +1580,13 @@ namespace Azure.Storage.Blobs.Specialized
                 operationName: $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+
+            // Return an exploding Response on 304
+            if (response.IsUnavailable())
+            {
+                return response.GetRawResponse().AsNoBodyResponse<BlobDownloadResult>();
+            }
+
             using BlobDownloadStreamingResult blobDownloadStreamingResult = response.Value;
             BinaryData data;
             if (async)
@@ -3260,6 +3274,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             copySourceAuthorization: sourceAuthentication?.ToString(),
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3284,6 +3299,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             copySourceAuthorization: sourceAuthentication?.ToString(),
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             cancellationToken: cancellationToken);
                     }
 
@@ -5670,7 +5686,8 @@ namespace Azure.Storage.Blobs.Specialized
                 BlobContainerName = BlobContainerName,
                 BlobName = Name,
                 Snapshot = _snapshot,
-                BlobVersionId = _blobVersionId
+                BlobVersionId = _blobVersionId,
+                EncryptionScope = _clientConfiguration.EncryptionScope
             });
 
         /// <summary>
@@ -5706,11 +5723,12 @@ namespace Azure.Storage.Blobs.Specialized
             // Deep copy of builder so we don't modify the user's original BlobSasBuilder.
             builder = BlobSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ContainerName, BlobName, Snapshot, and BlobVersionId, if they are null.
+            // Assign builder's ContainerName, BlobName, Snapshot, BlobVersionId, and EncryptionScope if they are null.
             builder.BlobContainerName ??= BlobContainerName;
             builder.BlobName ??= Name;
             builder.Snapshot ??= _snapshot;
             builder.BlobVersionId ??= _blobVersionId;
+            builder.EncryptionScope ??= _clientConfiguration.EncryptionScope;
 
             if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
             {
