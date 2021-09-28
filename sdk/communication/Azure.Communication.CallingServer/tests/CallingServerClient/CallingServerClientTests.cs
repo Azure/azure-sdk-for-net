@@ -56,7 +56,9 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinCallPayload);
 
-            var response = await callingServerClient.JoinCallAsync(serverCallId, source, joinCallOptions).ConfigureAwait(false);
+            var callLocator = new ServerCallLocator(serverCallId);
+
+            var response = await callingServerClient.JoinCallAsync(callLocator, source, joinCallOptions).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual("cad9df7b-f3ac-4c53-96f7-c76e7437b3c1", response.Value.CallConnectionId);
         }
@@ -66,7 +68,9 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinCallPayload);
 
-            var response = callingServerClient.JoinCall(serverCallId, source, joinCallOptions);
+            var callLocator = new ServerCallLocator(serverCallId);
+
+            var response = callingServerClient.JoinCall(callLocator, source, joinCallOptions);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual("cad9df7b-f3ac-4c53-96f7-c76e7437b3c1", response.Value.CallConnectionId);
         }
@@ -76,7 +80,9 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callingServerClient.JoinCallAsync(serverCallId, source, joinCallOptions).ConfigureAwait(false));
+            var callLocator = new ServerCallLocator(serverCallId);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callingServerClient.JoinCallAsync(callLocator, source, joinCallOptions).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -86,7 +92,9 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.JoinCall(serverCallId, source, joinCallOptions));
+            var callLocator = new ServerCallLocator(serverCallId);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.JoinCall(callLocator, source, joinCallOptions));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }

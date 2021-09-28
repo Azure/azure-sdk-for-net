@@ -252,62 +252,18 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Remove a participant from the call. </summary>
-        /// <param name="participantId"> The participant id. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> RemoveParticipantAsync(string participantId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipant)}");
-            scope.Start();
-            try
-            {
-                return await RestClient.RemoveParticipantAsync(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Remove a participants from the call. </summary>
-        /// <param name="participantId"> The participant id. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response RemoveParticipant(string participantId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipant)}");
-            scope.Start();
-            try
-            {
-                return RestClient.RemoveParticipant(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    cancellationToken: cancellationToken
-                    );
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Remove a participant from the call using <see cref="CommunicationIdentifier"/>.</summary>
         /// <param name="participant"> The identity of participant to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> RemoveParticipantByIdAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipantByIdAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipant)}");
             scope.Start();
             try
             {
-                return await RestClient.RemoveParticipantByIdAsync(
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return await RestClient.RemoveParticipantAsync(
                     callConnectionId: CallConnectionId,
                     identifier: CommunicationIdentifierSerializer.Serialize(participant),
                     cancellationToken: cancellationToken
@@ -320,17 +276,19 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Remove a participant from the call using <see cref="CommunicationIdentifier"/>.</summary>
+        /// <summary> Remove a participant from the call. </summary>
         /// <param name="participant"> The identity of participant to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response RemoveParticipantById(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual Response RemoveParticipant(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipantById)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipant)}");
             scope.Start();
             try
             {
-                return RestClient.RemoveParticipantById(
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return RestClient.RemoveParticipant(
                     callConnectionId: CallConnectionId,
                     identifier: CommunicationIdentifierSerializer.Serialize(participant),
                     cancellationToken: cancellationToken
@@ -354,6 +312,8 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
+                Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
+
                 return await RestClient.TransferAsync(
                     callConnectionId: CallConnectionId,
                     targetParticipant: CommunicationIdentifierSerializer.Serialize(targetParticipant),
@@ -379,6 +339,8 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
+                Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
+
                 return RestClient.Transfer(
                     callConnectionId: CallConnectionId,
                     targetParticipant: CommunicationIdentifierSerializer.Serialize(targetParticipant),
@@ -488,24 +450,26 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get participant of the call using participant id. </summary>
-        /// <param name="participantId">The participant id. </param>
+        /// <summary> Get participant from the call using <see cref="CommunicationIdentifier"/>. </summary>
+        /// <param name="participant"> The identity of participant. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual async Task<Response<CallParticipant>> GetParticipantAsync(string participantId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<CallParticipant>>> GetParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantAsync)}");
             scope.Start();
             try
             {
-                Response<CallParticipantInternal> callParticipantInternal = await RestClient.GetParticipantAsync(
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = await RestClient.GetParticipantAsync(
                                         callConnectionId: CallConnectionId,
-                                        participantId: participantId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                         cancellationToken: cancellationToken
                                         ).ConfigureAwait(false);
 
-                return Response.FromValue(new CallParticipant(callParticipantInternal.Value), callParticipantInternal.GetRawResponse());
+                return Response.FromValue(callParticipantsInternal.Value.Select(c => new CallParticipant(c)), callParticipantsInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -514,23 +478,25 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get participant of the call using participant id. </summary>
-        /// <param name="participantId">The participant id. </param>
+        /// <summary> Get participant from the call using <see cref="CommunicationIdentifier"/>. </summary>
+        /// <param name="participant"> The identity of participant. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual Response<CallParticipant> GetParticipant(string participantId, CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<CallParticipant>> GetParticipant(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
             scope.Start();
             try
             {
-                Response<CallParticipantInternal> callParticipantInternal = RestClient.GetParticipant(
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = RestClient.GetParticipant(
                                         callConnectionId: CallConnectionId,
-                                        participantId: participantId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                         cancellationToken: cancellationToken);
 
-                return Response.FromValue(new CallParticipant(callParticipantInternal.Value), callParticipantInternal.GetRawResponse());
+                return Response.FromValue(callParticipantsInternal.Value.Select(c => new CallParticipant(c)), callParticipantsInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -539,24 +505,29 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get participant from the call using <see cref="CommunicationIdentifier"/>. </summary>
+        /// <summary> Hold the participant and play default or custom audio. </summary>
         /// <param name="participant"> The identifier of the participant. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <param name="audioFileUri"> The uri of the audio file. If none is passed, default music will be played</param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. Needed only if audioFileUri is passed.</param>
+        /// <param name="callbackUri">The callback Uri to receive StartHoldMusic status notifications.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
-        public virtual async Task<Response<IEnumerable<CallParticipant>>> GetParticipantByIdAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StartHoldMusicResult>> StartHoldMusicAsync(CommunicationIdentifier participant, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantByIdAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusicAsync)}");
             scope.Start();
             try
             {
-                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = await RestClient.GetParticipantByIdAsync(
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return await RestClient.StartHoldMusicAsync(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        audioFileUri: audioFileUri?.AbsoluteUri,
+                                        audioFileId: audioFileId,
+                                        callbackUri: callbackUri?.AbsoluteUri,
                                         cancellationToken: cancellationToken
                                         ).ConfigureAwait(false);
-
-                return Response.FromValue(callParticipantsInternal.Value.Select(c => new CallParticipant(c)), callParticipantsInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -565,125 +536,28 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get participant from the call using <see cref="CommunicationIdentifier"/>. </summary>
+        /// <summary> Hold the participant and play default or custom audio. </summary>
         /// <param name="participant"> The identifier of the participant. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <param name="audioFileUri"> The uri of the audio file. If none is passed, default music will be played</param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. Needed only if audioFileUri is passed.</param>
+        /// <param name="callbackUri">The callback Uri to receive StartHoldMusic status notifications.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
-        public virtual Response<IEnumerable<CallParticipant>> GetParticipantById(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual Response<StartHoldMusicResult> StartHoldMusic(CommunicationIdentifier participant, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantById)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusic)}");
             scope.Start();
             try
             {
-                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = RestClient.GetParticipantById(
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return RestClient.StartHoldMusic(
                                         callConnectionId: CallConnectionId,
                                         identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        audioFileUri: audioFileUri?.AbsoluteUri,
+                                        audioFileId: audioFileId,
+                                        callbackUri: callbackUri?.AbsoluteUri,
                                         cancellationToken: cancellationToken);
-
-                return Response.FromValue(callParticipantsInternal.Value.Select(c => new CallParticipant(c)), callParticipantsInternal.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Hold the participant and play default music. </summary>
-        /// <param name="participantId">The participant id.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<StartHoldMusicResult>> StartHoldMusicAsync(string participantId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusicAsync)}");
-            scope.Start();
-            try
-            {
-                return await RestClient.StartHoldMusicAsync(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Hold the participant and play default music. </summary>
-        /// <param name="participantId">The participant id.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<StartHoldMusicResult> StartHoldMusic(string participantId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusic)}");
-            scope.Start();
-            try
-            {
-                return RestClient.StartHoldMusic(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Hold the participant and play the custom audio. </summary>
-        /// <param name="participantId">The participant id.</param>
-        /// <param name="audioFileUri"> The uri of the audio file. </param>
-        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
-        /// <param name="callbackUri">The callback Uri to receive StartHoldMusic status notifications. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<StartHoldMusicResult>> StartHoldMusicAsync(string participantId, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusicAsync)}");
-            scope.Start();
-            try
-            {
-                return await RestClient.StartHoldMusicAsync(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    audioFileUri: audioFileUri.AbsoluteUri,
-                    audioFileId: audioFileId,
-                    callbackUri: callbackUri.AbsoluteUri,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Hold the participant and play the custom audio. </summary>
-        /// <param name="participantId">The participant id.</param>
-        /// <param name="audioFileUri"> The uri of the audio file. </param>
-        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
-        /// <param name="callbackUri">The callback Uri to receive StartHoldMusic status notifications. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<StartHoldMusicResult> StartHoldMusic(string participantId, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusic)}");
-            scope.Start();
-            try
-            {
-                return RestClient.StartHoldMusic(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    audioFileUri: audioFileUri.AbsoluteUri,
-                    audioFileId: audioFileId,
-                    callbackUri: callbackUri.AbsoluteUri,
-                    cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -693,20 +567,20 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Remove participant from the hold and stop playing audio. </summary>
-        /// <param name="participantId"> The participant id. </param>
+        /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<StopHoldMusicResult>> StopHoldMusicAsync(string participantId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StopHoldMusicResult>> StopHoldMusicAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StopHoldMusicAsync)}");
             scope.Start();
             try
             {
                 return await RestClient.StopHoldMusicAsync(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken
+                                        ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -716,20 +590,19 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Remove participant from the hold and stop playing audio. </summary>
-        /// <param name="participantId"> The participant id. </param>
+        /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<StopHoldMusicResult> StopHoldMusic(string participantId, CancellationToken cancellationToken = default)
+        public virtual Response<StopHoldMusicResult> StopHoldMusic(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StopHoldMusic)}");
             scope.Start();
             try
             {
                 return RestClient.StopHoldMusic(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    cancellationToken: cancellationToken
-                    );
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -781,28 +654,30 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Play audio to a participant. </summary>
-        /// <param name="participantId">The participant id.</param>
+        /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="audioFileUri">The media resource uri of the play audio request. Currently only Wave file (.wav) format audio prompts are supported. The audio content in the wave file must be mono (single-channel), 16-bit samples with a 16,000 (16KHz) sampling rate.</param>
         /// <param name="options"> Options for playing audio. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<PlayAudioResult>> PlayAudioToParticipantAsync(string participantId, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayAudioResult>> PlayAudioToParticipantAsync(CommunicationIdentifier participant, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayAudioToParticipantAsync)}");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(participant, nameof(participant));
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
                 return await RestClient.ParticipantPlayAudioAsync(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    audioFileUri: audioFileUri.AbsoluteUri,
-                    loop: options?.Loop ?? false,
-                    audioFileId: options?.AudioFileId ?? Guid.NewGuid().ToString(),
-                    callbackUri: options?.CallbackUri?.AbsoluteUri,
-                    operationContext: options?.OperationContext ?? Guid.NewGuid().ToString(),
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        audioFileUri: audioFileUri.AbsoluteUri,
+                                        loop: options?.Loop ?? false,
+                                        audioFileId: options?.AudioFileId,
+                                        callbackUri: options?.CallbackUri?.AbsoluteUri,
+                                        operationContext: options?.OperationContext,
+                                        cancellationToken: cancellationToken
+                                        ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -812,27 +687,30 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Play audio to a participant. </summary>
-        /// <param name="participantId">The participant id.</param>
+        /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="audioFileUri">The media resource uri of the play audio request. Currently only Wave file (.wav) format audio prompts are supported. The audio content in the wave file must be mono (single-channel), 16-bit samples with a 16,000 (16KHz) sampling rate.</param>
         /// <param name="options"> Options for playing audio. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<PlayAudioResult> PlayAudioToParticipant(string participantId, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResult> PlayAudioToParticipant(CommunicationIdentifier participant, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayAudioToParticipant)}");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(participant, nameof(participant));
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
                 return RestClient.ParticipantPlayAudio(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    audioFileUri: audioFileUri.AbsoluteUri,
-                    loop: options?.Loop ?? false,
-                    audioFileId: options?.AudioFileId ?? Guid.NewGuid().ToString(),
-                    callbackUri: options?.CallbackUri?.AbsoluteUri,
-                    operationContext: options?.OperationContext ?? Guid.NewGuid().ToString(),
-                    cancellationToken: cancellationToken);
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        audioFileUri: audioFileUri.AbsoluteUri,
+                                        loop: options?.Loop ?? false,
+                                        audioFileId: options?.AudioFileId,
+                                        callbackUri: options?.CallbackUri?.AbsoluteUri,
+                                        operationContext: options?.OperationContext,
+                                        cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -842,22 +720,25 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Cancel Participant Media Operation. </summary>
-        /// <param name="participantId">The participant id.</param>
+        /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="mediaOperationId">The Id of the media operation to Cancel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> CancelParticipantMediaOperationAsync(string participantId, string mediaOperationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelParticipantMediaOperationAsync(CommunicationIdentifier participant, string mediaOperationId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperationAsync)}");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(participant, nameof(participant));
+                Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
+
                 return await RestClient.CancelParticipantMediaOperationAsync(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    mediaOperationId: mediaOperationId,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        mediaOperationId: mediaOperationId,
+                                        cancellationToken: cancellationToken
+                                        ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -867,21 +748,122 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Cancel Participant Media Operation. </summary>
-        /// <param name="participantId">The participant id.</param>
+        /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="mediaOperationId">The Id of the media operation to Cancel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response CancelParticipantMediaOperation(string participantId, string mediaOperationId, CancellationToken cancellationToken = default)
+        public virtual Response CancelParticipantMediaOperation(CommunicationIdentifier participant, string mediaOperationId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperation)}");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(participant, nameof(participant));
+                Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
+
                 return RestClient.CancelParticipantMediaOperation(
-                    callConnectionId: CallConnectionId,
-                    participantId: participantId,
-                    mediaOperationId: mediaOperationId,
-                    cancellationToken: cancellationToken);
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        mediaOperationId: mediaOperationId,
+                                        cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Mute Participant Operation. </summary>
+        /// <param name="participant"> The identifier of the participant. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> MuteParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperationAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return await RestClient.MuteParticipantAsync(
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken
+                                        ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Mute Participant Operation. </summary>
+        /// <param name="participant"> The identifier of the participant. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response MuteParticipant(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperation)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return RestClient.MuteParticipant(
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Unmute Participant Operation. </summary>
+        /// <param name="participant"> The identifier of the participant. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> UnmuteParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperationAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return await RestClient.UnmuteParticipantAsync(
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken
+                                        ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Unmute Participant Operation. </summary>
+        /// <param name="participant"> The identifier of the participant. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response UnmuteParticipant(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelParticipantMediaOperation)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(participant, nameof(participant));
+
+                return RestClient.UnmuteParticipant(
+                                        callConnectionId: CallConnectionId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {

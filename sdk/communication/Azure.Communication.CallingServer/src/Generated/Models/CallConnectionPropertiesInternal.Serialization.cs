@@ -25,7 +25,7 @@ namespace Azure.Communication.CallingServer
             Optional<string> callbackUri = default;
             Optional<IReadOnlyList<MediaType>> requestedMediaTypes = default;
             Optional<IReadOnlyList<EventSubscriptionType>> requestedCallEvents = default;
-            Optional<string> serverCallId = default;
+            Optional<CallLocatorModel> callLocator = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"))
@@ -118,13 +118,18 @@ namespace Azure.Communication.CallingServer
                     requestedCallEvents = array;
                     continue;
                 }
-                if (property.NameEquals("serverCallId"))
+                if (property.NameEquals("callLocator"))
                 {
-                    serverCallId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    callLocator = CallLocatorModel.DeserializeCallLocatorModel(property.Value);
                     continue;
                 }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, source.Value, alternateCallerId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value, Optional.ToList(requestedMediaTypes), Optional.ToList(requestedCallEvents), serverCallId.Value);
+            return new CallConnectionPropertiesInternal(callConnectionId.Value, source.Value, alternateCallerId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value, Optional.ToList(requestedMediaTypes), Optional.ToList(requestedCallEvents), callLocator.Value);
         }
     }
 }

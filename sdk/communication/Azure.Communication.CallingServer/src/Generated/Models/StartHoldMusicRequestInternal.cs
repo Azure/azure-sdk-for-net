@@ -5,16 +5,29 @@
 
 #nullable disable
 
+using System;
+using Azure.Communication;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The request payload for playing hold music for a participant. </summary>
-    internal partial class StartHoldMusicRequest
+    internal partial class StartHoldMusicRequestInternal
     {
-        /// <summary> Initializes a new instance of StartHoldMusicRequest. </summary>
-        public StartHoldMusicRequest()
+        /// <summary> Initializes a new instance of StartHoldMusicRequestInternal. </summary>
+        /// <param name="identifier"> The identifier of the participant. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
+        public StartHoldMusicRequestInternal(CommunicationIdentifierModel identifier)
         {
+            if (identifier == null)
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
+
+            Identifier = identifier;
         }
 
+        /// <summary> The identifier of the participant. </summary>
+        public CommunicationIdentifierModel Identifier { get; }
         /// <summary>
         /// The media resource uri of the hold music request.
         /// 
@@ -29,5 +42,7 @@ namespace Azure.Communication.CallingServer
         public string AudioFileId { get; set; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; set; }
+        /// <summary> The value to identify context of the operation. </summary>
+        public string OperationContext { get; set; }
     }
 }

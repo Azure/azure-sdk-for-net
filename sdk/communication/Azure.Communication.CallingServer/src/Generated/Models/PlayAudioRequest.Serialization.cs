@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class PlayAudioRequest : IUtf8JsonSerializable
+    public partial class PlayAudioRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

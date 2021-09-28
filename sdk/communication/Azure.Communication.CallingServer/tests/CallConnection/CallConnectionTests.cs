@@ -254,6 +254,235 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual(ex?.Status, 404);
         }
 
+        [TestCaseSource(nameof(TestData_ParticipantPlayAudio))]
+        public async Task PlayAudioToParticipantAsync_Return202Accepted(string participantUserId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            var callConnection = CreateMockCallConnection(202, PlayAudioResponsePayload);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            Response<PlayAudioResult> result = await callConnection.PlayAudioToParticipantAsync(
+                participant,
+                sampleAudioFileUri,
+                new PlayAudioOptions()
+                {
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                });
+
+            VerifyPlayAudioResult(result);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantPlayAudio))]
+        public void PlayAudioToParticipant_Return202Accepted(string participantUserId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            var callConnection = CreateMockCallConnection(202, PlayAudioResponsePayload);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            PlayAudioResult result = callConnection.PlayAudioToParticipant(
+                participant,
+                sampleAudioFileUri,
+                new PlayAudioOptions()
+                {
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                });
+
+            VerifyPlayAudioResult(result);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantPlayAudio))]
+        public void PlayAudioToParticipantAsync_Returns404NotFound(string participantUserId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            var callConnection = CreateMockCallConnection(404);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.PlayAudioToParticipantAsync(
+                participant,
+                sampleAudioFileUri,
+                new PlayAudioOptions()
+                {
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                }).ConfigureAwait(false));
+
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantPlayAudio))]
+        public void PlayAudioToParticipant_Returns404NotFound(string participantUserId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            var callConnection = CreateMockCallConnection(404);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.PlayAudioToParticipant(
+                participant,
+                sampleAudioFileUri,
+                new PlayAudioOptions()
+                {
+                    Loop = false,
+                    AudioFileId = sampleAudioFileId,
+                    CallbackUri = sampleCallbackUri,
+                    OperationContext = sampleOperationContext
+                }));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelParticipantMediaOperation))]
+        public async Task CancelParticipantMediaOperationAsync_Return200OK(string participantUserId, string mediaOperationId)
+        {
+            var callConnection = CreateMockCallConnection(200);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var result = await callConnection.CancelParticipantMediaOperationAsync(
+                participant,
+                mediaOperationId);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelParticipantMediaOperation))]
+        public void CancelParticipantMediaOperation_Return200OK(string participantUserId, string mediaOperationId)
+        {
+            var callConnection = CreateMockCallConnection(200);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var result = callConnection.CancelParticipantMediaOperation(
+                participant,
+                mediaOperationId);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelParticipantMediaOperation))]
+        public void CancelParticipantMediaOperationAsync_Returns404NotFound(string participantUserId, string mediaOperationId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.CancelParticipantMediaOperationAsync(
+                participant,
+                mediaOperationId).ConfigureAwait(false));
+
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelParticipantMediaOperation))]
+        public void CancelParticipantMediaOperation_Returns404NotFound(string participantUserId, string mediaOperationId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.CancelParticipantMediaOperation(
+                participant,
+                mediaOperationId));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public async Task MuteParticipantAsync_Return200OK(string callConnectionId, string participantUserId)
+        {
+            var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var result = await callConnection.MuteParticipantAsync(
+                participant);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public void MuteParticipant_Return200OK(string callConnectionId, string participantUserId)
+        {
+            var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var result = callConnection.MuteParticipant(
+                participant);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public void MuteParticipantAsync_Returns404NotFound(string callConnectionId, string participantUserId)
+        {
+            var callConnection = CreateMockCallConnection(404, callConnectionId: callConnectionId);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.MuteParticipantAsync(
+                participant).ConfigureAwait(false));
+
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public void MuteParticipant_Returns404NotFound(string callConnectionId, string participantUserId)
+        {
+            var callConnection = CreateMockCallConnection(404, callConnectionId: callConnectionId);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.MuteParticipant(
+                participant));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public async Task UnmuteParticipantAsync_Return200OK(string callConnectionId, string participantUserId)
+        {
+            var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var result = await callConnection.UnmuteParticipantAsync(
+                participant);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public void UnmuteParticipant_Return200OK(string callConnectionId, string participantUserId)
+        {
+            var callConnection = CreateMockCallConnection(200, callConnectionId: callConnectionId);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var result = callConnection.UnmuteParticipant(
+                participant);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public void UnmuteParticipantAsync_Returns404NotFound(string callConnectionId, string participantUserId)
+        {
+            var callConnection = CreateMockCallConnection(404, callConnectionId: callConnectionId);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.UnmuteParticipantAsync(
+                participant).ConfigureAwait(false));
+
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public void UnmuteParticipant_Returns404NotFound(string callConnectionId, string participantUserId)
+        {
+            var callConnection = CreateMockCallConnection(404, callConnectionId: callConnectionId);
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.UnmuteParticipant(
+                participant));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
         [TestCaseSource(nameof(TestData_AddParticipant))]
         public async Task AddParticipantsAsync_Passes(CommunicationIdentifier participant, string alternateCallerId, string operationContext)
         {
@@ -294,40 +523,86 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_ParticipantId))]
-        public async Task RemoveParticipantsAsync_Passes(string callConnectionId, string participantId)
+        [TestCaseSource(nameof(TestData_TransferCall))]
+        public async Task TransferCallAsync_Passes(CommunicationIdentifier participant, string userToUserInformation)
         {
-            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
+            var callConnection = CreateMockCallConnection(202, AddParticipantResultPayload);
 
-            var response = await callConnection.RemoveParticipantAsync(participantId).ConfigureAwait(false);
+            var response = await callConnection.TransferToParticipantAsync(participant, userToUserInformation).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
-        [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void RemoveParticipants_Passes(string callConnectionId, string participantId)
+        [TestCaseSource(nameof(TestData_TransferCall))]
+        public void TransferCall_Passes(CommunicationIdentifier participant, string userToUserInformation)
         {
-            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
+            var callConnection = CreateMockCallConnection(202, AddParticipantResultPayload);
 
-            var response = callConnection.RemoveParticipant(participantId);
+            var response = callConnection.TransferToParticipant(participant, userToUserInformation);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
-        [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void RemoveParticipantsAsync_Failed(string callConnectionId, string participantId)
+        [TestCaseSource(nameof(TestData_TransferCall))]
+        public void TransferCallAsync_Failed(CommunicationIdentifier participant, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.RemoveParticipantAsync(participantId).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferToParticipantAsync(participant, userToUserInformation).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCall))]
+        public void TransferCall_Failed(CommunicationIdentifier participant, string userToUserInformation)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferToParticipant(participant, userToUserInformation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
-        public void RemoveParticipants_Failed(string callConnectionId, string participantId)
+        public async Task RemoveParticipantsAsync_Passes(string callConnectionId, string participantUserId)
+        {
+            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
+
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var response = await callConnection.RemoveParticipantAsync(participant).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public void RemoveParticipants_Passes(string callConnectionId, string participantUserId)
+        {
+            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
+
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            var response = callConnection.RemoveParticipant(participant);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public void RemoveParticipantsAsync_Failed(string callConnectionId, string participantUserId)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.RemoveParticipant(participantId));
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.RemoveParticipantAsync(participant).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public void RemoveParticipants_Failed(string callConnectionId, string participantUserId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            var participant = new CommunicationUserIdentifier(participantUserId);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.RemoveParticipant(participant));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -380,6 +655,33 @@ namespace Azure.Communication.CallingServer.Tests
             };
         }
 
+        private static IEnumerable<object?[]> TestData_ParticipantPlayAudio()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    "66c76529-3e58-45bf-9592-84eadd52bc81",
+                    new Uri("https://av.ngrok.io/audio/sample-message.wav"),
+                    "sampleAudioFileId",
+                    new Uri("https://av.ngrok.io/someCallbackUri"),
+                    "sampleOperationContext",
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_CancelParticipantMediaOperation()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    "66c76529-3e58-45bf-9592-84eadd52bc81",
+                    "3631b8cb-4a65-45b5-98ae-339fc78b0aed",
+                }
+            };
+        }
+
         private static IEnumerable<object?[]> TestData_AddParticipant()
         {
             return new[]
@@ -389,6 +691,18 @@ namespace Azure.Communication.CallingServer.Tests
                     new CommunicationUserIdentifier("8:acs:acsuserid"),
                     "+14250000000",
                     "dummycontext"
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_TransferCall()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CommunicationUserIdentifier("8:acs:acsuserid"),
+                    "dummyUserToUserInformation"
                 },
             };
         }

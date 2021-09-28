@@ -11,24 +11,36 @@ namespace Azure.Communication.CallingServer.Tests.Events
         [Test]
         public void CallRecordingStateChangeEventTest()
         {
-            var json = "{\"recordingId\":\"id\",\"state\":\"active\",\"startDateTime\":\"2021-06-18T18:59:23.5718812-07:00\",\"serverCallId\":\"callServerId\"}";
+            var json = "{\"recordingId\":\"id\",\"state\":\"active\",\"startDateTime\":\"2021-06-18T18:59:23.5718812-07:00\", \"callLocator\":{\"serverCallLocator\" : {\"serverCallId\" : \"serverCallId\"}}}";
 
             var c = CallRecordingStateChangeEvent.Deserialize(json);
 
             Assert.AreEqual("id", c.RecordingId);
             Assert.AreEqual(CallRecordingState.Active, c.State);
-            Assert.AreEqual("callServerId", c.ServerCallId);
+            Assert.AreEqual("serverCallId", c.CallLocator?.ServerCallLocator?.ServerCallId);
             Assert.AreEqual("2021-06-18", c.StartDateTime.ToString("yyyy-MM-dd"));
         }
 
         [Test]
-        public void CallConnectionStateChangedEventTest()
+        public void CallConnectionStateChangedEventTestWithServerCallLocator()
         {
-            var json = "{\"serverCallId\":\"serverCallId\",\"callConnectionId\":\"callConnectionId\",\"callConnectionState\":\"connected\"}";
+            var json = "{\"callLocator\":{\"serverCallLocator\" : {\"serverCallId\" : \"serverCallId\"}},\"callConnectionId\":\"callConnectionId\",\"callConnectionState\":\"connected\"}";
 
             var c = CallConnectionStateChangedEvent.Deserialize(json);
 
-            Assert.AreEqual("serverCallId", c.ServerCallId);
+            Assert.AreEqual("serverCallId", c.CallLocator?.ServerCallLocator?.ServerCallId);
+            Assert.AreEqual("callConnectionId", c.CallConnectionId);
+            Assert.AreEqual(CallConnectionState.Connected, c.CallConnectionState);
+        }
+
+        [Test]
+        public void CallConnectionStateChangedEventTestWithGroupCallLocator()
+        {
+            var json = "{\"callLocator\":{\"groupCallLocator\" : {\"groupId\" : \"groupId\"}},\"callConnectionId\":\"callConnectionId\",\"callConnectionState\":\"connected\"}";
+
+            var c = CallConnectionStateChangedEvent.Deserialize(json);
+
+            Assert.AreEqual("groupId", c.CallLocator?.GroupCallLocator?.GroupId);
             Assert.AreEqual("callConnectionId", c.CallConnectionId);
             Assert.AreEqual(CallConnectionState.Connected, c.CallConnectionState);
         }

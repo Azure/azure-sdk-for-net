@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The options for communication <see cref="CallConnection"/> and <see cref="ServerCall"/>.
+    /// The options for communication <see cref="CallConnection"/> and <see cref="CallingServerClient"/>.
     /// </summary>
     public class CallingServerClientOptions : ClientOptions
     {

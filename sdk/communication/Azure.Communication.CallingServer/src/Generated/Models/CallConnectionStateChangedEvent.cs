@@ -18,18 +18,18 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
-        /// <param name="serverCallId"> The server call.id. </param>
+        /// <param name="callLocator"> The locator used for joining or taking action on a call. </param>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="callConnectionState"> The state of the call connection. </param>
-        internal CallConnectionStateChangedEvent(string serverCallId, string callConnectionId, CallConnectionState callConnectionState)
+        internal CallConnectionStateChangedEvent(CallLocatorModel callLocator, string callConnectionId, CallConnectionState callConnectionState)
         {
-            ServerCallId = serverCallId;
+            CallLocator = callLocator;
             CallConnectionId = callConnectionId;
             CallConnectionState = callConnectionState;
         }
 
-        /// <summary> The server call.id. </summary>
-        public string ServerCallId { get; }
+        /// <summary> The locator used for joining or taking action on a call. </summary>
+        public CallLocatorModel CallLocator { get; }
         /// <summary> The call connection id. </summary>
         public string CallConnectionId { get; }
         /// <summary> The state of the call connection. </summary>
