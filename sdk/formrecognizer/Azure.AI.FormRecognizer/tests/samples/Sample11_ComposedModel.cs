@@ -21,9 +21,9 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
+            string trainingFileUrl = TestEnvironment.BlobContainerSasUrlV2;
 
-            FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey), new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
 
             #region Snippet:FormRecognizerSampleTrainVariousModels
             // For this sample, you can use the training forms found in the `trainingFiles` folder.

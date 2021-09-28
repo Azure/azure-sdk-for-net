@@ -409,7 +409,7 @@ Train a machine-learned model on your own form types. The resulting model will b
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 Uri trainingFileUri = <trainingFileUri>;
-FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey), new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
 
 TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My Model");
 Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
@@ -443,7 +443,7 @@ For more information and samples see [here][train_a_model].
 Manage the custom models stored in your account.
 
 ```C# Snippet:FormRecognizerSampleManageCustomModelsAsync
-FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey), new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
 
 // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
 AccountProperties accountProperties = await client.GetAccountPropertiesAsync();
@@ -498,7 +498,7 @@ For more information and samples see [here][manage_custom_models].
 Manage the custom models stored in your account with a synchronous API. Note that we are still making an asynchronous call to `WaitForCompletionAsync` for training, since this method does not have a synchronous counterpart. For more information on long-running operations, see [Long-Running Operations](#long-running-operations).
 
 ```C# Snippet:FormRecognizerSampleManageCustomModels
-FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey), new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
 
 // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
 AccountProperties accountProperties = client.GetAccountProperties();
@@ -634,7 +634,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cognitive_resource]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 
 
-[form_recognizer_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/src/FormRecognizerClient.cs
+[form_recognizer_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/src/FormRecognizerClient/FormRecognizerClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal

@@ -21,7 +21,7 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
   - Invoices - Recognize and extract common fields from invoices, using a pre-trained invoice model.
   - Identity Documents - Recognize and extract common fields from identity documents like passports or driver's licenses, using a pre-trained identity documents model.
 
-## Common scenarios samples
+## Common scenarios samples for SDK v3.1.X
 - [Recognize form content](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample1_RecognizeFormContent.md)
 - [Recognize custom forms](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample2_RecognizeCustomForms.md)
 - [Recognize receipts](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample3_RecognizeReceipts.md)
@@ -31,7 +31,7 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 - [Train a model](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample5_TrainModel.md)
 - [Manage custom models](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample6_ManageCustomModels.md)
 
-## Advanced samples
+## Advanced samples for SDK v3.1.X
 - [Strongly-typing a recognized form](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md)
 - [Create a composed model](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample8_ModelCompose.md)
 - [Differentiate output models trained with and without labels](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample10_DifferentiateOutputModelsTrainedWithAndWithoutLabels.cs)

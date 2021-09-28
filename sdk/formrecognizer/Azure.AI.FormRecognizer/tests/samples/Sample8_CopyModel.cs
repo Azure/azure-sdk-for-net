@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = "<source_apiKey>";
 #endif
             var sourcecredential = new AzureKeyCredential(apiKey);
-            var sourceClient = new FormTrainingClient(new Uri(endpoint), sourcecredential);
+            var sourceClient = new FormTrainingClient(new Uri(endpoint), sourcecredential, new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
             #endregion
 
             // For the purpose of this sample, we are going to create a trained model to copy. Please note that
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Samples
 #if SNIPPET
             Uri trainingFileUri = <trainingFileUri>;
 #else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
 #endif
             TrainingOperation operation = await sourceClient.StartTrainingAsync(trainingFileUri, useTrainingLabels: false);
             Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = "<target_apiKey>";
 #endif
             var targetCredential = new AzureKeyCredential(apiKey);
-            var targetClient = new FormTrainingClient(new Uri(endpoint), targetCredential);
+            var targetClient = new FormTrainingClient(new Uri(endpoint), targetCredential, new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
             #endregion
 
             #region Snippet:FormRecognizerSampleGetCopyAuthorization
