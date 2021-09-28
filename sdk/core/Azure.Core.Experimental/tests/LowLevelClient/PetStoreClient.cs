@@ -92,12 +92,6 @@ namespace Azure.Core.Experimental.Tests
                     }
                     else
                     {
-                        // NOTE: Can this become:
-                        // throw new RequestFailedException(message.Response);
-                        // ??
-                        // (that would be so much tidier!)
-                        // QUESTION: What happens in the Async case, do we still need it?
-                        // Because we can't have an async constructor.
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
