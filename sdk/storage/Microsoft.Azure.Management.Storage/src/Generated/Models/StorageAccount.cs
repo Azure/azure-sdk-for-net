@@ -131,7 +131,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="allowCrossTenantReplication">Allow or disallow cross
         /// AAD tenant object replication. The default interpretation is true
         /// for this property.</param>
-        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ExtendedLocation extendedLocation = default(ExtendedLocation), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), KeyCreationTime keyCreationTime = default(KeyCreationTime), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), string largeFileSharesState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), RoutingPreference routingPreference = default(RoutingPreference), BlobRestoreStatus blobRestoreStatus = default(BlobRestoreStatus), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?), bool? allowCrossTenantReplication = default(bool?))
+        /// <param name="defaultToOAuthAuthentication">A boolean flag which
+        /// indicates whether the default authentication is OAuth or not. The
+        /// default interpretation is false for this property.</param>
+        /// <param name="publicNetworkAccess">Allow or disallow public network
+        /// access to Storage Account. Value is optional but if passed in, must
+        /// be 'Enabled' or 'Disabled'. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
+        /// <param name="immutableStorageWithVersioning">The property is
+        /// immutable and can only be set to true at the account creation time.
+        /// When set to true, it enables object level immutability for all the
+        /// containers in the account by default.</param>
+        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ExtendedLocation extendedLocation = default(ExtendedLocation), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), KeyCreationTime keyCreationTime = default(KeyCreationTime), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), string largeFileSharesState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), RoutingPreference routingPreference = default(RoutingPreference), BlobRestoreStatus blobRestoreStatus = default(BlobRestoreStatus), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? defaultToOAuthAuthentication = default(bool?), string publicNetworkAccess = default(string), ImmutableStorageAccount immutableStorageWithVersioning = default(ImmutableStorageAccount))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -168,6 +179,9 @@ namespace Microsoft.Azure.Management.Storage.Models
             AllowSharedKeyAccess = allowSharedKeyAccess;
             EnableNfsV3 = enableNfsV3;
             AllowCrossTenantReplication = allowCrossTenantReplication;
+            DefaultToOAuthAuthentication = defaultToOAuthAuthentication;
+            PublicNetworkAccess = publicNetworkAccess;
+            ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             CustomInit();
         }
 
@@ -419,6 +433,31 @@ namespace Microsoft.Azure.Management.Storage.Models
         public bool? AllowCrossTenantReplication { get; set; }
 
         /// <summary>
+        /// Gets or sets a boolean flag which indicates whether the default
+        /// authentication is OAuth or not. The default interpretation is false
+        /// for this property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultToOAuthAuthentication")]
+        public bool? DefaultToOAuthAuthentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets allow or disallow public network access to Storage
+        /// Account. Value is optional but if passed in, must be 'Enabled' or
+        /// 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets the property is immutable and can only be set to true
+        /// at the account creation time. When set to true, it enables object
+        /// level immutability for all the containers in the account by
+        /// default.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.immutableStorageWithVersioning")]
+        public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -472,6 +511,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (BlobRestoreStatus != null)
             {
                 BlobRestoreStatus.Validate();
+            }
+            if (ImmutableStorageWithVersioning != null)
+            {
+                ImmutableStorageWithVersioning.Validate();
             }
         }
     }

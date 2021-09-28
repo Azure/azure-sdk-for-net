@@ -15,7 +15,7 @@ The Azure Key Vault keys library client supports RSA keys and Elliptic Curve (EC
 ### Install the package
 Install the Azure Key Vault keys client library for .NET with [NuGet][nuget]:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Security.KeyVault.Keys
 ```
 
@@ -32,7 +32,7 @@ In order to interact with the Key Vault service, you'll need to create an instan
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Identity
 ```
 
@@ -146,7 +146,7 @@ Once you've created a `KeyVaultKey` in the Azure Key Vault, you can also create 
 ```C# Snippet:CreateCryptographyClient
 // Create a new cryptography client using the same Key Vault or Managed HSM endpoint, service version,
 // and options as the KeyClient created earlier.
-var cryptoClient = client.GetCryptographyClient(key.Name, key.Properties.Version);
+CryptographyClient cryptoClient = client.GetCryptographyClient(key.Name, key.Properties.Version);
 ```
 
 ## Key concepts

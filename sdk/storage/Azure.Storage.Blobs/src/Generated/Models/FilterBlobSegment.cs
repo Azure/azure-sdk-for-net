@@ -52,9 +52,13 @@ namespace Azure.Storage.Blobs.Models
             NextMarker = nextMarker;
         }
 
+        /// <summary> Gets the service endpoint. </summary>
         public string ServiceEndpoint { get; }
+        /// <summary> Gets the where. </summary>
         public string Where { get; }
+        /// <summary> Gets the blobs. </summary>
         public IReadOnlyList<FilterBlobItem> Blobs { get; }
+        /// <summary> Gets the next marker. </summary>
         public string NextMarker { get; }
     }
 }

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -43,12 +45,32 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// <param name="encryptionKey">The public part of the encryption
         /// certificate. Client uses this to encrypt any secret.</param>
         /// <param name="resourceKey">The Resource ID of the Resource.</param>
-        public DataBoxEdgeDeviceExtendedInfo(string id = default(string), string name = default(string), string type = default(string), string encryptionKeyThumbprint = default(string), string encryptionKey = default(string), string resourceKey = default(string))
+        /// <param name="clientSecretStoreId">The Key Vault ARM Id for client
+        /// secrets</param>
+        /// <param name="clientSecretStoreUrl">The url to access the Client Key
+        /// Vault</param>
+        /// <param name="channelIntegrityKeyName">The name of Channel Integrity
+        /// Key stored in the Client Key Vault</param>
+        /// <param name="channelIntegrityKeyVersion">The version of Channel
+        /// Integrity Key stored in the Client Key Vault</param>
+        /// <param name="keyVaultSyncStatus">Key vault sync status. Possible
+        /// values include: 'KeyVaultSynced', 'KeyVaultSyncFailed',
+        /// 'KeyVaultNotConfigured', 'KeyVaultSyncPending', 'KeyVaultSyncing',
+        /// 'KeyVaultNotSynced'</param>
+        /// <param name="deviceSecrets">Device secrets, will be returned only
+        /// with ODataFilter $expand=deviceSecrets</param>
+        public DataBoxEdgeDeviceExtendedInfo(string id = default(string), string name = default(string), string type = default(string), string encryptionKeyThumbprint = default(string), string encryptionKey = default(string), string resourceKey = default(string), string clientSecretStoreId = default(string), string clientSecretStoreUrl = default(string), string channelIntegrityKeyName = default(string), string channelIntegrityKeyVersion = default(string), string keyVaultSyncStatus = default(string), IDictionary<string, Secret> deviceSecrets = default(IDictionary<string, Secret>))
             : base(id, name, type)
         {
             EncryptionKeyThumbprint = encryptionKeyThumbprint;
             EncryptionKey = encryptionKey;
             ResourceKey = resourceKey;
+            ClientSecretStoreId = clientSecretStoreId;
+            ClientSecretStoreUrl = clientSecretStoreUrl;
+            ChannelIntegrityKeyName = channelIntegrityKeyName;
+            ChannelIntegrityKeyVersion = channelIntegrityKeyVersion;
+            KeyVaultSyncStatus = keyVaultSyncStatus;
+            DeviceSecrets = deviceSecrets;
             CustomInit();
         }
 
@@ -75,6 +97,47 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceKey")]
         public string ResourceKey { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Key Vault ARM Id for client secrets
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientSecretStoreId")]
+        public string ClientSecretStoreId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the url to access the Client Key Vault
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientSecretStoreUrl")]
+        public string ClientSecretStoreUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of Channel Integrity Key stored in the Client
+        /// Key Vault
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.channelIntegrityKeyName")]
+        public string ChannelIntegrityKeyName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version of Channel Integrity Key stored in the
+        /// Client Key Vault
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.channelIntegrityKeyVersion")]
+        public string ChannelIntegrityKeyVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets key vault sync status. Possible values include:
+        /// 'KeyVaultSynced', 'KeyVaultSyncFailed', 'KeyVaultNotConfigured',
+        /// 'KeyVaultSyncPending', 'KeyVaultSyncing', 'KeyVaultNotSynced'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVaultSyncStatus")]
+        public string KeyVaultSyncStatus { get; set; }
+
+        /// <summary>
+        /// Gets device secrets, will be returned only with ODataFilter
+        /// $expand=deviceSecrets
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deviceSecrets")]
+        public IDictionary<string, Secret> DeviceSecrets { get; private set; }
 
     }
 }

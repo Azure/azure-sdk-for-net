@@ -42,6 +42,7 @@ namespace Azure.Data.Tables.Tests
 
         protected string tableName { get; private set; }
         protected const string PartitionKeyValue = "somPartition";
+        protected const string PartitionKeyValueWithSingleQuotes = "partition'key''with'''singlequotes'";
         protected const string PartitionKeyValue2 = "somPartition2";
         protected const string StringTypePropertyName = "SomeStringProperty";
         protected const string DateTypePropertyName = "SomeDateProperty";

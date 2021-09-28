@@ -1,14 +1,8 @@
 # Release History
 
 ## 12.0.0-preview.17 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2020-12-06.
+- This release contains bug fixes to improve quality.
 
 ## 12.0.0-preview.16 (2021-09-08)
 - This release contains bug fixes to improve quality.

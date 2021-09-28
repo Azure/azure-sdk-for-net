@@ -36,21 +36,35 @@ namespace Azure.Analytics.Synapse.Spark.Models
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Gets or sets the artifact id. </summary>
         public string ArtifactId { get; set; }
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets or sets the file. </summary>
         public string File { get; set; }
+        /// <summary> Gets or sets the class name. </summary>
         public string ClassName { get; set; }
+        /// <summary> Gets the arguments. </summary>
         public IList<string> Arguments { get; }
+        /// <summary> Gets the jars. </summary>
         public IList<string> Jars { get; }
+        /// <summary> Gets the python files. </summary>
         public IList<string> PythonFiles { get; }
+        /// <summary> Gets the files. </summary>
         public IList<string> Files { get; }
+        /// <summary> Gets the archives. </summary>
         public IList<string> Archives { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Configuration { get; }
+        /// <summary> Gets or sets the driver memory. </summary>
         public string DriverMemory { get; set; }
+        /// <summary> Gets or sets the driver cores. </summary>
         public int? DriverCores { get; set; }
+        /// <summary> Gets or sets the executor memory. </summary>
         public string ExecutorMemory { get; set; }
+        /// <summary> Gets or sets the executor cores. </summary>
         public int? ExecutorCores { get; set; }
+        /// <summary> Gets or sets the executor count. </summary>
         public int? ExecutorCount { get; set; }
     }
 }

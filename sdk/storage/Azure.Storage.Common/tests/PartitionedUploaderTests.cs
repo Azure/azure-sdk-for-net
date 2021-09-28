@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
@@ -33,7 +34,7 @@ namespace Azure.Storage.Tests
         {
             var mock = new Mock<PartitionedUploader<object, object>.CreateScope>(MockBehavior.Strict);
             mock.Setup(del => del(s_operationName))
-                .Returns(new Core.Pipeline.DiagnosticScope(s_operationName, new DiagnosticListener("Azure.Storage.Tests")));
+                .Returns(new Core.Pipeline.DiagnosticScope("Azure.Storage.Tests", s_operationName, new DiagnosticListener("Azure.Storage.Tests"), DiagnosticScope.ActivityKind.Client));
             return mock;
         }
 

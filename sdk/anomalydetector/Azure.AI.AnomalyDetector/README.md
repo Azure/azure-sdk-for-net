@@ -9,7 +9,7 @@ Microsoft Azure Cognitive Services Anomaly Detector API enables you to monitor a
 ### Install the package
 Install the Azure Anomaly Detector client library for .NET with [NuGet][nuget]:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.AI.AnomalyDetector --version 3.0.0-preview.3
 ```
 
