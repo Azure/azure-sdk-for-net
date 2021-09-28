@@ -31,14 +31,12 @@ namespace Azure.Storage.Blobs.Specialized
     public class BlobVirtualDirectoryClient
     {
         /// <summary>
-        /// The blob directory's primary <see cref="Uri"/> endpoint.
-        /// TODO: better docs
+        /// The virtual blob directory's primary <see cref="Uri"/> endpoint.
         /// </summary>
         private readonly Uri _uri;
 
         /// <summary>
-        /// Gets the blob directory's primary <see cref="Uri"/> endpoint.
-        /// TODO: better docs
+        /// Gets the virtual blob directory's primary <see cref="Uri"/> endpoint.
         /// </summary>
         public virtual Uri Uri => _uri;
 
@@ -94,14 +92,12 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// <see cref="BlobClientConfiguration"/>.
-        /// TODO: better docs
+        /// The configuation<see cref="BlobClientConfiguration"/>.
         /// </summary>
         internal readonly BlobClientConfiguration _clientConfiguration;
 
         /// <summary>
         /// <see cref="BlobClientConfiguration"/>.
-        /// TODO: better docs
         /// </summary>
         internal virtual BlobClientConfiguration ClientConfiguration => _clientConfiguration;
 
@@ -395,6 +391,33 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
+        /// Create a new <see cref="BlockBlobClient"/> object by
+        /// concatenating <paramref name="blobName"/> to
+        /// the end of the <see cref="Uri"/>. The new
+        /// <see cref="BlockBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="blobName">The name of the block blob.</param>
+        /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
+        protected internal virtual BlockBlobClient GetBlockBlobClientCore(string blobName)
+        {
+            if (ClientSideEncryption != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
+            }
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                BlobName = blobName
+            };
+
+            return new BlockBlobClient(
+                blobUriBuilder.ToUri(),
+                ClientConfiguration);
+        }
+
+        /// <summary>
         /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobVirtualDirectoryClient"/>'s parent container.
         /// The new <see cref="BlobContainerClient"/>
         /// uses the same request policy pipeline as the
@@ -452,7 +475,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(string, BlobDirectoryUploadOptions, CancellationToken)"/>
+        /// The <see cref="Upload(string, bool, BlobDirectoryUploadOptions, CancellationToken)"/>
         /// operation overwrites the blobs contained in the blob directory, creating a
         /// blob if none exists.  Overwriting an existing blobs in the blob directory
         /// replaces any existing metadata on the blob.
@@ -472,6 +495,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="sourceDirectoryPath">
         /// A string of the path to the local directory containing the local files to upload.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether an existing blobs should be deleted and recreated.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -493,18 +519,20 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual IEnumerable<Response<BlobContentInfo>> Upload(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             string sourceDirectoryPath,
+            bool overwrite = false,
             BlobDirectoryUploadOptions options = default,
             CancellationToken cancellationToken = default)
         {
             return UploadInternal(
                 sourceDirectoryPath,
+                overwrite,
                 options,
                 async: false,
                 cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, BlobDirectoryUploadOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(string, bool, BlobDirectoryUploadOptions, CancellationToken)"/>
         /// operation overwrites the contents of the blob, creating a new block
         /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
@@ -519,6 +547,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="sourceDirectoryPath">
         /// A string of the path to the local directory containing the local files to upload.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether an existing blobs should be deleted and recreated.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -540,11 +571,13 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<IEnumerable<Response<BlobContentInfo>>> UploadAsync(
 #pragma warning disable AZC0015 // Unexpected client method return type.
             string sourceDirectoryPath,
+            bool overwrite = false,
             BlobDirectoryUploadOptions options = default,
             CancellationToken cancellationToken = default)
         {
             return await UploadInternal(
                 sourceDirectoryPath,
+                overwrite,
                 options,
                 async: true,
                 cancellationToken)
@@ -571,6 +604,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="options">
         /// Optional Parameters <see cref="BlobDirectoryUploadOptions"/>.
         /// </param>
+        /// <param name="overwrite">
+        /// Whether an existing blobs should be deleted and recreated.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -588,6 +624,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         internal async Task<IEnumerable<Response<BlobContentInfo>>> UploadInternal(
             string sourceDirectoryPath,
+            bool overwrite,
             BlobDirectoryUploadOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -631,6 +668,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 responses.Add(await GetBlobClient(blobName)
                                    .UploadAsync(
                                        path.FullName.ToString(),
+                                       overwrite,
                                        cancellationToken)
                                    .ConfigureAwait(false));
                             });
@@ -970,16 +1008,32 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Pageable<BlobItem> GetBlobs(
             BlobTraits traits = BlobTraits.None,
             BlobStates states = BlobStates.None,
             string prefix = default,
             CancellationToken cancellationToken = default)
         {
-            prefix = prefix != null ? $"{DirectoryPath}/{prefix}" : DirectoryPath;
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobVirtualDirectoryClient)}.{nameof(GetBlobs)}");
+            try
+            {
+                scope.Start();
 
-            return GetParentBlobContainerClient()
-                .GetBlobs(traits, states, prefix, cancellationToken);
+                prefix = prefix != null ? $"{DirectoryPath}/{prefix}" : DirectoryPath;
+
+                return GetParentBlobContainerClient()
+                    .GetBlobs(traits, states, prefix, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -1014,18 +1068,163 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<BlobItem> GetBlobsAsync(
             BlobTraits traits = BlobTraits.None,
             BlobStates states = BlobStates.None,
             string prefix = default,
             CancellationToken cancellationToken = default)
         {
-            prefix = prefix != null ? $"{DirectoryPath}/{prefix}" : DirectoryPath;
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobVirtualDirectoryClient)}.{nameof(GetBlobs)}");
 
-            return GetParentBlobContainerClient()
-                .GetBlobsAsync(traits, states, prefix, cancellationToken);
+            try
+            {
+                scope.Start();
+
+                prefix = prefix != null ? $"{DirectoryPath}/{prefix}" : DirectoryPath;
+
+                return GetParentBlobContainerClient()
+                    .GetBlobsAsync(traits, states, prefix, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion GetBlobs
+
+        #region GetBlobsByHierarchy
+        /// <summary>
+        /// The <see cref="GetBlobsByHierarchy"/> operation returns
+        /// an async collection of blobs in this container.  Enumerating the
+        /// blobs may make multiple requests to the service while fetching all
+        /// the values.  Blobs are ordered lexicographically by name.   A
+        /// <paramref name="delimiter"/> can be used to traverse a virtual
+        /// hierarchy of blobs as though it were a file system.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
+        /// List Blobs</see>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the blobs.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for filtering the blobs.
+        /// </param>
+        /// <param name="delimiter">
+        /// A <paramref name="delimiter"/> that can be used to traverse a
+        /// virtual hierarchy of blobs as though it were a file system.  The
+        /// delimiter may be a single character or a string.
+        /// <see cref="BlobHierarchyItem.Prefix"/> will be returned
+        /// in place of all blobs whose names begin with the same substring up
+        /// to the appearance of the delimiter character.  The value of a
+        /// prefix is substring+delimiter, where substring is the common
+        /// substring that begins one or more blob  names, and delimiter is the
+        /// value of <paramref name="delimiter"/>. You can use the value of
+        /// prefix to make a subsequent call to list the blobs that begin with
+        /// this prefix, by specifying the value of the prefix for the
+        /// <paramref name="prefix"/>.
+        ///
+        /// Note that each BlobPrefix element returned counts toward the
+        /// maximum result, just as each Blob element does.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{T}"/> of <see cref="BlobHierarchyItem"/>
+        /// describing the blobs in the container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<BlobHierarchyItem> GetBlobsByHierarchy(
+            BlobTraits traits = BlobTraits.None,
+            BlobStates states = BlobStates.None,
+            string delimiter = default,
+            string prefix = default,
+            CancellationToken cancellationToken = default)
+        {
+            prefix = prefix != null ? $"{DirectoryPath}/{prefix}" : DirectoryPath;
+
+            return GetParentBlobContainerClient().GetBlobsByHierarchy(traits, states, delimiter, prefix, cancellationToken);
+        }
+
+        /// <summary>
+        /// The <see cref="GetBlobsByHierarchyAsync"/> operation returns
+        /// an async collection of blobs in this container.  Enumerating the
+        /// blobs may make multiple requests to the service while fetching all
+        /// the values.  Blobs are ordered lexicographically by name.   A
+        /// <paramref name="delimiter"/> can be used to traverse a virtual
+        /// hierarchy of blobs as though it were a file system.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
+        /// List Blobs</see>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the blobs.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for filtering the blobs.
+        /// </param>
+        /// <param name="delimiter">
+        /// A <paramref name="delimiter"/> that can be used to traverse a
+        /// virtual hierarchy of blobs as though it were a file system.  The
+        /// delimiter may be a single character or a string.
+        /// <see cref="BlobHierarchyItem.Prefix"/> will be returned
+        /// in place of all blobs whose names begin with the same substring up
+        /// to the appearance of the delimiter character.  The value of a
+        /// prefix is substring+delimiter, where substring is the common
+        /// substring that begins one or more blob  names, and delimiter is the
+        /// value of <paramref name="delimiter"/>. You can use the value of
+        /// prefix to make a subsequent call to list the blobs that begin with
+        /// this prefix, by specifying the value of the prefix for the
+        /// <paramref name="prefix"/>.
+        ///
+        /// Note that each BlobPrefix element returned counts toward the
+        /// maximum result, just as each Blob element does.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the
+        /// blobs in the container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
+            BlobTraits traits = BlobTraits.None,
+            BlobStates states = BlobStates.None,
+            string delimiter = default,
+            string prefix = default,
+            CancellationToken cancellationToken = default)
+        {
+            prefix = prefix != null ? $"{DirectoryPath}/{prefix}" : DirectoryPath;
+
+            return GetParentBlobContainerClient().GetBlobsByHierarchyAsync(traits, states, delimiter, prefix, cancellationToken);
+        }
+        #endregion GetBlobsByHierarchy
     }
 
     /// <summary>
