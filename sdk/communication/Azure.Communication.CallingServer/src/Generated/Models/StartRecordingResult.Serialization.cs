@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class StartCallRecordingResult
+    public partial class StartRecordingResult
     {
-        internal static StartCallRecordingResult DeserializeStartCallRecordingResult(JsonElement element)
+        internal static StartRecordingResult DeserializeStartRecordingResult(JsonElement element)
         {
             Optional<string> recordingId = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new StartCallRecordingResult(recordingId.Value);
+            return new StartRecordingResult(recordingId.Value);
         }
     }
 }
