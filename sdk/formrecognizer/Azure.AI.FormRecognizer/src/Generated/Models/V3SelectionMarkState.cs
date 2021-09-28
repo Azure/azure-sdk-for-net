@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="V3SelectionMarkState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="V3SelectionMarkState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public V3SelectionMarkState(string value)
         {
