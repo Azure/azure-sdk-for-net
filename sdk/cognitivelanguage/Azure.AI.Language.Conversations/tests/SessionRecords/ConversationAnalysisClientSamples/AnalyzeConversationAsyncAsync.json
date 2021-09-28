@@ -8,7 +8,7 @@
         "Content-Length": "61",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-dcaac5ebe7d6d74e8c18b6cc3df6ecbe-94614d90239d0d47-00",
+        "traceparent": "00-ef84f667c25e274092ea5c7859b6adc9-4c76599565001446-00",
         "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20210928.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "f5a0aa56f4391be6a0e91ba910057d15",
         "x-ms-return-client-request-id": "true"
@@ -18,7 +18,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1825c3da-83e0-43d5-83ca-48634d0ef728",
+        "apim-request-id": "0e31db0b-7e52-4f10-87e1-b931f6a6dac0",
         "Cache-Control": [
           "no-store",
           "proxy-revalidate",
@@ -27,13 +27,13 @@
           "private"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 08:28:23 GMT",
+        "Date": "Tue, 28 Sep 2021 09:11:31 GMT",
         "pragma": "no-cache",
-        "request-id": "1825c3da-83e0-43d5-83ca-48634d0ef728",
+        "request-id": "0e31db0b-7e52-4f10-87e1-b931f6a6dac0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "60"
+        "x-envoy-upstream-service-time": "64"
       },
       "ResponseBody": [
         "{\n",
