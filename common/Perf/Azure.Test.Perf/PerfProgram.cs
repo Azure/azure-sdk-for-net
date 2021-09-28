@@ -113,7 +113,7 @@ namespace Azure.Test.Perf
                         setupStatusCts.Cancel();
                         setupStatusThread.Join();
 
-                        if (options.TestProxy != null)
+                        if (options.TestProxies != null && options.TestProxies.Any())
                         {
                             using var recordStatusCts = new CancellationTokenSource();
                             var recordStatusThread = PerfStressUtilities.PrintStatus("=== Record and Start Playback ===", () => ".", newLine: false, recordStatusCts.Token);
