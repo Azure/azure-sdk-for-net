@@ -9,7 +9,7 @@ namespace Azure.Data.SchemaRegistry
     /// The format used when serializing SchemaRegistry messages.
     /// </summary>
     [CodeGenModel("SerializationType")]
-    public readonly partial struct SerializationType
+    public readonly partial struct SchemaFormat
     {
     }
 }
