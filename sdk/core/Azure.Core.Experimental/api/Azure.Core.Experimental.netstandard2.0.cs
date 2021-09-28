@@ -142,6 +142,7 @@ namespace Azure.Core.Pipeline
 {
     public static partial class ResponseExtensions
     {
+        public static Azure.RequestFailedException CreateExceptionAsync(this Azure.Response response) { throw null; }
         public static bool IsError(this Azure.Response response) { throw null; }
     }
 }

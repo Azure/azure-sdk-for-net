@@ -34,7 +34,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="response"></param>
         /// <returns></returns>
-        public static RequestFailedException CreateExceptionAsync(this Response response)
+        public static RequestFailedException CreateException(this Response response)
         {
             var classifiedResponse = response as ClassifiedResponse;
 

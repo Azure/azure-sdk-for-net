@@ -181,7 +181,6 @@ namespace Azure
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
-        public RequestFailedException(Azure.Response response) { }
         public RequestFailedException(int status, string message) { }
         public RequestFailedException(int status, string message, System.Exception? innerException) { }
         public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
@@ -433,8 +432,6 @@ namespace Azure.Core
     public partial class ResponseClassifier
     {
         public ResponseClassifier() { }
-        public ResponseClassifier(Azure.Core.ClientOptions options) { }
-        protected virtual void ExtractFailureContent(string? content, Azure.Core.ResponseHeaders responseHeaders, ref string? message, ref string? errorCode) { }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
         public virtual bool IsRetriable(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableException(System.Exception exception) { throw null; }
