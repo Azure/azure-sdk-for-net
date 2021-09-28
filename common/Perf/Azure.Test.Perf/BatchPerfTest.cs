@@ -99,11 +99,11 @@ namespace Azure.Test.Perf
                 // Make one call to Run() before starting recording, to avoid capturing one-time setup like authorization requests.
                 if (Options.Sync)
                 {
-                    Run(CancellationToken.None);
+                    RunBatch(CancellationToken.None);
                 }
                 else
                 {
-                    await RunAsync(CancellationToken.None);
+                    await RunBatchAsync(CancellationToken.None);
                 }
 
                 await StartRecording();
