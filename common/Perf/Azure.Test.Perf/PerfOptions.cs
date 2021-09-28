@@ -51,7 +51,7 @@ namespace Azure.Test.Perf
         [Option("sync", HelpText = "Runs sync version of test")]
         public bool Sync { get; set; }
 
-        [Option('x', "test-proxies", Separator = ';', HelpText = "URIs of TestProxy Servers")]
+        [Option('x', "test-proxies", Separator = ';', HelpText = "URIs of TestProxy Servers (separated by ';')")]
         public IEnumerable<Uri> TestProxies { get; set; }
 
         [Option('w', "warmup", Default = 5, HelpText = "Duration of warmup in seconds")]
