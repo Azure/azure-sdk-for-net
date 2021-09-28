@@ -41,9 +41,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 
+            #endregion
+
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
-            #endregion
         }
 
         [AsyncOnly]
