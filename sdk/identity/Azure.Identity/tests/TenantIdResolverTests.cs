@@ -57,7 +57,7 @@ namespace Azure.Identity.Tests
             {
                 if (disableMultiTenantAuth.HasValue)
                 {
-                    env = new TestEnvVar(IdentityCompatSwitches.DisableTenantDiscoveryEnvVar,
+                    env = new TestEnvVar(IdentityCompatSwitches.DisableMultiTenantAuthEnvVar,
                         disableMultiTenantAuth.Value.ToString());
                 }
 
