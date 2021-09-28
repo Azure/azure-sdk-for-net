@@ -4,7 +4,6 @@
 using CommandLine;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -76,11 +75,6 @@ namespace Azure.Test.PerfStress
         {
             var thread = new Thread(() =>
             {
-                // Ensure no space between value and percentage sign
-                var newCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
-                newCulture.NumberFormat.PercentPositivePattern = 1;
-                Thread.CurrentThread.CurrentCulture = newCulture;
-
                 Console.WriteLine(header);
 
                 bool needsExtraNewline = false;
