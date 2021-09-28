@@ -96,7 +96,7 @@ namespace Azure.Monitor.Query.Tests
 
             // Query TOP 10 resource groups by event count
             #region Snippet:QueryLogsAsPrimitiveCall
-            Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(
+            Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
                 workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
                 new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -124,7 +124,7 @@ namespace Azure.Monitor.Query.Tests
 
             // Query TOP 10 resource groups by event count
             #region Snippet:QueryLogsAsModelCall
-            Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(
+            Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryWorkspaceAsync<MyLogEntryModel>(
                 workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
                 new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -193,7 +193,7 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
-            Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+            Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
                 workspaceId,
                 "AzureActivity | summarize count()",
                 new QueryTimeRange(TimeSpan.FromDays(1)),
@@ -225,7 +225,7 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
-            Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+            Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
                 workspaceId,
                 "AzureActivity | summarize count()",
                 new QueryTimeRange(TimeSpan.FromDays(1)),
