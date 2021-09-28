@@ -97,11 +97,11 @@ Use multiple Azure SignalR Service instances for resiliency and disaster recover
 
 In order for a client to connect to SignalR, it needs to obtain the SignalR client hub URL and an access token. We call the process as "negotiation".
 
-```C# Snippet:Negotiate
+```C# Snippet:BasicNegotiate
 [FunctionName("Negotiate")]
 public static SignalRConnectionInfo Negotiate(
     [HttpTrigger(AuthorizationLevel.Anonymous)] HttpRequest req,
-    [SignalRConnectionInfo(HubName = "simplechat", UserId = "{headers.x-ms-signalr-userid}")] SignalRConnectionInfo connectionInfo)
+    [SignalRConnectionInfo(HubName = "<hub_name>", UserId = "<user_id>")] SignalRConnectionInfo connectionInfo)
 {
     return connectionInfo;
 }
@@ -109,32 +109,32 @@ public static SignalRConnectionInfo Negotiate(
 
 ### Broadcast individual messages
 
-To broadcast messages to all the connections in a hub from a single Azure Function invocation you can apply the `SignalR` attribute to the function return value. The return value should be of type `Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRMessage`.
+To broadcast messages to all the connections in a hub from a single Azure Function invocation you can apply the `SignalR` attribute to the function return value. The return value should be of type `SignalRMessage`.
 
-```C# Snippet:SignalRBindingToReturnValue
-[FunctionName("messages")]
-[return: SignalR(HubName = "simplechat")]
+```C# Snippet:SendMessageWithReturnValueBinding
+[FunctionName("sendOneMessageWithReturnValueBinding")]
+[return: SignalR(HubName = "<hub_name>")]
 public static SignalRMessage SendMessage(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "post")]HttpRequest req)
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req)
 {
     return new SignalRMessage
     {
-        Target = "newMessage",
-        Arguments = new[] { message }
+        Target = "<target>",
+        Arguments = new[] { "<here_can_be_multiple_objects>" }
     };
 }
 ```
 
-You can also use an `out` parameter of type `Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRMessage`.
-```C# Snippet:SignalRBindingToOutputParameter
+You can also use an `out` parameter of type `SignalRMessage`.
+```C# Snippet:SendMessageWithOutParameterBinding
 [FunctionName("messages")]
 public static void SendMessage(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "post")]HttpRequest req, [SignalR(HubName = "simplechat")]out SignalRMessage message)
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req, [SignalR(HubName = "<hub_name>")] out SignalRMessage message)
 {
     message = new SignalRMessage
     {
-        Target = "newMessage",
-        Arguments = new[] { message }
+        Target = "<target>",
+        Arguments = new[] { "<here_can_be_multiple_objects>" }
     };
 }
 ```
@@ -142,18 +142,18 @@ public static void SendMessage(
 
 To broadcast multiple messages to all the connections in a hub from a single Azure Function invocation you can apply the `SignalR` attribute to the `IAsyncCollector<SignalRMessage>` parameter.
 
-```C# Snippet:SignalRBindingToAsyncCollector
+```C# Snippet:SendMessageWithAsyncCollector
 [FunctionName("messages")]
 public static Task SendMessage(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "post")]HttpRequest req,
-    [SignalR(HubName = "simplechat")]IAsyncCollector<SignalRMessage> signalRMessages)
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req,
+    [SignalR(HubName = "<hub_name>")] IAsyncCollector<SignalRMessage> signalRMessages)
 {
-        return signalRMessages.AddAsync(
-        new SignalRMessage
-        {
-            Target = "newMessage",
-            Arguments = new[] { new object() }
-        });
+    return signalRMessages.AddAsync(
+    new SignalRMessage
+    {
+        Target = "<target>",
+        Arguments = new[] { "<here_can_be_multiple_objects>" }
+    });
 }
 ```
 
@@ -163,21 +163,38 @@ To send messages to a connection, user or group, the function is similar to broa
 
 Here is an example to send messages to a user using return value binding.
 
-```C# Snippet:SignalRBindingToReturnValue
+```C# Snippet:SendMessageToUser
 [FunctionName("messages")]
-[return: SignalR(HubName = "simplechat")]
-public static SignalRMessage SendMessage(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "post")]HttpRequest req)
+[return: SignalR(HubName = "<hub_name>")]
+public static SignalRMessage SendMessageToUser(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req)
 {
     return new SignalRMessage
     {
-        UserId = "TestUser1",
-        Target = "newMessage",
-        Arguments = new[] { message }
+        UserId = "<user_id>",
+        Target = "<target>",
+        Arguments = new[] { "<here_can_be_multiple_objects>" }
     };
 }
 ```
-<!--TODO serverless hub, trigger-->
+### SignalR client connection trigger
+
+To trigger a function when a SignalR client gets connected or disconnected, you can apply the `SignalRTrigger` attribute to the `InvocationContext` parameter.
+
+Here is an example to log the connection ID when a SignalR client is connected. Make sure the second paramater of `SignalRTrigger` constructor is `connections`, which stands for the category of the trigger is connections. The third
+```C# Snippet:ConnectedTrigger
+[FunctionName("SignalRTest")]
+public static void Run([SignalRTrigger("<hubName>", "connections", "connected")] InvocationContext invocationContext, ILogger logger)
+{
+    logger.LogInformation($"{invocationContext.ConnectionId} was connected.");
+}
+```
+
+### SignalR client message trigger
+
+To trigger a function when a SignalR client sends a message, you can apply the `SignalRTrigger` attribute to the `InvocationContext` parameter, apply the `SignalRParameter` attribute to each parameter whose name matches the parameter name in your message.
+
+
 ## Troubleshooting
 
 * Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for function troubleshooting guidance.
