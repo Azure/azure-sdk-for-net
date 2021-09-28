@@ -23,8 +23,8 @@ Recognized receipts and custom forms are returned as `RecognizedForm` objects fr
 
 We'll be using a recognized receipt as a sample, so we'll call our wrapper class `Receipt`. To store items listed in the receipt, we'll use a similar wrapper called `ReceiptItem`. To see the full source files, see:
 
-* [Receipt class](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Receipt.cs)
-* [ReceiptItem class](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/ReceiptItem.cs)
+* [Receipt class](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3/Receipt.cs)
+* [ReceiptItem class](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3/ReceiptItem.cs)
 
 The `Receipt` class is composed of multiple `FormField<T>` properties. `FormField<T>` is a class defined in the main Form Recognizer library and used as a strongly-typed version of `FormField`, and it's more convenient to handle since there's no need to perform type checking.
 
