@@ -17,12 +17,12 @@ namespace Azure.Data.AppConfiguration.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-            LogsQueryClient.Query(TestEnvironment.WorkspaceId, LogsQuery, QueryTimeRange.All, cancellationToken: cancellationToken);
+            LogsQueryClient.QueryWorkspace(TestEnvironment.WorkspaceId, LogsQuery, QueryTimeRange.All, cancellationToken: cancellationToken);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await LogsQueryClient.QueryAsync(TestEnvironment.WorkspaceId, LogsQuery, QueryTimeRange.All, cancellationToken: cancellationToken).ConfigureAwait(false);
+            await LogsQueryClient.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, LogsQuery, QueryTimeRange.All, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
     }
 }
