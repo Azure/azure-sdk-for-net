@@ -1,4 +1,4 @@
-# Analyze a conversation
+# Ask a question
 
 This sample demonstrates how to analyze an utterance. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
@@ -15,22 +15,30 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ## Synchronous
 
-```C# Snippet:ConversationAnalysis_AnalyzeConversation
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(
     "Menu",
-    "production",
-    "We'll have 2 plates of seared salmon nigiri.");
+    "production", 
+    "Tendremos 2 platos de nigiri de salmón braseado.")
+{
+    Language = "es"
+};
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
 
 ## Asynchronous
 
-```C# Snippet:ConversationAnalysis_AnalyzeConversationAsync
-Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(
     "Menu",
     "production",
-    "We'll have 2 plates of seared salmon nigiri.");
+    "Tendremos 2 platos de nigiri de salmón braseado.")
+{
+    Language = "es"
+};
+Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
