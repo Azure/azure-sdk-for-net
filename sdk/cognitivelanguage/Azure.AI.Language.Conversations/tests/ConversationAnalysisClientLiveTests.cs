@@ -28,16 +28,13 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation()
         {
-            ConversationAnalysisClient client = Client;
-
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(
                TestEnvironment.ProjectName,
                TestEnvironment.DeploymentName,
                EnglishText);
 
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
+            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(options);
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
             Assert.That(response.Value.Prediction.ProjectKind, Is.EqualTo(ProjectKind.Conversation));
         }
@@ -45,8 +42,6 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversationWithLanguage()
         {
-            ConversationAnalysisClient client = Client;
-
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(
                TestEnvironment.ProjectName,
                TestEnvironment.DeploymentName,
@@ -55,9 +50,8 @@ namespace Azure.AI.Language.Conversations.Tests
                 Language = "es"
             };
 
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
+            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(options);
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
             Assert.That(response.Value.Prediction.ProjectKind, Is.EqualTo(ProjectKind.Conversation));
         }
@@ -65,18 +59,15 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversationsDeepstack()
         {
-            ConversationAnalysisClient client = Client;
-
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(
                TestEnvironment.ProjectName,
                TestEnvironment.DeploymentName,
                EnglishText);
 
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
+            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(options);
 
             DeepstackPrediction deepstackPrediction = response.Value.Prediction as DeepstackPrediction;
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Prediction.ProjectKind, Is.EqualTo(ProjectKind.Conversation));
 
             Assert.That(deepstackPrediction.TopIntent, Is.EqualTo("Order"));
@@ -89,8 +80,6 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public void AnalyzeConversationsInvalidArgument()
         {
-            ConversationAnalysisClient client = Client;
-
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(
               TestEnvironment.ProjectName,
               TestEnvironment.DeploymentName,
@@ -98,7 +87,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await client.AnalyzeConversationAsync(options);
+                await Client.AnalyzeConversationAsync(options);
             });
 
             Assert.That(ex.Status, Is.EqualTo(400));
