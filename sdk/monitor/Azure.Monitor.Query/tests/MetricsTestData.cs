@@ -107,7 +107,7 @@ namespace Azure.Monitor.Query.Tests
                 return false;
             }
 
-            var metrics = await metricQueryClient.QueryAsync(_testEnvironment.MetricsResource, new[] {MetricName},
+            var metrics = await metricQueryClient.QueryResourceAsync(_testEnvironment.MetricsResource, new[] {MetricName},
                 new MetricsQueryOptions()
                 {
                     TimeRange = new QueryTimeRange(StartTime, Duration),

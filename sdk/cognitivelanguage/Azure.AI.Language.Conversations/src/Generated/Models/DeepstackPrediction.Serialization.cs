@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations.Models
         {
             IReadOnlyList<DeepstackIntent> intents = default;
             IReadOnlyList<DeepstackEntity> entities = default;
-            ProjectKind projectKind = default;
+            ProjectKind projectType = default;
             Optional<string> topIntent = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,9 +41,9 @@ namespace Azure.AI.Language.Conversations.Models
                     entities = array;
                     continue;
                 }
-                if (property.NameEquals("projectKind"))
+                if (property.NameEquals("projectType"))
                 {
-                    projectKind = new ProjectKind(property.Value.GetString());
+                    projectType = new ProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("topIntent"))
@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Models
                     continue;
                 }
             }
-            return new DeepstackPrediction(projectKind, topIntent.Value, intents, entities);
+            return new DeepstackPrediction(projectType, topIntent.Value, intents, entities);
         }
     }
 }

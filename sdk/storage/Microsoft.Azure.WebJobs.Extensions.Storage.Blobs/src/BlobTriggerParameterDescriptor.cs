@@ -25,13 +25,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         [JsonConverter(typeof(StringEnumConverter))]
         public FileAccess Access { get; set; }
 
+        /// <summary>Get or sets source of the blob trigger.</summary>
+        public BlobTriggerSource BlobTriggerSource { get; set; }
+
         /// <inheritdoc />
         public override string GetTriggerReason(IDictionary<string, string> arguments)
         {
             string blobPath;
             if (arguments != null && arguments.TryGetValue(Name, out blobPath))
             {
-                return "New blob detected: " + blobPath;
+                return $"New blob detected({BlobTriggerSource}): " + blobPath;
             }
 
             return null;
