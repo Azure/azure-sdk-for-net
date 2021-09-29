@@ -469,6 +469,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             PrivateEndpointConnection privateEndpointConnection = (await privateEndpointConnectionContainer.CreateOrUpdateAsync(connectionName, parameter)).Value;
             Assert.NotNull(privateEndpointConnection);
             Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, eHNamespace2.Id.ToString());
+            connectionName = privateEndpointConnection.Id.Name;
 
             //get the endpoint connection and validate
             privateEndpointConnection = await privateEndpointConnectionContainer.GetAsync(connectionName);
