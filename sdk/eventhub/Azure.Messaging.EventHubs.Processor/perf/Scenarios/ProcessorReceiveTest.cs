@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -12,15 +13,22 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
 {
     public class ProcessorReceiveTest : ProcessorTest<ProcessorOptions>
     {
+        private readonly ConcurrentDictionary<string, int> _partitionEventCount;
+
         public ProcessorReceiveTest(ProcessorOptions options) : base(options)
         {
             EventProcessorClient.ProcessEventAsync += ProcessEventAsync;
             EventProcessorClient.ProcessErrorAsync += ProcessErrorAsync;
+
+            if (options.CheckpointInterval.HasValue)
+            {
+                _partitionEventCount = new ConcurrentDictionary<string, int>();
+            }
         }
 
-        private async Task ProcessEventAsync(ProcessEventArgs arg)
+        private async Task ProcessEventAsync(ProcessEventArgs args)
         {
-            if (arg.HasEvent)
+            if (args.HasEvent)
             {
                 if (Options.ProcessingDelayMs.HasValue)
                 {
@@ -38,14 +46,29 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
                 }
 
                 // Consume properties
-                foreach (var property in arg.Data.Properties)
+                foreach (var property in args.Data.Properties)
                 {
                     var key = property.Key;
                     var value = property.Value;
                 }
 
                 // Consume body
-                await arg.Data.EventBody.ToStream().CopyToAsync(Stream.Null);
+                await args.Data.EventBody.ToStream().CopyToAsync(Stream.Null);
+
+                if (Options.CheckpointInterval.HasValue)
+                {
+                    var partition = args.Partition.PartitionId;
+                    var eventsSinceLastCheckpoint = _partitionEventCount.AddOrUpdate(
+                        key: partition,
+                        addValue: 1,
+                        updateValueFactory: (_, currentCount) => currentCount + 1);
+
+                    if (eventsSinceLastCheckpoint >= Options.CheckpointInterval.Value)
+                    {
+                        await args.UpdateCheckpointAsync();
+                        _partitionEventCount[partition] = 0;
+                    }
+                }
 
                 // EventPerfTest.EventRaised() should never throw either, but add a guard in case this changes
                 try
