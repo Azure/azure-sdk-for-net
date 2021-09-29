@@ -79,9 +79,9 @@ namespace Azure.AI.TextAnalytics.Samples
             // View operation results.
             foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {
-                IReadOnlyCollection<SingleCategoryClassifyActionResult> classificationResultsCollection = documentsInPage.SingleCategoryClassifyResults;
+                IReadOnlyCollection<SingleCategoryClassifyActionResult> singleClassificationActionResults = documentsInPage.SingleCategoryClassifyResults;
 
-                foreach (SingleCategoryClassifyActionResult classificationActionResults in classificationResultsCollection)
+                foreach (SingleCategoryClassifyActionResult classificationActionResults in singleClassificationActionResults)
                 {
                     foreach (SingleCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
