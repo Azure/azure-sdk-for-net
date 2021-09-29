@@ -351,53 +351,53 @@ namespace Azure.Storage.Blobs.Test
         //    Directory.Delete(folder, true);
         //}
 
-        [RecordedTest]
-        public async Task DownloadDirectoryAsync()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+        //[RecordedTest]
+        //public async Task DownloadDirectoryAsync()
+        //{
+        //    // Arrange
+        //    await using DisposingContainer test = await GetTestContainerAsync();
 
-            string dirName = GetNewBlobDirectoryName();
-            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+        //    string dirName = GetNewBlobDirectoryName();
+        //    BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
 
-            string folder = CreateRandomDirectory(Path.GetTempPath());
-            string openChild = CreateRandomFile(folder);
-            string lockedChild = CreateRandomFile(folder);
+        //    string folder = CreateRandomDirectory(Path.GetTempPath());
+        //    string openChild = CreateRandomFile(folder);
+        //    string lockedChild = CreateRandomFile(folder);
 
-            string openSubfolder = CreateRandomDirectory(folder);
-            string openSubchild = CreateRandomFile(openSubfolder);
+        //    string openSubfolder = CreateRandomDirectory(folder);
+        //    string openSubchild = CreateRandomFile(openSubfolder);
 
-            string lockedSubfolder = CreateRandomDirectory(folder);
-            string lockedSubchild = CreateRandomFile(lockedSubfolder);
+        //    string lockedSubfolder = CreateRandomDirectory(folder);
+        //    string lockedSubchild = CreateRandomFile(lockedSubfolder);
 
-            string localDirName = folder.Split('\\').Last();
+        //    string localDirName = folder.Split('\\').Last();
 
-            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+        //    BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
 
-            // Act
-            await client.UploadAsync(folder, false, options);
+        //    // Act
+        //    await client.UploadAsync(folder, false, options);
 
-            Directory.Delete(folder, true);
+        //    Directory.Delete(folder, true);
 
-            await client.DownloadAsync(folder, options: new BlobDirectoryDownloadOptions()
-            {
-                DirectoryRequestConditions = new BlobDirectoryRequestConditions()
-            });
+        //    await client.DownloadAsync(folder, options: new BlobDirectoryDownloadOptions()
+        //    {
+        //        DirectoryRequestConditions = new BlobDirectoryRequestConditions()
+        //    });
 
-            List<string> localItemsAfterDownload = Directory.GetFiles(folder, "*", SearchOption.AllDirectories).ToList();
+        //    List<string> localItemsAfterDownload = Directory.GetFiles(folder, "*", SearchOption.AllDirectories).ToList();
 
-            // Assert
-            Assert.Multiple(() =>
-            {
-                CollectionAssert.Contains(localItemsAfterDownload, openChild);
-                CollectionAssert.Contains(localItemsAfterDownload, lockedChild);
-                CollectionAssert.Contains(localItemsAfterDownload, openSubchild);
-                CollectionAssert.Contains(localItemsAfterDownload, lockedSubchild);
-            });
+        //    // Assert
+        //    Assert.Multiple(() =>
+        //    {
+        //        CollectionAssert.Contains(localItemsAfterDownload, openChild);
+        //        CollectionAssert.Contains(localItemsAfterDownload, lockedChild);
+        //        CollectionAssert.Contains(localItemsAfterDownload, openSubchild);
+        //        CollectionAssert.Contains(localItemsAfterDownload, lockedSubchild);
+        //    });
 
-            // Cleanup
-            Directory.Delete(folder, true);
-        }
+        //    // Cleanup
+        //    Directory.Delete(folder, true);
+        //}
 
         //[RecordedTest]
         //public async Task DownloadDirectoryAsync_Empty()
@@ -501,60 +501,30 @@ namespace Azure.Storage.Blobs.Test
         }
         */
 
-        /*
-         * Folder sturcture:
-         * dir/file0
-         * dir/file1
-         * dir/dir0/file2
-         * dir/dir0/file3
-         * dir/dir1/file4
-         * dir/dir1/file5
-         */
         [RecordedTest]
         public async Task UploadDownloadDirectory_Basic()
         {
             // Arrange
-            string sourceDir = CreateDirectory(Path.GetTempPath(), GetNewBlobDirectoryName());
-            string destDir = CreateDirectory(Path.GetTempPath(), GetNewBlobDirectoryName());
+            (string SourceDir, string DestDir) directories = await PrepareDirectories();
+
             try
             {
-                // Set up source directory
-                string dir0 = CreateDirectory(sourceDir, GetNewBlobDirectoryName());
-                string dir1 = CreateDirectory(sourceDir, GetNewBlobDirectoryName());
-
-                List<byte[]> fileData = new List<byte[]>();
-                List<string> fileNames = new List<string>();
-                for (int i = 0; i < 6; i++)
-                {
-                    fileData.Add(GetRandomBuffer(Constants.KB));
-                    fileNames.Add(GetNewBlobName());
-                }
-
-                string file0 = await CreateFile(sourceDir, fileNames[0], fileData[0]);
-                string file1 = await CreateFile(sourceDir, fileNames[1], fileData[1]);
-                string file2 = await CreateFile(dir0, fileNames[2], fileData[2]);
-                string file3 = await CreateFile(dir0, fileNames[3], fileData[3]);
-                string file4 = await CreateFile(dir1, fileNames[4], fileData[4]);
-                string file5 = await CreateFile(dir1, fileNames[5], fileData[5]);
-
                 // Create container
                 await using DisposingContainer test = await GetTestContainerAsync();
                 BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
 
-                // Upload directory
-                await client.UploadAsync(sourceDir);
-
-                // Download directory
-                await client.DownloadAsync(destDir);
+                // Act
+                await client.UploadAsync(directories.SourceDir);
+                await client.DownloadAsync(directories.DestDir);
 
                 // Assert
-                AssertDirectoryEquality(sourceDir, destDir, checkRootDirectoryNames: false);
+                AssertDirectoryEquality(directories.SourceDir, directories.DestDir, checkRootDirectoryNames: false);
             }
             finally
             {
                 // Cleanup
-                Directory.Delete(sourceDir, true);
-                Directory.Delete(destDir, true);
+                Directory.Delete(directories.SourceDir, true);
+                Directory.Delete(directories.DestDir, true);
             }
         }
 
@@ -1255,6 +1225,41 @@ namespace Azure.Storage.Blobs.Test
         {
             string[] split = path.Split(Path.DirectorySeparatorChar);
             return split[split.Length - 1];
+        }
+
+        /*
+         * Folder sturcture:
+         * dir/file0
+         * dir/file1
+         * dir/dir0/file2
+         * dir/dir0/file3
+         * dir/dir1/file4
+         * dir/dir1/file5
+         */
+        private async Task<(string SourceDir, string DestDir)> PrepareDirectories()
+        {
+            string sourceDir = CreateDirectory(Path.GetTempPath(), GetNewBlobDirectoryName());
+            string destDir = CreateDirectory(Path.GetTempPath(), GetNewBlobDirectoryName());
+
+            string dir0 = CreateDirectory(sourceDir, GetNewBlobDirectoryName());
+            string dir1 = CreateDirectory(sourceDir, GetNewBlobDirectoryName());
+
+            List<byte[]> fileData = new List<byte[]>();
+            List<string> fileNames = new List<string>();
+            for (int i = 0; i < 6; i++)
+            {
+                fileData.Add(GetRandomBuffer(Constants.KB));
+                fileNames.Add(GetNewBlobName());
+            }
+
+            string file0 = await CreateFile(sourceDir, fileNames[0], fileData[0]);
+            string file1 = await CreateFile(sourceDir, fileNames[1], fileData[1]);
+            string file2 = await CreateFile(dir0, fileNames[2], fileData[2]);
+            string file3 = await CreateFile(dir0, fileNames[3], fileData[3]);
+            string file4 = await CreateFile(dir1, fileNames[4], fileData[4]);
+            string file5 = await CreateFile(dir1, fileNames[5], fileData[5]);
+
+            return (SourceDir: sourceDir, DestDir: destDir);
         }
     }
 }
