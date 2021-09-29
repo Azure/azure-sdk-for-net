@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Triggers;
+using Microsoft.Azure.WebPubSub.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;

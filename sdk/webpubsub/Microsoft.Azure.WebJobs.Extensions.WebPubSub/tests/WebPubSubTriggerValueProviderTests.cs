@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Messaging.WebPubSub;
+using Microsoft.Azure.WebPubSub.AspNetCore;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using static Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubTriggerBinding;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Messaging.WebPubSub;
+using Microsoft.Azure.WebPubSub.AspNetCore;
 using Moq;
 using NUnit.Framework;
 

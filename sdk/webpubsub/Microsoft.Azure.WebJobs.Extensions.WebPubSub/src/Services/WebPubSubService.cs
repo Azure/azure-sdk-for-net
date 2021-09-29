@@ -29,14 +29,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             var url = _client.GenerateClientAccessUri(userId: userId, roles: roles);
 
-            #region TODO: Remove after SDK fix. Work-around to support http.
-            if (!_serviceConfig.Endpoint.Scheme.StartsWith("https", StringComparison.OrdinalIgnoreCase))
-            {
-                var replaced = url.AbsoluteUri.Replace("wss", "ws");
-                url = new Uri(replaced);
-            }
-            #endregion
-
             return new WebPubSubConnection(url);
         }
     }

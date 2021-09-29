@@ -6,16 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Azure.WebPubSub.AspNetCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -23,10 +20,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private readonly Dictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
         private readonly ILogger _logger;
+        private readonly WebPubSubOptions _options;
 
-        public WebPubSubTriggerDispatcher(ILogger logger)
+        public WebPubSubTriggerDispatcher(ILogger logger, WebPubSubOptions options)
         {
             _logger = logger;
+            _options = options;
         }
 
         public void AddListener(string key, WebPubSubListener listener)
@@ -39,24 +38,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         }
 
         public async Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage req,
-            HashSet<string> allowedHosts,
-            HashSet<string> accessKeys,
             CancellationToken token = default)
         {
-            // Handle service abuse check.
-            if (Utilities.RespondToServiceAbuseCheck(req, allowedHosts, out var abuseResponse))
+            if (req.IsValidationRequest(out var requestHosts))
             {
-                return abuseResponse;
+                return RespondToServiceAbuseCheck(requestHosts, _options.ValidationOptions);
             }
 
-            if (!TryParseRequest(req, out var context))
+            if (!TryParseCloudEvents(req, out var context))
             {
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
-            }
-
-            if (!Utilities.ValidateSignature(context.ConnectionId, context.Signature, accessKeys))
-            {
-                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
             }
 
             var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -65,6 +56,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (_listeners.TryGetValue(function, out var executor))
             {
+                if (!context.IsValidSignature(_options.ValidationOptions))
+                {
+                    return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                }
+
+                // Upstream messaging is POST method
+                if (req.Method != HttpMethod.Post)
+                {
+                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                }
+
                 BinaryData message = null;
                 MessageDataType dataType = MessageDataType.Text;
                 IDictionary<string, string[]> claims = null;
@@ -79,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     case RequestType.Connect:
                         {
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            var request = JsonConvert.DeserializeObject<ConnectEventRequest>(content);
+                            var request = JsonSerializer.Deserialize<ConnectEventRequest>(content);
                             claims = request.Claims;
                             subprotocols = request.Subprotocols;
                             query = request.Query;
@@ -89,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     case RequestType.Disconnected:
                         {
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            var request = JsonConvert.DeserializeObject<DisconnectedEventRequest>(content);
+                            var request = JsonSerializer.Deserialize<DisconnectedEventRequest>(content);
                             reason = request.Reason;
                             break;
                         }
@@ -99,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             {
                                 return new HttpResponseMessage(HttpStatusCode.BadRequest)
                                 {
-                                    Content = new StringContent($"{Constants.ErrorMessages.NotSupportedDataType}{req.Content.Headers.ContentType.MediaType}")
+                                    Content = new StringContent($"{ExtensionConstants.ErrorMessages.NotSupportedDataType}{req.Content.Headers.ContentType.MediaType}")
                                 };
                             }
 
@@ -140,10 +142,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             // Skip no returns
                             if (response != null)
                             {
-                                var validResponse = BuildValidResponse(response, requestType);
+                                var validResponse = Utilities.BuildValidResponse(response, requestType);
 
                                 if (validResponse != null)
                                 {
+                                    // built-in support on set states only applies .NET WebPubSubTrigger.
+                                    if (response is ConnectResponse connectResponse)
+                                    {
+                                        AddStateHeader(ref validResponse, context, connectResponse.States);
+                                    }
+                                    if (response is MessageResponse msgResponse)
+                                    {
+                                        AddStateHeader(ref validResponse, context, msgResponse.States);
+                                    }
                                     return validResponse;
                                 }
                                 _logger.LogWarning($"Invalid response type {response.GetType()} regarding current request: {requestType}");
@@ -163,34 +174,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return new HttpResponseMessage(HttpStatusCode.NotFound);
         }
 
-        private static bool TryParseRequest(HttpRequestMessage request, out ConnectionContext context)
+        private static bool TryParseCloudEvents(HttpRequestMessage request, out ConnectionContext context)
         {
-            // ConnectionId is required in upstream request, and method is POST.
-            if (!request.Headers.Contains(Constants.Headers.CloudEvents.ConnectionId)
-                || request.Method != HttpMethod.Post)
-            {
-                context = null;
-                return false;
-            }
-
-            context = new ConnectionContext();
             try
             {
+                context = new();
                 context.ConnectionId = request.Headers.GetValues(Constants.Headers.CloudEvents.ConnectionId).SingleOrDefault();
                 context.Hub = request.Headers.GetValues(Constants.Headers.CloudEvents.Hub).SingleOrDefault();
                 context.EventType = Utilities.GetEventType(request.Headers.GetValues(Constants.Headers.CloudEvents.Type).SingleOrDefault());
                 context.EventName = request.Headers.GetValues(Constants.Headers.CloudEvents.EventName).SingleOrDefault();
                 context.Signature = request.Headers.GetValues(Constants.Headers.CloudEvents.Signature).SingleOrDefault();
-                context.Headers = request.Headers.ToDictionary(x => x.Key, v => new StringValues(v.Value.ToArray()), StringComparer.OrdinalIgnoreCase);
+                context.Origin = request.Headers.GetValues(Constants.Headers.WebHookRequestOrigin).SingleOrDefault();
+                context.InitHeaders(request.Headers.ToDictionary(x => x.Key, v => new StringValues(v.Value.ToArray()), StringComparer.OrdinalIgnoreCase));
 
                 // UserId is optional, e.g. connect
                 if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.UserId, out var values))
                 {
                     context.UserId = values.SingleOrDefault();
                 }
+
+                if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.State, out var connectionStates))
+                {
+                    context.InitStates(connectionStates.SingleOrDefault().DecodeConnectionStates());
+                }
             }
             catch (Exception)
             {
+                context = null;
                 return false;
             }
 
@@ -202,71 +212,37 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return $"{context.Hub}.{context.EventType}.{context.EventName}";
         }
 
-        private static bool TryConvertResponse<T>(JObject item, out T response)
+        public static void AddStateHeader(ref HttpResponseMessage response, ConnectionContext context, Dictionary<string, object> newStates)
         {
-            try
+            var updatedStates = context.UpdateStates(newStates);
+            if (updatedStates != null)
             {
-                response = item.ToObject<T>();
-                return true;
+                response.Headers.Add(Constants.Headers.CloudEvents.State, updatedStates.EncodeConnectionStates());
             }
-            catch (JsonSerializationException)
-            {
-                // ignore invalid response
-            }
-            response = default;
-            return false;
         }
 
-        internal static HttpResponseMessage BuildValidResponse(object response, RequestType requestType)
+        private static HttpResponseMessage RespondToServiceAbuseCheck(IList<string> requestHosts, WebPubSubValidationOptions options)
         {
-            JObject converted = null;
-            bool needConvert = false;
-            if (response is JObject jObject)
+            var response = new HttpResponseMessage();
+            // skip validation and allow all.
+            if (options == null || !options.ContainsHost())
             {
-                converted = jObject;
-                needConvert = true;
+                response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, "*");
+                return response;
             }
-            else if (response is string str)
+            else
             {
-                converted = JObject.Parse(str);
-                needConvert = true;
-            }
-
-            // Check error
-            if (needConvert && TryConvertResponse(converted, out ErrorResponse error))
-            {
-                return Utilities.BuildErrorResponse(error);
-            }
-            else if (response is ErrorResponse errorResponse)
-            {
-                return Utilities.BuildErrorResponse(errorResponse);
-            }
-
-            if (requestType == RequestType.Connect)
-            {
-                if (needConvert)
+                foreach (var item in requestHosts)
                 {
-                    return Utilities.BuildResponse(converted.ToString());
-                }
-                else if (response is ConnectResponse connectResponse)
-                {
-                    return Utilities.BuildResponse(connectResponse);
+                    if (options.ContainsHost(item))
+                    {
+                        response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, item);
+                        return response;
+                    }
                 }
             }
-
-            if (requestType == RequestType.User)
-            {
-                if (needConvert && TryConvertResponse(converted, out MessageResponse msgResponse))
-                {
-                    return Utilities.BuildResponse(msgResponse);
-                }
-                else if (response is MessageResponse messageResponse)
-                {
-                    return Utilities.BuildResponse(messageResponse);
-                }
-            }
-
-            return null;
+            response.StatusCode = HttpStatusCode.BadRequest;
+            return response;
         }
     }
 }

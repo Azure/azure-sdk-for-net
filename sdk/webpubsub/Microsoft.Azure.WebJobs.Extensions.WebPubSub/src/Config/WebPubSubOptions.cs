@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Collections.Generic;
 using Microsoft.Azure.WebJobs.Hosting;
-using Newtonsoft.Json.Linq;
+using Microsoft.Azure.WebPubSub.AspNetCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -12,11 +12,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public string Hub { get; set; }
 
-        internal string ConnectionString { get; set; }
+        public string ConnectionString { get; set; }
 
-        internal HashSet<string> AllowedHosts { get; set; } = new HashSet<string>();
-
-        internal HashSet<string> AccessKeys { get; set; } = new HashSet<string>();
+        internal WebPubSubValidationOptions ValidationOptions { get; set; }
 
         /// <summary>
         /// Formats the options as JSON objects for display.
@@ -25,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public string Format()
         {
             // Not expose ConnectionString in logging.
-            JObject options = new JObject
+            JObject options = new()
             {
                 { nameof(Hub), Hub }
             };

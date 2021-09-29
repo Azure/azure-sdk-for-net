@@ -4,6 +4,7 @@
 using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Indexers;
+using Microsoft.Azure.WebPubSub.AspNetCore;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -19,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private static BinaryData TestMessage = BinaryData.FromString("JobHostEndToEndTests");
         private static Dictionary<string, string> FuncConfiguration = new Dictionary<string, string>
         {
-            { Constants.WebPubSubConnectionStringName, "Endpoint=https://abc;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH;Version=1.0;" }
+            { ExtensionConstants.WebPubSubConnectionStringName, "Endpoint=https://abc;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH;Version=1.0;" }
         };
 
         [TestCase]

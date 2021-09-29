@@ -1,19 +1,19 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json.Serialization;
 
-namespace Azure.Messaging.WebPubSub
+namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    /// <summary>
+    /// Client certificate info.
+    /// </summary>
     public sealed class ClientCertificateInfo
     {
-        public string Thumbprint { get; }
-
-        public ClientCertificateInfo(string thumbprint)
-        {
-            Thumbprint = thumbprint;
-        }
+        /// <summary>
+        /// Certificate thumbprint.
+        /// </summary>
+        [JsonPropertyName("thumbprint")]
+        public string Thumbprint { get; set; }
     }
 }

@@ -6,16 +6,17 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Logging;
+using Microsoft.Azure.WebPubSub.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             _logger = loggerFactory.CreateLogger(LogCategories.CreateTriggerCategory("WebPubSub"));
             _nameResolver = nameResolver;
             _configuration = configuration;
-            _dispatcher = new WebPubSubTriggerDispatcher(_logger);
+            _dispatcher = new WebPubSubTriggerDispatcher(_logger, _options);
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -50,13 +51,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (string.IsNullOrEmpty(_options.ConnectionString))
             {
-                _options.ConnectionString = _nameResolver.Resolve(Constants.WebPubSubConnectionStringName);
-                AddSettings(_options.ConnectionString);
+                _options.ConnectionString = _nameResolver.Resolve(ExtensionConstants.WebPubSubConnectionStringName);
             }
 
             if (string.IsNullOrEmpty(_options.Hub))
             {
-                _options.Hub = _nameResolver.Resolve(Constants.HubNameStringName);
+                _options.Hub = _nameResolver.Resolve(ExtensionConstants.HubNameStringName);
+            }
+
+            // resolve validation options
+            var upstream = _nameResolver.Resolve(ExtensionConstants.WebPubSubTriggerValidationStringName);
+            if (upstream != null)
+            {
+                _options.ValidationOptions = new WebPubSubValidationOptions(upstream);
             }
 
             Exception webhookException = null;
@@ -79,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             // bindings
             context
                 .AddConverter<WebPubSubConnection, JObject>(JObject.FromObject)
-                .AddConverter<WebPubSubRequest, JObject>(JObject.FromObject)
+                .AddConverter<WebPubSubContext, JObject>(JObject.FromObject)
                 .AddConverter<JObject, WebPubSubOperation>(ConvertToWebPubSubOperation)
                 .AddConverter<JArray, WebPubSubOperation[]>(ConvertToWebPubSubOperationArray);
 
@@ -92,8 +99,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             webpubsubConnectionAttributeRule.AddValidator(ValidateWebPubSubConnectionAttributeBinding);
             webpubsubConnectionAttributeRule.BindToInput(GetClientConnection);
 
-            var webPubSubRequestAttributeRule = context.AddBindingRule<WebPubSubRequestAttribute>();
-            webPubSubRequestAttributeRule.Bind(new WebPubSubRequestBindingProvider(_options, _nameResolver, _configuration));
+            var webPubSubRequestAttributeRule = context.AddBindingRule<WebPubSubContextAttribute>();
+            webPubSubRequestAttributeRule.Bind(new WebPubSubContextBindingProvider(_nameResolver, _configuration));
 
             // Output binding
             var webPubSubAttributeRule = context.AddBindingRule<WebPubSubAttribute>();
@@ -105,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public Task<HttpResponseMessage> ConvertAsync(HttpRequestMessage input, CancellationToken cancellationToken)
         {
-            return _dispatcher.ExecuteAsync(input, _options.AllowedHosts, _options.AccessKeys, cancellationToken);
+            return _dispatcher.ExecuteAsync(input, cancellationToken);
         }
 
         private void ValidateWebPubSubConnectionAttributeBinding(WebPubSubConnectionAttribute attribute, Type type)
@@ -143,22 +150,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         private void ValidateConnectionString(string attributeConnectionString, string attributeConnectionStringName)
         {
-            AddSettings(attributeConnectionString);
             var connectionString = Utilities.FirstOrDefault(attributeConnectionString, _options.ConnectionString);
 
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new InvalidOperationException($"The Service connection string must be set either via an '{Constants.WebPubSubConnectionStringName}' app setting, via an '{Constants.WebPubSubConnectionStringName}' environment variable, or directly in code via {nameof(WebPubSubOptions)}.{nameof(WebPubSubOptions.ConnectionString)} or {attributeConnectionStringName}.");
-            }
-        }
-
-        private void AddSettings(string connectionString)
-        {
-            if (!string.IsNullOrEmpty(connectionString))
-            {
-                var item = new ServiceConfigParser(connectionString);
-                _options.AllowedHosts.Add(item.Endpoint.Host);
-                _options.AccessKeys.Add(item.AccessKey);
+                throw new InvalidOperationException($"The Service connection string must be set either via an '{ExtensionConstants.WebPubSubConnectionStringName}' app setting, via an '{ExtensionConstants.WebPubSubConnectionStringName}' environment variable, or directly in code via {nameof(WebPubSubOptions)}.{nameof(WebPubSubOptions.ConnectionString)} or {attributeConnectionStringName}.");
             }
         }
 
@@ -169,8 +165,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 Converters = new List<JsonConverter>
                 {
                     new StringEnumConverter(),
-                    new BinaryDataJsonConverter()
-                }
+                    new BinaryDataJsonConverter(),
+                },
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
         }
 

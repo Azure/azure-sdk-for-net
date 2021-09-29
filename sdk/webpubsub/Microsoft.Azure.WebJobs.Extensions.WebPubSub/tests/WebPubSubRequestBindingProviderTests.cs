@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     public class WebPubSubRequestBindingProviderTests
     {
-        private readonly WebPubSubRequestBindingProvider _provider;
+        private readonly WebPubSubContextBindingProvider _provider;
         private readonly IConfiguration _configuration;
 
         public WebPubSubRequestBindingProviderTests()
@@ -23,8 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                    .AddEnvironmentVariables()
                    .Build();
             Mock<INameResolver> mockResolver = new Mock<INameResolver>(MockBehavior.Strict);
-            WebPubSubOptions config = new WebPubSubOptions();
-            _provider = new WebPubSubRequestBindingProvider(config, mockResolver.Object, _configuration);
+            _provider = new WebPubSubContextBindingProvider(mockResolver.Object, _configuration);
         }
 
         [TestCase]
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         public static void TestFunc(
-            [WebPubSubRequest] WebPubSubRequest request)
+            [WebPubSubContext] WebPubSubContext request)
         {
         }
     }

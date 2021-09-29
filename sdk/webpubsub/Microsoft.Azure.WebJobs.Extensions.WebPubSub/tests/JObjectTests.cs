@@ -5,9 +5,11 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Microsoft.Azure.WebPubSub.AspNetCore;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+
+using SystemJson = System.Text.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
@@ -45,7 +47,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var testData = @"{""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]}";
 
-            var converted = JsonConvert.DeserializeObject<BinaryData>(testData, new BinaryDataJsonConverter());
+            var options = new SystemJson.JsonSerializerOptions();
+            options.Converters.Add(new Azure.WebPubSub.AspNetCore.BinaryDataJsonConverter());
+
+            var converted = SystemJson.JsonSerializer.Deserialize<BinaryData>(testData, options);
 
             Assert.AreEqual("BinaryData", converted.ToString());
         }
@@ -118,9 +123,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase]
+        public void TestWebPubSubRequest()
+        {
+            var context = new ConnectionContext()
+            {
+                ConnectionId = "connectionId",
+                UserId = "userA",
+                EventName = "connected",
+                EventType = WebPubSubEventType.System
+            };
+            var test = new WebPubSubContext(new ConnectedEventRequest(context));
+
+            var serilized = System.Text.Json.JsonSerializer.Serialize(test);
+        }
+
         private static HttpResponseMessage BuildResponse(string input, RequestType requestType)
         {
-            return WebPubSubTriggerDispatcher.BuildValidResponse(input, requestType);
+            return Utilities.BuildValidResponse(input, requestType);
         }
     }
 }

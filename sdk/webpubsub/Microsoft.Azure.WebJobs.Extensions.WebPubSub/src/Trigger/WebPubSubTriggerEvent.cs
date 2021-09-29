@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Azure.Messaging.WebPubSub;
+using Microsoft.Azure.WebPubSub.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
