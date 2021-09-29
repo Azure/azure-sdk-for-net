@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             NotebookPreparationError = notebookPreparationError;
         }
 
+        /// <summary> Gets the fqdn. </summary>
         public string Fqdn { get; }
         /// <summary> the data plane resourceId that used to initialize notebook component. </summary>
         public string ResourceId { get; }

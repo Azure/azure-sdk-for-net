@@ -36,13 +36,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Scope = scope;
         }
 
+        /// <summary> Gets the notebook resource id. </summary>
         public string NotebookResourceId { get; }
+        /// <summary> Gets the host name. </summary>
         public string HostName { get; }
+        /// <summary> Gets the public dns. </summary>
         public string PublicDns { get; }
+        /// <summary> Gets the access token. </summary>
         public string AccessToken { get; }
+        /// <summary> Gets the token type. </summary>
         public string TokenType { get; }
+        /// <summary> Gets the expires in. </summary>
         public int? ExpiresIn { get; }
+        /// <summary> Gets the refresh token. </summary>
         public string RefreshToken { get; }
+        /// <summary> Gets the scope. </summary>
         public string Scope { get; }
     }
 }

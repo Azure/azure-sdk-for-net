@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             UserStorageKey = userStorageKey;
         }
 
+        /// <summary> Gets the user storage key. </summary>
         public string UserStorageKey { get; }
     }
 }

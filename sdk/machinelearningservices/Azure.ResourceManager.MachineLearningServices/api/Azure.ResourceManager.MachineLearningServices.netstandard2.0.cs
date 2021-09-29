@@ -1,5 +1,28 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
+    public static partial class ArmClientExtensions
+    {
+        public static Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource GetBatchDeploymentTrackedResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource GetBatchEndpointTrackedResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.CodeContainerResource GetCodeContainerResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.CodeVersionResource GetCodeVersionResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.ComponentContainerResource GetComponentContainerResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.ComponentVersionResource GetComponentVersionResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.ComputeResource GetComputeResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.DatasetContainerResource GetDatasetContainerResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.DatasetVersionResource GetDatasetVersionResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.DatastoreResource GetDatastoreResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource GetEnvironmentContainerResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource GetEnvironmentVersionResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.JobBaseResource GetJobBaseResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.ModelContainerResource GetModelContainerResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.ModelVersionResource GetModelVersionResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource GetOnlineDeploymentTrackedResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource GetOnlineEndpointTrackedResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Workspace GetWorkspace(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.WorkspaceConnection GetWorkspaceConnection(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
+    }
     public partial class BatchDeploymentTrackedResource : Azure.ResourceManager.Core.ArmResource
     {
         public static readonly Azure.ResourceManager.ResourceType ResourceType;

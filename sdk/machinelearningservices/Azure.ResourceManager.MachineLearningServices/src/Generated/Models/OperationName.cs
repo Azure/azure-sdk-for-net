@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="OperationName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationName(string value)
         {

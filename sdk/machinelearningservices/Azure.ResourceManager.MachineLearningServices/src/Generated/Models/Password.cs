@@ -24,7 +24,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Value = value;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the value. </summary>
         public string Value { get; }
     }
 }

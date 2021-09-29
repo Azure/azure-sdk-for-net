@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SslConfigurationStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SslConfigurationStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SslConfigurationStatus(string value)
         {

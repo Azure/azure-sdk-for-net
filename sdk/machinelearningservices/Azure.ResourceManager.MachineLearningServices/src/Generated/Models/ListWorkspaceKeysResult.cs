@@ -30,10 +30,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             NotebookAccessKeys = notebookAccessKeys;
         }
 
+        /// <summary> Gets the user storage key. </summary>
         public string UserStorageKey { get; }
+        /// <summary> Gets the user storage resource id. </summary>
         public string UserStorageResourceId { get; }
+        /// <summary> Gets the app insights instrumentation key. </summary>
         public string AppInsightsInstrumentationKey { get; }
+        /// <summary> Gets the container registry credentials. </summary>
         public RegistryListCredentialsResult ContainerRegistryCredentials { get; }
+        /// <summary> Gets the notebook access keys. </summary>
         public ListNotebookKeysResult NotebookAccessKeys { get; }
     }
 }

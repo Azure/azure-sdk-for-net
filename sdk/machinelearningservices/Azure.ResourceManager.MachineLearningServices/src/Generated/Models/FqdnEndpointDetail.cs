@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Port = port;
         }
 
+        /// <summary> Gets the port. </summary>
         public int? Port { get; }
     }
 }

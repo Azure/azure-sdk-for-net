@@ -24,7 +24,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Enabled = enabled;
         }
 
+        /// <summary> Gets or sets the delay in minutes. </summary>
         public int? DelayInMinutes { get; set; }
+        /// <summary> Gets or sets the enabled. </summary>
         public bool? Enabled { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ScaleType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScaleType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScaleType(string value)
         {

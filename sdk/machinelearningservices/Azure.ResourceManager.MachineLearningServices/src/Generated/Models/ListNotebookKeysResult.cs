@@ -24,7 +24,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             SecondaryAccessKey = secondaryAccessKey;
         }
 
+        /// <summary> Gets the primary access key. </summary>
         public string PrimaryAccessKey { get; }
+        /// <summary> Gets the secondary access key. </summary>
         public string SecondaryAccessKey { get; }
     }
 }

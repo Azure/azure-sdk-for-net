@@ -26,8 +26,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             MaxNodeCount = maxNodeCount;
         }
 
+        /// <summary> Gets or sets the min node count. </summary>
         public int? MinNodeCount { get; set; }
+        /// <summary> Gets or sets the enabled. </summary>
         public bool? Enabled { get; set; }
+        /// <summary> Gets or sets the max node count. </summary>
         public int? MaxNodeCount { get; set; }
     }
 }

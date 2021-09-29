@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ValueFormat"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValueFormat"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ValueFormat(string value)
         {

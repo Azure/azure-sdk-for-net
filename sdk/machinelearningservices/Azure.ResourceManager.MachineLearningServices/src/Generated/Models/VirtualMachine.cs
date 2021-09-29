@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             ComputeType = computeType;
         }
 
+        /// <summary> Gets or sets the properties. </summary>
         public VirtualMachineProperties Properties { get; set; }
     }
 }

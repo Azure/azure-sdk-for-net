@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Properties = properties;
         }
 
+        /// <summary> Gets the properties. </summary>
         public FqdnEndpointsProperties Properties { get; }
     }
 }

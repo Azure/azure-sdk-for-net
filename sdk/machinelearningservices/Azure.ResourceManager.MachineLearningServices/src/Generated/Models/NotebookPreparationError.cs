@@ -24,7 +24,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             StatusCode = statusCode;
         }
 
+        /// <summary> Gets the error message. </summary>
         public string ErrorMessage { get; }
+        /// <summary> Gets the status code. </summary>
         public int? StatusCode { get; }
     }
 }

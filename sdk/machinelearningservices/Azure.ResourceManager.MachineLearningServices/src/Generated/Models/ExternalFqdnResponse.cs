@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Value = value;
         }
 
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<FqdnEndpoints> Value { get; }
     }
 }

@@ -28,7 +28,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Endpoints = endpoints;
         }
 
+        /// <summary> Gets the category. </summary>
         public string Category { get; }
+        /// <summary> Gets the endpoints. </summary>
         public IReadOnlyList<FqdnEndpoint> Endpoints { get; }
     }
 }

@@ -50,14 +50,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             OtherResults = otherResults;
         }
 
+        /// <summary> Gets the user defined route results. </summary>
         public IReadOnlyList<DiagnoseResult> UserDefinedRouteResults { get; }
+        /// <summary> Gets the network security rule results. </summary>
         public IReadOnlyList<DiagnoseResult> NetworkSecurityRuleResults { get; }
+        /// <summary> Gets the resource lock results. </summary>
         public IReadOnlyList<DiagnoseResult> ResourceLockResults { get; }
+        /// <summary> Gets the dns resolution results. </summary>
         public IReadOnlyList<DiagnoseResult> DnsResolutionResults { get; }
+        /// <summary> Gets the storage account results. </summary>
         public IReadOnlyList<DiagnoseResult> StorageAccountResults { get; }
+        /// <summary> Gets the key vault results. </summary>
         public IReadOnlyList<DiagnoseResult> KeyVaultResults { get; }
+        /// <summary> Gets the container registry results. </summary>
         public IReadOnlyList<DiagnoseResult> ContainerRegistryResults { get; }
+        /// <summary> Gets the application insights results. </summary>
         public IReadOnlyList<DiagnoseResult> ApplicationInsightsResults { get; }
+        /// <summary> Gets the other results. </summary>
         public IReadOnlyList<DiagnoseResult> OtherResults { get; }
     }
 }

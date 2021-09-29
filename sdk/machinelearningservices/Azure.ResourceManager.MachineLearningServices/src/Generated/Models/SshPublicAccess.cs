@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SshPublicAccess"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshPublicAccess"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SshPublicAccess(string value)
         {

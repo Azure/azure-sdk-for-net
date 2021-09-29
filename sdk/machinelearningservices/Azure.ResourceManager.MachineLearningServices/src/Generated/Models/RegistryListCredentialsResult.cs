@@ -30,8 +30,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Passwords = passwords;
         }
 
+        /// <summary> Gets the location. </summary>
         public string Location { get; }
+        /// <summary> Gets the username. </summary>
         public string Username { get; }
+        /// <summary> Gets the passwords. </summary>
         public IReadOnlyList<Password> Passwords { get; }
     }
 }

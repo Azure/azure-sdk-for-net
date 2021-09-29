@@ -28,7 +28,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             EndpointDetails = endpointDetails;
         }
 
+        /// <summary> Gets the domain name. </summary>
         public string DomainName { get; }
+        /// <summary> Gets the endpoint details. </summary>
         public IReadOnlyList<FqdnEndpointDetail> EndpointDetails { get; }
     }
 }
