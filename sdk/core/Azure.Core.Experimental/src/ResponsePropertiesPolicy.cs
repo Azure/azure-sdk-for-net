@@ -11,11 +11,11 @@ namespace Azure.Core
     /// </summary>
     internal class ResponsePropertiesPolicy : HttpPipelinePolicy
     {
-        private ClientDiagnostics _clientDiagnostics;
+        private DiagnosticsOptions _diagnosticsOptions;
 
-        public ResponsePropertiesPolicy(ClientDiagnostics clientDiagnostics)
+        public ResponsePropertiesPolicy(DiagnosticsOptions options)
         {
-            _clientDiagnostics = clientDiagnostics;
+            _diagnosticsOptions = options;
         }
 
         /// <inheritdoc/>
@@ -49,7 +49,7 @@ namespace Azure.Core
 
             // The non-experimental version of this functionality is roughly described in:
             // https://github.com/Azure/azure-sdk-for-net/pull/24248
-            response.ResponseClassifier = new ExceptionFormattingResponseClassifier(message.ResponseClassifier, _clientDiagnostics);
+            response.ResponseClassifier = new ExceptionFormattingResponseClassifier(message.ResponseClassifier, _diagnosticsOptions);
         }
     }
 }

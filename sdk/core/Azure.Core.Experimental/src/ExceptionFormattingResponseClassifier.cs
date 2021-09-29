@@ -13,7 +13,7 @@ namespace Azure.Core.Pipeline
     internal class ExceptionFormattingResponseClassifier : ResponseClassifier
     {
         private ResponseClassifier _responseClassifier;
-        private ClientDiagnostics _clientDiagnostics;
+        private HttpMessageSanitizer _messageSanitizer;
 
         private bool _computedExceptionDetails;
         private string? _exceptionMessage;
@@ -29,10 +29,10 @@ namespace Azure.Core.Pipeline
 
         /// <summary>
         /// </summary>
-        public ExceptionFormattingResponseClassifier(ResponseClassifier responseClassifier, ClientDiagnostics clientDiagnostics)
+        public ExceptionFormattingResponseClassifier(ResponseClassifier responseClassifier, DiagnosticsOptions diagnostics)
         {
             _responseClassifier = responseClassifier;
-            _clientDiagnostics = clientDiagnostics;
+            _messageSanitizer = ClientDiagnostics.CreateMessageSanitizer(diagnostics);
         }
 
         public string GetExceptionMessage(Response response)
@@ -59,11 +59,10 @@ namespace Azure.Core.Pipeline
         {
             string? message = null;
             string? errorCode = null;
-            IDictionary<string, string>? additionalInfo = new Dictionary<string, string>();
 
             string? content = ClientDiagnostics.ReadContentAsync(response, false).EnsureCompleted();
-            _clientDiagnostics.ExtractFailureContent(content, response.Headers, ref message, ref errorCode, ref additionalInfo);
-            _exceptionMessage = _clientDiagnostics.CreateRequestFailedMessageWithContent(response, message, content, errorCode, additionalInfo);
+            ClientDiagnostics.ExtractAzureErrorContent(content, ref message, ref errorCode);
+            _exceptionMessage = ClientDiagnostics.CreateRequestFailedMessageWithContent(response, message, content, errorCode, _messageSanitizer);
             _errorCode = errorCode;
             _computedExceptionDetails = true;
         }
