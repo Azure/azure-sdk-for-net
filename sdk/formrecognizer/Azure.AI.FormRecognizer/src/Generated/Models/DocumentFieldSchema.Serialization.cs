@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentFieldSchema DeserializeDocumentFieldSchema(JsonElement element)
         {
-            Optional<DocumentFieldType> type = default;
+            DocumentFieldType type = default;
             Optional<string> description = default;
             Optional<string> example = default;
             Optional<DocumentFieldSchema> items = default;
@@ -24,11 +24,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     type = property.Value.GetString().ToDocumentFieldType();
                     continue;
                 }
@@ -68,7 +63,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentFieldSchema(Optional.ToNullable(type), description.Value, example.Value, items.Value, Optional.ToDictionary(properties));
+            return new DocumentFieldSchema(type, description.Value, example.Value, items.Value, Optional.ToDictionary(properties));
         }
     }
 }

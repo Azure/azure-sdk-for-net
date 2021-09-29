@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> The GetModelsResponse. </summary>
+    /// <summary> List Models response object. </summary>
     internal partial class GetModelsResponse
     {
         /// <summary> Initializes a new instance of GetModelsResponse. </summary>

@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<int> percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            Optional<DocumentOperationKind> kind = default;
+            DocumentOperationKind kind = default;
             string resourceLocation = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -56,11 +56,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("kind"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     kind = new DocumentOperationKind(property.Value.GetString());
                     continue;
                 }
@@ -70,7 +65,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new ModelOperationInfo(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, Optional.ToNullable(kind), resourceLocation);
+            return new ModelOperationInfo(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation);
         }
     }
 }

@@ -240,22 +240,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return ValueCountryRegion;
         }
 
-        // TODO: are there any more details we can add to be more specific about the returned string?
-        /// <summary>
-        /// Gets the value of the field as a currency <see cref="string"/>.
-        /// </summary>
-        /// <returns>The value of the field converted to a currency <see cref="string"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="DocumentFieldType.Currency"/>.</exception>
-        public string AsCurrency()
-        {
-            if (ValueType != DocumentFieldType.Currency)
-            {
-                throw new InvalidOperationException($"Cannot get field as currency.  Field value's type is {ValueType}.");
-            }
-
-            return ValueCurrency;
-        }
-
         /// <summary>
         /// Gets the value of the field as a <see cref="DocumentSignatureType"/>.
         /// </summary>

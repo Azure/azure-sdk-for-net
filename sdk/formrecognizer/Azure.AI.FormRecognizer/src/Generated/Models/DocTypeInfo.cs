@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> The DocTypeInfo. </summary>
+    /// <summary> Document type info. </summary>
     public partial class DocTypeInfo
     {
         /// <summary> Initializes a new instance of DocTypeInfo. </summary>

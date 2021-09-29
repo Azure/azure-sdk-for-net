@@ -21,7 +21,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DocumentFieldType.Int64 => "integer",
             DocumentFieldType.SelectionMark => "selectionMark",
             DocumentFieldType.CountryRegion => "countryRegion",
-            DocumentFieldType.Currency => "currency",
             DocumentFieldType.Signature => "signature",
             DocumentFieldType.List => "array",
             DocumentFieldType.Dictionary => "object",
@@ -38,7 +37,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             if (string.Equals(value, "integer", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.Int64;
             if (string.Equals(value, "selectionMark", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.SelectionMark;
             if (string.Equals(value, "countryRegion", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.CountryRegion;
-            if (string.Equals(value, "currency", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.Currency;
             if (string.Equals(value, "signature", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.Signature;
             if (string.Equals(value, "array", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.List;
             if (string.Equals(value, "object", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.Dictionary;
