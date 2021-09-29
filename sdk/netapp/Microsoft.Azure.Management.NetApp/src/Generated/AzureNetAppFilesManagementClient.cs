@@ -87,6 +87,11 @@ namespace Microsoft.Azure.Management.NetApp
         public virtual INetAppResourceOperations NetAppResource { get; private set; }
 
         /// <summary>
+        /// Gets the INetAppResourceQuotaLimitsOperations.
+        /// </summary>
+        public virtual INetAppResourceQuotaLimitsOperations NetAppResourceQuotaLimits { get; private set; }
+
+        /// <summary>
         /// Gets the IAccountsOperations.
         /// </summary>
         public virtual IAccountsOperations Accounts { get; private set; }
@@ -374,6 +379,7 @@ namespace Microsoft.Azure.Management.NetApp
         {
             Operations = new Operations(this);
             NetAppResource = new NetAppResourceOperations(this);
+            NetAppResourceQuotaLimits = new NetAppResourceQuotaLimitsOperations(this);
             Accounts = new AccountsOperations(this);
             Pools = new PoolsOperations(this);
             Volumes = new VolumesOperations(this);

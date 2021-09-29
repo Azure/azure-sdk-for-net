@@ -217,10 +217,10 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="recordingContentType">Contenttype for recording.</param>
-        /// <param name="recordingChannelType">Channeltype for recording.</param>
-        /// <param name="recordingFormatType">Channeltype for recording.</param>
-        public virtual async Task<Response<StartCallRecordingResult>> StartRecordingAsync(Uri recordingStateCallbackUri, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, CancellationToken cancellationToken = default)
+        /// <param name="content">content for recording.</param>
+        /// <param name="channel">channel for recording.</param>
+        /// <param name="format">format for recording.</param>
+        public virtual async Task<Response<StartRecordingResult>> StartRecordingAsync(Uri recordingStateCallbackUri, RecordingContent? content = null, RecordingChannel? channel = null, RecordingFormat? format = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StartRecording)}");
             scope.Start();
@@ -229,9 +229,9 @@ namespace Azure.Communication.CallingServer
                 return await RestClient.StartRecordingAsync(
                     serverCallId: ServerCallId,
                     recordingStateCallbackUri: recordingStateCallbackUri.AbsoluteUri,
-                    recordingContentType: recordingContentType,
-                    recordingChannelType: recordingChannelType,
-                    recordingFormatType: recordingFormatType,
+                    recordingContentType: content,
+                    recordingChannelType: channel,
+                    recordingFormatType: format,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -247,10 +247,10 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="recordingContentType">Contenttype for recording.</param>
-        /// <param name="recordingChannelType">Channeltype for recording.</param>
-        /// <param name="recordingFormatType">Channeltype for recording.</param>
-        public virtual Response<StartCallRecordingResult> StartRecording(Uri recordingStateCallbackUri, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, CancellationToken cancellationToken = default)
+        /// <param name="content">content for recording.</param>
+        /// <param name="channel">channel for recording.</param>
+        /// <param name="format">format for recording.</param>
+        public virtual Response<StartRecordingResult> StartRecording(Uri recordingStateCallbackUri, RecordingContent? content = null, RecordingChannel? channel = null, RecordingFormat? format = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StartRecording)}");
             scope.Start();
@@ -259,9 +259,9 @@ namespace Azure.Communication.CallingServer
                 return RestClient.StartRecording(
                     serverCallId: ServerCallId,
                     recordingStateCallbackUri: recordingStateCallbackUri.AbsoluteUri,
-                    recordingContentType: recordingContentType,
-                    recordingChannelType: recordingChannelType,
-                    recordingFormatType: recordingFormatType,
+                    recordingContentType: content,
+                    recordingChannelType: channel,
+                    recordingFormatType: format,
                     cancellationToken: cancellationToken
                     );
             }

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -61,6 +63,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// whether the deferred deleted DS is to be purged soon</param>
         /// <param name="isRehydrate">Flag to identify that deferred deleted DS
         /// is to be moved into Pause state</param>
+        /// <param
+        /// name="resourceGuardOperationRequests">ResourceGuardOperationRequests
+        /// on which LAC check will be performed</param>
         /// <param name="protectedItemDataId">Internal ID of a backup item.
         /// Used by Azure SQL Backup engine to contact Recovery
         /// Services.</param>
@@ -69,8 +74,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionError', 'ProtectionStopped', 'ProtectionPaused'</param>
         /// <param name="extendedInfo">Additional information for this backup
         /// item.</param>
-        public AzureSqlProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string protectedItemDataId = default(string), string protectionState = default(string), AzureSqlProtectedItemExtendedInfo extendedInfo = default(AzureSqlProtectedItemExtendedInfo))
-            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate)
+        public AzureSqlProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), string protectedItemDataId = default(string), string protectionState = default(string), AzureSqlProtectedItemExtendedInfo extendedInfo = default(AzureSqlProtectedItemExtendedInfo))
+            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests)
         {
             ProtectedItemDataId = protectedItemDataId;
             ProtectionState = protectionState;

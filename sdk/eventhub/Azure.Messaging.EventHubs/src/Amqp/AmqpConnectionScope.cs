@@ -419,7 +419,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public virtual async Task<SendingAmqpLink> OpenProducerLinkAsync(string partitionId,
                                                                          TransportProducerFeatures features,
-                                                                         PartitionPublishingOptions options,
+                                                                         PartitionPublishingOptionsInternal options,
                                                                          TimeSpan timeout,
                                                                          string linkIdentifier,
                                                                          CancellationToken cancellationToken)
@@ -763,7 +763,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         protected virtual async Task<SendingAmqpLink> CreateSendingLinkAsync(AmqpConnection connection,
                                                                              Uri endpoint,
                                                                              TransportProducerFeatures features,
-                                                                             PartitionPublishingOptions options,
+                                                                             PartitionPublishingOptionsInternal options,
                                                                              TimeSpan timeout,
                                                                              string linkIdentifier,
                                                                              CancellationToken cancellationToken)
