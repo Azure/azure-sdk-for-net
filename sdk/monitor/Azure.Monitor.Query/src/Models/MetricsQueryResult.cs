@@ -30,5 +30,23 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </summary>
         [CodeGenMember("Interval")]
         public TimeSpan? Granularity { get; }
+
+        /// <summary>
+        /// Returns the metric result for the name.
+        /// </summary>
+        /// <param name="name"></param>
+        public MetricResult GetMetric(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException(name);
+            IEnumerator<MetricResult> enumerator = Metrics.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                MetricResult current = enumerator.Current;
+                if (current.Name.Equals(name))
+                    return current;
+            }
+            throw new ArgumentException(name);
+        }
     }
 }
