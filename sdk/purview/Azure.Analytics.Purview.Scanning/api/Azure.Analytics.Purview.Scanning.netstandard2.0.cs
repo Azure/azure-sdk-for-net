@@ -72,10 +72,10 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteKeyVaultReferenceAsync(string keyVaultName, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response DeleteScanRuleset(string scanRulesetName, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteScanRulesetAsync(string scanRulesetName, Azure.RequestOptions options = null) { throw null; }
-        public Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient GetClassificationRuleClient(string classificationRuleName) { throw null; }
+        public virtual Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient GetClassificationRuleClient(string classificationRuleName) { throw null; }
         public virtual Azure.Response GetClassificationRules(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetClassificationRulesAsync(Azure.RequestOptions options = null) { throw null; }
-        public Azure.Analytics.Purview.Scanning.PurviewDataSourceClient GetDataSourceClient(string dataSourceName) { throw null; }
+        public virtual Azure.Analytics.Purview.Scanning.PurviewDataSourceClient GetDataSourceClient(string dataSourceName) { throw null; }
         public virtual Azure.Response GetDataSources(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDataSourcesAsync(Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response GetKeyVaultReference(string keyVaultName, Azure.RequestOptions options = null) { throw null; }
