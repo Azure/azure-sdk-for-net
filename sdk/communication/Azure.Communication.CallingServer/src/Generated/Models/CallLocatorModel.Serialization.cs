@@ -15,63 +15,53 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupCallLocator))
+            if (Optional.IsDefined(GroupCallId))
             {
-                writer.WritePropertyName("groupCallLocator");
-                writer.WriteObjectValue(GroupCallLocator);
+                writer.WritePropertyName("groupCallId");
+                writer.WriteStringValue(GroupCallId);
             }
-            if (Optional.IsDefined(ServerCallLocator))
+            if (Optional.IsDefined(ServerCallId))
             {
-                writer.WritePropertyName("serverCallLocator");
-                writer.WriteObjectValue(ServerCallLocator);
+                writer.WritePropertyName("serverCallId");
+                writer.WriteStringValue(ServerCallId);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static CallLocatorModel DeserializeCallLocatorModel(JsonElement element)
         {
-            Optional<GroupCallLocatorModel> groupCallLocator = default;
-            Optional<ServerCallLocatorModel> serverCallLocator = default;
-            Optional<CallLocatorTypeModel> type = default;
+            Optional<string> groupCallId = default;
+            Optional<string> serverCallId = default;
+            Optional<CallLocatorKindModel> kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupCallLocator"))
+                if (property.NameEquals("groupCallId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    groupCallLocator = GroupCallLocatorModel.DeserializeGroupCallLocatorModel(property.Value);
+                    groupCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverCallLocator"))
+                if (property.NameEquals("serverCallId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    serverCallLocator = ServerCallLocatorModel.DeserializeServerCallLocatorModel(property.Value);
+                    serverCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("kind"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new CallLocatorTypeModel(property.Value.GetString());
+                    kind = new CallLocatorKindModel(property.Value.GetString());
                     continue;
                 }
             }
-            return new CallLocatorModel(groupCallLocator.Value, serverCallLocator.Value, Optional.ToNullable(type));
+            return new CallLocatorModel(groupCallId.Value, serverCallId.Value, Optional.ToNullable(kind));
         }
     }
 }

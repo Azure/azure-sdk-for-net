@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
             Optional<string> recordingId = default;
             CallRecordingState state = default;
             DateTimeOffset startDateTime = default;
-            Optional<CallLocatorModel> callLocator = default;
+            Optional<string> serverCallId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingId"))
@@ -36,18 +36,13 @@ namespace Azure.Communication.CallingServer
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("callLocator"))
+                if (property.NameEquals("serverCallId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    callLocator = CallLocatorModel.DeserializeCallLocatorModel(property.Value);
+                    serverCallId = property.Value.GetString();
                     continue;
                 }
             }
-            return new CallRecordingStateChangeEvent(recordingId.Value, state, startDateTime, callLocator.Value);
+            return new CallRecordingStateChangeEvent(recordingId.Value, state, startDateTime, serverCallId.Value);
         }
     }
 }
