@@ -22,6 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
             NextLink = nextLink;
         }
 
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

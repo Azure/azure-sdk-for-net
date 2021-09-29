@@ -154,7 +154,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             ECParameters ecParameters = ecdsa.ExportParameters(false);
             ecdsa.ImportParameters(ecParameters);
 
-            Assert.That(() => new JsonWebKey(ecdsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+            Assert.That<JsonWebKey>(() => new JsonWebKey(ecdsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
 #endif
         }
 
@@ -172,7 +172,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (ECDsa ecdsa = jwk.ToECDsa(includePrivateParameters: true))
             {
-                Assert.That(() => ecdsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+                Assert.That<ECParameters>(() => ecdsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
             }
 #endif
         }
@@ -291,7 +291,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RSAParameters rsaParameters = rsa.ExportParameters(false);
             rsa.ImportParameters(rsaParameters);
 
-            Assert.That(() => new JsonWebKey(rsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+            Assert.That<JsonWebKey>(() => new JsonWebKey(rsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
         }
 
         [Test]
@@ -305,7 +305,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (RSA rsa = jwk.ToRSA(includePrivateParameters: true))
             {
-                Assert.That(() => rsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+                Assert.That<RSAParameters>(() => rsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
             }
         }
 

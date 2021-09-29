@@ -28,12 +28,16 @@ namespace Azure.Monitor.Query.Models
         {
             Id = id;
             Status = status;
-            _body = body;
+            Body = body;
             Headers = headers;
         }
 
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
+        /// <summary> Gets the status. </summary>
         public int? Status { get; }
+        /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
+        public LogsBatchQueryResult Body { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IReadOnlyDictionary<string, string> Headers { get; }
     }

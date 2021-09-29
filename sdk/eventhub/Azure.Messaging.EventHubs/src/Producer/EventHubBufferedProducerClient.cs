@@ -2,10 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Producer
 {
@@ -54,6 +60,45 @@ namespace Azure.Messaging.EventHubs.Producer
                 RetryOptions = new EventHubsRetryOptions { MaximumRetries = 15, TryTimeout = TimeSpan.FromMinutes(3) }
             };
 
+        /// <summary>The set of currently active partition publishing tasks.  Partition identifiers are used as keys.</summary>
+        private readonly ConcurrentDictionary<string, PartitionPublisher> _activePartitionPublishers = new();
+
+        /// <summary>The primitive for synchronizing access when class-wide state is changing.</summary>
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "The AvailableWaitHandle property is not accessed; resources requiring dispose will not have been allocated.")]
+        private readonly SemaphoreSlim _stateGuard = new SemaphoreSlim(1, 1);
+
+        /// <summary>The producer to use to send events to the Event Hub.</summary>
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is being disposed via delegation to CloseAsync.")]
+        private readonly EventHubProducerClient _producer;
+
+        /// <summary>The set of options to use with the <see cref="EventHubBufferedProducerClient" />  instance.</summary>
+        private readonly EventHubBufferedProducerClientOptions _options;
+
+        /// <summary>The handler to be called once a batch has successfully published.</summary>
+        private event Func<SendEventBatchSucceededEventArgs, Task> _sendSucceededHandler;
+
+        /// <summary>The handler to be called once a batch has failed to publish.</summary>
+        private event Func<SendEventBatchFailedEventArgs, Task> _sendFailedHandler;
+
+        /// <summary>The task responsible for managing the operations of the producer when it is running.</summary>
+        private Task _producerManagementTask;
+
+        /// <summary>A <see cref="CancellationTokenSource"/> instance to signal the request to cancel all operations associated with publishing.</summary>
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is being disposed via delegation to StopPublishingAsync, which is called by Close Async.")]
+        private CancellationTokenSource _publishingCancellationSource;
+
+        /// <summary>The set of partitions identifiers for the configured Event Hub, intended to be used for partition assignment.</summary>
+        private string[] _partitions;
+
+        /// <summary>A hash representing the set of partitions identifiers for the configured Event Hub, intended to be used for partition validation.</summary>
+        private HashSet<string> _partitionHash;
+
+        /// <summary>Indicates whether or not registration for handlers is locked; if so, no changes are permitted.</summary>
+        private volatile bool _areHandlersLocked;
+
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _isClosed;
+
         /// <summary>
         ///   The fully qualified Event Hubs namespace that this producer is currently associated with, which will likely be similar
         ///   to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -74,36 +119,55 @@ namespace Azure.Messaging.EventHubs.Producer
         public string Identifier => _producer.Identifier;
 
         /// <summary>
+        ///   Indicates whether or not this <see cref="EventHubBufferedProducerClient" /> is currently
+        ///   active and publishing queued events.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the client is publishing; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The producer will begin publishing when an event is enqueued and should remain active until
+        ///   either <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> is called.
+        ///
+        ///   If any events were enqueued, <see cref="IsClosed" /> is <c>false</c>, and <see cref="IsPublishing" />
+        ///   is <c>false</c>, this likely indicates an unrecoverable state for the client.  It is recommended to
+        ///   close the <see cref="EventHubBufferedProducerClient" /> and create a new instance.
+        ///
+        ///   In this state, exceptions will be reported by the Event Hubs client library logs, which can be captured
+        ///   using the <see cref="Azure.Core.Diagnostics.AzureEventSourceListener" />.
+        /// </remarks>
+        ///
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_AzureEventSourceListener.md">Capturing Event Hubs logs</seealso>
+        ///
+        public virtual bool IsPublishing => (_producerManagementTask != null);
+
+        /// <summary>
+        ///   Indicates whether or not this <see cref="EventHubBufferedProducerClient" /> has been closed.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        public virtual bool IsClosed
+        {
+            get => _isClosed;
+            protected internal set => _isClosed = value;
+        }
+
+        /// <summary>
         ///   The total number of events that are currently buffered and waiting to be published, across all partitions.
         /// </summary>
         ///
         public virtual int TotalBufferedEventCount { get; private set; }
 
         /// <summary>
-        ///   <c>true</c> if the producer has been closed <c>false</c> otherwise.
+        ///   The instance of <see cref="EventHubsEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
-        public bool IsClosed
-        {
-            get => _isClosed;
-            protected set => _isClosed = value;
-        }
-
-        /// <summary>The producer to use to send events to the Event Hub.</summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is being disposed but it must be in CloseAsync so that dispose can match the IAsyncDisposable signature.")]
-        private readonly EventHubProducerClient _producer;
-
-        /// <summary>Indicates whether or not this instance has started publishing.</summary>
-        private volatile bool _isStarted;
-
-        /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _isClosed;
-
-        /// <summary>The handler to be called once a batch has successfully published.</summary>
-        private event Func<SendEventBatchSucceededEventArgs, Task> _sendSucceeded;
-
-        /// <summary>The handler to be called once a batch has failed to publish.</summary>
-        private event Func<SendEventBatchFailedEventArgs, Task> _sendFailed;
+        internal EventHubsEventSource Logger { get; set; } = EventHubsEventSource.Log;
 
         /// <summary>
         ///    Invoked after each batch of events has been successfully published to the Event Hub, this
@@ -122,35 +186,40 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
         ///
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "Guidance does not apply; this is an event.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<SendEventBatchSucceededEventArgs, Task> SendEventBatchSucceededAsync
         {
             add
             {
                 Argument.AssertNotNull(value, nameof(SendEventBatchSucceededAsync));
 
-                if (_sendSucceeded != default)
+                if (_sendSucceededHandler != default)
                 {
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
-                _sendSucceeded = value;
+
+                if (_areHandlersLocked)
+                {
+                    throw new InvalidOperationException(Resources.CannotChangeHandlersWhenPublishing);
+                }
+
+                _sendSucceededHandler = value;
             }
 
             remove
             {
                 Argument.AssertNotNull(value, nameof(SendEventBatchSucceededAsync));
 
-                if (_isStarted)
-                {
-                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
-                }
-
-                if (_sendSucceeded != value)
+                if (_sendSucceededHandler != value)
                 {
                     throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
-                _sendSucceeded = default;
+
+                if (_areHandlersLocked)
+                {
+                    throw new InvalidOperationException(Resources.CannotChangeHandlersWhenPublishing);
+                }
+
+                _sendSucceededHandler = default;
             }
         }
 
@@ -185,35 +254,40 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <seealso cref="EventHubsRetryOptions" />
         ///
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "Guidance does not apply; this is an event.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<SendEventBatchFailedEventArgs, Task> SendEventBatchFailedAsync
         {
             add
             {
                 Argument.AssertNotNull(value, nameof(SendEventBatchFailedAsync));
 
-                if (_sendFailed != default)
+                if (_sendFailedHandler != default)
                 {
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
-                _sendFailed = value;
+
+                if (_areHandlersLocked)
+                {
+                    throw new InvalidOperationException(Resources.CannotChangeHandlersWhenPublishing);
+                }
+
+                _sendFailedHandler = value;
             }
 
             remove
             {
                 Argument.AssertNotNull(value, nameof(SendEventBatchFailedAsync));
 
-                if (_isStarted)
-                {
-                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
-                }
-
-                if (_sendFailed != value)
+                if (_sendFailedHandler != value)
                 {
                     throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
-                _sendFailed = default;
+
+                if (_areHandlersLocked)
+                {
+                    throw new InvalidOperationException(Resources.CannotChangeHandlersWhenPublishing);
+                }
+
+                _sendFailedHandler = default;
             }
         }
 
@@ -234,7 +308,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
-        public EventHubBufferedProducerClient(string connectionString) : this(connectionString, clientOptions: DefaultOptions)
+        public EventHubBufferedProducerClient(string connectionString) : this(connectionString, null, null)
         {
         }
 
@@ -257,9 +331,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubBufferedProducerClient(string connectionString,
-                                              EventHubBufferedProducerClientOptions clientOptions) : this(clientOptions)
+                                              EventHubBufferedProducerClientOptions clientOptions) : this(connectionString, null, clientOptions)
         {
-            _producer = new EventHubProducerClient(connectionString, clientOptions.ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -302,7 +375,8 @@ namespace Azure.Messaging.EventHubs.Producer
                                               string eventHubName,
                                               EventHubBufferedProducerClientOptions clientOptions) : this(clientOptions)
         {
-            _producer = new EventHubProducerClient(connectionString, eventHubName, clientOptions.ToEventHubProducerClientOptions());
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+            _producer = new EventHubProducerClient(connectionString, eventHubName, (clientOptions ?? DefaultOptions).ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -317,9 +391,8 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubBufferedProducerClient(string fullyQualifiedNamespace,
                                               string eventHubName,
                                               AzureNamedKeyCredential credential,
-                                              EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
+                                              EventHubBufferedProducerClientOptions clientOptions = default) : this(fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -334,9 +407,8 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubBufferedProducerClient(string fullyQualifiedNamespace,
                                               string eventHubName,
                                               AzureSasCredential credential,
-                                              EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
+                                              EventHubBufferedProducerClientOptions clientOptions = default) : this(fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -351,9 +423,8 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubBufferedProducerClient(string fullyQualifiedNamespace,
                                               string eventHubName,
                                               TokenCredential credential,
-                                              EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
+                                              EventHubBufferedProducerClientOptions clientOptions = default) : this(fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -366,7 +437,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubBufferedProducerClient(EventHubConnection connection,
                                               EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
         {
-            _producer = new EventHubProducerClient(connection, clientOptions?.ToEventHubProducerClientOptions());
+            _producer = new EventHubProducerClient(connection, (clientOptions ?? DefaultOptions).ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -393,7 +464,35 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         protected EventHubBufferedProducerClient()
         {
-            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubBufferedProducerClient" /> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the producer with.</param>
+        /// <param name="credential">The credential to use for authorization.  This may be of type <see cref="TokenCredential" />, <see cref="AzureSasCredential" />, or <see cref="AzureNamedKeyCredential" />.</param>
+        /// <param name="clientOptions">A set of <see cref="EventHubBufferedProducerClientOptions"/> to apply when configuring the producer.</param>
+        ///
+        private EventHubBufferedProducerClient(string fullyQualifiedNamespace,
+                                               string eventHubName,
+                                               object credential,
+                                               EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
+        {
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var options = (clientOptions ?? DefaultOptions).ToEventHubProducerClientOptions();
+
+            _producer = credential switch
+            {
+                TokenCredential tokenCred => new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, tokenCred, options),
+                AzureSasCredential sasCred => new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, sasCred, options),
+                AzureNamedKeyCredential keyCred =>  new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, keyCred, options),
+                _ => throw new ArgumentException(Resources.UnsupportedCredential, nameof(credential))
+            };
         }
 
         /// <summary>
@@ -404,8 +503,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private EventHubBufferedProducerClient(EventHubBufferedProducerClientOptions options)
         {
-            options = options?.Clone() ?? DefaultOptions;
-            throw new NotImplementedException();
+            _options = options?.Clone() ?? DefaultOptions;
         }
 
         /// <summary>
@@ -485,10 +583,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         public virtual Task<int> EnqueueEventAsync(EventData eventData,
-                                              CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+                                                   CancellationToken cancellationToken = default) => EnqueueEventAsync(eventData, default, cancellationToken);
 
         /// <summary>
         ///   Enqueues an <see cref="EventData"/> into the buffer to be published to the Event Hub.  If there is no capacity in
@@ -513,11 +608,58 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
         /// </remarks>
         ///
-        public virtual Task<int> EnqueueEventAsync(EventData eventData,
-                                              EnqueueEventOptions options,
-                                              CancellationToken cancellationToken = default)
+        public virtual async Task<int> EnqueueEventAsync(EventData eventData,
+                                                         EnqueueEventOptions options,
+                                                         CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            // ======================================================================
+            //  NOTE:
+            //    This method is currently just a stub; full functionality will be
+            //    added in a later set of changes.
+            // ======================================================================
+
+            // Validate
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            // Log
+
+            _areHandlersLocked = true;
+
+            try
+            {
+                if ((!IsPublishing) || (_producerManagementTask?.IsCompleted ?? false))
+                {
+                    var releaseGuard = false;
+
+                    try
+                    {
+                        if (!_stateGuard.Wait(0, cancellationToken))
+                        {
+                            await _stateGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                        }
+
+                        releaseGuard = true;
+                        await StartPublishingAsync(cancellationToken).ConfigureAwait(false);
+                    }
+                    finally
+                    {
+                        if (releaseGuard)
+                        {
+                            _stateGuard.Release();
+                        }
+                    }
+                }
+
+                // Do the enqueue
+            }
+            catch //(Exception ex)
+            {
+                // Log
+                //throw;
+            }
+
+            return int.MinValue;
         }
 
         /// <summary>
@@ -542,10 +684,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         public virtual Task<int> EnqueueEventsAsync(IEnumerable<EventData> events,
-                                               CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+                                                    CancellationToken cancellationToken = default) => EnqueueEventsAsync(events, default, cancellationToken);
 
         /// <summary>
         ///   Enqueues a set of <see cref="EventData"/> into the buffer to be published to the Event Hub.  If there is insufficient capacity in
@@ -569,41 +708,57 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
         /// </remarks>
         ///
-        public virtual Task<int> EnqueueEventsAsync(IEnumerable<EventData> events,
-                                                    EnqueueEventOptions options,
-                                                    CancellationToken cancellationToken = default)
+        public virtual async Task<int> EnqueueEventsAsync(IEnumerable<EventData> events,
+                                                          EnqueueEventOptions options,
+                                                          CancellationToken cancellationToken = default)
         {
-            _isStarted = true;
-            throw new NotImplementedException();
-        }
+            // ======================================================================
+            //  NOTE:
+            //    This method is currently just a stub; full functionality will be
+            //    added in a later set of changes.
+            // ======================================================================
 
-        /// <summary>
-        ///   This method is invoked upon the successful publishing of a batch of events. It is responsible for raising the <see cref="SendEventBatchSucceededAsync"/> event.
-        /// </summary>
-        ///
-        /// <param name="events">The set of events belonging to the batch that was successfully published.</param>
-        /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
-        ///
-        protected virtual Task OnSendSucceededAsync(IReadOnlyList<EventData> events,
-                                                    string partitionId)
-        {
-            throw new NotImplementedException();
-        }
+            // Validate
 
-        /// <summary>
-        ///   This method is invoked upon the failed publishing of a batch of events, after all eligible retries are exhausted.  It
-        ///   is responsible for raising the <see cref="SendEventBatchFailedAsync"/> event.
-        /// </summary>
-        ///
-        /// <param name="events">The set of events belonging to the the batch that failed to be published.</param>
-        /// <param name="exception">The <see cref="Exception"/> that was raised when the events failed to publish.</param>
-        /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
-        ///
-        protected virtual Task OnSendFailedAsync(IReadOnlyList<EventData> events,
-                                                 Exception exception,
-                                                 string partitionId)
-        {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            // Log
+
+            _areHandlersLocked = true;
+
+            try
+            {
+                if ((!IsPublishing) || (_producerManagementTask?.IsCompleted ?? false))
+                {
+                    var releaseGuard = false;
+
+                    try
+                    {
+                        if (!_stateGuard.Wait(0, cancellationToken))
+                        {
+                            await _stateGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                        }
+
+                        releaseGuard = true;
+                        await StartPublishingAsync(cancellationToken).ConfigureAwait(false);
+                    }
+                    finally
+                    {
+                        if (releaseGuard)
+                        {
+                            _stateGuard.Release();
+                        }
+                    }
+                }
+
+                // Do the enqueue
+            }
+            catch //(Exception ex)
+            {
+                // Log
+                throw;
+            }
+
+            return int.MinValue;
         }
 
         /// <summary>
@@ -611,26 +766,31 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   the outcome of each of which will be individually reported by the <see cref="SendEventBatchSucceededAsync" /> and
         ///   <see cref="SendEventBatchFailedAsync" /> handlers.
         ///
-        ///    Upon completion of this method, the buffer will be empty.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
-        ///
-        public virtual Task FlushAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        ///   This method cancels any active publishing and abandons all events in the buffer that are waiting to be published.
         ///   Upon completion of this method, the buffer will be empty.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        internal virtual Task ClearAsync(CancellationToken cancellationToken = default)
+        public virtual async Task FlushAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Argument.AssertNotClosed(_isClosed, nameof(EventHubBufferedProducerClient));
+
+            if (!_stateGuard.Wait(0, cancellationToken))
+            {
+                await _stateGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+            }
+
+            try
+            {
+                Argument.AssertNotClosed(_isClosed, nameof(EventHubBufferedProducerClient));
+                await FlushInternalAsync(cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                // If we reached the try block without an exception, it is safe to assume the guard is held.
+
+                _stateGuard.Release();
+            }
         }
 
         /// <summary>
@@ -646,11 +806,122 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   This method will automatically unregister the <see cref="SendEventBatchSucceededAsync"/> and <see cref="SendEventBatchFailedAsync"/> handlers.
         /// </remarks>
         ///
-        public virtual Task CloseAsync(bool flush = true,
-                                       CancellationToken cancellationToken = default)
+        public virtual async Task CloseAsync(bool flush = true,
+                                             CancellationToken cancellationToken = default)
         {
-            _isClosed = true;
-            throw new NotImplementedException();
+            if (_isClosed)
+            {
+                return;
+            }
+
+            var guardHeld = false;
+            var capturedException = default(Exception);
+
+            try
+            {
+                if (!_stateGuard.Wait(0, cancellationToken))
+                {
+                    await _stateGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                // If we've reached this point without an exception, the guard is held.
+
+                guardHeld = true;
+
+                if (_isClosed)
+                {
+                    return;
+                }
+
+                _isClosed = true;
+                Logger.ClientCloseStart(nameof(EventHubBufferedProducerClient), EventHubName, Identifier);
+
+                if (IsPublishing)
+                {
+                    try
+                    {
+                        if (flush)
+                        {
+                            await FlushInternalAsync(CancellationToken.None).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                           await ClearInternalAsync(CancellationToken.None).ConfigureAwait(false);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // If flushing, the exception should cause closing to fail to protect against data loss.  State should be
+                        // reset so that applications can attempt to close/flush again.  This should be rare and limited to unexpected
+                        // scenarios, as normal exceptions during send operations will be surfaced through the handler.
+
+                        if (flush)
+                        {
+                            _isClosed = false;
+                            throw;
+                        }
+                        else
+                        {
+                            // When clearing, the exception is non-blocking; log and continue.
+
+                            Logger.ClientCloseError(nameof(EventHubBufferedProducerClient), EventHubName, Identifier, ex.Message);
+                        }
+                    }
+                }
+
+                // Stop processing and close the producer.  Capture exceptions to allow
+                // cleanup and disposal to complete.
+
+                try
+                {
+                    await Task.WhenAll(
+                        _producer.CloseAsync(CancellationToken.None),
+                        StopPublishingAsync(CancellationToken.None)
+                    ).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    Logger.ClientCloseError(nameof(EventHubBufferedProducerClient), EventHubName, Identifier, ex.Message);
+                    capturedException = ex;
+                }
+
+                // Unregister the event handlers.
+
+                _areHandlersLocked = false;
+
+                if (_sendSucceededHandler != null)
+                {
+                    SendEventBatchSucceededAsync -= _sendSucceededHandler;
+                    _sendSucceededHandler = null;
+                }
+
+                if (_sendFailedHandler != null)
+                {
+                    SendEventBatchFailedAsync -= _sendFailedHandler;
+                    _sendFailedHandler = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.ClientCloseError(nameof(EventHubBufferedProducerClient), EventHubName, Identifier, ex.Message);
+                throw;
+            }
+            finally
+            {
+                if (guardHeld)
+                {
+                    _stateGuard.Release();
+                }
+
+                Logger.ClientCloseComplete(nameof(EventHubBufferedProducerClient), EventHubName, Identifier);
+            }
+
+            // Surface any exception that was captured.
+
+            if (capturedException != default)
+            {
+                ExceptionDispatchInfo.Capture(capturedException).Throw();
+            }
         }
 
         /// <summary>
@@ -658,7 +929,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <remarks>
-        ///   Calling this method will also invoke <see cref="FlushAsync(CancellationToken)"/>, which will attempt to publish any events that are still pending,
+        ///   Calling this method will also invoke <see cref="FlushInternalAsync(CancellationToken)"/>, which will attempt to publish any events that are still pending,
         ///   and finish any active sending.  It will also automatically unregister the <see cref="SendEventBatchSucceededAsync"/> and <see cref="SendEventBatchFailedAsync"/>
         ///   handlers.
         ///
@@ -667,11 +938,402 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "This needs to match IAsyncDisposable")]
-        public virtual ValueTask DisposeAsync()
+        public virtual async ValueTask DisposeAsync()
         {
+            await CloseAsync(true).ConfigureAwait(false);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        ///
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
+
+        /// <summary>
+        ///   Returns a hash code for this instance.
+        /// </summary>
+        ///
+        /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
+
+        /// <summary>
+        ///   Converts the instance to string representation.
+        /// </summary>
+        ///
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Cancels any active publishing and abandons all events in the buffer that are waiting to be published.
+        ///   Upon completion of this method, the buffer will be empty.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>
+        ///   This method will modify class-level state and should be synchronized.  It is assumed that callers hold responsibility for
+        ///   ensuring synchronization concerns; this method should be invoked after any primitives have been acquired.
+        ///
+        ///   Callers are also assumed to own responsibility for any validation that the client is in the intended state before calling.
+        /// </remarks>
+        ///
+        internal virtual Task ClearInternalAsync(CancellationToken cancellationToken = default)
+        {
+            // ======================================================================
+            //  NOTE:
+            //    This method is currently just a stub; full functionality will be
+            //    added in a later set of changes.
+            // ======================================================================
+
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        ///   Attempts to publish all events in the buffer immediately.  This may result in multiple batches being published,
+        ///   the outcome of each of which will be individually reported by the <see cref="SendEventBatchSucceededAsync" /> and
+        ///   <see cref="SendEventBatchFailedAsync" /> handlers.
+        ///
+        ///   Upon completion of this method, the buffer will be empty.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>
+        ///   This method will modify class-level state and should be synchronized.  It is assumed that callers hold responsibility for
+        ///   ensuring synchronization concerns; this method should be invoked after any primitives have been acquired.
+        ///
+        ///   Callers are also assumed to own responsibility for any validation that the client is in the intended state before calling.
+        /// </remarks>
+        ///
+        internal virtual async Task FlushInternalAsync(CancellationToken cancellationToken = default)
+        {
+            // ======================================================================
+            //  NOTE:
+            //    This method is currently just a stub; full functionality will be
+            //    added in a later set of changes.
+            // ======================================================================
+
+            // If publishing is taking place, but the management task has completed,
+            // restart publishing to ensure that send operations are taking place.
+
+            if ((IsPublishing) && (_producerManagementTask?.IsCompleted ?? false))
+            {
+                await StartPublishingAsync(cancellationToken).ConfigureAwait(false);
+            }
+
+            //TODO: Implement Flush
+        }
+
+        /// <summary>
+        ///   Responsible for raising the <see cref="SendEventBatchSucceededAsync"/> event upon the successful publishing
+        ///   of a batch of events.
+        /// </summary>
+        ///
+        /// <param name="events">The set of events belonging to the batch that was successfully published.</param>
+        /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
+        ///
+        protected virtual Task OnSendSucceededAsync(IReadOnlyList<EventData> events,
+                                                    string partitionId)
+        {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Responsible for raising the <see cref="SendEventBatchFailedAsync"/> event upon the failed publishing of a
+        ///   batch of events, after all eligible retries are exhausted.
+        /// </summary>
+        ///
+        /// <param name="events">The set of events belonging to the batch that failed to be published.</param>
+        /// <param name="exception">The <see cref="Exception"/> that was raised when the events failed to publish.</param>
+        /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
+        ///
+        protected virtual Task OnSendFailedAsync(IReadOnlyList<EventData> events,
+                                                 Exception exception,
+                                                 string partitionId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Queries for the identifiers of the Event Hub partitions.
+        /// </summary>
+        ///
+        /// <param name="producer">The producer client instance to use for querying.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the query.</param>
+        ///
+        /// <returns>The set of identifiers for the Event Hub partitions.</returns>
+        ///
+        protected virtual async Task<string[]> ListPartitionIdsAsync(EventHubProducerClient producer,
+                                                                     CancellationToken cancellationToken) =>
+            await producer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        ///   Performs the actions needed to initialize the <see cref="EventHubBufferedProducerClient" /> to begin accepting events to be
+        ///   enqueued and published.  If this method is called while processing is active, no action is taken.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect background processing once it starts running.</param>
+        ///
+        /// <remarks>
+        ///   This method will modify class-level state and should be synchronized.  It is assumed that callers hold responsibility for
+        ///   ensuring synchronization concerns; this method should be invoked after any primitives have been acquired.
+        ///
+        ///   Callers are also assumed to own responsibility for any validation that the client is in the intended state before calling.
+        /// </remarks>
+        ///
+        private async Task StartPublishingAsync(CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.BufferedProducerBackgroundProcessingStart(Identifier, EventHubName);
+
+            try
+            {
+                // If there is already a task running for the background management process,
+                // then no further initialization is needed.
+
+                if (IsPublishing)
+                {
+                    return;
+                }
+
+                // There should be no cancellation source, but guard against leaking resources in the
+                // event of a crash or other exception.
+
+                _publishingCancellationSource?.Cancel();
+                _publishingCancellationSource?.Dispose();
+                _publishingCancellationSource = new CancellationTokenSource();
+
+                // If there was a task present, then it will have been previously faulted
+                // or has just been canceled; capture any exception for logging.  This is
+                // considered non-fatal, as a new instance of the task will be started.
+
+                if (_producerManagementTask != null)
+                {
+                    try
+                    {
+                        await _producerManagementTask.ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.BufferedProducerManagementTaskError(Identifier, EventHubName, ex.Message);
+                    }
+                }
+
+                // Ensure that partition state is initialized, and then start the background
+                // processing task responsible for ensuring updated state and managing partition
+                // processing health.
+
+                await EnsurePartitionStateAsync(cancellationToken).ConfigureAwait(false);
+                _producerManagementTask = RunProducerManagementAsync(_publishingCancellationSource.Token);
+            }
+            catch (Exception ex)
+            {
+                if (ex is OperationCanceledException opEx)
+                {
+                    throw new TaskCanceledException(opEx.Message, opEx);
+                }
+
+                Logger.BufferedProducerBackgroundProcessingStartError(Identifier, EventHubName, ex.Message);
+                throw;
+            }
+            finally
+            {
+                Logger.BufferedProducerBackgroundProcessingStartComplete(Identifier, EventHubName);
+            }
+        }
+
+        /// <summary>
+        ///   Performs the actions needed to stop processing events. the <see cref="EventHubBufferedProducerClient" /> to begin accepting events to be
+        ///   enqueued and published.  Should this method be called while processing is not active, no action is taken.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.</param>
+        ///
+        /// <remarks>
+        ///   This method will modify class-level state and should be synchronized.  It is assumed that callers hold responsibility for
+        ///   ensuring synchronization concerns; this method should be invoked after any primitives have been acquired.  Callers are also
+        ///   assumed to own responsibility for any validation that the client is in the intended state before calling.
+        ///
+        ///   This method does not consider any events that have been enqueued and are in a pending state.  It is assumed
+        ///   that the caller has responsibility for invoking <see cref="FlushInternalAsync" /> or <see cref="ClearInternalAsync" />
+        ///   prior to this method if needed.
+        /// </remarks>
+        ///
+        private async Task StopPublishingAsync(CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.BufferedProducerBackgroundProcessingStop(Identifier, EventHubName);
+
+            var capturedExceptions = default(List<Exception>);
+
+            try
+            {
+                // If there is no task running for the background management process, there
+                // is nothing to stop.
+
+                if (_producerManagementTask == null)
+                {
+                    return;
+                }
+
+                // Request cancellation of the background processing.
+
+                _publishingCancellationSource?.Cancel();
+                _publishingCancellationSource?.Dispose();
+                _publishingCancellationSource = new CancellationTokenSource();
+
+                // Wait for the background tasks to complete.
+
+                try
+                {
+                    await _producerManagementTask.ConfigureAwait(false);
+                }
+                catch (TaskCanceledException)
+                {
+                    // This is expected; no action is needed.
+                }
+                catch (Exception ex)
+                {
+                    Logger.BufferedProducerBackgroundProcessingStopError(Identifier, EventHubName, ex.Message);
+                    (capturedExceptions ??= new List<Exception>()).Add(ex);
+                }
+
+                // Clean up all partition publishers.
+
+                foreach (var pair in _activePartitionPublishers)
+                {
+                    // Dispose for the partition publishers will log exceptions and
+                    // avoid surfacing them, as processing is stopping.
+
+                    try
+                    {
+                        _activePartitionPublishers.TryRemove(pair.Key, out _);
+                        pair.Value.Dispose();
+                    }
+                    catch (Exception ex)
+                    {
+                       Logger.BufferedProducerBackgroundProcessingStopError(Identifier, EventHubName, ex.Message);
+                       (capturedExceptions ??= new List<Exception>()).Add(ex);
+                    }
+                }
+
+                _producerManagementTask = null;
+            }
+            catch (Exception ex)
+            {
+                if (ex is OperationCanceledException opEx)
+                {
+                    throw new TaskCanceledException(opEx.Message, opEx);
+                }
+
+                Logger.BufferedProducerBackgroundProcessingStopError(Identifier, EventHubName, ex.Message);
+                (capturedExceptions ??= new List<Exception>()).Add(ex);
+            }
+            finally
+            {
+                Logger.BufferedProducerBackgroundProcessingStopComplete(Identifier, EventHubName);
+            }
+
+            // Surface any exceptions that were captured during cleanup.
+
+            if (capturedExceptions?.Count == 1)
+            {
+                ExceptionDispatchInfo.Capture(capturedExceptions[0]).Throw();
+            }
+            else if (capturedExceptions is not null)
+            {
+                throw new AggregateException(capturedExceptions);
+            };
+        }
+
+        /// <summary>
+        ///   Performs the actions needed to validate that the partition state information for the
+        ///   producer is current, updating the class members if needed.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>
+        ///   This method will read and mutate class-level state for partitions using the
+        ///   shared producer client instance.
+        /// </remarks>
+        ///
+        private async Task EnsurePartitionStateAsync(CancellationToken cancellationToken = default)
+        {
+            var currentPartitions = await _producer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
+
+            // Assume that if the count of partitions matches the current count, then no updated is needed.
+            // This is safe because partition identifiers are stable and new partitions can be added but
+            // the can never be removed.
+
+            if ((_partitions?.Length ?? 0) != currentPartitions.Length)
+            {
+                // The partitions need to be updated.  Because the two class members tracking partitions
+                // are used for different purposes, it is permissible for them to drift for a short period.
+                // As a result, there's no need to synchronize them.
+
+                var currentHash = new HashSet<string>(currentPartitions);
+
+                _partitions = currentPartitions;
+                _partitionHash = currentHash;
+            }
+        }
+
+        /// <summary>
+        ///   Performs the tasks needed to manage state for the <see cref="EventHubBufferedProducerClient" /> and
+        ///   ensure the health of the tasks responsible for partition processing.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        private static Task RunProducerManagementAsync(CancellationToken cancellationToken)
+        {
+            // ======================================================================
+            //  NOTE:
+            //    This method is currently just a stub; full functionality will be
+            //    added in a later set of changes.
+            // ======================================================================
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        ///   The set of information needed to track and manage the active publishing
+        ///   activities for a partition.
+        /// </summary>
+        ///
+        internal class PartitionPublisher : IDisposable
+        {
+            /// <summary>The identifier of the partition that is being published.</summary>
+            public readonly string PartitionId;
+
+            /// <summary>The task that is performing the publishing.</summary>
+            public readonly Task PublishingTask;
+
+            /// <summary>The source token that can be used to cancel the processing for the associated <see cref="PublishingTask" />.</summary>
+            public readonly CancellationTokenSource CancellationSource;
+
+            /// <summary>
+            ///   Performs tasks needed to clean-up the disposable resources used by the publisher.  This method does
+            ///   not assume responsibility for signaling the cancellation source or awaiting the <see cref="PublishingTask" />.
+            /// </summary>
+            ///
+            public void Dispose()
+            {
+                CancellationSource?.Dispose();
+                PublishingTask?.Dispose();
+            }
         }
     }
 }

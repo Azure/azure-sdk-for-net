@@ -16,6 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceCredentialType = DataSourceCredentialKind.ServicePrincipalInKeyVault;
         }
 
+        /// <summary> Gets or sets the parameters. </summary>
         public ServicePrincipalInKVParamPatch Parameters { get; set; }
     }
 }

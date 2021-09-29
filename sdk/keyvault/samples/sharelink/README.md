@@ -73,13 +73,13 @@ For more detail about this process, read [Manage storage account keys with Key V
 
 This sample not only demonstrates how to generate SAS definitions and tokens using Key Vault, but defines a REST client using our source generator we use for many other Azure SDKs. To build the project either as a standalone sample or within the [Azure/azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repository using [.NET Core 3.1](https://dot.net) or newer, simply run:
 
-```bash
+```dotnetcli
 dotnet build
 ```
 
 We have no plans to ship a package for Key Vault-managed storage accounts since RBAC is recommended, but if you need support for managed storage accounts you can copy the REST client source into your own projects by running:
 
-```bash
+```dotnetcli
 dotnet build /t:CopySource /p:Destination=<ProjectDirectory>
 ```
 
@@ -87,7 +87,7 @@ The sample project file and _Program.cs_ are not copied automatically. Only the 
 
 You also need to add a reference to Azure.Core in your project. In your project directory where you just copied source run:
 
-```bash
+```dotnetcli
 dotnet add package Azure.Core
 ```
 
@@ -103,7 +103,7 @@ For more options, run `sharelink --help`.
 
 You can also run the application from source using `dotnet run --`, passing any arguments after `--` to the program directly:
 
-```bash
+```dotnetcli
 dotnet run -- --vault-name <KeyVaultName> --storage-account-name <StorageAccountName> --days 2
 ```
 

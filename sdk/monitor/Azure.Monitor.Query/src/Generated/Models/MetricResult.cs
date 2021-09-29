@@ -16,20 +16,20 @@ namespace Azure.Monitor.Query.Models
     {
         /// <summary> Initializes a new instance of MetricResult. </summary>
         /// <param name="id"> the metric Id. </param>
-        /// <param name="type"> the resource type of the metric resource. </param>
+        /// <param name="resourceType"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="type"/>, <paramref name="localizedName"/>, or <paramref name="timeSeries"/> is null. </exception>
-        internal MetricResult(string id, string type, LocalizableString localizedName, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceType"/>, <paramref name="localizedName"/>, or <paramref name="timeSeries"/> is null. </exception>
+        internal MetricResult(string id, string resourceType, LocalizableString localizedName, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
-            if (type == null)
+            if (resourceType == null)
             {
-                throw new ArgumentNullException(nameof(type));
+                throw new ArgumentNullException(nameof(resourceType));
             }
             if (localizedName == null)
             {
@@ -41,7 +41,7 @@ namespace Azure.Monitor.Query.Models
             }
 
             Id = id;
-            Type = type;
+            ResourceType = resourceType;
             LocalizedName = localizedName;
             Unit = unit;
             TimeSeries = timeSeries.ToList();
@@ -49,19 +49,19 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> Initializes a new instance of MetricResult. </summary>
         /// <param name="id"> the metric Id. </param>
-        /// <param name="type"> the resource type of the metric resource. </param>
+        /// <param name="resourceType"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
-        /// <param name="displayDescription"> Detailed description of this metric. </param>
+        /// <param name="description"> Detailed description of this metric. </param>
         /// <param name="errorCode"> &apos;Success&apos; or the error details on query failures for this metric. </param>
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
-        internal MetricResult(string id, string type, LocalizableString localizedName, string displayDescription, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<MetricTimeSeriesElement> timeSeries)
+        internal MetricResult(string id, string resourceType, LocalizableString localizedName, string description, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<MetricTimeSeriesElement> timeSeries)
         {
             Id = id;
-            Type = type;
+            ResourceType = resourceType;
             LocalizedName = localizedName;
-            DisplayDescription = displayDescription;
+            Description = description;
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
             Unit = unit;
@@ -70,10 +70,6 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> the metric Id. </summary>
         public string Id { get; }
-        /// <summary> the resource type of the metric resource. </summary>
-        public string Type { get; }
-        /// <summary> Detailed description of this metric. </summary>
-        public string DisplayDescription { get; }
         /// <summary> The unit of the metric. </summary>
         public MetricUnit Unit { get; }
     }

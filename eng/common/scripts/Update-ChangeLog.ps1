@@ -5,6 +5,7 @@
 # Unreleased: Default is true. If it is set to false, then today's date will be set in verion title. If it is True then title will show "Unreleased"
 # ReplaceLatestEntryTitle: Replaces the latest changelog entry title.
 
+[CmdletBinding()]
 param (
   [Parameter(Mandatory = $true)]
   [String]$Version,
@@ -74,13 +75,13 @@ if ($ChangeLogEntries.Contains($Version))
 {
     if ($ChangeLogEntries[$Version].ReleaseStatus -eq $ReleaseStatus)
     {
-        LogWarning "Version [$Version] is already present in change log with specificed ReleaseStatus [$ReleaseStatus]. No Change made."
+        LogDebug "Version [$Version] is already present in change log with specificed ReleaseStatus [$ReleaseStatus]. No Change made."
         exit(0)
     }
 
     if ($Unreleased -and ($ChangeLogEntries[$Version].ReleaseStatus -ne $ReleaseStatus))
     {
-        LogWarning "Version [$Version] is already present in change log with a release date. Please review [$ChangelogPath]. No Change made."
+        LogDebug "Version [$Version] is already present in change log with a release date. Please review [$ChangelogPath]. No Change made."
         exit(0)
     }
 
@@ -88,7 +89,7 @@ if ($ChangeLogEntries.Contains($Version))
     {
         if ((Get-Date ($ChangeLogEntries[$Version].ReleaseStatus).Trim("()")) -gt (Get-Date $ReleaseStatus.Trim("()")))
         {
-            LogWarning "New ReleaseDate for version [$Version] is older than existing release date in changelog. Please review [$ChangelogPath]. No Change made."
+            LogDebug "New ReleaseDate for version [$Version] is older than existing release date in changelog. Please review [$ChangelogPath]. No Change made."
             exit(0)
         }
     }
@@ -106,47 +107,7 @@ if ($LatestsSorted[0] -ne $Version) {
 
 if ($ReplaceLatestEntryTitle)
 {
-    # Remove empty sections from content
-    $sanitizedContent = @()
-    $sectionContent = @()
-    $sectionContentCount = 0
-    $latesVersionContent = $ChangeLogEntries[$LatestVersion].ReleaseContent
-
-    foreach ($line in $latesVersionContent)
-    {
-        if ($line.StartsWith("### ") -or $sectionContentCount -gt 0)
-        {
-            if ($line.StartsWith("#") -and $sectionContentCount -gt 1)
-            {
-                $sanitizedContent += $sectionContent
-                $sectionContent = @()
-                $sectionContentCount = 0
-            }
-    
-            if ($line.StartsWith("#") -and $sectionContentCount -eq 1)
-            {
-                $sectionContent = @()
-                $sectionContentCount = 0
-            }
-
-            $sectionContent += $line
-            if (-not [System.String]::IsNullOrWhiteSpace($line))
-            {
-                $sectionContentCount++
-            }
-        }
-        elseif ($sectionContent.Count -eq 0)
-        {
-            $sanitizedContent += $line
-        }
-    }
-    
-    if ($sectionContentCount -gt 1)
-    {
-        $sanitizedContent += $sectionContent
-    }
-
-    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -Content $sanitizedContent
+    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -InitialAtxHeader $ChangeLogEntries.InitialAtxHeader -Content $ChangeLogEntries[$LatestVersion].ReleaseContent
     LogDebug "Resetting latest entry title to [$($newChangeLogEntry.ReleaseTitle)]"
     $ChangeLogEntries.Remove($LatestVersion)
     if ($newChangeLogEntry) {
@@ -161,12 +122,12 @@ elseif ($ChangeLogEntries.Contains($Version))
 {
     LogDebug "Updating ReleaseStatus for Version [$Version] to [$($ReleaseStatus)]"
     $ChangeLogEntries[$Version].ReleaseStatus = $ReleaseStatus
-    $ChangeLogEntries[$Version].ReleaseTitle = "## $Version $ReleaseStatus"
+    $ChangeLogEntries[$Version].ReleaseTitle = "$($ChangeLogEntries.InitialAtxHeader)# $Version $ReleaseStatus"
 }
 else
 {
     LogDebug "Adding new ChangeLog entry for Version [$Version]"
-    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus
+    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -InitialAtxHeader $ChangeLogEntries.InitialAtxHeader
     if ($newChangeLogEntry) {
         $ChangeLogEntries.Insert(0, $Version, $newChangeLogEntry)
     }

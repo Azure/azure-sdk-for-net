@@ -41,8 +41,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (!eventData.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
             {
-                using DiagnosticScope messageScope = ScopeFactory.CreateScope(DiagnosticProperty.EventActivityName);
-                messageScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind);
+                using DiagnosticScope messageScope = ScopeFactory.CreateScope(DiagnosticProperty.EventActivityName, DiagnosticScope.ActivityKind.Producer);
                 messageScope.AddAttribute(DiagnosticProperty.EventHubAttribute, eventHubName);
                 messageScope.AddAttribute(DiagnosticProperty.EndpointAttribute, fullyQualifiedNamespace);
                 messageScope.Start();

@@ -11,7 +11,7 @@ Install this package if you want to use Newtonsoft.Json to serialize and deseria
 
 Install this package from [NuGet] using the .NET CLI:
 
-```bash
+```dotnetcli
 dotnet add package Microsoft.Azure.Core.NewtonsoftJson
 ```
 

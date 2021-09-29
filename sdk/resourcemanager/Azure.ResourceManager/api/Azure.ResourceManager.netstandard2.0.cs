@@ -42,6 +42,9 @@ namespace Azure.ResourceManager
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual T UseClientContext<T>(System.Func<System.Uri, Azure.Core.TokenCredential, Azure.ResourceManager.ArmClientOptions, Azure.Core.Pipeline.HttpPipeline, T> func) { throw null; }
     }
+    public static partial class ArmClientExtensions
+    {
+    }
     public sealed partial class ArmClientOptions : Azure.Core.ClientOptions
     {
         public ArmClientOptions() { }
@@ -1418,10 +1421,10 @@ namespace Azure.ResourceManager.Resources.Models
         Off = 1,
         CurrentPeriodOff = 2,
     }
-    public abstract partial class SubResource
+    public partial class SubResource
     {
-        protected SubResource() { }
-        protected SubResource(string id) { }
+        public SubResource() { }
+        protected internal SubResource(string id) { }
         public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
     }
     public partial class SubscriptionPolicies
