@@ -649,8 +649,10 @@ namespace Azure.Storage.Blobs.Specialized
                     PathScanner scanner = scannerFactory.BuildPathScanner();
                     IEnumerable<FileSystemInfo> pathList = scanner.Scan();
 
-                    int concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
-                        options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                    int concurrency = options?.TransferOptions.MaximumConcurrency > 0
+                        ? options.TransferOptions.MaximumConcurrency.GetValueOrDefault()
+                        : 1;
+
                     TaskThrottler throttler = new TaskThrottler(concurrency);
 
                     List<Response<BlobContentInfo>> responses = new List<Response<BlobContentInfo>>();
@@ -920,12 +922,14 @@ namespace Azure.Storage.Blobs.Specialized
 
                 BlobRequestConditions conditions = new BlobRequestConditions()
                 {
-                    IfModifiedSince = options.DirectoryRequestConditions.IfModifiedSince ?? null,
-                    IfUnmodifiedSince = options.DirectoryRequestConditions.IfUnmodifiedSince ?? null,
+                    IfModifiedSince = options?.DirectoryRequestConditions?.IfModifiedSince ?? null,
+                    IfUnmodifiedSince = options?.DirectoryRequestConditions?.IfUnmodifiedSince ?? null,
                 };
 
-                int concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
-                    options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                int concurrency = options?.TransferOptions.MaximumConcurrency.GetValueOrDefault() > 0
+                    ? options.TransferOptions.MaximumConcurrency.GetValueOrDefault()
+                    : 1;
+
                 TaskThrottler throttler = new TaskThrottler(concurrency);
 
                 List<Response> responses = new List<Response>();
@@ -943,7 +947,7 @@ namespace Azure.Storage.Blobs.Specialized
                             responses.Add(await client.DownloadToAsync(
                                 destination,
                                 conditions,
-                                options.TransferOptions,
+                                options?.TransferOptions ?? new StorageTransferOptions(),
                                 cancellationToken)
                                 .ConfigureAwait(false));
                         }
