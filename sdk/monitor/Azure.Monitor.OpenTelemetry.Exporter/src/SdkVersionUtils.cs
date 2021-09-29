@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // Ignoring part after '+' if it is present.
             string shortVersion = versionString?.Split('+')[0];
 
-            return !string.IsNullOrEmpty(shortVersion) ? shortVersion : new Version().ToString();
+            return shortVersion;
         }
     }
 }
