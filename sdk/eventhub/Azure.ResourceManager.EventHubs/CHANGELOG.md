@@ -1,11 +1,6 @@
 # Release History
 
-## 1.0.0-preview.2 (Unreleased)
-
-- Accept header added to all requests.
-- Collections are now always initialized and collection properties are readonly by default.
-
-## 1.0.0-preview.1
+## 1.0.0-beta.1 (Unreleased)
 
 This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
@@ -21,7 +16,6 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 
 > NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
 
-### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
 The package name has been changed from `Microsoft.Azure.Management.EventHub` to `Azure.ResourceManager.EventHubs`
@@ -85,39 +79,33 @@ var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpd
 ```
 
 After upgrade:
-```csharp
+```C# Snippet:ChangeLog_Sample
 using Azure.Identity;
-using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.EventHubs.Models;
 
- var eventHubsManagementClient = new EventHubsManagementClient(subscriptionId, new DefaultAzureCredential());
- var namespacesOperations = eventHubsManagementClient.Namespaces;
- var eventHubsOperations = eventHubsManagementClient.EventHubs;
+string namespaceName = "myNamespace";
+string eventhubName = "myEventhub";
+string resourceGroupName = "myResourceGroup";
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceGroup resourceGroup = client.DefaultSubscription.GetResourceGroups().Get(resourceGroupName);
+//create namespace
+EHNamespaceData parameters = new EHNamespaceData(Location.WestUS)
+{
+    Sku = new Sku(SkuName.Standard)
+    {
+        Tier = SkuTier.Standard,
+    }
+};
+parameters.Tags.Add("tag1", "value1");
+parameters.Tags.Add("tag2", "value2");
+EHNamespaceContainer eHNamespaceContainer = resourceGroup.GetEHNamespaces();
+EHNamespace eHNamespace = eHNamespaceContainer.CreateOrUpdate(namespaceName, parameters).Value;
 
- var createNamespaceResponse = await namespacesOperations.StartCreateOrUpdateAsync(
-     resourceGroup,
-     namespaceName,
-     new EHNamespace()
-     {
-         Location = "westus",
-         Sku = new Sku(SkuName.Standard)
-         {
-             Tier = SkuTier.Standard,
-         },
-         Tags = new Dictionary<string, string>()
-         {
-             {"tag1", "value1"},
-             {"tag2", "value2"}
-         }
-     });
- await createNamespaceResponse.WaitForCompletionAsync();
-
- // Create Eventhub
- Eventhub eventHub = await eventHubsOperations.CreateOrUpdateAsync(
-     resourceGroup,
-     namespaceName,
-     venthubName,
-     new Eventhub() { MessageRetentionInDays = 5 });
+//create eventhub
+EventhubContainer eventhubContainer = eHNamespace.GetEventhubs();
+Eventhub eventhub = eventhubContainer.CreateOrUpdate(eventhubName, new EventhubData() { MessageRetentionInDays = 5 }).Value;
 ```
 
 #### Object Model Changes
@@ -134,8 +122,7 @@ var createAutorizationRuleParameter = new AuthorizationRule()
 
 After upgrade:
 ```csharp
-var createAutorizationRuleParameter = new AuthorizationRule()
-    {
-        Rights = new List<AccessRights>() { AccessRights.Listen,AccessRights.Send}
-    };
+var createAutorizationRuleParameter = new AuthorizationRuleData();
+createAutorizationRuleParameter.Rights.Add(AccessRights.Listen);
+createAutorizationRuleParameter.Rights.Add(AccessRights.Listen);
 ```
