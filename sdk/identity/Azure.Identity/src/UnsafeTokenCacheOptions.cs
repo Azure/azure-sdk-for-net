@@ -28,9 +28,9 @@ namespace Azure.Identity
         /// Returns the bytes used to initialize the token cache. This would most likely have come from the <see cref="TokenCacheUpdatedArgs"/>.
         /// It is recommended that if this method is overriden, there is no need to provide a duplicate implementation for the parameterless <see cref="RefreshCacheAsync()"/>.
         /// </summary>
-        /// <param name="details">The <see cref="TokenCacheRefreshArgs"/> containing information about the current state of the cache.</param>
+        /// <param name="args">The <see cref="TokenCacheRefreshArgs"/> containing information about the current state of the cache.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of this operation.</param>
-        protected internal virtual async Task<TokenCacheData> RefreshCacheAsync(TokenCacheRefreshArgs details, CancellationToken cancellationToken = default) =>
+        protected internal virtual async Task<TokenCacheData> RefreshCacheAsync(TokenCacheRefreshArgs args, CancellationToken cancellationToken = default) =>
              new() {CacheBytes =  await RefreshCacheAsync().ConfigureAwait(false)};
     }
 }
