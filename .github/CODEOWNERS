@@ -178,8 +178,8 @@
 
 # PRLabel: %Communication
 /sdk/communication/                                     @acsdevx-msft
-/sdk/communication/Azure.Communication.PhoneNumbers     @RoyHerrod @danielav7 @whisper6284 @AlonsoMondal
-/sdk/communication/Azure.Communication.Sms              @RoyHerrod @arifibrahim4
+/sdk/communication/Azure.Communication.PhoneNumbers/     @RoyHerrod @danielav7 @whisper6284 @AlonsoMondal
+/sdk/communication/Azure.Communication.Sms/              @RoyHerrod @arifibrahim4
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute
