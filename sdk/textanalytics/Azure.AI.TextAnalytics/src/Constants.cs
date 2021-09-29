@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics
         {
             string cognitiveServicesEndpointSuffix = CognitiveServicesEndpointSuffix;
             cognitiveServicesEndpointSuffix = cognitiveServicesEndpointSuffix.Substring(1);
-            string defaultCognitiveScope = $"https://{cognitiveServicesEndpointSuffix}/.default)";
+            string defaultCognitiveScope = $"https://{cognitiveServicesEndpointSuffix}/.default";
             return defaultCognitiveScope;
         }
     }
