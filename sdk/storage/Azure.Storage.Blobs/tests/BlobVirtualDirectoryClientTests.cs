@@ -529,6 +529,58 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task UploadDirectory_HttpHeaders()
+        {
+            // Arrange
+            (string SourceDir, string DestDir) directories = await PrepareDirectories();
+            string contentType = "contentType";
+            string contentEncoding = "contentEncoding";
+            string contentLanguage = "contentLanguage";
+            string contentDisposition = "contentDisposition";
+            string cacheControl = "cacheControl";
+
+            try
+            {
+                // Create container
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
+
+                BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions
+                {
+                    HttpHeaders = new BlobDirectoryHttpHeaders
+                    {
+                        ContentType = contentType,
+                        ContentEncoding = contentEncoding,
+                        ContentLanguage = contentLanguage,
+                        ContentDisposition = contentDisposition,
+                        CacheControl = cacheControl
+                    }
+                };
+
+                // Act
+                await client.UploadAsync(directories.SourceDir, options: options);
+
+                // Assert
+                IList<BlobHierarchyItem> blobHierarchyItems = await client.GetBlobsByHierarchyAsync().ToListAsync();
+                foreach (BlobHierarchyItem blobHierarchyItem in blobHierarchyItems)
+                {
+                    Assert.IsTrue(blobHierarchyItem.IsBlob);
+                    Assert.AreEqual(contentType, blobHierarchyItem.Blob.Properties.ContentType);
+                    Assert.AreEqual(contentEncoding, blobHierarchyItem.Blob.Properties.ContentEncoding);
+                    Assert.AreEqual(contentLanguage, blobHierarchyItem.Blob.Properties.ContentLanguage);
+                    Assert.AreEqual(contentDisposition, blobHierarchyItem.Blob.Properties.ContentDisposition);
+                    Assert.AreEqual(cacheControl, blobHierarchyItem.Blob.Properties.CacheControl);
+                }
+            }
+            finally
+            {
+                // Cleanup
+                Directory.Delete(directories.SourceDir, true);
+                Directory.Delete(directories.DestDir, true);
+            }
+        }
+
+        [RecordedTest]
         public async Task ListBlobsFlatSegmentAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

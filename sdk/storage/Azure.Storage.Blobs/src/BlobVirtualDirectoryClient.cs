@@ -657,6 +657,23 @@ namespace Azure.Storage.Blobs.Specialized
 
                     List<Response<BlobContentInfo>> responses = new List<Response<BlobContentInfo>>();
 
+                    BlobUploadOptions blobUploadOptions = new BlobUploadOptions
+                    {
+                        HttpHeaders = new BlobHttpHeaders
+                        {
+                            ContentType = options?.HttpHeaders?.ContentType,
+                            ContentEncoding = options?.HttpHeaders?.ContentEncoding,
+                            ContentLanguage = options?.HttpHeaders?.ContentLanguage,
+                            ContentDisposition = options?.HttpHeaders?.ContentDisposition,
+                            CacheControl = options?.HttpHeaders?.CacheControl
+                        },
+                        Metadata = options?.Metadata,
+                        Tags = options?.Tags,
+                        Conditions = overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                        AccessTier = options?.AccessTier,
+                        TransferOptions = options?.TransferOptions ?? new StorageTransferOptions()
+                    };
+
                     foreach (FileSystemInfo path in pathList)
                     {
                         if (path.GetType() == typeof(FileInfo))
@@ -670,7 +687,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 responses.Add(await GetBlobClient(blobName)
                                    .UploadAsync(
                                        path.FullName.ToString(),
-                                       overwrite,
+                                       blobUploadOptions,
                                        cancellationToken)
                                    .ConfigureAwait(false));
                             });
