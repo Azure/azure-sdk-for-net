@@ -342,7 +342,7 @@ namespace Azure.Test.Perf
                     // Average: NNN,NNN,NNN.NN (14)
                     // CPU: NNN.NN% (7)
                     // Memory: NNN,NNN.NN (10)
-                    return $"{currentCompleted,11:N0}   {totalCompleted,15:N0}   {averageCompleted,14:N2}   {cpuPercentage/100,6:N2}%   " +
+                    return $"{currentCompleted,11:N0}   {totalCompleted,15:N0}   {averageCompleted,14:N2}   {cpuPercentage * 100,6:N2}%   " +
                         $"{workingSetMB,10:N2}M   {privateMemoryMB,13:N2}M";
                 },
                 newLine: true,
@@ -445,7 +445,7 @@ namespace Azure.Test.Perf
             var cpuPercentage = (cpuTime / cpuElapsed) / Environment.ProcessorCount;
 
             Console.WriteLine($"Completed {totalOperations:N0} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
-                $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op, {cpuPercentage/100:N2}% CPU)");
+                $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op, {cpuPercentage * 100:N2}% CPU)");
             Console.WriteLine();
 
             if (latency)
@@ -492,7 +492,7 @@ namespace Azure.Test.Perf
             var percentiles = new double[] { 0.5, 0.75, 0.9, 0.99, 0.999, 0.9999, 0.99999, 1.0 };
             foreach (var percentile in percentiles)
             {
-                Console.WriteLine($"{percentile/100,7:N3}%\t{sortedLatencies[(int)(sortedLatencies.Length * percentile) - 1].TotalMilliseconds,8:N2}ms");
+                Console.WriteLine($"{percentile * 100,7:N3}%   {sortedLatencies[(int)(sortedLatencies.Length * percentile) - 1].TotalMilliseconds,8:N2}ms");
             }
             Console.WriteLine();
         }
