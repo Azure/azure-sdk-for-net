@@ -32,17 +32,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         private static string GetVersion(Type type)
         {
-            string versionString = type
+            try
+            {
+                string versionString = type
                 .Assembly
                 .GetCustomAttributes<AssemblyInformationalVersionAttribute>()
                 .First()
                 .InformationalVersion;
 
-            // Informational version will be something like 1.1.0-beta2+a25741030f05c60c85be102ce7c33f3899290d49.
-            // Ignoring part after '+' if it is present.
-            string shortVersion = versionString?.Split('+')[0];
+                // Informational version will be something like 1.1.0-beta2+a25741030f05c60c85be102ce7c33f3899290d49.
+                // Ignoring part after '+' if it is present.
+                string shortVersion = versionString?.Split('+')[0];
 
-            return shortVersion;
+                return shortVersion;
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.Write($"ErrorInitializingPartOfSdkVersion{EventLevelSuffix.Error}", $"{ex.ToInvariantString()}");
+                return new Version().ToString();
+            }
         }
     }
 }
