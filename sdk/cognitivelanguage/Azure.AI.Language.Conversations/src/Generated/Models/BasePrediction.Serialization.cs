@@ -14,18 +14,21 @@ namespace Azure.AI.Language.Conversations.Models
     {
         internal static BasePrediction DeserializeBasePrediction(JsonElement element)
         {
-            Optional<ProjectKind> projectKind = default;
+            if (element.TryGetProperty("projectType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "workflow": return WorkflowPrediction.DeserializeWorkflowPrediction(element);
+                    case "conversation": return DeepstackPrediction.DeserializeDeepstackPrediction(element);
+                }
+            }
+            ProjectKind projectType = default;
             Optional<string> topIntent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("projectKind"))
+                if (property.NameEquals("projectType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    projectKind = new ProjectKind(property.Value.GetString());
+                    projectType = new ProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("topIntent"))
@@ -34,7 +37,7 @@ namespace Azure.AI.Language.Conversations.Models
                     continue;
                 }
             }
-            return new BasePrediction(Optional.ToNullable(projectKind), topIntent.Value);
+            return new BasePrediction(projectType, topIntent.Value);
         }
     }
 }

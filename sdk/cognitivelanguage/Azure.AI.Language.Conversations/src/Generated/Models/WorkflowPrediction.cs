@@ -24,15 +24,17 @@ namespace Azure.AI.Language.Conversations.Models
             }
 
             Intents = intents;
+            ProjectKind = Models.ProjectKind.Workflow;
         }
 
         /// <summary> Initializes a new instance of WorkflowPrediction. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent&apos;s value also contains the actual response from the target project. </param>
-        internal WorkflowPrediction(ProjectKind? projectKind, string topIntent, IReadOnlyDictionary<string, TargetIntentResult> intents) : base(projectKind, topIntent)
+        internal WorkflowPrediction(ProjectKind projectKind, string topIntent, IReadOnlyDictionary<string, TargetIntentResult> intents) : base(projectKind, topIntent)
         {
             Intents = intents;
+            ProjectKind = projectKind;
         }
 
         /// <summary> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent&apos;s value also contains the actual response from the target project. </summary>

@@ -18,14 +18,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of BasePrediction. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
-        internal BasePrediction(ProjectKind? projectKind, string topIntent)
+        internal BasePrediction(ProjectKind projectKind, string topIntent)
         {
             ProjectKind = projectKind;
             TopIntent = topIntent;
         }
-
-        /// <summary> The type of the project. </summary>
-        public ProjectKind? ProjectKind { get; }
         /// <summary> The intent with the highest score. </summary>
         public string TopIntent { get; }
     }
