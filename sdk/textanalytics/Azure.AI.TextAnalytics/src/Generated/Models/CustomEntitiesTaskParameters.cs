@@ -5,18 +5,35 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The CustomEntitiesTaskParameters. </summary>
     internal partial class CustomEntitiesTaskParameters
     {
         /// <summary> Initializes a new instance of CustomEntitiesTaskParameters. </summary>
-        public CustomEntitiesTaskParameters()
+        /// <param name="projectName"></param>
+        /// <param name="deploymentName"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        public CustomEntitiesTaskParameters(string projectName, string deploymentName)
         {
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            ProjectName = projectName;
+            DeploymentName = deploymentName;
         }
 
-        public string ProjectName { get; set; }
-        public string DeploymentName { get; set; }
+        public string ProjectName { get; }
+        public string DeploymentName { get; }
+        public bool? LoggingOptOut { get; set; }
         public StringIndexType? StringIndexType { get; set; }
     }
 }

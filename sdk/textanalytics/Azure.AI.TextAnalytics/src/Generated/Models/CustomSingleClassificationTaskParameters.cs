@@ -5,17 +5,34 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The CustomSingleClassificationTaskParameters. </summary>
     internal partial class CustomSingleClassificationTaskParameters
     {
         /// <summary> Initializes a new instance of CustomSingleClassificationTaskParameters. </summary>
-        public CustomSingleClassificationTaskParameters()
+        /// <param name="projectName"></param>
+        /// <param name="deploymentName"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        public CustomSingleClassificationTaskParameters(string projectName, string deploymentName)
         {
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+
+            ProjectName = projectName;
+            DeploymentName = deploymentName;
         }
 
-        public string ProjectName { get; set; }
-        public string DeploymentName { get; set; }
+        public string ProjectName { get; }
+        public string DeploymentName { get; }
+        public bool? LoggingOptOut { get; set; }
     }
 }

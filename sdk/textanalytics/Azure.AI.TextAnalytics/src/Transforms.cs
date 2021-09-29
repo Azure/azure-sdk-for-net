@@ -351,6 +351,29 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
+        #region SingleCategoryClassifyResult
+        internal static SingleCategoryClassifyResultCollection ConvertToSingleCategoryClassifyResultCollection(CustomSingleClassificationResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var classifiedCustomCategoryResults = new List<SingleCategoryClassifyResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                classifiedCustomCategoryResults.Add(new SingleCategoryClassifyResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read classifications
+            foreach (SingleClassificationDocument classificationDocument in results.Documents)
+            {
+                classifiedCustomCategoryResults.Add(new SingleCategoryClassifyResult(classificationDocument.Id, classificationDocument.Statistics ?? default, new ClassificationCategory(classificationDocument), ConvertToWarnings(classificationDocument.Warnings)));
+            }
+
+            classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
+
+            return new SingleCategoryClassifyResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ProjectName, results.DeploymentName);
+        }
+        #endregion
+
         #region Analyze Operation
 
         internal static PiiTask ConvertToPiiTask(RecognizePiiEntitiesAction action)
@@ -440,6 +463,16 @@ namespace Azure.AI.TextAnalytics
                 }
             };
         }
+        internal static CustomSingleClassificationTask ConvertToCustomSingleClassificationTask(SingleCategoryClassifyAction action)
+        {
+            return new CustomSingleClassificationTask()
+            {
+                Parameters = new CustomSingleClassificationTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                }
+            };
+        }
 
         internal static IList<EntityLinkingTask> ConvertFromRecognizeLinkedEntitiesActionsToTasks(IReadOnlyCollection<RecognizeLinkedEntitiesAction> recognizeLinkedEntitiesActions)
         {
@@ -513,13 +546,25 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
+        internal static IList<CustomSingleClassificationTask> ConvertFromSingleCategoryClassifyActionsToTasks(IReadOnlyCollection<SingleCategoryClassifyAction> singleCategoryClassifyActions)
+        {
+            List<CustomSingleClassificationTask> list = new List<CustomSingleClassificationTask>();
+
+            foreach (SingleCategoryClassifyAction action in singleCategoryClassifyActions)
+            {
+                list.Add(ConvertToCustomSingleClassificationTask(action));
+            }
+
+            return list;
+        }
+
         private static string[] parseActionErrorTarget(string targetReference)
         {
             if (string.IsNullOrEmpty(targetReference))
             {
                 throw new InvalidOperationException("Expected an error with a target field referencing an action but did not get one");
             }
-            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
             // action could be failed and the target reference is "#/tasks/keyPhraseExtractionTasks/0";
             Match targetMatch = _targetRegex.Match(targetReference);
@@ -542,6 +587,7 @@ namespace Azure.AI.TextAnalytics
             IDictionary<int, TextAnalyticsErrorInternal> entitiesLinkingRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> analyzeSentimentErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> extractSummaryErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+            IDictionary<int, TextAnalyticsErrorInternal> singleCategoryClassifyErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
 
             if (jobState.Errors.Any())
             {
@@ -578,6 +624,10 @@ namespace Azure.AI.TextAnalytics
                     {
                         extractSummaryErrors.Add(taskIndex, error);
                     }
+                    else if ("customSingleClassificationTasks".Equals(taskName))
+                    {
+                        singleCategoryClassifyErrors.Add(taskIndex, error);
+                    }
                     else
                     {
                         throw new InvalidOperationException($"Invalid task name in target reference - {taskName}. \n Additional information: Error code: {error.Code} Error message: {error.Message}");
@@ -591,7 +641,30 @@ namespace Azure.AI.TextAnalytics
                 ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors),
                 ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
                 ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
-                ConvertToExtractSummaryActionsResults(jobState, map, extractSummaryErrors));
+                ConvertToExtractSummaryActionsResults(jobState, map, extractSummaryErrors),
+                ConvertToSingleCategoryClassifyResults(jobState, map, singleCategoryClassifyErrors));
+        }
+
+        private static IReadOnlyCollection<SingleCategoryClassifyActionResult> ConvertToSingleCategoryClassifyResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
+        {
+            var collection = new List<SingleCategoryClassifyActionResult>();
+            int index = 0;
+            foreach (CustomSingleClassificationTasksItem task in jobState.Tasks.CustomSingleClassificationTasks)
+            {
+                tasksErrors.TryGetValue(index, out TextAnalyticsErrorInternal taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new SingleCategoryClassifyActionResult(task.LastUpdateDateTime, taskError));
+                }
+                else
+                {
+                    collection.Add(new SingleCategoryClassifyActionResult(ConvertToSingleCategoryClassifyResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
         }
 
         private static IReadOnlyCollection<AnalyzeSentimentActionResult> ConvertToAnalyzeSentimentActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)

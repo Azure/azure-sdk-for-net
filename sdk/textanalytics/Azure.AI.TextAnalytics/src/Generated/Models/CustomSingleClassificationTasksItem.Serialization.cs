@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TasksStateTasksCustomSingleClassificationTasksItem
+    internal partial class CustomSingleClassificationTasksItem
     {
-        internal static TasksStateTasksCustomSingleClassificationTasksItem DeserializeTasksStateTasksCustomSingleClassificationTasksItem(JsonElement element)
+        internal static CustomSingleClassificationTasksItem DeserializeCustomSingleClassificationTasksItem(JsonElement element)
         {
             Optional<CustomSingleClassificationResult> results = default;
             DateTimeOffset lastUpdateDateTime = default;
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new TasksStateTasksCustomSingleClassificationTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            return new CustomSingleClassificationTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
         }
     }
 }

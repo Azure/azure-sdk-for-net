@@ -11,21 +11,21 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasksCustomSingleClassificationTasksItem. </summary>
-    internal partial class TasksStateTasksCustomSingleClassificationTasksItem : TaskState
+    internal partial class CustomSingleClassificationTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksCustomSingleClassificationTasksItem. </summary>
+        /// <summary> Initializes a new instance of CustomSingleClassificationTasksItem. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
-        internal TasksStateTasksCustomSingleClassificationTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
+        internal CustomSingleClassificationTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksCustomSingleClassificationTasksItem. </summary>
+        /// <summary> Initializes a new instance of CustomSingleClassificationTasksItem. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>
         /// <param name="results"></param>
-        internal TasksStateTasksCustomSingleClassificationTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, CustomSingleClassificationResult results) : base(lastUpdateDateTime, taskName, status)
+        internal CustomSingleClassificationTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, CustomSingleClassificationResult results) : base(lastUpdateDateTime, taskName, status)
         {
             Results = results;
         }
