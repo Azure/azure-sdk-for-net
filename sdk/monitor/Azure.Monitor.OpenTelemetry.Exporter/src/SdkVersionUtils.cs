@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.Write($"ErrorInitializingPartOfSdkVersion{EventLevelSuffix.Error}", $"{ex.ToInvariantString()}");
-                return new Version().ToString();
+                return null;
             }
         }
     }
