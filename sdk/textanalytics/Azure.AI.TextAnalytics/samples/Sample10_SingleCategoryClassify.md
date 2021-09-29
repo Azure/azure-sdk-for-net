@@ -28,7 +28,7 @@ var batchInput = new List<string>
     document
 };
 
-//Set project and deployment names of the target model
+// Set project and deployment names of the target model
 string projectName = "<projectName>";
 string deploymentName = "<deploymentName>";
 

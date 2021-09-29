@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 document
             };
 
-            //declare project and deployment names of the target model
+            // Set project and deployment names of the target model
 #if SNIPPET
             string projectName = "<projectName>";
             string deploymentName = "<deploymentName>";
