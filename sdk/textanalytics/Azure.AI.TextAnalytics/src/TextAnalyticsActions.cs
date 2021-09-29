@@ -57,8 +57,17 @@ namespace Azure.AI.TextAnalytics
         /// Note that currently only one <see cref="ExtractSummaryAction"/> is supported.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_1"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
         /// </remarks>
         public IReadOnlyCollection<ExtractSummaryAction> ExtractSummaryActions { get; set; }
+
+        /// <summary>
+        /// The set of <see cref="SingleCategoryClassifyAction"/> that will get executed on the input documents.
+        /// Note that currently only one <see cref="SingleCategoryClassifyAction"/> is supported.
+        /// </summary>
+        /// <remarks>
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
+        /// </remarks>
+        public IReadOnlyCollection<SingleCategoryClassifyAction> SingleCategoryClassifyActions { get; set; }
     }
 }

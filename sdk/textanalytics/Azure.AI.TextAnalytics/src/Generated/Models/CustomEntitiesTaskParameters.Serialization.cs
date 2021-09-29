@@ -15,15 +15,14 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProjectName))
+            writer.WritePropertyName("project-name");
+            writer.WriteStringValue(ProjectName);
+            writer.WritePropertyName("deployment-name");
+            writer.WriteStringValue(DeploymentName);
+            if (Optional.IsDefined(LoggingOptOut))
             {
-                writer.WritePropertyName("projectName");
-                writer.WriteStringValue(ProjectName);
-            }
-            if (Optional.IsDefined(DeploymentName))
-            {
-                writer.WritePropertyName("deploymentName");
-                writer.WriteStringValue(DeploymentName);
+                writer.WritePropertyName("loggingOptOut");
+                writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             if (Optional.IsDefined(StringIndexType))
             {

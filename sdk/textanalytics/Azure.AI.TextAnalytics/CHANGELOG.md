@@ -3,6 +3,7 @@
 ## 5.2.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added property `SingleCategoryClassifyAction` to `TextAnalyticsActions` to support the new 'Custom Single Classification' API. This action can be used to get a custom classification for an input document or batch of documents.
 
 ### Breaking Changes
 

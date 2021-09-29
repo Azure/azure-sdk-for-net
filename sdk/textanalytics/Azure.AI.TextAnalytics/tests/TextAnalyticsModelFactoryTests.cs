@@ -136,6 +136,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 TextAnalyticsModelFactory.AnalyzeSentimentActionResult(default, default)
             };
 
+            var singleCategoryClassifyActionResults = new List<SingleCategoryClassifyActionResult>()
+            {
+                TextAnalyticsModelFactory.SingleCategoryClassifyActionResult(default, default),
+                TextAnalyticsModelFactory.SingleCategoryClassifyActionResult(default, default)
+            };
+
             var actionsResult = TextAnalyticsModelFactory.AnalyzeActionsResult(
                 extractKeyPhrasesActionResults,
                 recognizeEntitiesActionResults,
@@ -162,7 +168,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 recognizePiiEntitiesActionResults,
                 recognizeLinkedEntitiesActionResults,
                 analyzeSentimentActionResults,
-                extractSummaryActionResults);
+                extractSummaryActionResults,
+                singleCategoryClassifyActionResults);
 
             CollectionAssert.AreEquivalent(extractKeyPhrasesActionResults, actionsResult.ExtractKeyPhrasesResults);
             CollectionAssert.AreEquivalent(recognizeEntitiesActionResults, actionsResult.RecognizeEntitiesResults);
@@ -170,6 +177,7 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(recognizeLinkedEntitiesActionResults, actionsResult.RecognizeLinkedEntitiesResults);
             CollectionAssert.AreEquivalent(analyzeSentimentActionResults, actionsResult.AnalyzeSentimentResults);
             CollectionAssert.AreEquivalent(extractSummaryActionResults, actionsResult.ExtractSummaryResults);
+            CollectionAssert.AreEquivalent(singleCategoryClassifyActionResults, actionsResult.SingleCategoryClassifyResults);
         }
 
         [Test]

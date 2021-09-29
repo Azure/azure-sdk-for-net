@@ -1,0 +1,152 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Content-Length": "565",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-8135ee7f51ca0343ac6f27a821fccca5-84b81837399c8445-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210926.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "3c8be6aa35e8db5723a8c915994557b6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "1",
+              "text": "I need a reservation for an indoor restaurant in China. Please don\u0027t stop the music. Play music and add it to my playlist",
+              "language": "en"
+            },
+            {
+              "id": "2",
+              "text": "David Schmidt, senior vice president--Food Safety, International Food Information Council (IFIC), Washington, D.C., discussed the physical activity component.",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": {
+          "customSingleClassificationTasks": [
+            {
+              "parameters": {
+                "project-name": "659c1851-be0b-4142-b12a-087da9785926",
+                "deployment-name": "659c1851-be0b-4142-b12a-087da9785926"
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "2e2cc6f2-0d26-44a3-8de5-77a37430f005",
+        "Date": "Sun, 26 Sep 2021 17:32:26 GMT",
+        "operation-location": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze/jobs/6f49993b-a337-4871-9f72-4a3ad40e6992",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "198"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze/jobs/6f49993b-a337-4871-9f72-4a3ad40e6992?showStats=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210926.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "0ebd3431940a663a14ca52143b4f08e9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ff5e2bb7-b8c9-4fb3-b691-96edace4df83",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 26 Sep 2021 17:32:27 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "69"
+      },
+      "ResponseBody": {
+        "jobId": "6f49993b-a337-4871-9f72-4a3ad40e6992",
+        "lastUpdateDateTime": "2021-09-26T17:32:27Z",
+        "createdDateTime": "2021-09-26T17:32:27Z",
+        "expirationDateTime": "2021-09-27T17:32:27Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "customSingleClassificationTasks": [
+            {
+              "lastUpdateDateTime": "2021-09-26T17:32:27.7779344Z",
+              "state": "succeeded",
+              "results": {
+                "statistics": {
+                  "documentsCount": 2,
+                  "validDocumentsCount": 2,
+                  "erroneousDocumentsCount": 0,
+                  "transactionsCount": 2
+                },
+                "documents": [
+                  {
+                    "id": "1",
+                    "classification": {
+                      "category": "BookRestaurant",
+                      "confidenceScore": 1.0
+                    },
+                    "statistics": {
+                      "charactersCount": 121,
+                      "transactionsCount": 1
+                    },
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "classification": {
+                      "category": "RateBook",
+                      "confidenceScore": 0.57
+                    },
+                    "statistics": {
+                      "charactersCount": 158,
+                      "transactionsCount": 1
+                    },
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "projectName": "659c1851-be0b-4142-b12a-087da9785926",
+                "deploymentName": "659c1851-be0b-4142-b12a-087da9785926"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1016445064",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveweppe.azure-api.net"
+  }
+}

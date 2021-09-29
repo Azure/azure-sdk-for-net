@@ -5,8 +5,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
+    /// <summary>
+    /// CustomEntitiesTaskParameters class.
+    /// </summary>
     [CodeGenModel("CustomEntitiesTaskParameters")]
-    internal partial class CustomEntitiesTaskParameters
-    {
-    }
+    internal partial class CustomEntitiesTaskParameters { }
 }
