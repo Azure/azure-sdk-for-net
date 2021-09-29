@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.EventHubs
         }
         /// <summary> List all Event Hubs Namespace IDs in an Event Hubs Dedicated Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<EHNamespaceIdContainer>>> GetNamespacesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<SubResource>>> GetNamespacesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Cluster.GetNamespaces");
             scope.Start();
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> List all Event Hubs Namespace IDs in an Event Hubs Dedicated Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<EHNamespaceIdContainer>> GetNamespaces(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<SubResource>> GetNamespaces(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Cluster.GetNamespaces");
             scope.Start();

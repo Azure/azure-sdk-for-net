@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.AreEqual(cluster.Data.Name, clusterName);
 
             //get the namespace under cluster
-            IReadOnlyList<EHNamespaceIdContainer> namspaceIds=(await cluster.GetNamespacesAsync()).Value;
+            IReadOnlyList<SubResource> namspaceIds=(await cluster.GetNamespacesAsync()).Value;
 
             //update the cluster
             cluster.Data.Tags.Add("key", "value");
