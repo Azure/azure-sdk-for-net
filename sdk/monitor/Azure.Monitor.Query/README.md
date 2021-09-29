@@ -32,17 +32,14 @@ dotnet add package Azure.Monitor.Query
 
 An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class. Pass it to the constructor of your `LogsQueryClient` or `MetricsQueryClient` class.
 
-To authenticate, the following example uses `DefaultAzureCredential` from the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package:
+To authenticate, the following examples use `DefaultAzureCredential` from the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package:
 
-```csharp
-//using Azure.Identity;
-//using Azure.Monitor.Query;
+```C# Snippet:CreateLogsClient
+var client = new LogsQueryClient(new DefaultAzureCredential());
+```
 
-var credential = new DefaultAzureCredential();
-
-var logsQueryClient = new LogsQueryClient(credential);
-// or
-var metricsQueryClient = new MetricsQueryClient(credential);
+```C# Snippet:CreateMetricsClient
+var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
 ```
 
 ### Execute the query
