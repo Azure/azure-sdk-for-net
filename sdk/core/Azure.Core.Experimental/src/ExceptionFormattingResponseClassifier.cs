@@ -62,7 +62,7 @@ namespace Azure.Core.Pipeline
 
             string? content = ClientDiagnostics.ReadContentAsync(response, false).EnsureCompleted();
             ClientDiagnostics.ExtractAzureErrorContent(content, ref message, ref errorCode);
-            _exceptionMessage = ClientDiagnostics.CreateRequestFailedMessageWithContent(response, message, content, errorCode, _messageSanitizer);
+            _exceptionMessage = ClientDiagnostics.CreateRequestFailedMessageWithContent(response, message, content, errorCode, null, _messageSanitizer);
             _errorCode = errorCode;
             _computedExceptionDetails = true;
         }

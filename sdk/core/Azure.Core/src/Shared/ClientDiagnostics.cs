@@ -140,17 +140,13 @@ namespace Azure.Core.Pipeline
 
         public string CreateRequestFailedMessageWithContent(Response response, string? message, string? content, string? errorCode, IDictionary<string, string>? additionalInfo)
         {
-            StringBuilder messageBuilder = new StringBuilder();
-
-            AppendResponseDetails(messageBuilder, response, message, errorCode);
-            AppendAdditionalInfo(messageBuilder, additionalInfo);
-            AppendResponseContent(messageBuilder, content, response.Headers, _sanitizer);
-
-            return messageBuilder.ToString();
+            return CreateRequestFailedMessageWithContent(response, message, content, errorCode, additionalInfo, _sanitizer);
         }
 
-        private static void AppendResponseDetails(StringBuilder messageBuilder, Response response, string? message, string? errorCode)
+        internal static string CreateRequestFailedMessageWithContent(Response response, string? message, string? content, string? errorCode, IDictionary<string, string>? additionalInfo, HttpMessageSanitizer sanitizer)
         {
+            StringBuilder messageBuilder = new StringBuilder();
+
             messageBuilder
                 .AppendLine(message ?? DefaultMessage)
                 .Append("Status: ")
@@ -173,10 +169,7 @@ namespace Azure.Core.Pipeline
                     .Append(errorCode)
                     .AppendLine();
             }
-        }
 
-        private static void AppendAdditionalInfo(StringBuilder messageBuilder, IDictionary<string, string>? additionalInfo)
-        {
             if (additionalInfo != null && additionalInfo.Count > 0)
             {
                 messageBuilder
@@ -190,10 +183,7 @@ namespace Azure.Core.Pipeline
                         .AppendLine(info.Value);
                 }
             }
-        }
 
-        private static void AppendResponseContent(StringBuilder messageBuilder, string? content, ResponseHeaders headers, HttpMessageSanitizer sanitizer)
-        {
             if (content != null)
             {
                 messageBuilder
@@ -206,19 +196,11 @@ namespace Azure.Core.Pipeline
                 .AppendLine()
                 .AppendLine("Headers:");
 
-            foreach (HttpHeader responseHeader in headers)
+            foreach (HttpHeader responseHeader in response.Headers)
             {
                 string headerValue = sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
                 messageBuilder.AppendLine($"{responseHeader.Name}: {headerValue}");
             }
-        }
-
-        internal static string CreateRequestFailedMessageWithContent(Response response, string? message, string? content, string? errorCode, HttpMessageSanitizer sanitizer)
-        {
-            StringBuilder messageBuilder = new StringBuilder();
-
-            AppendResponseDetails(messageBuilder, response, message, errorCode);
-            AppendResponseContent(messageBuilder, content, response.Headers, sanitizer);
 
             return messageBuilder.ToString();
         }
