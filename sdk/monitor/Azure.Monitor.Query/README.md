@@ -90,7 +90,7 @@ You can query logs using the `LogsQueryClient.QueryAsync` method. The result is 
 ```C# Snippet:QueryLogsAsTable
 string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
-Response<LogsQueryResult> response = await client.QueryAsync(
+Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
     new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -137,7 +137,7 @@ var client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureC
 string workspaceId = "<workspace_id>";
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(
+Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryWorkspaceAsync<MyLogEntryModel>(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
     new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -158,7 +158,7 @@ string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(
+Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
     new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -177,7 +177,7 @@ You can also dynamically inspect the list of columns. The following example prin
 string workspaceId = "<workspace_id>";
 
 var client = new LogsQueryClient(new DefaultAzureCredential());
-Response<LogsQueryResult> response = await client.QueryAsync(
+Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
     new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -216,11 +216,11 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 // And total event count
 var batch = new LogsBatchQuery();
 
-string countQueryId = batch.AddQuery(
+string countQueryId = batch.AddWorkspaceQuery(
     workspaceId,
     "AzureActivity | count",
     new QueryTimeRange(TimeSpan.FromDays(1)));
-string topQueryId = batch.AddQuery(
+string topQueryId = batch.AddWorkspaceQuery(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
     new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -249,7 +249,7 @@ string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
     workspaceId,
     "AzureActivity | summarize count()",
     new QueryTimeRange(TimeSpan.FromDays(1)),
@@ -275,7 +275,7 @@ string additionalWorkspaceId = "<additional_workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
     workspaceId,
     "AzureActivity | summarize count()",
     new QueryTimeRange(TimeSpan.FromDays(1)),
@@ -306,7 +306,7 @@ string resourceId =
 
 var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
 
-Response<MetricsQueryResult> results = await metricsClient.QueryAsync(
+Response<MetricsQueryResult> results = await metricsClient.QueryResourceAsync(
     resourceId,
     new[] {"Microsoft.OperationalInsights/workspaces"}
 );
@@ -366,7 +366,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 
 try
 {
-    await client.QueryAsync(
+    await client.QueryWorkspaceAsync(
         workspaceId, "My Not So Valid Query", new QueryTimeRange(TimeSpan.FromDays(1)));
 }
 catch (Exception e)

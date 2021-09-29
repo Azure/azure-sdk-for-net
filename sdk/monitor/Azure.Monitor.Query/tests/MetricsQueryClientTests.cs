@@ -23,7 +23,7 @@ namespace Azure.Monitor.Query.Tests
                 Transport = mockTransport
             });
 
-            await client.QueryAsync("rid", new string[]{});
+            await client.QueryResourceAsync("rid", new string[]{});
             StringAssert.StartsWith("https://management.azure.com", mockTransport.SingleRequest.Uri.ToString());
         }
 
@@ -47,7 +47,7 @@ namespace Azure.Monitor.Query.Tests
                 Audience = scope == null ? (MetricsQueryClientAudience?)null : new MetricsQueryClientAudience(scope)
             });
 
-            await client.QueryAsync("", new string[]{});
+            await client.QueryResourceAsync("", new string[]{});
             Assert.AreEqual(new[] { expectedScope }, scopes);
         }
 

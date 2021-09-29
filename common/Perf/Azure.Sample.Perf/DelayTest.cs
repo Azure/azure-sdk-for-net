@@ -11,14 +11,11 @@ namespace Azure.Sample.Perf
 {
     public class DelayTest : PerfTest<DelayTest.DelayOptions>
     {
-        private static int _instanceCount = 0;
         private TimeSpan _delay;
 
         public DelayTest(DelayTest.DelayOptions options) : base(options)
         {
-            var instanceCount = Interlocked.Increment(ref _instanceCount) - 1;
-
-            _delay = TimeSpan.FromMilliseconds(options.InitialDelayMs * Math.Pow(options.InstanceGrowthFactor, instanceCount));
+            _delay = TimeSpan.FromMilliseconds(options.InitialDelayMs * Math.Pow(options.InstanceGrowthFactor, ParallelIndex));
         }
 
         public override void Run(CancellationToken cancellationToken)
@@ -35,17 +32,17 @@ namespace Azure.Sample.Perf
 
         public class DelayOptions : PerfOptions
         {
-            [Option("initialDelayMs", Default = 1000, HelpText = "Initial delay (in milliseconds)")]
+            [Option("initial-delay-ms", Default = 1000, HelpText = "Initial delay (in milliseconds)")]
             public int InitialDelayMs { get; set; }
 
             // Used for verifying the perf framework correctly computes average throughput across parallel tests of different speed.
             // Each instance of this test completes operations at a different rate, to allow for testing scenarios where
             // some instances are still waiting when time expires.  The first instance completes in 1 second per operation,
             // the second instance in 2 seconds, the third instance in 4 seconds, and so on.
-            [Option("instanceGrowthFactor", Default = 1, HelpText = "Instance growth factor.  The delay of instance N will be (InitialDelayMS * (InstanceGrowthFactor ^ InstanceCount)).")]
+            [Option("instance-growth-factor", Default = 1, HelpText = "Instance growth factor.  The delay of instance N will be (InitialDelayMS * (InstanceGrowthFactor ^ InstanceCount)).")]
             public double InstanceGrowthFactor { get; set; }
 
-            [Option("iterationGrowthFactor", Default = 1, HelpText = "Iteration growth factor.  The delay of iteration N will be (InitialDelayMS * (IterationGrowthFactor ^ IterationCount)).")]
+            [Option("iteration-growth-factor", Default = 1, HelpText = "Iteration growth factor.  The delay of iteration N will be (InitialDelayMS * (IterationGrowthFactor ^ IterationCount)).")]
             public double IterationGrowthFactor { get; set; }
         }
     }
