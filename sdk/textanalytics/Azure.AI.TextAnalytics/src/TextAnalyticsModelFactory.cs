@@ -545,14 +545,14 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyResultCollection"/> for mocking purposes.
         /// </summary>
-        /// <param name="list">Sets the collection of <see cref="TextAnalytics.MultiCategoryClassifyResultCollection"/>.</param>
+        /// <param name="classificationResultList">Sets the collection of <see cref="TextAnalytics.MultiCategoryClassifyResultCollection"/>.</param>
         /// <param name="statistics">Sets the <see cref="MultiCategoryClassifyResultCollection.Statistics"/> property.</param>
         /// <param name="projectName">Sets the <see cref="MultiCategoryClassifyResultCollection.ProjectName"/> property.</param>
         /// <param name="deploymentName">Sets the <see cref="MultiCategoryClassifyResultCollection.DeploymentName"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyResultCollection"/> for mocking purposes.</returns>
-        public static MultiCategoryClassifyResultCollection MultiCategoryClassifyResultCollection(IEnumerable<MultiCategoryClassifyResult> list, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
+        public static MultiCategoryClassifyResultCollection MultiCategoryClassifyResultCollection(IEnumerable<MultiCategoryClassifyResult> classificationResultList, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
         {
-            return new MultiCategoryClassifyResultCollection(list.ToList(), statistics, projectName, deploymentName);
+            return new MultiCategoryClassifyResultCollection(classificationResultList.ToList(), statistics, projectName, deploymentName);
         }
 
         /// <summary>

@@ -18,8 +18,6 @@ namespace Azure.AI.TextAnalytics.Samples
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string projectName = TestEnvironment.MultiClassificationProjectName;
-            string deploymentName = TestEnvironment.MultiClassificationDeploymentName;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -35,6 +33,15 @@ namespace Azure.AI.TextAnalytics.Samples
                      Language = "en",
                 }
             };
+
+            // Set project and deployment names of the target model
+#if SNIPPET
+            string projectName = "<projectName>";
+            string deploymentName = "<deploymentName>";
+#else
+            string projectName = TestEnvironment.MultiClassificationProjectName;
+            string deploymentName = TestEnvironment.MultiClassificationDeploymentName;
+#endif
 
             var multiCategoryClassifyAction = new MultiCategoryClassifyAction(projectName, deploymentName);
 
@@ -75,28 +82,12 @@ namespace Azure.AI.TextAnalytics.Samples
             // View operation results.
             foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {
-                IReadOnlyCollection<MultiCategoryClassifyActionResult> classificationResultsCollection = documentsInPage.MultiCategoryClassifyResults;
+                IReadOnlyCollection<MultiCategoryClassifyActionResult> multiClassificationActionResults = documentsInPage.MultiCategoryClassifyResults;
 
-                foreach (MultiCategoryClassifyActionResult classificationActionResults in classificationResultsCollection)
+                foreach (MultiCategoryClassifyActionResult classificationActionResults in multiClassificationActionResults)
                 {
-                    if (classificationActionResults.HasError)
-                    {
-                        Console.WriteLine($"  Error!");
-                        Console.WriteLine($"  Action error code: {classificationActionResults.Error.ErrorCode}.");
-                        Console.WriteLine($"  Message: {classificationActionResults.Error.Message}");
-                        continue;
-                    }
-
                     foreach (MultiCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
-                        if (documentResults.HasError)
-                        {
-                            Console.WriteLine($"  Error!");
-                            Console.WriteLine($"  Document error code: {documentResults.Error.ErrorCode}.");
-                            Console.WriteLine($"  Message: {documentResults.Error.Message}");
-                            continue;
-                        }
-
                         if (documentResults.ClassificationCategories.Count > 0)
                         {
                             Console.WriteLine($"  The following classes were predicted for this document:");

@@ -7,7 +7,7 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the execution of an <see cref="MultiCategoryClassifyAction"/> on the input documents.
+    /// The result of the execution of a <see cref="MultiCategoryClassifyAction"/> on the input documents.
     /// </summary>
     public class MultiCategoryClassifyActionResult : TextAnalyticsActionResult
     {
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics
             : base(completedOn, error) { }
 
         /// <summary>
-        /// Gets the result of the execution of an <see cref="MultiCategoryClassifyAction"/> per each input document.
+        /// Gets the result of the execution of a <see cref="MultiCategoryClassifyAction"/> per each input document.
         /// </summary>
         public MultiCategoryClassifyResultCollection DocumentsResults
         {

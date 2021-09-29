@@ -5,8 +5,8 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Configurations that allow callers to specify details about how to execute
-    /// a Multi Category Classify action on a set of documents. This corresponds
-    /// to a Multi Classification task in the text analytics service.
+    /// a Multi Category Classification action on a set of documents. This corresponds
+    /// to a Multi Classification task in the Text Analytics service.
     /// For example, the target project and deployment names are required
     /// for a successful custom classification action.
     /// </summary>
@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="MultiCategoryClassifyAction"/>
         /// class which allows callers to specify details about how to execute
-        /// a Multi Category Classify action on a set of documents.
+        /// a Multi Category Classification action on a set of documents.
         /// Sets the <see cref="ProjectName"/> and <see cref="DeploymentName"/> properties.
         /// </summary>
         public MultiCategoryClassifyAction(string projectName, string deploymentName)
@@ -25,16 +25,12 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the value of the property corresponding to the name of the
-        /// target project for this action. This property is set when calling
-        /// the <see cref="MultiCategoryClassifyAction"/> constructor.
+        /// Gets the value of the property corresponding to the name of the target project
         /// </summary>
         public string ProjectName { get; }
 
         /// <summary>
-        /// Gets the value of the property corresponding to the name of the
-        /// deployment for this action. This property is set when calling
-        /// the <see cref="MultiCategoryClassifyAction"/> constructor.
+        /// Gets the value of the property corresponding to the name of the target deployment.
         /// </summary>
         public string DeploymentName { get; }
 

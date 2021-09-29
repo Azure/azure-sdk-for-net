@@ -1,5 +1,5 @@
 # Perform Custom Multiple Category Classification in Documents
-This sample demonstrates how to run a Multi Category Classify action in one or more documents. To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
+This sample demonstrates how to run a Multi Category Classification action in one or more documents. To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
@@ -15,7 +15,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 ## Performing Custom Multiple Category Classification in one or multiple documents
 
-To perform Multiple Category Classification in one or multiple documents, set up an `MultiCategoryClassifyAction` and call `StartAnalyzeActionsAsync` on the documents. The result is a Long Running operation of type `AnalyzeActionsOperation` which polls for the results from the API.
+To perform Multiple Category Classification in one or multiple documents, set up a `MultiCategoryClassifyAction` and call `StartAnalyzeActionsAsync` on the documents. The result is a Long Running Operation of type `AnalyzeActionsOperation` which polls for the results from the API.
 
 ```C# Snippet:TextAnalyticsMultiCategoryClassifyAsync
 // Get input document.
@@ -27,6 +27,10 @@ var batchInput = new List<string>
 {
     document
 };
+
+// Set project and deployment names of the target model
+string projectName = "<projectName>";
+string deploymentName = "<deploymentName>";
 
 var multiCategoryClassifyAction = new MultiCategoryClassifyAction(projectName, deploymentName);
 
@@ -62,28 +66,12 @@ To view the final results of the long-running operation:
 // View operation results.
 await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
 {
-    IReadOnlyCollection<MultiCategoryClassifyActionResult> classificationResultsCollection = documentsInPage.MultiCategoryClassifyResults;
+    IReadOnlyCollection<MultiCategoryClassifyActionResult> multiClassificationActionResults = documentsInPage.MultiCategoryClassifyResults;
 
-    foreach (MultiCategoryClassifyActionResult classificationActionResults in classificationResultsCollection)
+    foreach (MultiCategoryClassifyActionResult classificationActionResults in multiClassificationActionResults)
     {
-        if (classificationActionResults.HasError)
-        {
-            Console.WriteLine($"  Error!");
-            Console.WriteLine($"  Action error code: {classificationActionResults.Error.ErrorCode}.");
-            Console.WriteLine($"  Message: {classificationActionResults.Error.Message}");
-            continue;
-        }
-
         foreach (MultiCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
         {
-            if (documentResults.HasError)
-            {
-                Console.WriteLine($"  Error!");
-                Console.WriteLine($"  Document error code: {documentResults.Error.ErrorCode}.");
-                Console.WriteLine($"  Message: {documentResults.Error.Message}");
-                continue;
-            }
-
             if (documentResults.ClassificationCategories.Count > 0)
             {
                 Console.WriteLine($"  The following classes were predicted for this document:");
