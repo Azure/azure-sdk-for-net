@@ -21,8 +21,7 @@ namespace Azure.AI.Language.Conversations.Tests
         private static List<string> ExpectedOutput = new List<string>()
         {
             "2 plates",
-            "seared salmon nigiri",
-            "2 plates of seared salmon nigiri"
+            "seared salmon nigiri"
         };
 
         [RecordedTest]
@@ -73,8 +72,8 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.That(deepstackPrediction.TopIntent, Is.EqualTo("Order"));
 
             IList<string> entitiesText = deepstackPrediction.Entities.Select(entity => entity.Text).ToList();
-            Assert.That(entitiesText, Has.Count.AtLeast(1));
-            Assert.That(entitiesText, Is.SubsetOf(ExpectedOutput));
+            Assert.That(entitiesText, Has.Count.EqualTo(2));
+            Assert.That(entitiesText, Is.EqualTo(ExpectedOutput));
         }
 
         [RecordedTest]
