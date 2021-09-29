@@ -54,9 +54,8 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             options = new OnBehalfOfCredentialOptions();
-            options.AllowMultiTenantAuthentication = allowMultiTenantAuthentication;
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, options.AllowMultiTenantAuthentication);
+            expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context);
             OnBehalfOfCredential client = InstrumentClient(
                 new OnBehalfOfCredential(
                     TenantId,

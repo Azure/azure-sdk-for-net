@@ -6,6 +6,7 @@ using System.Threading;
 
 namespace Azure.Test.Perf
 {
+    // Adapted from https://devblogs.microsoft.com/pfxteam/getting-random-numbers-in-a-thread-safe-way/
     public static class ThreadsafeRandom
     {
         private static readonly Random _globalRandom = new Random();

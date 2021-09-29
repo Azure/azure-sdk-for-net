@@ -10,7 +10,7 @@ namespace Azure.Test.Perf
         public static string CreateAlphanumeric(int length)
         {
             var buffer = new char[length];
-            for (var i=0; i < length; i++)
+            for (var i = 0; i < length; i++)
             {
                 buffer[i] = _alphanumeric[ThreadsafeRandom.Next(_alphanumeric.Length)];
             }
