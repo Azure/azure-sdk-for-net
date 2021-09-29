@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="provisioningState">Resource provisioning state</param>
         /// <param name="encryption">The encryption details of the
         /// workspace</param>
-        /// <param name="publicNetworkAccess">Enable or Disable pubic network
+        /// <param name="publicNetworkAccess">Enable or Disable public network
         /// access to workspace. Possible values include: 'Enabled',
         /// 'Disabled'</param>
         public WorkspacePatchInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedIdentity identity = default(ManagedIdentity), string sqlAdministratorLoginPassword = default(string), ManagedVirtualNetworkSettings managedVirtualNetworkSettings = default(ManagedVirtualNetworkSettings), WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default(WorkspaceRepositoryConfiguration), PurviewConfiguration purviewConfiguration = default(PurviewConfiguration), string provisioningState = default(string), EncryptionDetails encryption = default(EncryptionDetails), string publicNetworkAccess = default(string))
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public EncryptionDetails Encryption { get; set; }
 
         /// <summary>
-        /// Gets or sets enable or Disable pubic network access to workspace.
+        /// Gets or sets enable or Disable public network access to workspace.
         /// Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]

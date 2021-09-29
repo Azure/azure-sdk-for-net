@@ -15,16 +15,16 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DataFeedRollupType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedRollupType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFeedRollupType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NoRollupValue = "NoRollup";
-        private const string NeedRollupValue = "NeedRollup";
-        private const string AlreadyRollupValue = "AlreadyRollup";
+        private const string NoRollupNeededValue = "NoRollup";
+        private const string RollupNeededValue = "NeedRollup";
+        private const string AlreadyRolledUpValue = "AlreadyRollup";
         /// <summary> Determines if two <see cref="DataFeedRollupType"/> values are the same. </summary>
         public static bool operator ==(DataFeedRollupType left, DataFeedRollupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedRollupType"/> values are not the same. </summary>

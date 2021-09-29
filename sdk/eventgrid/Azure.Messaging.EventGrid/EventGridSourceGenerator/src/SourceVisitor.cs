@@ -43,11 +43,7 @@ namespace EventGridSourceGenerator
                     new SystemEventNode()
                     {
                         EventName = symbol.Name,
-                        EventType = 
-                            // temporary workaround until https://github.com/Azure/azure-rest-api-specs/pull/14261/ is merged
-                            type == @"""Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListenersEvent""" ? 
-                                @"""Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListener""" 
-                                : type,
+                        EventType = type,
                         DeserializeMethod = symbol.MemberNames.Single(m => m.StartsWith("Deserialize"))
                     });
             }

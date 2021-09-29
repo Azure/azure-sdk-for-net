@@ -1,5 +1,7 @@
 # Azure.Containers.ContainerRegistry Samples - Hello World (sync)
 
+The following sample illustrates how to list repositories in a registry, and handle errors that might arise.
+
 ## Import the namespaces
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_Namespaces
@@ -15,9 +17,13 @@ Create a `ContainerRegistryClient` and send a request.
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+    });
 
-// Perform an operation
+// Get the collection of repository names from the registry
 Pageable<string> repositories = client.GetRepositoryNames();
 foreach (string repository in repositories)
 {
@@ -34,7 +40,11 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a ContainerRepository class for an invalid repository
 string fakeRepositoryName = "doesnotexist";
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+    });
 ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
 try

@@ -1,6 +1,6 @@
 # Azure SDK diagnostics
 
-**NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`. The samples make use of the `SecretClientOptions` type, but the same functionality is available for any of the `Azure.` packages that contain client options types that derive from [ClientOptions](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/src/ClientOptions.cs), e.g. `BlobClientOptions`, `TextAnalyticsClientOptions`, etc.
+**NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`. The samples make use of the `SecretClientOptions` type, but the same functionality is available for any of the `Azure.` packages that contain client options types that derive from [ClientOptions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/ClientOptions.cs), e.g. `BlobClientOptions`, `TextAnalyticsClientOptions`, etc.
 
 ## Logging
 
@@ -70,7 +70,7 @@ SecretClientOptions options = new SecretClientOptions()
 
 ### ASP.NET Core applications
 
-If your are using Azure SDK libraries in ASP.NET Core application consider using the `Microsoft.Extensions.Azure` package that provides integration with `Microsoft.Extensions.Logging` library. See [Microsoft.Extensions.Azure readme](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/extensions/Microsoft.Extensions.Azure/README.md) for more details.
+If your are using Azure SDK libraries in ASP.NET Core application consider using the `Microsoft.Extensions.Azure` package that provides integration with `Microsoft.Extensions.Logging` library. See [Microsoft.Extensions.Azure readme](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extensions/Microsoft.Extensions.Azure/README.md) for more details.
 
 
 ### Custom logging callback
@@ -94,7 +94,7 @@ Azure SDKs are instrumented for distributed tracing using ApplicationsInsights o
 
 Application Insights, a feature of Azure Monitor, is an extensible Application Performance Management (APM) service for developers and DevOps professionals. Use it to monitor your live applications. It will automatically detect performance anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually do with your app
 
-If you application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`. 
+If your application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`. 
 
 To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
 
@@ -103,7 +103,7 @@ To setup ApplicationInsights tracking for your application follow the [Start Mon
 Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
 
 ### Sample
-To see an example of distributed tracing in action, take a look at our [sample app](https://github.com/Azure/azure-sdk-for-net/blob/master/samples/linecounter/README.md) that combines several Azure SDKs.
+To see an example of distributed tracing in action, take a look at our [sample app](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/linecounter/README.md) that combines several Azure SDKs.
 
 ## Setting x-ms-client-request-id value sent with requests
 

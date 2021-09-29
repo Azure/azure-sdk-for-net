@@ -25,6 +25,7 @@
     <PackageReference Include="Polly" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.9.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">

@@ -9,7 +9,7 @@
 - Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 5.0.200 SDK** for your specific platform. (or a higher version within the 5.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/5.0)
+- Install **.NET Core 5.0.301 SDK** for your specific platform. (or a higher version within the 5.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/5.0)
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (14.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
@@ -58,7 +58,7 @@ Nuget package will be created in root directory under \artifacts\packages\Debug 
 Run e.g. `msbuild eng\mgmt.proj /t:"Runtests" /p:Scope=Compute`
 In the above example _RunTests_ will build and run tests for Compute only or you can use command line CLI:
 
-```bash
+```dotnetcli
 dotnet test Compute\Microsoft.Azure.Management.Compute\tests\Microsoft.Azure.Management.Tests.csproj
 ```
 
@@ -75,7 +75,7 @@ Now you can use the same command on non-windows as above for e.g. on Ubuntu you 
 
 If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
 
-```bash
+```dotnetcli
 dotnet tool restore
 dotnet test /p:CollectCoverage=true
 ```
@@ -96,7 +96,7 @@ If for any reason there is an update to the build tools, you will then need to f
 
 We have created a dotnet template to make creating new management SDK library easier than ever.
 
-See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/master/eng/templates/README.md)].
+See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/main/eng/templates/README.md)].
 
 # Client Libraries
 
@@ -158,7 +158,7 @@ After a few moments of initial configuration Visual Studio Code will launch the 
 ### Live testing
 
 Before running or recording live tests you need to create
-[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md).  Many of the client libraries make use of the Azure Core Test Framework to provide the basis for the live test infrastructure, including the ability to record Live tests so that they can be run without access to Azure resources.  The [Test Framework documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework/README.md) provides more context around test recordings and other features.
+[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md).  Many of the client libraries make use of the Azure Core Test Framework to provide the basis for the live test infrastructure, including the ability to record Live tests so that they can be run without access to Azure resources.  The [Test Framework documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework/README.md) provides more context around test recordings and other features.
 
 To run live tests after creating live resources:
 
@@ -212,7 +212,7 @@ string ignored = "this code will not appear in the snippet markdown";
 
 **\`\`\`**
 
-See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/tests/Samples/Sample01_HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md). 
+See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/tests/Samples/Sample01_HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md). 
 Note that snippet names need to be globally unique under a given service directory.
 
 Snippets also can be integrated into XML doc comments. For example:
@@ -249,7 +249,7 @@ dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuil
 Each library needs to provide a `ApiCompatVersion` property which is set to the last GA'ed version of the library that will be used to compare APIs with the current to ensure no breaks have been introduced. Projects with this property set will download the specified package and the ApiCompat (Microsoft.DotNet.ApiCompat) tools package as part of the restore step of the project. Then as a post build step of the project it will run ApiCompat to verify the current APIs are compatible with the last GA'ed version of the APIs. For libraries that wish to disable the APICompat check they can remove the `ApiCompatVersion` property from their project. Our version bump automation will automatically add or increment the `ApiCompatVersion` property to the project when it detects that the version it is changing was a GA version which usually indicates that we just shipped that GA version and so it should be the new baseline for API checks.
 
 ### Releasing a new version of a GA'ed libary
-Since the [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props) is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
+Since the [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/Packages.Data.props) is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
 
 ## NuGet Package Dev Feed
 
@@ -342,7 +342,7 @@ To prepare a package for release you should make use of `.\eng\common\scripts\Pr
 In `sdk\< Service Name >`, you will find projects for services that have already been implemented
 
 1. Client library projects needs to use the $(RequiredTargetFrameworks) *(defined in eng/Directory.Build.Data.props)* property in its TargetFramework while management library projects should use $(SdkTargetFx) _(defined in AzSdk.reference.props)_
-2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md)
+2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md)
    - Client library packages are in a folder name like **_Microsoft.Azure.< ServiceName >_**
    - Management library packages are in a folder named like **_Microsoft.Azure.Management.< Resource Provider Name >_**
 3. Each shipping package contains a project for their **generated** and /or **Customization** code
@@ -410,66 +410,85 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 
 ## On-boarding New generated code library
 
-1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*` for management libraries or `Azure.*` (e.g.  `sdk/storage/Azure.Management.Storage` or `sdk/storage/Azure.Storage.Blobs`)
+1. Install templates for both data-plane and management-plane (control-plan) SDKs:
+
+   ```dotnetcli
+   # Data-plane SDK
+   dotnet new --install sdk/template
+   dotnet new azuresdk --name Azure.MyService --output sdk/myservice --ServiceDirectory myservice --ProjectName Azure.MyService
+
+   # Management-plane SDK
+   dotnet new --install eng/templates/Azure.ResourceManager.Template
+   dotnet new azuremgmt --help
+   ```
+
+   There are several options available for management-plane SDKs. You can see all those available with `--help` as shown above, or
+   [read about them](https://github.com/heaths/azure-sdk-for-net/blob/main/eng/templates/README.md) in our documentation.
+
+   This will perform most of the renames, namespace fix-ups, etc., for you automatically; though, be sure to check all files - especially the README.md file(s) - for required manual changes.
+   If the template is already installed, this same command will upgrade it.
+
 2. Modify `autorest.md` to point to you Swagger file or central README.md file. E.g.
 
-``` yaml
-input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/blob.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
-```
+   ``` yaml
+   input-file:
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/blob.json
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
+   ```
 
-``` yaml
-require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
-```
+   ``` yaml
+   require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
+   ```
 
 3. Run `dotnet build /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 14).
 4. For management plan libraries add `azure-arm: true` setting to `autorest.md` client constructors and options would be auto-generated. For data-plane libraries follow the next two steps.
-4. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
+5. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
 
-``` C#
-namespace Azure.Management.Storage
-{
-    public class StorageManagementClientOptions: ClientOptions
-    {
-        private const ServiceVersion Latest = ServiceVersion.V2019_06_01;
-        internal static StorageManagementClientOptions Default { get; } = new StorageManagementClientOptions();
+   ``` C#
+   namespace Azure.Management.Storage
+   {
+       public class StorageManagementClientOptions: ClientOptions
+       {
+           private const ServiceVersion Latest = ServiceVersion.V2019_06_01;
+           internal static StorageManagementClientOptions Default { get; } = new StorageManagementClientOptions();
+   
+           public StorageManagementClientOptions(ServiceVersion serviceVersion = Latest)
+           {
+               VersionString = serviceVersion switch
+               {
+                   ServiceVersion.V2019_06_01 => "2019-06-01",
+                   _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
+               };
+           }
+   
+           internal string VersionString { get; }
+   
+           public enum ServiceVersion
+           {
+   #pragma warning disable CA1707 // Identifiers should not contain underscores
+               V2019_06_01 = 1
+   #pragma warning restore CA1707
+           }
+       }
+   }
+   ```
 
-        public StorageManagementClientOptions(ServiceVersion serviceVersion = Latest)
-        {
-            VersionString = serviceVersion switch
-            {
-                ServiceVersion.V2019_06_01 => "2019-06-01",
-                _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
-            };
-        }
+6. Add public constructors to all the clients using a partial class.
 
-        internal string VersionString { get; }
-
-        public enum ServiceVersion
-        {
-#pragma warning disable CA1707
-            V2019_06_01 = 1
-#pragma warning restore CA1707
-        }
-    }
-}
-```
-5. Add public constructors to all the clients using a partial class.
-``` C#
- public partial class FileSharesClient
-    {
-        public FileSharesClient(string subscriptionId, TokenCredential tokenCredential): this(subscriptionId, tokenCredential, StorageManagementClientOptions.Default)
-        {
-        }
-
-        public FileSharesClient(string subscriptionId, TokenCredential tokenCredential, StorageManagementClientOptions options):
-            this(new ClientDiagnostics(options), ManagementClientPipeline.Build(options, tokenCredential), subscriptionId, apiVersion: options.VersionString)
-        {
-        }
-    }
-```
+   ``` C#
+    public partial class FileSharesClient
+       {
+           public FileSharesClient(string subscriptionId, TokenCredential tokenCredential): this(subscriptionId, tokenCredential, StorageManagementClientOptions.Default)
+           {
+           }
+   
+           public FileSharesClient(string subscriptionId, TokenCredential tokenCredential, StorageManagementClientOptions options):
+               this(new ClientDiagnostics(options), ManagementClientPipeline.Build(options, tokenCredential), subscriptionId, apiVersion: options.VersionString)
+           {
+           }
+       }
+   ```
 
 ### Code Review Process
 
@@ -520,7 +539,7 @@ Much of the management plane SDK code is generated from metadata specs about the
 
 ## Versioning
 
-For more information on how we version see [Versioning](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/dev/Versioning.md)
+For more information on how we version see [Versioning](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Versioning.md)
 
 ## Breaking Changes
 

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples
     {
         [Test]
@@ -57,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 new TextDocumentInput("4", string.Empty)
             };
 
-            var options = new RecognizeEntitiesOptions { IncludeStatistics = true };
+            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             Response<RecognizeEntitiesResultCollection> response = await client.RecognizeEntitiesBatchAsync(documents, options);
             RecognizeEntitiesResultCollection entitiesInDocuments = response.Value;
 

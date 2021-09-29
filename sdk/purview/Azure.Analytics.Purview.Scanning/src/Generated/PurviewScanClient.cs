@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Scanning
     public partial class PurviewScanClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -60,7 +61,7 @@ namespace Azure.Analytics.Purview.Scanning
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             this.dataSourceName = dataSourceName;
             this.scanName = scanName;
@@ -68,23 +69,51 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a filter. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     excludeUriPrefixes: [string],
+        ///     includeUriPrefixes: [string]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetFilterAsync(RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetFilterAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetFilterRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetFilterRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -107,23 +136,51 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a filter. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     excludeUriPrefixes: [string],
+        ///     includeUriPrefixes: [string]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetFilter(RequestOptions requestOptions = null)
+        public virtual Response GetFilter(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetFilterRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetFilterRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -145,11 +202,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetFilter"/> and <see cref="GetFilterAsync"/> operations. </summary>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetFilterRequest(RequestOptions requestOptions = null)
+        private HttpMessage CreateGetFilterRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -168,72 +223,61 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or updates a filter. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>FilterPropertiesAutoGenerated</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>FilterPropertiesAutoGenerated</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>excludeUriPrefixes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeUriPrefixes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     excludeUriPrefixes: [string],
+        ///     includeUriPrefixes: [string]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     excludeUriPrefixes: [string],
+        ///     includeUriPrefixes: [string]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateFilterAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateFilterAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateFilterRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCreateOrUpdateFilterRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -259,72 +303,61 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or updates a filter. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>FilterPropertiesAutoGenerated</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>FilterPropertiesAutoGenerated</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>excludeUriPrefixes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeUriPrefixes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     excludeUriPrefixes: [string],
+        ///     includeUriPrefixes: [string]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     excludeUriPrefixes: [string],
+        ///     includeUriPrefixes: [string]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdateFilter(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdateFilter(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateFilterRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCreateOrUpdateFilterRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -347,12 +380,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateFilter"/> and <see cref="CreateOrUpdateFilterAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateFilterRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateCreateOrUpdateFilterRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -366,289 +396,146 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Creates an instance of a scan. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>kind</term>
-        ///     <term>&quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;</term>
-        ///     <term>Yes</term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanResults</term>
-        ///     <term>ScanResult[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResult</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>parentId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resourceId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assetsDiscovered</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assetsClassified</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>diagnostics</term>
-        ///     <term>ScanResultDiagnostics</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>queuedTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>pipelineStartTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanRulesetVersion</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanRulesetType</term>
-        ///     <term>&quot;Custom&quot; | &quot;System&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanLevelType</term>
-        ///     <term>&quot;Full&quot; | &quot;Incremental&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>errorMessage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>error</term>
-        ///     <term>ScanResultError</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>runType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dataSourceType</term>
-        ///     <term>&quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResultDiagnostics</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>notifications</term>
-        ///     <term>Notification[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>exceptionCountMap</term>
-        ///     <term>Dictionary&lt;string, number&gt;</term>
-        ///     <term></term>
-        ///     <term> Dictionary of &lt;integer&gt;. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResultError</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>target</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>details</term>
-        ///     <term>ErrorModel[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Notification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ErrorModel</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>target</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>details</term>
-        ///     <term>ErrorModel[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot; (required),
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string,
+        ///       id: string,
+        ///       resourceId: string,
+        ///       status: string,
+        ///       assetsDiscovered: number,
+        ///       assetsClassified: number,
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string,
+        ///             code: number
+        ///           }
+        ///         ],
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///       },
+        ///       startTime: string (ISO 8601 Format),
+        ///       queuedTime: string (ISO 8601 Format),
+        ///       pipelineStartTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       scanRulesetVersion: number,
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [
+        ///           {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [ErrorModel]
+        ///           }
+        ///         ]
+        ///       },
+        ///       runType: string,
+        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string,
+        ///       id: string,
+        ///       resourceId: string,
+        ///       status: string,
+        ///       assetsDiscovered: number,
+        ///       assetsClassified: number,
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string,
+        ///             code: number
+        ///           }
+        ///         ],
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///       },
+        ///       startTime: string (ISO 8601 Format),
+        ///       queuedTime: string (ISO 8601 Format),
+        ///       pipelineStartTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       scanRulesetVersion: number,
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [
+        ///           {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [ErrorModel]
+        ///           }
+        ///         ]
+        ///       },
+        ///       runType: string,
+        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCreateOrUpdateRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -674,282 +561,139 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates an instance of a scan. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>kind</term>
-        ///     <term>&quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;</term>
-        ///     <term>Yes</term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanResults</term>
-        ///     <term>ScanResult[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResult</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>parentId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>resourceId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assetsDiscovered</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>assetsClassified</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>diagnostics</term>
-        ///     <term>ScanResultDiagnostics</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>queuedTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>pipelineStartTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanRulesetVersion</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanRulesetType</term>
-        ///     <term>&quot;Custom&quot; | &quot;System&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanLevelType</term>
-        ///     <term>&quot;Full&quot; | &quot;Incremental&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>errorMessage</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>error</term>
-        ///     <term>ScanResultError</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>runType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dataSourceType</term>
-        ///     <term>&quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResultDiagnostics</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>notifications</term>
-        ///     <term>Notification[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>exceptionCountMap</term>
-        ///     <term>Dictionary&lt;string, number&gt;</term>
-        ///     <term></term>
-        ///     <term> Dictionary of &lt;integer&gt;. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ScanResultError</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>target</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>details</term>
-        ///     <term>ErrorModel[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Notification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ErrorModel</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>code</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>message</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>target</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>details</term>
-        ///     <term>ErrorModel[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot; (required),
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string,
+        ///       id: string,
+        ///       resourceId: string,
+        ///       status: string,
+        ///       assetsDiscovered: number,
+        ///       assetsClassified: number,
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string,
+        ///             code: number
+        ///           }
+        ///         ],
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///       },
+        ///       startTime: string (ISO 8601 Format),
+        ///       queuedTime: string (ISO 8601 Format),
+        ///       pipelineStartTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       scanRulesetVersion: number,
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [
+        ///           {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [ErrorModel]
+        ///           }
+        ///         ]
+        ///       },
+        ///       runType: string,
+        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string,
+        ///       id: string,
+        ///       resourceId: string,
+        ///       status: string,
+        ///       assetsDiscovered: number,
+        ///       assetsClassified: number,
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string,
+        ///             code: number
+        ///           }
+        ///         ],
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///       },
+        ///       startTime: string (ISO 8601 Format),
+        ///       queuedTime: string (ISO 8601 Format),
+        ///       pipelineStartTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       scanRulesetVersion: number,
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [
+        ///           {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [ErrorModel]
+        ///           }
+        ///         ]
+        ///       },
+        ///       runType: string,
+        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdate(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdate(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCreateOrUpdateRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -972,12 +716,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -990,28 +731,95 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Gets a scan information. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string,
+        ///       id: string,
+        ///       resourceId: string,
+        ///       status: string,
+        ///       assetsDiscovered: number,
+        ///       assetsClassified: number,
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string,
+        ///             code: number
+        ///           }
+        ///         ],
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///       },
+        ///       startTime: string (ISO 8601 Format),
+        ///       queuedTime: string (ISO 8601 Format),
+        ///       pipelineStartTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       scanRulesetVersion: number,
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [
+        ///           {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [ErrorModel]
+        ///           }
+        ///         ]
+        ///       },
+        ///       runType: string,
+        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetPropertiesAsync(RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetPropertiesRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetPropertiesRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1034,23 +842,90 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Gets a scan information. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string,
+        ///       id: string,
+        ///       resourceId: string,
+        ///       status: string,
+        ///       assetsDiscovered: number,
+        ///       assetsClassified: number,
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string,
+        ///             code: number
+        ///           }
+        ///         ],
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///       },
+        ///       startTime: string (ISO 8601 Format),
+        ///       queuedTime: string (ISO 8601 Format),
+        ///       pipelineStartTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       scanRulesetVersion: number,
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [
+        ///           {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [ErrorModel]
+        ///           }
+        ///         ]
+        ///       },
+        ///       runType: string,
+        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetProperties(RequestOptions requestOptions = null)
+        public virtual Response GetProperties(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetPropertiesRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetPropertiesRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1072,11 +947,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetProperties"/> and <see cref="GetPropertiesAsync"/> operations. </summary>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetPropertiesRequest(RequestOptions requestOptions = null)
+        private HttpMessage CreateGetPropertiesRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1092,27 +965,95 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes the scan associated with the data source. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string,
+        ///       id: string,
+        ///       resourceId: string,
+        ///       status: string,
+        ///       assetsDiscovered: number,
+        ///       assetsClassified: number,
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string,
+        ///             code: number
+        ///           }
+        ///         ],
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///       },
+        ///       startTime: string (ISO 8601 Format),
+        ///       queuedTime: string (ISO 8601 Format),
+        ///       pipelineStartTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       scanRulesetVersion: number,
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [
+        ///           {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [ErrorModel]
+        ///           }
+        ///         ]
+        ///       },
+        ///       runType: string,
+        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteAsync(RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 200:
+                            return message.Response;
                         case 204:
                             return message.Response;
                         default:
@@ -1132,27 +1073,95 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes the scan associated with the data source. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string,
+        ///       id: string,
+        ///       resourceId: string,
+        ///       status: string,
+        ///       assetsDiscovered: number,
+        ///       assetsClassified: number,
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string,
+        ///             code: number
+        ///           }
+        ///         ],
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///       },
+        ///       startTime: string (ISO 8601 Format),
+        ///       queuedTime: string (ISO 8601 Format),
+        ///       pipelineStartTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       scanRulesetVersion: number,
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [
+        ///           {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [ErrorModel]
+        ///           }
+        ///         ]
+        ///       },
+        ///       runType: string,
+        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Delete(RequestOptions requestOptions = null)
+        public virtual Response Delete(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 200:
+                            return message.Response;
                         case 204:
                             return message.Response;
                         default:
@@ -1171,11 +1180,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(RequestOptions requestOptions = null)
+        private HttpMessage CreateDeleteRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1191,25 +1198,64 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Runs the scan. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   scanResultId: OperationResponseScanResultId,
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;,
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorInfo]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="runId"> The String to use. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RunScanAsync(string runId, string scanLevel = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> RunScanAsync(string runId, string scanLevel = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateRunScanRequest(runId, scanLevel, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateRunScanRequest(runId, scanLevel);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1232,25 +1278,64 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Runs the scan. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   scanResultId: OperationResponseScanResultId,
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;,
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorInfo]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="runId"> The String to use. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response RunScan(string runId, string scanLevel = null, RequestOptions requestOptions = null)
+        public virtual Response RunScan(string runId, string scanLevel = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateRunScanRequest(runId, scanLevel, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateRunScanRequest(runId, scanLevel);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1272,13 +1357,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="RunScan"/> and <see cref="RunScanAsync"/> operations. </summary>
-        /// <param name="runId"> The String to use. </param>
-        /// <param name="scanLevel"> The ScanLevelType to use. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateRunScanRequest(string runId, string scanLevel = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateRunScanRequest(string runId, string scanLevel)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1300,24 +1381,63 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Cancels a scan. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   scanResultId: OperationResponseScanResultId,
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;,
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorInfo]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CancelScanAsync(string runId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CancelScanAsync(string runId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCancelScanRequest(runId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCancelScanRequest(runId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1340,24 +1460,63 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Cancels a scan. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   scanResultId: OperationResponseScanResultId,
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;,
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorInfo]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CancelScan(string runId, RequestOptions requestOptions = null)
+        public virtual Response CancelScan(string runId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCancelScanRequest(runId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCancelScanRequest(runId);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1379,12 +1538,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="CancelScan"/> and <see cref="CancelScanAsync"/> operations. </summary>
-        /// <param name="runId"> The String to use. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCancelScanRequest(string runId, RequestOptions requestOptions = null)
+        private HttpMessage CreateCancelScanRequest(string runId)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1403,23 +1559,89 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Lists the scan history of a scan. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       parentId: string,
+        ///       id: string,
+        ///       resourceId: string,
+        ///       status: string,
+        ///       assetsDiscovered: number,
+        ///       assetsClassified: number,
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string,
+        ///             code: number
+        ///           }
+        ///         ],
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///       },
+        ///       startTime: string (ISO 8601 Format),
+        ///       queuedTime: string (ISO 8601 Format),
+        ///       pipelineStartTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       scanRulesetVersion: number,
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [
+        ///           {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [ErrorModel]
+        ///           }
+        ///         ]
+        ///       },
+        ///       runType: string,
+        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///     }
+        ///   ],
+        ///   nextLink: string,
+        ///   count: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRunsAsync(RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetRunsAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRunsRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetRunsRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetRuns");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1442,23 +1664,89 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Lists the scan history of a scan. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       parentId: string,
+        ///       id: string,
+        ///       resourceId: string,
+        ///       status: string,
+        ///       assetsDiscovered: number,
+        ///       assetsClassified: number,
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string,
+        ///             code: number
+        ///           }
+        ///         ],
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///       },
+        ///       startTime: string (ISO 8601 Format),
+        ///       queuedTime: string (ISO 8601 Format),
+        ///       pipelineStartTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       scanRulesetVersion: number,
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string,
+        ///       error: {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [
+        ///           {
+        ///             code: string,
+        ///             message: string,
+        ///             target: string,
+        ///             details: [ErrorModel]
+        ///           }
+        ///         ]
+        ///       },
+        ///       runType: string,
+        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///     }
+        ///   ],
+        ///   nextLink: string,
+        ///   count: number
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetRuns(RequestOptions requestOptions = null)
+        public virtual Response GetRuns(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRunsRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetRunsRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetRuns");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1480,11 +1768,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetRuns"/> and <see cref="GetRunsAsync"/> operations. </summary>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetRunsRequest(RequestOptions requestOptions = null)
+        private HttpMessage CreateGetRunsRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1501,23 +1787,76 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Gets trigger information. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     recurrence: {
+        ///       frequency: &quot;Week&quot; | &quot;Month&quot;,
+        ///       interval: number,
+        ///       startTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       schedule: {
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///         minutes: [number],
+        ///         hours: [number],
+        ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;],
+        ///         monthDays: [number],
+        ///         monthlyOccurrences: [
+        ///           {
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;,
+        ///             occurrence: number
+        ///           }
+        ///         ]
+        ///       },
+        ///       timeZone: string
+        ///     },
+        ///     recurrenceInterval: string,
+        ///     createdAt: string (ISO 8601 Format),
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastScheduled: string (ISO 8601 Format),
+        ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///     incrementalScanStartTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTriggerAsync(RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetTriggerAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTriggerRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetTriggerRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1540,23 +1879,76 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Gets trigger information. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     recurrence: {
+        ///       frequency: &quot;Week&quot; | &quot;Month&quot;,
+        ///       interval: number,
+        ///       startTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       schedule: {
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///         minutes: [number],
+        ///         hours: [number],
+        ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;],
+        ///         monthDays: [number],
+        ///         monthlyOccurrences: [
+        ///           {
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;,
+        ///             occurrence: number
+        ///           }
+        ///         ]
+        ///       },
+        ///       timeZone: string
+        ///     },
+        ///     recurrenceInterval: string,
+        ///     createdAt: string (ISO 8601 Format),
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastScheduled: string (ISO 8601 Format),
+        ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///     incrementalScanStartTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetTrigger(RequestOptions requestOptions = null)
+        public virtual Response GetTrigger(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTriggerRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetTriggerRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1578,11 +1970,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTrigger"/> and <see cref="GetTriggerAsync"/> operations. </summary>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetTriggerRequest(RequestOptions requestOptions = null)
+        private HttpMessage CreateGetTriggerRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1601,219 +1991,111 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates an instance of a trigger. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>TriggerPropertiesAutoGenerated</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TriggerPropertiesAutoGenerated</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>recurrence</term>
-        ///     <term>TriggerPropertiesRecurrence</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>recurrenceInterval</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdAt</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedAt</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastScheduled</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanLevel</term>
-        ///     <term>&quot;Full&quot; | &quot;Incremental&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>incrementalScanStartTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TriggerPropertiesRecurrence</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>frequency</term>
-        ///     <term>&quot;Week&quot; | &quot;Month&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>interval</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>schedule</term>
-        ///     <term>TriggerRecurrenceSchedule</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TriggerRecurrenceSchedule</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>additionalProperties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> Dictionary of &lt;AnyObject&gt;. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minutes</term>
-        ///     <term>number[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>hours</term>
-        ///     <term>number[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>weekDays</term>
-        ///     <term>&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>monthDays</term>
-        ///     <term>number[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>monthlyOccurrences</term>
-        ///     <term>RecurrenceScheduleOccurrence[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>RecurrenceScheduleOccurrence</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>additionalProperties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> Dictionary of &lt;AnyObject&gt;. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>day</term>
-        ///     <term>&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>occurrence</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     recurrence: {
+        ///       frequency: &quot;Week&quot; | &quot;Month&quot;,
+        ///       interval: number,
+        ///       startTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       schedule: {
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///         minutes: [number],
+        ///         hours: [number],
+        ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;],
+        ///         monthDays: [number],
+        ///         monthlyOccurrences: [
+        ///           {
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;,
+        ///             occurrence: number
+        ///           }
+        ///         ]
+        ///       },
+        ///       timeZone: string
+        ///     },
+        ///     recurrenceInterval: string,
+        ///     createdAt: string (ISO 8601 Format),
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastScheduled: string (ISO 8601 Format),
+        ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///     incrementalScanStartTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     recurrence: {
+        ///       frequency: &quot;Week&quot; | &quot;Month&quot;,
+        ///       interval: number,
+        ///       startTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       schedule: {
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///         minutes: [number],
+        ///         hours: [number],
+        ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;],
+        ///         monthDays: [number],
+        ///         monthlyOccurrences: [
+        ///           {
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;,
+        ///             occurrence: number
+        ///           }
+        ///         ]
+        ///       },
+        ///       timeZone: string
+        ///     },
+        ///     recurrenceInterval: string,
+        ///     createdAt: string (ISO 8601 Format),
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastScheduled: string (ISO 8601 Format),
+        ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///     incrementalScanStartTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateTriggerAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateTriggerAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateTriggerRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1839,219 +2121,111 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates an instance of a trigger. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>TriggerPropertiesAutoGenerated</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TriggerPropertiesAutoGenerated</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>recurrence</term>
-        ///     <term>TriggerPropertiesRecurrence</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>recurrenceInterval</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdAt</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedAt</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastScheduled</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scanLevel</term>
-        ///     <term>&quot;Full&quot; | &quot;Incremental&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>incrementalScanStartTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TriggerPropertiesRecurrence</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>frequency</term>
-        ///     <term>&quot;Week&quot; | &quot;Month&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>interval</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>schedule</term>
-        ///     <term>TriggerRecurrenceSchedule</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TriggerRecurrenceSchedule</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>additionalProperties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> Dictionary of &lt;AnyObject&gt;. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minutes</term>
-        ///     <term>number[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>hours</term>
-        ///     <term>number[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>weekDays</term>
-        ///     <term>&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>monthDays</term>
-        ///     <term>number[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>monthlyOccurrences</term>
-        ///     <term>RecurrenceScheduleOccurrence[]</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>RecurrenceScheduleOccurrence</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>additionalProperties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> Dictionary of &lt;AnyObject&gt;. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>day</term>
-        ///     <term>&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>occurrence</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///    <term></term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     recurrence: {
+        ///       frequency: &quot;Week&quot; | &quot;Month&quot;,
+        ///       interval: number,
+        ///       startTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       schedule: {
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///         minutes: [number],
+        ///         hours: [number],
+        ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;],
+        ///         monthDays: [number],
+        ///         monthlyOccurrences: [
+        ///           {
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;,
+        ///             occurrence: number
+        ///           }
+        ///         ]
+        ///       },
+        ///       timeZone: string
+        ///     },
+        ///     recurrenceInterval: string,
+        ///     createdAt: string (ISO 8601 Format),
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastScheduled: string (ISO 8601 Format),
+        ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///     incrementalScanStartTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     recurrence: {
+        ///       frequency: &quot;Week&quot; | &quot;Month&quot;,
+        ///       interval: number,
+        ///       startTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       schedule: {
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///         minutes: [number],
+        ///         hours: [number],
+        ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;],
+        ///         monthDays: [number],
+        ///         monthlyOccurrences: [
+        ///           {
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;,
+        ///             occurrence: number
+        ///           }
+        ///         ]
+        ///       },
+        ///       timeZone: string
+        ///     },
+        ///     recurrenceInterval: string,
+        ///     createdAt: string (ISO 8601 Format),
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastScheduled: string (ISO 8601 Format),
+        ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///     incrementalScanStartTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdateTrigger(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdateTrigger(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateTriggerRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2074,12 +2248,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateTrigger"/> and <see cref="CreateOrUpdateTriggerAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateTriggerRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateCreateOrUpdateTriggerRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -2093,32 +2264,86 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Deletes the trigger associated with the scan. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     recurrence: {
+        ///       frequency: &quot;Week&quot; | &quot;Month&quot;,
+        ///       interval: number,
+        ///       startTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       schedule: {
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///         minutes: [number],
+        ///         hours: [number],
+        ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;],
+        ///         monthDays: [number],
+        ///         monthlyOccurrences: [
+        ///           {
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;,
+        ///             occurrence: number
+        ///           }
+        ///         ]
+        ///       },
+        ///       timeZone: string
+        ///     },
+        ///     recurrenceInterval: string,
+        ///     createdAt: string (ISO 8601 Format),
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastScheduled: string (ISO 8601 Format),
+        ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///     incrementalScanStartTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteTriggerAsync(RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteTriggerAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTriggerRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteTriggerRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 200:
+                            return message.Response;
                         case 204:
                             return message.Response;
                         default:
@@ -2138,27 +2363,81 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes the trigger associated with the scan. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   name: string,
+        ///   properties: {
+        ///     recurrence: {
+        ///       frequency: &quot;Week&quot; | &quot;Month&quot;,
+        ///       interval: number,
+        ///       startTime: string (ISO 8601 Format),
+        ///       endTime: string (ISO 8601 Format),
+        ///       schedule: {
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///         minutes: [number],
+        ///         hours: [number],
+        ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;],
+        ///         monthDays: [number],
+        ///         monthlyOccurrences: [
+        ///           {
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+        ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;,
+        ///             occurrence: number
+        ///           }
+        ///         ]
+        ///       },
+        ///       timeZone: string
+        ///     },
+        ///     recurrenceInterval: string,
+        ///     createdAt: string (ISO 8601 Format),
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastScheduled: string (ISO 8601 Format),
+        ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;,
+        ///     incrementalScanStartTime: string (ISO 8601 Format)
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         message: string,
+        ///         target: string,
+        ///         details: [ErrorModel]
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteTrigger(RequestOptions requestOptions = null)
+        public virtual Response DeleteTrigger(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTriggerRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteTriggerRequest();
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 200:
+                            return message.Response;
                         case 204:
                             return message.Response;
                         default:
@@ -2177,11 +2456,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteTrigger"/> and <see cref="DeleteTriggerAsync"/> operations. </summary>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteTriggerRequest(RequestOptions requestOptions = null)
+        private HttpMessage CreateDeleteTriggerRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();

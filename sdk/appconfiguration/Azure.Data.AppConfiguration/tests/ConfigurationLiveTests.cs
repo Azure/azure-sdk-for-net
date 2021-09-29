@@ -665,6 +665,103 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        public async Task GetSettingWithIfMatch_Matches()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+                // Test
+                ConfigurationSetting responseSetting = await service.GetConfigurationSettingAsync(testSetting.Key, testSetting.Label, acceptDateTime: null, new MatchConditions()
+                {
+                    IfMatch = testSetting.ETag
+                });
+
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetSettingWithIfMatch_NoMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await service.GetConfigurationSettingAsync(testSetting.Key, testSetting.Label, acceptDateTime: null, new MatchConditions()
+                    {
+                        IfMatch = new ETag("this won't match")
+                    }));
+
+                Assert.AreEqual(412, exception.Status);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetSettingWithIfNoneMatch_Matches()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+                // Test
+                Response<ConfigurationSetting> responseSetting = await service.GetConfigurationSettingAsync(testSetting.Key, testSetting.Label, acceptDateTime: null, new MatchConditions()
+                {
+                    IfNoneMatch = testSetting.ETag
+                });
+
+                Assert.Catch<Exception>(() => _ = responseSetting.Value);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetSettingWithIfNoneMatch_NoMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+                // Test
+                ConfigurationSetting responseSetting = await service.GetConfigurationSettingAsync(testSetting.Key, testSetting.Label, acceptDateTime: null, new MatchConditions()
+                {
+                    IfNoneMatch = new ETag("this won't match")
+                });
+
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
         public async Task GetWithAcceptDateTime()
         {
             ConfigurationClient service = GetClient();
@@ -701,6 +798,26 @@ namespace Azure.Data.AppConfiguration.Tests
                 Response<ConfigurationSetting> response = await service.GetConfigurationSettingAsync(setting, onlyIfChanged: true).ConfigureAwait(false);
                 Assert.AreEqual(200, response.GetRawResponse().Status);
                 Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(modifiedSetting, response.Value));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetIfChangedSettingNotModified()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+
+                Response<ConfigurationSetting> response = await service.GetConfigurationSettingAsync(new ConfigurationSetting(setting.Key, "", setting.Label, setting.ETag), onlyIfChanged: true).ConfigureAwait(false);
+                Assert.AreEqual(304, response.GetRawResponse().Status);
+                Assert.Catch<Exception>(() => _ = response.Value);
             }
             finally
             {

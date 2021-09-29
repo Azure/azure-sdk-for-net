@@ -59,6 +59,13 @@ namespace Azure
         public override string ToString() { throw null; }
         public string ToString(string format) { throw null; }
     }
+    public partial class HttpAuthorization
+    {
+        public HttpAuthorization(string scheme, string parameter) { }
+        public string Parameter { get { throw null; } }
+        public string Scheme { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpRange : System.IEquatable<Azure.HttpRange>
     {
@@ -201,6 +208,13 @@ namespace Azure
         protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
+    public sealed partial class ResponseError
+    {
+        public ResponseError(string? code, string? message) { }
+        public string? Code { get { throw null; } }
+        public string? Message { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class Response<T>
     {
         protected Response() { }
@@ -236,6 +250,7 @@ namespace Azure.Core
     public abstract partial class ClientOptions
     {
         protected ClientOptions() { }
+        public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
@@ -293,6 +308,7 @@ namespace Azure.Core
             public static string IfModifiedSince { get { throw null; } }
             public static string IfNoneMatch { get { throw null; } }
             public static string IfUnmodifiedSince { get { throw null; } }
+            public static string Prefer { get { throw null; } }
             public static string Range { get { throw null; } }
             public static string Referer { get { throw null; } }
             public static string UserAgent { get { throw null; } }
@@ -308,9 +324,10 @@ namespace Azure.Core
         public bool BufferResponse { get { throw null; } set { } }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool HasResponse { get { throw null; } }
+        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
-        public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
+        public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
         public void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
@@ -320,6 +337,7 @@ namespace Azure.Core
     {
         PerCall = 0,
         PerRetry = 1,
+        BeforeTransport = 2,
     }
     public abstract partial class Request : System.IDisposable
     {
@@ -453,6 +471,9 @@ namespace Azure.Core
     public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
+        public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken) { throw null; }
+        public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken, System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<Azure.Core.AccessToken>> getTokenAsync) { throw null; }
+        public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<Azure.Core.AccessToken>> getTokenAsync) { throw null; }
         public abstract Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
     }
@@ -462,10 +483,12 @@ namespace Azure.Core
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public TokenRequestContext(string[] scopes, string? parentRequestId) { throw null; }
-        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null) { throw null; }
         public string? Claims { get { throw null; } }
         public string? ParentRequestId { get { throw null; } }
         public string[] Scopes { get { throw null; } }
+        public string? TenantId { get { throw null; } }
     }
 }
 namespace Azure.Core.Cryptography

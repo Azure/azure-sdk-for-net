@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(RedirectType))
@@ -92,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<ApplicationGatewayRedirectType> redirectType = default;
             Optional<SubResource> targetListener = default;
             Optional<string> targetUrl = default;
@@ -149,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            targetListener = DeserializeSubResource(property0.Value);
+                            targetListener = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("targetUrl"))
@@ -187,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             requestRoutingRules = array;
                             continue;
@@ -202,7 +200,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             urlPathMaps = array;
                             continue;
@@ -217,7 +215,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             pathRules = array;
                             continue;
@@ -226,7 +224,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayRedirectConfiguration(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(redirectType), targetListener.Value, targetUrl.Value, Optional.ToNullable(includePath), Optional.ToNullable(includeQueryString), Optional.ToList(requestRoutingRules), Optional.ToList(urlPathMaps), Optional.ToList(pathRules));
+            return new ApplicationGatewayRedirectConfiguration(id, name.Value, etag.Value, type.Value, Optional.ToNullable(redirectType), targetListener.Value, targetUrl.Value, Optional.ToNullable(includePath), Optional.ToNullable(includeQueryString), Optional.ToList(requestRoutingRules), Optional.ToList(urlPathMaps), Optional.ToList(pathRules));
         }
     }
 }

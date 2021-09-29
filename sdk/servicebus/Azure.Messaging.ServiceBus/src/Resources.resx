@@ -312,4 +312,8 @@
   <data name="DisposedConnectionMessageProcessorMustStop" xml:space="preserve">
     <value>The message processor is unable to continue and will stop processing; the host application has closed the connection to the Service Bus service.</value>
   </data>
+  <data name="TransactionReconnectionError" xml:space="preserve">
+      <value>An attempt was made to reconnect the {0} sender link as part of a cross-entity transaction. This could not be completed successfully because the {1} receiver
+needs to be re-established first. Attempting the transaction again will allow the correct link to be established first.</value>
+  </data>
 </root>

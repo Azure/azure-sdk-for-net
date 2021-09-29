@@ -1,7 +1,33 @@
 # Release History
 
-## 4.2.0-beta.7 (Unreleased)
+## 4.3.0-beta.2 (Unreleased)
 
+### Features Added
+
+- Added `KeyVaultCertificateIdentifier.TryCreate` to parse certificate URIs without throwing an exception when invalid. ([#23146](https://github.com/Azure/azure-sdk-for-net/issues/23146))
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Added certificate version to distributed tracing. ([#12907](https://github.com/Azure/azure-sdk-for-net/issues/12907))
+- Added `DownloadCertificateOptions` to pass `X509KeyStorageFlags` appropriate for different host applications. ([#23016](https://github.com/Azure/azure-sdk-for-net/issues/23016))
+
+### Other Changes
+
+## 4.3.0-beta.1 (2021-08-10)
+
+### Fixed
+
+- The default service version is now "7.3-preview".
+
+## 4.2.0 (2021-06-15)
+
+### Features Added
+
+- Changed default service version to "7.2".
+- Added `KeyVaultCertificateIdentifier` to parse certificate URIs.
+- Added `CertificateClient.DownloadCertificate` and `DownloadCertificateAsync` to download an `X509Certificate2` with private key.
 
 ## 4.2.0-beta.6 (2021-05-11)
 

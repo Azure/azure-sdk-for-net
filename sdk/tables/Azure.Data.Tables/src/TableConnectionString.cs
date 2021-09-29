@@ -173,8 +173,8 @@ namespace Azure.Data.Tables
             {
                 accountInformation =
                     settings.TryGetSegmentValue(TableConstants.ConnectionStrings.DevelopmentProxyUriSetting, out var proxyUri)
-                    ? GetDevelopmentStorageAccount(new Uri(proxyUri))
-                    : DevelopmentStorageAccount;
+                        ? GetDevelopmentStorageAccount(new Uri(proxyUri))
+                        : DevelopmentStorageAccount;
 
                 return true;
             }
@@ -188,11 +188,13 @@ namespace Azure.Data.Tables
                 settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out sasToken);
 
             var matchesAutomaticEndpointsSpec = settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountNameSetting, out var accountName) &&
-                (settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey) ||
-              settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out sasToken));
+                                                (settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey) ||
+                                                 settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out sasToken));
 
             settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out var primary);
-            var endpointSuffix = settings.GetSegmentValueOrDefault(TableConstants.ConnectionStrings.EndpointSuffixSetting, TableConstants.ConnectionStrings.DefaultEndpointSuffix);
+            var endpointSuffix = settings.GetSegmentValueOrDefault(
+                TableConstants.ConnectionStrings.EndpointSuffixSetting,
+                TableConstants.ConnectionStrings.DefaultEndpointSuffix);
 
             if (matchesAutomaticEndpointsSpec || matchesExplicitEndpointsSpec)
             {
@@ -206,8 +208,7 @@ namespace Azure.Data.Tables
                 // if secondary is specified, primary must also be specified
 
                 static bool IsValidEndpointPair(string primary, string secondary) =>
-                        !string.IsNullOrWhiteSpace(primary)
-                        || /* primary is null, and... */ string.IsNullOrWhiteSpace(secondary);
+                    !string.IsNullOrWhiteSpace(primary) || /* primary is null, and... */ string.IsNullOrWhiteSpace(secondary);
 
                 (Uri, Uri) createStorageUri(string primary, string secondary, string sasToken, Func<ConnectionString, (Uri, Uri)> factory)
                 {
@@ -252,11 +253,7 @@ namespace Azure.Data.Tables
                         new TableConnectionString(
                             GetCredentials(settings),
                             tableStorageUri: createStorageUri(tableEndpoint, tableSecondaryEndpoint, sasToken ?? string.Empty, ConstructTableEndpoint)
-                            )
-                        {
-                            EndpointSuffix = settingOrDefault(TableConstants.ConnectionStrings.EndpointSuffixSetting),
-                            Settings = settings
-                        };
+                        ) { EndpointSuffix = settingOrDefault(TableConstants.ConnectionStrings.EndpointSuffixSetting), Settings = settings };
 
                     accountInformation._accountName = settingOrDefault(TableConstants.ConnectionStrings.AccountNameSetting);
 
@@ -307,9 +304,7 @@ namespace Azure.Data.Tables
                     return string.Empty;
                 }
 
-                return lastSegment.EndsWith("/", StringComparison.OrdinalIgnoreCase) ?
-                lastSegment.Substring(0, lastSegment.Length - 1) :
-                lastSegment;
+                return lastSegment.EndsWith("/", StringComparison.OrdinalIgnoreCase) ? lastSegment.Substring(0, lastSegment.Length - 1) : lastSegment;
             }
         }
 
@@ -334,9 +329,7 @@ namespace Azure.Data.Tables
                 // This is most likely Azurite, which looks like this: https://127.0.0.1:10002/contoso/
                 var segments = uri.Segments;
 
-                accountName = segments[1].EndsWith("/", StringComparison.OrdinalIgnoreCase) ?
-                    segments[1].Substring(0, segments[1].Length - 1) :
-                    segments[1];
+                accountName = segments[1].EndsWith("/", StringComparison.OrdinalIgnoreCase) ? segments[1].Substring(0, segments[1].Length - 1) : segments[1];
             }
 
             return accountName;
@@ -350,16 +343,14 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         internal static Uri GetSecondaryUriFromPrimary(Uri primaryUri, string accountName = null)
         {
-            var secondaryUriBuilder = new UriBuilder(primaryUri);
-
             if (!string.IsNullOrEmpty(accountName))
             {
                 // We've been provided the accountName, so just insert the '-secondary' suffix after it
-                var indexOfAccountName = secondaryUriBuilder.Host.IndexOf(accountName, StringComparison.OrdinalIgnoreCase);
-                secondaryUriBuilder.Host = secondaryUriBuilder.Host.Insert(indexOfAccountName + accountName.Length, TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix);
-                return secondaryUriBuilder.Uri;
+                var secondaryUri = primaryUri.AbsoluteUri.Replace(accountName, accountName + TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix);
+                return new Uri(secondaryUri);
             }
 
+            var secondaryUriBuilder = new UriBuilder(primaryUri);
             var indexOfDot = secondaryUriBuilder.Host.IndexOf('.');
             UriHostNameType hostNameType = Uri.CheckHostName(secondaryUriBuilder.Host);
 
@@ -395,9 +386,9 @@ namespace Azure.Data.Tables
         /// <returns>The new <see cref="TableConnectionString"/>.</returns>
         private static TableConnectionString GetDevelopmentStorageAccount(Uri proxyUri)
         {
-            UriBuilder builder = proxyUri != null ?
-                new UriBuilder(proxyUri.Scheme, proxyUri.Host) :
-                new UriBuilder("http", TableConstants.ConnectionStrings.Localhost);
+            UriBuilder builder = proxyUri != null
+                ? new UriBuilder(proxyUri.Scheme, proxyUri.Host)
+                : new UriBuilder("http", TableConstants.ConnectionStrings.Localhost);
 
             builder.Path = TableConstants.ConnectionStrings.DevStoreAccountName;
 
@@ -409,19 +400,19 @@ namespace Azure.Data.Tables
             builder.Port = TableConstants.ConnectionStrings.TableEndpointPortNumber;
             Uri tableSecondaryEndpoint = builder.Uri;
 
-            var credentials = new TableSharedKeyCredential(TableConstants.ConnectionStrings.DevStoreAccountName, TableConstants.ConnectionStrings.DevStoreAccountKey);
+            var credentials = new TableSharedKeyCredential(
+                TableConstants.ConnectionStrings.DevStoreAccountName,
+                TableConstants.ConnectionStrings.DevStoreAccountKey);
             var account = new TableConnectionString(
                 credentials,
-                tableStorageUri: (tableEndpoint, tableSecondaryEndpoint))
-            {
-                Settings = ConnectionString.Empty()
-            };
+                tableStorageUri: (tableEndpoint, tableSecondaryEndpoint)) { Settings = ConnectionString.Empty() };
             account.Settings.Add(TableConstants.ConnectionStrings.UseDevelopmentSetting, "true");
             if (proxyUri != null)
             {
-                account.Settings.Add(TableConstants.ConnectionStrings.DevelopmentProxyUriSetting, proxyUri.ToString());
+                account.Settings.Add(TableConstants.ConnectionStrings.DevelopmentProxyUriSetting, proxyUri.AbsoluteUri);
             }
 
+            account._accountName = credentials.AccountName;
             account.IsDevStoreAccount = true;
 
             return account;
@@ -440,10 +431,10 @@ namespace Azure.Data.Tables
 
             return
                 accountName != null && accountKey != null && sharedAccessSignature == null
-                ? new TableSharedKeyCredential(accountName, accountKey)
-                : (object)(accountKey == null && sharedAccessSignature != null
-                    ? sharedAccessSignature
-                    : null);
+                    ? new TableSharedKeyCredential(accountName, accountKey)
+                    : (object)(accountKey == null && sharedAccessSignature != null
+                        ? sharedAccessSignature
+                        : null);
         }
 
         /// <summary>
@@ -466,11 +457,11 @@ namespace Azure.Data.Tables
             {
                 Scheme = scheme,
                 Host = string.Format(
-                        CultureInfo.InvariantCulture,
-                        "{0}.{1}.{2}",
-                        accountName,
-                        hostNamePrefix,
-                        endpointSuffix),
+                    CultureInfo.InvariantCulture,
+                    "{0}.{1}.{2}",
+                    accountName,
+                    hostNamePrefix,
+                    endpointSuffix),
                 Query = sasToken
             };
 
@@ -478,12 +469,12 @@ namespace Azure.Data.Tables
             {
                 Scheme = scheme,
                 Host = string.Format(
-                        CultureInfo.InvariantCulture,
-                        "{0}{1}.{2}.{3}",
-                        accountName,
-                        TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix,
-                        hostNamePrefix,
-                        endpointSuffix),
+                    CultureInfo.InvariantCulture,
+                    "{0}{1}.{2}.{3}",
+                    accountName,
+                    TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix,
+                    hostNamePrefix,
+                    endpointSuffix),
                 Query = sasToken
             };
 
@@ -524,9 +515,9 @@ namespace Azure.Data.Tables
         /// <param name="settings">The settings.</param>
         /// <returns>The default table endpoint.</returns>
         private static (Uri Primary, Uri Secondary) ConstructTableEndpoint(ConnectionString settings) => ConstructTableEndpoint(
-                settings.GetRequired(TableConstants.ConnectionStrings.DefaultEndpointsProtocolSetting),
-                settings.GetRequired(TableConstants.ConnectionStrings.AccountNameSetting),
-                settings.GetNonRequired(TableConstants.ConnectionStrings.EndpointSuffixSetting),
-                settings.GetNonRequired(TableConstants.ConnectionStrings.SharedAccessSignatureSetting));
+            settings.GetRequired(TableConstants.ConnectionStrings.DefaultEndpointsProtocolSetting),
+            settings.GetRequired(TableConstants.ConnectionStrings.AccountNameSetting),
+            settings.GetNonRequired(TableConstants.ConnectionStrings.EndpointSuffixSetting),
+            settings.GetNonRequired(TableConstants.ConnectionStrings.SharedAccessSignatureSetting));
     }
 }

@@ -35,8 +35,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="name">Name of the criteria.</param>
         /// <param name="metricName">Name of the metric.</param>
-        /// <param name="timeAggregation">the criteria time aggregation
-        /// types.</param>
+        /// <param name="timeAggregation">the criteria time aggregation types.
+        /// Possible values include: 'Average', 'Count', 'Minimum', 'Maximum',
+        /// 'Total'</param>
         /// <param name="operatorProperty">the criteria operator. Possible
         /// values include: 'Equals', 'NotEquals', 'GreaterThan',
         /// 'GreaterThanOrEqual', 'LessThan', 'LessThanOrEqual'</param>
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="skipMetricValidation">Allows creating an alert rule on
         /// a custom metric that isn't yet emitted, by causing the metric
         /// validation to be skipped.</param>
-        public MetricCriteria(string name, string metricName, object timeAggregation, string operatorProperty, double threshold, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool? skipMetricValidation = default(bool?))
+        public MetricCriteria(string name, string metricName, string timeAggregation, string operatorProperty, double threshold, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool? skipMetricValidation = default(bool?))
             : base(name, metricName, timeAggregation, additionalProperties, metricNamespace, dimensions, skipMetricValidation)
         {
             OperatorProperty = operatorProperty;

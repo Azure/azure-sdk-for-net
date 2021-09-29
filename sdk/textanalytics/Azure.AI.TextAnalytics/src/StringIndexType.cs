@@ -3,10 +3,10 @@
 
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     [CodeGenModel("StringIndexType")]
-    public readonly partial struct StringIndexType
+    internal readonly partial struct StringIndexType
     {
     }
 }

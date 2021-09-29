@@ -13,15 +13,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary>
     /// incident status
     /// 
-    /// 
-    /// 
-    /// only return for alerting incident result.
+    /// only return for alerting incident result
     /// </summary>
     public readonly partial struct AnomalyIncidentStatus : IEquatable<AnomalyIncidentStatus>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AnomalyIncidentStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyIncidentStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnomalyIncidentStatus(string value)
         {

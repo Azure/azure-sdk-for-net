@@ -15,7 +15,7 @@ Param (
 )
 
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
-function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
+function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel, $releaseStatus)
 {
     $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
     $FileStream = [System.IO.FileStream]::new($filePath, [System.IO.FileMode]::Open)
@@ -33,6 +33,17 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
     $StringContent = [System.Net.Http.StringContent]::new($apiLabel)
     $StringContent.Headers.ContentDisposition = $stringHeader
     $multipartContent.Add($stringContent)
+    Write-Host "Request param, label: $apiLabel"
+
+    if ($releaseStatus -and ($releaseStatus -ne "Unreleased"))
+    {
+        $compareAllParam = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
+        $compareAllParam.Name = "compareAllRevisions"
+        $compareAllParamContent = [System.Net.Http.StringContent]::new($true)
+        $compareAllParamContent.Headers.ContentDisposition = $compareAllParam
+        $multipartContent.Add($compareAllParamContent)
+        Write-Host "Request param, compareAllRevisions: true"
+    }
 
     $headers = @{
         "ApiKey" = $apiKey;
@@ -71,7 +82,7 @@ else
 {
     Write-Host "The function for 'FindArtifactForApiReviewFn' was not found.`
     Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
-    See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
+    See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
     exit(1)
 }
 
@@ -103,28 +114,35 @@ if ($packages)
 
         Write-Host "Version: $($version)"
         Write-Host "SDK Type: $($pkgInfo.SdkType)"
+        Write-Host "Release Status: $($pkgInfo.ReleaseStatus)"
 
-        # Run create review step only if build is triggered from master branch or if version is GA.
+        # Run create review step only if build is triggered from main branch or if version is GA.
         # This is to avoid invalidating review status by a build triggered from feature branch
         if ( ($SourceBranch -eq $DefaultBranch) -or (-not $version.IsPrerelease))
         {
             Write-Host "Submitting API Review for package $($pkg)"
-            $respCode = Submit-APIReview -packagename $pkg -filePath $pkgPath -uri $APIViewUri -apiKey $APIKey -apiLabel $APILabel
+            $respCode = Submit-APIReview -packagename $pkg -filePath $pkgPath -uri $APIViewUri -apiKey $APIKey -apiLabel $APILabel -releaseStatus $pkgInfo.ReleaseStatus
             Write-Host "HTTP Response code: $($respCode)"
             # HTTP status 200 means API is in approved status
             if ($respCode -eq '200')
             {
                 Write-Host "API review is in approved status."
             }
-            elseif ($version.IsPrerelease -or ($version.Major -eq 0))
+            elseif ($version.IsPrerelease)
             {
                 # Ignore API review status for prerelease version
                 Write-Host "Package version is not GA. Ignoring API view approval status"
             }
+            elseif (!$pkgInfo.ReleaseStatus -or $pkgInfo.ReleaseStatus -eq "Unreleased")
+            {
+                Write-Host "Release date is not set for current version in change log file for package. Ignoring API review approval status since package is not yet ready for release."
+            }
             else
             {
                 # Return error code if status code is 201 for new data plane package
-                if ($pkgInfo.SdkType -eq "client" -and $pkgInfo.IsNewSdk)
+                # Temporarily enable API review for spring SDK types. Ideally this should be done be using 'IsReviewRequired' method in language side
+                # to override default check of SDK type client
+                if (($pkgInfo.SdkType -eq "client" -or $pkgInfo.SdkType -eq "spring") -and $pkgInfo.IsNewSdk)
                 {
                     if ($respCode -eq '201')
                     {
@@ -143,7 +161,7 @@ if ($packages)
                 {
                     Write-Host "API review is not approved for package $($PackageName), however it is not required for this package type so it can still be released without API review approval."
                 }
-            } 
+            }
         }
         else
         {

@@ -86,7 +86,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17814")]
         public void InstantiateFieldValueWithSelectionMarkAndNoValueSelectionMark()
         {
             var fieldValue = new FieldValue(FieldValueType.SelectionMark);

@@ -32,6 +32,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobPatchParameter class.
         /// </summary>
         /// <param name="priority">The priority of the Job.</param>
+        /// <param name="maxParallelTasks">The maximum number of tasks that can
+        /// be executed in parallel for the job.</param>
         /// <param name="onAllTasksComplete">The action the Batch service
         /// should take when all Tasks in the Job are in the completed
         /// state.</param>
@@ -41,9 +43,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Job's Tasks.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the Job as metadata.</param>
-        public JobPatchParameter(int? priority = default(int?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        public JobPatchParameter(int? priority = default(int?), int? maxParallelTasks = default(int?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Priority = priority;
+            MaxParallelTasks = maxParallelTasks;
             OnAllTasksComplete = onAllTasksComplete;
             Constraints = constraints;
             PoolInfo = poolInfo;
@@ -66,6 +69,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum number of tasks that can be executed in
+        /// parallel for the job.
+        /// </summary>
+        /// <remarks>
+        /// The value of maxParallelTasks must be -1 or greater than 0 if
+        /// specified. If not specified, the default value is -1, which means
+        /// there's no limit to the number of tasks that can be run at once.
+        /// You can update a job's maxParallelTasks after it has been created
+        /// using the update job API.
+        /// </remarks>
+        [JsonProperty(PropertyName = "maxParallelTasks")]
+        public int? MaxParallelTasks { get; set; }
 
         /// <summary>
         /// Gets or sets the action the Batch service should take when all

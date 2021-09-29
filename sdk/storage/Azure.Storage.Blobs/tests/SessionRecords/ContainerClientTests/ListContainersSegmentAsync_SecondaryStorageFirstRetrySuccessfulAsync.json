@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seantest2sec.blob.core.windows.net/test-container-93fd8620-cc18-8531-6158-1670ab368a56?restype=container",
@@ -14,14 +14,14 @@
         "x-ms-client-request-id": "02638f1e-d9a8-7962-18ee-35b74273dd0f",
         "x-ms-date": "Wed, 17 Feb 2021 20:08:36 GMT",
         "x-ms-return-client-request-id": "true",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 20:08:36 GMT",
-        "ETag": "\u00220x8D8D37FCF696E8A\u0022",
+        "ETag": "\"0x8D8D37FCF696E8A\"",
         "Last-Modified": "Wed, 17 Feb 2021 20:08:36 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "02638f1e-d9a8-7962-18ee-35b74273dd0f",
         "x-ms-request-id": "2cdc37b5-101e-003b-4f68-0574ff000000",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "1c516e24-88d3-25ad-a6f7-ac20682137f5",
         "x-ms-date": "Wed, 17 Feb 2021 20:08:37 GMT",
         "x-ms-return-client-request-id": "true",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -62,12 +62,12 @@
         "x-ms-client-request-id": "1c516e24-88d3-25ad-a6f7-ac20682137f5",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "7161f38b-001e-0007-5a68-051312000000",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerNotFound</Code><Message>The specified container does not exist.\n",
         "RequestId:7161f38b-001e-0007-5a68-051312000000\n",
-        "Time:2021-02-17T20:08:38.2135964Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-02-17T20:08:38.2135964Z</Message></Error>"
       ]
     },
     {
@@ -84,14 +84,14 @@
         "x-ms-client-request-id": "1c516e24-88d3-25ad-a6f7-ac20682137f5",
         "x-ms-date": "Wed, 17 Feb 2021 20:08:40 GMT",
         "x-ms-return-client-request-id": "true",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 20:08:39 GMT",
-        "ETag": "\u00220x8D8D37FCF696E8A\u0022",
+        "ETag": "\"0x8D8D37FCF696E8A\"",
         "Last-Modified": "Wed, 17 Feb 2021 20:08:36 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -105,7 +105,7 @@
         "x-ms-lease-state": "available",
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "2cdc429c-101e-003b-1268-0574ff000000",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
@@ -123,7 +123,7 @@
         "x-ms-client-request-id": "d393c2bd-c122-223c-99c9-c1124b531a8b",
         "x-ms-date": "Wed, 17 Feb 2021 20:08:40 GMT",
         "x-ms-return-client-request-id": "true",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -136,13 +136,13 @@
         ],
         "x-ms-client-request-id": "d393c2bd-c122-223c-99c9-c1124b531a8b",
         "x-ms-request-id": "2cdc4326-101e-003b-0e68-0574ff000000",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1791306867",
-    "Storage_TestConfigSecondary": "SecondaryTenant\nseantest2sec\nU2FuaXRpemVk\nhttps://seantest2sec.blob.core.windows.net\nhttps://seantest2sec.file.core.windows.net\nhttps://seantest2sec.queue.core.windows.net\nhttps://seantest2sec.table.core.windows.net\n\n\n\n\nhttps://seantest2sec-secondary.blob.core.windows.net\nhttps://seantest2sec-secondary.file.core.windows.net\nhttps://seantest2sec-secondary.queue.core.windows.net\nhttps://seantest2sec-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seantest2sec.blob.core.windows.net/;QueueEndpoint=https://seantest2sec.queue.core.windows.net/;FileEndpoint=https://seantest2sec.file.core.windows.net/;BlobSecondaryEndpoint=https://seantest2sec-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seantest2sec-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seantest2sec-secondary.file.core.windows.net/;AccountName=seantest2sec;AccountKey=Sanitized\nseanscope1"
+    "Storage_TestConfigSecondary": "SecondaryTenant\nseantest2sec\nU2FuaXRpemVk\nhttps://seantest2sec.blob.core.windows.net\nhttps://seantest2sec.file.core.windows.net\nhttps://seantest2sec.queue.core.windows.net\nhttps://seantest2sec.table.core.windows.net\n\n\n\n\nhttps://seantest2sec-secondary.blob.core.windows.net\nhttps://seantest2sec-secondary.file.core.windows.net\nhttps://seantest2sec-secondary.queue.core.windows.net\nhttps://seantest2sec-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seantest2sec.blob.core.windows.net/;QueueEndpoint=https://seantest2sec.queue.core.windows.net/;FileEndpoint=https://seantest2sec.file.core.windows.net/;BlobSecondaryEndpoint=https://seantest2sec-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seantest2sec-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seantest2sec-secondary.file.core.windows.net/;AccountName=seantest2sec;AccountKey=Sanitized\nseanscope1\n\n"
   }
 }

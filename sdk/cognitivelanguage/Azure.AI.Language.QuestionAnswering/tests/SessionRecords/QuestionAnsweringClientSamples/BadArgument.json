@@ -1,0 +1,44 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=invalid-knowledgebase\u0026deploymentName=test\u0026api-version=2021-07-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "46",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210923.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "8aa8310b156e16cf6b60da1cb46762d4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "question": "Does this knowledge base exist?"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "apim-request-id": "a50d986a-019b-4677-9128-23975a9f9666",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTransaction=1",
+        "Date": "Thu, 23 Sep 2021 23:29:35 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "545"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022error\u0022: {\n",
+        "    \u0022code\u0022: \u0022BadArgument\u0022,\n",
+        "    \u0022message\u0022: \u0022Please verify azure search service is up.\u0022\n",
+        "  }\n",
+        "}"
+      ]
+    }
+  ],
+  "Variables": {
+    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_KEY": "Sanitized",
+    "RandomSeed": "1679933285"
+  }
+}

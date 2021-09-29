@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of AnalyzeJobErrorsAndStatistics. </summary>
-        /// <param name="errors"> . </param>
+        /// <param name="errors"></param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         internal AnalyzeJobErrorsAndStatistics(IReadOnlyList<TextAnalyticsErrorInternal> errors, TextDocumentBatchStatistics statistics)
         {
@@ -29,6 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
             Statistics = statistics;
         }
 
+        /// <summary> Gets the errors. </summary>
         public IReadOnlyList<TextAnalyticsErrorInternal> Errors { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public TextDocumentBatchStatistics Statistics { get; }

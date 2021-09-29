@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -16,7 +17,9 @@ namespace Azure
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestOptions"/> class.
         /// </summary>
-        public RequestOptions() { }
+        public RequestOptions()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestOptions"/> class using the given <see cref="RequestOptions"/>.
@@ -51,6 +54,24 @@ namespace Azure
         /// of the underlying <see cref="HttpPipeline"/>.
         /// </summary>
         public HttpPipelinePolicy? PerCallPolicy { get; set; }
+
+        /// <summary>
+        /// Applies options from <see cref="RequestOptions"/> instance to a <see cref="HttpMessage"/>.
+        /// </summary>
+        /// <param name="requestOptions"></param>
+        /// <param name="message"></param>
+        public static void Apply(RequestOptions requestOptions, HttpMessage message)
+        {
+            if (requestOptions == null)
+            {
+                return;
+            }
+
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+        }
 
         /// <summary>
         /// An <see cref="HttpPipelineSynchronousPolicy"/> which invokes an action when a request is being sent.

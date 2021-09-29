@@ -24,7 +24,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         public CommunicationRelayClient(string connectionString)
             : this(
-                ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 new CommunicationRelayClientOptions())
         { }
 
@@ -33,7 +33,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationRelayClient(string connectionString, CommunicationRelayClientOptions options)
             : this(
-                ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 options ?? new CommunicationRelayClientOptions())
         { }
 
@@ -43,8 +43,8 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationRelayClient(Uri endpoint, AzureKeyCredential keyCredential, CommunicationRelayClientOptions options = default)
             : this(
-                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                AssertNotNull(keyCredential, nameof(keyCredential)),
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
                 options ?? new CommunicationRelayClientOptions())
         { }
 
@@ -54,8 +54,8 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationRelayClient(Uri endpoint, TokenCredential tokenCredential, CommunicationRelayClientOptions options = default)
             : this(
-                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                AssertNotNull(tokenCredential, nameof(tokenCredential)),
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
                 options ?? new CommunicationRelayClientOptions())
         { }
 
@@ -90,7 +90,7 @@ namespace Azure.Communication.NetworkTraversal
             RestClient = null;
         }
 
-        /// <summary>Gets a TURN credential for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <summary>Gets a Relay Configuration for a <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
@@ -100,7 +100,7 @@ namespace Azure.Communication.NetworkTraversal
             scope.Start();
             try
             {
-                return RestClient.IssueTurnCredentials(communicationUser.Id, cancellationToken);
+                return RestClient.IssueRelayConfiguration(communicationUser.Id, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -109,7 +109,7 @@ namespace Azure.Communication.NetworkTraversal
             }
         }
 
-        /// <summary>Asynchronously gets a TURN credential for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <summary>Asynchronously gets a Relay Configuration for a <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationRelayConfiguration>> GetRelayConfigurationAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
@@ -118,26 +118,13 @@ namespace Azure.Communication.NetworkTraversal
             scope.Start();
             try
             {
-                return await RestClient.IssueTurnCredentialsAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.IssueRelayConfigurationAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
             }
-        }
-
-        private static T AssertNotNull<T>(T argument, string argumentName)
-            where T : class
-        {
-            Argument.AssertNotNull(argument, argumentName);
-            return argument;
-        }
-
-        private static string AssertNotNullOrEmpty(string argument, string argumentName)
-        {
-            Argument.AssertNotNullOrEmpty(argument, argumentName);
-            return argument;
         }
     }
 }

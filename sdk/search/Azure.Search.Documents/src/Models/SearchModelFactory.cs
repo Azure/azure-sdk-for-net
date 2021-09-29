@@ -4,13 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary>
-    /// Helps mock the types in Azure.Search.Documents.Models.
+    /// Helper class that acts as a factory for read-only models, to mock the types in <c>Azure.Search.Documents.Models</c>.
     /// </summary>
+    [CodeGenModel("SearchServiceModelFactory")]
+    [CodeGenSuppress("IndexDocumentsResult", typeof(IReadOnlyList<IndexingResult>))]
     public static partial class SearchModelFactory
     {
         /// <summary> Initializes a new instance of AnalyzedTokenInfo. </summary>
@@ -66,6 +69,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
         /// <returns> A new IndexerExecutionResult instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IndexerExecutionResult IndexerExecutionResult(
             IndexerExecutionStatus status,
             string errorMessage,
@@ -157,6 +161,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <returns> A new SearchIndexerStatus instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchIndexerStatus SearchIndexerStatus(
             IndexerStatus status,
             IndexerExecutionResult lastResult,
@@ -274,6 +279,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="results"> The list of returned Autocompleted items. </param>
         /// <returns> A new AutocompleteResults instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AutocompleteResults AutocompleteResults(
             double? coverage,
             IReadOnlyList<AutocompleteItem> results) =>

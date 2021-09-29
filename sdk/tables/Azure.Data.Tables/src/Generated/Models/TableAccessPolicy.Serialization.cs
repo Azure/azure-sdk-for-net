@@ -29,9 +29,12 @@ namespace Azure.Data.Tables.Models
                 writer.WriteValue(ExpiresOn.Value, "O");
                 writer.WriteEndElement();
             }
-            writer.WriteStartElement("Permission");
-            writer.WriteValue(Permission);
-            writer.WriteEndElement();
+            if (Permission != null)
+            {
+                writer.WriteStartElement("Permission");
+                writer.WriteValue(Permission);
+                writer.WriteEndElement();
+            }
             writer.WriteEndElement();
         }
 

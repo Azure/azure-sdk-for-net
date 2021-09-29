@@ -32,7 +32,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
         /// <param name="status"> Model training status. </param>
-        /// <param name="displayName"> . </param>
+        /// <param name="displayName"></param>
         /// <param name="variablesCount"> Count of variables. </param>
         internal ModelSnapshot(Guid modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime, ModelStatus status, string displayName, int variablesCount)
         {
@@ -52,6 +52,7 @@ namespace Azure.AI.AnomalyDetector.Models
         public DateTimeOffset LastUpdatedTime { get; }
         /// <summary> Model training status. </summary>
         public ModelStatus Status { get; }
+        /// <summary> Gets the display name. </summary>
         public string DisplayName { get; }
         /// <summary> Count of variables. </summary>
         public int VariablesCount { get; }

@@ -1,5 +1,5 @@
 # Running multiple actions
-This sample demonstrates how to run multiple actions in one or more documents. Actions include entity recognition, linked entity recognition, key phrase extraction, Personally Identifiable Information (PII) Recognition, and sentiment analysis. To get started you will need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+This sample demonstrates how to run multiple actions in one or more documents. Actions include entity recognition, linked entity recognition, key phrase extraction, Personally Identifiable Information (PII) Recognition, sentiment analysis, and extractive text summarization. To get started you will need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
@@ -37,9 +37,6 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
     {
         ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
         RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
-        RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() },
-        RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
-        AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
         DisplayName = "AnalyzeOperationSample"
     };
 
@@ -60,44 +57,19 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
 
     await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     {
-        IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = documentsInPage.ExtractKeyPhrasesActionsResults;
-        IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = documentsInPage.RecognizeEntitiesActionsResults;
-        IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = documentsInPage.RecognizePiiEntitiesActionsResults;
-        IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = documentsInPage.RecognizeLinkedEntitiesActionsResults;
-        IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = documentsInPage.AnalyzeSentimentActionsResults;
+        IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesResults = documentsInPage.ExtractKeyPhrasesResults;
+        IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesResults = documentsInPage.RecognizeEntitiesResults;
 
         Console.WriteLine("Recognized Entities");
         int docNumber = 1;
-        foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesActionsResults)
+        foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
         {
-            foreach (RecognizeEntitiesResult result in entitiesActionResults.Result)
+            foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} entities:");
+                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
 
-                foreach (CategorizedEntity entity in result.Entities)
-                {
-                    Console.WriteLine($"  Entity: {entity.Text}");
-                    Console.WriteLine($"  Category: {entity.Category}");
-                    Console.WriteLine($"  Offset: {entity.Offset}");
-                    Console.WriteLine($"  Length: {entity.Length}");
-                    Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"  SubCategory: {entity.SubCategory}");
-                }
-                Console.WriteLine("");
-            }
-        }
-
-        Console.WriteLine("Recognized PII Entities");
-        docNumber = 1;
-        foreach (RecognizePiiEntitiesActionResult piiActionResults in piiActionsResults)
-        {
-            foreach (RecognizePiiEntitiesResult result in piiActionResults.Result)
-            {
-                Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} PII entities:");
-
-                foreach (PiiEntity entity in result.Entities)
+                foreach (CategorizedEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Text}");
                     Console.WriteLine($"  Category: {entity.Category}");
@@ -112,63 +84,17 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
 
         Console.WriteLine("Key Phrases");
         docNumber = 1;
-        foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesActionsResults)
+        foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesResults)
         {
-            foreach (ExtractKeyPhrasesResult result in keyPhrasesActionResult.Result)
+            foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+                Console.WriteLine($"  Recognized the following {documentResults.KeyPhrases.Count} Keyphrases:");
 
-                foreach (string keyphrase in result.KeyPhrases)
+                foreach (string keyphrase in documentResults.KeyPhrases)
                 {
                     Console.WriteLine($"  {keyphrase}");
                 }
-                Console.WriteLine("");
-            }
-        }
-
-        Console.WriteLine("Recognized Linked Entities");
-        docNumber = 1;
-        foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingActionsResults)
-        {
-            foreach (RecognizeLinkedEntitiesResult result in linkedEntitiesActionResults.Result)
-            {
-                Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} linked entities:");
-
-                foreach (LinkedEntity entity in result.Entities)
-                {
-                    Console.WriteLine($"  Entity: {entity.Name}");
-                    Console.WriteLine($"  DataSource: {entity.DataSource}");
-                    Console.WriteLine($"  DataSource EntityId: {entity.DataSourceEntityId}");
-                    Console.WriteLine($"  Language: {entity.Language}");
-                    Console.WriteLine($"  DataSource Url: {entity.Url}");
-
-                    Console.WriteLine($"  Total Matches: {entity.Matches.Count()}");
-                    foreach (LinkedEntityMatch match in entity.Matches)
-                    {
-                        Console.WriteLine($"    Match Text: {match.Text}");
-                        Console.WriteLine($"    ConfidenceScore: {match.ConfidenceScore}");
-                        Console.WriteLine($"    Offset: {match.Offset}");
-                        Console.WriteLine($"    Length: {match.Length}");
-                    }
-                    Console.WriteLine("");
-                }
-                Console.WriteLine("");
-            }
-        }
-
-        Console.WriteLine("Analyze Sentiment");
-        docNumber = 1;
-        foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentActionsResults)
-        {
-            foreach (AnalyzeSentimentResult result in analyzeSentimentActionsResult.Result)
-            {
-                Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
-                Console.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive}.");
-                Console.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral}.");
-                Console.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative}.");
                 Console.WriteLine("");
             }
         }
@@ -178,10 +104,10 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
 
 To see the full example source files, see:
 
-* [Synchronously StartAnalyzeActions ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperation.cs)
-* [Asynchronously StartAnalyzeActions ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationAsync.cs)
-* [Synchronously StartAnalyzeActions Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationConvenience.cs)
-* [Asynchronously StartAnalyzeActions Convenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationConvenienceAsync.cs)
+* [Synchronously StartAnalyzeActions ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperation.cs)
+* [Asynchronously StartAnalyzeActions ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationAsync.cs)
+* [Synchronously StartAnalyzeActions Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationConvenience.cs)
+* [Asynchronously StartAnalyzeActions Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationConvenienceAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

@@ -23,14 +23,13 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests.Sampl
                     new AzureKeyCredential(TestEnvironment.CloudEventTopicKey));
 
             var cloudEvent =
-                new CloudEvent(
-                    type: "record",
-                    source: new Uri("http://www.contoso.com"))
-                    {
-                        Data = "data"
-                    };
-
-            await client.SendCloudEventAsync(cloudEvent);
+                new CloudEvent
+                {
+                    Type = "record",
+                    Source = new Uri("http://www.contoso.com"),
+                    Data = "data"
+                };
+            await client.SendCloudNativeCloudEventAsync(cloudEvent);
             #endregion
         }
     }

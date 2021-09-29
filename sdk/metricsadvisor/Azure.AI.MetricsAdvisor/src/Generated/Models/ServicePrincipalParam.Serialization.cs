@@ -17,8 +17,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("clientId");
             writer.WriteStringValue(ClientId);
-            writer.WritePropertyName("clientSecret");
-            writer.WriteStringValue(ClientSecret);
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret");
+                writer.WriteStringValue(ClientSecret);
+            }
             writer.WritePropertyName("tenantId");
             writer.WriteStringValue(TenantId);
             writer.WriteEndObject();
@@ -27,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal static ServicePrincipalParam DeserializeServicePrincipalParam(JsonElement element)
         {
             string clientId = default;
-            string clientSecret = default;
+            Optional<string> clientSecret = default;
             string tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new ServicePrincipalParam(clientId, clientSecret, tenantId);
+            return new ServicePrincipalParam(clientId, clientSecret.Value, tenantId);
         }
     }
 }

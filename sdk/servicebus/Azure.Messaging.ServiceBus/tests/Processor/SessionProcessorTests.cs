@@ -6,21 +6,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
-    public class SessionProcessorTests : ServiceBusTestBase
+    public class SessionProcessorTests
     {
         [Test]
         public void CannotAddNullHandler()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Assert.That(() => processor.ProcessMessageAsync += null, Throws.InstanceOf<ArgumentNullException>());
@@ -33,9 +31,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void MustSetMessageHandler()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
@@ -45,9 +42,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void MustSetErrorHandler()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -59,9 +55,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotAddTwoHandlersToTheSameEvent()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -79,9 +74,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotRemoveHandlerThatHasNotBeenAdded()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             // First scenario: no handler has been set.
@@ -108,9 +102,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CanRemoveHandlerThatHasBeenAdded()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedReceiverConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Func<ProcessSessionMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
@@ -139,9 +132,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [Test]
         public void ProcessorOptionsSetOnClient()
         {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var client = new ServiceBusClient(connString);
             var options = new ServiceBusSessionProcessorOptions
             {
@@ -392,7 +385,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var cts = new CancellationTokenSource();
 
             // mutate the cancellation token to distinguish it from CancellationToken.None
-            cts.CancelAfter(100);
+            cts.CancelAfter(500);
 
             await mockSessionProcessor.Object.CloseAsync(cts.Token);
             mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));

@@ -223,7 +223,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     if (partitionKey != null)
                     {
                         // Partition key is set then we expect all messages from the same partition.
-                        Assert.True(pReceived.Count(p => p.Count > 0) == 1, "Received messsages from multiple partitions.");
+                        Assert.True(pReceived.Count(p => p.Count > 0) == 1, "Received messages from multiple partitions.");
 
                         // Find target partition.
                         var targetPartition = pReceived.Single(p => p.Count > 0);

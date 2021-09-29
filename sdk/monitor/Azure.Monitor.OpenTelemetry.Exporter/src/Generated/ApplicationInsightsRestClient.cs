@@ -30,12 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public ApplicationInsightsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://dc.services.visualstudio.com")
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
-
-            this.host = host;
+            this.host = host ?? throw new ArgumentNullException(nameof(host));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

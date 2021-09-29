@@ -212,9 +212,9 @@ namespace Azure.Messaging.ServiceBus {
                 return ResourceManager.GetString("DefaultServerBusyException", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to he message processor is unable to continue and will stop processing; the host application has closed the connection to the Service Bus service..
+        ///   Looks up a localized string similar to The message processor is unable to continue and will stop processing; the host application has closed the connection to the Service Bus service..
         /// </summary>
         internal static string DisposedConnectionMessageProcessorMustStop {
             get {
@@ -606,6 +606,16 @@ namespace Azure.Messaging.ServiceBus {
         internal static string TokenMissingExpiresOn {
             get {
                 return ResourceManager.GetString("TokenMissingExpiresOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An attempt was made to reconnect the {0} sender link as part of a cross-entity transaction. This could not be completed successfully because the {1} receiver
+        ///needs to be re-established first. Attempting the transaction again will allow the correct link to be established first..
+        /// </summary>
+        internal static string TransactionReconnectionError {
+            get {
+                return ResourceManager.GetString("TransactionReconnectionError", resourceCulture);
             }
         }
         

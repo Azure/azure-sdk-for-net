@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -378,33 +379,44 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task BearerTokenAuthenticationPolicy_GatedConcurrentCallsFailed()
+        public void BearerTokenAuthenticationPolicy_GatedConcurrentCallsFailed()
         {
             var requestMre = new ManualResetEventSlim(false);
             var responseMre = new ManualResetEventSlim(false);
+            var getTokenCallCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
+            {
+                if (Interlocked.Increment(ref getTokenCallCount) == 1)
                 {
                     requestMre.Set();
                     responseMre.Wait(c);
-                    throw new InvalidOperationException("Error");
-                },
-                IsAsync);
+                }
+
+                throw new InvalidOperationException($"Error");
+            }, IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
 
             var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
-            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
-
             requestMre.Wait();
-            await Task.Delay(1_000);
+
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
             responseMre.Set();
 
             Assert.CatchAsync(async () => await Task.WhenAll(firstRequestTask, secondRequestTask));
 
             Assert.IsTrue(firstRequestTask.IsFaulted);
             Assert.IsTrue(secondRequestTask.IsFaulted);
-            Assert.AreEqual(firstRequestTask.Exception.InnerException, secondRequestTask.Exception.InnerException);
+
+            if (getTokenCallCount == 1)
+            {
+                Assert.AreEqual(firstRequestTask.Exception.InnerException, secondRequestTask.Exception.InnerException);
+            }
+            else
+            {
+                Assert.AreEqual(getTokenCallCount, 2);
+            }
         }
 
         [Test]
@@ -460,20 +472,19 @@ namespace Azure.Core.Tests
             var responseMre = new ManualResetEventSlim(true);
             var credentialMre = new ManualResetEventSlim(false);
 
-            var getTokenRequestTimes = new List<DateTimeOffset>();
+            var getTokenRequestTimes = new ConcurrentQueue<DateTimeOffset>();
             var transportCallCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
+            {
+                if (transportCallCount > 0)
                 {
-                    if (transportCallCount > 0)
-                    {
-                        credentialMre.Set();
-                        getTokenRequestTimes.Add(DateTimeOffset.UtcNow);
-                        throw new InvalidOperationException("Error");
-                    }
+                    credentialMre.Set();
+                    getTokenRequestTimes.Enqueue(DateTimeOffset.UtcNow);
+                    throw new InvalidOperationException("Credential Error");
+                }
 
-                    return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(1.5));
-                },
-                IsAsync);
+                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(1.5));
+            }, IsAsync);
 
             var tokenRefreshRetryDelay = TimeSpan.FromSeconds(2);
             var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromMinutes(2), tokenRefreshRetryDelay);
@@ -521,7 +532,8 @@ namespace Azure.Core.Tests
             Assert.AreEqual(auth4Value, auth5Value);
 
             Assert.AreEqual(2, getTokenRequestTimes.Count);
-            Assert.True(getTokenRequestTimes[1] - getTokenRequestTimes[0] > tokenRefreshRetryDelay);
+            var getTokenRequestTimesList = getTokenRequestTimes.ToList();
+            Assert.True(getTokenRequestTimesList[1] - getTokenRequestTimesList[0] > tokenRefreshRetryDelay);
         }
 
         [Test]
@@ -664,18 +676,20 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Retry(3)] //https://github.com/Azure/azure-sdk-for-net/issues/21005
         public async Task BearerTokenAuthenticationPolicy_BackgroundRefreshCancelledAndLogs()
         {
             var requestMre = new ManualResetEventSlim(true);
             var responseMre = new ManualResetEventSlim(true);
             var currentTime = DateTimeOffset.UtcNow;
-            var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddMinutes(2), currentTime.AddMinutes(30) });
-            var callCount = 0;
+            var expires = new ConcurrentQueue<DateTimeOffset>(new[] { currentTime.AddMinutes(2), currentTime.AddMinutes(30) });
+            int requestCount = 0;
             var logged = false;
             string msg = "fail to refresh";
             var credential = new BearerTokenAuthenticationPolicyTests.TokenCredentialStub((r, c) =>
                 {
-                    if (callCount > 0)
+                    TestContext.WriteLine($"Start TokenCredentialStub: requestCount: {requestCount}");
+                    if (Interlocked.Increment(ref requestCount) > 1)
                     {
                         Task.Delay(100).GetAwaiter().GetResult();
                         throw new OperationCanceledException(msg);
@@ -683,14 +697,16 @@ namespace Azure.Core.Tests
                     requestMre.Set();
                     responseMre.Wait(c);
                     requestMre.Reset();
-                    callCount++;
 
-                    return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
+                    expires.TryDequeue(out var token);
+                    TestContext.WriteLine($"End TokenCredentialStub: callCount: {requestCount}");
+                    return new AccessToken(Guid.NewGuid().ToString(), token);
                 },
                 IsAsync);
 
             AzureEventSourceListener listener = new((args, text) =>
             {
+                TestContext.WriteLine(text);
                 if (args.EventName == "BackgroundRefreshFailed" && text.Contains(msg))
                 {
                     logged = true;
@@ -717,6 +733,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Retry(3)] //https://github.com/Azure/azure-sdk-for-net/issues/21005
         public async Task BearerTokenAuthenticationPolicy_BackgroundRefreshFailsAndLogs()
         {
             var requestMre = new ManualResetEventSlim(true);
@@ -728,6 +745,7 @@ namespace Azure.Core.Tests
             string msg = "fail to refresh";
             var credential = new BearerTokenAuthenticationPolicyTests.TokenCredentialStub((r, c) =>
                 {
+                    TestContext.WriteLine($"Start TokenCredentialStub: callCount: {callCount}");
                     if (callCount > 0)
                     {
                         throw new Exception(msg);
@@ -737,12 +755,14 @@ namespace Azure.Core.Tests
                     requestMre.Reset();
                     callCount++;
 
+                    TestContext.WriteLine($"End TokenCredentialStub: callCount: {callCount}");
                     return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
                 },
                 IsAsync);
 
             AzureEventSourceListener listener = new((args, text) =>
             {
+                TestContext.WriteLine(text);
                 if (args.EventName == "BackgroundRefreshFailed" && text.Contains(msg))
                 {
                     logged = true;
@@ -756,7 +776,6 @@ namespace Azure.Core.Tests
             responseMre.Reset();
 
             Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/Refresh"));
-            // requestMre.Wait();
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/AlmostExpired"));
             await requestTask;

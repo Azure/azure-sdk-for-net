@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(FrontendIPConfiguration))
@@ -36,6 +35,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("backendAddressPool");
                 writer.WriteObjectValue(BackendAddressPool);
+            }
+            if (Optional.IsCollectionDefined(BackendAddressPools))
+            {
+                writer.WritePropertyName("backendAddressPools");
+                writer.WriteStartArray();
+                foreach (var item in BackendAddressPools)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Probe))
             {
@@ -91,9 +100,10 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<SubResource> frontendIPConfiguration = default;
             Optional<SubResource> backendAddressPool = default;
+            Optional<IList<SubResource>> backendAddressPools = default;
             Optional<SubResource> probe = default;
             Optional<TransportProtocol> protocol = default;
             Optional<LoadDistribution> loadDistribution = default;
@@ -142,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            frontendIPConfiguration = DeserializeSubResource(property0.Value);
+                            frontendIPConfiguration = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("backendAddressPool"))
@@ -152,7 +162,22 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendAddressPool = DeserializeSubResource(property0.Value);
+                            backendAddressPool = SubResource.DeserializeSubResource(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("backendAddressPools"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<SubResource> array = new List<SubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SubResource.DeserializeSubResource(item));
+                            }
+                            backendAddressPools = array;
                             continue;
                         }
                         if (property0.NameEquals("probe"))
@@ -162,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            probe = DeserializeSubResource(property0.Value);
+                            probe = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("protocol"))
@@ -259,7 +284,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new LoadBalancingRule(id.Value, name.Value, etag.Value, type.Value, frontendIPConfiguration.Value, backendAddressPool.Value, probe.Value, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
+            return new LoadBalancingRule(id, name.Value, etag.Value, type.Value, frontendIPConfiguration.Value, backendAddressPool.Value, Optional.ToList(backendAddressPools), probe.Value, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
         }
     }
 }

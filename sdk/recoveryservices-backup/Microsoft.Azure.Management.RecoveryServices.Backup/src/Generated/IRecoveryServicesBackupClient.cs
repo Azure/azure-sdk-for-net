@@ -69,6 +69,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
 
         /// <summary>
+        /// Gets the IBackupResourceStorageConfigsNonCRROperations.
+        /// </summary>
+        IBackupResourceStorageConfigsNonCRROperations BackupResourceStorageConfigsNonCRR { get; }
+
+        /// <summary>
         /// Gets the IProtectionIntentOperations.
         /// </summary>
         IProtectionIntentOperations ProtectionIntent { get; }
@@ -277,6 +282,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Gets the IRecoveryPointsRecommendedForMoveOperations.
         /// </summary>
         IRecoveryPointsRecommendedForMoveOperations RecoveryPointsRecommendedForMove { get; }
+
+        /// <summary>
+        /// Gets the IResourceGuardProxiesOperations.
+        /// </summary>
+        IResourceGuardProxiesOperations ResourceGuardProxies { get; }
+
+        /// <summary>
+        /// Gets the IResourceGuardProxyOperations.
+        /// </summary>
+        IResourceGuardProxyOperations ResourceGuardProxy { get; }
 
         /// <summary>
         /// Gets the IBackupUsageSummariesCRROperations.

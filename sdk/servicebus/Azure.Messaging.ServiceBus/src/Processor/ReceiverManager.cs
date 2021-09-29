@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -27,14 +25,12 @@ namespace Azure.Messaging.ServiceBus
         private readonly ServiceBusReceiverOptions _receiverOptions;
         protected readonly ServiceBusProcessorOptions ProcessorOptions;
         protected readonly EntityScopeFactory _scopeFactory;
-        protected readonly IList<ServiceBusPlugin> _plugins;
 
         protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
         public ReceiverManager(
             ServiceBusProcessor processor,
-            EntityScopeFactory scopeFactory,
-            IList<ServiceBusPlugin> plugins)
+            EntityScopeFactory scopeFactory)
         {
             Processor = processor;
             ProcessorOptions = processor.Options;
@@ -47,13 +43,11 @@ namespace Azure.Messaging.ServiceBus
                 SubQueue = SubQueue.None
             };
             _maxReceiveWaitTime = ProcessorOptions.MaxReceiveWaitTime;
-            _plugins = plugins;
             Receiver = new ServiceBusReceiver(
                 connection: Processor.Connection,
                 entityPath: Processor.EntityPath,
                 isSessionEntity: false,
                 isProcessor: true,
-                plugins: _plugins,
                 options: _receiverOptions);
             _scopeFactory = scopeFactory;
         }
@@ -123,7 +117,7 @@ namespace Azure.Messaging.ServiceBus
 
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticProperty.ConsumerKind);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer);
             scope.SetMessageData(new ServiceBusReceivedMessage[] { message });
             scope.Start();
             try
@@ -154,7 +148,7 @@ namespace Azure.Messaging.ServiceBus
                     Receiver.ReceiveMode == ServiceBusReceiveMode.PeekLock &&
                     AutoRenewLock)
                 {
-                    renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                    renewLockCancellationTokenSource = new CancellationTokenSource();
                     renewLock = RenewMessageLock(
                         message,
                         renewLockCancellationTokenSource);
@@ -164,13 +158,13 @@ namespace Azure.Messaging.ServiceBus
 
                 try
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, message.SequenceNumber);
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, message.SequenceNumber, message.LockTokenGuid);
                     await OnMessageHandler(message, cancellationToken).ConfigureAwait(false);
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, message.SequenceNumber);
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, message.SequenceNumber, message.LockTokenGuid);
                 }
                 catch (Exception ex)
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, message.SequenceNumber, ex.ToString());
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, message.SequenceNumber, ex.ToString(), message.LockTokenGuid);
                     throw;
                 }
 
@@ -187,8 +181,6 @@ namespace Azure.Messaging.ServiceBus
                         CancellationToken.None)
                         .ConfigureAwait(false);
                 }
-
-                await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
             }
             catch (Exception ex)
             // This prevents exceptions relating to processing a message from bubbling up all
@@ -240,7 +232,7 @@ namespace Azure.Messaging.ServiceBus
             }
             finally
             {
-                renewLockCancellationTokenSource?.Cancel();
+                await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
                 renewLockCancellationTokenSource?.Dispose();
             }
         }
@@ -350,7 +342,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        protected async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
+        protected virtual async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
         {
             try
             {

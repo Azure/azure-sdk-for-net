@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionListResult. </summary>
         internal ExpressRouteCircuitConnectionListResult()
         {
-            Value = new ChangeTrackingList<ExpressRouteCircuitConnection>();
+            Value = new ChangeTrackingList<ExpressRouteCircuitConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionListResult. </summary>
         /// <param name="value"> The global reach connection associated with Private Peering in an ExpressRoute Circuit. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ExpressRouteCircuitConnectionListResult(IReadOnlyList<ExpressRouteCircuitConnection> value, string nextLink)
+        internal ExpressRouteCircuitConnectionListResult(IReadOnlyList<ExpressRouteCircuitConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The global reach connection associated with Private Peering in an ExpressRoute Circuit. </summary>
-        public IReadOnlyList<ExpressRouteCircuitConnection> Value { get; }
+        public IReadOnlyList<ExpressRouteCircuitConnectionData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

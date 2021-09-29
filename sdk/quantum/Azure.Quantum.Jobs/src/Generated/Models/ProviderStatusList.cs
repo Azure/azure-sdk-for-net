@@ -20,7 +20,7 @@ namespace Azure.Quantum.Jobs.Models
         }
 
         /// <summary> Initializes a new instance of ProviderStatusList. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal ProviderStatusList(IReadOnlyList<ProviderStatus> value, string nextLink)
         {
@@ -28,6 +28,7 @@ namespace Azure.Quantum.Jobs.Models
             NextLink = nextLink;
         }
 
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<ProviderStatus> Value { get; }
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }

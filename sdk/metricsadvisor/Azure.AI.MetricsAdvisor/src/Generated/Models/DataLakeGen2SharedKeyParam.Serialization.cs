@@ -15,14 +15,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("accountKey");
-            writer.WriteStringValue(AccountKey);
+            if (Optional.IsDefined(AccountKey))
+            {
+                writer.WritePropertyName("accountKey");
+                writer.WriteStringValue(AccountKey);
+            }
             writer.WriteEndObject();
         }
 
         internal static DataLakeGen2SharedKeyParam DeserializeDataLakeGen2SharedKeyParam(JsonElement element)
         {
-            string accountKey = default;
+            Optional<string> accountKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountKey"))
@@ -31,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataLakeGen2SharedKeyParam(accountKey);
+            return new DataLakeGen2SharedKeyParam(accountKey.Value);
         }
     }
 }

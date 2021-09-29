@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The StringIndexType. </summary>
-    public readonly partial struct StringIndexType : IEquatable<StringIndexType>
+    internal readonly partial struct StringIndexType : IEquatable<StringIndexType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="StringIndexType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringIndexType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StringIndexType(string value)
         {

@@ -67,6 +67,8 @@ namespace Azure.Data.Tables
         /// </param>
         /// <param name="credential">The shared access signature credential used to sign requests.
         /// See <see cref="GenerateSasUri(TableAccountSasPermissions,TableAccountSasResourceTypes,DateTimeOffset)"/> for creating a SAS token.</param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not start with 'https'.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="credential"/> is null.</exception>
         public TableServiceClient(Uri endpoint, AzureSasCredential credential)
             : this(endpoint, credential, null)
         {
@@ -85,6 +87,7 @@ namespace Azure.Data.Tables
         /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
         /// Configure Azure Storage connection strings</see>.
         /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
         public TableServiceClient(string connectionString)
             : this(connectionString, null)
         { }
@@ -100,7 +103,9 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableServiceClient(Uri endpoint, TablesClientOptions options = null)
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not start with 'https'.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> is null.</exception>
+        public TableServiceClient(Uri endpoint, TableClientOptions options = null)
             : this(endpoint, default, default, options)
         {
             if (endpoint.Scheme != Uri.UriSchemeHttps)
@@ -124,7 +129,9 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableServiceClient(Uri endpoint, AzureSasCredential credential, TablesClientOptions options = null)
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not start with 'https'.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> is null.</exception>
+        public TableServiceClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
             : this(endpoint, default, credential, options)
         {
             if (endpoint.Scheme != Uri.UriSchemeHttps)
@@ -143,6 +150,7 @@ namespace Azure.Data.Tables
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential)
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), default, null)
         {
@@ -161,7 +169,8 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TablesClientOptions options)
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options)
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -183,24 +192,29 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableServiceClient(string connectionString, TablesClientOptions options = null)
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="connectionString"/> is invalid.</exception>
+        public TableServiceClient(string connectionString, TableClientOptions options = null)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
             _accountName = connString._accountName;
+            _endpoint = connString.TableStorageUri.PrimaryUri;
 
-            options ??= TablesClientOptions.DefaultOptions;
+            options ??= TableClientOptions.DefaultOptions;
             var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
             var secondaryEndpoint = connString.TableStorageUri.SecondaryUri?.AbsoluteUri;
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
-            TableSharedKeyPipelinePolicy policy = connString.Credentials switch
+            TableSharedKeyPipelinePolicy policy = null;
+            if (connString.Credentials is TableSharedKeyCredential credential)
             {
-                TableSharedKeyCredential credential => new TableSharedKeyPipelinePolicy(credential),
-                _ => default
-            };
+                policy = new TableSharedKeyPipelinePolicy(credential);
+                // This is for SAS key generation.
+                _tableSharedKeyCredential = credential;
+            }
             _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
@@ -214,12 +228,49 @@ namespace Azure.Data.Tables
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
         }
 
-        internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TablesClientOptions options)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified <see cref="Uri" />.
+        /// </summary>
+        /// <param name="endpoint">
+        /// A <see cref="Uri"/> referencing the table service account.
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// </param>
+        /// <param name="tokenCredential">The <see cref="TokenCredential"/> used to authorize requests.</param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
+        /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.</exception>
+        public TableServiceClient(Uri endpoint, TokenCredential tokenCredential, TableClientOptions options = default)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+
+            _endpoint = endpoint;
+            options ??= TableClientOptions.DefaultOptions;
+            _isCosmosEndpoint = IsPremiumEndpoint(endpoint);
+            var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
+            var endpointString = endpoint.AbsoluteUri;
+            string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint)?.AbsoluteUri;
+
+            _pipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: perCallPolicies,
+                perRetryPolicies: new[] { new BearerTokenAuthenticationPolicy(tokenCredential, TableConstants.StorageScope) },
+                new ResponseClassifier());
+
+            _version = options.VersionString;
+            _diagnostics = new TablesClientDiagnostics(options);
+            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
+            _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
+        }
+
+        internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             _endpoint = endpoint;
-            options ??= TablesClientOptions.DefaultOptions;
+            options ??= TableClientOptions.DefaultOptions;
             _isCosmosEndpoint = IsPremiumEndpoint(endpoint);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             var endpointString = endpoint.AbsoluteUri;
@@ -295,7 +346,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
 
-            return new TableClient(tableName, _tableOperations, _version, _diagnostics, _isCosmosEndpoint, _endpoint, _pipeline);
+            return new TableClient(tableName, _accountName, _tableOperations, _version, _diagnostics, _isCosmosEndpoint, _endpoint, _pipeline);
         }
 
         /// <summary>
@@ -606,7 +657,7 @@ namespace Azure.Data.Tables
                     cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
             {
                 return default;
             }
@@ -638,7 +689,7 @@ namespace Azure.Data.Tables
                     .ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
             {
                 return default;
             }
@@ -864,6 +915,10 @@ namespace Azure.Data.Tables
             TableAccountSasBuilder builder)
         {
             Argument.AssertNotNull(builder, nameof(builder));
+            if (SharedKeyCredential == null)
+            {
+                throw new InvalidOperationException($"{nameof(GenerateSasUri)} requires that this client be constructed with a credential type other than {nameof(TokenCredential)} in order to sign the SAS token.");
+            }
 
             TableUriBuilder sasUri = new(_endpoint);
             sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();

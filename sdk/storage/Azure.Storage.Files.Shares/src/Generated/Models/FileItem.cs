@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
     internal partial class FileItem
     {
         /// <summary> Initializes a new instance of FileItem. </summary>
-        /// <param name="name"> . </param>
+        /// <param name="name"></param>
         /// <param name="properties"> File properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal FileItem(string name, FileProperty properties)
@@ -31,8 +31,30 @@ namespace Azure.Storage.Files.Shares.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of FileItem. </summary>
+        /// <param name="name"></param>
+        /// <param name="fileId"></param>
+        /// <param name="properties"> File properties. </param>
+        /// <param name="attributes"></param>
+        /// <param name="permissionKey"></param>
+        internal FileItem(string name, string fileId, FileProperty properties, string attributes, string permissionKey)
+        {
+            Name = name;
+            FileId = fileId;
+            Properties = properties;
+            Attributes = attributes;
+            PermissionKey = permissionKey;
+        }
+
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the file id. </summary>
+        public string FileId { get; }
         /// <summary> File properties. </summary>
         public FileProperty Properties { get; }
+        /// <summary> Gets the attributes. </summary>
+        public string Attributes { get; }
+        /// <summary> Gets the permission key. </summary>
+        public string PermissionKey { get; }
     }
 }

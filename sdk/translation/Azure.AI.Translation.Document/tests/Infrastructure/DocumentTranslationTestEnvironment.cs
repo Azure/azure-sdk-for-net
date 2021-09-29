@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Translation.Document.Tests
@@ -27,5 +30,22 @@ namespace Azure.AI.Translation.Document.Tests
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
         public string StorageConnectionString => GetRecordedVariable(StorageConnectionStringEnvironmentVariableName, options => options.HasSecretConnectionStringParameter("AccountKey", SanitizedValue.Base64));
         public string StorageAccountName => GetRecordedVariable(StorageAccountNameEnvironmentVariableName);
+
+        protected override async ValueTask<bool> IsEnvironmentReadyAsync()
+        {
+            string endpoint = GetOptionalVariable(EndpointEnvironmentVariableName);
+            var client = new DocumentTranslationClient(new Uri(endpoint), Credential);
+            try
+            {
+                await client.GetSupportedDocumentFormatsAsync();
+                await client.GetSupportedGlossaryFormatsAsync();
+                client.GetTranslationStatuses().Take(2);
+            }
+            catch (RequestFailedException e) when (e.Status == 401)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -75,6 +75,17 @@ namespace Azure.Storage.Sas
         DeleteVersion = 1024,
 
         /// <summary>
+        /// Indicates that setting immutability policy is permitted.
+        /// </summary>
+        SetImmutabilityPolicy = 2048,
+
+        /// <summary>
+        /// Indicates that Blob Permanent Delete is permitted.
+        /// Blob service only.
+        /// </summary>
+        PermanentDelete = 4096,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -112,6 +123,10 @@ namespace Azure.Storage
             {
                 sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
             }
+            if ((permissions & AccountSasPermissions.PermanentDelete) == AccountSasPermissions.PermanentDelete)
+            {
+                sb.Append(Constants.Sas.Permissions.PermanentDelete);
+            }
             if ((permissions & AccountSasPermissions.List) == AccountSasPermissions.List)
             {
                 sb.Append(Constants.Sas.Permissions.List);
@@ -139,6 +154,10 @@ namespace Azure.Storage
             if ((permissions & AccountSasPermissions.Filter) == AccountSasPermissions.Filter)
             {
                 sb.Append(Constants.Sas.Permissions.FilterByTags);
+            }
+            if ((permissions & AccountSasPermissions.SetImmutabilityPolicy) == AccountSasPermissions.SetImmutabilityPolicy)
+            {
+                sb.Append(Constants.Sas.Permissions.SetImmutabilityPolicy);
             }
             return sb.ToString();
         }

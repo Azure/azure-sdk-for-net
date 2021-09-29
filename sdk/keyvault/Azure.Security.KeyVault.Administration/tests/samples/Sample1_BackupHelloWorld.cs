@@ -11,17 +11,17 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class Sample1_BackupHelloWorld : BackupRestoreTestBase
     {
-        public Sample1_BackupHelloWorld(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public Sample1_BackupHelloWorld(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [Test]
         public void CreateClientSample()
         {
-            var keyVaultUrl = TestEnvironment.ManagedHsmUrl;
+            var managedHsmUrl = TestEnvironment.ManagedHsmUrl;
 
             #region Snippet:HelloCreateKeyVaultBackupClient
-            KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
             #endregion
         }
 

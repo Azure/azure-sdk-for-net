@@ -16,23 +16,27 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of MetricNamespace. </summary>
-        /// <param name="id"> The ID of the metricNamespace. </param>
+        /// <param name="id"> The ID of the metric namespace. </param>
         /// <param name="type"> The type of the namespace. </param>
-        /// <param name="name"> The name of the namespace. </param>
+        /// <param name="name"> The escaped name of the namespace. </param>
+        /// <param name="classification"> Kind of namespace. </param>
         /// <param name="properties"> Properties which include the fully qualified namespace name. </param>
-        internal MetricNamespace(string id, string type, string name, MetricNamespaceName properties)
+        internal MetricNamespace(string id, string type, string name, MetricNamespaceClassification? classification, MetricNamespaceName properties)
         {
             Id = id;
             Type = type;
             Name = name;
+            Classification = classification;
             Properties = properties;
         }
 
-        /// <summary> The ID of the metricNamespace. </summary>
+        /// <summary> The ID of the metric namespace. </summary>
         public string Id { get; }
         /// <summary> The type of the namespace. </summary>
         public string Type { get; }
-        /// <summary> The name of the namespace. </summary>
+        /// <summary> The escaped name of the namespace. </summary>
         public string Name { get; }
+        /// <summary> Kind of namespace. </summary>
+        public MetricNamespaceClassification? Classification { get; }
     }
 }

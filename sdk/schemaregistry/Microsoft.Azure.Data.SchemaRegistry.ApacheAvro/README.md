@@ -8,7 +8,7 @@ Azure Schema Registry is a schema repository service hosted by Azure Event Hubs,
 
 Install the Azure Schema Registry Apache Avro library for .NET with [NuGet][nuget]:
 
-```bash
+```dotnetcli
 dotnet add package Microsoft.Azure.Data.SchemaRegistry.ApacheAvro --version 1.0.0-beta.1
 ```
 
@@ -44,8 +44,8 @@ Once you have the Azure resource credentials and the Event Hubs namespace hostna
 ```C# Snippet:SchemaRegistryAvroCreateSchemaRegistryClient
 // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-// For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
-var schemaRegistryClient = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+// For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+var schemaRegistryClient = new SchemaRegistryClient(fullyQualifiedNamespace: fullyQualifiedNamespace, credential: new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -130,8 +130,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
 [azure_powershell]: https://docs.microsoft.com/powershell/azure/
 [create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
-[quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md
-[schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
+[quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md
+[schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
 [schema_properties]: src/SchemaProperties.cs
 [azure_identity]: https://www.nuget.org/packages/Azure.Identity
@@ -139,12 +139,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
-[object_serializer]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/src/Serialization/ObjectSerializer.cs
-[schema_registry_avro_serializer]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/src/SchemaRegistryAvroObjectSerializer.cs
-[employee]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/tests/Models/Employee.cs
+[object_serializer]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/Serialization/ObjectSerializer.cs
+[schema_registry_avro_serializer]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/src/SchemaRegistryAvroObjectSerializer.cs
+[employee]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/tests/Models/Employee.cs
 [avro_csharp_documentation]: https://avro.apache.org/docs/current/api/csharp/html/index.html
 [apache_avro_library]: https://www.nuget.org/packages/Apache.Avro/
 [generic_record]: https://avro.apache.org/docs/current/api/csharp/html/classAvro_1_1Generic_1_1GenericRecord.html
 [specific_record]: https://avro.apache.org/docs/current/api/csharp/html/interfaceAvro_1_1Specific_1_1ISpecificRecord.html
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_schema_registry]: https://aka.ms/schemaregistry

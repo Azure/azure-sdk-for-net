@@ -63,7 +63,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return new SegmentCursor(
                 segmentPath: ManifestPath,
                 shardCursors: shardCursors,
-                currentShardPath: _shards[_shardIndex].ShardPath);
+                currentShardPath: _shards.Count > 0 ? _shards[_shardIndex].ShardPath : null);
         }
 
         public virtual async Task<List<BlobChangeFeedEvent>> GetPage(
@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             if (!HasNext())
             {
-                throw new InvalidOperationException("Segment doesn't have any more events");
+                return new List<BlobChangeFeedEvent>(capacity: 0);
             }
 
             int i = 0;

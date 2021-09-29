@@ -1,7 +1,28 @@
 # Release History
 
-## 5.0.0-beta.6 (Unreleased)
+## 5.0.0-beta.8 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.0.0-beta.7 (2021-07-07)
+
+### Breaking Changes
+
+- Renamed `MaxBatchSize` to `MaxEventBatchSize` in `EventHubsOptions`.
+
+## 5.0.0-beta.6 (2021-06-09)
+
+### Changes
+
+#### Key Bug Fixes
+
+- Single dispatch now uses one thread per partition.
 
 ## 5.0.0-beta.5 (2021-05-11)
 

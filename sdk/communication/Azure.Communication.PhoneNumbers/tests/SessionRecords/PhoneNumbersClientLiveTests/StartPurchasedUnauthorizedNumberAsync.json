@@ -8,11 +8,14 @@
         "Authorization": "Sanitized",
         "Content-Length": "30",
         "Content-Type": "application/json",
-        "Date": "Tue, 25 May 2021 07:27:39 GMT",
-        "traceparent": "00-8144b58e06047547916725a52e6ed3bb-a605b0027893fc4d-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.0.1-alpha.20210525.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-c54dab8c6f293241b7a92e67a88f837b-d7863e93bdb4af4d-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "263947100f3426b871f6d8688d2a572d",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 22 Jun 2021 22:03:53 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,18 +25,19 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07",
         "Content-Type": "application/json",
-        "Date": "Tue, 25 May 2021 07:27:39 GMT",
-        "MS-CV": "RToIaO/3\u002B0mCuSBtz3Ie3w.0",
+        "Date": "Tue, 22 Jun 2021 22:03:53 GMT",
+        "MS-CV": "CsA0LGa87k2SluvgFB4cwg.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "066asYAAAAAAt/Dcr2meDRpYpbSnMAAuwTEFYRURHRTEyMTIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0SV7SYAAAAAAe3lsW3tjlRa1s2mOSVFT1WVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "305ms"
+        "X-Processing-Time": "295ms"
       },
       "ResponseBody": {
         "error": {
-          "code": "SearchIdNotFound",
-          "message": "The specified search id Sanitized cannot be found."
+          "code": "NotFound",
+          "message": "Input searchId Sanitized cannot be found.",
+          "target": "searchid"
         }
       }
     }

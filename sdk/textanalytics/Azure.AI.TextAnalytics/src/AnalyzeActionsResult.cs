@@ -6,55 +6,54 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The results of executing multiple actions in a set of documents.
+    /// The results of executing multiple actions on a set of documents.
     /// </summary>
     public class AnalyzeActionsResult
     {
         internal AnalyzeActionsResult(
-            IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult,
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
             IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
-            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults,
-            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults,
-            TextDocumentBatchStatistics statistics)
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults)
         {
-            ExtractKeyPhrasesActionsResults = extractKeyPhrasesActionResult;
-            RecognizeEntitiesActionsResults = recognizeEntitiesActionResults;
-            RecognizePiiEntitiesActionsResults = recognizePiiEntitiesActionResults;
-            RecognizeLinkedEntitiesActionsResults = recognizeLinkedEntitiesActionsResults;
-            AnalyzeSentimentActionsResults = analyzeSentimentActionsResults;
-            Statistics = statistics;
+            ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
+            RecognizeEntitiesResults = recognizeEntitiesActionResults;
+            RecognizePiiEntitiesResults = recognizePiiEntitiesActionResults;
+            RecognizeLinkedEntitiesResults = recognizeLinkedEntitiesActionResults;
+            AnalyzeSentimentResults = analyzeSentimentActionResults;
+            ExtractSummaryResults = extractSummaryActionResults;
         }
 
         /// <summary>
-        /// Determines the collection of ExtractKeyPhrasesActionResult.
+        /// Determines the collection of <see cref="ExtractKeyPhrasesActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<ExtractKeyPhrasesActionResult> ExtractKeyPhrasesActionsResults { get; }
+        public IReadOnlyCollection<ExtractKeyPhrasesActionResult> ExtractKeyPhrasesResults { get; }
 
         /// <summary>
-        /// Determines the collection of RecognizeEntitiesActionResult.
+        /// Determines the collection of <see cref="RecognizeEntitiesActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<RecognizeEntitiesActionResult> RecognizeEntitiesActionsResults { get; }
+        public IReadOnlyCollection<RecognizeEntitiesActionResult> RecognizeEntitiesResults { get; }
 
         /// <summary>
-        /// Determines the collection of RecognizePiiEntitiesActionResult.
+        /// Determines the collection of <see cref="RecognizePiiEntitiesActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesActionsResults { get; }
+        public IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesResults { get; }
 
         /// <summary>
-        /// Determines the collection of RecognizeLinkedEntitiesActionsResult.
+        /// Determines the collection of <see cref="RecognizeLinkedEntitiesActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults { get; }
+        public IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesResults { get; }
 
         /// <summary>
-        /// Determines the collection of AnalyzeSentimentActionsResults.
+        /// Determines the collection of <see cref="AnalyzeSentimentActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentActionsResults { get; }
+        public IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentResults { get; }
 
         /// <summary>
-        /// Gets statistics about the operation executed and how it was processed
-        /// by the service.
+        /// Determines the collection of <see cref="ExtractSummaryActionResult"/>.
         /// </summary>
-        public TextDocumentBatchStatistics Statistics { get; }
+        public IReadOnlyCollection<ExtractSummaryActionResult> ExtractSummaryResults { get; }
     }
 }

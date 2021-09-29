@@ -3,7 +3,6 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
@@ -14,7 +13,6 @@ trigger:
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
@@ -27,7 +25,6 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: formrecognizer
-    SpellCheckPublicApiSurface: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.AI.FormRecognizer

@@ -12,11 +12,13 @@ namespace Azure.Data.Tables.Tests
         public string PrimaryStorageAccountKey => GetRecordedVariable("TABLES_PRIMARY_STORAGE_ACCOUNT_KEY", options => options.IsSecret(SanitizedValue.Base64));
         public string StorageAccountName => GetRecordedVariable("TABLES_STORAGE_ACCOUNT_NAME");
         public string StorageUri => $"https://{StorageAccountName}.table.{StorageEndpointSuffix ?? DefaultStorageSuffix}";
+        public string StorageConnectionString => $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={PrimaryStorageAccountKey};EndpointSuffix={StorageEndpointSuffix ?? DefaultStorageSuffix}";
 
         // Cosmos Tables
         public string CosmosEndpointSuffix => GetRecordedOptionalVariable("COSMOS_TABLES_ENDPOINT_SUFFIX") ?? "cosmos.azure.com";
         public string PrimaryCosmosAccountKey => GetRecordedVariable("TABLES_PRIMARY_COSMOS_ACCOUNT_KEY", options => options.IsSecret(SanitizedValue.Base64));
         public string CosmosAccountName => GetRecordedVariable("TABLES_COSMOS_ACCOUNT_NAME");
         public string CosmosUri => $"https://{CosmosAccountName}.table.{CosmosEndpointSuffix}";
+        public string CosmosConnectionString => $"DefaultEndpointsProtocol=https;AccountName={CosmosAccountName};AccountKey={PrimaryCosmosAccountKey};EndpointSuffix={CosmosEndpointSuffix}";
     }
 }

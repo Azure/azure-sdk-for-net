@@ -20,7 +20,6 @@ namespace Azure.Storage.Files.Shares
     internal partial class ShareRestClient
     {
         private string url;
-        private string path;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,27 +28,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="path"> path. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="path"/>, or <paramref name="version"/> is null. </exception>
-        public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string path, string version = "2020-04-08")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-10-02")
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-
-            this.url = url;
-            this.path = path;
-            this.version = version;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
+            this.version = version ?? throw new ArgumentNullException(nameof(version));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -61,8 +45,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
             {
@@ -145,8 +127,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             if (sharesnapshot != null)
             {
@@ -211,8 +191,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             if (sharesnapshot != null)
             {
@@ -283,8 +261,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
@@ -357,8 +333,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
@@ -434,8 +408,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
@@ -517,8 +489,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
@@ -594,8 +564,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
@@ -668,8 +636,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "snapshot", true);
             if (timeout != null)
@@ -729,8 +695,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "filepermission", true);
             if (timeout != null)
@@ -802,8 +766,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "filepermission", true);
             if (timeout != null)
@@ -882,8 +844,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "properties", true);
             if (timeout != null)
@@ -961,8 +921,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "metadata", true);
             if (timeout != null)
@@ -1028,8 +986,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "acl", true);
             if (timeout != null)
@@ -1115,8 +1071,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "acl", true);
             if (timeout != null)
@@ -1190,8 +1144,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "stats", true);
             if (timeout != null)
@@ -1267,8 +1219,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "undelete", true);
             if (timeout != null)
@@ -1291,8 +1241,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Restores a previously deleted Share. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="deletedShareName"> Specifies the name of the preivously-deleted share. </param>
-        /// <param name="deletedShareVersion"> Specifies the version of the preivously-deleted share. </param>
+        /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
+        /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<ShareRestoreHeaders>> RestoreAsync(int? timeout = null, string deletedShareName = null, string deletedShareVersion = null, CancellationToken cancellationToken = default)
         {
@@ -1310,8 +1260,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Restores a previously deleted Share. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="deletedShareName"> Specifies the name of the preivously-deleted share. </param>
-        /// <param name="deletedShareVersion"> Specifies the version of the preivously-deleted share. </param>
+        /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
+        /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<ShareRestoreHeaders> Restore(int? timeout = null, string deletedShareName = null, string deletedShareVersion = null, CancellationToken cancellationToken = default)
         {

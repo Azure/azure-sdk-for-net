@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class TasksState
     {
         /// <summary> Initializes a new instance of TasksState. </summary>
-        /// <param name="tasks"> . </param>
+        /// <param name="tasks"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
         internal TasksState(AnalyzeTasks tasks)
         {
@@ -25,6 +25,7 @@ namespace Azure.AI.TextAnalytics.Models
             Tasks = tasks;
         }
 
+        /// <summary> Gets the tasks. </summary>
         public AnalyzeTasks Tasks { get; }
     }
 }

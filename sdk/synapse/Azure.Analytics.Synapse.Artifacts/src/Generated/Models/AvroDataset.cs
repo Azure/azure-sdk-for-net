@@ -35,10 +35,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="location"> The location of the avro storage. </param>
         /// <param name="avroCompressionCodec"> A string from AvroCompressionCodecEnum or an expression. </param>
-        /// <param name="avroCompressionLevel"> . </param>
+        /// <param name="avroCompressionLevel"></param>
         internal AvroDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, DatasetLocation location, object avroCompressionCodec, int? avroCompressionLevel) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
@@ -51,6 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DatasetLocation Location { get; set; }
         /// <summary> A string from AvroCompressionCodecEnum or an expression. </summary>
         public object AvroCompressionCodec { get; set; }
+        /// <summary> Gets or sets the avro compression level. </summary>
         public int? AvroCompressionLevel { get; set; }
     }
 }

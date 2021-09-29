@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Threading;
 using Azure.Core.Pipeline;
 
@@ -67,7 +68,7 @@ namespace Azure.Core
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; }
+        public ResponseClassifier ResponseClassifier { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
@@ -78,7 +79,7 @@ namespace Azure.Core
         /// Gets or sets the network timeout value for this message. If <c>null</c> the value provided in <see cref="RetryOptions.NetworkTimeout"/> would be used instead.
         /// Defaults to <c>null</c>.
         /// </summary>
-        internal TimeSpan? NetworkTimeout { get; set; }
+        public TimeSpan? NetworkTimeout { get; set; }
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.

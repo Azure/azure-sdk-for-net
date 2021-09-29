@@ -486,7 +486,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             ReplicationVaultHealth = new ReplicationVaultHealthOperations(this);
             ReplicationVaultSetting = new ReplicationVaultSettingOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-02-10";
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -607,6 +607,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TestMigrateProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UnplannedFailoverProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UnplannedFailoverProviderSpecificInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UpdateApplianceForReplicationProtectedItemProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UpdateApplianceForReplicationProtectedItemProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UpdateMigrationItemProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UpdateMigrationItemProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UpdateReplicationProtectedItemProviderInput>("instanceType"));

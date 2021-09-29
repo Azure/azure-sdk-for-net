@@ -56,8 +56,9 @@ jobs:
           /p:ServiceDirectory=${{ parameters.ServiceToTest }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:RunApiCompat=false /p:InheritDocEnabled=false
-          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
+          /p:Configuration=$(BuildConfiguration)
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+          $(AdditionalTestArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
       - task: PublishTestResults@2
         condition: always()

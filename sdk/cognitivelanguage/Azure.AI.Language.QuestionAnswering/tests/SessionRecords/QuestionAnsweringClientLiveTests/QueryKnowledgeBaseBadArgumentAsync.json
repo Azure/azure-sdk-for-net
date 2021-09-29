@@ -1,0 +1,56 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-07-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "16",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b68d93129584dc4c87e2e993c2ae72c9-e6eb1c236f95624d-00",
+        "User-Agent": [
+          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210922.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "711fbbca6da7766bd6c8f2076186d32f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "question": " "
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "apim-request-id": "13431d28-cae9-450d-8495-6da0529d1f35",
+        "Content-Length": "261",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTransaction=1",
+        "Date": "Wed, 22 Sep 2021 20:19:41 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "4"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022error\u0022: {\n",
+        "    \u0022code\u0022: \u0022BadArgument\u0022,\n",
+        "    \u0022message\u0022: \u0022Invalid input. See details.\u0022,\n",
+        "    \u0022details\u0022: [\n",
+        "      {\n",
+        "        \u0022code\u0022: \u0022ValidationFailure\u0022,\n",
+        "        \u0022message\u0022: \u0022Provide a valid Question or QnAId field.\u0022,\n",
+        "        \u0022target\u0022: \u0022Question\u0022\n",
+        "      }\n",
+        "    ]\n",
+        "  }\n",
+        "}"
+      ]
+    }
+  ],
+  "Variables": {
+    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_KEY": "Sanitized",
+    "QUESTIONANSWERING_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
+    "RandomSeed": "748977788"
+  }
+}

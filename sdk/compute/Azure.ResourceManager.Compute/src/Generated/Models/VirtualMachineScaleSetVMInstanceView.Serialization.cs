@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachineHealthStatus> vmHealth = default;
             Optional<BootDiagnosticsInstanceView> bootDiagnostics = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Optional<string> assignedHost = default;
             Optional<string> placementGroupId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -138,13 +139,18 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
+                if (property.NameEquals("assignedHost"))
+                {
+                    assignedHost = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("placementGroupId"))
                 {
                     placementGroupId = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVMInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Optional.ToList(disks), Optional.ToList(extensions), vmHealth.Value, bootDiagnostics.Value, Optional.ToList(statuses), placementGroupId.Value);
+            return new VirtualMachineScaleSetVMInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Optional.ToList(disks), Optional.ToList(extensions), vmHealth.Value, bootDiagnostics.Value, Optional.ToList(statuses), assignedHost.Value, placementGroupId.Value);
         }
     }
 }

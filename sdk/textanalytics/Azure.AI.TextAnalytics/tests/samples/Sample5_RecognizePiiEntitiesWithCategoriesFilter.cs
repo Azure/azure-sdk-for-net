@@ -8,7 +8,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
@@ -26,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Samples
             try
             {
                 // For sample purposes we want the service to only return SSN.
-                RecognizePiiEntitiesOptions options = new() { CategoriesFilter = { PiiEntityCategory.PhoneNumber } };
+                RecognizePiiEntitiesOptions options = new() { CategoriesFilter = { PiiEntityCategory.USSocialSecurityNumber } };
                 Response<PiiEntityCollection> response = client.RecognizePiiEntities(document, options: options);
                 PiiEntityCollection entities = response.Value;
 

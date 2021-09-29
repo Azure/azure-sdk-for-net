@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,6 +36,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         /// <param name="protectedItemsCount">Number of items associated with
         /// this policy.</param>
+        /// <param name="resourceGuardOperationRequests">ResourceGuard
+        /// Operation Requests</param>
         /// <param name="schedulePolicy">Backup schedule specified as part of
         /// backup policy.</param>
         /// <param name="retentionPolicy">Retention policy with the details on
@@ -42,8 +46,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// policy range in days</param>
         /// <param name="timeZone">TimeZone optional input as string. For
         /// example: TimeZone = "Pacific Standard Time".</param>
-        public AzureIaaSVMProtectionPolicy(int? protectedItemsCount = default(int?), InstantRPAdditionalDetails instantRPDetails = default(InstantRPAdditionalDetails), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), int? instantRpRetentionRangeInDays = default(int?), string timeZone = default(string))
-            : base(protectedItemsCount)
+        public AzureIaaSVMProtectionPolicy(int? protectedItemsCount = default(int?), IList<string> resourceGuardOperationRequests = default(IList<string>), InstantRPAdditionalDetails instantRPDetails = default(InstantRPAdditionalDetails), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), int? instantRpRetentionRangeInDays = default(int?), string timeZone = default(string))
+            : base(protectedItemsCount, resourceGuardOperationRequests)
         {
             InstantRPDetails = instantRPDetails;
             SchedulePolicy = schedulePolicy;

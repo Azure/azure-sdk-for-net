@@ -15,22 +15,18 @@ namespace Azure.Monitor.Query.Models
     {
         internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element)
         {
-            Optional<IReadOnlyList<LogsQueryResultTable>> tables = default;
+            IReadOnlyList<LogsTable> tables = default;
             Optional<JsonElement> statistics = default;
-            Optional<ErrorDetails> error = default;
+            Optional<JsonElement> render = default;
+            Optional<JsonElement> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<LogsQueryResultTable> array = new List<LogsQueryResultTable>();
+                    List<LogsTable> array = new List<LogsTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogsQueryResultTable.DeserializeLogsQueryResultTable(item));
+                        array.Add(LogsTable.DeserializeLogsTable(item));
                     }
                     tables = array;
                     continue;
@@ -40,18 +36,18 @@ namespace Azure.Monitor.Query.Models
                     statistics = property.Value.Clone();
                     continue;
                 }
+                if (property.NameEquals("render"))
+                {
+                    render = property.Value.Clone();
+                    continue;
+                }
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    error = ErrorDetails.DeserializeErrorDetails(property.Value);
+                    error = property.Value.Clone();
                     continue;
                 }
             }
-            return new LogsQueryResult(Optional.ToList(tables), statistics, error.Value);
+            return new LogsQueryResult(tables, statistics, render, error);
         }
     }
 }

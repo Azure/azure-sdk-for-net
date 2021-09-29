@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> the quick query body. </summary>
+    /// <summary> Groups the set of query request settings. </summary>
     internal partial class QueryRequest
     {
         /// <summary> Initializes a new instance of QueryRequest. </summary>
-        /// <param name="expression"> a query statement. </param>
+        /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public QueryRequest(string expression)
         {
@@ -25,7 +25,9 @@ namespace Azure.Storage.Blobs.Models
             QueryType = "SQL";
             Expression = expression;
         }
+        /// <summary> Gets or sets the input serialization. </summary>
         public QuerySerialization InputSerialization { get; set; }
+        /// <summary> Gets or sets the output serialization. </summary>
         public QuerySerialization OutputSerialization { get; set; }
     }
 }

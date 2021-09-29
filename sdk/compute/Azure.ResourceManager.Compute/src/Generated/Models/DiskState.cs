@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The state of the disk. </summary>
+    /// <summary> This enumerates the possible state of the disk. </summary>
     public readonly partial struct DiskState : IEquatable<DiskState>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DiskState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskState(string value)
         {

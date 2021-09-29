@@ -14,6 +14,7 @@
       AZC0100;
     </NoWarn>
     <IncludeAzureCoreSharedCode>true</IncludeAzureCoreSharedCode>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,14 +35,14 @@
     <PackageReference Update="Azure.Core" Version="1.14.0" />
     <PackageReference Update="Azure.Identity" Version="1.4.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.1.1" />
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210510.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210602.1" PrivateAssets="All" />
     <PackageReference Update="System.CommandLine" Version="%(VersionOverride)" />
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsSample)' == 'true'">
     <!-- Link files needed for Key Vault -->
-    <Compile Include="..\..\Azure.Security.KeyVault.Shared\src\ChallengeBasedAuthenticationPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="..\..\Azure.Security.KeyVault.Shared\src\ChallengeBasedAuthenticationPolicy.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <Target Name="CopySource">

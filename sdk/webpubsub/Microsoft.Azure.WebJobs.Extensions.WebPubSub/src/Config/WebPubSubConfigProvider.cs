@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Logging;
@@ -59,10 +59,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 _options.Hub = _nameResolver.Resolve(Constants.HubNameStringName);
             }
 
+            Exception webhookException = null;
+            try
+            {
 #pragma warning disable CS0618 // Type or member is obsolete
-            var url = context.GetWebhookHandler();
+                var url = context.GetWebhookHandler();
 #pragma warning restore CS0618 // Type or member is obsolete
-            _logger.LogInformation($"Registered Web PubSub negotiate Endpoint = {url?.GetLeftPart(UriPartial.Path)}");
+                _logger.LogInformation($"Registered Web PubSub negotiate Endpoint = {url?.GetLeftPart(UriPartial.Path)}");
+            }
+            catch (Exception ex)
+            {
+                // disable trigger.
+                webhookException = ex;
+            }
 
             // register JsonConverters
             RegisterJsonConverter();
@@ -70,17 +79,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             // bindings
             context
                 .AddConverter<WebPubSubConnection, JObject>(JObject.FromObject)
+                .AddConverter<WebPubSubRequest, JObject>(JObject.FromObject)
                 .AddConverter<JObject, WebPubSubOperation>(ConvertToWebPubSubOperation)
                 .AddConverter<JArray, WebPubSubOperation[]>(ConvertToWebPubSubOperationArray);
 
             // Trigger binding
             context.AddBindingRule<WebPubSubTriggerAttribute>()
-                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _options));
+                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _nameResolver, _options, webhookException));
 
+            // Input binding
             var webpubsubConnectionAttributeRule = context.AddBindingRule<WebPubSubConnectionAttribute>();
             webpubsubConnectionAttributeRule.AddValidator(ValidateWebPubSubConnectionAttributeBinding);
             webpubsubConnectionAttributeRule.BindToInput(GetClientConnection);
 
+            var webPubSubRequestAttributeRule = context.AddBindingRule<WebPubSubRequestAttribute>();
+            webPubSubRequestAttributeRule.Bind(new WebPubSubRequestBindingProvider(_options, _nameResolver, _configuration));
+
+            // Output binding
             var webPubSubAttributeRule = context.AddBindingRule<WebPubSubAttribute>();
             webPubSubAttributeRule.AddValidator(ValidateWebPubSubAttributeBinding);
             webPubSubAttributeRule.BindToCollector(CreateCollector);

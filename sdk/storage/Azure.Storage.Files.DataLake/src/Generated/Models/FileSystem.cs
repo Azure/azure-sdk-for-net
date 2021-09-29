@@ -16,9 +16,9 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of FileSystem. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="lastModified"> . </param>
-        /// <param name="eTag"> . </param>
+        /// <param name="name"></param>
+        /// <param name="lastModified"></param>
+        /// <param name="eTag"></param>
         internal FileSystem(string name, string lastModified, string eTag)
         {
             Name = name;
@@ -26,8 +26,11 @@ namespace Azure.Storage.Files.DataLake.Models
             ETag = eTag;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the last modified. </summary>
         public string LastModified { get; }
+        /// <summary> Gets the e tag. </summary>
         public string ETag { get; }
     }
 }

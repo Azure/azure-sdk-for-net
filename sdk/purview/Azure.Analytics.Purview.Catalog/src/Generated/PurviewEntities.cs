@@ -18,7 +18,8 @@ namespace Azure.Analytics.Purview.Catalog
     public partial class PurviewEntities
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -37,348 +38,131 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>referredEntities</term>
-        ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
-        ///     <term></term>
-        ///     <term> The referred entities. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entity</term>
-        ///     <term>AtlasEntity</term>
-        ///     <term></term>
-        ///     <term> An instance of an entity - like hive_table, hive_database. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntity</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of classifications. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The created time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>homeId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>meanings</term>
-        ///     <term>AtlasTermAssignmentHeader[]</term>
-        ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>provenanceType</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>proxy</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The update time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who updated the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The version of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermAssignmentHeader</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>confidence</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The display text. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The source of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The steward of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the term. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entity: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     classifications: [
+        ///       {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string,
+        ///         entityGuid: string,
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///         removePropagationsOnEntityDelete: boolean,
+        ///         validityPeriods: [
+        ///           {
+        ///             endTime: string,
+        ///             startTime: string,
+        ///             timeZone: string
+        ///           }
+        ///         ],
+        ///         source: string,
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       }
+        ///     ],
+        ///     createTime: number,
+        ///     createdBy: string,
+        ///     guid: string,
+        ///     homeId: string,
+        ///     meanings: [
+        ///       {
+        ///         confidence: number,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         displayText: string,
+        ///         expression: string,
+        ///         relationGuid: string,
+        ///         source: string,
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///         steward: string,
+        ///         termGuid: string
+        ///       }
+        ///     ],
+        ///     provenanceType: number,
+        ///     proxy: boolean,
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     updateTime: number,
+        ///     updatedBy: string,
+        ///     version: number,
+        ///     source: string,
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCreateOrUpdateRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -407,348 +191,131 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>referredEntities</term>
-        ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
-        ///     <term></term>
-        ///     <term> The referred entities. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entity</term>
-        ///     <term>AtlasEntity</term>
-        ///     <term></term>
-        ///     <term> An instance of an entity - like hive_table, hive_database. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntity</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of classifications. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The created time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>homeId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>meanings</term>
-        ///     <term>AtlasTermAssignmentHeader[]</term>
-        ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>provenanceType</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>proxy</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The update time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who updated the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The version of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermAssignmentHeader</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>confidence</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The display text. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The source of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The steward of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the term. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entity: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     classifications: [
+        ///       {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string,
+        ///         entityGuid: string,
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///         removePropagationsOnEntityDelete: boolean,
+        ///         validityPeriods: [
+        ///           {
+        ///             endTime: string,
+        ///             startTime: string,
+        ///             timeZone: string
+        ///           }
+        ///         ],
+        ///         source: string,
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       }
+        ///     ],
+        ///     createTime: number,
+        ///     createdBy: string,
+        ///     guid: string,
+        ///     homeId: string,
+        ///     meanings: [
+        ///       {
+        ///         confidence: number,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         displayText: string,
+        ///         expression: string,
+        ///         relationGuid: string,
+        ///         source: string,
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///         steward: string,
+        ///         termGuid: string
+        ///       }
+        ///     ],
+        ///     provenanceType: number,
+        ///     proxy: boolean,
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     updateTime: number,
+        ///     updatedBy: string,
+        ///     version: number,
+        ///     source: string,
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdate(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdate(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCreateOrUpdateRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -770,12 +337,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -785,32 +349,91 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       guid: string,
+        ///       homeId: string,
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       provenanceType: number,
+        ///       proxy: boolean,
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guids"> An array of GUIDs of entities to create. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -833,27 +456,86 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       guid: string,
+        ///       homeId: string,
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       provenanceType: number,
+        ///       proxy: boolean,
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guids"> An array of GUIDs of entities to create. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetByGuids(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
+        public virtual Response GetByGuids(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -875,15 +557,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetByGuids"/> and <see cref="GetByGuidsAsync"/> operations. </summary>
-        /// <param name="guids"> An array of GUIDs of entities to create. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetByGuidsRequest(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetByGuidsRequest(IEnumerable<string> guids, bool? minExtInfo, bool? ignoreRelationships, IEnumerable<string> excludeRelationshipTypes)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -915,348 +591,133 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>referredEntities</term>
-        ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
-        ///     <term></term>
-        ///     <term> The referred entities. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entities</term>
-        ///     <term>AtlasEntity[]</term>
-        ///     <term></term>
-        ///     <term> An array of entities. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntity</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of classifications. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The created time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>homeId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>meanings</term>
-        ///     <term>AtlasTermAssignmentHeader[]</term>
-        ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>provenanceType</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>proxy</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The update time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who updated the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The version of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermAssignmentHeader</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>confidence</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The display text. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The source of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The steward of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the term. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       guid: string,
+        ///       homeId: string,
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       provenanceType: number,
+        ///       proxy: boolean,
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateEntitiesAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateEntitiesAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateEntitiesRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1285,348 +746,133 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>referredEntities</term>
-        ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
-        ///     <term></term>
-        ///     <term> The referred entities. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entities</term>
-        ///     <term>AtlasEntity[]</term>
-        ///     <term></term>
-        ///     <term> An array of entities. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntity</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of classifications. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The created time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>homeId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>meanings</term>
-        ///     <term>AtlasTermAssignmentHeader[]</term>
-        ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>provenanceType</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>proxy</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The update time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who updated the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The version of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermAssignmentHeader</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>confidence</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The display text. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The source of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The steward of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the term. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       guid: string,
+        ///       homeId: string,
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       provenanceType: number,
+        ///       proxy: boolean,
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdateEntities(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdateEntities(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateEntitiesRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1648,12 +894,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateEntities"/> and <see cref="CreateOrUpdateEntitiesAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateEntitiesRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateCreateOrUpdateEntitiesRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1663,29 +906,80 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Delete a list of entities in bulk identified by their GUIDs or unique attributes. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guids"> An array of GUIDs of entities to delete. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteByGuidsAsync(IEnumerable<string> guids, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteByGuidsAsync(IEnumerable<string> guids, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByGuidsRequest(guids, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteByGuidsRequest(guids);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1708,24 +1002,75 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete a list of entities in bulk identified by their GUIDs or unique attributes. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guids"> An array of GUIDs of entities to delete. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteByGuids(IEnumerable<string> guids, RequestOptions requestOptions = null)
+        public virtual Response DeleteByGuids(IEnumerable<string> guids, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByGuidsRequest(guids, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteByGuidsRequest(guids);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1747,12 +1092,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteByGuids"/> and <see cref="DeleteByGuidsAsync"/> operations. </summary>
-        /// <param name="guids"> An array of GUIDs of entities to delete. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteByGuidsRequest(IEnumerable<string> guids, RequestOptions requestOptions = null)
+        private HttpMessage CreateDeleteByGuidsRequest(IEnumerable<string> guids)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1768,135 +1110,44 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>classification</term>
-        ///     <term>AtlasClassification</term>
-        ///     <term></term>
-        ///     <term> An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuids</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classification: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     entityGuid: string,
+        ///     entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     removePropagationsOnEntityDelete: boolean,
+        ///     validityPeriods: [
+        ///       {
+        ///         endTime: string,
+        ///         startTime: string,
+        ///         timeZone: string
+        ///       }
+        ///     ],
+        ///     source: string,
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///   },
+        ///   entityGuids: [string]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddClassificationAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> AddClassificationAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateAddClassificationRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1921,135 +1172,44 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>classification</term>
-        ///     <term>AtlasClassification</term>
-        ///     <term></term>
-        ///     <term> An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuids</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classification: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     entityGuid: string,
+        ///     entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     removePropagationsOnEntityDelete: boolean,
+        ///     validityPeriods: [
+        ///       {
+        ///         endTime: string,
+        ///         startTime: string,
+        ///         timeZone: string
+        ///       }
+        ///     ],
+        ///     source: string,
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///   },
+        ///   entityGuids: [string]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response AddClassification(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response AddClassification(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateAddClassificationRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2071,12 +1231,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="AddClassification"/> and <see cref="AddClassificationAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateAddClassificationRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateAddClassificationRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -2085,31 +1242,88 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/entity/bulk/classification", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Get complete definition of an entity given its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entity: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     classifications: [
+        ///       {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string,
+        ///         entityGuid: string,
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///         removePropagationsOnEntityDelete: boolean,
+        ///         validityPeriods: [
+        ///           {
+        ///             endTime: string,
+        ///             startTime: string,
+        ///             timeZone: string
+        ///           }
+        ///         ],
+        ///         source: string,
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       }
+        ///     ],
+        ///     createTime: number,
+        ///     createdBy: string,
+        ///     guid: string,
+        ///     homeId: string,
+        ///     meanings: [
+        ///       {
+        ///         confidence: number,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         displayText: string,
+        ///         expression: string,
+        ///         relationGuid: string,
+        ///         source: string,
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///         steward: string,
+        ///         termGuid: string
+        ///       }
+        ///     ],
+        ///     provenanceType: number,
+        ///     proxy: boolean,
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     updateTime: number,
+        ///     updatedBy: string,
+        ///     version: number,
+        ///     source: string,
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByGuidAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetByGuidAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2132,26 +1346,83 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get complete definition of an entity given its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entity: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     classifications: [
+        ///       {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string,
+        ///         entityGuid: string,
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///         removePropagationsOnEntityDelete: boolean,
+        ///         validityPeriods: [
+        ///           {
+        ///             endTime: string,
+        ///             startTime: string,
+        ///             timeZone: string
+        ///           }
+        ///         ],
+        ///         source: string,
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       }
+        ///     ],
+        ///     createTime: number,
+        ///     createdBy: string,
+        ///     guid: string,
+        ///     homeId: string,
+        ///     meanings: [
+        ///       {
+        ///         confidence: number,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         displayText: string,
+        ///         expression: string,
+        ///         relationGuid: string,
+        ///         source: string,
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///         steward: string,
+        ///         termGuid: string
+        ///       }
+        ///     ],
+        ///     provenanceType: number,
+        ///     proxy: boolean,
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     updateTime: number,
+        ///     updatedBy: string,
+        ///     version: number,
+        ///     source: string,
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetByGuid(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
+        public virtual Response GetByGuid(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2173,14 +1444,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetByGuid"/> and <see cref="GetByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetByGuidRequest(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetByGuidRequest(string guid, bool? minExtInfo, bool? ignoreRelationships)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2207,26 +1473,77 @@ namespace Azure.Analytics.Purview.Catalog
         /// It does not support updating complex types like arrays, and maps.
         /// Null updates are not possible.
         /// </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2254,26 +1571,77 @@ namespace Azure.Analytics.Purview.Catalog
         /// It does not support updating complex types like arrays, and maps.
         /// Null updates are not possible.
         /// </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response PartialUpdateEntityAttributeByGuid(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response PartialUpdateEntityAttributeByGuid(string guid, string name, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2295,14 +1663,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="PartialUpdateEntityAttributeByGuid"/> and <see cref="PartialUpdateEntityAttributeByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="name"> The name of the attribute. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreatePartialUpdateEntityAttributeByGuidRequest(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreatePartialUpdateEntityAttributeByGuidRequest(string guid, string name, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -2314,29 +1677,80 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Delete an entity identified by its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteByGuidAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteByGuidAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2359,24 +1773,75 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete an entity identified by its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteByGuid(string guid, RequestOptions requestOptions = null)
+        public virtual Response DeleteByGuid(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2398,12 +1863,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteByGuid"/> and <see cref="DeleteByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteByGuidRequest(string guid, RequestOptions requestOptions = null)
+        private HttpMessage CreateDeleteByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -2417,25 +1879,44 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   entityGuid: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   removePropagationsOnEntityDelete: boolean,
+        ///   validityPeriods: [
+        ///     {
+        ///       endTime: string,
+        ///       startTime: string,
+        ///       timeZone: string
+        ///     }
+        ///   ],
+        ///   source: string,
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationRequest(guid, classificationName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetClassificationRequest(guid, classificationName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2458,25 +1939,44 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   entityGuid: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   removePropagationsOnEntityDelete: boolean,
+        ///   validityPeriods: [
+        ///     {
+        ///       endTime: string,
+        ///       startTime: string,
+        ///       timeZone: string
+        ///     }
+        ///   ],
+        ///   source: string,
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetClassification(string guid, string classificationName, RequestOptions requestOptions = null)
+        public virtual Response GetClassification(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationRequest(guid, classificationName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetClassificationRequest(guid, classificationName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2498,13 +1998,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetClassification"/> and <see cref="GetClassificationAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetClassificationRequest(string guid, string classificationName, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetClassificationRequest(string guid, string classificationName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2522,23 +2018,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete a given classification from an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteClassificationAsync(string guid, string classificationName, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteClassificationAsync(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2563,23 +2056,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete a given classification from an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteClassification(string guid, string classificationName, RequestOptions requestOptions = null)
+        public virtual Response DeleteClassification(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2601,13 +2091,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteClassification"/> and <see cref="DeleteClassificationAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteClassificationRequest(string guid, string classificationName, RequestOptions requestOptions = null)
+        private HttpMessage CreateDeleteClassificationRequest(string guid, string classificationName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -2622,24 +2108,34 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   list: [AnyObject],
+        ///   pageSize: number,
+        ///   sortBy: string,
+        ///   sortType: &quot;NONE&quot; | &quot;ASC&quot; | &quot;DESC&quot;,
+        ///   startIndex: number,
+        ///   totalCount: number
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationsRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetClassificationsRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2662,24 +2158,34 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   list: [AnyObject],
+        ///   pageSize: number,
+        ///   sortBy: string,
+        ///   sortType: &quot;NONE&quot; | &quot;ASC&quot; | &quot;DESC&quot;,
+        ///   startIndex: number,
+        ///   totalCount: number
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetClassifications(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetClassifications(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationsRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetClassificationsRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2701,12 +2207,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetClassifications"/> and <see cref="GetClassificationsAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetClassificationsRequest(string guid, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetClassificationsRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2722,116 +2225,43 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Add classifications to an existing entity represented by a GUID. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   entityGuid: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   removePropagationsOnEntityDelete: boolean,
+        ///   validityPeriods: [
+        ///     {
+        ///       endTime: string,
+        ///       startTime: string,
+        ///       timeZone: string
+        ///     }
+        ///   ],
+        ///   source: string,
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationsRequest(guid, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateAddClassificationsRequest(guid, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2855,116 +2285,43 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Add classifications to an existing entity represented by a GUID. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   entityGuid: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   removePropagationsOnEntityDelete: boolean,
+        ///   validityPeriods: [
+        ///     {
+        ///       endTime: string,
+        ///       startTime: string,
+        ///       timeZone: string
+        ///     }
+        ///   ],
+        ///   source: string,
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response AddClassifications(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response AddClassifications(string guid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationsRequest(guid, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateAddClassificationsRequest(guid, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2986,13 +2343,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="AddClassifications"/> and <see cref="AddClassificationsAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateAddClassificationsRequest(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateAddClassificationsRequest(string guid, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3003,122 +2356,49 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Update classifications to an existing entity represented by a guid. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   entityGuid: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   removePropagationsOnEntityDelete: boolean,
+        ///   validityPeriods: [
+        ///     {
+        ///       endTime: string,
+        ///       startTime: string,
+        ///       timeZone: string
+        ///     }
+        ///   ],
+        ///   source: string,
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateClassificationsRequest(guid, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateUpdateClassificationsRequest(guid, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -3142,116 +2422,43 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Update classifications to an existing entity represented by a guid. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   entityGuid: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   removePropagationsOnEntityDelete: boolean,
+        ///   validityPeriods: [
+        ///     {
+        ///       endTime: string,
+        ///       startTime: string,
+        ///       timeZone: string
+        ///     }
+        ///   ],
+        ///   source: string,
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response UpdateClassifications(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response UpdateClassifications(string guid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateClassificationsRequest(guid, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateUpdateClassificationsRequest(guid, content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -3273,13 +2480,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateClassifications"/> and <see cref="UpdateClassificationsAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateUpdateClassificationsRequest(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateUpdateClassificationsRequest(string guid, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -3290,39 +2493,96 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary>
         /// Get complete definition of an entity given its type and unique attribute.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
-        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
+        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;. 
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entity: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     classifications: [
+        ///       {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string,
+        ///         entityGuid: string,
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///         removePropagationsOnEntityDelete: boolean,
+        ///         validityPeriods: [
+        ///           {
+        ///             endTime: string,
+        ///             startTime: string,
+        ///             timeZone: string
+        ///           }
+        ///         ],
+        ///         source: string,
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       }
+        ///     ],
+        ///     createTime: number,
+        ///     createdBy: string,
+        ///     guid: string,
+        ///     homeId: string,
+        ///     meanings: [
+        ///       {
+        ///         confidence: number,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         displayText: string,
+        ///         expression: string,
+        ///         relationGuid: string,
+        ///         source: string,
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///         steward: string,
+        ///         termGuid: string
+        ///       }
+        ///     ],
+        ///     provenanceType: number,
+        ///     proxy: boolean,
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     updateTime: number,
+        ///     updatedBy: string,
+        ///     version: number,
+        ///     source: string,
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -3347,32 +2607,89 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary>
         /// Get complete definition of an entity given its type and unique attribute.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
-        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
+        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;. 
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entity: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     classifications: [
+        ///       {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string,
+        ///         entityGuid: string,
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///         removePropagationsOnEntityDelete: boolean,
+        ///         validityPeriods: [
+        ///           {
+        ///             endTime: string,
+        ///             startTime: string,
+        ///             timeZone: string
+        ///           }
+        ///         ],
+        ///         source: string,
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       }
+        ///     ],
+        ///     createTime: number,
+        ///     createdBy: string,
+        ///     guid: string,
+        ///     homeId: string,
+        ///     meanings: [
+        ///       {
+        ///         confidence: number,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         displayText: string,
+        ///         expression: string,
+        ///         relationGuid: string,
+        ///         source: string,
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///         steward: string,
+        ///         termGuid: string
+        ///       }
+        ///     ],
+        ///     provenanceType: number,
+        ///     proxy: boolean,
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     updateTime: number,
+        ///     updatedBy: string,
+        ///     version: number,
+        ///     source: string,
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response GetByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -3394,15 +2711,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetByUniqueAttributes"/> and <see cref="GetByUniqueAttributesAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetByUniqueAttributesRequest(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetByUniqueAttributesRequest(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3439,350 +2750,133 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>referredEntities</term>
-        ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
-        ///     <term></term>
-        ///     <term> The referred entities. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entity</term>
-        ///     <term>AtlasEntity</term>
-        ///     <term></term>
-        ///     <term> An instance of an entity - like hive_table, hive_database. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntity</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of classifications. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The created time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>homeId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>meanings</term>
-        ///     <term>AtlasTermAssignmentHeader[]</term>
-        ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>provenanceType</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>proxy</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The update time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who updated the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The version of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermAssignmentHeader</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>confidence</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The display text. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The source of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The steward of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the term. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entity: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     classifications: [
+        ///       {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string,
+        ///         entityGuid: string,
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///         removePropagationsOnEntityDelete: boolean,
+        ///         validityPeriods: [
+        ///           {
+        ///             endTime: string,
+        ///             startTime: string,
+        ///             timeZone: string
+        ///           }
+        ///         ],
+        ///         source: string,
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       }
+        ///     ],
+        ///     createTime: number,
+        ///     createdBy: string,
+        ///     guid: string,
+        ///     homeId: string,
+        ///     meanings: [
+        ///       {
+        ///         confidence: number,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         displayText: string,
+        ///         expression: string,
+        ///         relationGuid: string,
+        ///         source: string,
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///         steward: string,
+        ///         termGuid: string
+        ///       }
+        ///     ],
+        ///     provenanceType: number,
+        ///     proxy: boolean,
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     updateTime: number,
+        ///     updatedBy: string,
+        ///     version: number,
+        ///     source: string,
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -3816,350 +2910,133 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>referredEntities</term>
-        ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
-        ///     <term></term>
-        ///     <term> The referred entities. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entity</term>
-        ///     <term>AtlasEntity</term>
-        ///     <term></term>
-        ///     <term> An instance of an entity - like hive_table, hive_database. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntity</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of classifications. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The created time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>homeId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>meanings</term>
-        ///     <term>AtlasTermAssignmentHeader[]</term>
-        ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>provenanceType</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>proxy</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The update time of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who updated the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The version of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>contacts</term>
-        ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
-        ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermAssignmentHeader</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>confidence</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The display text. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The source of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The steward of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the term. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>ContactBasic</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>info</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entity: {
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     typeName: string,
+        ///     lastModifiedTS: string,
+        ///     classifications: [
+        ///       {
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///         typeName: string,
+        ///         lastModifiedTS: string,
+        ///         entityGuid: string,
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///         removePropagationsOnEntityDelete: boolean,
+        ///         validityPeriods: [
+        ///           {
+        ///             endTime: string,
+        ///             startTime: string,
+        ///             timeZone: string
+        ///           }
+        ///         ],
+        ///         source: string,
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       }
+        ///     ],
+        ///     createTime: number,
+        ///     createdBy: string,
+        ///     guid: string,
+        ///     homeId: string,
+        ///     meanings: [
+        ///       {
+        ///         confidence: number,
+        ///         createdBy: string,
+        ///         description: string,
+        ///         displayText: string,
+        ///         expression: string,
+        ///         relationGuid: string,
+        ///         source: string,
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///         steward: string,
+        ///         termGuid: string
+        ///       }
+        ///     ],
+        ///     provenanceType: number,
+        ///     proxy: boolean,
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///     updateTime: number,
+        ///     updatedBy: string,
+        ///     version: number,
+        ///     source: string,
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response PartialUpdateEntityByUniqueAttributes(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response PartialUpdateEntityByUniqueAttributes(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4181,14 +3058,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="PartialUpdateEntityByUniqueAttributes"/> and <see cref="PartialUpdateEntityByUniqueAttributesAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreatePartialUpdateEntityByUniqueAttributesRequest(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        private HttpMessage CreatePartialUpdateEntityByUniqueAttributesRequest(string typeName, RequestContent content, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -4203,7 +3075,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -4215,25 +3087,76 @@ namespace Azure.Analytics.Purview.Catalog
         /// The REST request would look something like this:
         /// DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4263,25 +3186,76 @@ namespace Azure.Analytics.Purview.Catalog
         /// The REST request would look something like this:
         /// DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   guidAssignments: Dictionary&lt;string, string&gt;,
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   partialUpdatedEntities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classificationNames: [string],
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       displayText: string,
+        ///       guid: string,
+        ///       meaningNames: [string],
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteByUniqueAttribute(string typeName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response DeleteByUniqueAttribute(string typeName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4303,13 +3277,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteByUniqueAttribute"/> and <see cref="DeleteByUniqueAttributeAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteByUniqueAttributeRequest(string typeName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateDeleteByUniqueAttributeRequest(string typeName, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -4330,23 +3300,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4372,23 +3339,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4410,14 +3374,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteClassificationByUniqueAttribute"/> and <see cref="DeleteClassificationByUniqueAttributeAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteClassificationByUniqueAttributeRequest(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateDeleteClassificationByUniqueAttributeRequest(string typeName, string classificationName, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -4437,117 +3396,44 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Add classification to the entity identified by its type and unique attributes. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   entityGuid: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   removePropagationsOnEntityDelete: boolean,
+        ///   validityPeriods: [
+        ///     {
+        ///       endTime: string,
+        ///       startTime: string,
+        ///       timeZone: string
+        ///     }
+        ///   ],
+        ///   source: string,
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4571,117 +3457,44 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Add classification to the entity identified by its type and unique attributes. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   entityGuid: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   removePropagationsOnEntityDelete: boolean,
+        ///   validityPeriods: [
+        ///     {
+        ///       endTime: string,
+        ///       startTime: string,
+        ///       timeZone: string
+        ///     }
+        ///   ],
+        ///   source: string,
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4703,14 +3516,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="AddClassificationsByUniqueAttribute"/> and <see cref="AddClassificationsByUniqueAttributeAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateAddClassificationsByUniqueAttributeRequest(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateAddClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -4725,123 +3533,50 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Update classification on an entity identified by its type and unique attributes. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   entityGuid: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   removePropagationsOnEntityDelete: boolean,
+        ///   validityPeriods: [
+        ///     {
+        ///       endTime: string,
+        ///       startTime: string,
+        ///       timeZone: string
+        ///     }
+        ///   ],
+        ///   source: string,
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateClassificationsByUniqueAttributeAsync(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> UpdateClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4865,117 +3600,44 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Update classification on an entity identified by its type and unique attributes. </summary>
         /// <remarks>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   entityGuid: string,
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///   removePropagationsOnEntityDelete: boolean,
+        ///   validityPeriods: [
+        ///     {
+        ///       endTime: string,
+        ///       startTime: string,
+        ///       timeZone: string
+        ///     }
+        ///   ],
+        ///   source: string,
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response UpdateClassificationsByUniqueAttribute(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response UpdateClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4997,14 +3659,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateClassificationsByUniqueAttribute"/> and <see cref="UpdateClassificationsByUniqueAttributeAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateUpdateClassificationsByUniqueAttributeRequest(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateUpdateClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -5019,274 +3676,34 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Set classifications on entities in bulk. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>guidHeaderMap</term>
-        ///     <term>Dictionary&lt;string, AtlasEntityHeader&gt;</term>
-        ///     <term></term>
-        ///     <term> The description of the guid header map,. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntityHeader</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classificationNames</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term> An array of classification names. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of classifications. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The display text. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>meaningNames</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term> An array of meanings. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>meanings</term>
-        ///     <term>AtlasTermAssignmentHeader[]</term>
-        ///     <term></term>
-        ///     <term> An array of term assignment headers. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermAssignmentHeader</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>confidence</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The display text. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The source of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The steward of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the term. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SetClassificationsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> SetClassificationsAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSetClassificationsRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateSetClassificationsRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5311,267 +3728,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Set classifications on entities in bulk. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>guidHeaderMap</term>
-        ///     <term>Dictionary&lt;string, AtlasEntityHeader&gt;</term>
-        ///     <term></term>
-        ///     <term> The description of the guid header map,. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntityHeader</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classificationNames</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term> An array of classification names. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>classifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of classifications. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The display text. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>meaningNames</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term> An array of meanings. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>meanings</term>
-        ///     <term>AtlasTermAssignmentHeader[]</term>
-        ///     <term></term>
-        ///     <term> An array of term assignment headers. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasTermAssignmentHeader</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>confidence</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The user who created the record. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayText</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The display text. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>expression</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The source of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
-        ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>steward</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The steward of the term. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the term. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response SetClassifications(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response SetClassifications(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSetClassificationsRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateSetClassificationsRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5593,12 +3770,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="SetClassifications"/> and <see cref="SetClassificationsAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateSetClassificationsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateSetClassificationsRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -5608,7 +3782,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -5623,29 +3797,88 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// The REST request would look something like this
         /// 
-        /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1.
+        /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       guid: string,
+        ///       homeId: string,
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       provenanceType: number,
+        ///       proxy: boolean,
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5678,29 +3911,88 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// The REST request would look something like this
         /// 
-        /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1.
+        /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   entities: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       classifications: [
+        ///         {
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///           typeName: string,
+        ///           lastModifiedTS: string,
+        ///           entityGuid: string,
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///           removePropagationsOnEntityDelete: boolean,
+        ///           validityPeriods: [
+        ///             {
+        ///               endTime: string,
+        ///               startTime: string,
+        ///               timeZone: string
+        ///             }
+        ///           ],
+        ///           source: string,
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         }
+        ///       ],
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       guid: string,
+        ///       homeId: string,
+        ///       meanings: [
+        ///         {
+        ///           confidence: number,
+        ///           createdBy: string,
+        ///           description: string,
+        ///           displayText: string,
+        ///           expression: string,
+        ///           relationGuid: string,
+        ///           source: string,
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///           steward: string,
+        ///           termGuid: string
+        ///         }
+        ///       ],
+        ///       provenanceType: number,
+        ///       proxy: boolean,
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetEntitiesByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response GetEntitiesByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5722,15 +4014,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEntitiesByUniqueAttributes"/> and <see cref="GetEntitiesByUniqueAttributesAsync"/> operations. </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetEntitiesByUniqueAttributesRequest(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetEntitiesByUniqueAttributesRequest(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -5756,24 +4042,69 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get entity header given its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   classificationNames: [string],
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   displayText: string,
+        ///   guid: string,
+        ///   meaningNames: [string],
+        ///   meanings: [
+        ///     {
+        ///       confidence: number,
+        ///       createdBy: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetHeaderAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetHeaderAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetHeaderRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetHeaderRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5796,24 +4127,69 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get entity header given its GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///   typeName: string,
+        ///   lastModifiedTS: string,
+        ///   classificationNames: [string],
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   displayText: string,
+        ///   guid: string,
+        ///   meaningNames: [string],
+        ///   meanings: [
+        ///     {
+        ///       confidence: number,
+        ///       createdBy: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetHeader(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetHeader(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetHeaderRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetHeaderRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5835,12 +4211,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetHeader"/> and <see cref="GetHeaderAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetHeaderRequest(string guid, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetHeaderRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

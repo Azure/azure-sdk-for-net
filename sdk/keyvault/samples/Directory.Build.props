@@ -7,6 +7,10 @@
     <IsPackable>true</IsPackable>
     <IsSample>true</IsSample>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+    <NoWarn>
+      $(NoWarn);
+      NU5104;
+    </NoWarn>
   </PropertyGroup>
 
   <Import Project="..\Directory.Build.props" />

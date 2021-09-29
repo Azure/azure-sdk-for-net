@@ -10,7 +10,7 @@ Azure Attestation receives evidence from compute entities, turns them into a set
 
 > NOTE: This is a preview SDK for the Microsoft Azure Attestation service. It provides all the essential functionality to access the Azure Attestation service, it should be considered 'as-is" and is subject to changes in the future which may break compatibility with previous versions.
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/attestation/Azure.Security.Attestation) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Security.Attestation) | [API reference documentation][API_reference] | [Product documentation](https://docs.microsoft.com/azure/attestation/)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/attestation/Azure.Security.Attestation) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Security.Attestation) | [API reference documentation][API_reference] | [Product documentation](https://docs.microsoft.com/azure/attestation/)
 
 ## Getting started
 
@@ -23,7 +23,7 @@ Azure Attestation receives evidence from compute entities, turns them into a set
 
 Install the Microsoft Azure Attestation client library for .NET with [NuGet][nuget]:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Security.Attestation --prerelease
 ```
 
@@ -35,7 +35,7 @@ In order to interact with the Microsoft Azure Attestation service, you'll need t
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Identity
 ```
 
@@ -81,7 +81,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
     $Env:AZURE_TENANT_ID="tenant-ID"
     ```
 
-For more information about the Azure Identity APIs and how to use them, see [Azure Identity client library](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity)
+For more information about the Azure Identity APIs and how to use them, see [Azure Identity client library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity)
 
 ## Key concepts
 
@@ -157,12 +157,12 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
-[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
-[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
-[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
-[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -212,10 +212,10 @@ var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, 
 
 Clients need to be able to verify that the attestation policy document was not modified before the policy document was received by the attestation service's enclave.
 
-There are two properties provided in the [PolicyResult][attestation_policy_result] that can be used to verify that the service received the policy document:
+There are two properties provided in the [PolicyModificationResult][attestation_policy_modification_result] that can be used to verify that the service received the policy document:
 
-* [`PolicySigner`][attestation_policy_result_signer] - if the `SetPolicy` call included a signing certificate, this will be the certificate provided at the time of the `SetPolicy` call. If no policy signer was set, this will be null.
-* [`PolicyTokenHash`][attestation_policy_result_token_hash] - this is the hash of the [JSON Web Token][json_web_token] sent to the service.
+* [`PolicySigner`][attestation_policy_modification_result_signer] - if the `SetPolicy` call included a signing certificate, this will be the certificate provided at the time of the `SetPolicy` call. If no policy signer was set, this will be null.
+* [`PolicyTokenHash`][attestation_policy_modification_result_token_hash] - this is the hash of the [JSON Web Token][json_web_token] sent to the service.
 
 To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
 
@@ -298,7 +298,7 @@ IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningC
 
 ## Troubleshooting
 
-Most Attestation service operations will throw a [RequestFailedException](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs) on failure with helpful ErrorCodes. Many of these errors are recoverable.
+Most Attestation service operations will throw a [RequestFailedException](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs) on failure with helpful ErrorCodes. Many of these errors are recoverable.
 
 ```C# Snippet:AttestSgxEnclaveWithException
 try
@@ -342,19 +342,19 @@ See [CONTRIBUTING.md][contributing] for details on building, testing, and contri
 [attestation_response]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1
 [attestation_response_token]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1.token
 [attestation_response_value]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1.value
-[attestation_policy_result]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult
-[attestation_policy_result_signer]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult.policysigner
-[attestation_policy_result_token_hash]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult.policytokenhash
+[attestation_policy_modification_result]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policymodificationresult
+[attestation_policy_modification_result_signer]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policymodificationresult.policysigner
+[attestation_policy_modification_result_token_hash]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policymodificationresult.policytokenhash
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [json_web_token]: https://tools.ietf.org/html/rfc7519
 [JWK]: https://tools.ietf.org/html/rfc7517
 [base64url_encoding]: https://tools.ietf.org/html/rfc4648#section-5
 [nuget]: https://www.nuget.org/
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential
-[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fattestation%2FAzure.Security.Attestation%2FREADME.png)

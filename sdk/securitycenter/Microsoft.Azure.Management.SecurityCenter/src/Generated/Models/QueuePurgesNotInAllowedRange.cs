@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Number of device queue purges is not in allowed range.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("QueuePurgesNotInAllowedRange")]
     public partial class QueuePurgesNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary>

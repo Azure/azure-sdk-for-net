@@ -22,7 +22,7 @@ namespace Azure.Identity
     /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of an Azure Active Directory user account.</description></item>
     /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
     /// </list>
-    /// This credential ultimately uses a <see cref="ClientSecretCredential"/> or <see cref="UsernamePasswordCredential"/> to
+    /// This credential ultimately uses a <see cref="ClientSecretCredential"/>, <see cref="ClientCertificateCredential"/>, or <see cref="UsernamePasswordCredential"/> to
     /// perform the authentication using these details. Please consult the
     /// documentation of that class for more details.
     /// </summary>
@@ -30,6 +30,7 @@ namespace Azure.Identity
     {
         private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured.";
         private readonly CredentialPipeline _pipeline;
+        private readonly TokenCredentialOptions _options;
 
         internal TokenCredential Credential { get; }
 
@@ -39,8 +40,7 @@ namespace Azure.Identity
         /// </summary>
         public EnvironmentCredential()
             : this(CredentialPipeline.GetInstance(null))
-        {
-        }
+        { }
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
@@ -48,13 +48,13 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public EnvironmentCredential(TokenCredentialOptions options)
-            : this(CredentialPipeline.GetInstance(options))
-        {
-        }
+            : this(CredentialPipeline.GetInstance(options), options)
+        { }
 
-        internal EnvironmentCredential(CredentialPipeline pipeline)
+        internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredentialOptions options = null)
         {
             _pipeline = pipeline;
+            _options = options ?? new TokenCredentialOptions();
 
             string tenantId = EnvironmentVariables.TenantId;
             string clientId = EnvironmentVariables.ClientId;
@@ -67,15 +67,15 @@ namespace Azure.Identity
             {
                 if (!string.IsNullOrEmpty(clientSecret))
                 {
-                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, null, _pipeline, null);
+                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _options, _pipeline, null);
                 }
                 else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
-                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, null, _pipeline, null);
+                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _options, _pipeline, null);
                 }
                 else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
-                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, null, _pipeline, null);
+                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, _options, _pipeline, null);
                 }
             }
         }

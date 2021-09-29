@@ -5,17 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using BenchmarkDotNet.Toolchains.Roslyn;
 using Moq;
 using NUnit.Framework;
 
@@ -1668,6 +1665,25 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public async Task DownloadAsync_ZeroFile()
+        {
+            // Arrange
+            await using DisposingFile test = await GetTestFileAsync();
+            var fileName = GetNewFileName();
+            var file = test.Directory.GetFileClient(fileName);
+            await file.CreateAsync(0);
+
+            // Act
+            Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync();
+            using var targetStream = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(targetStream);
+
+            // Assert
+            Assert.AreEqual(0, downloadResponse.Value.ContentLength);
+            Assert.AreEqual(0, targetStream.Length);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task DownloadAsync_NoLease()
         {
@@ -1801,6 +1817,51 @@ namespace Azure.Storage.Files.Shares.Tests
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual, 128 * Constants.KB);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [RecordedTest]
+        public async Task DownloadAsync_WithUnreliableConnection_ConcurrentModification()
+        {
+            var fileSize = 2 * Constants.MB;
+            var dataSize = 2 * Constants.MB;
+
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+            ShareDirectoryClient directoryFaulty = InstrumentClient(
+                new ShareDirectoryClient(
+                    directory.Uri,
+                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
+                    GetFaultyFileConnectionOptions(raiseAt: 256 * Constants.KB)));
+
+            await directory.CreateIfNotExistsAsync();
+
+            // Arrange
+            var fileName = GetNewFileName();
+            ShareFileClient fileFaulty = InstrumentClient(directoryFaulty.GetFileClient(fileName));
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(fileName));
+            await file.CreateAsync(maxSize: fileSize);
+            var data = GetRandomBuffer(dataSize);
+            var modifiedData = GetRandomBuffer(dataSize);
+            await fileFaulty.UploadAsync(new MemoryStream(data));
+
+            // Act
+            using ShareFileDownloadInfo downloadInfo = await fileFaulty.DownloadAsync();
+
+            // Modify content after we got response but haven't read data stream yet.
+            // The faulty stream will simulate service side closing connection.
+            await fileFaulty.UploadAsync(new MemoryStream(modifiedData));
+
+            // Read data stream
+            var actual = new MemoryStream();
+            await TestHelper.AssertExpectedExceptionAsync<ShareFileModifiedException>(
+                downloadInfo.Content.CopyToAsync(actual, 4 * Constants.KB),
+                e => {
+                    Assert.AreEqual(e.ResourceUri, file.Uri);
+                    Assert.AreNotEqual(e.ExpectedETag, e.ActualETag);
+                    Assert.IsNotNull(e.Range);
+                });
         }
 
         [RecordedTest]
@@ -2747,12 +2808,17 @@ namespace Azure.Storage.Files.Shares.Tests
                     .GetDirectoryClient(directoryName)
                     .GetFileClient(fileName));
 
+            ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await destFile.UploadRangeFromUriAsync(
                 sourceUri: sasFile.Uri,
                 range: destRange,
                 sourceRange: sourceRange,
-                conditions: conditions);
+                options: options);
         }
 
         [Test]
@@ -2795,13 +2861,18 @@ namespace Azure.Storage.Files.Shares.Tests
                     .GetDirectoryClient(directoryName)
                     .GetFileClient(fileName));
 
+            ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destFile.UploadRangeFromUriAsync(
                     sourceUri: sasFile.Uri,
                     range: destRange,
                     sourceRange: sourceRange,
-                    conditions: conditions),
+                    options: options),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
@@ -3182,7 +3253,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await file.UploadAsync(stream2);
             byte[] outputBytes = new byte[size];
 
-            await TestHelper.AssertExpectedExceptionAsync<ShareFileModificationException>(
+            await TestHelper.AssertExpectedExceptionAsync<ShareFileModifiedException>(
                 outputStream.ReadAsync(outputBytes, 0, size),
                 e => {
                     Assert.AreEqual(e.ResourceUri, file.Uri);
