@@ -708,34 +708,6 @@ namespace Azure.AI.FormRecognizer.Models
             return new DocTypeInfo(description, fieldSchema, fieldConfidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
-        /// <param name="type"> Semantic data type of the field value. </param>
-        /// <param name="description"> Field description. </param>
-        /// <param name="example"> Example field content. </param>
-        /// <param name="items"> Field type schema of each array element. </param>
-        /// <param name="properties"> Named sub-fields of the object field. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldSchema"/> instance for mocking. </returns>
-        internal static DocumentFieldSchema DocumentFieldSchema(DocumentFieldType? type = null, string description = null, string example = null, DocumentFieldSchema items = null, IReadOnlyDictionary<string, DocumentFieldSchema> properties = null)
-        {
-            properties ??= new Dictionary<string, DocumentFieldSchema>();
-
-            return new DocumentFieldSchema(type, description, example, items, properties);
-        }
-
-        /// <summary> Initializes a new instance of ModelOperationInfo. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="kind"> Type of operation. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.ModelOperationInfo"/> instance for mocking. </returns>
-        internal  static ModelOperationInfo ModelOperationInfo(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DocumentOperationKind? kind = null, string resourceLocation = null)
-        {
-            return new ModelOperationInfo(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind, resourceLocation);
-        }
-
         /// <summary> Initializes a new instance of DocumentAnalysisError. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
@@ -760,6 +732,20 @@ namespace Azure.AI.FormRecognizer.Models
             return new DocumentAnalysisInnerError(code, message, innererror);
         }
 
+        /// <summary> Initializes a new instance of ModelOperationInfo. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="kind"> Type of operation. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.ModelOperationInfo"/> instance for mocking. </returns>
+        internal static ModelOperationInfo ModelOperationInfo(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null)
+        {
+            return new ModelOperationInfo(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation);
+        }
+
         /// <summary> Initializes a new instance of ModelOperation. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
@@ -771,9 +757,23 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentAnalysis.ModelOperation"/> instance for mocking. </returns>
-        internal static ModelOperation ModelOperation(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind? kind = null, string resourceLocation = null, DocumentAnalysisError error = null, DocumentModel result = null)
+        internal static ModelOperation ModelOperation(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, DocumentAnalysisError error = null, DocumentModel result = null)
         {
             return new ModelOperation(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, error, result);
+        }
+
+        /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
+        /// <param name="type"> Semantic data type of the field value. </param>
+        /// <param name="description"> Field description. </param>
+        /// <param name="example"> Example field content. </param>
+        /// <param name="items"> Field type schema of each array element. </param>
+        /// <param name="properties"> Named sub-fields of the object field. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldSchema"/> instance for mocking. </returns>
+        internal static DocumentFieldSchema DocumentFieldSchema(DocumentFieldType type = default, string description = null, string example = null, DocumentFieldSchema items = null, IReadOnlyDictionary<string, DocumentFieldSchema> properties = null)
+        {
+            properties ??= new Dictionary<string, DocumentFieldSchema>();
+
+            return new DocumentFieldSchema(type, description, example, items, properties);
         }
 
         #endregion

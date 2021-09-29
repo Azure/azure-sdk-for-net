@@ -14,8 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentFieldSchema
     {
         /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
-        internal DocumentFieldSchema()
+        /// <param name="type"> Semantic data type of the field value. </param>
+        internal DocumentFieldSchema(DocumentFieldType type)
         {
+            Type = type;
             Properties = new ChangeTrackingDictionary<string, DocumentFieldSchema>();
         }
 
@@ -25,7 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="example"> Example field content. </param>
         /// <param name="items"> Field type schema of each array element. </param>
         /// <param name="properties"> Named sub-fields of the object field. </param>
-        internal DocumentFieldSchema(DocumentFieldType? type, string description, string example, DocumentFieldSchema items, IReadOnlyDictionary<string, DocumentFieldSchema> properties)
+        internal DocumentFieldSchema(DocumentFieldType type, string description, string example, DocumentFieldSchema items, IReadOnlyDictionary<string, DocumentFieldSchema> properties)
         {
             Type = type;
             Description = description;
@@ -35,7 +37,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Semantic data type of the field value. </summary>
-        public DocumentFieldType? Type { get; }
+        public DocumentFieldType Type { get; }
         /// <summary> Field description. </summary>
         public string Description { get; }
         /// <summary> Example field content. </summary>

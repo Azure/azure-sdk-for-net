@@ -123,7 +123,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentModelAdministrationClient();
 
-            DocumentModel model = await client.GetModelAsync("prebuilt-receipt");
+            DocumentModel model = await client.GetModelAsync("prebuilt-businessCard");
             ValidateDocumentModel(model, true);
         }
 

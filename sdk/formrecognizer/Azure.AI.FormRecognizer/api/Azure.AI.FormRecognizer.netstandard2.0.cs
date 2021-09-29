@@ -394,7 +394,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> Spans { get { throw null; } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType ValueType { get { throw null; } }
         public string AsCountryRegion() { throw null; }
-        public string AsCurrency() { throw null; }
         public System.DateTime AsDate() { throw null; }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField> AsDictionary() { throw null; }
         public double AsDouble() { throw null; }
@@ -413,7 +412,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string Example { get { throw null; } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema Items { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema> Properties { get { throw null; } }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType? Type { get { throw null; } }
+        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType Type { get { throw null; } }
     }
     public enum DocumentFieldType
     {
@@ -428,7 +427,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         SelectionMark = 8,
         CountryRegion = 9,
         Signature = 10,
-        Currency = 11,
     }
     public partial class DocumentKeyValueElement
     {
@@ -622,7 +620,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal ModelOperationInfo() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationKind? Kind { get { throw null; } }
+        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationKind Kind { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public string OperationId { get { throw null; } }
         public int? PercentCompleted { get { throw null; } }

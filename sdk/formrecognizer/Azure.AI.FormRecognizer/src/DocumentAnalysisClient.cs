@@ -155,7 +155,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 var response = await ServiceClient.DocumentAnalysisAnalyzeDocumentAsync(
                     modelId,
                     ContentType1.ApplicationOctetStream,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : analyzeDocumentOptions.Pages,
+                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
                     analyzeDocumentOptions.Locale,
                     Constants.DefaultStringIndexType,
                     document,
@@ -212,7 +212,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 var response = ServiceClient.DocumentAnalysisAnalyzeDocument(
                     modelId,
                     ContentType1.ApplicationOctetStream,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : analyzeDocumentOptions.Pages,
+                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
                     analyzeDocumentOptions.Locale,
                     Constants.DefaultStringIndexType,
                     document,
@@ -269,7 +269,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 var request = new AnalyzeDocumentRequest() { UrlSource = documentUri.AbsoluteUri };
                 var response = await ServiceClient.DocumentAnalysisAnalyzeDocumentAsync(
                     modelId,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : analyzeDocumentOptions.Pages,
+                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
                     analyzeDocumentOptions.Locale,
                     Constants.DefaultStringIndexType,
                     request,
@@ -326,7 +326,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 var request = new AnalyzeDocumentRequest() { UrlSource = documentUri.AbsoluteUri };
                 var response = ServiceClient.DocumentAnalysisAnalyzeDocument(
                     modelId,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : analyzeDocumentOptions.Pages,
+                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
                     analyzeDocumentOptions.Locale,
                     Constants.DefaultStringIndexType,
                     request,

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -36,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateDocumentAnalysisAnalyzeDocumentRequest(string modelId, ContentType1 contentType, IEnumerable<string> pages, string locale, StringIndexType? stringIndexType, Stream analyzeRequest)
+        internal HttpMessage CreateDocumentAnalysisAnalyzeDocumentRequest(string modelId, ContentType1 contentType, string pages, string locale, StringIndexType? stringIndexType, Stream analyzeRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,7 +48,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendPath(":analyze", false);
             if (pages != null)
             {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
+                uri.AppendQuery("pages", pages, true);
             }
             if (locale != null)
             {
@@ -79,7 +78,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentAnalysisAnalyzeDocumentHeaders>> DocumentAnalysisAnalyzeDocumentAsync(string modelId, ContentType1 contentType, IEnumerable<string> pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentAnalysisAnalyzeDocumentHeaders>> DocumentAnalysisAnalyzeDocumentAsync(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -107,7 +106,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentAnalysisAnalyzeDocumentHeaders> DocumentAnalysisAnalyzeDocument(string modelId, ContentType1 contentType, IEnumerable<string> pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DocumentAnalysisDocumentAnalysisAnalyzeDocumentHeaders> DocumentAnalysisAnalyzeDocument(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -126,7 +125,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        internal HttpMessage CreateDocumentAnalysisAnalyzeDocumentRequest(string modelId, IEnumerable<string> pages, string locale, StringIndexType? stringIndexType, AnalyzeDocumentRequest analyzeRequest)
+        internal HttpMessage CreateDocumentAnalysisAnalyzeDocumentRequest(string modelId, string pages, string locale, StringIndexType? stringIndexType, AnalyzeDocumentRequest analyzeRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -139,7 +138,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendPath(":analyze", false);
             if (pages != null)
             {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
+                uri.AppendQuery("pages", pages, true);
             }
             if (locale != null)
             {
@@ -170,7 +169,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentAnalysisAnalyzeDocumentHeaders>> DocumentAnalysisAnalyzeDocumentAsync(string modelId, IEnumerable<string> pages = null, string locale = null, StringIndexType? stringIndexType = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentAnalysisAnalyzeDocumentHeaders>> DocumentAnalysisAnalyzeDocumentAsync(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -197,7 +196,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentAnalysisAnalyzeDocumentHeaders> DocumentAnalysisAnalyzeDocument(string modelId, IEnumerable<string> pages = null, string locale = null, StringIndexType? stringIndexType = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DocumentAnalysisDocumentAnalysisAnalyzeDocumentHeaders> DocumentAnalysisAnalyzeDocument(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -383,7 +382,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Creates a new model from document types of existing models. </summary>
-        /// <param name="composeRequest"> The ComposeDocumentModelRequest to use. </param>
+        /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
         public async Task<ResponseWithHeaders<DocumentAnalysisDocumentAnalysisComposeDocumentModelHeaders>> DocumentAnalysisComposeDocumentModelAsync(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
@@ -406,7 +405,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Creates a new model from document types of existing models. </summary>
-        /// <param name="composeRequest"> The ComposeDocumentModelRequest to use. </param>
+        /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
         public ResponseWithHeaders<DocumentAnalysisDocumentAnalysisComposeDocumentModelHeaders> DocumentAnalysisComposeDocumentModel(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
@@ -448,7 +447,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Generates authorization to copy a model to this location with specified modelId and optional description. </summary>
-        /// <param name="authorizeCopyRequest"> The AuthorizeCopyRequest to use. </param>
+        /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
         public async Task<Response<CopyAuthorization>> DocumentAnalysisAuthorizeCopyDocumentModelAsync(AuthorizeCopyRequest authorizeCopyRequest, CancellationToken cancellationToken = default)
@@ -475,7 +474,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Generates authorization to copy a model to this location with specified modelId and optional description. </summary>
-        /// <param name="authorizeCopyRequest"> The AuthorizeCopyRequest to use. </param>
+        /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
         public Response<CopyAuthorization> DocumentAnalysisAuthorizeCopyDocumentModel(AuthorizeCopyRequest authorizeCopyRequest, CancellationToken cancellationToken = default)
@@ -524,7 +523,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Copies model to the target resource, region, and modelId. </summary>
         /// <param name="modelId"> Unique model name. </param>
-        /// <param name="copyToRequest"> The CopyAuthorization to use. </param>
+        /// <param name="copyToRequest"> Copy to request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
         public async Task<ResponseWithHeaders<DocumentAnalysisDocumentAnalysisCopyDocumentModelToHeaders>> DocumentAnalysisCopyDocumentModelToAsync(string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
@@ -552,7 +551,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Copies model to the target resource, region, and modelId. </summary>
         /// <param name="modelId"> Unique model name. </param>
-        /// <param name="copyToRequest"> The CopyAuthorization to use. </param>
+        /// <param name="copyToRequest"> Copy to request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
         public ResponseWithHeaders<DocumentAnalysisDocumentAnalysisCopyDocumentModelToHeaders> DocumentAnalysisCopyDocumentModelTo(string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)

@@ -17,9 +17,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="status"> Operation status. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
-        internal ModelOperationInfo(string operationId, DocumentOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, string resourceLocation)
+        internal ModelOperationInfo(string operationId, DocumentOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation)
         {
             if (operationId == null)
             {
@@ -34,6 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Status = status;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
+            Kind = kind;
             ResourceLocation = resourceLocation;
         }
 
@@ -45,7 +47,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        internal ModelOperationInfo(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind? kind, string resourceLocation)
+        internal ModelOperationInfo(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation)
         {
             OperationId = operationId;
             Status = status;
@@ -63,7 +65,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Operation progress (0-100). </summary>
         public int? PercentCompleted { get; }
         /// <summary> Type of operation. </summary>
-        public DocumentOperationKind? Kind { get; }
+        public DocumentOperationKind Kind { get; }
         /// <summary> URL of the resource targeted by this operation. </summary>
         public string ResourceLocation { get; }
     }
