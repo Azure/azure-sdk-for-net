@@ -19,7 +19,6 @@ namespace Azure.Identity
         internal readonly MsalConfidentialClient _client;
         private readonly string _tenantId;
         private readonly CredentialPipeline _pipeline;
-        private readonly bool _allowMultiTenantAuthentication;
         private readonly string _clientId;
         private readonly string _clientSecret;
         private readonly UserAssertion _userAssertion;
@@ -82,7 +81,6 @@ namespace Azure.Identity
         {
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             options ??= new OnBehalfOfCredentialOptions();
             _userAssertion = new UserAssertion(userAssertion);
@@ -130,7 +128,6 @@ namespace Azure.Identity
 
             options ??= new OnBehalfOfCredentialOptions();
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _allowMultiTenantAuthentication = options.AllowMultiTenantAuthentication;
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             _clientId = clientId;
             _clientSecret = clientSecret;
@@ -152,7 +149,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
 
                 AuthenticationResult result = await _client
                     .AcquireTokenOnBehalfOf(requestContext.Scopes, tenantId, _userAssertion, async, cancellationToken)
