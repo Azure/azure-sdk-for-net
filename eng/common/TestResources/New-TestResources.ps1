@@ -76,7 +76,14 @@ param (
     [switch] $Force,
 
     [Parameter()]
-    [switch] $OutFile
+    [switch] $OutFile,
+
+    [Parameter()]
+    [boolean] $OutFileEncryption = $true,
+
+    [Parameter()]
+    [ValidateSet('json', 'dotenv', 'pwshenv')]
+    [string] $OutFileFormat = 'json'
 )
 
 # By default stop for any error.
@@ -159,7 +166,14 @@ try {
 
     # Enumerate test resources to deploy. Fail if none found.
     $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
-    $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
+
+    $root = ''
+    if (Split-Path -IsAbsolute $ServiceDirectory) {
+        $root = $ServiceDirectory
+    } else {
+        $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
+    }
+
     $templateFiles = @()
 
     'test-resources.json', 'test-resources.bicep' | ForEach-Object {
@@ -598,12 +612,28 @@ try {
             }
 
             $outputFile = "$($templateFile.originalFilePath).env"
+            if ($env:ENV_FILE) {
+                $outputFile = "$env:ENV_FILE"
+            }
 
-            $environmentText = $deploymentOutputs | ConvertTo-Json;
+            $environmentText = ''
+            if ($OutFileFormat -eq 'json') {
+                $environmentText = $deploymentOutputs | ConvertTo-Json;
+            } elseif ($OutFileFormat -eq 'dotenv') {
+                foreach($entry in $deploymentOutputs.GetEnumerator()) {
+                    $environmentText += "$($entry.name)=$($entry.value)`n"
+                }
+            } elseif ($OutFileFormat -eq 'pwshenv') {
+                foreach($entry in $deploymentOutputs.GetEnumerator()) {
+                    $environmentText += "`$$($entry.name)=$($entry.value)`n"
+                }
+            }
+
             $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
-            $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
-
-            Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
+            if ($OutFileEncryption) {
+                $bytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
+            }
+            Set-Content $outputFile -Value $bytes -AsByteStream -Force
 
             Write-Host "Test environment settings`n $environmentText`nstored into encrypted $outputFile"
         } else {
