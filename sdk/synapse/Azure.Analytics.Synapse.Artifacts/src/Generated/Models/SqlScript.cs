@@ -32,12 +32,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> The description of the SQL script. </param>
         /// <param name="type"> The type of the SQL script. </param>
         /// <param name="content"> The content of the SQL script. </param>
+        /// <param name="folder"> The folder that this SQL script is in. If not specified, this SQL script will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SqlScript(string description, SqlScriptType? type, SqlScriptContent content, IDictionary<string, object> additionalProperties)
+        internal SqlScript(string description, SqlScriptType? type, SqlScriptContent content, SqlScriptFolder folder, IDictionary<string, object> additionalProperties)
         {
             Description = description;
             Type = type;
             Content = content;
+            Folder = folder;
             AdditionalProperties = additionalProperties;
         }
 
@@ -47,6 +49,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SqlScriptType? Type { get; set; }
         /// <summary> The content of the SQL script. </summary>
         public SqlScriptContent Content { get; set; }
+        /// <summary> The folder that this SQL script is in. If not specified, this SQL script will appear at the root level. </summary>
+        public SqlScriptFolder Folder { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, object> AdditionalProperties { get; }
     }

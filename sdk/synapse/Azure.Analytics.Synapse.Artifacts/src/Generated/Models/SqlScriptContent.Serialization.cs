@@ -21,8 +21,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("query");
             writer.WriteStringValue(Query);
-            writer.WritePropertyName("currentConnection");
-            writer.WriteObjectValue(CurrentConnection);
+            if (Optional.IsDefined(CurrentConnection))
+            {
+                writer.WritePropertyName("currentConnection");
+                writer.WriteObjectValue(CurrentConnection);
+            }
+            if (Optional.IsDefined(ResultLimit))
+            {
+                writer.WritePropertyName("resultLimit");
+                writer.WriteNumberValue(ResultLimit.Value);
+            }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
@@ -39,7 +47,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static SqlScriptContent DeserializeSqlScriptContent(JsonElement element)
         {
             string query = default;
-            SqlConnection currentConnection = default;
+            Optional<SqlConnection> currentConnection = default;
+            Optional<int> resultLimit = default;
             Optional<SqlScriptMetadata> metadata = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -52,7 +61,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("currentConnection"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     currentConnection = SqlConnection.DeserializeSqlConnection(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("resultLimit"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resultLimit = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("metadata"))
@@ -68,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScriptContent(query, currentConnection, metadata.Value, additionalProperties);
+            return new SqlScriptContent(query, currentConnection.Value, Optional.ToNullable(resultLimit), metadata.Value, additionalProperties);
         }
 
         internal partial class SqlScriptContentConverter : JsonConverter<SqlScriptContent>

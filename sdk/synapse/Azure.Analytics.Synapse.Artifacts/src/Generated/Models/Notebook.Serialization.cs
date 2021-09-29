@@ -61,6 +61,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Folder))
+            {
+                writer.WritePropertyName("folder");
+                writer.WriteObjectValue(Folder);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -78,6 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             int nbformat = default;
             int nbformatMinor = default;
             IList<NotebookCell> cells = default;
+            Optional<NotebookFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -132,10 +138,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     cells = array;
                     continue;
                 }
+                if (property.NameEquals("folder"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    folder = NotebookFolder.DeserializeNotebookFolder(property.Value);
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Notebook(description.Value, bigDataPool.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, additionalProperties);
+            return new Notebook(description.Value, bigDataPool.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, folder.Value, additionalProperties);
         }
 
         internal partial class NotebookConverter : JsonConverter<Notebook>

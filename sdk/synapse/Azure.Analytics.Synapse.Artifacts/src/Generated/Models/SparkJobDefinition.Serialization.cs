@@ -38,6 +38,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("jobProperties");
             writer.WriteObjectValue(JobProperties);
+            if (Optional.IsDefined(Folder))
+            {
+                writer.WritePropertyName("folder");
+                writer.WriteObjectValue(Folder);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -53,6 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> requiredSparkVersion = default;
             Optional<string> language = default;
             SparkJobProperties jobProperties = default;
+            Optional<SparkJobDefinitionFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -82,10 +88,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     jobProperties = SparkJobProperties.DeserializeSparkJobProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("folder"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    folder = SparkJobDefinitionFolder.DeserializeSparkJobDefinitionFolder(property.Value);
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkJobDefinition(description.Value, targetBigDataPool, requiredSparkVersion.Value, language.Value, jobProperties, additionalProperties);
+            return new SparkJobDefinition(description.Value, targetBigDataPool, requiredSparkVersion.Value, language.Value, jobProperties, folder.Value, additionalProperties);
         }
 
         internal partial class SparkJobDefinitionConverter : JsonConverter<SparkJobDefinition>
