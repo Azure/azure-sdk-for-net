@@ -6,6 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "traceparent": "00-0717597a84e67a4ea56185d7e035998f-468b4cd15caa8842-00",
         "User-Agent": [
           "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20210928.1",
           "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
@@ -18,10 +19,10 @@
       "ResponseHeaders": {
         "Content-Length": "11551",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 07:00:34 GMT",
+        "Date": "Tue, 28 Sep 2021 09:30:59 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "14c5c771-d862-4c69-8dfc-d05b9872c1c8"
+        "x-ms-correlation-request-id": "d0fdf85c-4741-4822-8448-4b8e704a687a"
       },
       "ResponseBody": {
         "value": [
