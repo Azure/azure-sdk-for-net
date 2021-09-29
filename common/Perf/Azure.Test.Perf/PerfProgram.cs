@@ -21,6 +21,12 @@ namespace Azure.Test.Perf
     {
         private const int BYTES_PER_MEGABYTE = 1024 * 1024;
 
+        private static int[] _completedOperations;
+        private static TimeSpan[] _lastCompletionTimes;
+        private static List<TimeSpan>[] _latencies;
+        private static List<TimeSpan>[] _correctedLatencies;
+        private static Channel<(TimeSpan, Stopwatch)> _pendingOperations;
+
         private static IPerfTest[] _perfTests;
         private static IList<long> _completedOperations => _perfTests.Select(p => p.CompletedOperations).ToList();
         private static IList<TimeSpan> _lastCompletionTimes => _perfTests.Select(p => p.LastCompletionTime).ToList();
