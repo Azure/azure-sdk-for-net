@@ -289,7 +289,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [regional_endpoints]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-custom-subdomains#is-there-a-list-of-regional-endpoints
 
 
-[labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
+[labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool
 [service_recognize_receipt_fields]: https://aka.ms/formrecognizer/receiptfields
 [service_recognize_business_cards_fields]: https://aka.ms/formrecognizer/businesscardfields
 [service_recognize_invoices_fields]: https://aka.ms/formrecognizer/invoicefields

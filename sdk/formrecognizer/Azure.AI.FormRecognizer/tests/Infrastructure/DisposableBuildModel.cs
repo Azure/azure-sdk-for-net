@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// <remarks>
     /// Please note that models can also be built using a graphical user interface
     /// such as the Form Recognizer Labeling Tool found here:
-    /// <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1"/>.
+    /// <see href="https://aka.ms/azsdk/formrecognizer/labelingtool"/>.
     /// </remarks>
     public class DisposableBuildModel : IAsyncDisposable
     {
