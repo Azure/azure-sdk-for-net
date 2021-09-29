@@ -618,6 +618,46 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task UploadDirectory_Tags()
+        {
+            // Arrange
+            (string SourceDir, string DestDir) directories = await PrepareDirectories();
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            try
+            {
+                // Create container
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
+
+                BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions
+                {
+                    Tags = tags
+                };
+
+                // Act
+                await client.UploadAsync(directories.SourceDir, options: options);
+
+                // Assert
+                IList<BlobHierarchyItem> blobHierarchyItems = await client.GetBlobsByHierarchyAsync(BlobTraits.Tags).ToListAsync();
+                foreach (BlobHierarchyItem blobHierarchyItem in blobHierarchyItems)
+                {
+                    Assert.IsTrue(blobHierarchyItem.IsBlob);
+                    AssertDictionaryEquality(tags, blobHierarchyItem.Blob.Tags);
+                }
+            }
+            finally
+            {
+                // Cleanup
+                Directory.Delete(directories.SourceDir, true);
+                Directory.Delete(directories.DestDir, true);
+            }
+        }
+
+        [RecordedTest]
         public async Task ListBlobsFlatSegmentAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
