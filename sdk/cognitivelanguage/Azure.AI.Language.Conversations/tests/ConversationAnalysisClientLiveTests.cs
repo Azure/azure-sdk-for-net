@@ -73,7 +73,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             IList<string> entitiesText = deepstackPrediction.Entities.Select(entity => entity.Text).ToList();
             Assert.That(entitiesText, Has.Count.EqualTo(2));
-            Assert.That(entitiesText, Is.EqualTo(ExpectedOutput));
+            Assert.That(entitiesText, Is.EquivalentTo(ExpectedOutput));
         }
 
         [RecordedTest]
